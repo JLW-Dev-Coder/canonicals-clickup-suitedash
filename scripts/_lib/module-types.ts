@@ -14,6 +14,12 @@ export const REGISTERED_TYPES = [
 
 export type RegisteredType = typeof REGISTERED_TYPES[number];
 
+export const FENCE_LANG_BY_MODULE_TYPE: Record<string, string> = {
+  'stack-css': 'css',
+  'stack-js': 'javascript',
+  'm014-landing-pages': 'html',
+};
+
 export function moduleConfigPath(type: string): string {
   return resolve(MODULE_CONFIG_DIR, `${type}.md`);
 }
