@@ -16,6 +16,87 @@ parent_stack_slug: 29355_Stacks_LMS
 ---
 <script>
 (function () {
+  'use strict';
+
+  var SCOPE_SELECTOR = '.lms-lesson-1-1';
+  var BUTTON_SELECTOR = '.lms-btn-next[data-lesson-next]';
+  var SIDEBAR_SELECTOR = '.modules.side-menu';
+  var LESSON_LINK_SELECTOR = '.lesson-item a';
+  var POLL_INTERVAL_MS = 100;
+  var POLL_TIMEOUT_MS = 3000;
+
+  function findScopeRoot() {
+    return document.querySelector(SCOPE_SELECTOR);
+  }
+
+  function findSidebarLessonLinks() {
+    var sidebar = document.querySelector(SIDEBAR_SELECTOR);
+    if (!sidebar) return null;
+    return sidebar.querySelectorAll(LESSON_LINK_SELECTOR);
+  }
+
+  function resolveNextLessonUrl(lessonNumber, sidebarLinks) {
+    var prefix = 'Lesson ' + lessonNumber;
+    for (var i = 0; i < sidebarLinks.length; i++) {
+      var link = sidebarLinks[i];
+      var text = (link.textContent || '').trim();
+      if (text.indexOf(prefix) === 0) {
+        var href = link.getAttribute('ng-href') || link.getAttribute('href');
+        if (href && href !== '' && href !== '#') {
+          return href;
+        }
+      }
+    }
+    return null;
+  }
+
+  function rewriteNextButtons() {
+    var scope = findScopeRoot();
+    if (!scope) return false;
+
+    var buttons = scope.querySelectorAll(BUTTON_SELECTOR);
+    if (!buttons.length) return true;
+
+    var sidebarLinks = findSidebarLessonLinks();
+    if (!sidebarLinks || !sidebarLinks.length) return false;
+
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      if (btn.dataset.lmsNextResolved === 'true') continue;
+
+      var lessonNumber = btn.getAttribute('data-lesson-next');
+      if (!lessonNumber) continue;
+
+      var resolvedUrl = resolveNextLessonUrl(lessonNumber, sidebarLinks);
+      if (resolvedUrl) {
+        btn.setAttribute('href', resolvedUrl);
+        btn.dataset.lmsNextResolved = 'true';
+      } else {
+        if (window.console && window.console.warn) {
+          window.console.warn('[lms-lesson-1-1] Could not resolve next-lesson URL for "Lesson ' + lessonNumber + '". Sidebar link not found or has empty href.');
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function pollUntilResolved() {
+    var elapsed = 0;
+    var interval = setInterval(function () {
+      var done = rewriteNextButtons();
+      elapsed += POLL_INTERVAL_MS;
+      if (done || elapsed >= POLL_TIMEOUT_MS) {
+        clearInterval(interval);
+      }
+    }, POLL_INTERVAL_MS);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', pollUntilResolved);
+  } else {
+    pollUntilResolved();
+  }
 })();
 </script>
 
@@ -24,3 +105,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 — Meet Zuri. Empty scaffold; behavior deferred. | JLW |
+| 2026-05-08 | Initial JS authoring. Runtime resolver: walks SD sidebar, matches Lesson N.M by title prefix, rewrites .lms-btn-next href from data-lesson-next attribute. Idempotent. Polls up to 3s for SD Angular sidebar to render. | JLW |
