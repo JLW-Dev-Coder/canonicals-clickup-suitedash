@@ -14,7 +14,7 @@ last_editor: JLW
 status: live
 parent_stack_slug: 29355_Stacks_Pages
 ---
-```javascript
+<script>
 window.TPP = window.TPP || { initialized: false };
 
 function tppBoot() {
@@ -210,4 +210,10 @@ function tppInitHeaderScrolled(root) {
   window.addEventListener('scroll', update, { passive: true });
   update();
 }
-```
+</script>
+
+## Change log
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-05-08 | Added `<script>` wrapper tags inline per module-config rule update | JLW |

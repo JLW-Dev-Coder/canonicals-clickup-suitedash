@@ -7,7 +7,7 @@ sd_modal_path: Stack editor (no modal — direct text body)
 
 # Module Config — Stack > JS
 
-JavaScript payload for a SuiteDash Stack. Body IS the JS code (no `<script>` wrapper).
+JavaScript payload for a SuiteDash Stack. The repo file body wraps the JS in `<script>...</script>` tags inline. SD pastes the body verbatim into the stack editor.
 
 ## Frontmatter additions
 
@@ -22,14 +22,18 @@ sd_pages_consuming:
 
 ## Body shape
 
-Raw JavaScript. No HTML wrapper.
+The body is the FULL paste-ready JS payload, including the `<script>` wrapper.
 
-```javascript
+```
+<script>
 (function () {
   'use strict';
   // ... code ...
 })();
+</script>
 ```
+
+The `<script>` opening tag is the FIRST line of the body. The `</script>` closing tag is the LAST line before the change log section.
 
 ---
 

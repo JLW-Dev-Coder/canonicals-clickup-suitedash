@@ -28,6 +28,20 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
 7. Inventory B (`ITEMS.md`) syncs like any other repo file.
 8. **CU page titles use single dash (`-`), never em-dash (`–`).** Body content can use em-dashes.
 9. **Never commit a file containing `REPLACE_*` placeholders or empty stub bodies.** Files needing Owner IDs are created during setup with real values.
+10. **Stack body wrapper rule.** `module_type: stack-css` files have bodies wrapped in `<style>...</style>` tags as the first and last lines. `module_type: stack-js` files have bodies wrapped in `<script>...</script>` tags. The wrapper is part of the body, not added at paste-time.
+11. **Autonomy: RC commits, pushes, and deploys without asking.** After completing any task that produces a commit-worthy change, RC:
+    - Stages the changes
+    - Writes a clear conventional-commit message (`feat:`, `fix:`, `chore:`, `docs:`, etc.)
+    - Commits
+    - Pushes to `origin main`
+    - For this repo, "deploy" is the CU push (already handled by `npm run sync:cu -- push <slug>` during the task — RC does not need a separate deploy step)
+    - Reports the commit hash and push result to Owner
+    Owner does NOT need to approve commits or pushes. RC ships work end-to-end.
+    Exceptions where RC stops before committing:
+    - Any file would contain `REPLACE_*` literals (rule 9)
+    - A `cu_page_id` would be set to a placeholder
+    - A canonical body still contains unfilled `{TODO}` markers from a module-config template
+    - A user-visible CU/SD payload would be deployed before Owner has confirmed copy/visual choices
 
 ## Pre-task self-check (every time)
 

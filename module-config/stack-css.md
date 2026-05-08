@@ -7,7 +7,7 @@ sd_modal_path: Stack editor (no modal — direct text body)
 
 # Module Config — Stack > CSS
 
-CSS payload for a SuiteDash Stack. The repo file body IS the CSS code (no `<style>` wrapper — added at SD-paste time).
+CSS payload for a SuiteDash Stack. The repo file body wraps the CSS in `<style>...</style>` tags inline. SD pastes the body verbatim into the stack editor.
 
 ## Frontmatter additions
 
@@ -22,17 +22,27 @@ sd_pages_consuming:
 
 ## Body shape
 
-Raw CSS. No HTML wrapper. Change log at bottom.
+The body is the FULL paste-ready CSS payload, including the `<style>` wrapper. SD's stack editor expects literal `<style>` and `<script>` tags in the body (it's an HTML-context paste field, not a scoped CSS field).
 
-```css
-/* Author or paste CSS here. */
-
+```
+<style>
+/* tokens */
 :root {
-  /* Tokens */
+  --tpp-rose: #E91E63;
+  /* ... */
 }
 
-/* ... rules ... */
+/* rules */
+.tpp-form-head { /* ... */ }
+
+/* media queries */
+@media (max-width: 768px) {
+  /* ... */
+}
+</style>
 ```
+
+The `<style>` opening tag is the FIRST line of the body. The `</style>` closing tag is the LAST line before the change log section.
 
 ---
 

@@ -14,7 +14,7 @@ last_editor: JLW
 status: live
 parent_stack_slug: 29355_Stacks_Pages
 ---
-```css
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -688,11 +688,8 @@ parent_stack_slug: 29355_Stacks_Pages
   letter-spacing: -0.5px;
   padding: 4px 0 8px 0;
 }
-.tpp-h3-line-1,
-.tpp-h3-line-2 {
+.tpp-h3-large em {
   display: block;
-}
-.tpp-h3-line-2 {
   font-style: italic;
   background: linear-gradient(120deg, var(--tpp-rose) 0%, var(--tpp-crimson) 100%);
   -webkit-background-clip: text;
@@ -700,15 +697,6 @@ parent_stack_slug: 29355_Stacks_Pages
   -webkit-text-fill-color: transparent;
   padding: 4px 16px 8px 0;
   margin-top: 4px;
-}
-.tpp-h3-large em {
-  background: linear-gradient(120deg, var(--tpp-rose) 0%, var(--tpp-crimson) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
-  display: inline-block;
-  padding-right: 12px;
 }
 .tpp-h4 {
   font-family: var(--tpp-font-body);
@@ -1728,4 +1716,11 @@ parent_stack_slug: 29355_Stacks_Pages
   .tpp-btn-primary,
   .tpp-header-cta { animation: none !important; }
 }
-```
+</style>
+
+## Change log
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-05-08 | H3 layout fix: removed `.tpp-h3-line-1` and `.tpp-h3-line-2` rules, ported their visual properties to `.tpp-h3-large em` (now `display: block` for two-line layout) | JLW |
+| 2026-05-08 | Added `<style>` wrapper tags inline per module-config rule update | JLW |
