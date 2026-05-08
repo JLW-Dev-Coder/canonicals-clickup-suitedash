@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "description": "Mapping of CU page IDs to repo canonicals. Owner setup populates parent pages; cu-create populates instances.",
+  "last_updated": "2026-05-08",
+  "registry": {
+    "tax-prep-setup-root": {
+      "cu_page_id": "80djf-706797",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-706797",
+      "cu_parent_page_id": null,
+      "cu_page_name": "Item 29355 – Tax Prep Setup",
+      "type": "item-root",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-deal-branch": {
+      "cu_page_id": "80djf-699817",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-699817",
+      "cu_parent_page_id": "80djf-706797",
+      "cu_page_name": "Item 29355 – Tax Prep Setup – Deal",
+      "type": "branch",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-order-root": {
+      "cu_page_id": "80djf-702057",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-702057",
+      "cu_parent_page_id": "80djf-706797",
+      "cu_page_name": "Item 29355 – Tax Prep Setup – Order",
+      "type": "branch",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-deal-stacks": {
+      "cu_page_id": "80djf-701537",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701537",
+      "cu_parent_page_id": "80djf-699817",
+      "cu_page_name": "Item: 29355 – Stacks",
+      "type": "stacks-parent",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_Pages": {
+      "cu_page_id": "80djf-701517",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701517",
+      "cu_parent_page_id": "80djf-701537",
+      "cu_page_name": "29355_Stacks_Pages",
+      "type": "stack-parent",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_Pages_CSS": {
+      "cu_page_id": "80djf-701697",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701697",
+      "cu_parent_page_id": "80djf-701517",
+      "cu_page_name": "29355_Stacks_Pages_CSS",
+      "type": "stack-css",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_Pages_JS": {
+      "cu_page_id": "80djf-701717",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701717",
+      "cu_parent_page_id": "80djf-701517",
+      "cu_page_name": "29355_Stacks_Pages_JS",
+      "type": "stack-js",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-order-m021-lms": {
+      "cu_page_id": "80djf-701917",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701917",
+      "cu_parent_page_id": "80djf-702057",
+      "cu_page_name": "M021 LMS",
+      "type": "m021-lms",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-lms-1-course": {
+      "cu_page_id": "80djf-707897",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-707897",
+      "cu_parent_page_id": "80djf-701917",
+      "cu_page_name": "Item: 29355 – LMS 1 – Course",
+      "type": "course",
+      "sd_item_id": 29355,
+      "platform": "tpp",
+      "lms_number": 1
+    }
+  }
+}
