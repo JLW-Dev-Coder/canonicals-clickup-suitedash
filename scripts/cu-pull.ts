@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { findCanonicalPath, ITEMS_PATH } from './_lib/paths.ts';
 import { readCanonical, writeCanonical } from './_lib/frontmatter.ts';
 import { fetchPage } from './_lib/clickup-client.ts';
+import { stripCodeFence } from './_lib/module-types.ts';
 
 const slug = process.argv[2];
 if (!slug) { console.error('Usage: npm run sync:cu -- pull <slug>'); process.exit(1); }
@@ -18,5 +19,5 @@ if (frontmatter.cu_page_id.startsWith('REPLACE')) {
 }
 const page = await fetchPage(frontmatter.cu_page_id);
 frontmatter.last_synced = new Date().toISOString().split('T')[0];
-await writeCanonical(filepath, frontmatter, page.content);
+await writeCanonical(filepath, frontmatter, stripCodeFence(page.content));
 console.log(`✓ Pulled ${slug} from CU`);

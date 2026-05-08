@@ -15,7 +15,6 @@ status: draft
 landing_index: 1
 sd_page_path: 'secure.virtuallaunch.pro/i/{token}'
 ---
-```xml
 <div class="tpp-lp">
     <div class="tpp-cursor" aria-hidden="true">
         <div class="tpp-cursor-dot">
@@ -526,4 +525,3 @@ sd_page_path: 'secure.virtuallaunch.pro/i/{token}'
         </div>
     </div>
 </div>
-```

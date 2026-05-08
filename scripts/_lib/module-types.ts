@@ -20,6 +20,14 @@ export const FENCE_LANG_BY_MODULE_TYPE: Record<string, string> = {
   'm014-landing-pages': 'html',
 };
 
+export function stripCodeFence(s: string): string {
+  const opening = s.match(/^```[a-zA-Z0-9_-]*\r?\n/);
+  if (!opening) return s;
+  const closing = s.match(/\r?\n```\s*$/);
+  if (!closing) return s;
+  return s.slice(opening[0].length, s.length - closing[0].length);
+}
+
 export function moduleConfigPath(type: string): string {
   return resolve(MODULE_CONFIG_DIR, `${type}.md`);
 }
