@@ -7,8 +7,8 @@ cu_page_id: 80djf-708397
 cu_url: 'https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708397'
 cu_parent_page_id: 80djf-708257
 cu_path: >-
-  Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_LMS
-  > 29355_Stacks_LMS_Lesson_1.1_HTML
+  Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_LMS >
+  29355_Stacks_LMS_Lesson_1.1_HTML
 last_synced: '2026-05-08'
 last_editor: JLW
 status: live
