@@ -48,7 +48,7 @@
 | M011 | `m011-flows` | Flows | ⬜ | (not yet) |
 | M012 | `m012-forms` | Forms | ⬜ | (not yet) |
 | M013 | `m013-invoice-items` | Invoice Items | ⬜ | (not yet) |
-| M014 | `m014-landing-pages` | Landing Pages | ⬜ | (not yet) |
+| M014 | `m014-landing-pages` | Landing Pages | ✅ | [`module-config/m014-landing-pages.md`](module-config/m014-landing-pages.md) |
 | M015 | `m015-menus` | Menus | ⬜ | (not yet) |
 | M016 | `m016-platform-branding` | Platform Branding | ⬜ | (not yet) |
 | M017 | `m017-portal-pages` | Portal Pages | ⬜ | (not yet) |
@@ -80,3 +80,4 @@ When the module-config gets authored, run `npm run module-config:mark-authored -
 | Date | Change | Editor |
 |------|--------|--------|
 | 2026-05-08 | Initial inventory. 3 module-configs authored (stack-css, stack-js, course); 22 module types pending (M001–M021, Form). Bonus removed per Owner — client-facing doc, not RC-managed. | JLW |
+| 2026-05-08 | Authored `module-config/m014-landing-pages.md` for first instance (Landing Page 1 — Tax Prep Setup Explore_HTML, CU 80djf-701737). M014 flipped ⬜ → ✅. | JLW |
