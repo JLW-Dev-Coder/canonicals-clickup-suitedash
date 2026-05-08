@@ -13,7 +13,7 @@ const urlFor = (id: string) => `https://app.clickup.com/${workspace}/v/dc/${doc}
 
 interface Seed {
   slug: string;
-  module_type: string;
+  body_type: string;
   cu_page_id: string;
   cu_parent_page_id: string;
   cu_path: string;
@@ -24,7 +24,7 @@ interface Seed {
 const seeds: Seed[] = [
   {
     slug: '29355_Stacks_Pages_CSS',
-    module_type: 'stack-css',
+    body_type: 'stack-css',
     cu_page_id: '80djf-701697',
     cu_parent_page_id: '80djf-701517',
     cu_path: 'Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_Pages > 29355_Stacks_Pages_CSS',
@@ -33,7 +33,7 @@ const seeds: Seed[] = [
   },
   {
     slug: '29355_Stacks_Pages_JS',
-    module_type: 'stack-js',
+    body_type: 'stack-js',
     cu_page_id: '80djf-701717',
     cu_parent_page_id: '80djf-701517',
     cu_path: 'Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_Pages > 29355_Stacks_Pages_JS',
@@ -42,7 +42,7 @@ const seeds: Seed[] = [
   },
   {
     slug: 'lms-1-course',
-    module_type: 'course',
+    body_type: 'course',
     cu_page_id: '80djf-707897',
     cu_parent_page_id: '80djf-701917',
     cu_path: 'Item 29355 - Tax Prep Setup > Order > M021 LMS > Item: 29355 - LMS 1 - Course',
@@ -62,7 +62,7 @@ for (const s of seeds) {
 
   const fm: BaseFrontmatter = {
     slug: s.slug,
-    module_type: s.module_type,
+    body_type: s.body_type,
     sd_item_id: 29355,
     platform: 'tpp',
     cu_page_id: s.cu_page_id,

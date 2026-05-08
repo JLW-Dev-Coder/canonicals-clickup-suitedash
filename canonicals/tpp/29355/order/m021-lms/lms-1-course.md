@@ -1,6 +1,6 @@
 ---
 slug: lms-1-course
-module_type: course
+body_type: course
 sd_item_id: 29355
 platform: tpp
 cu_page_id: 80djf-707897

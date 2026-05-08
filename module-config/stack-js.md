@@ -12,7 +12,7 @@ JavaScript payload for a SuiteDash Stack. The repo file body wraps the JS in `<s
 ## Frontmatter additions
 
 ```yaml
-module_type: stack-js
+body_type: stack-js
 parent_stack_slug: {e.g. 29355_Stacks_Pages}
 sd_stack_uuid: {SD stack UUID}
 sd_stack_name: {SD's name for the stack}

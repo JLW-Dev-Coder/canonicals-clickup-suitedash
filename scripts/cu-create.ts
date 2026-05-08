@@ -106,7 +106,7 @@ cuPageName = normalizePageName(cuPageName);
 
 const platform = 'tpp';
 const repoPath = computeModulePath({
-  module_type: type,
+  body_type: type,
   platform,
   sd_item_id: sdItemId,
   parent_stack_slug: parentStackSlug,
@@ -147,7 +147,7 @@ console.log(`✓ CU page created: ${cuPage.id}`);
 
 const frontmatter: BaseFrontmatter = {
   slug,
-  module_type: type,
+  body_type: type,
   sd_item_id: sdItemId,
   platform,
   cu_page_id: cuPage.id,

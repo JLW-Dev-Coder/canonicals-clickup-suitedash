@@ -6,7 +6,7 @@ export type ModuleType = string;
 
 export interface BaseFrontmatter {
   slug: string;
-  module_type: ModuleType;
+  body_type: ModuleType;
   sd_item_id: number | null;
   platform: string;
   cu_page_id: string;
@@ -40,7 +40,7 @@ export function validateFrontmatter(fm: Partial<BaseFrontmatter>, slug: string):
   const errors: string[] = [];
   if (!fm.slug) errors.push('frontmatter.slug missing');
   if (fm.slug && fm.slug !== slug) errors.push(`frontmatter.slug (${fm.slug}) must match filename slug (${slug})`);
-  if (!fm.module_type) errors.push('frontmatter.module_type missing');
+  if (!fm.body_type) errors.push('frontmatter.body_type missing');
   if (fm.sd_item_id === undefined) errors.push('frontmatter.sd_item_id missing (use null for meta-inventory files)');
   if (!fm.platform) errors.push('frontmatter.platform missing');
   if (!fm.cu_page_id) errors.push('frontmatter.cu_page_id missing');

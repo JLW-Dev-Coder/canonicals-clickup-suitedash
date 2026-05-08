@@ -14,7 +14,7 @@ Styling is NOT inline. Landing-page HTML is styled by the brand's `Stacks_Pages_
 ## Frontmatter additions
 
 ```yaml
-module_type: m014-landing-pages
+body_type: m014-landing-pages
 landing_index: {N — the "Landing Page N" sequence number for this item}
 sd_page_token: {public token segment of the secure.virtuallaunch.pro/i/{token} URL, if known}
 sd_page_path: {SD Pages path that hosts this content}

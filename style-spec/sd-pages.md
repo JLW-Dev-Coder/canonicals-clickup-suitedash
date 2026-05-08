@@ -39,7 +39,7 @@ Owner splits Stacks into purpose-specific sibling files. The convention seen for
 
 **Edit rule:** CSS changes go to `29355_Stacks_Pages_CSS`. JS changes go to `29355_Stacks_Pages_JS`. **Never edit the container `29355_Stacks_All Pages_CSS_JS`** — its Styling Options just reference the siblings.
 
-In the canonicals repo, each Stack is a `module_type: stack-css` (or `stack-js`) markdown file under `canonicals/`. The body of that file is what gets pasted into the SD Custom CSS / Custom JS slot.
+In the canonicals repo, each Stack is a `body_type: stack-css` (or `stack-js`) markdown file under `canonicals/`. The body of that file is what gets pasted into the SD Custom CSS / Custom JS slot.
 
 ---
 
@@ -144,7 +144,7 @@ Before writing any CSS:
 - [ ] Confirm with Owner: is the change site-wide (Stack-CSS) or page-specific (per-page Custom CSS)?
 - [ ] Capture rendered DOM for the affected element. Static HTML/Page-Editor view alone won't show runtime classes.
 - [ ] Identify the canonical file: `Select-String` for the Stack name in `canonicals\`.
-- [ ] Confirm the file's frontmatter is `module_type: stack-css`.
+- [ ] Confirm the file's frontmatter is `body_type: stack-css`.
 - [ ] Read the full current body before editing.
 
 While writing CSS:

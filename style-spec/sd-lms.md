@@ -84,7 +84,7 @@ Before writing any CSS:
 
 - [ ] Confirm with Owner: which lesson is in scope? Confirm the `.lms-lesson-{N-N}` scope class.
 - [ ] Read the matching `_HTML` canonical to confirm the class hooks the body actually exposes.
-- [ ] Confirm the CSS canonical's frontmatter is `module_type: stack-css`.
+- [ ] Confirm the CSS canonical's frontmatter is `body_type: stack-css`.
 - [ ] Read the full current body before editing.
 
 While writing CSS:

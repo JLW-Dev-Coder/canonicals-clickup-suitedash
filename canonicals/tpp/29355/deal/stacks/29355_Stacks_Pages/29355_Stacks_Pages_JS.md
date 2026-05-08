@@ -1,6 +1,6 @@
 ---
 slug: 29355_Stacks_Pages_JS
-module_type: stack-js
+body_type: stack-js
 sd_item_id: 29355
 platform: tpp
 cu_page_id: 80djf-701717

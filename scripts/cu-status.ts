@@ -25,7 +25,7 @@ for await (const filepath of walk(CANONICALS_DIR)) {
   try {
     const { frontmatter } = await readCanonical(filepath);
     console.log(
-      `${(frontmatter.slug ?? '?').padEnd(45)} | ${(frontmatter.module_type ?? '?').padEnd(15)} | ${(frontmatter.status ?? '?').padEnd(10)} | ${frontmatter.last_synced ?? '?'}`
+      `${(frontmatter.slug ?? '?').padEnd(45)} | ${(frontmatter.body_type ?? '?').padEnd(15)} | ${(frontmatter.status ?? '?').padEnd(10)} | ${frontmatter.last_synced ?? '?'}`
     );
     count++;
   } catch (err) {
@@ -37,7 +37,7 @@ try {
   await stat(ITEMS_PATH);
   const { frontmatter } = await readCanonical(ITEMS_PATH);
   console.log(
-    `${(frontmatter.slug ?? 'ITEMS').padEnd(45)} | ${(frontmatter.module_type ?? '?').padEnd(15)} | ${(frontmatter.status ?? '?').padEnd(10)} | ${frontmatter.last_synced ?? '?'}`
+    `${(frontmatter.slug ?? 'ITEMS').padEnd(45)} | ${(frontmatter.body_type ?? '?').padEnd(15)} | ${(frontmatter.status ?? '?').padEnd(10)} | ${frontmatter.last_synced ?? '?'}`
   );
   count++;
 } catch {

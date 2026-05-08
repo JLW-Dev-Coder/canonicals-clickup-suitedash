@@ -28,7 +28,7 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
 7. Inventory B (`ITEMS.md`) syncs like any other repo file.
 8. **CU page titles use single dash (`-`), never em-dash (`–`).** Body content can use em-dashes.
 9. **Never commit a file containing `REPLACE_*` placeholders or empty stub bodies.** Files needing Owner IDs are created during setup with real values.
-10. **Stack body wrapper rule.** `module_type: stack-css` files have bodies wrapped in `<style>...</style>` tags as the first and last lines. `module_type: stack-js` files have bodies wrapped in `<script>...</script>` tags. The wrapper is part of the body, not added at paste-time.
+10. **Stack body wrapper rule.** `body_type: stack-css` files have bodies wrapped in `<style>...</style>` tags as the first and last lines. `body_type: stack-js` files have bodies wrapped in `<script>...</script>` tags. The wrapper is part of the body, not added at paste-time.
 11. **Autonomy: RC commits, pushes, and deploys without asking.** After completing any task that produces a commit-worthy change, RC:
     - Stages the changes
     - Writes a clear conventional-commit message (`feat:`, `fix:`, `chore:`, `docs:`, etc.)
@@ -62,7 +62,7 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
     - Author a style-spec for the surface first (treat like ask-on-first-use for module-configs)
     - Proceed without a spec (Owner explicitly authorizes; RC flags the work as a deviation in the file's change log)
     - Consult an existing spec under a different name
-    The CSS-generating commands this rule applies to: `Create Stack > CSS for item ...`, any direct edit to a `module_type: stack-css` file's body, any task whose deliverable is CSS targeting an SD surface.
+    The CSS-generating commands this rule applies to: `Create Stack > CSS for item ...`, any direct edit to a `body_type: stack-css` file's body, any task whose deliverable is CSS targeting an SD surface.
 
 ## Pre-task self-check (every time)
 

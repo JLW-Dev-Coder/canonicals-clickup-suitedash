@@ -1,6 +1,6 @@
 ---
 slug: ITEMS
-module_type: meta-inventory
+body_type: meta-inventory
 sd_item_id: null
 platform: meta
 cu_page_id: 80djf-708317

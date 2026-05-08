@@ -14,7 +14,7 @@ Lifted verbatim from the Zuri Training Videos project. Track-specific vocabulary
 
 ```yaml
 # Add these to the base canonical-cu-sd-sync.md §5 frontmatter:
-module_type: course
+body_type: course
 lms_number: {N}
 course_title: "{verbatim title}"
 parent_course_lms_number: {N | null}

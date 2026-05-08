@@ -1,6 +1,6 @@
 ---
 slug: 29355_Stacks_LMS_Lesson_1.1_HTML
-module_type: stack-html
+body_type: stack-html
 sd_item_id: 29355
 platform: tpp
 cu_page_id: 80djf-708397

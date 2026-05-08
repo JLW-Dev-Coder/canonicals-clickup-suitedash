@@ -1,6 +1,6 @@
 ---
 slug: landing-page-1
-module_type: m014-landing-pages
+body_type: m014-landing-pages
 sd_item_id: 29355
 platform: tpp
 cu_page_id: 80djf-701737

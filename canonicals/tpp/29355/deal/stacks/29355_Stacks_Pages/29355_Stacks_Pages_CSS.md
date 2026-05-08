@@ -1,6 +1,6 @@
 ---
 slug: 29355_Stacks_Pages_CSS
-module_type: stack-css
+body_type: stack-css
 sd_item_id: 29355
 platform: tpp
 cu_page_id: 80djf-701697

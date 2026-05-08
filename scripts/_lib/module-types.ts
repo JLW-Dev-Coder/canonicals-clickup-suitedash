@@ -14,7 +14,7 @@ export const REGISTERED_TYPES = [
 
 export type RegisteredType = typeof REGISTERED_TYPES[number];
 
-export const FENCE_LANG_BY_MODULE_TYPE: Record<string, string> = {
+export const FENCE_LANG_BY_BODY_TYPE: Record<string, string> = {
   'stack-css': 'css',
   'stack-js': 'javascript',
   'stack-html': 'html',

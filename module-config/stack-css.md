@@ -12,7 +12,7 @@ CSS payload for a SuiteDash Stack. The repo file body wraps the CSS in `<style>.
 ## Frontmatter additions
 
 ```yaml
-module_type: stack-css
+body_type: stack-css
 parent_stack_slug: {e.g. 29355_Stacks_Pages}
 sd_stack_uuid: {SD stack UUID — uuid query param from the stack editor URL}
 sd_stack_name: {SD's name for the stack}
