@@ -1,0 +1,63 @@
+{
+  "$schema": "Slug → CU page metadata. Owner populates parent IDs; RC adds child entries on create.",
+  "workspace_id": "8402511",
+  "doc_id": "80djf-83497",
+  "registry": {
+    "tax-prep-setup-root": {
+      "cu_page_id": "REPLACE_WITH_ROOT_PAGE_ID",
+      "cu_url": "REPLACE",
+      "type": "hierarchy-parent",
+      "description": "Root: Item 29355 – Tax Prep Setup (and future siblings)"
+    },
+    "29355-deal-stacks": {
+      "cu_page_id": "REPLACE_WITH_STACKS_PARENT_ID",
+      "cu_url": "REPLACE",
+      "type": "hierarchy-parent",
+      "description": "Item: 29355 – Stacks (parent for all 29355 stacks)",
+      "sd_item_id": 29355
+    },
+    "29355_Stacks_Pages": {
+      "cu_page_id": "80djf-701517",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701517",
+      "type": "stack-parent",
+      "description": "Parent for 29355_Stacks_Pages_CSS and _JS",
+      "sd_item_id": 29355
+    },
+    "29355_Stacks_Pages_CSS": {
+      "cu_page_id": "80djf-701697",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701697",
+      "type": "stack-css",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_Pages_JS": {
+      "cu_page_id": "REPLACE_WITH_JS_PAGE_ID",
+      "cu_url": "REPLACE",
+      "type": "stack-js",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-order-root": {
+      "cu_page_id": "REPLACE_WITH_ORDER_BRANCH_ROOT_PAGE_ID",
+      "cu_url": "REPLACE",
+      "type": "hierarchy-parent",
+      "description": "Item 29355 – Tax Prep Setup – Order (parent for all M-series modules)",
+      "sd_item_id": 29355
+    },
+    "29355-order-m021-lms": {
+      "cu_page_id": "REPLACE_WITH_M021_LMS_PAGE_ID",
+      "cu_url": "REPLACE",
+      "type": "hierarchy-parent",
+      "description": "M021 LMS — parent for all Course config docs under item 29355",
+      "sd_item_id": 29355
+    },
+    "29355-lms-1-course": {
+      "cu_page_id": "80djf-707897",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-707897",
+      "type": "course",
+      "sd_item_id": 29355,
+      "lms_number": 1,
+      "platform": "tpp"
+    }
+  }
+}

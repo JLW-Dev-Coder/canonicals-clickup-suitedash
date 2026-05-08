@@ -1,0 +1,70 @@
+import 'dotenv/config';
+
+const CU_API_BASE = 'https://api.clickup.com/api/v3';
+
+function getToken(): string {
+  const t = process.env.CLICKUP_API_TOKEN;
+  if (!t) throw new Error('CLICKUP_API_TOKEN env var not set. See .env.example.');
+  return t;
+}
+function getWorkspaceId(): string {
+  const id = process.env.CLICKUP_WORKSPACE_ID;
+  if (!id) throw new Error('CLICKUP_WORKSPACE_ID env var not set.');
+  return id;
+}
+function getDocId(): string {
+  const id = process.env.CLICKUP_TAX_PREP_DOC_ID;
+  if (!id) throw new Error('CLICKUP_TAX_PREP_DOC_ID env var not set.');
+  return id;
+}
+
+export interface CUPage {
+  id: string;
+  name: string;
+  content: string;
+  parent_page_id?: string;
+  date_updated: number;
+}
+
+export async function fetchPage(pageId: string): Promise<CUPage> {
+  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages/${pageId}`, {
+    headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
+  });
+  if (!res.ok) throw new Error(`CU fetch failed: ${res.status} ${res.statusText} — ${await res.text()}`);
+  return (await res.json()) as CUPage;
+}
+
+export async function updatePage(pageId: string, content: string, name?: string): Promise<void> {
+  const body: Record<string, unknown> = { content, content_format: 'text/md' };
+  if (name) body.name = name;
+  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages/${pageId}`, {
+    method: 'PUT',
+    headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`CU update failed: ${res.status} ${res.statusText} — ${await res.text()}`);
+}
+
+export async function createPage(params: { parent_page_id: string; name: string; content: string }): Promise<CUPage> {
+  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages`, {
+    method: 'POST',
+    headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      parent_page_id: params.parent_page_id,
+      name: params.name,
+      content: params.content,
+      content_format: 'text/md',
+    }),
+  });
+  if (!res.ok) throw new Error(`CU create failed: ${res.status} ${res.statusText} — ${await res.text()}`);
+  return (await res.json()) as CUPage;
+}
+
+export async function listChildPages(parentPageId: string): Promise<CUPage[]> {
+  const res = await fetch(
+    `${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages?parent_page_id=${parentPageId}`,
+    { headers: { Authorization: getToken(), 'Content-Type': 'application/json' } }
+  );
+  if (!res.ok) throw new Error(`CU list failed: ${res.status} ${res.statusText} — ${await res.text()}`);
+  return (await res.json()) as CUPage[];
+}
