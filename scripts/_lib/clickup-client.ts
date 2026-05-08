@@ -18,6 +18,13 @@ function getDocId(): string {
   return id;
 }
 
+/**
+ * Normalize a CU page name: em-dash → single dash. Body content keeps em-dashes.
+ */
+export function normalizePageName(name: string): string {
+  return name.replace(/–/g, '-').replace(/—/g, '-');
+}
+
 export interface CUPage {
   id: string;
   name: string;
@@ -36,7 +43,7 @@ export async function fetchPage(pageId: string): Promise<CUPage> {
 
 export async function updatePage(pageId: string, content: string, name?: string): Promise<void> {
   const body: Record<string, unknown> = { content, content_format: 'text/md' };
-  if (name) body.name = name;
+  if (name) body.name = normalizePageName(name);
   const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages/${pageId}`, {
     method: 'PUT',
     headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
@@ -51,7 +58,7 @@ export async function createPage(params: { parent_page_id: string; name: string;
     headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
     body: JSON.stringify({
       parent_page_id: params.parent_page_id,
-      name: params.name,
+      name: normalizePageName(params.name),
       content: params.content,
       content_format: 'text/md',
     }),

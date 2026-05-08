@@ -14,15 +14,19 @@ export const MODULES_PATH = resolve(REPO_ROOT, 'MODULES.md');
 export const ITEMS_PATH = resolve(REPO_ROOT, 'ITEMS.md');
 
 export async function findCanonicalPath(slug: string, dir: string = CANONICALS_DIR): Promise<string | null> {
-  const entries = await readdir(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const full = resolve(dir, entry.name);
-    if (entry.isDirectory()) {
-      const found = await findCanonicalPath(slug, full);
-      if (found) return found;
-    } else if (entry.isFile() && entry.name === `${slug}.md`) {
-      return full;
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const full = resolve(dir, entry.name);
+      if (entry.isDirectory()) {
+        const found = await findCanonicalPath(slug, full);
+        if (found) return found;
+      } else if (entry.isFile() && entry.name === `${slug}.md`) {
+        return full;
+      }
     }
+  } catch {
+    // canonicals dir may not exist yet — that's fine pre-setup
   }
   return null;
 }

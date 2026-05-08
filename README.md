@@ -15,38 +15,45 @@ The Owner issues short commands like:
 RC (Execution Engineer / Claude Code) runs `npm run cu:create -- <type> <item-id> <name>`. The script:
 1. Checks `MODULES.md` for a configuration entry for that type
 2. If a `module-config/{type}.md` exists, looks up the parent CU page in `_meta/cu-page-registry.json`
-3. Creates the new CU page via the ClickUp v3 API
+3. Creates the new CU page via the ClickUp v3 API (page title uses single dash `-`, never em-dash `–`)
 4. Writes a 1:1 repo file mirror with the new page ID in frontmatter
 5. Pushes the body to the CU page
 6. Updates the registry and `ITEMS.md`
 
-If no module-config exists for the requested type, the script halts with `MODULE-CONFIG MISSING` and asks Owner for the SD modal field list. RC authors `module-config/{type}.md`, runs `npm run module-config:mark-authored -- <type>`, and re-runs the original create command.
+If no module-config exists, the script halts with `MODULE-CONFIG MISSING` and asks Owner for the SD modal field list. RC authors `module-config/{type}.md`, runs `npm run module-config:mark-authored -- <type>`, and re-runs the original create command.
 
 CU is the reading surface. The repo is the source of truth.
+
+## Conventions
+
+- **CU page titles:** single dash (`-`) only. Em-dash (`–`) is rejected by the CU API title field.
+- **Body content:** em-dash is fine. Use whichever reads better in markdown.
+- **No placeholders in committed files.** See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Inventories
 
 - [`MODULES.md`](MODULES.md) — Inventory A: which module types have configurations authored
-- [`ITEMS.md`](ITEMS.md) — Inventory B: which modules each item has instantiated
+- [`ITEMS.md`](ITEMS.md) — Inventory B: which modules each item has instantiated (created during Owner setup)
 
 ## Folder structure
 
 ```
 canonicals-clickup-suitedash/
 ├── README.md
-├── MODULES.md                     ← Inventory A (repo-only)
-├── ITEMS.md                       ← Inventory B (repo + CU mirror)
+├── CONTRIBUTING.md
+├── MODULES.md
+├── ITEMS.md                       ← created during Owner setup (PART 10)
 ├── package.json
 ├── tsconfig.json
 ├── .gitignore
 ├── .env.example
 ├── .claude/
-│   └── CLAUDE.md                  ← RC's working context
-├── module-config/                 ← Per-module-type SD modal configurations
+│   └── CLAUDE.md
+├── module-config/
 │   ├── course.md
 │   ├── stack-css.md
 │   └── stack-js.md
-├── scripts/                       ← Sync + create scripts
+├── scripts/
 │   ├── cu-create.ts
 │   ├── cu-pull.ts
 │   ├── cu-push.ts
@@ -59,16 +66,10 @@ canonicals-clickup-suitedash/
 │       ├── mark-authored.ts
 │       ├── module-types.ts
 │       └── paths.ts
-├── canonicals/                    ← Per-item authored module instances
-│   └── tpp/
-│       └── 29355/
-│           ├── deal/stacks/29355_Stacks_Pages/
-│           │   ├── 29355_Stacks_Pages_CSS.md
-│           │   └── 29355_Stacks_Pages_JS.md
-│           └── order/m021-lms/
-│               └── lms-1-course.md
-└── _meta/
-    └── cu-page-registry.json
+├── canonicals/                    ← seed instances created during Owner setup
+│   └── .gitkeep
+└── _meta/                         ← registry created during Owner setup
+    └── .gitkeep
 ```
 
 ## Workflow
@@ -82,7 +83,7 @@ Owner says: `Create [TYPE] for item [ID]: "[NAME]"`. RC runs `npm run cu:create`
 If RC reports `MODULE-CONFIG MISSING`:
 
 1. Owner describes (or screenshots) the SD modal for that module type
-2. RC authors `module-config/{type}.md` based on the description
+2. RC authors `module-config/{type}.md`
 3. Run `npm run module-config:mark-authored -- {type}` to flip MODULES.md to ✅
 4. Re-run the original `Create [TYPE]` command
 
@@ -103,11 +104,13 @@ If RC reports `MODULE-CONFIG MISSING`:
 
 ## Setup (first time)
 
+See PART 10 of the scaffold RC prompt. Summary:
 1. `npm install`
-2. `cp .env.example .env`, fill in `CLICKUP_API_TOKEN`, `CLICKUP_WORKSPACE_ID`, `CLICKUP_TAX_PREP_DOC_ID`
-3. Owner: populate `_meta/cu-page-registry.json` REPLACE entries
-4. Owner: fill `cu_page_id` in `ITEMS.md` frontmatter
-5. Verify: `npm run sync:cu -- status`
+2. `cp .env.example .env`, fill in tokens
+3. Gather CU parent page IDs from CU URLs
+4. Create `_meta/cu-page-registry.json`, `ITEMS.md`, and seed canonicals using the bodies provided in the scaffold prompt with real IDs filled in
+5. `npm run sync:cu -- pull` for each seed canonical to fetch live bodies from CU
+6. Commit
 
 ## Commands
 

@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { REGISTRY_PATH, computeModulePath } from './_lib/paths.ts';
 import { writeCanonical, type BaseFrontmatter } from './_lib/frontmatter.ts';
 import { moduleConfigExists, readModuleConfig, fillTemplate, REGISTERED_TYPES } from './_lib/module-types.ts';
-import { createPage, listChildPages } from './_lib/clickup-client.ts';
+import { createPage, listChildPages, normalizePageName } from './_lib/clickup-client.ts';
 import { addItemInventoryRow } from './_lib/inventories.ts';
 import matter from 'gray-matter';
 
@@ -74,14 +74,16 @@ if (type === 'stack-css' || type === 'stack-js') {
     process.exit(1);
   }
   parentPageId = m021.cu_page_id;
-  console.log('Fetching existing LMS courses to compute next number...');
+  console.log('Computing next LMS number from existing children...');
   const children = await listChildPages(parentPageId);
+  // Match both em-dash and single-dash forms in existing CU page names
   const numbers = children
-    .map(c => c.name.match(/LMS\s+(\d+)\s+–\s+Course/i))
+    .map(c => c.name.match(/LMS\s+(\d+)\s+[–-]\s+Course/i))
     .filter((m): m is RegExpMatchArray => m !== null)
     .map(m => parseInt(m[1], 10));
   lmsNumber = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
-  cuPageName = `Item: ${sdItemId} – LMS ${lmsNumber} – Course`;
+  // Single dash for new page names per CU API rule
+  cuPageName = `Item: ${sdItemId} - LMS ${lmsNumber} - Course`;
 } else if (type.match(/^m\d{3}-/)) {
   const orderRoot = registry.registry[`${sdItemId}-order-root`];
   if (!orderRoot || orderRoot.cu_page_id.startsWith('REPLACE')) {
@@ -98,6 +100,9 @@ if (type === 'stack-css' || type === 'stack-js') {
   console.error(`No create handler for type: ${type}`);
   process.exit(1);
 }
+
+// Belt-and-suspenders: normalize the page name even though the helpers also do it
+cuPageName = normalizePageName(cuPageName);
 
 const platform = 'tpp';
 const repoPath = computeModulePath({
