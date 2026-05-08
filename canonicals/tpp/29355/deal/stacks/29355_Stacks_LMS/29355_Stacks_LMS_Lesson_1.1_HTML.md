@@ -28,7 +28,7 @@ parent_stack_slug: 29355_Stacks_LMS
   </div>
 
   <div class="lms-block lms-block-text">
-    <p>Welcome. Watch the short intro above, then continue to the next lesson where Zuri explains the order metaphor that frames the rest of this course.</p>
+    <p><span class="lms-lead">Welcome.</span> Watch the short intro above, then continue to the next lesson where <em class="lms-highlight">Zuri</em> explains the <em class="lms-emphasis">order metaphor</em> that frames the rest of this course.</p>
   </div>
 
   <div class="lms-block lms-block-button lms-block-button-support">
@@ -48,3 +48,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 — Meet Zuri. Video, intro text, support-call button, separator, continue-to-1.2 button. | JLW |
+| 2026-05-08 | Added text-styling hooks: `.lms-lead` on "Welcome.", `.lms-highlight` on "Zuri", `.lms-emphasis` on "order metaphor". Content unchanged. | JLW |

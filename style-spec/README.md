@@ -20,6 +20,7 @@ These docs capture:
 |---|---|---|---|
 | `sd-admin-dashboards` | Admin/portal dashboard at `/dashboard` (Angular widget canvas) | ✅ | [`sd-admin-dashboards.md`](sd-admin-dashboards.md) |
 | `sd-pages` | SD Pages at `secure.virtuallaunch.pro/i/{token}` (Page Editor + Stack-triad convention) | ✅ | [`sd-pages.md`](sd-pages.md) |
+| `sd-lms` | SD LMS Lesson body at `/lms/p/lesson/view/{id}` (per-lesson `.lms-lesson-{N-N}` scope) | ✅ | [`sd-lms.md`](sd-lms.md) |
 
 ## How RC uses these
 
@@ -56,3 +57,4 @@ RC never generates CSS for a covered surface without consulting the spec.
 |------|--------|--------|
 | 2026-05-08 | Initial index. Imported `sd-admin-dashboards.md`. | JLW |
 | 2026-05-08 | Added `sd-pages` spec. | JLW |
+| 2026-05-08 | Added `sd-lms` spec. | JLW |
