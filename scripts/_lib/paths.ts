@@ -42,11 +42,11 @@ export function computeModulePath(params: {
   const { module_type, platform, sd_item_id } = params;
   const itemRoot = resolve(CANONICALS_DIR, platform, String(sd_item_id));
 
-  if (module_type === 'stack-css' || module_type === 'stack-js') {
+  if (module_type === 'stack-css' || module_type === 'stack-js' || module_type === 'stack-html') {
     if (!params.parent_stack_slug) {
       throw new Error(`parent_stack_slug required for module_type=${module_type}`);
     }
-    const suffix = module_type === 'stack-css' ? 'CSS' : 'JS';
+    const suffix = module_type === 'stack-css' ? 'CSS' : module_type === 'stack-js' ? 'JS' : 'HTML';
     return resolve(itemRoot, 'deal', 'stacks', params.parent_stack_slug, `${params.parent_stack_slug}_${suffix}.md`);
   }
 

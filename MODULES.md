@@ -56,6 +56,7 @@
 | M019 | `m019-proposals` | Proposals | ⬜ | (not yet) |
 | M020 | `m020-tasks` | Tasks | ⬜ | (not yet) |
 | M021 | `m021-lms` | LMS (parent shell) | ⬜ | (not yet) |
+| M022 | `m022-stacks` | Stacks | ⬜ | (not yet) |
 
 ## Standalone module types
 
@@ -81,3 +82,4 @@ When the module-config gets authored, run `npm run module-config:mark-authored -
 |------|--------|--------|
 | 2026-05-08 | Initial inventory. 3 module-configs authored (stack-css, stack-js, course); 22 module types pending (M001–M021, Form). Bonus removed per Owner — client-facing doc, not RC-managed. | JLW |
 | 2026-05-08 | Authored `module-config/m014-landing-pages.md` for first instance (Landing Page 1 — Tax Prep Setup Explore_HTML, CU 80djf-701737). M014 flipped ⬜ → ✅. | JLW |
+| 2026-05-08 | Added M022 Stacks row (m022-stacks) for the SuiteDash Stacks module branch. Status ⬜ — module-config not yet authored. Triggered by 29355_Stacks_LMS_Lesson_1.1 triad authoring. | JLW |

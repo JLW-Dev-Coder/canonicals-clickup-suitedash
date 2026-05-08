@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { MODULE_CONFIG_DIR } from './paths.ts';
 
 export const REGISTERED_TYPES = [
-  'stack-css', 'stack-js', 'course',
+  'stack-css', 'stack-js', 'stack-html', 'course',
   'm001-appointments', 'm002-auto-templates', 'm003-business-sectors', 'm004-circles',
   'm005-content-categories', 'm006-custom-fields', 'm007-dashes', 'm008-document-generators',
   'm009-drip-sequences', 'm010-marketing-audience', 'm011-flows', 'm012-forms',
@@ -17,6 +17,7 @@ export type RegisteredType = typeof REGISTERED_TYPES[number];
 export const FENCE_LANG_BY_MODULE_TYPE: Record<string, string> = {
   'stack-css': 'css',
   'stack-js': 'javascript',
+  'stack-html': 'html',
   'm014-landing-pages': 'html',
 };
 
