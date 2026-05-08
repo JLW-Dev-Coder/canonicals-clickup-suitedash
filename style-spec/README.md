@@ -19,6 +19,7 @@ These docs capture:
 | Spec ID | SD surface | Status | Doc |
 |---|---|---|---|
 | `sd-admin-dashboards` | Admin/portal dashboard at `/dashboard` (Angular widget canvas) | ✅ | [`sd-admin-dashboards.md`](sd-admin-dashboards.md) |
+| `sd-pages` | SD Pages at `secure.virtuallaunch.pro/i/{token}` (Page Editor + Stack-triad convention) | ✅ | [`sd-pages.md`](sd-pages.md) |
 
 ## How RC uses these
 
@@ -54,3 +55,4 @@ RC never generates CSS for a covered surface without consulting the spec.
 | Date | Change | Editor |
 |------|--------|--------|
 | 2026-05-08 | Initial index. Imported `sd-admin-dashboards.md`. | JLW |
+| 2026-05-08 | Added `sd-pages` spec. | JLW |

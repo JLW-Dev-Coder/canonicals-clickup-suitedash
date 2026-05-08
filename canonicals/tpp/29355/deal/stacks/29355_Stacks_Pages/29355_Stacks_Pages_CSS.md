@@ -686,6 +686,7 @@ parent_stack_slug: 29355_Stacks_Pages
   margin: 0 0 18px;
   line-height: 1.08;
   letter-spacing: -0.5px;
+  text-wrap: balance;
   padding: 4px 0 8px 0;
 }
 .tpp-h3-large em {
@@ -1724,3 +1725,4 @@ parent_stack_slug: 29355_Stacks_Pages
 |------|--------|--------|
 | 2026-05-08 | H3 layout fix: removed `.tpp-h3-line-1` and `.tpp-h3-line-2` rules, ported their visual properties to `.tpp-h3-large em` (now `display: block` for two-line layout) | JLW |
 | 2026-05-08 | Added `<style>` wrapper tags inline per module-config rule update | JLW |
+| 2026-05-08 | Added `text-wrap: balance` to `.tpp-h3-large` to prevent the "Want a landing page like / this" three-line wrap on the booking section headline. Spec: `style-spec/sd-pages.md`. | JLW |
