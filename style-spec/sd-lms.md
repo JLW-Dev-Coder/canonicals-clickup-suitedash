@@ -49,6 +49,33 @@ Inline elements:
 
 ---
 
+## 2a. Course-level body slot
+
+In addition to per-lesson triads, the LMS surface has one course-level CSS body:
+
+- `29355_Stacks_LMS_Course_CSS` — sibling to lesson triads under the same `parent_stack_slug: 29355_Stacks_LMS`. Pasted into **LMS → Course Meta → Custom CSS** (not a per-lesson field). Applies to every lesson in the course.
+
+Use the course-level slot for SD chrome that's shared across lessons (sidebar nav, navbar). Use per-lesson slots for body content scoped to `.lms-lesson-{N-N}`.
+
+## 2b. Sidebar class inventory (SD-owned, restyled by us)
+
+These selectors are SD-owned chrome — we don't author the HTML, we restyle it:
+
+- `.panel-preview__sidebar` — sidebar root
+- `.panel-preview__sidebar .navbar-header` — logo strip
+- `.modules.side-menu` — module list root
+- `.module-item` — module row
+- `.module-title` — module label (collapsible)
+- `.module-title.collapsed` — module collapsed state
+- `.lessons` — lesson list (nested under module)
+- `.lessons.show` — expanded lesson list
+- `.lesson-item` — individual lesson row
+- `.lesson-item.active` — current lesson
+- `.fa-chevron-up` (inside `.module-title`) — expand/collapse caret
+- `.fa-circle` (inside `.lesson-item a`) — lesson status dot
+
+---
+
 ## 3. Visual direction
 
 Match the Tax Prep Pro landing page aesthetic (see `apps/tcvlp` or the public taxprep page). Rose/pink gradient primary CTAs (`#e91e63 → #c2185b`), pill-shaped buttons, rounded corners (12px–16px on cards, 999px on buttons), generous whitespace, soft pink-tinted shadows.
@@ -120,3 +147,4 @@ When you discover a new block type, a new class hook, a new SD chrome selector t
 | Date | Change | Editor |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 (Meet Zuri) drives first-pass spec. Visual direction lifted from TPP landing page. | JLW |
+| 2026-05-08 | Added course-level body slot (29355_Stacks_LMS_Course_CSS) and sidebar class inventory. | JLW |

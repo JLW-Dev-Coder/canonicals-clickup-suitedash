@@ -24,7 +24,7 @@ parent_stack_slug: 29355_Stacks_LMS
 .lms-lesson-1-1 {
   max-width: 760px;
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 56px 0 32px;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -32,9 +32,12 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .lms-lesson-1-1 .lms-block-video {
   margin-bottom: 28px;
+  display: flex;
+  justify-content: center;
 }
 
 .lms-lesson-1-1 .lms-video-wrap {
+  width: min(320px, 100%);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(180, 30, 60, 0.08);
@@ -46,7 +49,7 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .lms-lesson-1-1 .lms-video-wrap .embed-content {
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 177.78%;
   height: 0;
   background: #1a1a1a;
 }
@@ -167,3 +170,4 @@ parent_stack_slug: 29355_Stacks_LMS
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 — Meet Zuri. Empty scaffold; styling rules deferred. | JLW |
 | 2026-05-08 | Initial CSS authoring. Rose-gradient pill buttons, centered layout, .lms-lead / .lms-highlight / .lms-emphasis text accents. Scoped to .lms-lesson-1-1. Visual direction matches TPP landing page. | JLW |
+| 2026-05-08 | Added top spacing (56px) to lesson wrapper. Resized video block to 9:16 (YouTube Shorts), responsive width min(320px, 100%), centered. | JLW |
