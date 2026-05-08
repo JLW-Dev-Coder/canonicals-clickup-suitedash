@@ -42,6 +42,11 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
     - A `cu_page_id` would be set to a placeholder
     - A canonical body still contains unfilled `{TODO}` markers from a module-config template
     - A user-visible CU/SD payload would be deployed before Owner has confirmed copy/visual choices
+12. **Style-spec consultation for CSS work.** Before generating CSS for any SD surface, RC checks `style-spec/` for a doc covering that surface (per `style-spec/README.md`). If a spec exists, RC reads it and follows it. If no spec exists, RC stops and asks Owner whether to:
+    - Author a style-spec for the surface first (treat like ask-on-first-use for module-configs)
+    - Proceed without a spec (Owner explicitly authorizes; RC flags the work as a deviation in the file's change log)
+    - Consult an existing spec under a different name
+    The CSS-generating commands this rule applies to: `Create Stack > CSS for item ...`, any direct edit to a `module_type: stack-css` file's body, any task whose deliverable is CSS targeting an SD surface.
 
 ## Pre-task self-check (every time)
 
@@ -49,6 +54,7 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
 2. Read the relevant section of `canonical-cu-sd-sync.md`.
 3. Verify `.env` has `CLICKUP_API_TOKEN`, `CLICKUP_WORKSPACE_ID`, `CLICKUP_TAX_PREP_DOC_ID`.
 4. For create: verify the parent CU page exists in `_meta/cu-page-registry.json` with a real (non-placeholder) value.
+5. For CSS-generating tasks: confirm the relevant style-spec exists at `style-spec/{spec-id}.md` and read it before authoring CSS (rule 12).
 
 ## Reporting
 

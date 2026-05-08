@@ -35,6 +35,12 @@ CU is the reading surface. The repo is the source of truth.
 - [`MODULES.md`](MODULES.md) — Inventory A: which module types have configurations authored
 - [`ITEMS.md`](ITEMS.md) — Inventory B: which modules each item has instantiated (created during Owner setup)
 
+## Style specifications
+
+[`style-spec/`](style-spec/) holds reference docs for styling SuiteDash surfaces — repo-only, never pushed to CU. RC reads these before generating CSS for any SD surface a doc covers. See [`style-spec/README.md`](style-spec/README.md) for the index and current coverage.
+
+Per `.claude/CLAUDE.md` rule 12, CSS-generating tasks check `style-spec/` first. If no spec exists for the target surface, RC asks Owner whether to author one before proceeding.
+
 ## Folder structure
 
 ```
@@ -49,10 +55,13 @@ canonicals-clickup-suitedash/
 ├── .env.example
 ├── .claude/
 │   └── CLAUDE.md
-├── module-config/
+├── module-config/                 ← Per-module-type SD modal configurations
 │   ├── course.md
 │   ├── stack-css.md
 │   └── stack-js.md
+├── style-spec/                    ← SD-surface styling reference docs (repo-only)
+│   ├── README.md
+│   └── sd-admin-dashboards.md
 ├── scripts/
 │   ├── cu-create.ts
 │   ├── cu-pull.ts

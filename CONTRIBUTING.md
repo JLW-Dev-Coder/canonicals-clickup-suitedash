@@ -7,6 +7,7 @@
 3. **Append-only change logs.** Every canonical file has a `## Change log` section at the bottom. Modifying a file requires appending a new row. Never rewrite or delete prior rows.
 4. **No drive-by edits.** Each commit addresses one logical change. If you notice a problem outside the scope of your current task, open it as a separate issue or commit.
 5. **Owner approves all module-config additions.** When `Create [TYPE]` triggers ask-on-first-use, the resulting `module-config/{type}.md` is reviewed by Owner before committing.
+6. **`style-spec/` is repo-only.** Files under `style-spec/` are RC's working reference, never pushed to CU. They have no `cu_page_id` frontmatter and never appear in `_meta/cu-page-registry.json`. The `cu-status` and `sync:cu` scripts ignore this folder.
 
 ## File creation rules
 
