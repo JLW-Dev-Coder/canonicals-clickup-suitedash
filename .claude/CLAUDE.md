@@ -44,11 +44,20 @@ If MODULES.md shows ⬜ for that type, the script halts with `MODULE-CONFIG MISS
     - A user-visible CU/SD payload would be deployed before Owner has confirmed copy/visual choices
 
     After `git push origin main` succeeds, if any committed file is a CU-mapped
-    canonical (i.e. has a `cu_page_id` in its frontmatter), RC also runs
-    `npm run sync:cu` to refresh the matching CU page(s). If `sync:cu` fails,
-    RC reports the failure but does NOT roll back the git commit — the repo
-    is the source of truth and the CU drift can be re-synced later. RC notes
-    in the report which CU pages were updated and which (if any) were skipped.
+    canonical (i.e. has a `cu_page_id` in its frontmatter), RC pushes those
+    files to CU using:
+
+    - Single CU-mapped file: `npm run sync:cu -- push <slug>`
+    - Multiple CU-mapped files: invoke `npm run sync:cu -- push <slug>` once
+      per slug (the router has no batch/glob/`--all` form; see
+      `scripts/cu-router.ts` and `scripts/cu-push.ts`)
+    - To check which files are CU-mapped before pushing: `npm run sync:cu -- status`
+      (walks `canonicals/` + `ITEMS.md`, prints slug/type/status/last_synced)
+
+    If `sync:cu` fails for any file, RC reports the failure but does NOT roll
+    back the git commit — the repo is the source of truth and CU drift can
+    be re-synced later. RC notes in the report which CU pages were updated
+    and which (if any) were skipped or failed.
 12. **Style-spec consultation for CSS work.** Before generating CSS for any SD surface, RC checks `style-spec/` for a doc covering that surface (per `style-spec/README.md`). If a spec exists, RC reads it and follows it. If no spec exists, RC stops and asks Owner whether to:
     - Author a style-spec for the surface first (treat like ask-on-first-use for module-configs)
     - Proceed without a spec (Owner explicitly authorizes; RC flags the work as a deviation in the file's change log)

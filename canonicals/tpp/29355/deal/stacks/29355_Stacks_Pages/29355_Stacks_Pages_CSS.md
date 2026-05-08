@@ -89,7 +89,7 @@ parent_stack_slug: 29355_Stacks_Pages
 .tpp-lp a div { text-decoration: none !important; border-bottom: 0 !important; }
 .tpp-lp img { max-width: 100%; display: block; }
 .tpp-wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-.tpp-narrow { max-width: 760px; }
+.tpp-narrow { max-width: 880px; }
 
 /* Header */
 .tpp-header {
@@ -1726,3 +1726,4 @@ parent_stack_slug: 29355_Stacks_Pages
 | 2026-05-08 | H3 layout fix: removed `.tpp-h3-line-1` and `.tpp-h3-line-2` rules, ported their visual properties to `.tpp-h3-large em` (now `display: block` for two-line layout) | JLW |
 | 2026-05-08 | Added `<style>` wrapper tags inline per module-config rule update | JLW |
 | 2026-05-08 | Added `text-wrap: balance` to `.tpp-h3-large` to prevent the "Want a landing page like / this" three-line wrap on the booking section headline. Spec: `style-spec/sd-pages.md`. | JLW |
+| 2026-05-08 | Widened `.tpp-narrow` from `max-width: 760px` to `880px` so "Want a landing page like this" fits on one line at the form-card headline (54px clamp). Pairs with the `text-wrap: balance` from cb24cd0 (kept as fallback). `.tpp-narrow` is the form section's wrap; only declared/used here. Spec: `style-spec/sd-pages.md`. | JLW |
