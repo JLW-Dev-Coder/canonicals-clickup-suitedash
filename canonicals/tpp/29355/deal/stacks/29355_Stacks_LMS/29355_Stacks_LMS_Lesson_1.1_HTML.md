@@ -49,3 +49,4 @@ parent_stack_slug: 29355_Stacks_LMS
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 — Meet Zuri. Video, intro text, support-call button, separator, continue-to-1.2 button. | JLW |
 | 2026-05-08 | Added text-styling hooks: `.lms-lead` on "Welcome.", `.lms-highlight` on "Zuri", `.lms-emphasis` on "order metaphor". Content unchanged. | JLW |
+| 2026-05-08 | No content changes. Per-lesson CSS/JS bodies were retired in favor of course-level pattern. This HTML now relies on `29355_Stacks_LMS_Course_CSS` and `29355_Stacks_LMS_Course_JS` for styling and behavior. | JLW |

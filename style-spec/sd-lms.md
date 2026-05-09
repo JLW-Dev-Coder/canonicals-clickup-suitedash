@@ -10,7 +10,17 @@ repo_only: true
 
 **Audience:** RC (or any future Claude instance) picking up SuiteDash **LMS Lesson** styling work — the lesson body content rendered inside the LMS course player. This is a different surface from SD Pages (`sd-pages.md`) and the in-shell admin dashboard (`sd-admin-dashboards.md`).
 
-**Purpose:** Establish the surface boundary, the per-lesson scoping convention, the class hooks lessons must wrap, and the workflow for authoring lesson HTML + CSS triads.
+**Purpose:** Establish the surface boundary, the per-lesson scoping convention, the class hooks lessons must wrap, and the workflow for authoring lesson HTML alongside one course-level CSS + one course-level JS.
+
+## Pattern: course-level CSS/JS + per-lesson HTML
+
+Each LMS course has:
+
+- **One** `_Course_CSS` body — pasted into **LMS → Course Meta → Custom CSS**. Holds all styling for SD chrome (sidebar, navbar) and every lesson body. Per-lesson `.lms-lesson-{N-N}` scopes still exist; they live inside this single course-level stylesheet.
+- **One** `_Course_JS` body — pasted into **LMS → Course Meta → Custom JS**. Holds all behavior shared across lessons (e.g. next-lesson resolver).
+- **Per-lesson** `_Lesson_{N.N}_HTML` bodies — one per lesson, pasted into each lesson's body field.
+
+Per-lesson Custom CSS and Custom JS fields are **not used**. This is deliberate: a single paste-target for shared chrome, less duplication, simpler authoring.
 
 ---
 
@@ -49,13 +59,14 @@ Inline elements:
 
 ---
 
-## 2a. Course-level body slot
+## 2a. Course-level body slots
 
-In addition to per-lesson triads, the LMS surface has one course-level CSS body:
+The LMS surface has two course-level bodies, both siblings to per-lesson HTML files under the same `parent_stack_slug: 29355_Stacks_LMS`:
 
-- `29355_Stacks_LMS_Course_CSS` — sibling to lesson triads under the same `parent_stack_slug: 29355_Stacks_LMS`. Pasted into **LMS → Course Meta → Custom CSS** (not a per-lesson field). Applies to every lesson in the course.
+- `29355_Stacks_LMS_Course_CSS` — pasted into **LMS → Course Meta → Custom CSS**. Applies to every lesson in the course. Holds SD chrome styling (sidebar, navbar) **and** all per-lesson body styling scoped by `.lms-lesson-{N-N}`.
+- `29355_Stacks_LMS_Course_JS` — pasted into **LMS → Course Meta → Custom JS**. Applies to every lesson in the course. Holds behavior shared across lessons (e.g. next-lesson resolver).
 
-Use the course-level slot for SD chrome that's shared across lessons (sidebar nav, navbar). Use per-lesson slots for body content scoped to `.lms-lesson-{N-N}`.
+Per-lesson Custom CSS / Custom JS fields are **not used**. All CSS and JS for the course lives in the two course-level slots.
 
 ## 2b. Sidebar class inventory (SD-owned, restyled by us)
 
@@ -92,16 +103,23 @@ Match the Tax Prep Pro landing page aesthetic (see `apps/tcvlp` or the public ta
 
 ---
 
-## 5. Where the CSS goes
+## 5. Where the CSS and JS go
 
-CSS edits for an LMS lesson go to the lesson's matching `_CSS` canonical (e.g. `29355_Stacks_LMS_Lesson_1.1_CSS`). Each lesson is an HTML/CSS sibling pair under `canonicals/.../29355_Stacks_LMS/`. Workflow:
+Two SD paste-targets, both under **LMS → Course Meta**:
 
-1. Identify the canonical CSS file for the lesson
-2. Edit the body (everything between `<style>` and `</style>`)
+- **LMS → Course Meta → Custom CSS** ← body of `29355_Stacks_LMS_Course_CSS`
+- **LMS → Course Meta → Custom JS** ← body of `29355_Stacks_LMS_Course_JS`
+
+Per-lesson Custom CSS / Custom JS fields are not used.
+
+Workflow for a CSS or JS edit:
+
+1. Identify the course-level canonical (`_Course_CSS` or `_Course_JS`)
+2. Edit the body (everything between `<style>...</style>` for CSS, `<script>...</script>` for JS)
 3. Commit
-4. Push via `npm run sync:cu -- push <slug>` so the body lands in the matching CU page
+4. Push via `npm run sync:cu -- push <slug>` so the body lands in the matching CU page; Owner then re-pastes it into the SD course meta field
 
-**Do not** edit the theme-level Custom CSS or any SD chrome stylesheet from a lesson task. SD owns the chrome.
+**Do not** edit the theme-level Custom CSS or any SD chrome stylesheet from a course task — restyle SD chrome from inside the course-level CSS instead.
 
 ---
 
@@ -148,3 +166,4 @@ When you discover a new block type, a new class hook, a new SD chrome selector t
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Lesson 1.1 (Meet Zuri) drives first-pass spec. Visual direction lifted from TPP landing page. | JLW |
 | 2026-05-08 | Added course-level body slot (29355_Stacks_LMS_Course_CSS) and sidebar class inventory. | JLW |
+| 2026-05-08 | Pivoted to course-level pattern: per-lesson HTML only, single course-level CSS + JS. Removed per-lesson CSS/JS body slots from the documented pattern. | JLW |

@@ -84,30 +84,21 @@
       "sd_item_id": 29355,
       "platform": "tpp"
     },
-    "29355_Stacks_LMS_Lesson_1.1_CSS": {
-      "cu_page_id": "80djf-708417",
-      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708417",
-      "cu_parent_page_id": "80djf-708257",
-      "cu_page_name": "29355_Stacks_LMS_Lesson_1.1_CSS",
-      "body_type": "stack-css",
-      "sd_item_id": 29355,
-      "platform": "tpp"
-    },
-    "29355_Stacks_LMS_Lesson_1.1_JS": {
-      "cu_page_id": "80djf-708437",
-      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708437",
-      "cu_parent_page_id": "80djf-708257",
-      "cu_page_name": "29355_Stacks_LMS_Lesson_1.1_JS",
-      "body_type": "stack-js",
-      "sd_item_id": 29355,
-      "platform": "tpp"
-    },
     "29355_Stacks_LMS_Course_CSS": {
       "cu_page_id": "80djf-708457",
       "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708457",
       "cu_parent_page_id": "80djf-708257",
       "cu_page_name": "29355_Stacks_LMS_Course_CSS",
       "body_type": "stack-css",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Course_JS": {
+      "cu_page_id": "80djf-708477",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708477",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Course_JS",
+      "body_type": "stack-js",
       "sd_item_id": 29355,
       "platform": "tpp"
     },

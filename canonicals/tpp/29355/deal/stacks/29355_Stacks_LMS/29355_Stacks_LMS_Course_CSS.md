@@ -16,10 +16,16 @@ parent_stack_slug: 29355_Stacks_LMS
 ---
 <style>
 /* ============================================================
-   29355_Stacks_LMS_Course_CSS — course-level chrome for TPP LMS
+   29355_Stacks_LMS_Course_CSS — course-level CSS for TPP LMS
    Pasted into SuiteDash at: LMS → Course Meta → Custom CSS
-   Scope: SD-owned chrome (sidebar nav, navbar header).
-   Per-lesson body styling lives in 29355_Stacks_LMS_Lesson_{N.M}_CSS.
+   Scope:
+     1. SD-owned chrome (sidebar nav, navbar header)
+     2. Per-lesson wrapper rules (scoped to .lms-lesson-{N-N})
+     3. Lesson body content styling (hoisted globals shared by every lesson)
+   ============================================================ */
+
+/* ============================================================
+   Section 1 — SD chrome (sidebar, navbar)
    ============================================================ */
 
 .panel-preview__sidebar {
@@ -135,6 +141,162 @@ parent_stack_slug: 29355_Stacks_LMS
 .panel-preview__sidebar .lesson-item.active a .fa-solid.fa-circle {
   color: #e91e63;
 }
+
+/* ============================================================
+   Section 2 — Per-lesson wrapper (scoped per-lesson)
+   Each lesson may have different wrapper constraints (max-width,
+   padding). Keep these scoped so a future lesson can override.
+   ============================================================ */
+
+.lms-lesson-1-1 {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 0 32px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* ============================================================
+   Section 3 — Lesson body content (hoisted globals)
+   Shared across every lesson in the course. Rules are bare —
+   no .lms-lesson-{N-N} prefix — because the visual treatment
+   (brand pill buttons, text accents, video framing, separator)
+   is identical on every lesson.
+   ============================================================ */
+
+/* ---------- Video block ---------- */
+
+.lms-block-video {
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.lms-video-wrap {
+  width: min(320px, 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(180, 30, 60, 0.08);
+}
+
+.lms-video-wrap figure {
+  margin: 0;
+}
+
+.lms-video-wrap .embed-content {
+  position: relative;
+  padding-bottom: 177.78%;
+  height: 0;
+  background: #1a1a1a;
+}
+
+.lms-video-wrap .embed-content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- Text block ---------- */
+
+.lms-block-text {
+  max-width: 620px;
+  margin: 0 auto 32px;
+}
+
+.lms-block-text p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #2a2a2a;
+  text-align: center;
+  letter-spacing: 0.1px;
+  margin: 0;
+}
+
+.lms-lead {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  color: #c2185b;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.lms-highlight {
+  font-style: normal;
+  font-weight: 500;
+  color: #1a1a1a;
+  border-bottom: 2px solid #f4c0d1;
+  padding-bottom: 1px;
+}
+
+.lms-emphasis {
+  font-style: italic;
+  color: #555555;
+}
+
+/* ---------- Button blocks ---------- */
+
+.lms-block-button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.lms-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lms-btn::after {
+  content: "→";
+  font-size: 18px;
+  line-height: 1;
+}
+
+.lms-btn-support {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(194, 24, 91, 0.25);
+}
+
+.lms-btn-support:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(194, 24, 91, 0.32);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.lms-btn-next {
+  padding: 13px 26px;
+  background: transparent;
+  color: #c2185b;
+  border: 1.5px solid #e91e63;
+}
+
+.lms-btn-next:hover {
+  transform: translateY(-1px);
+  background: rgba(233, 30, 99, 0.04);
+  color: #c2185b;
+  text-decoration: none;
+}
+
+/* ---------- Separator ---------- */
+
+.lms-separator {
+  border: 0;
+  border-top: 1px solid #f0d4da;
+  margin: 32px 0;
+}
 </style>
 
 ## Change log
@@ -142,3 +304,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Sidebar restyle: dark surface, rose-accented active states, collapsed/expanded chevron, lesson-item hover and active states. Scoped to `.panel-preview__sidebar`. | JLW |
+| 2026-05-08 | Migrated all lesson body styling from `29355_Stacks_LMS_Lesson_1.1_CSS` into this course-level body. Hoisted button/text/video rules to bare globals; kept `.lms-lesson-1-1` wrapper scoped per-lesson. | JLW |
