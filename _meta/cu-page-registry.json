@@ -120,6 +120,348 @@
       "sd_item_id": 29355,
       "platform": "tpp",
       "lms_number": 1
+    },
+    "29355_Stacks_LMS_Lesson_1.3_HTML": {
+      "cu_page_id": "80djf-708517",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708517",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_1.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_1.4_HTML": {
+      "cu_page_id": "80djf-708537",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708537",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_1.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_2.1_HTML": {
+      "cu_page_id": "80djf-708557",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708557",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_2.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_2.2_HTML": {
+      "cu_page_id": "80djf-708577",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708577",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_2.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_2.3_HTML": {
+      "cu_page_id": "80djf-708597",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708597",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_2.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_2.4_HTML": {
+      "cu_page_id": "80djf-708617",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708617",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_2.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_3.1_HTML": {
+      "cu_page_id": "80djf-708637",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708637",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_3.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_3.2_HTML": {
+      "cu_page_id": "80djf-708657",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708657",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_3.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_3.3_HTML": {
+      "cu_page_id": "80djf-708677",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708677",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_3.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_3.4_HTML": {
+      "cu_page_id": "80djf-708697",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708697",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_3.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_4.1_HTML": {
+      "cu_page_id": "80djf-708717",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708717",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_4.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_4.2_HTML": {
+      "cu_page_id": "80djf-708737",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708737",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_4.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_4.3_HTML": {
+      "cu_page_id": "80djf-708757",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708757",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_4.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_4.4_HTML": {
+      "cu_page_id": "80djf-708777",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708777",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_4.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_5.1_HTML": {
+      "cu_page_id": "80djf-708797",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708797",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_5.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_5.2_HTML": {
+      "cu_page_id": "80djf-708817",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708817",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_5.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_5.3_HTML": {
+      "cu_page_id": "80djf-708837",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708837",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_5.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_5.4_HTML": {
+      "cu_page_id": "80djf-708857",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708857",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_5.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_6.1_HTML": {
+      "cu_page_id": "80djf-708877",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708877",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_6.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_6.2_HTML": {
+      "cu_page_id": "80djf-708897",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708897",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_6.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_6.3_HTML": {
+      "cu_page_id": "80djf-708917",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708917",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_6.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_6.4_HTML": {
+      "cu_page_id": "80djf-708937",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708937",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_6.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_7.1_HTML": {
+      "cu_page_id": "80djf-708957",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708957",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_7.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_7.2_HTML": {
+      "cu_page_id": "80djf-708977",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708977",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_7.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_7.3_HTML": {
+      "cu_page_id": "80djf-708997",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-708997",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_7.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_7.4_HTML": {
+      "cu_page_id": "80djf-709017",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709017",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_7.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_8.1_HTML": {
+      "cu_page_id": "80djf-709037",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709037",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_8.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_8.2_HTML": {
+      "cu_page_id": "80djf-709057",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709057",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_8.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_8.3_HTML": {
+      "cu_page_id": "80djf-709077",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709077",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_8.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_8.4_HTML": {
+      "cu_page_id": "80djf-709097",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709097",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_8.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_9.1_HTML": {
+      "cu_page_id": "80djf-709117",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709117",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_9.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_9.2_HTML": {
+      "cu_page_id": "80djf-709137",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709137",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_9.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_9.3_HTML": {
+      "cu_page_id": "80djf-709157",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709157",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_9.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_9.4_HTML": {
+      "cu_page_id": "80djf-709177",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709177",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_9.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_10.1_HTML": {
+      "cu_page_id": "80djf-709197",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709197",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_10.1_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_10.2_HTML": {
+      "cu_page_id": "80djf-709217",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709217",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_10.2_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_10.3_HTML": {
+      "cu_page_id": "80djf-709237",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709237",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_10.3_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355_Stacks_LMS_Lesson_10.4_HTML": {
+      "cu_page_id": "80djf-709257",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709257",
+      "cu_parent_page_id": "80djf-708257",
+      "cu_page_name": "29355_Stacks_LMS_Lesson_10.4_HTML",
+      "body_type": "stack-html",
+      "sd_item_id": 29355,
+      "platform": "tpp"
     }
   }
 }
