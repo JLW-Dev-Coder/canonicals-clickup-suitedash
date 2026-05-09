@@ -145,6 +145,35 @@ parent_stack_slug: 29355_Stacks_LMS
   color: #e91e63;
 }
 
+/* Footer bar + Next button */
+
+.panel-preview__footer {
+  background: #1a1a1a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel-preview__footer button,
+.panel-preview__footer .btn,
+.panel-preview__footer a.btn {
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.panel-preview__footer button:hover,
+.panel-preview__footer .btn:hover,
+.panel-preview__footer a.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.35);
+  color: #ffffff;
+}
+
 /* ============================================================
    Section 2 — Per-lesson wrapper (scoped per-lesson)
    Each lesson may have different wrapper constraints (max-width,
