@@ -57,6 +57,8 @@ parent_stack_slug: 29355_Stacks_LMS
 .panel-preview__sidebar .module-item {
   border: 0 !important;
   margin: 4px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.04) !important;
 }
 
 .panel-preview__sidebar .module-title {
@@ -82,8 +84,8 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .panel-preview__sidebar .module-item:has(.lessons.show) > .module-title,
 .panel-preview__sidebar .module-title:not(.collapsed) {
-  background: linear-gradient(135deg, rgba(233, 30, 99, 0.12), rgba(194, 24, 91, 0.08));
-  box-shadow: inset 2px 0 0 #e91e63;
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.28), rgba(194, 24, 91, 0.18));
+  box-shadow: inset 3px 0 0 #e91e63;
   border-radius: 8px;
   color: #ffffff;
 }
@@ -170,6 +172,14 @@ parent_stack_slug: 29355_Stacks_LMS
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(233, 30, 99, 0.35);
   color: #ffffff !important;
+}
+
+.navbar-brand .logo__dark-mode {
+  display: none;
+}
+
+.navbar-brand[style] {
+  background-color: transparent !important;
 }
 
 /* ============================================================
@@ -389,4 +399,5 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Initial authoring. Sidebar restyle: dark surface, rose-accented active states, collapsed/expanded chevron, lesson-item hover and active states. Scoped to `.panel-preview__sidebar`. | JLW |
 | 2026-05-08 | Migrated all lesson body styling from `29355_Stacks_LMS_Lesson_1.1_CSS` into this course-level body. Hoisted button/text/video rules to bare globals; kept `.lms-lesson-1-1` wrapper scoped per-lesson. | JLW |
 | 2026-05-08 | Added `.lms-block-checklist` rules. Pink gradient ✓ bullets, hairline separators, 620px max-width centered. Used on `*.4` "How to Customize" lessons. | JLW |
+| 2026-05-08 | Phase 5 sidebar: boosted active-module gradient (0.12/0.08 → 0.28/0.18) and `inset` shadow (2px → 3px) for legibility on deepened `#0f0f0f` background; added inactive-row separator on `.module-item` (`border-bottom: 1px solid rgba(255,255,255,0.04)` plus `border-bottom-color !important` to outrank SD's inline `style="border-color: rgb(221,221,221)"`); softened logo card (`.navbar-brand .logo__dark-mode { display:none }` + `.navbar-brand[style] { background-color: transparent !important }`). | JLW |
 | 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
