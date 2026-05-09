@@ -297,6 +297,50 @@ parent_stack_slug: 29355_Stacks_LMS
   border-top: 1px solid #f0d4da;
   margin: 32px 0;
 }
+
+/* ---------- Checklist block ---------- */
+
+.lms-block-checklist {
+  max-width: 620px;
+  margin: 0 auto 32px;
+}
+
+.lms-block-checklist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lms-block-checklist li {
+  position: relative;
+  padding: 10px 0 10px 32px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #2a2a2a;
+  border-bottom: 1px solid #f5e1e6;
+}
+
+.lms-block-checklist li:last-child {
+  border-bottom: 0;
+}
+
+.lms-block-checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
 </style>
 
 ## Change log
@@ -305,3 +349,4 @@ parent_stack_slug: 29355_Stacks_LMS
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Sidebar restyle: dark surface, rose-accented active states, collapsed/expanded chevron, lesson-item hover and active states. Scoped to `.panel-preview__sidebar`. | JLW |
 | 2026-05-08 | Migrated all lesson body styling from `29355_Stacks_LMS_Lesson_1.1_CSS` into this course-level body. Hoisted button/text/video rules to bare globals; kept `.lms-lesson-1-1` wrapper scoped per-lesson. | JLW |
+| 2026-05-08 | Added `.lms-block-checklist` rules. Pink gradient ✓ bullets, hairline separators, 620px max-width centered. Used on `*.4` "How to Customize" lessons. | JLW |

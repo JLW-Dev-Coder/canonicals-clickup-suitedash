@@ -47,6 +47,9 @@ Block-level children:
 - `.lms-block-button` — button block (contains `<a>`)
 - `.lms-block-button-support` — persistent support-call CTA variant
 - `.lms-block-button-next` — continue-to-next-lesson variant
+- `.lms-block-checklist` — checklist block (used on `How to Customize Phase X` lessons; contains a `<ul>` of action items)
+- `.lms-block-checklist ul` — list root
+- `.lms-block-checklist li` — checklist item
 
 Inline elements:
 - `.lms-btn` — every CTA anchor
@@ -167,3 +170,4 @@ When you discover a new block type, a new class hook, a new SD chrome selector t
 | 2026-05-08 | Initial authoring. Lesson 1.1 (Meet Zuri) drives first-pass spec. Visual direction lifted from TPP landing page. | JLW |
 | 2026-05-08 | Added course-level body slot (29355_Stacks_LMS_Course_CSS) and sidebar class inventory. | JLW |
 | 2026-05-08 | Pivoted to course-level pattern: per-lesson HTML only, single course-level CSS + JS. Removed per-lesson CSS/JS body slots from the documented pattern. | JLW |
+| 2026-05-08 | Added `.lms-block-checklist` class hook for action-item lists on `*.4` "How to Customize" lessons. | JLW |
