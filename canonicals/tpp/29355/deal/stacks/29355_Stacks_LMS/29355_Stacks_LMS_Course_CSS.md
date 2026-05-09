@@ -87,7 +87,7 @@ parent_stack_slug: 29355_Stacks_LMS
   background: linear-gradient(135deg, rgba(233, 30, 99, 0.28), rgba(194, 24, 91, 0.18));
   box-shadow: inset 3px 0 0 #e91e63;
   border-radius: 8px;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .panel-preview__sidebar .module-title .fa-chevron-up {
@@ -118,7 +118,7 @@ parent_stack_slug: 29355_Stacks_LMS
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  color: #888888;
+  color: #888888 !important;
   font-size: 12.5px;
   line-height: 1.5;
   text-decoration: none;
@@ -133,7 +133,7 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .panel-preview__sidebar .lesson-item.active a {
-  color: #ffffff;
+  color: #ffffff !important;
   background: rgba(233, 30, 99, 0.18);
 }
 
@@ -368,18 +368,37 @@ parent_stack_slug: 29355_Stacks_LMS
   text-decoration: none;
 }
 
-.lms-btn-next {
-  padding: 13px 26px;
+/* Replaced "Continue to Lesson X.X" — was a broken JS-resolved link.
+   Now a non-clickable visual cue pointing at SD's "I have completed this Lesson" button below. */
+.lms-btn.lms-btn-next {
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 24px auto 0;
+  padding: 0;
   background: transparent;
-  color: #c2185b;
-  border: 1.5px solid #e91e63;
+  border: 2px solid #e91e63;
+  border-radius: 50%;
+  color: #e91e63;
+  text-decoration: none;
+  font-size: 0;
+  animation: lms-pulse-down 1.6s ease-in-out infinite;
 }
 
-.lms-btn-next:hover {
-  transform: translateY(-1px);
-  background: rgba(233, 30, 99, 0.04);
-  color: #c2185b;
-  text-decoration: none;
+.lms-btn.lms-btn-next::before {
+  content: "↓";
+  font-size: 20px;
+  line-height: 1;
+  color: #e91e63;
+  font-weight: 700;
+}
+
+@keyframes lms-pulse-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
 }
 
 /* ---------- Separator ---------- */
@@ -444,4 +463,5 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Migrated all lesson body styling from `29355_Stacks_LMS_Lesson_1.1_CSS` into this course-level body. Hoisted button/text/video rules to bare globals; kept `.lms-lesson-1-1` wrapper scoped per-lesson. | JLW |
 | 2026-05-08 | Added `.lms-block-checklist` rules. Pink gradient ✓ bullets, hairline separators, 620px max-width centered. Used on `*.4` "How to Customize" lessons. | JLW |
 | 2026-05-08 | Phase 5 sidebar: boosted active-module gradient (0.12/0.08 → 0.28/0.18) and `inset` shadow (2px → 3px) for legibility on deepened `#0f0f0f` background; added inactive-row separator on `.module-item` (`border-bottom: 1px solid rgba(255,255,255,0.04)` plus `border-bottom-color !important` to outrank SD's inline `style="border-color: rgb(221,221,221)"`); softened logo card (`.navbar-brand .logo__dark-mode { display:none }` + `.navbar-brand[style] { background-color: transparent !important }`). | JLW |
+| 2026-05-08 | Phase 7: escalated three sidebar text colors past SD's `.panel-preview__main .module-title, .panel-preview__main .lesson-item a { color:#000 !important }` rule — added `!important` to active-module title `#ffffff`, inactive lesson-item `#888888`, and active lesson-item `#ffffff`. Replaced broken in-body `.lms-btn.lms-btn-next` "Continue to Lesson X.X" link (course-level JS resolver fails on lessons with no real next lesson) with a non-clickable 40×40 rose-bordered down-arrow visual (`pointer-events:none`, `font-size:0` to hide existing label, `::before` injects ↓, 1.6s `lms-pulse-down` keyframe nudge). Removed `.lms-btn-next:hover`. | JLW |
 | 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
