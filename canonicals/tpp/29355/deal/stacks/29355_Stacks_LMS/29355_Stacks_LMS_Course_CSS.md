@@ -57,7 +57,7 @@ parent_stack_slug: 29355_Stacks_LMS
 .panel-preview__sidebar .module-item {
   border: 0 !important;
   margin: 4px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
   border-bottom-color: rgba(255, 255, 255, 0.04) !important;
 }
 
@@ -180,6 +180,50 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .navbar-brand[style] {
   background-color: transparent !important;
+}
+
+/* "I have completed this Lesson" button (self-assessment lessons) */
+.panel-preview__bottom-bar {
+  background: #0f0f0f;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 24px;
+  text-align: center;
+}
+
+.panel-preview__bottom-bar > div[ng-click] {
+  display: inline-block;
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  color: #ffffff !important;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.panel-preview__bottom-bar > div[ng-click]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.35);
+  color: #ffffff !important;
+}
+
+/* "Locked" button (gated navigation, incomplete lesson) */
+.panel-preview__btn.panel-preview__btn--lock {
+  background: #2a2a2a;
+  color: rgba(255, 255, 255, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: not-allowed;
+}
+
+.panel-preview__btn.panel-preview__btn--lock .fa-lock-keyhole {
+  color: rgba(255, 255, 255, 0.45);
+  margin-right: 8px;
 }
 
 /* ============================================================
