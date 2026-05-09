@@ -29,7 +29,7 @@ parent_stack_slug: 29355_Stacks_LMS
    ============================================================ */
 
 .panel-preview__sidebar {
-  background: #1a1a1a;
+  background: #0f0f0f;
   border-right: 1px solid #2a2a2a;
 }
 
@@ -145,18 +145,17 @@ parent_stack_slug: 29355_Stacks_LMS
   color: #e91e63;
 }
 
-/* Footer bar + Next button */
-
-.panel-preview__footer {
-  background: #1a1a1a;
+/* Footer actions bar + Prev/Next buttons */
+.panel-preview__footer-actions {
+  background: #0f0f0f;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 24px;
 }
 
-.panel-preview__footer button,
-.panel-preview__footer .btn,
-.panel-preview__footer a.btn {
+.panel-preview__btn.panel-preview__btn--prev,
+.panel-preview__btn.panel-preview__btn--next {
   background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
-  color: #ffffff;
+  color: #ffffff !important;
   border: none;
   border-radius: 999px;
   padding: 10px 24px;
@@ -166,12 +165,11 @@ parent_stack_slug: 29355_Stacks_LMS
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.panel-preview__footer button:hover,
-.panel-preview__footer .btn:hover,
-.panel-preview__footer a.btn:hover {
+.panel-preview__btn.panel-preview__btn--prev:hover,
+.panel-preview__btn.panel-preview__btn--next:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(233, 30, 99, 0.35);
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 /* ============================================================
