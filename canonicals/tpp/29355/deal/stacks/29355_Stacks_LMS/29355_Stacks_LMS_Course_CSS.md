@@ -34,8 +34,8 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .panel-preview__sidebar .navbar-header {
-  padding: 20px 0;
-  border-bottom: 1px solid #2a2a2a;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .panel-preview__sidebar .navbar-header .navbar-brand {
@@ -50,26 +50,28 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .panel-preview__sidebar .modules.side-menu {
   padding: 16px 0;
-  margin: 0;
+  margin: 12px 0 0;
   list-style: none;
 }
 
 .panel-preview__sidebar .module-item {
   border: 0 !important;
-  margin: 4px 20px;
+  margin: 4px 12px;
 }
 
 .panel-preview__sidebar .module-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   padding: 12px 14px;
   color: #aaaaaa;
   font-size: 13px;
   font-weight: 500;
+  line-height: 1.4;
   text-decoration: none;
   border-radius: 8px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .panel-preview__sidebar .module-title:hover {
@@ -81,9 +83,9 @@ parent_stack_slug: 29355_Stacks_LMS
 .panel-preview__sidebar .module-item:has(.lessons.show) > .module-title,
 .panel-preview__sidebar .module-title:not(.collapsed) {
   background: linear-gradient(135deg, rgba(233, 30, 99, 0.12), rgba(194, 24, 91, 0.08));
-  border-left: 3px solid #e91e63;
+  box-shadow: inset 2px 0 0 #e91e63;
+  border-radius: 8px;
   color: #ffffff;
-  padding-left: 11px;
 }
 
 .panel-preview__sidebar .module-title .fa-chevron-up {
@@ -99,7 +101,7 @@ parent_stack_slug: 29355_Stacks_LMS
 
 .panel-preview__sidebar .lessons {
   list-style: none;
-  padding: 4px 0 4px 14px;
+  padding: 4px 0 4px 10px;
   margin-top: 4px;
   border-left: 1px solid rgba(233, 30, 99, 0.2);
   border-top: 0 !important;
@@ -113,9 +115,10 @@ parent_stack_slug: 29355_Stacks_LMS
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 12px;
+  padding: 8px 10px;
   color: #888888;
   font-size: 12.5px;
+  line-height: 1.5;
   text-decoration: none;
   border-radius: 6px;
   transition: background 0.15s ease, color 0.15s ease;
@@ -146,12 +149,19 @@ parent_stack_slug: 29355_Stacks_LMS
    Section 2 — Per-lesson wrapper (scoped per-lesson)
    Each lesson may have different wrapper constraints (max-width,
    padding). Keep these scoped so a future lesson can override.
+   Top spacing lives on .panel-preview__content so every lesson
+   in the course gets ≥56px clearance from the content-area top
+   regardless of which wrapper class the lesson body uses.
    ============================================================ */
+
+.panel-preview__content {
+  padding-top: 56px;
+}
 
 .lms-lesson-1-1 {
   max-width: 760px;
   margin: 0 auto;
-  padding: 56px 0 32px;
+  padding: 0 0 32px;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -205,7 +215,8 @@ parent_stack_slug: 29355_Stacks_LMS
   margin: 0 auto 32px;
 }
 
-.lms-block-text p {
+.lms-block-text p,
+.wysiwyg-content .lms-block-text p {
   font-size: 18px;
   line-height: 1.75;
   color: #2a2a2a;
@@ -311,7 +322,8 @@ parent_stack_slug: 29355_Stacks_LMS
   margin: 0;
 }
 
-.lms-block-checklist li {
+.lms-block-checklist li,
+.wysiwyg-content .lms-block-checklist li {
   position: relative;
   padding: 10px 0 10px 32px;
   font-size: 17px;
@@ -350,3 +362,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Initial authoring. Sidebar restyle: dark surface, rose-accented active states, collapsed/expanded chevron, lesson-item hover and active states. Scoped to `.panel-preview__sidebar`. | JLW |
 | 2026-05-08 | Migrated all lesson body styling from `29355_Stacks_LMS_Lesson_1.1_CSS` into this course-level body. Hoisted button/text/video rules to bare globals; kept `.lms-lesson-1-1` wrapper scoped per-lesson. | JLW |
 | 2026-05-08 | Added `.lms-block-checklist` rules. Pink gradient ✓ bullets, hairline separators, 620px max-width centered. Used on `*.4` "How to Customize" lessons. | JLW |
+| 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
