@@ -31,8 +31,14 @@ parent_stack_slug: 29355_Stacks_LMS
     <p>Throughout this course, you'll hear these four words again and again: <strong>provider</strong>, <strong>taxpayer</strong>, <strong>order</strong>, and <strong>phase</strong>. Keep them in mind.</p>
   </div>
 
+  <div class="lms-block lms-block-reference">
+    <span class="lms-ref-kicker">Section 1 of 10 — Welcome</span>
+    <p class="lms-ref-desc">Zuri introduces the order-fulfillment metaphor. Everything that follows is a deep-dive into one of those phases.</p>
+    <a href="https://help.suitedash.com/article/467-automations-overview" target="_blank" rel="noopener" class="lms-ref-link">Start with SuiteDash Automations Overview</a>
+  </div>
+
   <div class="lms-block lms-block-button lms-block-button-support">
-    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Book Your Support Call</a>
+    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Need help? Book a Support Call</a>
   </div>
 
   <hr class="lms-separator" />
@@ -48,3 +54,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Mirrors Lesson 1.1 HTML structure. Content from CU source page. Relies on `29355_Stacks_LMS_Course_CSS` and `29355_Stacks_LMS_Course_JS`. | JLW |
+| 2026-05-10 | Added `.lms-block-reference` with module-specific SD help link. Updated support button text to "Need help? Book a Support Call". | JLW |

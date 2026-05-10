@@ -41,8 +41,14 @@ parent_stack_slug: 29355_Stacks_LMS
     </ul>
   </div>
 
+  <div class="lms-block lms-block-reference">
+    <span class="lms-ref-kicker">Section 5 of 10 — Phase 4</span>
+    <p class="lms-ref-desc">The payment form and invoice items collect what the taxpayer agreed to pay. Once payment clears, the order moves into prep.</p>
+    <a href="https://help.suitedash.com/article/394-office-billing-your-clients" target="_blank" rel="noopener" class="lms-ref-link">Configure invoices and payments in SuiteDash</a>
+  </div>
+
   <div class="lms-block lms-block-button lms-block-button-support">
-    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Book Your Support Call</a>
+    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Need help? Book a Support Call</a>
   </div>
 
   <hr class="lms-separator" />
@@ -58,3 +64,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Mirrors Lesson 1.2 HTML structure. Content from CU source page (Owner-sequence mapping per commit f4d13b5 adjudications). Relies on `29355_Stacks_LMS_Course_CSS` and `29355_Stacks_LMS_Course_JS`. | JLW |
+| 2026-05-10 | Added `.lms-block-reference` with module-specific SD help link. Updated support button text to "Need help? Book a Support Call". | JLW |

@@ -31,8 +31,14 @@ parent_stack_slug: 29355_Stacks_LMS
     <p><span class="lms-lead">Welcome.</span> Watch the short intro above, then continue to the next lesson where <em class="lms-highlight">Zuri</em> explains the <em class="lms-emphasis">order metaphor</em> that frames the rest of this course.</p>
   </div>
 
+  <div class="lms-block lms-block-reference">
+    <span class="lms-ref-kicker">Section 1 of 10 — Welcome</span>
+    <p class="lms-ref-desc">Zuri introduces the order-fulfillment metaphor. Everything that follows is a deep-dive into one of those phases.</p>
+    <a href="https://help.suitedash.com/article/467-automations-overview" target="_blank" rel="noopener" class="lms-ref-link">Start with SuiteDash Automations Overview</a>
+  </div>
+
   <div class="lms-block lms-block-button lms-block-button-support">
-    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Book Your Support Call</a>
+    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Need help? Book a Support Call</a>
   </div>
 
   <hr class="lms-separator" />
@@ -50,3 +56,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Initial authoring. Lesson 1.1 — Meet Zuri. Video, intro text, support-call button, separator, continue-to-1.2 button. | JLW |
 | 2026-05-08 | Added text-styling hooks: `.lms-lead` on "Welcome.", `.lms-highlight` on "Zuri", `.lms-emphasis` on "order metaphor". Content unchanged. | JLW |
 | 2026-05-08 | No content changes. Per-lesson CSS/JS bodies were retired in favor of course-level pattern. This HTML now relies on `29355_Stacks_LMS_Course_CSS` and `29355_Stacks_LMS_Course_JS` for styling and behavior. | JLW |
+| 2026-05-10 | Added `.lms-block-reference` with module-specific SD help link. Updated support button text to "Need help? Book a Support Call". | JLW |

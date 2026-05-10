@@ -31,8 +31,14 @@ parent_stack_slug: 29355_Stacks_LMS
     <p>Two pieces make Phase 1 work: Landing Page 1 — Book a Tax Appointment, and Tax Prep Form 0 — Booking Form. The form's Taxpayer Type dropdown is the most important field in the entire setup.</p>
   </div>
 
+  <div class="lms-block lms-block-reference">
+    <span class="lms-ref-kicker">Section 2 of 10 — Phase 1</span>
+    <p class="lms-ref-desc">The booking form and landing page capture the taxpayer type before anything else can happen.</p>
+    <a href="https://help.suitedash.com/article/572-pages-creating-a-landing-page" target="_blank" rel="noopener" class="lms-ref-link">Build your booking landing page in SuiteDash</a>
+  </div>
+
   <div class="lms-block lms-block-button lms-block-button-support">
-    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Book Your Support Call</a>
+    <a href="https://taxpreppro.virtuallaunch.pro/zuri" class="lms-btn lms-btn-support">Need help? Book a Support Call</a>
   </div>
 
   <hr class="lms-separator" />
@@ -48,3 +54,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-08 | Initial authoring. Mirrors Lesson 1.2 HTML structure. Content from CU source page (Owner-sequence mapping per commit f4d13b5 adjudications). Relies on `29355_Stacks_LMS_Course_CSS` and `29355_Stacks_LMS_Course_JS`. | JLW |
+| 2026-05-10 | Added `.lms-block-reference` with module-specific SD help link. Updated support button text to "Need help? Book a Support Call". | JLW |
