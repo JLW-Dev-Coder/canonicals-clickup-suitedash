@@ -29,13 +29,17 @@ parent_stack_slug: 29355_Stacks_LMS
    ============================================================ */
 
 .panel-preview__sidebar {
-  background: #0f0f0f;
-  border-right: 1px solid #2a2a2a;
+  background: #0f0f0f !important;
+  border-right: 1px solid #2a2a2a !important;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
 }
 
 .panel-preview__sidebar .navbar-header {
   padding: 24px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0f0f0f !important;
 }
 
 .panel-preview__sidebar .navbar-header .navbar-brand {
@@ -67,7 +71,7 @@ parent_stack_slug: 29355_Stacks_LMS
   align-items: center;
   gap: 10px;
   padding: 12px 14px;
-  color: #aaaaaa;
+  color: #aaaaaa !important;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
@@ -77,7 +81,7 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .panel-preview__sidebar .module-title:hover {
-  color: #ffffff;
+  color: #ffffff !important;
   background: rgba(255, 255, 255, 0.03);
   text-decoration: none;
 }
@@ -127,7 +131,7 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .panel-preview__sidebar .lesson-item a:hover {
-  color: #ffffff;
+  color: #ffffff !important;
   background: rgba(255, 255, 255, 0.04);
   text-decoration: none;
 }
@@ -149,7 +153,7 @@ parent_stack_slug: 29355_Stacks_LMS
 
 /* Footer actions bar + Prev/Next buttons */
 .panel-preview__footer-actions {
-  background: #0f0f0f;
+  background: #0f0f0f !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 12px 24px;
 }
@@ -184,7 +188,7 @@ parent_stack_slug: 29355_Stacks_LMS
 
 /* "I have completed this Lesson" button (self-assessment lessons) */
 .panel-preview__bottom-bar {
-  background: #0f0f0f;
+  background: #0f0f0f !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 12px 24px;
   text-align: center;
@@ -465,3 +469,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Phase 5 sidebar: boosted active-module gradient (0.12/0.08 → 0.28/0.18) and `inset` shadow (2px → 3px) for legibility on deepened `#0f0f0f` background; added inactive-row separator on `.module-item` (`border-bottom: 1px solid rgba(255,255,255,0.04)` plus `border-bottom-color !important` to outrank SD's inline `style="border-color: rgb(221,221,221)"`); softened logo card (`.navbar-brand .logo__dark-mode { display:none }` + `.navbar-brand[style] { background-color: transparent !important }`). | JLW |
 | 2026-05-08 | Phase 7: escalated three sidebar text colors past SD's `.panel-preview__main .module-title, .panel-preview__main .lesson-item a { color:#000 !important }` rule — added `!important` to active-module title `#ffffff`, inactive lesson-item `#888888`, and active lesson-item `#ffffff`. Replaced broken in-body `.lms-btn.lms-btn-next` "Continue to Lesson X.X" link (course-level JS resolver fails on lessons with no real next lesson) with a non-clickable 40×40 rose-bordered down-arrow visual (`pointer-events:none`, `font-size:0` to hide existing label, `::before` injects ↓, 1.6s `lms-pulse-down` keyframe nudge). Removed `.lms-btn-next:hover`. | JLW |
 | 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
+| 2026-05-10 | Sidebar specificity fix: added `!important` to `.panel-preview__sidebar` background, border-right, `.navbar-header` background, `.panel-preview__footer-actions` background, `.panel-preview__bottom-bar` background, and module-title/lesson-item text colors to outrank SD's default gray chrome. Added `position: relative; z-index: 10; overflow: hidden` to sidebar to clip overlapping elements from adjacent panels. | JLW |
