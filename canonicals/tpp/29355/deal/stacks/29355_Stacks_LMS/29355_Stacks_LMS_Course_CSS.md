@@ -330,6 +330,59 @@ parent_stack_slug: 29355_Stacks_LMS
   color: #555555;
 }
 
+/* ---------- Reference guide block ---------- */
+
+.lms-block-reference {
+  max-width: 620px;
+  margin: 0 auto 28px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.06) 0%, rgba(194, 24, 91, 0.03) 100%);
+  border: 1px solid rgba(233, 30, 99, 0.15);
+  border-left: 3px solid #e91e63;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.lms-block-reference .lms-ref-kicker {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #e91e63;
+  margin-bottom: 6px;
+}
+
+.lms-block-reference .lms-ref-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #555555;
+  margin: 0 0 12px;
+}
+
+.lms-block-reference .lms-ref-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c2185b;
+  text-decoration: none;
+  transition: color 0.15s ease, gap 0.15s ease;
+}
+
+.lms-block-reference .lms-ref-link:hover {
+  color: #e91e63;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.lms-block-reference .lms-ref-link::after {
+  content: "→";
+  font-size: 15px;
+  line-height: 1;
+}
+
 /* ---------- Button blocks ---------- */
 
 .lms-block-button {
@@ -485,3 +538,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-10 | Video aspect ratio fix: moved 9:16 `padding-bottom: 177.78%` from `.embed-content` (not present in lesson HTML) to `.lms-video-wrap` directly; added dual-selector iframe rule for both bare iframe and `.embed-content iframe`. Down-arrow fix: replaced unicode `↓` with CSS border-chevron for consistent rendering; bumped circle from 40px to 44px; added `line-height: 0` to parent. | JLW |
 | 2026-05-10 | Reduced video container from 320px to 240px width (9:16 height scales from 568px to 427px). Hidden `.lms-block-button-next` wrapper entirely per Owner direction (down-arrow button removed from UI, CSS rules retained for future un-hide). | JLW |
 | 2026-05-10 | Replaced percentage-based video aspect ratio (`padding-bottom: 177.78%; height: 0`) with fixed dimensions (`width: 240px; height: 426px`). The padding-bottom trick resolved against SD's content panel width instead of the 240px container, causing the video to fill the entire viewport. Fixed dimensions produce the intended phone-preview size. | JLW |
+| 2026-05-10 | Added `.lms-block-reference` styling: left-bordered card with rose tint background, kicker/description/link pattern. Positioned between text block and support button in lesson flow. | JLW |
