@@ -9,7 +9,7 @@ cu_parent_page_id: 80djf-708257
 cu_path: >-
   Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_LMS >
   29355_Stacks_LMS_Lesson_6.2_HTML
-last_synced: '2026-05-09'
+last_synced: '2026-05-10'
 last_editor: JLW
 status: live
 parent_stack_slug: 29355_Stacks_LMS
