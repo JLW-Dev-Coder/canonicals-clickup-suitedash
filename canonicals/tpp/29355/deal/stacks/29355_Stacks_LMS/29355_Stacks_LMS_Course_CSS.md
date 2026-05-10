@@ -271,19 +271,17 @@ parent_stack_slug: 29355_Stacks_LMS
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(180, 30, 60, 0.08);
-}
-
-.lms-video-wrap figure {
-  margin: 0;
-}
-
-.lms-video-wrap .embed-content {
   position: relative;
   padding-bottom: 177.78%;
   height: 0;
   background: #1a1a1a;
 }
 
+.lms-video-wrap figure {
+  margin: 0;
+}
+
+.lms-video-wrap iframe,
 .lms-video-wrap .embed-content iframe {
   position: absolute;
   top: 0;
@@ -379,8 +377,8 @@ parent_stack_slug: 29355_Stacks_LMS
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   margin: 24px auto 0;
   padding: 0;
   background: transparent;
@@ -389,15 +387,23 @@ parent_stack_slug: 29355_Stacks_LMS
   color: #e91e63;
   text-decoration: none;
   font-size: 0;
+  line-height: 0;
   animation: lms-pulse-down 1.6s ease-in-out infinite;
 }
 
 .lms-btn.lms-btn-next::before {
-  content: "↓";
-  font-size: 20px;
-  line-height: 1;
-  color: #e91e63;
-  font-weight: 700;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid #e91e63;
+  border-bottom: 2.5px solid #e91e63;
+  transform: rotate(45deg);
+  margin-top: -3px;
+}
+
+.lms-btn.lms-btn-next::after {
+  content: none;
 }
 
 @keyframes lms-pulse-down {
@@ -470,3 +476,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Phase 7: escalated three sidebar text colors past SD's `.panel-preview__main .module-title, .panel-preview__main .lesson-item a { color:#000 !important }` rule — added `!important` to active-module title `#ffffff`, inactive lesson-item `#888888`, and active lesson-item `#ffffff`. Replaced broken in-body `.lms-btn.lms-btn-next` "Continue to Lesson X.X" link (course-level JS resolver fails on lessons with no real next lesson) with a non-clickable 40×40 rose-bordered down-arrow visual (`pointer-events:none`, `font-size:0` to hide existing label, `::before` injects ↓, 1.6s `lms-pulse-down` keyframe nudge). Removed `.lms-btn-next:hover`. | JLW |
 | 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
 | 2026-05-10 | Sidebar specificity fix: added `!important` to `.panel-preview__sidebar` background, border-right, `.navbar-header` background, `.panel-preview__footer-actions` background, `.panel-preview__bottom-bar` background, and module-title/lesson-item text colors to outrank SD's default gray chrome. Added `position: relative; z-index: 10; overflow: hidden` to sidebar to clip overlapping elements from adjacent panels. | JLW |
+| 2026-05-10 | Video aspect ratio fix: moved 9:16 `padding-bottom: 177.78%` from `.embed-content` (not present in lesson HTML) to `.lms-video-wrap` directly; added dual-selector iframe rule for both bare iframe and `.embed-content iframe`. Down-arrow fix: replaced unicode `↓` with CSS border-chevron for consistent rendering; bumped circle from 40px to 44px; added `line-height: 0` to parent. | JLW |
