@@ -267,7 +267,7 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .lms-video-wrap {
-  width: min(320px, 100%);
+  width: min(240px, 100%);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(180, 30, 60, 0.08);
@@ -411,6 +411,12 @@ parent_stack_slug: 29355_Stacks_LMS
   50% { transform: translateY(4px); }
 }
 
+/* ---------- Next-lesson pointer (hidden per Owner) ---------- */
+
+.lms-block-button-next {
+  display: none !important;
+}
+
 /* ---------- Separator ---------- */
 
 .lms-separator {
@@ -477,3 +483,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-08 | Sidebar polish: module-title `line-height: 1.4` for wrapped long titles; replaced active 3px `border-left` + padding-compensation with `inset 2px 0 0` box-shadow (no padding math); module-item margin 20px → 12px; lessons padding-left 14px → 10px; lesson-item `line-height: 1.5` and padding 9px/12px → 8px/10px; `.modules.side-menu` margin-top: 12px so first module isn't flush with banner; navbar-header padding 20px → 24px and border-bottom strengthened to `rgba(255,255,255,0.06)`. Top-spacing fix: hoisted `padding-top: 56px` from `.lms-lesson-1-1` to `.panel-preview__content` so it applies course-wide regardless of wrapper class. Wysiwyg cascade: escalated `.lms-block-text p` and `.lms-block-checklist li` with a `.wysiwyg-content` ancestor selector to outrank SD's `.wysiwyg-content p` color rule (equal specificity otherwise — source order would have decided). | JLW |
 | 2026-05-10 | Sidebar specificity fix: added `!important` to `.panel-preview__sidebar` background, border-right, `.navbar-header` background, `.panel-preview__footer-actions` background, `.panel-preview__bottom-bar` background, and module-title/lesson-item text colors to outrank SD's default gray chrome. Added `position: relative; z-index: 10; overflow: hidden` to sidebar to clip overlapping elements from adjacent panels. | JLW |
 | 2026-05-10 | Video aspect ratio fix: moved 9:16 `padding-bottom: 177.78%` from `.embed-content` (not present in lesson HTML) to `.lms-video-wrap` directly; added dual-selector iframe rule for both bare iframe and `.embed-content iframe`. Down-arrow fix: replaced unicode `↓` with CSS border-chevron for consistent rendering; bumped circle from 40px to 44px; added `line-height: 0` to parent. | JLW |
+| 2026-05-10 | Reduced video container from 320px to 240px width (9:16 height scales from 568px to 427px). Hidden `.lms-block-button-next` wrapper entirely per Owner direction (down-arrow button removed from UI, CSS rules retained for future un-hide). | JLW |
