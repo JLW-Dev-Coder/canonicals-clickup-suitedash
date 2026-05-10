@@ -267,13 +267,13 @@ parent_stack_slug: 29355_Stacks_LMS
 }
 
 .lms-video-wrap {
-  width: min(240px, 100%);
+  width: 240px;
+  max-width: 100%;
+  height: 426px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(180, 30, 60, 0.08);
   position: relative;
-  padding-bottom: 177.78%;
-  height: 0;
   background: #1a1a1a;
 }
 
@@ -484,3 +484,4 @@ parent_stack_slug: 29355_Stacks_LMS
 | 2026-05-10 | Sidebar specificity fix: added `!important` to `.panel-preview__sidebar` background, border-right, `.navbar-header` background, `.panel-preview__footer-actions` background, `.panel-preview__bottom-bar` background, and module-title/lesson-item text colors to outrank SD's default gray chrome. Added `position: relative; z-index: 10; overflow: hidden` to sidebar to clip overlapping elements from adjacent panels. | JLW |
 | 2026-05-10 | Video aspect ratio fix: moved 9:16 `padding-bottom: 177.78%` from `.embed-content` (not present in lesson HTML) to `.lms-video-wrap` directly; added dual-selector iframe rule for both bare iframe and `.embed-content iframe`. Down-arrow fix: replaced unicode `↓` with CSS border-chevron for consistent rendering; bumped circle from 40px to 44px; added `line-height: 0` to parent. | JLW |
 | 2026-05-10 | Reduced video container from 320px to 240px width (9:16 height scales from 568px to 427px). Hidden `.lms-block-button-next` wrapper entirely per Owner direction (down-arrow button removed from UI, CSS rules retained for future un-hide). | JLW |
+| 2026-05-10 | Replaced percentage-based video aspect ratio (`padding-bottom: 177.78%; height: 0`) with fixed dimensions (`width: 240px; height: 426px`). The padding-bottom trick resolved against SD's content panel width instead of the 240px container, causing the video to fill the entire viewport. Fixed dimensions produce the intended phone-preview size. | JLW |
