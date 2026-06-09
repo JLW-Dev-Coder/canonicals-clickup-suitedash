@@ -177,6 +177,7 @@ parent_stack_slug: 29355_Stacks_Pages
   font-size: 13px;
   letter-spacing: 0.4px;
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   transition: transform var(--tpp-dur-base) var(--tpp-ease-out),
               box-shadow var(--tpp-dur-base) var(--tpp-ease-out);
@@ -192,7 +193,7 @@ parent_stack_slug: 29355_Stacks_Pages
   background: linear-gradient(135deg, var(--tpp-rose-deep), var(--tpp-crimson-deep));
   opacity: 0;
   transition: opacity var(--tpp-dur-base) ease;
-  z-index: 0;
+  z-index: -1;
 }
 .tpp-header-cta > * { position: relative; z-index: 1; }
 .tpp-header-cta:hover {
@@ -1727,3 +1728,4 @@ parent_stack_slug: 29355_Stacks_Pages
 | 2026-05-08 | Added `<style>` wrapper tags inline per module-config rule update | JLW |
 | 2026-05-08 | Added `text-wrap: balance` to `.tpp-h3-large` to prevent the "Want a landing page like / this" three-line wrap on the booking section headline. Spec: `style-spec/sd-pages.md`. | JLW |
 | 2026-05-08 | Widened `.tpp-narrow` from `max-width: 760px` to `880px` so "Want a landing page like this" fits on one line at the form-card headline (54px clamp). Pairs with the `text-wrap: balance` from cb24cd0 (kept as fallback). `.tpp-narrow` is the form section's wrap; only declared/used here. Spec: `style-spec/sd-pages.md`. | JLW |
+| 2026-06-08 | Fixed header CTA label vanishing on hover: `.tpp-header-cta::before` overlay painted over the unwrapped "Book Appointment" text node, which `.tpp-header-cta > *` never elevates. Added `isolation: isolate` to `.tpp-header-cta` and moved `::before` to `z-index: -1`. Spec: style-spec/sd-pages.md. | JLW |
