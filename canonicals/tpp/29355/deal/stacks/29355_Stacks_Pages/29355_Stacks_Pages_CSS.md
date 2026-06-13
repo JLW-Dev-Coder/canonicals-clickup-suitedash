@@ -9,7 +9,7 @@ cu_parent_page_id: 80djf-701517
 cu_path: >-
   Item 29355 - Tax Prep Setup > Deal > Item: 29355 - Stacks > 29355_Stacks_Pages
   > 29355_Stacks_Pages_CSS
-last_synced: '2026-05-08'
+last_synced: '2026-06-09'
 last_editor: JLW
 status: live
 parent_stack_slug: 29355_Stacks_Pages
