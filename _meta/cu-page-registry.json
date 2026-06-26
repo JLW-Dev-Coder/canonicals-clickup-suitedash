@@ -471,6 +471,56 @@
       "body_type": "stack-html",
       "sd_item_id": 29355,
       "platform": "tpp"
+    },
+    "29352-deal-appts": {
+      "cu_page_id": "80djf-737317",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737317",
+      "cu_parent_page_id": "80djf-717277",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Item: 29352 – Appts",
+      "body_type": "appts-parent",
+      "sd_item_id": 29352,
+      "platform": "tmp"
+    },
+    "appt-tax-monitor-setup-demo-appt": {
+      "cu_page_id": "80djf-737357",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737357",
+      "cu_parent_page_id": "80djf-737317",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Appt — Tax Monitor Setup — Demo Appt",
+      "body_type": "appt",
+      "sd_item_id": 29352,
+      "platform": "tmp"
+    },
+    "appt-tax-monitor-setup-discovery-appt": {
+      "cu_page_id": "80djf-737337",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737337",
+      "cu_parent_page_id": "80djf-737317",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Appt — Tax Monitor Setup — Discovery Appt",
+      "body_type": "appt",
+      "sd_item_id": 29352,
+      "platform": "tmp"
+    },
+    "appt-tax-monitor-setup-exit-offboarding-support": {
+      "cu_page_id": "80djf-737377",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737377",
+      "cu_parent_page_id": "80djf-737317",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Appt — Tax Monitor Setup — Exit/Offboarding Support",
+      "body_type": "appt",
+      "sd_item_id": 29352,
+      "platform": "tmp"
+    },
+    "appt-tax-monitor-setup-onboarding-support": {
+      "cu_page_id": "80djf-737397",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737397",
+      "cu_parent_page_id": "80djf-737317",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Appt — Tax Monitor Setup — Onboarding Support",
+      "body_type": "appt",
+      "sd_item_id": 29352,
+      "platform": "tmp"
     }
   }
 }

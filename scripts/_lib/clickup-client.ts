@@ -12,9 +12,9 @@ function getWorkspaceId(): string {
   if (!id) throw new Error('CLICKUP_WORKSPACE_ID env var not set.');
   return id;
 }
-function getDocId(): string {
-  const id = process.env.CLICKUP_TAX_PREP_DOC_ID;
-  if (!id) throw new Error('CLICKUP_TAX_PREP_DOC_ID env var not set.');
+function getDocId(override?: string): string {
+  const id = override || process.env.CLICKUP_TAX_PREP_DOC_ID;
+  if (!id) throw new Error('CLICKUP_TAX_PREP_DOC_ID env var not set (and no docId override provided).');
   return id;
 }
 
@@ -41,10 +41,10 @@ export async function fetchPage(pageId: string): Promise<CUPage> {
   return (await res.json()) as CUPage;
 }
 
-export async function updatePage(pageId: string, content: string, name?: string): Promise<void> {
+export async function updatePage(pageId: string, content: string, name?: string, docId?: string): Promise<void> {
   const body: Record<string, unknown> = { content, content_format: 'text/md' };
   if (name) body.name = normalizePageName(name);
-  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages/${pageId}`, {
+  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId(docId)}/pages/${pageId}`, {
     method: 'PUT',
     headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
