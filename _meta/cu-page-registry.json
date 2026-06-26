@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "description": "Mapping of CU page IDs to repo canonicals. Owner setup populates parent pages; cu-create populates instances.",
-  "last_updated": "2026-05-08",
+  "last_updated": "2026-06-26",
   "registry": {
     "tax-prep-setup-root": {
       "cu_page_id": "80djf-706797",
@@ -36,6 +36,15 @@
       "cu_parent_page_id": "80djf-699817",
       "cu_page_name": "Item: 29355 – Stacks",
       "body_type": "stacks-parent",
+      "sd_item_id": 29355,
+      "platform": "tpp"
+    },
+    "29355-deal-appts": {
+      "cu_page_id": "80djf-700377",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700377",
+      "cu_parent_page_id": "80djf-699817",
+      "cu_page_name": "Item: 29355 – Appts",
+      "body_type": "appts-parent",
       "sd_item_id": 29355,
       "platform": "tpp"
     },

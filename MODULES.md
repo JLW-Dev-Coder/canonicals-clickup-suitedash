@@ -35,7 +35,7 @@
 
 | # | Type ID | SD module | Status | Module config |
 |---|---|---|---|---|
-| M001 | `m001-appointments` | Appointments | ⬜ | (not yet) |
+| M001 | `m001-appointments` | Appointments | ✅ | [`module-config/appt.md`](module-config/appt.md) |
 | M002 | `m002-auto-templates` | Auto-Templates | ⬜ | (not yet) |
 | M003 | `m003-business-sectors` | Business Sectors | ⬜ | (not yet) |
 | M004 | `m004-circles` | Circles | ⬜ | (not yet) |
@@ -83,3 +83,4 @@ When the module-config gets authored, run `npm run module-config:mark-authored -
 | 2026-05-08 | Initial inventory. 3 module-configs authored (stack-css, stack-js, course); 22 module types pending (M001–M021, Form). Bonus removed per Owner — client-facing doc, not RC-managed. | JLW |
 | 2026-05-08 | Authored `module-config/m014-landing-pages.md` for first instance (Landing Page 1 — Tax Prep Setup Explore_HTML, CU 80djf-701737). M014 flipped ⬜ → ✅. | JLW |
 | 2026-05-08 | Added M022 Stacks row (m022-stacks) for the SuiteDash Stacks module branch. Status ⬜ — module-config not yet authored. Triggered by 29355_Stacks_LMS_Lesson_1.1 triad authoring. | JLW |
+| 2026-06-26 | M001 Appointments flipped ⬜ → ✅. Config authored as `module-config/appt.md` (filename mirrors `body_type: appt`, not the M-series type id `m001-appointments`); row link corrected to point at `appt.md`. Reverse-engineered from the four live TPP appt CU pages under `Item: 29355 – Appts`. | RC |

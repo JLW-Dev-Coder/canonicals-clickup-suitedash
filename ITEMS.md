@@ -45,7 +45,7 @@ status: live
 
 | # | Module | Status | Repo path | CU page |
 |---|--------|--------|-----------|---------|
-| M001 | Appointments | 🔵 | — | (link in CU) |
+| M001 | Appointments | ✅ | `canonicals/tpp/29355/deal/appts/` (4 appts — see sub-table below) | [Item: 29355 – Appts](https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700377) |
 | M002 | Auto-Templates | 🔵 | — | (link in CU) |
 | M003 | Business Sectors | 🔵 | — | (link in CU) |
 | M004 | Circles | 🔵 | — | (link in CU) |
@@ -67,6 +67,17 @@ status: live
 | M020 | Tasks | 🔵 | — | (link in CU) |
 | M021 | LMS (shell) | 🔵 | — | (link in CU) |
 
+### Appointments (under M001)
+
+The four Appointment Generators. CU parent `Item: 29355 – Appts` (80djf-700377) lives under the **Deal** branch (not the Order branch); canonicals mirror that location under `deal/appts/`. All four indicator colors `#f97316`, all assigned/notified to Staff – Super Admin.
+
+| Appt | Generator name | Status | Repo path | CU page |
+|---|---|---|---|---|
+| Demo Appt | Tax Prep Setup — Demo | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-demo-appt.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701657 |
+| Discovery Appt | Tax Prep Setup — Digital Coffee | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-discovery-appt.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701237 |
+| Onboarding Support | Tax Prep Setup — Onboarding Support | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-onboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709617 |
+| Exit/Offboarding Support | Tax Prep Setup — Exit/Offboarding Support | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-exit-offboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709777 |
+
 ### Order branch — LMS Courses (under M021)
 
 | LMS # | Title | Track | Status | Repo path | CU page |
@@ -80,3 +91,4 @@ status: live
 | Date | Change | Editor |
 |------|--------|--------|
 | 2026-05-08 | Initial inventory. Item 29355 seeded. | JLW |
+| 2026-06-26 | M001 Appointments flipped 🔵 → ✅. Authored 4 appt canonicals under `deal/appts/` from live CU (Demo, Discovery, Onboarding Support, Exit/Offboarding Support). Added Appointments sub-table. CU parent `Item: 29355 – Appts` (80djf-700377) is under the Deal branch. | RC |
