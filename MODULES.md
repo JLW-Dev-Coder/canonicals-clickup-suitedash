@@ -35,7 +35,7 @@
 
 | # | Type ID | SD module | Status | Module config |
 |---|---|---|---|---|
-| M001 | `m001-appointments` | Appointments | ✅ | [`module-config/appt.md`](module-config/appt.md) |
+| M001 | `m001-appointments` | Appointments | ✅ | [`module-config/m001-appointments.md`](module-config/m001-appointments.md) |
 | M002 | `m002-auto-templates` | Auto-Templates | ⬜ | (not yet) |
 | M003 | `m003-business-sectors` | Business Sectors | ⬜ | (not yet) |
 | M004 | `m004-circles` | Circles | ⬜ | (not yet) |
@@ -84,3 +84,4 @@ When the module-config gets authored, run `npm run module-config:mark-authored -
 | 2026-05-08 | Authored `module-config/m014-landing-pages.md` for first instance (Landing Page 1 — Tax Prep Setup Explore_HTML, CU 80djf-701737). M014 flipped ⬜ → ✅. | JLW |
 | 2026-05-08 | Added M022 Stacks row (m022-stacks) for the SuiteDash Stacks module branch. Status ⬜ — module-config not yet authored. Triggered by 29355_Stacks_LMS_Lesson_1.1 triad authoring. | JLW |
 | 2026-06-26 | M001 Appointments flipped ⬜ → ✅. Config authored as `module-config/appt.md` (filename mirrors `body_type: appt`, not the M-series type id `m001-appointments`); row link corrected to point at `appt.md`. Reverse-engineered from the four live TPP appt CU pages under `Item: 29355 – Appts`. | RC |
+| 2026-06-26 | Renamed `module-config/appt.md` → `module-config/m001-appointments.md` to match the filename-equals-module-id convention (so `moduleConfigPath('m001-appointments')` resolves). Row link updated. `body_type`/`config_for` remain `appt`. | RC |

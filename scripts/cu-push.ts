@@ -22,9 +22,21 @@ if (frontmatter.cu_page_id.startsWith('REPLACE')) {
   process.exit(1);
 }
 
-const lang = FENCE_LANG_BY_BODY_TYPE[frontmatter.body_type] ?? '';
-const wrappedBody = '```' + lang + '\n' + body + '\n```';
-await updatePage(frontmatter.cu_page_id, wrappedBody);
+// Body types whose CU page renders as markdown (no code-fence wrapper) and whose
+// title is kept in sync with the canonical on push. Code-stack types stay fenced.
+const RAW_MARKDOWN_BODY_TYPES = new Set(['appt']);
+const isRawMd = RAW_MARKDOWN_BODY_TYPES.has(frontmatter.body_type);
+
+const payload = isRawMd
+  ? body
+  : '```' + (FENCE_LANG_BY_BODY_TYPE[frontmatter.body_type] ?? '') + '\n' + body + '\n```';
+
+// Canonicals in a non-default CU doc declare it via `cu_doc_id` (e.g. Tax Monitor).
+const docId = typeof frontmatter.cu_doc_id === 'string' && frontmatter.cu_doc_id ? frontmatter.cu_doc_id : undefined;
+// Retitle markdown pages to their canonical `title` (em-dash → single dash via normalizePageName, CLAUDE.md rule 8).
+const name = isRawMd && typeof frontmatter.title === 'string' ? frontmatter.title : undefined;
+
+await updatePage(frontmatter.cu_page_id, payload, name, docId);
 frontmatter.last_synced = new Date().toISOString().split('T')[0];
 await writeCanonical(filepath, frontmatter, body);
-console.log(`✓ Pushed ${slug} to CU`);
+console.log(`✓ Pushed ${slug} to CU${docId ? ` (doc ${docId})` : ''}${name ? ' [retitled]' : ''}`);
