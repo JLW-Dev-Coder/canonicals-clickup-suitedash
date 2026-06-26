@@ -7,8 +7,10 @@ cu_page_id: 80djf-737397
 cu_url: 'https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737397'
 cu_parent_page_id: 80djf-737317
 cu_doc_id: 80djf-83557
-cu_path: 'Tax Monitor Setup > Deal > Item: 29352 - Appts > Appt - Tax Monitor Setup - Onboarding Support'
-last_synced: ''
+cu_path: >-
+  Tax Monitor Setup > Deal > Item: 29352 - Appts > Appt - Tax Monitor Setup -
+  Onboarding Support
+last_synced: '2026-06-26'
 last_editor: RC
 status: live
 title: Appt — Tax Monitor Setup — Onboarding Support
