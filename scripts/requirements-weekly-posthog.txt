@@ -1,0 +1,2 @@
+# No third-party deps — stdlib only (urllib, json, datetime).
+# This file documents the empty dep set and is referenced by the GHA workflow.
