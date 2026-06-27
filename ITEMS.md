@@ -108,13 +108,14 @@ The 13 Circles. CU parent `Item: 29355 – Circles` (80djf-700417) lives under t
 
 ## Item 29352 — Tax Monitor (platform: tmp)
 
-> Tax Monitor Setup lives in a **separate CU doc** (`80djf-83557`) from Tax Prep (`80djf-83497`). Only **M001 Appointments** is tracked here so far — other modules (Stacks, LMS, M002–M021, etc.) are out of scope for this task and intentionally not seeded.
+> Tax Monitor Setup lives in a **separate CU doc** (`80djf-83557`) from Tax Prep (`80djf-83497`). **M001 Appointments** and **M004 Circles** are tracked here so far — other modules (Stacks, LMS, remaining M002–M021, etc.) are out of scope for this task and intentionally not seeded.
 
 ### Order branch — M-series
 
 | # | Module | Status | Repo path | CU page |
 |---|--------|--------|-----------|---------|
 | M001 | Appointments | ✅ | `canonicals/tmp/29352/deal/appts/` (4 appts — see sub-table below) | [Item: 29352 – Appts](https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737317) |
+| M004 | Circles | ✅ | `canonicals/tmp/29352/deal/circles/` (13 circles — see sub-table below) | [Item: 29352 – Circles](https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-733737) |
 
 ### Appointments (under M001)
 
@@ -127,6 +128,26 @@ The four Appointment Generators, mirrored 1:1 from the TPP siblings with `Tax Pr
 | Onboarding Support | Tax Monitor Setup — Onboarding Support | ✅ | `canonicals/tmp/29352/deal/appts/appt-tax-monitor-setup-onboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737397 |
 | Exit/Offboarding Support | Tax Monitor Setup — Exit/Offboarding Support | ✅ | `canonicals/tmp/29352/deal/appts/appt-tax-monitor-setup-exit-offboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737377 |
 
+### Circles (under M004)
+
+The 13 Circles, mirrored 1:1 from the TPP siblings with `Tax Prep → Tax Monitor` swapped (per JLW's mirror rule). CU parent `Item: 29352 – Circles` (80djf-733737) lives under the **Deal** branch (`Tax Monitor Setup – Deal`, 80djf-717277), mirroring the TPP convention. All 13 authored as canonicals then pushed to live CU via `sync:cu` on 2026-06-27 (Circle 1 as the approved pilot, Circles 2–13 in the follow-up batch). Two body shapes carry over from TPP: **Phase circles 1–7** (Deal pipeline) carry the full `## Configuration` + `## Reference` block; **Invoice/Plan circles 8–13** carry only the two `circle/manageUsers/` admin URLs (preserved verbatim — no verifiable TMP analog). CU live titles render single-dash per CLAUDE.md rule 8 (`normalizePageName`); canonicals preserve the em-dash.
+
+| Circle | Segment | Status | Repo path | CU page |
+|---|---|---|---|---|
+| Circle 1 — Lead Capture & Intake | Deal Phase 1/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-1-29352-deal-phase-1-lead-capture-and-intake.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737437 |
+| Circle 2 — Qualify & Segment | Deal Phase 2/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-2-29352-deal-phase-2-qualify-and-segment.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737457 |
+| Circle 3 — Prospect Discovery Call | Deal Phase 3/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-3-29352-deal-phase-3-prospect-discovery-call.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737477 |
+| Circle 4 — Offer & Close | Deal Phase 4/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-4-29352-deal-phase-4-offer-and-close.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737497 |
+| Circle 5 — Client Onboarding & Setup | Deal Phase 5/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-5-29352-deal-phase-5-client-onboarding-and-setup.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737517 |
+| Circle 6 — Early Wins & Results | Deal Phase 6/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-6-29352-deal-phase-6-early-wins-and-results.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737537 |
+| Circle 7 — Upsell, Referral & Testimonial | Deal Phase 7/7 | ✅ | `canonicals/tmp/29352/deal/circles/circle-7-29352-deal-phase-7-upsell-referral-and-testimonial.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737557 |
+| Circle 8 — Member Addition — Member Paid | Invoice Add-On 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-8-29352-invoice-add-on-1-tax-monitor-setup-member-addition-member-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737577 |
+| Circle 9 — Member Paid | Invoice Item 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-9-29352-invoice-item-1-tax-monitor-setup-member-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737597 |
+| Circle 10 — Ongoing Support — Cancelled | Plan 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-10-29352-plan-1-tax-monitor-setup-ongoing-support-cancelled.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737617 |
+| Circle 11 — Ongoing Support — Created/Paid | Plan 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-11-29352-plan-1-tax-monitor-setup-ongoing-support-created-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737637 |
+| Circle 12 — Ongoing Support — Expired | Plan 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-12-29352-plan-1-tax-monitor-setup-ongoing-support-expired.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737657 |
+| Circle 13 — Ongoing Support — Unpaid | Plan 1 | ✅ | `canonicals/tmp/29352/deal/circles/circle-13-29352-plan-1-tax-monitor-setup-ongoing-support-unpaid.md` | https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737677 |
+
 ---
 
 ## Change log
@@ -137,3 +158,4 @@ The four Appointment Generators, mirrored 1:1 from the TPP siblings with `Tax Pr
 | 2026-06-26 | M001 Appointments flipped 🔵 → ✅. Authored 4 appt canonicals under `deal/appts/` from live CU (Demo, Discovery, Onboarding Support, Exit/Offboarding Support). Added Appointments sub-table. CU parent `Item: 29355 – Appts` (80djf-700377) is under the Deal branch. | RC |
 | 2026-06-26 | Seeded **Item 29352 — Tax Monitor** (platform: tmp, CU doc `80djf-83557`) with M001 Appointments ✅ + 4 appt sub-rows, mirrored 1:1 from the TPP siblings (`Tax Prep → Tax Monitor`). Only M001 seeded; other modules out of scope. ITEMS.md repo updated but **not** pushed to CU (Inventory B sync out of this task's scope). | RC |
 | 2026-06-27 | M004 Circles flipped 🔵 → ✅. Authored 13 circle canonicals under `deal/circles/` from live CU (Phase circles 1–7 + Invoice/Plan circles 8–13). Added Circles sub-table. CU parent `Item: 29355 – Circles` (80djf-700417) is under the Deal branch. Read-only pull — no CU writes. ITEMS.md repo updated but **not** pushed to CU (Inventory B sync out of this task's scope). | RC |
+| 2026-06-27 | **Item 29352 — M004 Circles** added. Mirrored all 13 TPP circle canonicals to `canonicals/tmp/29352/deal/circles/` (`Tax Prep → Tax Monitor` swap) and pushed them to live CU via `sync:cu` under `Item: 29352 – Circles` (80djf-733737, Deal branch). CU pages 80djf-737437…737677. Added M004 row + Circles sub-table. Circle 1 was the approved pilot; Circles 2–13 followed after PE go-ahead. CU titles display single-dash per rule 8 (`normalizePageName`); canonicals keep the em-dash. `circle/manageUsers/*` admin URLs preserved verbatim (no verifiable TMP analog). | RC |

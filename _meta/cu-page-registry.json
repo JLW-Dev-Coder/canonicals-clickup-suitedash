@@ -491,6 +491,16 @@
       "sd_item_id": 29352,
       "platform": "tmp"
     },
+    "29352-deal-circles": {
+      "cu_page_id": "80djf-733737",
+      "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-733737",
+      "cu_parent_page_id": "80djf-717277",
+      "cu_doc_id": "80djf-83557",
+      "cu_page_name": "Item: 29352 – Circles",
+      "body_type": "circles-parent",
+      "sd_item_id": 29352,
+      "platform": "tmp"
+    },
     "appt-tax-monitor-setup-demo-appt": {
       "cu_page_id": "80djf-737357",
       "cu_url": "https://app.clickup.com/8402511/v/dc/80djf-83557/80djf-737357",
