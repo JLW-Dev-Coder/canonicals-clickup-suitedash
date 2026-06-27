@@ -158,3 +158,40 @@ See PART 10 of the scaffold RC prompt. Summary:
 | `npm run sync:cu -- push <slug>` | Push repo → CU |
 | `npm run sync:cu -- status` | Report drift |
 | `npm run module-config:mark-authored -- <type>` | Flip MODULES.md row to ✅ |
+
+## Weekly PostHog engagement check
+
+Automated weekly cron that pulls 7-day engagement data from PostHog and
+updates the recurring ClickUp task `86e2285zc` in Marketing Working File.
+
+- **Script:** `scripts/weekly_posthog_engagement.py`
+- **Workflow:** `.github/workflows/weekly-posthog-engagement.yml`
+- **Schedule:** Saturdays 14:00 UTC (~7am PT)
+- **Target task:** [`86e2285zc`](https://app.clickup.com/t/86e2285zc) — recurring; closes after each run and ClickUp re-opens with same ID
+
+### Required GitHub Actions secrets
+
+| Secret | Value |
+|---|---|
+| `POSTHOG_API_KEY` | Personal API key with `project:read` scope |
+| `POSTHOG_PROJECT_ID` | Numeric project ID from PostHog Settings → Project |
+| `POSTHOG_HOST` | e.g. `https://us.posthog.com` (no trailing slash) |
+| `CLICKUP_API_TOKEN` | Personal API token from ClickUp Settings → My Apps |
+
+### How it works
+
+Each run:
+1. Reads task description, extracts current "Latest report" body as the new "Prior week"
+2. Pulls 7-day PostHog data via HogQL API
+3. Composes report with deltas vs prior week
+4. Updates description: spec section stays untouched, "Latest report" section overwritten with new data, "Prior week" section overwritten with old "Latest report" body
+5. Posts a comment containing the full report (permanent archive — comments accumulate over time)
+6. Closes the task → ClickUp's recurrence rule re-opens it for next Saturday
+
+### Manual trigger
+
+Run on demand from GitHub Actions → "Weekly PostHog engagement check" → "Run workflow".
+
+### Recovery from a broken run
+
+If the script fails partway, the task may end up open with a stale description, or closed without an archive comment. Inspect the task and the latest workflow run logs. Manual re-run via `workflow_dispatch` is safe — the script is idempotent on description anchors (it always replaces the same sections), and posting a duplicate comment is recoverable (delete the older one).
