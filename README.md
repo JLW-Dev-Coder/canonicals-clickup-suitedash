@@ -103,6 +103,34 @@ If RC reports `MODULE-CONFIG MISSING`:
 3. `npm run sync:cu -- push <slug>` to update the CU mirror
 4. For Stack > CSS / Stack > JS, paste the new payload into SD (manual until SD-concat builder ships)
 
+### Creating a CU page via `sync:cu -- push` (create path)
+
+`sync:cu -- push` has two modes, selected by the canonical's frontmatter:
+
+- **Update** — `cu_page_id` is a real ID → the existing CU page body (and, for raw-markdown
+  body types, its title) is updated in place. Unchanged legacy behavior.
+- **Create** — `cu_page_id` is empty and `parent_slug` is present → a new CU page is created
+  under the resolved parent, then the new identity is back-filled into the canonical
+  (`cu_page_id`, `cu_parent_page_id`, `cu_url`, `cu_doc_id` for non-default docs, `last_synced`)
+  so the next push takes the update path.
+
+Create-path resolution:
+- **Parent** comes from `_meta/cu-page-registry.json` keyed by `parent_slug` (must have a `cu_page_id`).
+- **Doc** is resolved parent `cu_doc_id` → canonical `cu_doc_id` → env default (`CLICKUP_TAX_PREP_DOC_ID`),
+  routed through `getDocId(docId)` in `clickup-client.ts`.
+- **Raw-markdown body types** (`appt`, `circle`, `course`) push unfenced; code-stack types stay fenced.
+
+If page creation fails the script prints a manual fallback (parent / name / doc / error) and exits
+non-zero without mutating the canonical.
+
+**Create-path test coverage (smoke gap).** The create path's first live exercise is Circles Prompt 2
+against 13 TMP Circle pages, not a dedicated smoke test. ClickUp's public API exposes no page-delete
+(`DELETE` on the page route returns `405 Method Not Allowed`), so live smoke tests cannot be cleaned up
+automatically — the "no live test artifacts" rule disqualifies a live create+delete smoke. Coverage for
+the create path comes from: (1) a dry-run validating payload shape, parent resolution, doc routing, and
+back-fill; (2) live proof of the shared `getDocId(docId)` path via TMP appt update; (3) the update-path
+regression smoke. The 13 Circles pushes are the real first run.
+
 ### Recovering from direct CU edits
 
 `npm run sync:cu -- pull <slug>` overwrites local with CU's current content. Review the diff in git.
