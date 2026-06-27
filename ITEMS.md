@@ -48,7 +48,7 @@ status: live
 | M001 | Appointments | ✅ | `canonicals/tpp/29355/deal/appts/` (4 appts — see sub-table below) | [Item: 29355 – Appts](https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700377) |
 | M002 | Auto-Templates | 🔵 | — | (link in CU) |
 | M003 | Business Sectors | 🔵 | — | (link in CU) |
-| M004 | Circles | 🔵 | — | (link in CU) |
+| M004 | Circles | ✅ | `canonicals/tpp/29355/deal/circles/` (13 circles — see sub-table below) | [Item: 29355 – Circles](https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700417) |
 | M005 | Content Categories | 🔵 | — | (link in CU) |
 | M006 | Custom Fields | 🔵 | — | (link in CU) |
 | M007 | Dashes | 🔵 | — | (link in CU) |
@@ -77,6 +77,26 @@ The four Appointment Generators. CU parent `Item: 29355 – Appts` (80djf-700377
 | Discovery Appt | Tax Prep Setup — Digital Coffee | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-discovery-appt.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701237 |
 | Onboarding Support | Tax Prep Setup — Onboarding Support | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-onboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709617 |
 | Exit/Offboarding Support | Tax Prep Setup — Exit/Offboarding Support | ✅ | `canonicals/tpp/29355/deal/appts/appt-tax-prep-setup-exit-offboarding-support.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-709777 |
+
+### Circles (under M004)
+
+The 13 Circles. CU parent `Item: 29355 – Circles` (80djf-700417) lives under the **Deal** branch (not the Order branch); canonicals mirror that location under `deal/circles/`. All 13 authored verbatim from live CU on 2026-06-27 (read-only pull — no CU writes). Two body shapes: **Phase circles 1–7** (Deal pipeline) carry the full `## Configuration` + `## Reference` block (Reference Title, Description, CRM Targets, Status `Active`, Color placeholder, Phase Position, Previous/Next Phase, Linked Modules `M004 Circles`); **Invoice/Plan circles 8–13** carry only the two `circle/manageUsers/` admin URLs (live state — minimal, not stubs). Live bodies' Linked Modules confirm the `M004` numbering.
+
+| Circle | Segment | Status | Repo path | CU page |
+|---|---|---|---|---|
+| Circle 1 — Lead Capture & Intake | Deal Phase 1/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-1-29355-deal-phase-1-lead-capture-and-intake.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700437 |
+| Circle 2 — Qualify & Segment | Deal Phase 2/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-2-29355-deal-phase-2-qualify-and-segment.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700457 |
+| Circle 3 — Prospect Discovery Call | Deal Phase 3/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-3-29355-deal-phase-3-prospect-discovery-call.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700477 |
+| Circle 4 — Offer & Close | Deal Phase 4/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-4-29355-deal-phase-4-offer-and-close.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700497 |
+| Circle 5 — Client Onboarding & Setup | Deal Phase 5/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-5-29355-deal-phase-5-client-onboarding-and-setup.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700517 |
+| Circle 6 — Early Wins & Results | Deal Phase 6/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-6-29355-deal-phase-6-early-wins-and-results.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700537 |
+| Circle 7 — Upsell, Referral & Testimonial | Deal Phase 7/7 | ✅ | `canonicals/tpp/29355/deal/circles/circle-7-29355-deal-phase-7-upsell-referral-and-testimonial.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-700557 |
+| Circle 8 — Member Addition — Member Paid | Invoice Add-On 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-8-29355-invoice-add-on-1-tax-prep-setup-member-addition-member-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701817 |
+| Circle 9 — Member Paid | Invoice Item 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-9-29355-invoice-item-1-tax-prep-setup-member-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-701797 |
+| Circle 10 — Ongoing Support — Cancelled | Plan 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-10-29355-plan-1-tax-prep-setup-ongoing-support-cancelled.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-710077 |
+| Circle 11 — Ongoing Support — Created/Paid | Plan 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-11-29355-plan-1-tax-prep-setup-ongoing-support-created-paid.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-710097 |
+| Circle 12 — Ongoing Support — Expired | Plan 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-12-29355-plan-1-tax-prep-setup-ongoing-support-expired.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-710117 |
+| Circle 13 — Ongoing Support — Unpaid | Plan 1 | ✅ | `canonicals/tpp/29355/deal/circles/circle-13-29355-plan-1-tax-prep-setup-ongoing-support-unpaid.md` | https://app.clickup.com/8402511/v/dc/80djf-83497/80djf-710057 |
 
 ### Order branch — LMS Courses (under M021)
 
@@ -116,3 +136,4 @@ The four Appointment Generators, mirrored 1:1 from the TPP siblings with `Tax Pr
 | 2026-05-08 | Initial inventory. Item 29355 seeded. | JLW |
 | 2026-06-26 | M001 Appointments flipped 🔵 → ✅. Authored 4 appt canonicals under `deal/appts/` from live CU (Demo, Discovery, Onboarding Support, Exit/Offboarding Support). Added Appointments sub-table. CU parent `Item: 29355 – Appts` (80djf-700377) is under the Deal branch. | RC |
 | 2026-06-26 | Seeded **Item 29352 — Tax Monitor** (platform: tmp, CU doc `80djf-83557`) with M001 Appointments ✅ + 4 appt sub-rows, mirrored 1:1 from the TPP siblings (`Tax Prep → Tax Monitor`). Only M001 seeded; other modules out of scope. ITEMS.md repo updated but **not** pushed to CU (Inventory B sync out of this task's scope). | RC |
+| 2026-06-27 | M004 Circles flipped 🔵 → ✅. Authored 13 circle canonicals under `deal/circles/` from live CU (Phase circles 1–7 + Invoice/Plan circles 8–13). Added Circles sub-table. CU parent `Item: 29355 – Circles` (80djf-700417) is under the Deal branch. Read-only pull — no CU writes. ITEMS.md repo updated but **not** pushed to CU (Inventory B sync out of this task's scope). | RC |
