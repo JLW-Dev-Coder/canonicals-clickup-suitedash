@@ -43,7 +43,9 @@ export function validateFrontmatter(fm: Partial<BaseFrontmatter>, slug: string):
   if (!fm.body_type) errors.push('frontmatter.body_type missing');
   if (fm.sd_item_id === undefined) errors.push('frontmatter.sd_item_id missing (use null for meta-inventory files)');
   if (!fm.platform) errors.push('frontmatter.platform missing');
-  if (!fm.cu_page_id) errors.push('frontmatter.cu_page_id missing');
+  // cu_page_id present ⇒ update path. cu_page_id empty + parent_slug present ⇒ create
+  // intent (cu-push resolves the parent and back-fills the ID). Neither ⇒ error.
+  if (!fm.cu_page_id && !fm.parent_slug) errors.push('frontmatter.cu_page_id or parent_slug required (cu_page_id for update, parent_slug for create)');
   if (!fm.status) errors.push('frontmatter.status missing');
   if (fm.status && !['live', 'draft', 'deprecated'].includes(fm.status)) {
     errors.push(`frontmatter.status (${fm.status}) must be live | draft | deprecated`);

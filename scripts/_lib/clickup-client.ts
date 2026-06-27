@@ -52,8 +52,8 @@ export async function updatePage(pageId: string, content: string, name?: string,
   if (!res.ok) throw new Error(`CU update failed: ${res.status} ${res.statusText} — ${await res.text()}`);
 }
 
-export async function createPage(params: { parent_page_id: string; name: string; content: string }): Promise<CUPage> {
-  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId()}/pages`, {
+export async function createPage(params: { parent_page_id: string; name: string; content: string; docId?: string }): Promise<CUPage> {
+  const res = await fetch(`${CU_API_BASE}/workspaces/${getWorkspaceId()}/docs/${getDocId(params.docId)}/pages`, {
     method: 'POST',
     headers: { Authorization: getToken(), 'Content-Type': 'application/json' },
     body: JSON.stringify({
