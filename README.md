@@ -161,13 +161,66 @@ See PART 10 of the scaffold RC prompt. Summary:
 
 ## Weekly PostHog engagement check
 
-Automated weekly cron that pulls 7-day engagement data from PostHog and
-updates the recurring ClickUp task `86e2285zc` in Marketing Working File.
+Automated weekly cron that pulls 7-day PostHog `$pageview` engagement per host
+and writes it as a structured **"Site Traffic [date]" subtask** under the
+matching site task in the **Sites** list (`901715084230`). Each weekly window
+is re-queried from PostHog, so prior weeks can be backfilled.
 
-- **Script:** `scripts/weekly_posthog_engagement.py`
+- **Script:** `scripts/weekly_posthog_sites.py`
 - **Workflow:** `.github/workflows/weekly-posthog-engagement.yml`
 - **Schedule:** Saturdays 14:00 UTC (~7am PT)
-- **Target task:** [`86e2285zc`](https://app.clickup.com/t/86e2285zc) — recurring; closes after each run and ClickUp re-opens with same ID
+- **Target:** one `Site Traffic [YYYY-MM-DD Saturday]` subtask per site, per week, under the site's parent task in the **Sites** list
+
+> The previous markdown-report writer (`scripts/weekly_posthog_engagement.py`,
+> which overwrote description sections of task `86e2285zc`) is retired — that
+> task no longer carries the description anchors it needed. The old script file
+> remains in the repo, unreferenced, for history. Each run of the new script
+> still posts a short one-line **run-summary comment** to `86e2285zc` as an
+> audit trail (weeks processed, subtasks upserted, hosts skipped).
+
+### Custom fields written
+
+For each site's weekly subtask the script sets **six** custom fields (raw
+counts + the two window-boundary dates):
+
+| CF | Type | Source |
+|---|---|---|
+| PostHog Page Views | number | `count()` of `$pageview` |
+| PostHog Unique Visitors | number | `count(DISTINCT distinct_id)` |
+| PostHog Sessions | number | `count(DISTINCT $session_id)` |
+| PostHog Internal Navs | number | `$pageview` with `$prev_pageview_pathname` set |
+| Traffic Tracked Start Date | date | window start = `S − 7 days` |
+| Traffic Tracked End Date | date | last full day counted = `S − 1 day` |
+
+The two ratio fields (**PostHog Page/Session**, **PostHog Engagement Rate**)
+are ClickUp **formula** custom fields — the script never writes them; ClickUp
+derives them from the six above.
+
+**Window semantics** — for a week ending on Saturday `S`: window is
+`[S − 7 days 00:00 UTC, S 00:00 UTC)`; the subtask is named
+`Site Traffic [S:%Y-%m-%d %A]`. Date CFs are written at 11:00 UTC (not
+midnight) so the calendar day renders correctly for US-timezone viewers.
+
+**Host → site mapping** — each site parent-task name is normalized (strip
+scheme, strip trailing `/`, lowercase) and PostHog `$host` values are matched
+against it. Hosts with no matching site task (deploy-preview `*.pages.dev`,
+scanners, brand-new hosts) are **skipped and reported** — the script never
+auto-creates roster tasks. A `HOST_ALIASES` map in the script bridges known
+spelling gaps (currently empty).
+
+### Backfill
+
+The `workflow_dispatch` input **`backfill_from`** (a Saturday `YYYY-MM-DD`,
+snapped to that week's Saturday if a non-Saturday is given) re-writes every
+week from that Saturday through the current week. Leave it blank to process
+only the current trailing week (matching the cron). Backfill is **idempotent**
+— an existing week's subtask is updated in place, never duplicated — and a
+window that returns zero PostHog rows is reported and skipped rather than
+written as empty.
+
+Locally: `python scripts/weekly_posthog_sites.py 2026-06-28` (or set
+`BACKFILL_FROM`). Add `--dry-run` to query PostHog, read the roster, and print
+the planned per-site writes without touching ClickUp.
 
 ### Required GitHub Actions secrets
 
@@ -178,20 +231,14 @@ updates the recurring ClickUp task `86e2285zc` in Marketing Working File.
 | `POSTHOG_HOST` | e.g. `https://us.posthog.com` (no trailing slash) |
 | `CLICKUP_API_TOKEN` | Personal API token from ClickUp Settings → My Apps |
 
-### How it works
-
-Each run:
-1. Reads task description, extracts current "Latest report" body as the new "Prior week"
-2. Pulls 7-day PostHog data via HogQL API
-3. Composes report with deltas vs prior week
-4. Updates description: spec section stays untouched, "Latest report" section overwritten with new data, "Prior week" section overwritten with old "Latest report" body
-5. Posts a comment containing the full report (permanent archive — comments accumulate over time)
-6. Closes the task → ClickUp's recurrence rule re-opens it for next Saturday
-
 ### Manual trigger
 
-Run on demand from GitHub Actions → "Weekly PostHog engagement check" → "Run workflow".
+Run on demand from GitHub Actions → "Weekly PostHog engagement check" → "Run
+workflow", optionally filling in `backfill_from`.
 
 ### Recovery from a broken run
 
-If the script fails partway, the task may end up open with a stale description, or closed without an archive comment. Inspect the task and the latest workflow run logs. Manual re-run via `workflow_dispatch` is safe — the script is idempotent on description anchors (it always replaces the same sections), and posting a duplicate comment is recoverable (delete the older one).
+A partial run is safe to re-run: the script is idempotent (it updates the
+same-named weekly subtask rather than creating a duplicate), so a
+`workflow_dispatch` re-run — with the same `backfill_from` if you were
+backfilling — simply overwrites the same subtasks with the same values.

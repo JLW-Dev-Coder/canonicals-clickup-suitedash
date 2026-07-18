@@ -4,7 +4,13 @@ on:
   schedule:
     # Saturdays at 14:00 UTC (~7am PT)
     - cron: '0 14 * * 6'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      backfill_from:
+        description: 'Optional Saturday YYYY-MM-DD; re-writes every week from that Saturday through the current week. Leave blank to process only the current trailing week.'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -20,11 +26,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run weekly check
+      - name: Run weekly Sites-list subtask writer
         env:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
           POSTHOG_PROJECT_ID: ${{ secrets.POSTHOG_PROJECT_ID }}
           POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
           CLICKUP_API_TOKEN: ${{ secrets.CLICKUP_API_TOKEN }}
+          BACKFILL_FROM: ${{ inputs.backfill_from }}
           PYTHONUTF8: '1'
-        run: python scripts/weekly_posthog_engagement.py
+        run: python scripts/weekly_posthog_sites.py
