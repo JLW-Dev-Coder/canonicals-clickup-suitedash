@@ -48,6 +48,12 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
 SITES_LIST_ID = "901715084230"
 RUN_SUMMARY_TASK_ID = "86e2285zc"  # optional one-line audit comment per run
 
+# Site Traffic subtasks are set to the "archive" status to match JLW's
+# hand-made template subtask (86e2db660). The Sites-list default status is
+# "hold" (yellow); left unset, new subtasks would inherit "hold". "archive"
+# is a valid settable status on this list (type=done, color #aa8d80).
+SUBTASK_STATUS = "archive"
+
 # The six writable custom fields. The two ratio CFs (PostHog Page/Session,
 # PostHog Engagement Rate) are formula fields -- ClickUp derives them, so we
 # never write them.
@@ -101,6 +107,10 @@ def http_post(url: str, headers: dict, body: dict) -> dict:
 
 def http_get(url: str, headers: dict) -> dict:
     return _http("GET", url, headers)
+
+
+def http_put(url: str, headers: dict, body: dict) -> dict:
+    return _http("PUT", url, headers, body)
 
 
 # ─── PostHog ────────────────────────────────────────────────────────────
@@ -207,9 +217,17 @@ def create_subtask(parent_id: str, name: str) -> str:
     resp = http_post(
         f"{CLICKUP_BASE}/list/{SITES_LIST_ID}/task",
         CLICKUP_HEADERS,
-        {"name": name, "parent": parent_id},
+        {"name": name, "parent": parent_id, "status": SUBTASK_STATUS},
     )
     return resp["id"]
+
+
+def set_task_status(task_id: str, status: str) -> None:
+    http_put(
+        f"{CLICKUP_BASE}/task/{task_id}",
+        CLICKUP_HEADERS,
+        {"status": status},
+    )
 
 
 def set_custom_field(task_id: str, field_id: str, value) -> None:
@@ -290,6 +308,10 @@ def upsert_site_subtask(
 
     if exists:
         sub_id = subtask_index[key]
+        # create_subtask() sets SUBTASK_STATUS on the create body, so only the
+        # update path needs an explicit status PUT to normalize an existing
+        # subtask that was written before this (list default was "hold").
+        set_task_status(sub_id, SUBTASK_STATUS)
         action = "updated"
     else:
         sub_id = create_subtask(parent_id, name)
