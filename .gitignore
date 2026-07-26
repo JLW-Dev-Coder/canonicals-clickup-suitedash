@@ -6,3 +6,5 @@ node_modules/
 .cu-cache/
 .discovered-parents.json
 _scratch/
+
+__pycache__/
