@@ -80,6 +80,30 @@ DATE_CF_HOUR_UTC = 11
 # based on a misremembered task name and would have skipped the site entirely.)
 HOST_ALIASES: dict[str, str] = {}
 
+# ─── Internal (Owner) traffic exclusion ─────────────────────────────────
+# The Owner's own browsing was being counted as audience. Verified against
+# PostHog 2026-07-25: for the week ending 07-24, green.virtuallaunch.pro
+# reported 82 unique visitors of which 80 pageviews were the Owner's own four
+# devices, and 280ea.virtuallaunch.pro reported 19 pageviews of which 6 were
+# external.
+#
+# Matched on IP, deliberately NOT on geo. San Diego / El Cajon was an analysis
+# proxy only -- California is the #1 target state for 280EA outreach, so a geo
+# filter would silently delete real prospects from the Owner's own reporting.
+#
+# The IPv6 suffix rotates per device (privacy extensions); the /64 network
+# prefix is the stable handle. Residential allocations can still move: if the
+# ISP re-leases either address this predicate matches nothing and the numbers
+# quietly re-inflate. That is why the run reports its excluded count -- a drop
+# to zero is the drift signal. Update these values, do not remove the filter.
+INTERNAL_IPV4 = "98.176.144.178"
+INTERNAL_IPV6_PREFIX = "2600:8801:8d1a:2600:"
+
+INTERNAL_TRAFFIC_SQL = (
+    f"(coalesce(toString(properties.$ip), '') = '{INTERNAL_IPV4}'"
+    f" OR coalesce(toString(properties.$ip), '') LIKE '{INTERNAL_IPV6_PREFIX}%')"
+)
+
 # ─── Env ────────────────────────────────────────────────────────────────
 POSTHOG_API_KEY = os.environ["POSTHOG_API_KEY"]
 POSTHOG_PROJECT_ID = os.environ["POSTHOG_PROJECT_ID"]
@@ -127,15 +151,22 @@ def run_hogql(query: str) -> list[dict]:
     return [dict(zip(columns, row)) for row in rows]
 
 
-def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> list[dict]:
-    """Per-host pageview totals + internal navs for [window_start, window_end_excl)."""
+def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> tuple[list[dict], int]:
+    """Per-host external pageview totals + internal navs for [window_start, window_end_excl).
+
+    Owner traffic (see INTERNAL_TRAFFIC_SQL) is excluded from every metric.
+    Returns (rows, excluded_pageview_count) where the count covers the whole
+    window across all hosts, including hosts dropped for having no external
+    traffic.
+    """
     start = window_start.isoformat()
     end = window_end_excl.isoformat()
     totals_q = f"""
     SELECT properties.$host AS host,
-           count() AS pageviews,
-           count(DISTINCT distinct_id) AS unique_visitors,
-           count(DISTINCT properties.$session_id) AS sessions
+           countIf(NOT {INTERNAL_TRAFFIC_SQL}) AS pageviews,
+           uniqIf(distinct_id, NOT {INTERNAL_TRAFFIC_SQL}) AS unique_visitors,
+           uniqIf(properties.$session_id, NOT {INTERNAL_TRAFFIC_SQL}) AS sessions,
+           countIf({INTERNAL_TRAFFIC_SQL}) AS excluded_pageviews
     FROM events
     WHERE event = '$pageview'
       AND timestamp >= '{start} 00:00:00'
@@ -152,14 +183,22 @@ def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> list[dict]:
       AND timestamp >= '{start} 00:00:00'
       AND timestamp <  '{end} 00:00:00'
       AND properties.$prev_pageview_pathname IS NOT NULL
+      AND NOT {INTERNAL_TRAFFIC_SQL}
     GROUP BY host
     ORDER BY internal_navs DESC
     LIMIT 100
     """
     totals = run_hogql(totals_q)
     navs_by_host = {r["host"]: r["internal_navs"] for r in run_hogql(navs_q)}
+    # Sum before dropping empties -- a host whose traffic was entirely internal
+    # still contributed to the excluded count and must not vanish from it.
+    excluded_total = sum(int(r.get("excluded_pageviews") or 0) for r in totals)
     merged = []
     for r in totals:
+        if not r["pageviews"]:
+            # No external traffic this window. Previously such a host produced
+            # no row at all; keep that behaviour so no all-zero subtask is written.
+            continue
         merged.append(
             {
                 "host": r["host"],
@@ -169,7 +208,7 @@ def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> list[dict]:
                 "internal_navs": navs_by_host.get(r["host"], 0),
             }
         )
-    return merged
+    return merged, excluded_total
 
 
 # ─── ClickUp ────────────────────────────────────────────────────────────
@@ -369,6 +408,7 @@ def main() -> int:
           f"existing subtasks indexed: {len(subtask_index)}")
 
     total_written = 0
+    total_excluded = 0
     empty_weeks: list[str] = []
     skipped_hosts: set[str] = set()
     ambiguous_hits: set[str] = set()
@@ -383,7 +423,8 @@ def main() -> int:
 
         print(f"\n=== Week ending {s} — window [{window_start} .. {window_end_excl}) "
               f"— '{name}' ===")
-        rows = fetch_window(window_start, window_end_excl)
+        rows, excluded_this_week = fetch_window(window_start, window_end_excl)
+        total_excluded += excluded_this_week
         if not rows:
             print("  PostHog returned zero rows for all hosts — skipping (no writes).")
             empty_weeks.append(s.isoformat())
@@ -420,7 +461,17 @@ def main() -> int:
     print(f"site subtasks {'planned' if dry_run else 'written'}: {total_written}")
     print(f"hosts skipped   : {sorted(skipped_hosts) or 'none'}")
     print(f"ambiguous hosts : {sorted(ambiguous_hits) or 'none'}")
+    print(f"internal pageviews excluded: {total_excluded}")
     print(f"errors          : {errors or 'none'}")
+
+    if total_excluded == 0:
+        print(
+            "\n[WARN] The internal-traffic filter matched zero pageviews across "
+            "every window. Either the Owner genuinely did not browse any tracked "
+            "site, or the Owner's IP allocation has moved and the reported "
+            "figures are re-inflated. Verify INTERNAL_IPV4 / INTERNAL_IPV6_PREFIX "
+            "against a recent $pageview before trusting this run."
+        )
 
     if not dry_run:
         skipped_str = ", ".join(sorted(skipped_hosts)) if skipped_hosts else "none"
@@ -428,6 +479,7 @@ def main() -> int:
             f"Weekly PostHog -> Sites subtasks · "
             f"weeks {weeks[0].isoformat()}..{weeks[-1].isoformat()} ({len(weeks)} window(s)) · "
             f"{total_written} site-subtask(s) upserted · "
+            f"{total_excluded} internal pageview(s) excluded · "
             f"{len(empty_weeks)} empty week(s) · "
             f"{len(skipped_hosts)} host(s) skipped: {skipped_str}"
         )
