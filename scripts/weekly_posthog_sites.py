@@ -22,14 +22,27 @@ Environment variables required:
 Optional:
   BACKFILL_FROM          A Saturday YYYY-MM-DD (snapped to that week's
                          Saturday if a non-Saturday is given). If set, every
-                         week from that Saturday through the most recent
-                         Saturday is (re)written.
+                         week from that Saturday through BACKFILL_TO (default:
+                         the most recent Saturday) is (re)written.
+  BACKFILL_TO            A Saturday YYYY-MM-DD bounding the *end* of the
+                         backfill range, so a single window can be pinned and
+                         run on its own (BACKFILL_FROM == BACKFILL_TO). Never
+                         allowed past the most recent Saturday -- we do not
+                         write windows that have not closed yet.
 
 CLI:
-  python scripts/weekly_posthog_sites.py [YYYY-MM-DD] [--dry-run]
-    positional YYYY-MM-DD  same as BACKFILL_FROM (CLI wins over env)
-    --dry-run              query PostHog + read the roster, print the planned
-                           per-site writes, and touch nothing in ClickUp
+  python scripts/weekly_posthog_sites.py [FROM] [TO] [--dry-run]
+    positional 1 YYYY-MM-DD  same as BACKFILL_FROM (CLI wins over env)
+    positional 2 YYYY-MM-DD  same as BACKFILL_TO   (CLI wins over env)
+    --dry-run                query PostHog + read the roster, print the planned
+                             per-site writes (with the subtask id each one
+                             resolves to), and touch nothing in ClickUp
+
+Every live window ends with a post-write reconciliation guard: PostHog is
+re-queried for the same window through the same function, ClickUp is re-read,
+and the stored custom-field values and subtask counts must agree. A mismatch
+prints the offending host/field and aborts the run non-zero rather than
+leaving a half-written week that looks complete.
 """
 
 import os
@@ -63,6 +76,15 @@ CF_SESSIONS = "5836f37d-de29-47b2-b71d-09be77d456bb"         # number
 CF_INTERNAL_NAVS = "f706493a-fbff-4a3c-a6e7-1d41a7c07374"    # number
 CF_TRACK_START = "a0305241-8b03-4e9c-878c-f4af3ee88549"      # date
 CF_TRACK_END = "1e1fb3b2-be4e-4990-b087-d62ffcd5e341"        # date
+
+# The four count fields the reconciliation guard re-checks after writing.
+# (row key, custom field id, human label for the failure line)
+GUARD_FIELDS = (
+    ("pageviews", CF_PAGE_VIEWS, "page views"),
+    ("unique_visitors", CF_UNIQUE_VISITORS, "unique visitors"),
+    ("sessions", CF_SESSIONS, "sessions"),
+    ("internal_navs", CF_INTERNAL_NAVS, "internal navs"),
+)
 
 # Date custom fields are written at 11:00:00 UTC, not 00:00 UTC. This exactly
 # reproduces the hand-made example subtask's stored epochs
@@ -219,16 +241,20 @@ CLICKUP_HEADERS = {
 }
 
 
-def fetch_sites_and_subtasks() -> tuple[dict, set, dict]:
+def fetch_sites_and_subtasks() -> tuple[dict, set, dict, dict]:
     """
     Walk the Sites list (parents + subtasks, incl. closed-status tasks) with
     pagination. Returns:
       roster        : {normalized_host -> site_task_id} for uniquely-named parents
       ambiguous     : {normalized_host} that map to >1 parent task
       subtask_index : {(parent_id, subtask_name) -> subtask_id}
+      subtask_cf    : {(parent_id, subtask_name) -> {custom_field_id -> value}}
+                      -- the values ClickUp actually has stored, which is what
+                      the reconciliation guard compares against.
     """
     norm_to_ids: dict[str, list[str]] = {}
     subtask_index: dict[tuple[str, str], str] = {}
+    subtask_cf: dict[tuple[str, str], dict] = {}
     page = 0
     while True:
         url = (
@@ -240,7 +266,11 @@ def fetch_sites_and_subtasks() -> tuple[dict, set, dict]:
         for t in tasks:
             parent = t.get("parent")
             if parent:
-                subtask_index[(parent, t["name"])] = t["id"]
+                key = (parent, t["name"])
+                subtask_index[key] = t["id"]
+                subtask_cf[key] = {
+                    cf["id"]: cf.get("value") for cf in (t.get("custom_fields") or [])
+                }
             else:
                 norm_to_ids.setdefault(normalize_host(t["name"]), []).append(t["id"])
         if resp.get("last_page") or not tasks:
@@ -249,7 +279,20 @@ def fetch_sites_and_subtasks() -> tuple[dict, set, dict]:
 
     roster = {n: ids[0] for n, ids in norm_to_ids.items() if len(ids) == 1}
     ambiguous = {n for n, ids in norm_to_ids.items() if len(ids) > 1}
-    return roster, ambiguous, subtask_index
+    return roster, ambiguous, subtask_index, subtask_cf
+
+
+def cf_int(cf_values: dict, field_id: str) -> int | None:
+    """Read a ClickUp number CF back as an int. ClickUp returns numbers as
+    strings ("209") and omits the key entirely when the field was never set;
+    None means 'not stored', which is never equal to a real count."""
+    v = cf_values.get(field_id)
+    if v is None or v == "":
+        return None
+    try:
+        return int(float(v))
+    except (TypeError, ValueError):
+        return None
 
 
 def create_subtask(parent_id: str, name: str) -> str:
@@ -338,12 +381,17 @@ def upsert_site_subtask(
     tracked_end: dt.date,
     subtask_index: dict,
     dry_run: bool,
-) -> str:
-    """Create-or-update the Site Traffic subtask and set the six CFs. Returns action."""
+) -> tuple[str, str | None]:
+    """Create-or-update the Site Traffic subtask and set the six CFs.
+
+    Returns (action, subtask_id). In dry-run the id is the existing subtask this
+    write would land on, or None if it would create -- that is what makes
+    "update, not duplicate" checkable before a backfill touches anything.
+    """
     key = (parent_id, name)
     exists = key in subtask_index
     if dry_run:
-        return "would-update" if exists else "would-create"
+        return ("would-update" if exists else "would-create", subtask_index.get(key))
 
     if exists:
         sub_id = subtask_index[key]
@@ -363,24 +411,123 @@ def upsert_site_subtask(
     set_custom_field(sub_id, CF_INTERNAL_NAVS, row["internal_navs"])
     set_custom_field(sub_id, CF_TRACK_START, date_cf_ms(tracked_start))
     set_custom_field(sub_id, CF_TRACK_END, date_cf_ms(tracked_end))
-    return action
+    return (action, sub_id)
+
+
+# ─── Post-write reconciliation guard ────────────────────────────────────
+def reconcile_window(
+    window_start: dt.date,
+    window_end_excl: dt.date,
+    name: str,
+    written: dict,
+    planned: int,
+    pre_label_count: int,
+    created: int,
+) -> list[str]:
+    """Verify a window's writes actually landed and still match PostHog.
+
+    Three independent asserts, because "the numbers looked plausible" is how a
+    half-written week gets mistaken for a complete one:
+
+      1. Values -- re-query PostHog for the *same* window via fetch_window(), so
+         the external-only filter and both statements are identical by
+         construction rather than by copy, then compare against the values
+         ClickUp has stored (read back, not the values we believe we sent).
+      2. Write count -- every host row the writer decided to write must have
+         produced exactly one recorded write. A silently dropped host is the
+         failure mode this catches.
+      3. Subtask count -- the number of subtasks carrying this week's date label
+         must have moved by exactly the number we created, which catches a
+         duplicate as well as a vanished subtask.
+
+    Returns a list of human-readable failures; empty means the window is sound.
+    """
+    failures: list[str] = []
+
+    rows, _ = fetch_window(window_start, window_end_excl)
+    requeried = {r["host"]: r for r in rows}
+    _, _, subtask_index, subtask_cf = fetch_sites_and_subtasks()
+
+    if len(written) != planned:
+        failures.append(
+            f"write count: writer decided to write {planned} host row(s) but "
+            f"recorded {len(written)} completed write(s)"
+        )
+
+    post_label_count = sum(1 for (_p, n) in subtask_index if n == name)
+    expected_label_count = pre_label_count + created
+    if post_label_count != expected_label_count:
+        failures.append(
+            f"subtask count: subtasks named '{name}' went {pre_label_count} -> "
+            f"{post_label_count}, expected {expected_label_count} "
+            f"({created} created this window)"
+        )
+
+    for host, w in sorted(written.items()):
+        key = (w["parent_id"], name)
+        sub_id = subtask_index.get(key)
+        if sub_id is None:
+            failures.append(
+                f"{host}: no subtask '{name}' found under parent {w['parent_id']} after writing"
+            )
+            continue
+        if sub_id != w["subtask_id"]:
+            failures.append(
+                f"{host}: subtask id changed under us — wrote {w['subtask_id']}, "
+                f"re-read {sub_id}"
+            )
+        r2 = requeried.get(host)
+        if r2 is None:
+            failures.append(
+                f"{host}: had a row at write time but is absent from the re-query"
+            )
+            continue
+        stored_cfs = subtask_cf.get(key, {})
+        for row_key, field_id, label in GUARD_FIELDS:
+            stored = cf_int(stored_cfs, field_id)
+            expected = int(r2[row_key] or 0)
+            if stored != expected:
+                failures.append(
+                    f"{host} [{label}] subtask={sub_id}: written={stored} "
+                    f"re-queried={expected}"
+                )
+    return failures
 
 
 # ─── Main ───────────────────────────────────────────────────────────────
-def parse_args(argv: list[str]) -> tuple[str | None, bool]:
+def parse_args(argv: list[str]) -> tuple[str | None, str | None, bool]:
     dry_run = "--dry-run" in argv
     positional = [a for a in argv[1:] if not a.startswith("-")]
-    backfill = positional[0] if positional else os.environ.get("BACKFILL_FROM") or None
+    backfill = positional[0] if len(positional) > 0 else os.environ.get("BACKFILL_FROM") or None
+    backfill_to = positional[1] if len(positional) > 1 else os.environ.get("BACKFILL_TO") or None
     if backfill is not None:
         backfill = backfill.strip() or None
-    return backfill, dry_run
+    if backfill_to is not None:
+        backfill_to = backfill_to.strip() or None
+    return backfill, backfill_to, dry_run
 
 
 def main() -> int:
-    backfill_from, dry_run = parse_args(sys.argv)
+    backfill_from, backfill_to, dry_run = parse_args(sys.argv)
 
     today = dt.date.today()
-    s_end = most_recent_saturday(today)
+    latest_closed = most_recent_saturday(today)
+    s_end = latest_closed
+    if backfill_to:
+        try:
+            raw_to = dt.datetime.strptime(backfill_to, "%Y-%m-%d").date()
+        except ValueError:
+            print(f"ERROR: backfill_to '{backfill_to}' is not YYYY-MM-DD")
+            return 1
+        s_end = most_recent_saturday(raw_to)
+        if s_end != raw_to:
+            print(f"[note] backfill_to {raw_to} is not a Saturday; snapped to {s_end}")
+        if s_end > latest_closed:
+            print(
+                f"ERROR: backfill_to {s_end} is past the most recent closed "
+                f"Saturday {latest_closed}; refusing to write an open window"
+            )
+            return 1
     if backfill_from:
         try:
             raw = dt.datetime.strptime(backfill_from, "%Y-%m-%d").date()
@@ -403,7 +550,7 @@ def main() -> int:
           f"({len(weeks)} window(s))")
 
     print("Fetching Sites roster + existing subtasks ...")
-    roster, ambiguous, subtask_index = fetch_sites_and_subtasks()
+    roster, ambiguous, subtask_index, _subtask_cf = fetch_sites_and_subtasks()
     print(f"  roster: {len(roster)} site task(s); ambiguous names: {len(ambiguous)}; "
           f"existing subtasks indexed: {len(subtask_index)}")
 
@@ -413,6 +560,7 @@ def main() -> int:
     skipped_hosts: set[str] = set()
     ambiguous_hits: set[str] = set()
     errors: list[str] = []
+    guard_failures: list[str] = []
 
     for s in weeks:
         window_start = s - dt.timedelta(days=7)  # inclusive 00:00 UTC
@@ -420,6 +568,9 @@ def main() -> int:
         tracked_start = window_start              # Traffic Tracked Start Date
         tracked_end = s - dt.timedelta(days=1)    # last full day counted
         name = f"Site Traffic [{s:%Y-%m-%d %A}]"
+        # Counted before this window's writes so the guard can assert the
+        # label's subtask count moved by exactly the number we created.
+        pre_label_count = sum(1 for (_p, n) in subtask_index if n == name)
 
         print(f"\n=== Week ending {s} — window [{window_start} .. {window_end_excl}) "
               f"— '{name}' ===")
@@ -429,6 +580,10 @@ def main() -> int:
             print("  PostHog returned zero rows for all hosts — skipping (no writes).")
             empty_weeks.append(s.isoformat())
             continue
+
+        planned = 0
+        created = 0
+        written: dict[str, dict] = {}
 
         for row in rows:
             host = row["host"]
@@ -444,16 +599,39 @@ def main() -> int:
                 skipped_hosts.add(host or "(empty host)")
                 print(f"  skip       {host}  ({label})")
                 continue
+            planned += 1
             try:
-                action = upsert_site_subtask(
+                action, sub_id = upsert_site_subtask(
                     detail, name, row, tracked_start, tracked_end, subtask_index, dry_run
                 )
+                total_written += 1  # "planned" in dry-run, "written" when live
                 if not dry_run:
-                    total_written += 1
-                print(f"  {action:<10} {host}  ({label})  parent={detail}")
+                    if action == "created":
+                        created += 1
+                    written[host] = {"parent_id": detail, "subtask_id": sub_id, **row}
+                sub_label = f" subtask={sub_id}" if sub_id else " subtask=(new)"
+                print(f"  {action:<12} {host}  ({label})  parent={detail}{sub_label}")
             except Exception as e:  # noqa: BLE001 - keep going; one site must not abort the run
                 errors.append(f"{s} {host}: {e}")
-                print(f"  ERROR      {host}: {e}")
+                print(f"  ERROR        {host}: {e}")
+
+        if dry_run:
+            continue
+
+        print(f"  [guard] reconciling {len(written)} written host(s) "
+              f"against a PostHog re-query ...")
+        failures = reconcile_window(
+            window_start, window_end_excl, name, written, planned, pre_label_count, created
+        )
+        if failures:
+            print(f"  [guard] FAILED for week ending {s}:")
+            for f in failures:
+                print(f"    - {f}")
+            guard_failures.extend(f"{s}: {f}" for f in failures)
+            print("  [guard] halting — remaining windows will not be processed.")
+            break
+        print(f"  [guard] OK — {len(written)} host(s) reconciled; subtasks named "
+              f"'{name}': {pre_label_count} -> {pre_label_count + created}")
 
     print("\n──────────────────────────────────────────────")
     print(f"weeks processed : {[w.isoformat() for w in weeks]}")
@@ -463,6 +641,7 @@ def main() -> int:
     print(f"ambiguous hosts : {sorted(ambiguous_hits) or 'none'}")
     print(f"internal pageviews excluded: {total_excluded}")
     print(f"errors          : {errors or 'none'}")
+    print(f"guard failures  : {guard_failures or 'none'}")
 
     if total_excluded == 0:
         print(
@@ -485,13 +664,15 @@ def main() -> int:
         )
         if errors:
             summary += f" · {len(errors)} ERROR(s)"
+        if guard_failures:
+            summary += f" · {len(guard_failures)} RECONCILIATION FAILURE(s) — run halted"
         try:
             post_run_summary(summary)
             print(f"\nPosted run-summary comment to {RUN_SUMMARY_TASK_ID}.")
         except Exception as e:  # noqa: BLE001 - comment is best-effort audit trail
             print(f"\n[warn] failed to post run-summary comment: {e}")
 
-    return 1 if errors else 0
+    return 1 if (errors or guard_failures) else 0
 
 
 if __name__ == "__main__":
