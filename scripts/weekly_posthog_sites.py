@@ -177,9 +177,10 @@ def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> tuple[list[
     """Per-host external pageview totals + internal navs for [window_start, window_end_excl).
 
     Owner traffic (see INTERNAL_TRAFFIC_SQL) is excluded from every metric.
+    A host observed in the window is returned even when all of its traffic was
+    internal, i.e. with all-zero external counts -- see the policy note below.
     Returns (rows, excluded_pageview_count) where the count covers the whole
-    window across all hosts, including hosts dropped for having no external
-    traffic.
+    window across all hosts.
     """
     start = window_start.isoformat()
     end = window_end_excl.isoformat()
@@ -217,17 +218,26 @@ def fetch_window(window_start: dt.date, window_end_excl: dt.date) -> tuple[list[
     excluded_total = sum(int(r.get("excluded_pageviews") or 0) for r in totals)
     merged = []
     for r in totals:
-        if not r["pageviews"]:
-            # No external traffic this window. Previously such a host produced
-            # no row at all; keep that behaviour so no all-zero subtask is written.
+        # Zero-external-traffic policy (spec change, approved by PE 2026-08-01).
+        # A host that PostHog saw in this window with >=1 pageview of ANY kind
+        # -- internal or external -- gets a row even when all four external
+        # values are 0, so long as it maps to a roster task. Rationale: a
+        # missing subtask is indistinguishable from a job that skipped or
+        # failed on that site, whereas an explicit 0 is a real reading.
+        #
+        # A host PostHog did not see at all still produces no row, so we never
+        # write zeros across the whole roster -- only for sites that were
+        # genuinely observed and genuinely had no external audience.
+        any_pageviews = int(r["pageviews"] or 0) + int(r.get("excluded_pageviews") or 0)
+        if any_pageviews <= 0:
             continue
         merged.append(
             {
                 "host": r["host"],
-                "pageviews": r["pageviews"],
-                "unique_visitors": r["unique_visitors"],
-                "sessions": r["sessions"],
-                "internal_navs": navs_by_host.get(r["host"], 0),
+                "pageviews": int(r["pageviews"] or 0),
+                "unique_visitors": int(r["unique_visitors"] or 0),
+                "sessions": int(r["sessions"] or 0),
+                "internal_navs": int(navs_by_host.get(r["host"], 0) or 0),
             }
         )
     return merged, excluded_total
