@@ -28,7 +28,9 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # ClickUp calls are paced to stay under the API rate limit, so a
+    # multi-window backfill spends real wall-clock on writes.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 

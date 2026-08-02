@@ -48,6 +48,7 @@ leaving a half-written week that looks complete.
 import os
 import sys
 import json
+import time
 import datetime as dt
 import urllib.request
 import urllib.error
@@ -134,17 +135,62 @@ CLICKUP_API_TOKEN = os.environ["CLICKUP_API_TOKEN"]
 
 
 # ─── HTTP helpers ───────────────────────────────────────────────────────
+# ClickUp rate limits per token (HTTP 429, ECODE APP_002). One host costs ~7
+# writes (six CFs + a status PUT), so a ten-host window is ~70 calls and
+# several windows run back-to-back will trip the limit. Discovered on the
+# 2026-07-18 backfill: six hosts lost their writes mid-window and the
+# reconciliation guard correctly refused to call the week good. Pacing plus
+# retry is the fix -- a half-written week is the exact state this whole
+# exercise exists to prevent, so it is worth spending wall-clock to avoid.
+CLICKUP_MIN_INTERVAL_S = 0.7
+CLICKUP_MAX_RETRIES = 6
+_last_clickup_call = 0.0
+
+
+def _pace_clickup() -> None:
+    """Keep at least CLICKUP_MIN_INTERVAL_S between consecutive ClickUp calls."""
+    global _last_clickup_call
+    wait = CLICKUP_MIN_INTERVAL_S - (time.monotonic() - _last_clickup_call)
+    if wait > 0:
+        time.sleep(wait)
+    _last_clickup_call = time.monotonic()
+
+
+def _retry_after_seconds(e: urllib.error.HTTPError, attempt: int) -> float:
+    """Honour Retry-After when ClickUp sends it, else exponential backoff."""
+    raw = e.headers.get("Retry-After") if e.headers else None
+    if raw is not None:
+        try:
+            return max(1.0, min(90.0, float(raw)))
+        except (TypeError, ValueError):
+            pass
+    return min(60.0, 2.0 ** attempt)
+
+
 def _http(method: str, url: str, headers: dict, body: dict | None = None) -> dict:
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            text = resp.read().decode("utf-8")
-            return json.loads(text) if text else {}
-    except urllib.error.HTTPError as e:
-        sys.stderr.write(f"HTTP {e.code} {e.reason} on {method} {url}\n")
-        sys.stderr.write(e.read().decode("utf-8", errors="replace") + "\n")
-        raise
+    is_clickup = "api.clickup.com" in url
+    for attempt in range(CLICKUP_MAX_RETRIES + 1):
+        if is_clickup:
+            _pace_clickup()
+        req = urllib.request.Request(url, data=data, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                text = resp.read().decode("utf-8")
+                return json.loads(text) if text else {}
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < CLICKUP_MAX_RETRIES:
+                delay = _retry_after_seconds(e, attempt)
+                sys.stderr.write(
+                    f"HTTP 429 on {method} {url} — retry "
+                    f"{attempt + 1}/{CLICKUP_MAX_RETRIES} in {delay:.0f}s\n"
+                )
+                time.sleep(delay)
+                continue
+            sys.stderr.write(f"HTTP {e.code} {e.reason} on {method} {url}\n")
+            sys.stderr.write(e.read().decode("utf-8", errors="replace") + "\n")
+            raise
+    raise RuntimeError(f"retry loop exhausted for {method} {url}")
 
 
 def http_post(url: str, headers: dict, body: dict) -> dict:
