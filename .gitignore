@@ -8,3 +8,5 @@ node_modules/
 _scratch/
 
 __pycache__/
+*.bak
+adapters/pdf/out/
