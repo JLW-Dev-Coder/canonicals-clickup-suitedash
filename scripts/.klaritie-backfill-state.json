@@ -1,0 +1,145 @@
+{
+  "A:email-task": {
+    "status": "done",
+    "taskId": "86e2unwjd",
+    "name": "Email — 2026-08-14 — Jamie Williams — Re: Bank Files (Records Received; Payment And 2848 Outstanding)"
+  },
+  "B:last-contact:marty": {
+    "status": "done",
+    "taskId": "86e2ra6bj",
+    "value": 1786690800000
+  },
+  "B:last-contact:kathleen": {
+    "status": "done",
+    "taskId": "86e2ra6ct",
+    "value": 1786690800000
+  },
+  "B:last-contact:amber": {
+    "status": "done",
+    "taskId": "86e2um2ny",
+    "value": 1786690800000
+  },
+  "C:rename:86e2ujy24": {
+    "status": "done",
+    "taskId": "86e2ujy24",
+    "previousName": "Client Request — Bank Signature Cards (Form 6639 rev. 3-2020 Part C)",
+    "name": "Client Request — Bank Signature Cards (Form 6639 rev. 3-2020 Part C) (Captured)"
+  },
+  "C:rename:86e2ujy2u": {
+    "status": "done",
+    "taskId": "86e2ujy2u",
+    "previousName": "Client Request — Corporate Resolutions (Form 6639 rev. 3-2020 Part C)",
+    "name": "Client Request — Corporate Resolutions (Form 6639 rev. 3-2020 Part C) (Captured)"
+  },
+  "C:rename:86e2ujy3t": {
+    "status": "done",
+    "taskId": "86e2ujy3t",
+    "note": "already-matches"
+  },
+  "C:rename:86e2ujy4u": {
+    "status": "done",
+    "taskId": "86e2ujy4u",
+    "previousName": "Client Request — Cancelled Checks, 5 Per Month, Fronts Only (Form 6639 rev. 3-2020 Part C)",
+    "name": "Client Request — Cancelled Checks (Form 6639 rev. 3-2020 Part C)"
+  },
+  "C:rename:86e2ujy5n": {
+    "status": "done",
+    "taskId": "86e2ujy5n",
+    "previousName": "Client Request — Loan Applications, Agreements & Corporate Financial Statements (Form 6639 rev. 3-2020 Part C)",
+    "name": "Client Request — Loan Applications (Form 6639 rev. 3-2020 Part C) (Not Applicable)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — Corporate Banking Resolution For Deposit Accounts (p1)": {
+    "status": "done",
+    "taskId": "86e2unwm4",
+    "name": "Record — 2026-08-13 — Twin City Bank — Corporate Banking Resolution For Deposit Accounts (p1)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — Signature Card And Deposit Account Agreement (p3)": {
+    "status": "done",
+    "taskId": "86e2unwme",
+    "name": "Record — 2026-08-13 — Twin City Bank — Signature Card And Deposit Account Agreement (p3)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — Superseded Signature Card Marked Copy (p3)": {
+    "status": "done",
+    "taskId": "86e2unwmw",
+    "name": "Record — 2026-08-13 — Twin City Bank — Superseded Signature Card Marked Copy (p3)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — Customer Identification Record For Authorized Signers (p4)": {
+    "status": "done",
+    "taskId": "86e2unwnj",
+    "name": "Record — 2026-08-13 — Twin City Bank — Customer Identification Record For Authorized Signers (p4)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — TIN And Backup Withholding Certification (p4)": {
+    "status": "done",
+    "taskId": "86e2unwpa",
+    "name": "Record — 2026-08-13 — Twin City Bank — TIN And Backup Withholding Certification (p4)"
+  },
+  "D:record:Record — 2026-08-13 — Twin City Bank — FinCEN Certification Of Beneficial Owners (p5-p7)": {
+    "status": "done",
+    "taskId": "86e2unwq6",
+    "name": "Record — 2026-08-13 — Twin City Bank — FinCEN Certification Of Beneficial Owners (p5-p7)"
+  },
+  "E:link:Record — 2026-08-13 — Twin City Bank — Corporate Banking Resolution For Deposit Accounts (p1)": {
+    "status": "done",
+    "from": "86e2unwm4",
+    "to": "86e2ujy2u"
+  },
+  "E:link:Record — 2026-08-13 — Twin City Bank — Signature Card And Deposit Account Agreement (p3)": {
+    "status": "done",
+    "from": "86e2unwme",
+    "to": "86e2ujy24"
+  },
+  "E:link:Record — 2026-08-13 — Twin City Bank — Superseded Signature Card Marked Copy (p3)": {
+    "status": "done",
+    "from": "86e2unwmw",
+    "to": "86e2ujy24"
+  },
+  "F:nextstep:Client Request — Accounts And Portal Access (Next Steps Item 1) (Outstanding)": {
+    "status": "done",
+    "taskId": "86e2unwu8",
+    "name": "Client Request — Accounts And Portal Access (Next Steps Item 1) (Outstanding)"
+  },
+  "F:nextstep:Client Request — Diagnostic Payment (Next Steps Item 2) (Outstanding)": {
+    "status": "done",
+    "taskId": "86e2unwvb",
+    "name": "Client Request — Diagnostic Payment (Next Steps Item 2) (Outstanding)"
+  },
+  "F:nextstep:Client Request — Power Of Attorney Form 2848 (Next Steps Item 3) (Outstanding)": {
+    "status": "done",
+    "taskId": "86e2unww8",
+    "name": "Client Request — Power Of Attorney Form 2848 (Next Steps Item 3) (Outstanding)"
+  },
+  "F:nextstep:Client Request — Audit Package (Next Steps Item 4) (Outstanding)": {
+    "status": "done",
+    "taskId": "86e2unwwr",
+    "name": "Client Request — Audit Package (Next Steps Item 4) (Outstanding)"
+  },
+  "F:nextstep:Client Request — Twin City Bank Contact And Document Tracking (Next Steps Item 5) (Captured)": {
+    "status": "done",
+    "taskId": "86e2unwy9",
+    "name": "Client Request — Twin City Bank Contact And Document Tracking (Next Steps Item 5) (Captured)"
+  },
+  "F:link:item5-cover": {
+    "status": "done",
+    "from": "86e2unwy9",
+    "to": "86e2ujraf"
+  },
+  "G:cycle-comment": {
+    "status": "done",
+    "commentId": 90170242088815
+  },
+  "H:address-task": {
+    "status": "done",
+    "taskId": "86e2unx3z",
+    "name": "Address — Twin City Bank — 729 Vandercook Way Longview WA 98632 (Related Party)"
+  },
+  "H:address-pin": {
+    "status": "done",
+    "taskId": "86e2unx3z"
+  },
+  "I:kelso-rename": {
+    "status": "done",
+    "taskId": "86e2uk2v3",
+    "previousName": "Address — Entity — Klaritie Farms Inc, 2205 Parrott Way Ste C, Kelso, WA 98626-5522",
+    "note": "already-enriched"
+  }
+}
