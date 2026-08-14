@@ -16,7 +16,8 @@
       "Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.",
       "433-F merges vehicle ownership+operating and parking/maintenance into gas_monthly; mortgage shares the rent line. Those registry fields are intentionally unmapped for 433-F.",
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
-      "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill."
+      "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
+      "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged."
     ]
   },
   "map": {
@@ -24,36 +25,6 @@
     "433f_tp_name": "topmostSubform[0].Page1[0].address[0].NamesAddress[0]",
     "433f_biz_name": "topmostSubform[0].Page1[0].age[0].NameBusiness[0]",
     "433f_biz_type": "topmostSubform[0].Page1[0].age[0].TypeBusiness[0]",
-    "433f_bank_institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
-    "433f_bank_acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
-    "433f_bank_type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
-    "433f_bank_balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]",
-    "433f_inv_institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
-    "433f_inv_acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
-    "433f_inv_type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
-    "433f_inv_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]",
-    "433f_vc_type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
-    "433f_vc_wallet": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
-    "433f_vc_value": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]",
-    "433f_re_desc": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
-    "433f_re_pmt": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
-    "433f_re_year": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
-    "433f_re_price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
-    "433f_re_fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
-    "433f_re_bal": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
-    "433f_re_equity": "topmostSubform[0].Page1[0].real_estate[0].row1[0].Equity[0]",
-    "433f_veh_desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
-    "433f_veh_pmt": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
-    "433f_veh_year": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
-    "433f_veh_value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
-    "433f_veh_bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
-    "433f_oa_desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
-    "433f_oa_value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
-    "433f_oa_bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
-    "433f_cc_type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
-    "433f_cc_limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
-    "433f_cc_bal": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
-    "433f_cc_min": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]",
     "433f_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].fieldXmlnshttpwwwxfa[0]",
     "433f_emp_gross": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].GrossPerPayPeriod[0]",
     "433f_emp_fed": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].TaxesPerPayPeriodFed[0]",
@@ -95,5 +66,149 @@
     "433f_exp_courtother": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_monthly[0]",
     "433f_exp_other1": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_monthly[0]",
     "433f_exp_other1_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other[0]"
+  },
+  "groups": {
+    "accounts": {
+      "array": "accounts",
+      "fallback": [
+        {
+          "institution": "433f_bank_institution",
+          "acct": "433f_bank_acct",
+          "type": "433f_bank_type",
+          "balance": "433f_bank_balance"
+        },
+        {
+          "institution": "433f_inv_institution",
+          "acct": "433f_inv_acct",
+          "type": "433f_inv_type",
+          "balance": "433f_inv_value"
+        },
+        {
+          "institution": "433f_vc_wallet",
+          "type": "433f_vc_type",
+          "balance": "433f_vc_value"
+        }
+      ],
+      "slots": [
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]"
+        },
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
+        },
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
+        },
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
+        }
+      ]
+    },
+    "real_estate": {
+      "array": "real_estate",
+      "fallback": [
+        {
+          "desc": "433f_re_desc",
+          "pmt": "433f_re_pmt",
+          "year": "433f_re_year",
+          "price": "433f_re_price",
+          "fmv": "433f_re_fmv",
+          "bal": "433f_re_bal",
+          "equity": "433f_re_equity"
+        }
+      ],
+      "slots": [
+        {
+          "desc": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
+          "pmt": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
+          "year": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
+          "price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
+          "fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
+          "bal": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
+          "equity": "topmostSubform[0].Page1[0].real_estate[0].row1[0].Equity[0]"
+        },
+        {
+          "desc": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].description[0]",
+          "pmt": "topmostSubform[0].Page1[0].real_estate[0].row2[0].MonthlyPayments[0]",
+          "year": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearPurchased[0]",
+          "price": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].PurchasePrice[0]",
+          "fmv": "topmostSubform[0].Page1[0].real_estate[0].row2[0].CurrentValue[0]",
+          "bal": "topmostSubform[0].Page1[0].real_estate[0].row2[0].BalanceOwed[0]",
+          "equity": "topmostSubform[0].Page1[0].real_estate[0].row2[0].Equity[0]"
+        }
+      ]
+    },
+    "other_assets": {
+      "array": "other_assets",
+      "fallback": [
+        {
+          "desc": "433f_veh_desc",
+          "pmt": "433f_veh_pmt",
+          "year": "433f_veh_year",
+          "value": "433f_veh_value",
+          "bal": "433f_veh_bal"
+        },
+        {
+          "desc": "433f_oa_desc",
+          "value": "433f_oa_value",
+          "bal": "433f_oa_bal"
+        }
+      ],
+      "slots": [
+        {
+          "desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
+          "pmt": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
+          "year": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
+          "value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
+          "bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
+          "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Equity1[0]"
+        },
+        {
+          "desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
+          "pmt": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Monthly_Payment2[0]",
+          "year": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Year_Purchased2[0]",
+          "value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
+          "bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
+          "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Equity2[0]"
+        }
+      ]
+    },
+    "credit_cards": {
+      "array": "credit_cards",
+      "fallback": [
+        {
+          "type": "433f_cc_type",
+          "limit": "433f_cc_limit",
+          "bal": "433f_cc_bal",
+          "min": "433f_cc_min"
+        }
+      ],
+      "slots": [
+        {
+          "type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
+          "limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
+          "bal": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
+          "min": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]"
+        },
+        {
+          "type": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].I_ype1[0]",
+          "limit": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].Crad_i_L_m_t1[0]",
+          "bal": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
+          "min": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
+        }
+      ]
+    }
   }
 }
