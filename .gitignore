@@ -10,3 +10,4 @@ _scratch/
 __pycache__/
 *.bak
 adapters/pdf/out/
+samples/433f.from-hubspot-*.json
