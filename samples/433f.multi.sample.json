@@ -1,26 +1,78 @@
 {
   "intake_id": "INT-SAMPLE-433F-MULTI",
-  "433f_tp_name": "ACME Holdings LLC — John Q. Sample",
+  "433f_tp_name": "ACME Holdings LLC \u2014 John Q. Sample",
   "433f_tp_address": "123 Example St, Denton, TX 76201",
   "433f_county": "Denton",
   "433f_biz_name": "ACME Holdings LLC",
   "433f_biz_type": "LLC / Sch C",
   "accounts": [
-    { "institution": "First Example Bank, Denton TX", "acct": "XXXX1234", "type": "Checking", "balance": "2450.00" },
-    { "institution": "Example Brokerage", "acct": "XXXX9002", "type": "Brokerage", "balance": "18200.00" },
-    { "institution": "Coinbase", "type": "BTC wallet", "balance": "3100.00" }
+    {
+      "institution": "First Example Bank, Denton TX",
+      "acct": "XXXX1234",
+      "type": "Checking",
+      "balance": "2450.00"
+    },
+    {
+      "institution": "Example Brokerage",
+      "acct": "XXXX9002",
+      "type": "Brokerage",
+      "balance": "18200.00"
+    },
+    {
+      "institution": "Coinbase",
+      "type": "BTC wallet",
+      "balance": "3100.00"
+    }
   ],
   "real_estate": [
-    { "desc": "Primary residence, Denton TX", "pmt": "1800", "year": "2019", "price": "280000", "fmv": "330000", "bal": "250000", "equity": "80000" },
-    { "desc": "Rental duplex, Denton TX", "pmt": "1200", "year": "2021", "price": "210000", "fmv": "240000", "bal": "180000", "equity": "60000" }
+    {
+      "desc": "Primary residence, Denton TX",
+      "pmt": "1800",
+      "year": "2019",
+      "price": "280000",
+      "fmv": "330000",
+      "bal": "250000",
+      "equity": "80000"
+    },
+    {
+      "desc": "Rental duplex, Denton TX",
+      "pmt": "1200",
+      "year": "2021",
+      "price": "210000",
+      "fmv": "240000",
+      "bal": "180000",
+      "equity": "60000"
+    }
   ],
   "other_assets": [
-    { "desc": "2020 Toyota Camry", "pmt": "410", "year": "2020", "value": "18000", "bal": "9500", "equity": "8500" },
-    { "desc": "Utility trailer", "value": "3000", "bal": "0", "equity": "3000" }
+    {
+      "desc": "2020 Toyota Camry",
+      "pmt": "410",
+      "year": "2020",
+      "value": "18000",
+      "bal": "9500",
+      "equity": "8500"
+    },
+    {
+      "desc": "Utility trailer",
+      "value": "3000",
+      "bal": "0",
+      "equity": "3000"
+    }
   ],
   "credit_cards": [
-    { "type": "Visa", "limit": "8000", "bal": "3200", "min": "95" },
-    { "type": "Amex", "limit": "12000", "bal": "1500", "min": "60" }
+    {
+      "type": "Visa",
+      "limit": "8000",
+      "bal": "3200",
+      "min": "95"
+    },
+    {
+      "type": "Amex",
+      "limit": "12000",
+      "bal": "1500",
+      "min": "60"
+    }
   ],
   "433f_emp_name": "Example Corp",
   "433f_emp_gross": "6200",
@@ -31,5 +83,7 @@
   "433f_exp_food": "867",
   "433f_exp_rent": "1800",
   "433f_exp_healthins": "420",
-  "433f_exp_student": "210"
+  "433f_exp_student": "210",
+  "household_size": "3",
+  "age_band": "under_65"
 }

@@ -17,7 +17,8 @@
       "433-F merges vehicle ownership+operating and parking/maintenance into gas_monthly; mortgage shares the rent line. Those registry fields are intentionally unmapped for 433-F.",
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
       "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
-      "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged."
+      "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
+      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from 433f.standards.json. Housing/vehicle allowables intentionally not auto-filled."
     ]
   },
   "map": {
@@ -210,5 +211,16 @@
         }
       ]
     }
+  },
+  "allowed": {
+    "national_by_household": {
+      "food": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row1[0].food_allowed[0]",
+      "housekeeping": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row2[0].housekeeping_allowed[0]",
+      "apparel": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row3[0].clothing_allowed[0]",
+      "personal_care": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row4[0].personal_care_allowed[0]",
+      "misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_allowed[0]",
+      "total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_allowed[0]"
+    },
+    "oop_by_age": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_allowed[0]"
   }
 }

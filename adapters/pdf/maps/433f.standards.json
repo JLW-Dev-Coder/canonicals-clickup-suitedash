@@ -1,0 +1,16 @@
+{
+  "effective": "2026",
+  "source": "IRS Collection Financial Standards",
+  "national": {
+    "1": { "food": 496, "housekeeping": 44, "apparel": 98,  "personal_care": 54,  "misc": 175, "total": 867 },
+    "2": { "food": 893, "housekeeping": 85, "apparel": 175, "personal_care": 90,  "misc": 315, "total": 1558 },
+    "3": { "food": 1073, "housekeeping": 94, "apparel": 211, "personal_care": 104, "misc": 375, "total": 1857 },
+    "4": { "food": 1278, "housekeeping": 95, "apparel": 249, "personal_care": 118, "misc": 436, "total": 2176 }
+  },
+  "national_addl_total": 397,
+  "oop": { "under_65": 90, "65_over": 163 },
+  "public_transport": 220,
+  "transport_ownership": { "1": 703, "2": 1406 },
+  "transport_operating": { "NE": {"1":330,"2":660}, "MW": {"1":263,"2":526}, "S": {"1":291,"2":582}, "W": {"1":299,"2":598} },
+  "note": "AUTO-FILLED into the form: National food-group per-category by household size + OOP by age (allowed without question). NOT auto-filled (preparer/input judgment): Housing & Utilities (Local Standard by county), and vehicle ownership+operating (car-count limits by filing status + greater-of vs public transit). Those are provided here for reference only."
+}
