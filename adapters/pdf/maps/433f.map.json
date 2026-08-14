@@ -18,7 +18,8 @@
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
       "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
       "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
-      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from 433f.standards.json. Housing/vehicle allowables intentionally not auto-filled."
+      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from 433f.standards.json. Housing/vehicle allowables intentionally not auto-filled.",
+      "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render."
     ]
   },
   "map": {
@@ -66,7 +67,9 @@
     "433f_exp_courtcs": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_monthly[0]",
     "433f_exp_courtother": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_monthly[0]",
     "433f_exp_other1": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_monthly[0]",
-    "433f_exp_other1_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other[0]"
+    "433f_exp_other1_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other[0]",
+    "433f_hh_under65": "topmostSubform[0].Page1[0].age[0].Under65[0]",
+    "433f_hh_over65": "topmostSubform[0].Page1[0].age[0]._65Over[0]"
   },
   "groups": {
     "accounts": {
@@ -209,6 +212,41 @@
           "bal": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
           "min": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
         }
+      ]
+    }
+  },
+  "checkboxes": {
+    "address_differs": "topmostSubform[0].Page1[0].address[0].If_address_provided_above_is_different_then_last_r[0]",
+    "account_business": [
+      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].CheckBox11[0]",
+      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].CheckBox11[1]",
+      "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].CheckBox11[0]",
+      "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].CheckBox11[1]"
+    ],
+    "real_estate": [
+      {
+        "primary": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].PR1[0]",
+        "other": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].CO1[0]"
+      },
+      {
+        "primary": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].PR2[0]",
+        "other": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].CO2[0]"
+      }
+    ],
+    "pay_freq": {
+      "order_assumed": "Printed-form order Weekly/Bi-weekly/Semi-monthly/Monthly = index 0/1/2/3. On-values encode nothing about order — CONFIRM ON RENDER.",
+      "index": { "weekly": 0, "biweekly": 1, "semimonthly": 2, "monthly": 3 },
+      "you": [
+        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
+      ],
+      "spouse": [
+        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
+        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
       ]
     }
   },

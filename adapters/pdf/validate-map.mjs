@@ -11,12 +11,23 @@ if (mapDoc.allowed) {
   for (const [k, v] of Object.entries(mapDoc.allowed.national_by_household || {})) targets.push([`allowed.${k}`, v]);
   if (mapDoc.allowed.oop_by_age) targets.push(['allowed.oop', mapDoc.allowed.oop_by_age]);
 }
+if (mapDoc.checkboxes) {
+  const cb = mapDoc.checkboxes;
+  if (cb.address_differs) targets.push(['cb.address_differs', cb.address_differs]);
+  (cb.account_business || []).forEach((n, i) => targets.push([`cb.account_business[${i}]`, n]));
+  (cb.real_estate || []).forEach((o, i) => {
+    if (o.primary) targets.push([`cb.real_estate[${i}].primary`, o.primary]);
+    if (o.other) targets.push([`cb.real_estate[${i}].other`, o.other]);
+  });
+  (cb.pay_freq?.you || []).forEach((n, i) => targets.push([`cb.pay_freq.you[${i}]`, n]));
+  (cb.pay_freq?.spouse || []).forEach((n, i) => targets.push([`cb.pay_freq.spouse[${i}]`, n]));
+}
 
 const missing = targets.filter(([k, v]) => !names.has(v));
-console.log(`map targets: ${targets.length} (scalar + composite + slots + allowed), PDF fields: ${names.size}`);
+console.log(`map targets: ${targets.length} (scalar + composite + slots + allowed + checkboxes), PDF fields: ${names.size}`);
 if (missing.length) {
   console.error(`MISSING ${missing.length} target(s) not found verbatim in 433f.fields.json:`);
   missing.forEach(([k, v]) => console.error(`  ${k} -> ${v}`));
   process.exit(2);
 }
-console.log('OK — every map target (scalars, slots, allowed) exists verbatim in the PDF field list.');
+console.log('OK — every map target (scalars, slots, allowed, checkboxes) exists verbatim in the PDF field list.');

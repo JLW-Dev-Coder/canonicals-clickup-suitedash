@@ -5,28 +5,33 @@
   "433f_county": "Denton",
   "433f_biz_name": "ACME Holdings LLC",
   "433f_biz_type": "LLC / Sch C",
+  "address_differs": true,
   "accounts": [
     {
       "institution": "First Example Bank, Denton TX",
       "acct": "XXXX1234",
       "type": "Checking",
-      "balance": "2450.00"
+      "balance": "2450.00",
+      "bp": "Personal"
     },
     {
       "institution": "Example Brokerage",
       "acct": "XXXX9002",
       "type": "Brokerage",
-      "balance": "18200.00"
+      "balance": "18200.00",
+      "bp": "Business"
     },
     {
       "institution": "Coinbase",
       "type": "BTC wallet",
-      "balance": "3100.00"
+      "balance": "3100.00",
+      "bp": "Personal"
     }
   ],
   "real_estate": [
     {
       "desc": "Primary residence, Denton TX",
+      "kind": "primary",
       "pmt": "1800",
       "year": "2019",
       "price": "280000",
@@ -36,6 +41,7 @@
     },
     {
       "desc": "Rental duplex, Denton TX",
+      "kind": "other",
       "pmt": "1200",
       "year": "2021",
       "price": "210000",
@@ -84,6 +90,10 @@
   "433f_exp_rent": "1800",
   "433f_exp_healthins": "420",
   "433f_exp_student": "210",
+  "pay_freq": "Bi-weekly",
+  "spouse_pay_freq": "Monthly",
+  "433f_hh_under65": "2",
+  "433f_hh_over65": "1",
   "household_size": "3",
   "age_band": "under_65"
 }
