@@ -1,4 +1,4 @@
-// Fills Form 433-A (Sections 1-3 slice) from a JSON intake record.
+// Fills Form 433-A (Sections 1-3 + Section 4 lines 12-14, 18-19) from a JSON intake record.
 //
 // CLI:  node adapters/pdf/fill-433a.mjs [samples/433a.sample.json]
 //
@@ -14,8 +14,11 @@
 //   checkboxes   — input_key -> { option: target }. The input NAMES its option instead
 //                  of indexing into a positional array, so a pay-period value can never
 //                  land on the wrong box because an assumed print order was wrong.
-//   groups       — household_members, five slots, each carrying both text and per-row
-//                  yes/no checkbox pairs.
+//   groups       — repeatable rows: household_members (5 slots, text + per-row yes/no
+//                  pairs), bank_accounts (4), investments (4), real_property (3) and
+//                  vehicles (3). A slot's `checkboxes` is OPTIONAL — the Section 4 asset
+//                  tables are text-only — and rows past the last slot are logged and
+//                  dropped, never thrown and never written over an earlier row.
 //   exclusive    — identical to 433-F: at most one target per set, read back off the form.
 //   _deferred    — documentation + existence-validation ONLY. Never filled.
 

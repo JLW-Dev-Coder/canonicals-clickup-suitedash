@@ -2,131 +2,164 @@
   "form": "433a",
   "form_revision": "6-2026",
   "catalog": "20312N",
-  "slice": "sections-1-3",
-  "map_version": 2,
-  "authored_from": "adapters/pdf/maps/433a.labels.txt pages 1-2 (commit 2580dea) + RC geometry disambiguation report (Prompt 10)",
+  "slice": "sections-1-3 + section-4 (lines 12,13,14,18,19)",
+  "map_version": 3,
+  "authored_from": "433a.labels.txt pages 1-4 (commit 2580dea) + RC geometry + maxLength reports (Prompts 10-11)",
   "_notes": [
     "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
     "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
     "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a lookup fails on one of these, the escaping was mangled - do not 'fix' it by deleting the backslash.",
     "Every semantic assignment is derived from correlated printed labels and rect geometry, never from field names. Internal names on this form are known to contradict the printed page.",
-    "KEY PREFIXES NOW FOLLOW PRINTED LINE NUMBERS, not internal field-name suffixes. The lawsuit block is printed line 7 (internal names say _6); bankruptcy is printed line 8 (internal names say _7). Renamed while free: no HubSpot properties exist for 433-A yet, and HubSpot property names are immutable once created."
+    "KEY PREFIXES NOW FOLLOW PRINTED LINE NUMBERS, not internal field-name suffixes. The lawsuit block is printed line 7 (internal names say _6); bankruptcy is printed line 8 (internal names say _7). Renamed while free: no HubSpot properties exist for 433-A yet, and HubSpot property names are immutable once created.",
+    "v3 adds Section 4 lines 12, 13 (bank x4), 14 (investments x4), 18a-c (real property x3), 19a-c (vehicles x3). Digital assets (15), available credit (16) and life insurance are deferred to Prompt 13 pending printed column headers.",
+    "Vehicle make_model uses p3_t22_18aMILE and mileage uses Line18aMKMDL. The internal names are INVERTED against the printed columns - confirmed twice, by label correlation and by maxLength (16 chars for Make/Model, 7 for Mileage). Do not \"correct\" this.",
+    "Real property and vehicle money/date blocks share one maxLength signature in column order: 8,12,12,12,8,12 = purchase date, current FMV, current loan balance, monthly payment, final payment date, equity. This is how the bled captions on rows 18b/18c and 19b/19c were resolved.",
+    "Real property and vehicle row indices are INVERTED: Table_Line17b[1] prints as 18b and [0] as 18c; Lender-phone18b[1] pairs with Line18b[0] (19b) and [0] with Line18b[1] (19c)."
   ],
-
   "map": {
     "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
     "1b_address": "topmostSubform[0].Page1[0].c1[0].#subform[1].p1-t5[0]",
     "1c_county_of_residence": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[1].p1-t4[0]",
-
     "2_tp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_030_0_[0]",
     "2_tp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_031_0_[0]",
     "2_sp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_034_0_[0]",
     "2_sp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_035_0_[0]",
-
     "3a_pct_ownership": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].PercentageOfOwnership[0]",
     "3a_title": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0]",
     "3b_business_name": "topmostSubform[0].Page1[0].c2[0].Lines3b[0].BusinessName[0]",
     "3c_business_type_other_desc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].ListOther[0]",
-
     "4a_tp_employer_name": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t15_4a[0]",
     "4b_tp_employer_address": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t16_4b[0]",
     "4e_tp_tenure_years": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
     "4e_tp_tenure_months": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
     "4f_tp_occupation": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t21_4f[0]",
     "4g_tp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
-
     "5a_sp_employer_name": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t23_5a[0]",
     "5b_sp_employer_address": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t24_5b[0]",
     "5e_sp_tenure_years": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
     "5e_sp_tenure_months": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]",
     "5f_sp_occupation": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t28_5f[0]",
     "5g_sp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]",
-
     "6_income_change_explain": "topmostSubform[0].Page1[0].TextField1[0]",
     "6_income_change_amount": "topmostSubform[0].Page1[0].amountIncrease[0].p1_t34_6a[0]",
     "6_income_change_when": "topmostSubform[0].Page1[0].whenIncrease[0]",
-
     "7_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
     "7_suit_represented_by": "topmostSubform[0].Page1[0].p1_t31_6[0]",
     "7_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
     "7_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
     "7_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
     "7_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
-
     "8_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
     "8_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
     "8_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
     "8_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
     "8_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
-
     "8b_lived_abroad_from": "topmostSubform[0].page2[0].p2_t50_8b[0]",
     "8b_lived_abroad_to": "topmostSubform[0].page2[0].p2_t51_8b[0]",
     "8c_dual_citizenship_country": "topmostSubform[0].page2[0].p2_t50_8[0]",
     "9a_inmate_number": "topmostSubform[0].page2[0].p2_t50_8[1]",
-
     "9b_place_where_recorded": "topmostSubform[0].page2[0].p1_t44_9[0]",
     "9b_trust_name": "topmostSubform[0].page2[0].p1-t47_9[0]",
     "9b_trust_anticipated_amount": "topmostSubform[0].page2[0].#subform[3].p1-t48_9[0]",
     "9b_trust_when_received": "topmostSubform[0].page2[0].p1-t49_9[0]",
-
     "9c_trust_name": "topmostSubform[0].page2[0].p2_t00_9b[0]",
-
     "10_sdb_location": "topmostSubform[0].page2[0].p1_t41_10[0]",
     "10_sdb_contents": "topmostSubform[0].page2[0].p1-t43_10[0]",
     "10_sdb_value": "topmostSubform[0].page2[0].value[0].p1-t42_10[0]",
-
     "11_transfer_assets": "topmostSubform[0].page2[0].#subform[0].p3_t1_11[0]",
     "11_transfer_value_at_transfer": "topmostSubform[0].page2[0].#subform[0].#subform[1].p3_t2_11[0]",
     "11_transfer_date": "topmostSubform[0].page2[0].#subform[0].p3_t3_11[0]",
-    "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]"
+    "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]",
+    "12_total_cash_on_hand": "topmostSubform[0].page2[0].p2-t1_11[0]",
+    "13_accounts_balance_as_of": "topmostSubform[0].page2[0].Table_Line13[0].Line12[0].AcctBal12[0].F02_001_11[0]",
+    "13e_total_cash": "topmostSubform[0].page2[0].p2-t8_12c[0]",
+    "14_investments_loan_balance_as_of": "topmostSubform[0].page2[0].Table_Line14[0].HeaderRow[0].LoanBal[0].p2-t9_13[0]"
   },
-
   "split": {
     "_why": "The form splits one real-world value across two abutting boxes with hard maxLength limits. Splitting in the engine rather than at intake means ONE HubSpot custom field per real value, not two - and CF names are immutable once provisioned. Consume `chars` source characters per part after applying `strip`; `format` masks the part with # as a digit placeholder. Every part must fit its target's /MaxLen or the fill stops.",
     "1c_home_phone": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 3, "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]" },
-        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]" }
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]"
+        }
       ]
     },
     "1d_cell_phone": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 3, "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]" },
-        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]" }
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]"
+        }
       ]
     },
     "4c_tp_work_phone": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 3, "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]" },
-        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]" }
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]"
+        }
       ]
     },
     "5c_sp_work_phone": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 3, "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]" },
-        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]" }
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]"
+        }
       ]
     },
     "9b_trust_ein": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 2, "target": "topmostSubform[0].page2[0].p1-t45_9[0]" },
-        { "chars": 7, "target": "topmostSubform[0].page2[0].p1-t46_9[0]" }
+        {
+          "chars": 2,
+          "target": "topmostSubform[0].page2[0].p1-t45_9[0]"
+        },
+        {
+          "chars": 7,
+          "target": "topmostSubform[0].page2[0].p1-t46_9[0]"
+        }
       ]
     },
     "9c_trustee_ein": {
       "strip": "[^0-9]",
       "parts": [
-        { "chars": 2, "target": "topmostSubform[0].page2[0].p1-t02_9b[0]" },
-        { "chars": 7, "target": "topmostSubform[0].page2[0].p1-t01_9b[0]" }
+        {
+          "chars": 2,
+          "target": "topmostSubform[0].page2[0].p1-t02_9b[0]"
+        },
+        {
+          "chars": 7,
+          "target": "topmostSubform[0].page2[0].p1-t01_9b[0]"
+        }
       ]
     }
   },
-
   "checkboxes": {
     "marital_status": {
       "married": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
@@ -199,7 +232,6 @@
       "no": "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
     }
   },
-
   "groups": {
     "household_members": {
       "source": "household_members",
@@ -292,9 +324,208 @@
           }
         }
       ]
+    },
+    "bank_accounts": {
+      "source": "bank_accounts",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "13",
+      "slots": [
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].Line12A[0]",
+            "financial_institution": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t2_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t3_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t4_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].Line12B[0]",
+            "financial_institution": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t7_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].Line12B[0]",
+            "financial_institution": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t7_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].Line12B[0]",
+            "financial_institution": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t7_12[0]"
+          }
+        }
+      ]
+    },
+    "investments": {
+      "source": "investments",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "14",
+      "slots": [
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].Line13A[0]",
+            "name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2-t61_13a[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2_t10_13a[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].Line13B[0]",
+            "name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].Line13B[0]",
+            "name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].Line13B[0]",
+            "name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t15_13b[0]"
+          }
+        }
+      ]
+    },
+    "real_property": {
+      "source": "real_property",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "18a/18b/18c",
+      "slots": [
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].Line17[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t5_17a[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t6_17a[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t7_17a[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t8_17a[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t9_17a[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t10_17a[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[3]",
+            "location": "topmostSubform[0].Page3[0].p3_t11_17a[2]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[15].p3_t12_17a[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[15].p2_t18_13c[2]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].Line17b[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t13_17b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t14_17b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t15_17b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t16_17b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t17_17b[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t18_17b[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[1]",
+            "location": "topmostSubform[0].Page3[0].p3_t18_17b[1]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[6].p3_t19_17b[1]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[6].p2_t18_13c[1]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].Line17b[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t13_17b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t14_17b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t15_17b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t16_17b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t17_17b[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t18_17b[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[0]",
+            "location": "topmostSubform[0].Page3[0].p3_t18_17b[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[4].p3_t19_17b[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[4].p2_t18_13c[0]"
+          }
+        }
+      ]
+    },
+    "vehicles": {
+      "source": "vehicles",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "19a/19b/19c",
+      "slots": [
+        {
+          "text": {
+            "year": "topmostSubform[0].Page3[0].Line18a[0].p3_t21_18aYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18a[0].p3_t22_18aMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18a[0].Line18aMKMDL[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aTGNUM[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Purchase[0].p3_t23_18a[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].CurrentFMV[0].p3_t24_18a[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].CurrentLoan[0].p3_t25_18a[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].AmountPayment[0].p3_t26_18a[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].DateFinal[0].p3_t27_18a[0]",
+            "equity": "topmostSubform[0].Page3[0].Equity[0].p3_t28_18a[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone[0].p3_t30_18a[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone[0].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "year": "topmostSubform[0].Page3[0].Line18b[0].p3_t00_18bYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18b[0].p3_t31_18bMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18b[0].Line18b[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18b[0].p3_t38_18b[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18b[0].p3_t29_18bVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[1]",
+            "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[1]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[1]",
+            "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[1]",
+            "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[1]",
+            "equity": "topmostSubform[0].Page3[0].p3_t37_18b[1]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[1].p3_t39_18bLLN[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[1].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "year": "topmostSubform[0].Page3[0].Line18b[1].p3_t00_18bYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18b[1].p3_t31_18bMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18b[1].Line18b[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18b[1].p3_t38_18b[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18b[1].p3_t29_18bVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[0]",
+            "equity": "topmostSubform[0].Page3[0].p3_t37_18b[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[0].p3_t39_18bLLN[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[0].p2_t18_13c[0]"
+          }
+        }
+      ]
     }
   },
-
   "exclusive": {
     "marital_status": [
       "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
@@ -417,9 +648,12 @@
     "hh5_contributes": [
       "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
       "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+    ],
+    "life_insurance_has_policies": [
+      "topmostSubform[0].Page2[0].c1_07_0_[0]",
+      "topmostSubform[0].Page2[0].c1_07_0_[1]"
     ]
   },
-
   "_deferred": {
     "_why": "Still unresolved. Validated for existence, never filled. Two Yes/No pairs on page 1 and one on page 2 whose printed question is not yet established.",
     "page1_yesno_pairs": {
@@ -437,11 +671,81 @@
         "topmostSubform[0].page2[0].c1_8a_[0]",
         "topmostSubform[0].page2[0].c1_8a_[1]"
       ]
+    },
+    "section4_pending_prompt13": {
+      "reason": "Column-to-field assignment not yet established from printed column headers. Validated for existence, never filled. Resolved in Prompt 13 from the column-header alignment report.",
+      "digital_assets_line_15": [
+        "topmostSubform[0].Page2[0].Table_Line14de[0].HeaderRow[0].assetAmount[0].mmddyyyy[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].Line13A[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].#field[1]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t13_13a[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t12_13a[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t11_13a[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].Line13B[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].#field[1]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t17_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t16_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t15_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].Line13B[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].#field[1]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t17_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t16_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t15_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].Line13B[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].#field[1]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t17_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t16_13b[0]",
+        "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t15_13b[0]",
+        "topmostSubform[0].Page2[0].Line14f[1]",
+        "topmostSubform[0].Page2[0].ListAccessPrivateKeys[0]"
+      ],
+      "available_credit_line_16": [
+        "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column3_14[0].F02_001_14[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column4_14[0].F02_002_14[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].p2-t72_14a[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].AcctNo14A[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t23_14a[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t24_14a[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t25_14a[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].p2-t73_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].Line14B[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t26_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t27_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t28_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].p2-t73_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].Line14B[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t26_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t27_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t28_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].p2-t73_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].Line14B[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t26_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t27_14b[0]",
+        "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t28_14b[0]",
+        "topmostSubform[0].Page2[0].p2_t29_14c[0]"
+      ],
+      "life_insurance": [
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t30_16[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t33_16c[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t36_16d[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t39_16e[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t42_16f[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t31_16[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t34_16c[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t37_16d[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t40_16e[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t43_16f[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t32_16[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t35_16c[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t38_16d[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t41_16e[0]",
+        "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t44_16f[0]",
+        "topmostSubform[0].Page2[0].p2_t45_15g[0]"
+      ],
+      "section4_totals": [
+        "topmostSubform[0].Page3[0].p3_t20_17c[0]",
+        "topmostSubform[0].Page3[0].p3_t40_18c[0]"
+      ]
     }
-  },
-
-  "_section4_handoff": {
-    "_why": "Identified during Sections 1-3 work but belongs to Section 4. Do not map here.",
-    "12_total_cash_on_hand": "topmostSubform[0].page2[0].p2-t1_11[0]"
   }
 }
