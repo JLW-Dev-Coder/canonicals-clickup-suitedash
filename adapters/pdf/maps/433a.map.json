@@ -2,9 +2,9 @@
   "form": "433a",
   "form_revision": "6-2026",
   "catalog": "20312N",
-  "slice": "sections-1-3 + section-4 complete (lines 12-20)",
-  "map_version": 4,
-  "authored_from": "433a.labels.txt sheets 1-5 + RC column-header alignment report (Prompt 12)",
+  "slice": "sections-1-3, section-4 complete, section-5 income/expense grid (printed lines 21-51)",
+  "map_version": 5,
+  "authored_from": "433a.labels.txt sheets 1-5 + RC sheet-6 column-header alignment report (Prompt 13)",
   "_notes": [
     "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
     "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
@@ -18,7 +18,10 @@
     "v4 completes Section 4: digital assets (15) x4, available credit (16) x4, life insurance (17) as THREE POLICY COLUMNS x five printed rows 17a-17e, and the line-20 property rows x2 on sheet 5, plus every Section 4 total. Column assignment came from printed column-header x-ranges, not per-field nearest-text.",
     "Life insurance prints as line 17 (rows 17a-17e, total 17f). The sheet-3 sentence saying \"blocks 16b through 16f\" is stale text from a prior revision sitting above the 17a-17f markers. Internal suffixes _16c.._16f lag the printed rows by one.",
     "Digital-asset row cells are ALL unlimited length, so maxLength gives no column signal there. Those five columns were assigned purely from header x-ranges: 50.4|136.8|262.8|381.6|507.6.",
-    "Line-20 location/lender blocks are INVERTED against their internal names, same pattern as 18b/18c and 19b/19c: row 20a takes p3_t55_19b + Lender-phone3, row 20b takes p3_t47_19a + Lender-phone4. Assigned by printed reading order."
+    "Line-20 location/lender blocks are INVERTED against their internal names, same pattern as 18b/18c and 19b/19c: row 20a takes p3_t55_19b + Lender-phone3, row 20b takes p3_t47_19a + Lender-phone4. Assigned by printed reading order.",
+    "v5 adds the Section 5 income and expense grid, printed lines 21-51, plus the allowed column. On sheet 6 EVERY internal suffix lags the printed line by one, in all three panels - keys follow the printed marker column.",
+    "Only two allowed cells are auto-filled: IRS35 (printed line 36, national standards total by household size) and IRS41 (printed line 42, out-of-pocket health by age band). The other 14 are listed under allowed._never_autofill with a reason each, validated for existence and never written.",
+    "Income prints 15 rows (21-35), expenses print 16 (36-51). The extra expense row is absorbed where the income side prints the \"Other Income (Specify below)\" sub-header instead of a field. Lines 33 and 34 are write-in rows with a description cell plus an amount cell."
   ],
   "map": {
     "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
@@ -87,7 +90,40 @@
     "17f_total_life_insurance_equity": "topmostSubform[0].Page2[0].p2_t45_15g[0]",
     "18d_total_equity_real_property": "topmostSubform[0].Page3[0].p3_t20_17c[0]",
     "19d_total_equity_vehicles": "topmostSubform[0].Page3[0].p3_t40_18c[0]",
-    "20c_total_equity_property_line_20": "topmostSubform[0].#subform[4].p3_t56_19c[0]"
+    "20c_total_equity_property_line_20": "topmostSubform[0].#subform[4].p3_t56_19c[0]",
+    "21_income_wages_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t57_20[0]",
+    "22_income_wages_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t59_21[0]",
+    "23_income_interest_dividends": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t61_22[0]",
+    "24_income_net_business_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t63_23[0]",
+    "25_income_net_rental_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t65_24[0]",
+    "26_income_distributions": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t67_25[0]",
+    "27_income_pension_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t69_26[0]",
+    "28_income_pension_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t71_27[0]",
+    "29_income_social_security_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t73_28[0]",
+    "30_income_social_security_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t75_29[0]",
+    "31_income_child_support": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t79_30[0]",
+    "32_income_alimony": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_31[0]",
+    "33_income_other_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank32[0]",
+    "33_income_other_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_32[0]",
+    "34_income_other2_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank33[0]",
+    "34_income_other2_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_33[0]",
+    "35_total_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_34[0]",
+    "36_exp_food_clothing_misc": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t58_35[0]",
+    "37_exp_housing_and_utilities": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t60_36[0]",
+    "38_exp_vehicle_ownership_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t62_37[0]",
+    "39_exp_vehicle_operating_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t64_38[0]",
+    "40_exp_public_transportation": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t66_39[0]",
+    "41_exp_health_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t68_40[0]",
+    "42_exp_out_of_pocket_health_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t70_41[0]",
+    "43_exp_court_ordered_payments": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t72_42[0]",
+    "44_exp_child_dependent_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t74_43[0]",
+    "45_exp_life_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t76_44[0]",
+    "46_exp_current_year_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t78_45[0]",
+    "47_exp_secured_debts": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t80_46[0]",
+    "48_exp_delinquent_state_local_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t82_47[0]",
+    "49_exp_other_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t83_48[0]",
+    "50_total_living_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t84_49[0]",
+    "51_net_difference": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t85_50[0]"
   },
   "split": {
     "_why": "The form splits one real-world value across two abutting boxes with hard maxLength limits. Splitting in the engine rather than at intake means ONE HubSpot custom field per real value, not two - and CF names are immutable once provisioned. Consume `chars` source characters per part after applying `strip`; `format` masks the part with # as a digit placeholder. Every part must fit its target's /MaxLen or the fill stops.",
@@ -847,6 +883,84 @@
       "targets": [
         "topmostSubform[0].page2[0].c1_8a_[0]",
         "topmostSubform[0].page2[0].c1_8a_[1]"
+      ]
+    }
+  },
+  "allowed": {
+    "_why": "The IRS USE ONLY / Allowable Expenses column. Only the two lines IRS grants at a FIXED published amount are auto-filled. Everything else in this column is left blank on purpose: a wrong allowable printed on a filed collection statement is worse than an empty cell an examiner fills in. Same rule already proven on 433-F.",
+    "_offset_warning": "The IRS* field names are offset by one from the printed line they serve. IRS35 is the allowed cell for PRINTED LINE 36, IRS41 for printed line 42, IRS49 for printed line 50, IRS50 for printed line 51. Never bind an allowed target by matching its own number to a line number.",
+    "standards_source": "adapters/pdf/maps/433f.standards.json (2026 IRS Collection Financial Standards; form-agnostic despite the 433f prefix - renamed in Commit 1 of this prompt)",
+    "national_standards_total": {
+      "printed_line": "36 Food, Clothing and Misc.",
+      "input": "household_size",
+      "target": "topmostSubform[0].Page4[0].IRS35[0]",
+      "lookup": "The National Standards TOTAL for the given household size, clamped to the published 1-4 range, plus the published per-additional-person amount for each person above 4. 433-A consolidates the whole national-standards basket onto one printed line, so this is the TOTAL, not a per-category figure."
+    },
+    "out_of_pocket_health": {
+      "printed_line": "42 Out of Pocket Health Care Costs",
+      "input": "age_band",
+      "target": "topmostSubform[0].Page4[0].IRS41[0]",
+      "lookup": "The published out-of-pocket health care amount for the given age band, multiplied by household_size if the standards data is expressed per person."
+    },
+    "_never_autofill": {
+      "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator (which walks string VALUES) checks every one of them for existence. Each is validated and never written.",
+      "fields": [
+        {
+          "target": "topmostSubform[0].Page4[0].IRS36[0]",
+          "reason": "printed line 37 Housing and Utilities - varies by county, no county table held"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS37[0]",
+          "reason": "printed line 38 Vehicle Ownership Costs - depends on car count and lease/loan status"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS38[0]",
+          "reason": "printed line 39 Vehicle Operating Costs - varies by census region"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS39[0]",
+          "reason": "printed line 40 Public Transportation - greater-of judgement against vehicle costs"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS40[0]",
+          "reason": "printed line 41 Health Insurance - actual, no published standard"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS42[0]",
+          "reason": "printed line 43 Court Ordered Payments - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS43[0]",
+          "reason": "printed line 44 Child/Dependent Care - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS44[0]",
+          "reason": "printed line 45 Life Insurance - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS45[0]",
+          "reason": "printed line 46 Current year taxes - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS46[0]",
+          "reason": "printed line 47 Secured Debts - actual, examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS47[0]",
+          "reason": "printed line 48 Delinquent State or Local Taxes - examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS48[0]",
+          "reason": "printed line 49 Other Expenses - examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS49[0]",
+          "reason": "printed line 50 Total Living Expenses - a sum of the column, only meaningful once an examiner completes it"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS50[0]",
+          "reason": "printed line 51 Net difference - same"
+        }
       ]
     }
   }
