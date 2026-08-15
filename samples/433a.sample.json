@@ -1,7 +1,7 @@
 {
-  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3 and the section 4 asset tables - it is not a realistic return.",
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3 and the whole of section 4 - it is not a realistic return.",
   "_coverage_notes": [
-    "Keyed against map_version 3. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
+    "Keyed against map_version 4. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
     "3c_business_type is 'llc' AND 3c_business_type_other_desc carries text. On a real form those contradict (the Other description belongs with the Other box). Both are present here deliberately so the ListOther target is proven to write; it is coverage, not a modelling claim.",
     "Pay periods differ on purpose - taxpayer bi-weekly, spouse monthly - so a copy/paste error between the 4h and 5h blocks shows up in the read-back instead of hiding behind identical values.",
     "Option values deliberately vary in case and padding (' Yes ', 'YES', booleans) to exercise the trim + case-insensitive match.",
@@ -13,7 +13,16 @@
     "13e_total_cash (20600) is deliberately the arithmetic sum of 12_total_cash_on_hand (1500) and the four SLOTTED account balances (4100+6200+3300+5500). The dropped fifth account's 9900 is excluded on purpose: if overflow ever silently wrote into a slot, the printed total would stop agreeing with the printed rows and the read-back would show it.",
     "13_accounts_balance_as_of and 14_investments_loan_balance_as_of are the column-header 'As of' DATE cells (/MaxLen 8, mmddyyyy) - not money. The per-row balance cells beneath them are /MaxLen 12 money. Both carry the same bled 'mmddyyyy' caption, so the two are only distinguishable by cell size, and that is exactly the confusion these values are sized to catch.",
     "real_property descriptions are distinct per row ('Row 18a' / 'Row 18b' / 'Row 18c') and vehicles differ in year, make/model AND mileage (11111 / 22222 / 33333). The map's row indices are INVERTED against print order on both tables, so identical filler would have hidden a swapped row; distinct values make a swap visible in one glance at the read-back grid.",
-    "Vehicle make_model writes to a target named ...18aMILE and mileage writes to one named ...MKMDL. That inversion is in the form, not in this sample: the printed columns are Make/Model (/MaxLen 16) and Mileage (/MaxLen 7). Five-digit mileages would not fit a 16-char Make/Model column error and vice versa, so a wrong-column write shows up as garbage rather than as a plausible number."
+    "Vehicle make_model writes to a target named ...18aMILE and mileage writes to one named ...MKMDL. That inversion is in the form, not in this sample: the printed columns are Make/Model (/MaxLen 16) and Mileage (/MaxLen 7). Five-digit mileages would not fit a 16-char Make/Model column error and vice versa, so a wrong-column write shows up as garbage rather than as a plausible number.",
+
+    "SECTION 4 COMPLETION (map v4). digital_assets carries FIVE records against four slots - the fifth is dropped and logged. Every digital-asset cell is /MaxLen-free, so cell size proves NOTHING about which column a value landed in; that table is the one place in Section 4 where only distinct per-column values can expose a mis-assignment. Hence every one of the twenty cells is unique and names its own row and column.",
+    "Digital-asset values are deliberately NOT wallet addresses, exchange account identifiers, seed phrases or key material - not even fabricated ones. The location column holds an obviously fictional custodian name and the name column holds 'Placeholder Coin' labels. Anything shaped like a real key would be a liability in a checked-in fixture regardless of whether it resolved to anything.",
+    "life_insurance_policies is NOT a row table. The form prints three POLICY COLUMNS by five rows (17a name/address, 17b policy number, 17c owner, 17d cash value, 17e loan balance), so each record here is one printed column. Policy number and owner are distinct per column ('POL-17-COL1-TEST' / Sample Taxpayer, COL2 / Sample Spouse, COL3 / Sample Family Trust) so a column mix-up is visible at a glance rather than hiding behind repeated values.",
+    "The 17* key prefix is the printed marker, not the internal one. The Page2 widgets are named Lines16b-f / p2_t33_16c / p2_t45_15g, and the form still carries a stale 'blocks 16b through 16f' sentence from an earlier revision. The printed markers on Rev. 6-2026 read 17a-17f, and those are what the keys follow, because these become immutable HubSpot property names.",
+    "property_line_20 rows name their own printed row ('Row 20a' / 'Row 20b'). Line 20's location and lender blocks are INVERTED against the internal field names, the same way 18b/18c and 19b/19c are: row 20a takes p3_t55_19b + Lender-phone3 and row 20b takes p3_t47_19a + Lender-phone4. Distinct descriptions, lenders and phones per row are what make that inversion checkable in the read-back.",
+    "All six Section 4 totals are arithmetic on the SLOTTED rows only, and each one is a different number, so a total written into the wrong cell shows up as a wrong number rather than a plausible one: 15e = 6105 (3800+1250+640+415, the dropped fifth digital asset's 9999 excluded), 16e = 5500 (2500+1800+900+300), 17f = 17000 (the three policies' cash value minus loan balance: 10000+4000+3000), 18d = 150000 (70000+55000+25000), 19d = 18000 (6000+7000+5000), 20c = 12500 (8000+4500).",
+    "18d, 19d and 20c are the three cross-section totals whose targets correlated only to bled street-address fragments (p3_t20_17c, p3_t40_18c, p3_t56_19c). All three were confirmed against the PRINTED markers before this sample was written, not against the field names, which disagree with the print in every case.",
+    "The four 'as of' date cells (15_digital_asset_value_as_of, 16_amount_owed_as_of, 16_available_credit_as_of, and the two already present at 13/14) are /MaxLen 8 mmddyyyy column headers, not money - same size trap as the v3 pair."
   ],
 
   "intake_id": "INT-SAMPLE-433A-001",
@@ -113,6 +122,21 @@
   "13_accounts_balance_as_of": "08012026",
   "13e_total_cash": "20600",
   "14_investments_loan_balance_as_of": "08012026",
+
+  "15_names_with_access_to_private_keys": "Sample Taxpayer and Sample Spouse (synthetic - no key material recorded)",
+  "15_digital_asset_value_as_of": "08012026",
+  "15e_total_digital_asset_equity": "6105",
+
+  "16_amount_owed_as_of": "08012026",
+  "16_available_credit_as_of": "08012026",
+  "16e_total_available_credit": "5500",
+
+  "17_has_life_insurance": "yes",
+  "17f_total_life_insurance_equity": "17000",
+
+  "18d_total_equity_real_property": "150000",
+  "19d_total_equity_vehicles": "18000",
+  "20c_total_equity_property_line_20": "12500",
 
   "household_members": [
     {
@@ -224,6 +248,126 @@
       "current_value": "2500",
       "loan_balance": "500",
       "equity": "2000"
+    }
+  ],
+
+  "digital_assets": [
+    {
+      "type_of_digital_asset": "Row 15a type - Digital Currency",
+      "name_of_digital_asset": "Row 15a name - Placeholder Coin Alpha",
+      "email_used_to_set_up": "row15a.sample@example.com",
+      "location_of_digital_asset": "Row 15a location - Sample Custodian One (synthetic, no identifiers held)",
+      "amount_and_value_usd": "Row 15a amount - 1.5000 units (USD 3,800.00)"
+    },
+    {
+      "type_of_digital_asset": "Row 15b type - Digital Token",
+      "name_of_digital_asset": "Row 15b name - Placeholder Coin Bravo",
+      "email_used_to_set_up": "row15b.sample@example.com",
+      "location_of_digital_asset": "Row 15b location - Sample Custodian Two (synthetic, no identifiers held)",
+      "amount_and_value_usd": "Row 15b amount - 40.0000 units (USD 1,250.00)"
+    },
+    {
+      "type_of_digital_asset": "Row 15c type - Non-Fungible Token",
+      "name_of_digital_asset": "Row 15c name - Placeholder Collectible Charlie",
+      "email_used_to_set_up": "row15c.sample@example.com",
+      "location_of_digital_asset": "Row 15c location - Sample Offline Storage Device (synthetic)",
+      "amount_and_value_usd": "Row 15c amount - 2.0000 units (USD 640.00)"
+    },
+    {
+      "type_of_digital_asset": "Row 15d type - Stablecoin",
+      "name_of_digital_asset": "Row 15d name - Placeholder Coin Delta",
+      "email_used_to_set_up": "row15d.sample@example.com",
+      "location_of_digital_asset": "Row 15d location - Sample Custodian Three (synthetic, no identifiers held)",
+      "amount_and_value_usd": "Row 15d amount - 415.0000 units (USD 415.00)"
+    },
+    {
+      "type_of_digital_asset": "OVERFLOW type - dropped, no fifth slot",
+      "name_of_digital_asset": "OVERFLOW name - Placeholder Coin Echo",
+      "email_used_to_set_up": "overflow.sample@example.com",
+      "location_of_digital_asset": "OVERFLOW location - Sample Custodian Four (synthetic)",
+      "amount_and_value_usd": "OVERFLOW amount - 9.0000 units (USD 9,999.00)"
+    }
+  ],
+
+  "available_credit": [
+    {
+      "institution_name_and_address": "Row 16a - Placeholder Card Services, 1300 Example Way, Testville TS 00000",
+      "account_number": "CRED-16A-TEST",
+      "credit_limit": "5000",
+      "amount_owed": "2500",
+      "available_credit": "2500"
+    },
+    {
+      "institution_name_and_address": "Row 16b - Example Bank Card Div, 1400 Example Way, Testville TS 00000",
+      "account_number": "CRED-16B-TEST",
+      "credit_limit": "4000",
+      "amount_owed": "2200",
+      "available_credit": "1800"
+    },
+    {
+      "institution_name_and_address": "Row 16c - Sample Store Credit Co, 1500 Example Way, Testville TS 00000",
+      "account_number": "CRED-16C-TEST",
+      "credit_limit": "2000",
+      "amount_owed": "1100",
+      "available_credit": "900"
+    },
+    {
+      "institution_name_and_address": "Row 16d - Testville Placeholder CU, 1600 Example Way, Testville TS 00000",
+      "account_number": "CRED-16D-TEST",
+      "credit_limit": "1000",
+      "amount_owed": "700",
+      "available_credit": "300"
+    }
+  ],
+
+  "life_insurance_policies": [
+    {
+      "company_name_and_address": "Policy column 1 - Placeholder Life Assurance Co, 1700 Example Way, Testville TS 00000",
+      "policy_number": "POL-17-COL1-TEST",
+      "owner_of_policy": "Sample Taxpayer",
+      "current_cash_value": "12000",
+      "outstanding_loan_balance": "2000"
+    },
+    {
+      "company_name_and_address": "Policy column 2 - Example Mutual Life Inc, 1800 Example Way, Testville TS 00000",
+      "policy_number": "POL-17-COL2-TEST",
+      "owner_of_policy": "Sample Spouse",
+      "current_cash_value": "5000",
+      "outstanding_loan_balance": "1000"
+    },
+    {
+      "company_name_and_address": "Policy column 3 - Sample Whole Life Society, 1900 Example Way, Testville TS 00000",
+      "policy_number": "POL-17-COL3-TEST",
+      "owner_of_policy": "Sample Family Trust",
+      "current_cash_value": "3000",
+      "outstanding_loan_balance": "0"
+    }
+  ],
+
+  "property_line_20": [
+    {
+      "description": "Vacation Cabin - Row 20a",
+      "purchase_date": "05202016",
+      "current_fmv": "60000",
+      "current_loan_balance": "52000",
+      "monthly_payment": "480",
+      "final_payment_date": "05202036",
+      "equity": "8000",
+      "location": "404 Example Ridge, Testville, TS 00000, Example County, USA - Row 20a",
+      "lender_name_address": "Row 20a lender - Placeholder Cabin Finance, 2000 Example Way, Testville TS 00000",
+      "lender_phone": "555-555-0181"
+    },
+    {
+      "description": "Storage Unit Parcel - Row 20b",
+      "purchase_date": "10052020",
+      "current_fmv": "22000",
+      "current_loan_balance": "17500",
+      "monthly_payment": "195",
+      "final_payment_date": "10052030",
+      "equity": "4500",
+      "location": "505 Example Depot Rd, Testville, TS 00000, Example County, USA - Row 20b",
+      "lender_name_address": "Row 20b lender - Example Storage Lending, 2100 Example Way, Testville TS 00000",
+      "lender_phone": "555-555-0182"
     }
   ],
 
