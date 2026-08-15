@@ -4,9 +4,9 @@
     "SECTION 5 (map v5). All 31 grid values are DISTINCT across both panels - not merely distinct within a panel. On sheet 6 every internal field-name suffix lags its printed line by one, so a one-row shift would land plausible money in the wrong printed category; only a grid with no repeated figure makes that shift visible in the read-back.",
     "The totals are real arithmetic on the rows above them, so they cross-check the rows: 35_total_income 12545 = the fourteen income amounts (5210+3120+145+880+615+430+275+190+355+240+505+320+165+95), 50_total_living_expenses 12477 = the fourteen expense amounts (3210+2450+735+512+130+620+645+410+815+175+1190+960+285+340), and 51_net_difference 68 = 12545 - 12477. A row that printed one line off would break at least one of those sums.",
     "Both write-in rows (printed 33 and 34) carry a DESCRIPTION and an amount. The description cells are the only text in an otherwise all-money grid, so if a description ever landed in a money column it would be obvious rather than plausible.",
-    "household_size is 7, deliberately ABOVE the published 1-4 national-standards range, so the per-additional-person arithmetic is exercised rather than skipped. It is also deliberately in tension with the printed household (taxpayer + spouse + 4 members with claimed_on_1040=yes = 6): the fill prints a mismatch warning, and that warning path is what this value tests. A sample where the two agreed would leave the check unproven.",
-    "age_band is 'under_65', which is the standards table's own key. The out-of-pocket standard is published PER PERSON, so line 42's allowable is the rate times household_size - the multiplication is the part worth proving, and a household of 1 would have hidden it.",
-    "Keyed against map_version 5. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
+    "allowable_household_size is DELIBERATELY ABSENT (map v6), so the fill exercises the derivation path rather than the override: taxpayer 1 + spouse 1 + the 4 slotted members with claimed_on_1040=yes = 6. That is the IRS National Standards default, which counts persons allowed as dependents on the most recent return, not occupants of the home. 6 is still above the published 1-4 range, so the per-additional-person arithmetic is exercised rather than skipped. The earlier household_size of 7 was the raw headcount and was the wrong basis; it priced line 36 at 3367 where the IRS default gives 2970.",
+    "allowable_under_65_count 5 + allowable_65_over_count 1 replace the single age_band input (map v6). 433-A prints ONE out-of-pocket line for a household that can span both bands, so a single band could not express this sample: 'Sample Household Four' is 71 and belongs in the 65-over band, and the old age_band of 'under_65' priced all seven people at the under-65 rate. The two counts sum to 6, which is the derived household above - that sum is a HARD STOP if it disagrees, because the two allowable cells would otherwise be priced on two different households.",
+    "Keyed against map_version 6. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
     "3c_business_type is 'llc' AND 3c_business_type_other_desc carries text. On a real form those contradict (the Other description belongs with the Other box). Both are present here deliberately so the ListOther target is proven to write; it is coverage, not a modelling claim.",
     "Pay periods differ on purpose - taxpayer bi-weekly, spouse monthly - so a copy/paste error between the 4h and 5h blocks shows up in the read-back instead of hiding behind identical values.",
     "Option values deliberately vary in case and padding (' Yes ', 'YES', booleans) to exercise the trim + case-insensitive match.",
@@ -143,8 +143,8 @@
   "19d_total_equity_vehicles": "18000",
   "20c_total_equity_property_line_20": "12500",
 
-  "household_size": "7",
-  "age_band": "under_65",
+  "allowable_under_65_count": "5",
+  "allowable_65_over_count": "1",
 
   "21_income_wages_taxpayer": "5210",
   "22_income_wages_spouse": "3120",
