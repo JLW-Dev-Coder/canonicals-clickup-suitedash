@@ -120,13 +120,18 @@ const round = (n) => Math.round(n * 10) / 10;
 
 function candidates(pageIdx, r) {
   const items = text[pageIdx]?.items || [];
-  const left = [], above = [], inside = [], near = [];
+  const left = [], right = [], above = [], inside = [], near = [];
 
   for (const t of items) {
     const vOverlap = t.y1 < r.y2 + TOL && t.y2 > r.y1 - TOL;
     const hOverlap = t.x1 < r.x2 + TOL && t.x2 > r.x1 - TOL;
 
     if (t.x2 <= r.x1 + TOL && vOverlap) left.push({ text: t.str, distance: round(r.x1 - t.x2) });
+    // RIGHT is not decoration: every checkbox on this form prints its option to the
+    // right of the box ("[ ] Weekly  [ ] Monthly"). Without it the four pay-period
+    // boxes all collapse onto the same caption and the Yes/No pairs are
+    // indistinguishable — which would make the P10 exclusive sets unauthorable.
+    if (t.x1 >= r.x2 - TOL && vOverlap) right.push({ text: t.str, distance: round(t.x1 - r.x2) });
     if (t.y1 >= r.y2 - TOL && hOverlap) above.push({ text: t.str, distance: round(t.y1 - r.y2) });
 
     const cx = (t.x1 + t.x2) / 2, cy = (t.y1 + t.y2) / 2;
@@ -141,11 +146,13 @@ function candidates(pageIdx, r) {
   const byDist = (a, b) => a.distance - b.distance;
   return {
     left: left.sort(byDist).slice(0, 3),
+    right: right.sort(byDist).slice(0, 3),
     above: above.sort(byDist).slice(0, 3),
     inside: inside.slice(0, 3),
     nearest: near.sort(byDist).slice(0, 5),
   };
 }
+const EMPTY = { left: [], right: [], above: [], inside: [], nearest: [] };
 
 // Choosing the label.
 //
@@ -163,29 +170,55 @@ function candidates(pageIdx, r) {
 const isMarker = (s) => /^\(?\d{1,2}[a-z]?\)?[.:]?$/i.test(s);
 const isDescriptive = (s) => s.length >= 2 && /[A-Za-z]/.test(s) && !isMarker(s);
 
-function pickLabel(c) {
-  const pools = [
-    ['above', c.above], ['left', c.left], ['inside', c.inside],
-  ];
+/** Nearest descriptive candidate across the given buckets, in order. */
+function nearestDescriptive(c, dirs) {
   let winner = null;
-  for (const [dir, pool] of pools) {
-    for (const cand of pool) {
+  for (const dir of dirs) {
+    for (const cand of c[dir] || []) {
       if (!isDescriptive(cand.text)) continue;
-      if (!winner || cand.distance < winner.distance) winner = { ...cand, dir, pool };
+      if (!winner || cand.distance < winner.distance) winner = { ...cand, dir, pool: c[dir] };
     }
   }
-  if (!winner) {
-    const n = c.nearest.find(x => isDescriptive(x.text));
-    if (n) winner = { ...n, dir: 'nearest', pool: c.nearest };
-  }
-  if (!winner) return { label: '', marker: '', dir: '', best: '' };
+  return winner;
+}
 
-  // Marker from the same bucket, nearest to the winner's own distance.
-  const marker = winner.pool
+/** Marker from the same bucket that supplied the label, at a comparable distance. */
+function markerFor(winner) {
+  if (!winner) return '';
+  const m = winner.pool
     .filter(x => isMarker(x.text))
     .sort((a, b) => Math.abs(a.distance - winner.distance) - Math.abs(b.distance - winner.distance))[0];
-  const m = marker && Math.abs(marker.distance - winner.distance) <= 2 ? marker.text : '';
-  return { label: winner.text, marker: m, dir: winner.dir, best: (m ? `${m} ${winner.text}` : winner.text) };
+  return m && Math.abs(m.distance - winner.distance) <= 2 ? m.text : '';
+}
+
+function pickLabel(c, type) {
+  if (type === 'PDFCheckBox') {
+    // A checkbox needs TWO pieces to be mappable: which question it belongs to, and
+    // which option this particular box is. The option is printed to its right; the
+    // question is the caption above or left of the group.
+    const opt = nearestDescriptive(c, ['right']) || nearestDescriptive(c, ['nearest']);
+    const ctx = nearestDescriptive(c, ['above', 'left']);
+    const marker = markerFor(ctx) || markerFor(opt);
+    const option = opt?.text ?? '';
+    const context = ctx && ctx.text !== option ? ctx.text : '';
+    const best = [marker, context, option && `[${option}]`].filter(Boolean).join(' ');
+    return { label: option || context, option, context, marker, dir: opt?.dir ?? ctx?.dir ?? '', best };
+  }
+
+  const winner =
+    nearestDescriptive(c, ['above', 'left', 'inside']) ||
+    nearestDescriptive(c, ['right']) ||
+    nearestDescriptive(c, ['nearest']);
+  if (!winner) return { label: '', option: '', context: '', marker: '', dir: '', best: '' };
+  const marker = markerFor(winner);
+  return {
+    label: winner.text,
+    option: '',
+    context: '',
+    marker,
+    dir: winner.dir,
+    best: marker ? `${marker} ${winner.text}` : winner.text,
+  };
 }
 
 const records = [];
@@ -195,15 +228,15 @@ for (const f of fields) {
   const type = f.constructor.name;
   const widgets = f.acroField.getWidgets();
   if (widgets.length === 0) {
-    records.push({ name, type, page: null, rect: null, candidates: { left: [], above: [], inside: [], nearest: [] }, marker: '', label: '', labelFrom: '', best: '' });
+    records.push({ name, type, page: null, rect: null, candidates: EMPTY, marker: '', label: '', option: '', context: '', labelFrom: '', best: '' });
     continue;
   }
   widgets.forEach((w, wi) => {
     const pageIdx = widgetPage(w);
     const g = w.getRectangle();
     const r = { x1: g.x, y1: g.y, x2: g.x + g.width, y2: g.y + g.height };
-    const c = pageIdx === null ? { left: [], above: [], inside: [], nearest: [] } : candidates(pageIdx, r);
-    const p = pickLabel(c);
+    const c = pageIdx === null ? EMPTY : candidates(pageIdx, r);
+    const p = pickLabel(c, type);
     records.push({
       name,
       type,
@@ -212,10 +245,12 @@ for (const f of fields) {
       page: pageIdx === null ? null : pageIdx + 1,
       rect: [round(r.x1), round(r.y1), round(r.x2), round(r.y2)],
       candidates: c,
-      marker: p.marker,       // printed line marker, from the same direction as `label`
-      label: p.label,         // printed descriptive caption, verbatim
+      marker: p.marker,       // printed line marker, from the bucket that supplied the label
+      label: p.label,         // printed caption, verbatim
+      option: p.option,       // checkboxes only: this box's own option, printed to its right
+      context: p.context,     // checkboxes only: the question the box belongs to
       labelFrom: p.dir,       // which direction supplied it
-      best: p.best,           // `marker + label` — both extracted, nothing invented
+      best: p.best,           // composed from the parts above — every part extracted, none invented
     });
   });
 }
