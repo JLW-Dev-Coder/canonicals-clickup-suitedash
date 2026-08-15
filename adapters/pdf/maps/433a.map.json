@@ -1,0 +1,409 @@
+{
+  "form": "433a",
+  "form_revision": "6-2026",
+  "catalog": "20312N",
+  "slice": "sections-1-3",
+  "authored_from": "adapters/pdf/maps/433a.labels.txt pages 1-2 (commit 2580dea)",
+  "_notes": [
+    "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
+    "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a target lookup fails on these two parents, the escaping was mangled - do not 'fix' it by deleting the backslash.",
+    "Every semantic assignment here is derived from correlated printed labels, not from field names. RC's 433-A report proved internal names can contradict the printed form.",
+    "Fields whose printed label was ambiguous or bled from an adjacent cell are NOT mapped. They are listed under _deferred with the reason. Leaving a cell blank is correct; filling it wrong is not."
+  ],
+
+  "map": {
+    "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
+    "1b_address": "topmostSubform[0].Page1[0].c1[0].#subform[1].p1-t5[0]",
+    "1c_county_of_residence": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[1].p1-t4[0]",
+
+    "2_tp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_030_0_[0]",
+    "2_tp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_031_0_[0]",
+    "2_sp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_034_0_[0]",
+    "2_sp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_035_0_[0]",
+
+    "3a_pct_ownership": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].PercentageOfOwnership[0]",
+    "3a_title": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0]",
+    "3b_business_name": "topmostSubform[0].Page1[0].c2[0].Lines3b[0].BusinessName[0]",
+    "3c_business_type_other_desc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].ListOther[0]",
+
+    "4a_tp_employer_name": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t15_4a[0]",
+    "4b_tp_employer_address": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t16_4b[0]",
+    "4f_tp_occupation": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t21_4f[0]",
+
+    "5a_sp_employer_name": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t23_5a[0]",
+    "5b_sp_employer_address": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t24_5b[0]",
+    "5f_sp_occupation": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t28_5f[0]",
+
+    "6_income_change_explain": "topmostSubform[0].Page1[0].TextField1[0]",
+    "6_income_change_amount": "topmostSubform[0].Page1[0].amountIncrease[0].p1_t34_6a[0]",
+    "6_income_change_when": "topmostSubform[0].Page1[0].whenIncrease[0]",
+
+    "6_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
+    "6_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
+    "6_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
+    "6_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
+    "6_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
+
+    "7_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
+    "7_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
+    "7_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
+    "7_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
+    "7_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
+
+    "9b_trust_name": "topmostSubform[0].page2[0].p1-t47_9[0]",
+    "9b_trust_ein": "topmostSubform[0].page2[0].p1-t45_9[0]",
+    "9b_trust_anticipated_amount": "topmostSubform[0].page2[0].#subform[3].p1-t48_9[0]",
+    "9b_trust_when_received": "topmostSubform[0].page2[0].p1-t49_9[0]",
+
+    "9c_trustee_ein": "topmostSubform[0].page2[0].p1-t02_9b[0]",
+
+    "10_sdb_location": "topmostSubform[0].page2[0].p1_t41_10[0]",
+    "10_sdb_contents": "topmostSubform[0].page2[0].p1-t43_10[0]",
+    "10_sdb_value": "topmostSubform[0].page2[0].value[0].p1-t42_10[0]",
+
+    "11_transfer_assets": "topmostSubform[0].page2[0].#subform[0].p3_t1_11[0]",
+    "11_transfer_value_at_transfer": "topmostSubform[0].page2[0].#subform[0].#subform[1].p3_t2_11[0]",
+    "11_transfer_date": "topmostSubform[0].page2[0].#subform[0].p3_t3_11[0]",
+    "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]"
+  },
+
+  "checkboxes": {
+    "marital_status": {
+      "married": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
+      "unmarried": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
+    },
+    "3a_business_interest": {
+      "yes": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
+      "no": "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
+    },
+    "3c_business_type": {
+      "partnership": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
+      "llc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
+      "corporation": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
+      "other": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
+    },
+    "4d_tp_contact_at_work": {
+      "yes": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
+      "no": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
+    },
+    "4h_tp_pay_period": {
+      "weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
+      "monthly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
+      "bi-weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
+      "other": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
+    },
+    "5d_sp_contact_at_work": {
+      "yes": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
+      "no": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
+    },
+    "5h_sp_pay_period": {
+      "weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
+      "monthly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
+      "bi-weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
+      "other": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
+    },
+    "6_lawsuit_role": {
+      "plaintiff": "topmostSubform[0].Page1[0].c1_6a_[2]",
+      "defendant": "topmostSubform[0].Page1[0].c1_6a_[3]"
+    },
+    "7_bankruptcy": {
+      "yes": "topmostSubform[0].Page1[0].c1_7_[0]",
+      "no": "topmostSubform[0].Page1[0].c1_7_[1]"
+    },
+    "9b_beneficiary_of_trust_estate_policy": {
+      "yes": "topmostSubform[0].page2[0].c1_9b_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9b_[1]"
+    },
+    "9c_trustee_fiduciary_contributor": {
+      "yes": "topmostSubform[0].page2[0].c1_9c_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9c_[1]"
+    },
+    "10_safe_deposit_box": {
+      "yes": "topmostSubform[0].page2[0].c1_10_[0]",
+      "no": "topmostSubform[0].page2[0].c1_10_[1]"
+    },
+    "11_transferred_assets": {
+      "yes": "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
+      "no": "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
+    }
+  },
+
+  "groups": {
+    "household_members": {
+      "source": "household_members",
+      "max": 5,
+      "overflow": "log",
+      "slots": [
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Name_01[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Age_01[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Relationship_01[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Name_02[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Age_02[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Relationship_02[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Name_03[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Age_03[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Relationship_03[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Name_04[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Age_04[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Relationship_04[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Name_04[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Age_04[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Relationship_04[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "exclusive": {
+    "marital_status": [
+      "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
+      "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
+    ],
+    "3a_business_interest": [
+      "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
+    ],
+    "3c_business_type": [
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
+    ],
+    "4d_tp_contact_at_work": [
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
+    ],
+    "4h_tp_pay_period": [
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
+    ],
+    "5d_sp_contact_at_work": [
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
+    ],
+    "5h_sp_pay_period": [
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
+    ],
+    "6_lawsuit_role": [
+      "topmostSubform[0].Page1[0].c1_6a_[2]",
+      "topmostSubform[0].Page1[0].c1_6a_[3]"
+    ],
+    "6_pair_a_unresolved": [
+      "topmostSubform[0].Page1[0].c1_6a_[0]",
+      "topmostSubform[0].Page1[0].c1_6a_[1]"
+    ],
+    "6_pair_b_unresolved": [
+      "topmostSubform[0].Page1[0].c1_6_[0]",
+      "topmostSubform[0].Page1[0].c1_6_[1]"
+    ],
+    "7_bankruptcy": [
+      "topmostSubform[0].Page1[0].c1_7_[0]",
+      "topmostSubform[0].Page1[0].c1_7_[1]"
+    ],
+    "8a_unresolved": [
+      "topmostSubform[0].page2[0].c1_8a_[0]",
+      "topmostSubform[0].page2[0].c1_8a_[1]"
+    ],
+    "8b_unresolved": [
+      "topmostSubform[0].page2[0].c1_8b_[0]",
+      "topmostSubform[0].page2[0].c1_8b_[1]"
+    ],
+    "8_unresolved": [
+      "topmostSubform[0].page2[0].c1_8_[0]",
+      "topmostSubform[0].page2[0].c1_8_[1]"
+    ],
+    "9a_unresolved": [
+      "topmostSubform[0].page2[0].c1_9a_[0]",
+      "topmostSubform[0].page2[0].c1_9a_[1]"
+    ],
+    "9b_beneficiary_of_trust_estate_policy": [
+      "topmostSubform[0].page2[0].c1_9b_[0]",
+      "topmostSubform[0].page2[0].c1_9b_[1]"
+    ],
+    "9c_trustee_fiduciary_contributor": [
+      "topmostSubform[0].page2[0].c1_9c_[0]",
+      "topmostSubform[0].page2[0].c1_9c_[1]"
+    ],
+    "10_safe_deposit_box": [
+      "topmostSubform[0].page2[0].c1_10_[0]",
+      "topmostSubform[0].page2[0].c1_10_[1]"
+    ],
+    "11_transferred_assets": [
+      "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
+      "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
+    ],
+    "hh1_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
+    ],
+    "hh1_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
+    ],
+    "hh2_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
+    ],
+    "hh2_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
+    ],
+    "hh3_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
+    ],
+    "hh3_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
+    ],
+    "hh4_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
+    ],
+    "hh4_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
+    ],
+    "hh5_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
+    ],
+    "hh5_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+    ]
+  },
+
+  "_deferred": {
+    "_why": "Printed label was ambiguous, duplicated, or bled from an adjacent cell. These targets are validated for existence but are NOT filled. PE resolves them from the labels.json candidate sets before they are mapped.",
+    "phone_pairs": {
+      "reason": "Two fields share each printed caption (Home Phone x2, Cell Phone x2, Work Telephone Number x2 per spouse). Cannot tell column split (taxpayer/spouse) from area-code/number split without rect x-ordering.",
+      "targets": [
+        "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]",
+        "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]",
+        "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]",
+        "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]",
+        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]",
+        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]",
+        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]",
+        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]"
+      ]
+    },
+    "how_long_with_employer_pairs": {
+      "reason": "Two fields per spouse both captioned 'How long with this employer' - likely years/months but unconfirmed.",
+      "targets": [
+        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
+        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
+        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
+        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]"
+      ]
+    },
+    "line_4g_5g": {
+      "reason": "Label bled from the household table ('on your Form 1040'). Actual 4g/5g caption unknown.",
+      "targets": [
+        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
+        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]"
+      ]
+    },
+    "line_6_date_field": {
+      "reason": "Caption is only '(mmddyyyy)'. Which of the several line-6 dates it belongs to is unresolved.",
+      "targets": ["topmostSubform[0].Page1[0].p1_t31_6[0]"]
+    },
+    "section_8_9a_text_fields": {
+      "reason": "Each text field carries the question text of a neighbouring line, not its own caption. Question-to-field assignment for lines 8/8a/8b/9a is unresolved.",
+      "targets": [
+        "topmostSubform[0].page2[0].p2_t50_8b[0]",
+        "topmostSubform[0].page2[0].p2_t51_8b[0]",
+        "topmostSubform[0].page2[0].p2_t50_8[0]",
+        "topmostSubform[0].page2[0].p2_t50_8[1]"
+      ]
+    },
+    "line_9_misc": {
+      "reason": "Captions bled ('(If yes, answer the following)', 'Yes', and the safe-deposit question appearing on a line-9 field).",
+      "targets": [
+        "topmostSubform[0].page2[0].p1_t44_9[0]",
+        "topmostSubform[0].page2[0].p1-t46_9[0]",
+        "topmostSubform[0].page2[0].p2_t00_9b[0]",
+        "topmostSubform[0].page2[0].p1-t01_9b[0]"
+      ]
+    },
+    "line_11_freeform": {
+      "reason": "Caption is a fragment of the question's continuation text.",
+      "targets": ["topmostSubform[0].page2[0].p2-t1_11[0]"]
+    }
+  }
+}
