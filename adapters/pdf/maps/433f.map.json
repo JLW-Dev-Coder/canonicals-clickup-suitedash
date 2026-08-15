@@ -1,5 +1,7 @@
 {
   "form": "433f",
+  "form_revision": "7-2024",
+  "catalog": "62053J",
   "hs_name_rule": "HubSpot property = 'irs'+<key> (e.g. 433f_exp_food -> irs433f_exp_food)",
   "pdf": "adapters/pdf/forms/f433f.pdf",
   "fields_source": "adapters/pdf/maps/433f.fields.json",
@@ -249,6 +251,21 @@
         "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
       ]
     }
+  },
+  "exclusive": {
+    "_note": "At most one target per set may end up checked. These are INDEPENDENT checkboxes in the PDF, not a radio group — nothing in the form prevents both. fill-433f.mjs fails loudly on a violation rather than picking a winner.",
+    "pay_freq_you": [
+      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
+    ],
+    "pay_freq_spouse": [
+      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
+      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
+    ]
   },
   "allowed": {
     "national_by_household": {

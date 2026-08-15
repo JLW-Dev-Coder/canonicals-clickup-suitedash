@@ -78,6 +78,31 @@ if (cb) {
   }
 }
 
+// Exclusive checkbox groups — "at most one of these may be checked".
+//
+// Yes/No pairs and frequency sets on these forms are INDEPENDENT checkboxes, not radio
+// groups: nothing in the PDF stops both from being checked. State is read back off the
+// form (not from what this run checked) so a box already set in the source PDF still
+// counts. A violation means the map or the input is wrong, so it fails loudly rather
+// than silently unchecking one — silently picking a winner would file a form asserting
+// something the taxpayer never said.
+const violations = [];
+for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
+  if (!Array.isArray(targets)) continue;   // `_note` prose, same convention as `special`
+  const on = targets.filter(n => {
+    try { return form.getCheckBox(n).isChecked(); } catch { return false; }
+  });
+  if (on.length > 1) violations.push({ set, on });
+}
+if (violations.length) {
+  console.error(`EXCLUSIVE GROUP VIOLATION — ${violations.length} set(s) have more than one checked target. No PDF written.`);
+  for (const v of violations) {
+    console.error(`  set "${v.set}": ${v.on.length} checked, expected at most 1`);
+    v.on.forEach(n => console.error(`    - ${n}`));
+  }
+  process.exit(2);
+}
+
 // IRS allowable standards (National food-group by household size + OOP by age)
 let allowedFilled = 0;
 if (std && mapDoc.allowed) {
