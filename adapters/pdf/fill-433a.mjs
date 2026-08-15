@@ -29,13 +29,25 @@ const skipped = [], overflow = [], written = new Set();
 // leaving the pay period blank files a form that asserts nothing where the taxpayer
 // said something. Collected so one run reports every bad value, then exits before save.
 const optionErrors = [];
+// Same reasoning for a value the FIELD refuses. Several 433-A cells carry a /MaxLen
+// (the name box is 45, the two EIN prefix boxes are 2), and pdf-lib throws rather than
+// truncating. Catching that as a "skip" would blank the cell silently, which is the
+// failure this engine exists to prevent — so it stops the run and names the field.
+const capacityErrors = [];
 
 const absent = (v) => v === undefined || v === null || String(v).trim() === '';
 
-const setText = (name, val) => {
+const setText = (name, val, key) => {
   if (absent(val)) return;
-  try { form.getTextField(name).setText(String(val)); filled++; written.add(name); }
-  catch { skipped.push(name); }
+  let field;
+  try { field = form.getTextField(name); } catch { skipped.push(name); return; }
+  const s = String(val), max = field.getMaxLength();
+  if (max !== undefined && s.length > max) {
+    capacityErrors.push({ key: key ?? name, name, len: s.length, max, value: s });
+    return;
+  }
+  try { field.setText(s); filled++; written.add(name); }
+  catch (e) { capacityErrors.push({ key: key ?? name, name, len: s.length, max, value: s, why: e.message }); }
 };
 
 const checkBox = (name) => {
@@ -67,7 +79,7 @@ const applyOption = (key, options, raw) => {
 };
 
 // scalar 1:1
-for (const [key, name] of Object.entries(mapDoc.map || {})) setText(name, data[key]);
+for (const [key, name] of Object.entries(mapDoc.map || {})) setText(name, data[key], key);
 
 // named-option checkboxes
 for (const [key, options] of Object.entries(mapDoc.checkboxes || {})) {
@@ -82,10 +94,22 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
   rows.forEach((row, i) => {
     if (i >= cap) { overflow.push(`${gName}[${i}]`); return; }   // drop, do not throw
     const slot = def.slots[i];
-    for (const [sub, name] of Object.entries(slot.text || {})) setText(name, row?.[sub]);
+    for (const [sub, name] of Object.entries(slot.text || {})) setText(name, row?.[sub], `${gName}[${i}].${sub}`);
     for (const [sub, options] of Object.entries(slot.checkboxes || {}))
       applyOption(`${gName}[${i}].${sub}`, options, row?.[sub]);
   });
+}
+
+if (capacityErrors.length) {
+  console.error(`FIELD REJECTED VALUE — ${capacityErrors.length} value(s) do not fit their cell. No PDF written.`);
+  for (const e of capacityErrors) {
+    console.error(`  key "${e.key}": ${e.len} chars into a field with maxLength=${e.max}`);
+    console.error(`    field: ${e.name}`);
+    console.error(`    value: ${JSON.stringify(e.value)}`);
+    if (e.why) console.error(`    pdf-lib: ${e.why}`);
+  }
+  console.error('  Shorten the input, or tell Principal the target is the wrong cell — truncating a filed form is not an acceptable fallback.');
+  process.exit(2);
 }
 
 if (optionErrors.length) {

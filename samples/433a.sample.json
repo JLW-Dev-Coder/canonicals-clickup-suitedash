@@ -1,0 +1,124 @@
+{
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-0100). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3 - it is not a realistic return.",
+  "_coverage_notes": [
+    "3c_business_type is 'llc' AND 3c_business_type_other_desc carries text. On a real form those contradict (the Other description belongs with the Other box). Both are present here deliberately so the ListOther target is proven to write; it is coverage, not a modelling claim.",
+    "Pay periods differ on purpose - taxpayer bi-weekly, spouse monthly - so a copy/paste error between the 4h and 5h blocks shows up in the read-back instead of hiding behind identical values.",
+    "Option values deliberately vary in case and padding (' Yes ', 'YES', booleans) to exercise the trim + case-insensitive match.",
+    "household_members carries SIX records against five slots: the sixth exists to prove overflow is logged and dropped rather than thrown or silently written.",
+    "1a_full_name is 42 chars because that cell carries /MaxLen 45. Longer input is refused by the field, and the fill now stops rather than blanking it.",
+    "9b_trust_ein and 9c_trustee_ein are DELIBERATELY ABSENT - the two targets the map assigns them to have maxLength=2 and are the 2-digit prefix half of a split EIN cell (the 7-digit remainder halves are already under _deferred). Neither can hold an EIN, so no value is supplied; see the report to Principal. Every other mapped scalar is exercised."
+  ],
+
+  "intake_id": "INT-SAMPLE-433A-001",
+
+  "1a_full_name": "Testcorp Sample Taxpayer and Sample Spouse",
+  "1b_address": "100 Example Way, Testville, TS 00000",
+  "1c_county_of_residence": "Example County",
+
+  "marital_status": "married",
+
+  "2_tp_ssn_itin": "000-00-0000",
+  "2_tp_dob": "01011980",
+  "2_sp_ssn_itin": "000-00-0001",
+  "2_sp_dob": "02021982",
+
+  "3a_business_interest": "yes",
+  "3a_pct_ownership": "50",
+  "3a_title": "Managing Member",
+  "3b_business_name": "Testcorp Industries LLC",
+  "3c_business_type": "llc",
+  "3c_business_type_other_desc": "Sample other-type description (coverage only)",
+
+  "4a_tp_employer_name": "Testcorp Industries",
+  "4b_tp_employer_address": "200 Example Blvd, Testville, TS 00000",
+  "4d_tp_contact_at_work": "no",
+  "4f_tp_occupation": "Sample Occupation A",
+  "4h_tp_pay_period": "bi-weekly",
+
+  "5a_sp_employer_name": "Placeholder Widgets Inc",
+  "5b_sp_employer_address": "300 Example Ave, Testville, TS 00000",
+  "5d_sp_contact_at_work": " Yes ",
+  "5f_sp_occupation": "Sample Occupation B",
+  "5h_sp_pay_period": "monthly",
+
+  "6_income_change_explain": "Sample anticipated income change - seasonal contract ends",
+  "6_income_change_amount": "1200",
+  "6_income_change_when": "09012026",
+
+  "6_lawsuit_role": "defendant",
+  "6_suit_location_of_filing": "Example County Superior Court, Testville TS",
+  "6_suit_docket_case_no": "CV-0000-TEST",
+  "6_suit_amount": "5000",
+  "6_suit_possible_completion_date": "12012026",
+  "6_suit_subject": "Sample contract dispute (synthetic)",
+
+  "7_bankruptcy": "yes",
+  "7_bk_date_filed": "03012024",
+  "7_bk_date_dismissed": "05012024",
+  "7_bk_date_discharged": "07012024",
+  "7_bk_petition_no": "BK-0000-TEST",
+  "7_bk_location_filed": "Example District of Testville, TS",
+
+  "9b_beneficiary_of_trust_estate_policy": "yes",
+  "9b_trust_name": "Sample Family Trust (synthetic)",
+  "9b_trust_anticipated_amount": "2500",
+  "9b_trust_when_received": "06012027",
+
+  "9c_trustee_fiduciary_contributor": "YES",
+
+  "10_safe_deposit_box": "yes",
+  "10_sdb_location": "Placeholder Savings, 400 Example St, Testville TS",
+  "10_sdb_contents": "Sample documents and one placeholder coin",
+  "10_sdb_value": "750",
+
+  "11_transferred_assets": "yes",
+  "11_transfer_assets": "Sample vehicle and household goods (synthetic)",
+  "11_transfer_value_at_transfer": "3000",
+  "11_transfer_date": "08012025",
+  "11_transfer_to_whom_or_where": "Sample Relative, Testville TS",
+
+  "household_members": [
+    {
+      "name": "Sample Dependent One",
+      "age": "12",
+      "relationship": "Child",
+      "claimed_on_1040": "yes",
+      "contributes_to_household_income": "no"
+    },
+    {
+      "name": "Sample Dependent Two",
+      "age": "16",
+      "relationship": "Child",
+      "claimed_on_1040": "yes",
+      "contributes_to_household_income": "yes"
+    },
+    {
+      "name": "Sample Dependent Three",
+      "age": "19",
+      "relationship": "Child",
+      "claimed_on_1040": "no",
+      "contributes_to_household_income": "yes"
+    },
+    {
+      "name": "Sample Household Four",
+      "age": "71",
+      "relationship": "Parent",
+      "claimed_on_1040": "Yes",
+      "contributes_to_household_income": false
+    },
+    {
+      "name": "Sample Household Five",
+      "age": "34",
+      "relationship": "Sibling",
+      "claimed_on_1040": true,
+      "contributes_to_household_income": "No"
+    },
+    {
+      "name": "Sample Overflow Six",
+      "age": "8",
+      "relationship": "Cousin",
+      "claimed_on_1040": "no",
+      "contributes_to_household_income": "no"
+    }
+  ]
+}
