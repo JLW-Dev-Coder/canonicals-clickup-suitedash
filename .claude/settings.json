@@ -1,16 +1,63 @@
 {
+  "$comment": "Claude Code permissions for vlp-platform. Committed so both machines get identical behaviour. Rules from every scope merge; evaluation is deny, then ask, then allow, first match wins. A deny rule cannot carry allowlist exceptions, so denies are kept narrow and literal. RC has commit/push/deploy autonomy per .claude/ROLES.md.",
+
   "permissions": {
     "defaultMode": "acceptEdits",
+
     "allow": [
-      "Bash(git *)",
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "Bash(node *)",
-      "Bash(pwsh *)",
-      "Bash(powershell *)",
-      "Read(**)",
-      "Edit(**)",
-      "Write(**)"
+      "Bash(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ],
+
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/.dev.vars)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/id_rsa*)",
+
+      "Bash(cat .env*)",
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(sudo *)",
+      "Bash(chmod 777 *)",
+      "Bash(dd *)",
+      "Bash(mkfs*)",
+
+      "Bash(git push --force *)",
+      "Bash(git push * --force)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fdx*)",
+      "Bash(git filter-branch *)",
+      "Bash(git branch -D *)",
+
+      "Bash(npx wrangler d1 delete *)",
+      "Bash(npx wrangler r2 bucket delete *)",
+      "Bash(npx wrangler kv namespace delete *)",
+      "Bash(npx wrangler secret delete *)",
+      "Bash(npx wrangler delete *)",
+      "Bash(wrangler d1 delete *)",
+      "Bash(wrangler r2 bucket delete *)",
+      "Bash(wrangler delete *)",
+
+      "Bash(npm publish *)",
+      "Bash(gh repo delete *)",
+      "Bash(gh release delete *)"
+    ],
+
+    "ask": [
+      "Bash(npx wrangler d1 execute *)",
+      "Bash(wrangler d1 execute *)"
     ]
   }
 }
