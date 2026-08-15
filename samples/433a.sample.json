@@ -1,14 +1,19 @@
 {
-  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3 - it is not a realistic return.",
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3 and the section 4 asset tables - it is not a realistic return.",
   "_coverage_notes": [
-    "Keyed against map_version 2. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
+    "Keyed against map_version 3. Key prefixes follow PRINTED line numbers, not internal field names: the lawsuit block is 7_* (its widgets are named _6) and bankruptcy is 8_* (named _7). Renaming here tracks the map rename.",
     "3c_business_type is 'llc' AND 3c_business_type_other_desc carries text. On a real form those contradict (the Other description belongs with the Other box). Both are present here deliberately so the ListOther target is proven to write; it is coverage, not a modelling claim.",
     "Pay periods differ on purpose - taxpayer bi-weekly, spouse monthly - so a copy/paste error between the 4h and 5h blocks shows up in the read-back instead of hiding behind identical values.",
     "Option values deliberately vary in case and padding (' Yes ', 'YES', booleans) to exercise the trim + case-insensitive match.",
     "household_members carries SIX records against five slots: the sixth exists to prove overflow is logged and dropped rather than thrown or silently written.",
     "1a_full_name is 42 chars because that cell carries /MaxLen 45. Longer input is refused by the field, and the fill stops rather than blanking it.",
     "The six split inputs are written in FOUR DIFFERENT human formats on purpose - parenthesised, dashed, bare digits, dotted, and an EIN both with and without its hyphen. All six must strip to the same digits and land in the same halves; if `strip` regressed, only some of them would break, which is the point.",
-    "Tenure and dependent-count cells are tiny (/MaxLen 2 and 10) and the two lived-abroad dates are /MaxLen 8, so values here are sized to the printed cell, not to prose."
+    "Tenure and dependent-count cells are tiny (/MaxLen 2 and 10) and the two lived-abroad dates are /MaxLen 8, so values here are sized to the printed cell, not to prose.",
+    "SECTION 4. bank_accounts carries FIVE records against four slots - the fifth proves overflow is logged and dropped on a text-only group, the same way household_members proves it on a group with checkboxes. The four Section 4 groups have no checkboxes at all, which is what exercises the optional-`checkboxes` path in the group handler.",
+    "13e_total_cash (20600) is deliberately the arithmetic sum of 12_total_cash_on_hand (1500) and the four SLOTTED account balances (4100+6200+3300+5500). The dropped fifth account's 9900 is excluded on purpose: if overflow ever silently wrote into a slot, the printed total would stop agreeing with the printed rows and the read-back would show it.",
+    "13_accounts_balance_as_of and 14_investments_loan_balance_as_of are the column-header 'As of' DATE cells (/MaxLen 8, mmddyyyy) - not money. The per-row balance cells beneath them are /MaxLen 12 money. Both carry the same bled 'mmddyyyy' caption, so the two are only distinguishable by cell size, and that is exactly the confusion these values are sized to catch.",
+    "real_property descriptions are distinct per row ('Row 18a' / 'Row 18b' / 'Row 18c') and vehicles differ in year, make/model AND mileage (11111 / 22222 / 33333). The map's row indices are INVERTED against print order on both tables, so identical filler would have hidden a swapped row; distinct values make a swap visible in one glance at the read-back grid.",
+    "Vehicle make_model writes to a target named ...18aMILE and mileage writes to one named ...MKMDL. That inversion is in the form, not in this sample: the printed columns are Make/Model (/MaxLen 16) and Mileage (/MaxLen 7). Five-digit mileages would not fit a 16-char Make/Model column error and vice versa, so a wrong-column write shows up as garbage rather than as a plausible number."
   ],
 
   "intake_id": "INT-SAMPLE-433A-001",
@@ -104,6 +109,11 @@
   "11_transfer_date": "08012025",
   "11_transfer_to_whom_or_where": "Sample Relative, Testville TS",
 
+  "12_total_cash_on_hand": "1500",
+  "13_accounts_balance_as_of": "08012026",
+  "13e_total_cash": "20600",
+  "14_investments_loan_balance_as_of": "08012026",
+
   "household_members": [
     {
       "name": "Sample Dependent One",
@@ -146,6 +156,164 @@
       "relationship": "Cousin",
       "claimed_on_1040": "no",
       "contributes_to_household_income": "no"
+    }
+  ],
+
+  "bank_accounts": [
+    {
+      "type_of_account": "Checking",
+      "financial_institution": "Placeholder Savings Bank, 401 Example St, Testville TS 00000",
+      "account_number": "ACCT-1001-TEST",
+      "account_balance": "4100"
+    },
+    {
+      "type_of_account": "Savings",
+      "financial_institution": "Example Credit Union, 402 Example St, Testville TS 00000",
+      "account_number": "ACCT-1002-TEST",
+      "account_balance": "6200"
+    },
+    {
+      "type_of_account": "Money Market",
+      "financial_institution": "Sample Trust Bank NA, 403 Example St, Testville TS 00000",
+      "account_number": "ACCT-1003-TEST",
+      "account_balance": "3300"
+    },
+    {
+      "type_of_account": "Certificate",
+      "financial_institution": "Testville Community Bank, 404 Example St, Testville TS 00000",
+      "account_number": "ACCT-1004-TEST",
+      "account_balance": "5500"
+    },
+    {
+      "type_of_account": "Overflow Checking",
+      "financial_institution": "Dropped Bank Placeholder, 405 Example St, Testville TS 00000",
+      "account_number": "ACCT-1005-TEST",
+      "account_balance": "9900"
+    }
+  ],
+
+  "investments": [
+    {
+      "type_of_investment": "Brokerage Account",
+      "name_and_address": "Placeholder Brokerage LLC, 500 Example Rd, Testville TS 00000",
+      "phone": "555-555-0151",
+      "current_value": "12000",
+      "loan_balance": "2000",
+      "equity": "10000"
+    },
+    {
+      "type_of_investment": "Retirement IRA",
+      "name_and_address": "Sample Retirement Custodian, 600 Example Ln, Testville TS 00000",
+      "phone": "555-555-0152",
+      "current_value": "8000",
+      "loan_balance": "0",
+      "equity": "8000"
+    },
+    {
+      "type_of_investment": "Stocks and Bonds",
+      "name_and_address": "Example Securities Co, 700 Example Ct, Testville TS 00000",
+      "phone": "555-555-0153",
+      "current_value": "4500",
+      "loan_balance": "1500",
+      "equity": "3000"
+    },
+    {
+      "type_of_investment": "Certificate of Deposit",
+      "name_and_address": "Testville Placeholder Bank, 800 Example Way, Testville TS 00000",
+      "phone": "555-555-0154",
+      "current_value": "2500",
+      "loan_balance": "500",
+      "equity": "2000"
+    }
+  ],
+
+  "real_property": [
+    {
+      "description": "Primary Residence - Row 18a",
+      "purchase_date": "03152015",
+      "current_fmv": "250000",
+      "current_loan_balance": "180000",
+      "monthly_payment": "1450",
+      "final_payment_date": "03152045",
+      "equity": "70000",
+      "title_holders": "Sample Taxpayer and Sample Spouse, joint tenancy",
+      "location": "101 Example Way, Testville, TS 00000, Example County, USA",
+      "lender_name_address": "Placeholder Mortgage Co, 900 Example Blvd, Testville TS 00000",
+      "lender_phone": "555-555-0161"
+    },
+    {
+      "description": "Rental Duplex - Row 18b",
+      "purchase_date": "06012019",
+      "current_fmv": "175000",
+      "current_loan_balance": "120000",
+      "monthly_payment": "980",
+      "final_payment_date": "06012049",
+      "equity": "55000",
+      "title_holders": "Sample Taxpayer, sole ownership",
+      "location": "202 Example Ave, Testville, TS 00000, Example County, USA",
+      "lender_name_address": "Example Lending Group, 950 Example Rd, Testville TS 00000",
+      "lender_phone": "555-555-0162"
+    },
+    {
+      "description": "Vacant Lot - Row 18c",
+      "purchase_date": "09102021",
+      "current_fmv": "40000",
+      "current_loan_balance": "15000",
+      "monthly_payment": "320",
+      "final_payment_date": "09102031",
+      "equity": "25000",
+      "title_holders": "Sample Spouse, sole ownership",
+      "location": "303 Example Trail, Testville, TS 00000, Example County, USA",
+      "lender_name_address": "Placeholder Land Finance, 975 Example St, Testville TS 00000",
+      "lender_phone": "555-555-0163"
+    }
+  ],
+
+  "vehicles": [
+    {
+      "year": "2018",
+      "make_model": "Sample Sedan A",
+      "mileage": "11111",
+      "license_tag": "TAG-19A-TEST",
+      "vin": "VIN0000000000019A",
+      "purchase_date": "04012018",
+      "current_fmv": "9000",
+      "current_loan_balance": "3000",
+      "monthly_payment": "250",
+      "final_payment_date": "04012027",
+      "equity": "6000",
+      "lender_name_address": "Placeholder Auto Finance, 1000 Example Dr, Testville TS 00000",
+      "lender_phone": "555-555-0171"
+    },
+    {
+      "year": "2020",
+      "make_model": "Sample Truck B",
+      "mileage": "22222",
+      "license_tag": "TAG-19B-TEST",
+      "vin": "VIN0000000000019B",
+      "purchase_date": "07012020",
+      "current_fmv": "15000",
+      "current_loan_balance": "8000",
+      "monthly_payment": "410",
+      "final_payment_date": "07012029",
+      "equity": "7000",
+      "lender_name_address": "Example Motors Credit, 1100 Example Pkwy, Testville TS 00000",
+      "lender_phone": "555-555-0172"
+    },
+    {
+      "year": "2022",
+      "make_model": "Sample Van C",
+      "mileage": "33333",
+      "license_tag": "TAG-19C-TEST",
+      "vin": "VIN0000000000019C",
+      "purchase_date": "11012022",
+      "current_fmv": "21000",
+      "current_loan_balance": "16000",
+      "monthly_payment": "525",
+      "final_payment_date": "11012032",
+      "equity": "5000",
+      "lender_name_address": "Sample Lease Holdings, 1200 Example Cir, Testville TS 00000",
+      "lender_phone": "555-555-0173"
     }
   ]
 }
