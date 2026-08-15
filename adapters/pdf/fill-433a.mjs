@@ -22,7 +22,12 @@
 //   exclusive    — identical to 433-F: at most one target per set, read back off the form.
 //   allowed      — the IRS USE ONLY column. Exactly two cells carry a fixed published
 //                  amount and are auto-filled; the other 14 are named under
-//                  `_never_autofill` and guarded against ever being written.
+//                  `_never_autofill` and guarded against ever being written. The
+//                  household the column is priced on is DERIVED from the form by
+//                  default (IRS National Standards counts claimed dependents, not
+//                  occupants) and the out-of-pocket line is priced per age band,
+//                  because 433-A prints one health figure for a household that can
+//                  span both bands.
 //   _deferred    — documentation + existence-validation ONLY. Never filled.
 
 import { PDFDocument } from 'pdf-lib';
@@ -173,8 +178,55 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
 // IRS35 is the allowed cell for PRINTED LINE 36 and IRS41 for printed line 42. Binding
 // IRS36 to line 36 would validate, fill, and print the whole column one row off.
 const allowedAudit = [];
+// Warnings, unlike allowedErrors, do not stop the run. Each marks a place where the
+// engine produced a defensible figure that an operator still has to stand behind: a
+// departure from the IRS default, or a count that disagrees with the ages on the form.
+// They print at the end of a successful run so a departure is on the record rather
+// than silent — which is the entire reason the override is allowed to exist.
+const allowedWarnings = [];
+let householdReport = null;
+
+// The three allowable inputs. These become immutable HubSpot property names, so they
+// are pinned here AND cross-checked against the map's own declaration below: a map that
+// renamed an input without this script following it would read an absent key and
+// quietly fall back to a default, which is exactly the class of silent mispricing this
+// column is built to prevent.
+const HH_INPUT  = 'allowable_household_size';
+const U65_INPUT = 'allowable_under_65_count';
+const O65_INPUT = 'allowable_65_over_count';
+
+// mmddyyyy -> whole years as of today, or null when the value is absent or unusable.
+// Only ever feeds a WARNING, never a written figure, so an unparseable date degrades to
+// "no evidence" rather than to a wrong allowance.
+const ageFromDob = (raw) => {
+  if (absent(raw)) return null;
+  const s = String(raw).replace(/\D/g, '');
+  if (s.length !== 8) return null;
+  const mm = +s.slice(0, 2), dd = +s.slice(2, 4), yyyy = +s.slice(4, 8);
+  if (!mm || !dd || !yyyy || mm > 12 || dd > 31) return null;
+  const now = new Date();
+  let age = now.getFullYear() - yyyy;
+  const monthsPast = (now.getMonth() + 1) - mm;
+  if (monthsPast < 0 || (monthsPast === 0 && now.getDate() < dd)) age--;
+  return age >= 0 && age < 130 ? age : null;
+};
+
+const wholeAge = (raw) => {
+  if (absent(raw)) return null;
+  const n = Number(String(raw).trim());
+  return Number.isInteger(n) && n >= 0 && n < 130 ? n : null;
+};
+
 const A = mapDoc.allowed;
 if (A) {
+  // Input-name drift check — see HH_INPUT above.
+  const declaredHH = A.national_standards_total?.input;
+  if (declaredHH && declaredHH !== HH_INPUT)
+    allowedErrors.push({ what: 'input name drift', why: `map declares national_standards_total.input = ${JSON.stringify(declaredHH)}, this engine reads ${JSON.stringify(HH_INPUT)}` });
+  const declaredOOP = A.out_of_pocket_health?.inputs;
+  if (Array.isArray(declaredOOP) && !(declaredOOP.length === 2 && declaredOOP.includes(U65_INPUT) && declaredOOP.includes(O65_INPUT)))
+    allowedErrors.push({ what: 'input name drift', why: `map declares out_of_pocket_health.inputs = ${JSON.stringify(declaredOOP)}, this engine reads ${JSON.stringify([U65_INPUT, O65_INPUT])}` });
+
   if (!existsSync(STANDARDS_PATH)) {
     allowedErrors.push({ what: 'standards table', why: `${STANDARDS_PATH} not found` });
   } else {
@@ -189,19 +241,51 @@ if (A) {
     if (!std.oop || typeof std.oop !== 'object')
       allowedErrors.push({ what: 'out-of-pocket health', why: `${STANDARDS_PATH} has no oop table` });
 
-    const rawHH = data.household_size;
-    let hh = null;
+    // -----------------------------------------------------------------------
+    // The household the whole column is priced on.
+    //
+    // IRS National Standards: "Generally, the total number of persons allowed for
+    // National Standards should be the same as those allowed as dependents on the
+    // taxpayer's most recent year income tax return." So the default is NOT the raw
+    // headcount living in the home — it is the taxpayer, the spouse if married, and the
+    // members actually CLAIMED. Rows that overflow the printed table are not on the
+    // form and cannot be claimed by it, so they do not count either.
+    //
+    // The guidance says "generally", not "always", so a supplied value still wins. It
+    // just does not get to win quietly.
+    const hhDef  = mapDoc.groups?.household_members;
+    const hhCap  = hhDef ? Math.min(hhDef.max ?? hhDef.slots.length, hhDef.slots.length) : 0;
+    const slotted = (Array.isArray(data.household_members) ? data.household_members : []).slice(0, hhCap);
+    const claimed = slotted.map((r, i) => ({ r, i })).filter(x => normalize(x.r?.claimed_on_1040) === 'yes');
+    const married = normalize(data.marital_status) === 'married';
+    const derivedHH = 1 + (married ? 1 : 0) + claimed.length;
+    const derivedBasis = `taxpayer 1 + spouse ${married ? 1 : 0} (marital_status ${JSON.stringify(data.marital_status ?? null)}) + ${claimed.length} household member(s) with claimed_on_1040=yes among the ${slotted.length} row(s) that fit the printed ${hhCap}-row table`;
+
+    const rawHH = data[HH_INPUT];
+    let hh = derivedHH, hhPath = 'derived';
     if (!absent(rawHH)) {
-      hh = Number(rawHH);
-      if (!Number.isInteger(hh) || hh < 1)
-        allowedErrors.push({ what: 'household_size', why: `expected a positive integer, received ${JSON.stringify(rawHH)}` });
+      const n = Number(rawHH);
+      if (!Number.isInteger(n) || n < 1) {
+        allowedErrors.push({ what: HH_INPUT, why: `expected a positive integer, received ${JSON.stringify(rawHH)}` });
+      } else {
+        hh = n;
+        hhPath = 'supplied';
+        if (n !== derivedHH) {
+          allowedWarnings.push([
+            `${HH_INPUT} OVERRIDE: supplied ${n}, derived ${derivedHH} — the supplied value WINS and priced the allowable column.`,
+            `  derived basis: ${derivedBasis}`,
+            `  IRS National Standards say the count should GENERALLY match the dependents claimed on the most recent return, so a departure is permitted — but it is a judgement the operator owns, and it is recorded here rather than left silent.`,
+          ].join('\n'));
+        }
+      }
     }
+    householdReport = { hh, hhPath, derivedHH, derivedBasis, suppliedHH: absent(rawHH) ? null : rawHH };
 
     // Printed line 36 — Food, Clothing and Misc. 433-A consolidates the entire
     // national-standards basket onto ONE printed line, so this is the published TOTAL
     // for the household size, not a per-category figure. The table is published for
     // sizes 1-4; above that the size-4 total plus a flat per-additional-person amount.
-    if (!allowedErrors.length && hh !== null && A.national_standards_total?.target) {
+    if (!allowedErrors.length && A.national_standards_total?.target) {
       const capped = Math.min(4, hh);
       const base = std.national[String(capped)].total;
       const extra = hh > 4 ? std.national_addl_total * (hh - 4) : 0;
@@ -212,7 +296,7 @@ if (A) {
         keys: hh > 4 ? `national["4"].total = ${base}; national_addl_total = ${std.national_addl_total}` : `national["${capped}"].total = ${base}`,
         arithmetic: hh > 4
           ? `${base} + ${std.national_addl_total} x (${hh} - 4) = ${base} + ${extra} = ${total}`
-          : `household_size ${hh} -> ${total}`,
+          : `household of ${hh} -> national["${capped}"].total = ${total}`,
         value: total,
       });
       setText(A.national_standards_total.target, total, 'allowed.national_standards_total');
@@ -220,35 +304,91 @@ if (A) {
 
     // Printed line 42 — Out of Pocket Health Care Costs.
     //
-    // The published amount is a rate PER PERSON per month, so the household figure this
-    // line prints is rate x household size. The table states its own unit in `oop_basis`
-    // rather than leaving the caller to infer it from a bare number: 433-F prints the
-    // per-person rate beside separate age-band headcounts and must NOT multiply, 433-A
-    // prints one household figure and must. Guessing that wrong misprices the statement,
-    // so an unstated basis is a hard stop, not a default.
-    const rawBand = data.age_band;
-    if (!allowedErrors.length && !absent(rawBand) && A.out_of_pocket_health?.target) {
-      const bands = Object.keys(std.oop);
-      const want = String(rawBand).trim().toLowerCase();
-      const band = bands.find(b => b.toLowerCase() === want);
-      if (!band) {
-        allowedErrors.push({ what: 'age_band', why: `received ${JSON.stringify(rawBand)}; standards table publishes: ${bands.join(', ')}` });
-      } else if (std.oop_basis !== 'per_person_per_month' && std.oop_basis !== 'per_household_per_month') {
-        allowedErrors.push({ what: 'oop_basis', why: `${STANDARDS_PATH} does not state whether oop is per person or per household (oop_basis = ${JSON.stringify(std.oop_basis)}). Refusing to guess.` });
-      } else if (std.oop_basis === 'per_person_per_month' && hh === null) {
-        allowedErrors.push({ what: 'household_size', why: 'age_band was supplied and the out-of-pocket standard is published per person, so household_size is required to reach the household figure printed on line 42' });
-      } else {
-        const rate = std.oop[band];
-        const perPerson = std.oop_basis === 'per_person_per_month';
-        const value = perPerson ? rate * hh : rate;
-        allowedAudit.push({
-          printed_line: A.out_of_pocket_health.printed_line,
-          target: A.out_of_pocket_health.target,
-          keys: `oop["${band}"] = ${rate}; oop_basis = "${std.oop_basis}"`,
-          arithmetic: perPerson ? `${rate} per person x ${hh} in household = ${value}` : `${rate} (already a household figure, not multiplied)`,
-          value,
-        });
-        setText(A.out_of_pocket_health.target, value, 'allowed.out_of_pocket_health');
+    // 433-A prints ONE out-of-pocket line for the whole household. 433-F prints the
+    // per-person rate beside separate age-band headcounts, which is why a single
+    // `age_band` input works there and does NOT work here: a household that spans both
+    // bands cannot be described by one band, and pricing it at the under-65 rate
+    // under-allows every person aged 65 or over — silently, on a filed statement.
+    // Hence two counts, and hence the sum check below.
+    //
+    // The table still states its own unit in `oop_basis`. Two counts times a rate is
+    // only the right arithmetic if the rate is per person, so an unstated or
+    // non-per-person basis is a hard stop, not a default.
+    const rawU = data[U65_INPUT], rawO = data[O65_INPUT];
+    if (!allowedErrors.length && !(absent(rawU) && absent(rawO)) && A.out_of_pocket_health?.target) {
+      // A count that is absent while its counterpart is present reads as zero. That is
+      // not a guess: the sum check immediately below compares the pair against the
+      // household actually priced on line 36, so a genuinely forgotten count fails
+      // loudly there rather than quietly halving the allowance here.
+      const parseCount = (raw, key) => {
+        if (absent(raw)) return 0;
+        const n = Number(raw);
+        if (!Number.isInteger(n) || n < 0) {
+          allowedErrors.push({ what: key, why: `expected a non-negative integer, received ${JSON.stringify(raw)}` });
+          return null;
+        }
+        return n;
+      };
+      const u65 = parseCount(rawU, U65_INPUT);
+      const o65 = parseCount(rawO, O65_INPUT);
+
+      const UK = 'under_65', OK_ = '65_over';
+      const bands = Object.keys(std.oop || {});
+      if (u65 !== null && o65 !== null) {
+        if (std.oop[UK] === undefined || std.oop[OK_] === undefined) {
+          allowedErrors.push({ what: 'out-of-pocket age bands', why: `${STANDARDS_PATH} must publish oop["${UK}"] and oop["${OK_}"]; it publishes: ${bands.join(', ') || '(none)'}` });
+        } else if (std.oop_basis !== 'per_person_per_month') {
+          // Deliberately NOT a list of accepted alternatives. Two headcounts times a
+          // rate is per-person arithmetic; any other basis makes this line wrong in a
+          // way no amount of care downstream recovers.
+          allowedErrors.push({ what: 'oop_basis', why: `line 42 is computed as two headcounts x a PER-PERSON rate, but ${STANDARDS_PATH} states oop_basis = ${JSON.stringify(std.oop_basis)}. Refusing to guess.` });
+        } else if (u65 + o65 !== hh) {
+          // Hard stop, not a warning. If the age-band counts describe a different
+          // household from the one line 36 was priced on, the two allowable cells are
+          // computed on two different households and there is no correct output to
+          // produce — so none is produced.
+          allowedErrors.push({
+            what: 'household disagreement between the two allowable cells',
+            why: `${U65_INPUT} ${u65} + ${O65_INPUT} ${o65} = ${u65 + o65}, but line 36 was priced on a household of ${hh} (${hhPath}). The two allowable cells would be computed on two different households.`,
+          });
+        } else {
+          const rU = std.oop[UK], rO = std.oop[OK_];
+          const value = u65 * rU + o65 * rO;
+          allowedAudit.push({
+            printed_line: A.out_of_pocket_health.printed_line,
+            target: A.out_of_pocket_health.target,
+            keys: `oop["${UK}"] = ${rU}; oop["${OK_}"] = ${rO}; oop_basis = "${std.oop_basis}"`,
+            arithmetic: `(${u65} x ${rU}) + (${o65} x ${rO}) = ${u65 * rU} + ${o65 * rO} = ${value}`,
+            value,
+          });
+          setText(A.out_of_pocket_health.target, value, 'allowed.out_of_pocket_health');
+
+          // Cross-check the counts against the ages the FORM carries: the printed age
+          // column for each claimed member, plus the taxpayer and spouse dates of
+          // birth. This warns and never auto-corrects — the ages on a form are a
+          // snapshot taken when it was completed, and the operator may hold better
+          // information than the page does.
+          const people = [{ who: 'taxpayer', age: ageFromDob(data['2_tp_dob']), src: '2_tp_dob' }];
+          if (married) people.push({ who: 'spouse', age: ageFromDob(data['2_sp_dob']), src: '2_sp_dob' });
+          for (const { r, i } of claimed)
+            people.push({ who: `household_members[${i}] ${r?.name ?? '(unnamed)'}`, age: wholeAge(r?.age), src: 'printed age column' });
+
+          const known   = people.filter(p => p.age !== null);
+          const unknown = people.filter(p => p.age === null);
+          const evU = known.filter(p => p.age <  65).length;
+          const evO = known.filter(p => p.age >= 65).length;
+          if (evU !== u65 || evO !== o65) {
+            const lines = [
+              `age-band cross-check DISAGREES with the supplied counts (not corrected — the form's ages are a snapshot and you may know better).`,
+              `  supplied: ${U65_INPUT} ${u65}, ${O65_INPUT} ${o65}`,
+              `  form says: ${evU} under 65, ${evO} aged 65 or over${unknown.length ? `, ${unknown.length} with no usable age` : ''}`,
+            ];
+            for (const p of people) lines.push(`    ${p.age === null ? '  ?' : String(p.age).padStart(3)}  ${p.who} (${p.src})`);
+            if (unknown.length) lines.push(`  A person with no usable age is counted in NEITHER band above, so a disagreement of exactly ${unknown.length} may be nothing more than that.`);
+            lines.push(`  Line 42 was written from the SUPPLIED counts. If the form's reading is the right one, that figure is wrong — confirm before filing.`);
+            allowedWarnings.push(lines.join('\n'));
+          }
+        }
       }
     }
   }
@@ -363,30 +503,23 @@ if (allowedAudit.length) {
   }
 }
 
-// Household-size sanity check. The allowable figures above are driven entirely by
-// `household_size`, but the form itself states a household on sheet 1: the taxpayer,
-// a spouse if married, and the members claimed as dependents. Only rows that actually
-// FIT the printed table are counted — an overflowed row is not on the form.
-//
-// This warns, it never fails: a household size may legitimately differ from the count
-// of dependents claimed on a 1040, and the allowable is the operator's call. But an
-// unnoticed mismatch misprices the entire statement, so it is never silent.
-if (!absent(data.household_size)) {
-  const hhDef = mapDoc.groups?.household_members;
-  const cap = hhDef ? Math.min(hhDef.max ?? hhDef.slots.length, hhDef.slots.length) : 0;
-  const members = Array.isArray(data.household_members) ? data.household_members.slice(0, cap) : [];
-  const claimed = members.filter(r => normalize(r?.claimed_on_1040) === 'yes').length;
-  const married = normalize(data.marital_status) === 'married';
-  const derived = 1 + (married ? 1 : 0) + claimed;
-  const supplied = Number(data.household_size);
-  const basis = `taxpayer 1 + spouse ${married ? 1 : 0} (marital_status "${data.marital_status ?? '(absent)'}") + ${claimed} household member(s) with claimed_on_1040=yes on the printed table`;
-  if (derived !== supplied) {
-    console.log(`WARNING household_size mismatch: input says ${supplied}, the form itself shows ${derived}.`);
-    console.log(`  form basis: ${basis}`);
-    console.log(`  The allowable standards above were computed from the INPUT value ${supplied}. If ${derived} is right, the allowables are wrong — confirm before filing.`);
+// Which household the allowable column was priced on, and how that number was reached.
+// Printed on EVERY run, not only on disagreement: the figure drives both allowable cells,
+// so "where did 6 come from" must never require reading the source to answer.
+if (householdReport) {
+  const { hh, hhPath, derivedHH, derivedBasis, suppliedHH } = householdReport;
+  console.log(`household size used for the allowable column: ${hh} (path: ${hhPath})`);
+  console.log(`  derived from the form: ${derivedHH} — ${derivedBasis}`);
+  if (hhPath === 'supplied') {
+    console.log(`  ${HH_INPUT} was supplied as ${JSON.stringify(suppliedHH)} and takes precedence over the derived default.`);
   } else {
-    console.log(`household_size ${supplied} agrees with the form (${basis}).`);
+    console.log(`  ${HH_INPUT} was absent, so the IRS default was derived and used.`);
   }
+}
+
+if (allowedWarnings.length) {
+  console.log(`allowable column — ${allowedWarnings.length} warning(s):`);
+  for (const w of allowedWarnings) console.log(`  WARNING ${w.replace(/\n/g, '\n  ')}`);
 }
 if (skipped.length) console.log(`skipped ${skipped.length}: ${skipped.slice(0, 4).join(', ')}${skipped.length > 4 ? ' ...' : ''}`);
 if (overflow.length) console.log(`OVERFLOW (dropped, form has no slot): ${overflow.join(', ')}`);

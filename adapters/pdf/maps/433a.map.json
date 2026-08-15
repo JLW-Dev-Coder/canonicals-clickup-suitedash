@@ -3,8 +3,8 @@
   "form_revision": "6-2026",
   "catalog": "20312N",
   "slice": "sections-1-3, section-4 complete, section-5 income/expense grid (printed lines 21-51)",
-  "map_version": 5,
-  "authored_from": "433a.labels.txt sheets 1-5 + RC sheet-6 column-header alignment report (Prompt 13)",
+  "map_version": 6,
+  "authored_from": "433a.labels.txt sheets 1-5 + RC sheet-6 alignment report + IRS National Standards guidance (Prompt 14)",
   "_notes": [
     "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
     "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
@@ -21,7 +21,10 @@
     "Line-20 location/lender blocks are INVERTED against their internal names, same pattern as 18b/18c and 19b/19c: row 20a takes p3_t55_19b + Lender-phone3, row 20b takes p3_t47_19a + Lender-phone4. Assigned by printed reading order.",
     "v5 adds the Section 5 income and expense grid, printed lines 21-51, plus the allowed column. On sheet 6 EVERY internal suffix lags the printed line by one, in all three panels - keys follow the printed marker column.",
     "Only two allowed cells are auto-filled: IRS35 (printed line 36, national standards total by household size) and IRS41 (printed line 42, out-of-pocket health by age band). The other 14 are listed under allowed._never_autofill with a reason each, validated for existence and never written.",
-    "Income prints 15 rows (21-35), expenses print 16 (36-51). The extra expense row is absorbed where the income side prints the \"Other Income (Specify below)\" sub-header instead of a field. Lines 33 and 34 are write-in rows with a description cell plus an amount cell."
+    "Income prints 15 rows (21-35), expenses print 16 (36-51). The extra expense row is absorbed where the income side prints the \"Other Income (Specify below)\" sub-header instead of a field. Lines 33 and 34 are write-in rows with a description cell plus an amount cell.",
+    "v6 replaces the single household_size input with allowable_household_size (derived by the IRS default when absent, operator-overridable with a loud warning) and replaces the single age_band with allowable_under_65_count + allowable_65_over_count.",
+    "The age-band change fixes a real mispricing: 433-A prints ONE out-of-pocket line for the whole household, so a single age_band would have priced every person at one rate. A household containing anyone 65 or over was being under-allowed.",
+    "Allowable household size follows IRS National Standards guidance: generally the persons allowed as dependents on the most recent return, plus the taxpayer and spouse. \"Generally\" is why the operator override exists."
   ],
   "map": {
     "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
@@ -892,15 +895,24 @@
     "standards_source": "adapters/pdf/maps/433f.standards.json (2026 IRS Collection Financial Standards; form-agnostic despite the 433f prefix - renamed in Commit 1 of this prompt)",
     "national_standards_total": {
       "printed_line": "36 Food, Clothing and Misc.",
-      "input": "household_size",
       "target": "topmostSubform[0].Page4[0].IRS35[0]",
-      "lookup": "The National Standards TOTAL for the given household size, clamped to the published 1-4 range, plus the published per-additional-person amount for each person above 4. 433-A consolidates the whole national-standards basket onto one printed line, so this is the TOTAL, not a per-category figure."
+      "basis": "IRS National Standards: \"Generally, the total number of persons allowed for National Standards should be the same as those allowed as dependents on the taxpayer's most recent year income tax return.\" Source: irs.gov/businesses/small-businesses-self-employed/national-standards-food-clothing-and-other-items",
+      "input": "allowable_household_size",
+      "derive_when_absent": "1 (taxpayer) + 1 if marital_status is married + the count of household_members with claimed_on_1040 = yes that fit the printed table. This is what the form itself shows, and it is the IRS default.",
+      "override": "If allowable_household_size IS supplied it WINS and is used as given - the IRS wording is \"generally\", so the operator may depart from the default. Warn loudly, showing both figures, so the departure is recorded rather than silent.",
+      "lookup": "National Standards TOTAL for that number of persons, clamped to the published 1-4 range, plus the published per-additional-person amount for each person above 4."
     },
     "out_of_pocket_health": {
       "printed_line": "42 Out of Pocket Health Care Costs",
-      "input": "age_band",
       "target": "topmostSubform[0].Page4[0].IRS41[0]",
-      "lookup": "The published out-of-pocket health care amount for the given age band, multiplied by household_size if the standards data is expressed per person."
+      "inputs": [
+        "allowable_under_65_count",
+        "allowable_65_over_count"
+      ],
+      "lookup": "(under_65_count x the published under-65 per-person amount) + (65_over_count x the published 65-and-over per-person amount). Read oop_basis from the standards file and STOP if it is not per-person; do not assume.",
+      "why_two_counts": "433-A prints ONE out-of-pocket line for the whole household, unlike 433-F which prints the per-person rate beside separate age-band headcounts. A household can span both age bands, so a single age_band input cannot express it and would silently price an over-65 person at the under-65 rate.",
+      "consistency_check": "under_65_count + 65_over_count must equal the household size actually used for the national standards line. Mismatch is a hard stop, not a warning: the two allowed cells would otherwise be computed on different households.",
+      "cross_check": "Compare the supplied counts against the ages printed in the household_members table plus the taxpayer and spouse dates of birth where available. Warn on disagreement; do not auto-correct."
     },
     "_never_autofill": {
       "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator (which walks string VALUES) checks every one of them for existence. Each is validated and never written.",
