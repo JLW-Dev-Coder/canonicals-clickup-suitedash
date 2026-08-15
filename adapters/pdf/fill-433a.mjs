@@ -5,6 +5,12 @@
 // Shape differences from fill-433f.mjs, all driven by the 433-A map:
 //   map          — scalar 1:1, same setText semantics (empty/absent is skipped, never
 //                  written as "undefined"/"null").
+//   split        — ONE input value distributed across abutting boxes (phone area/number,
+//                  EIN prefix/remainder). `strip` removes formatting the caller typed,
+//                  each part consumes `chars` source characters, optional `format` masks
+//                  the chunk (# = one chunk char, anything else literal). Exists so one
+//                  real-world value needs one HubSpot custom field, not two — and CF
+//                  names are immutable once provisioned.
 //   checkboxes   — input_key -> { option: target }. The input NAMES its option instead
 //                  of indexing into a positional array, so a pay-period value can never
 //                  land on the wrong box because an assumed print order was wrong.
@@ -34,6 +40,11 @@ const optionErrors = [];
 // truncating. Catching that as a "skip" would blank the cell silently, which is the
 // failure this engine exists to prevent — so it stops the run and names the field.
 const capacityErrors = [];
+// A split whose stripped input does not supply exactly the characters its parts consume.
+// Padding would invent digits and truncating would drop them; either way a half-written
+// EIN or a phone missing its last digit is worse on a filed form than an empty cell. So:
+// write nothing for that key, collect, and stop the run before anything is saved.
+const splitErrors = [];
 
 const absent = (v) => v === undefined || v === null || String(v).trim() === '';
 
@@ -81,6 +92,38 @@ const applyOption = (key, options, raw) => {
 // scalar 1:1
 for (const [key, name] of Object.entries(mapDoc.map || {})) setText(name, data[key], key);
 
+// split — one input value across abutting boxes.
+//
+// `format` masks a consumed chunk: '#' takes one chunk character, anything else is a
+// literal, so a 7-digit chunk with "###-####" prints as 555-0100. Parts go through the
+// same setText() as everything else, so the /MaxLen capacity guard covers them — a part
+// that will not fit stops the run rather than truncating into a wrong number.
+const applyFormat = (chunk, format) => {
+  let out = '', i = 0;
+  for (const ch of format) out += ch === '#' ? chunk[i++] : ch;
+  return out;
+};
+
+for (const [key, def] of Object.entries(mapDoc.split || {})) {
+  if (!def || typeof def !== 'object' || !Array.isArray(def.parts)) continue;  // `_why` prose
+  const raw = data[key];
+  if (absent(raw)) continue;                     // absent input key is fine, same as `map`
+  const stripped = def.strip ? String(raw).replace(new RegExp(def.strip, 'g'), '') : String(raw);
+  const expected = def.parts.reduce((n, p) => n + (p.chars ?? 0), 0);
+  // Exact, not "at least": a stripped value LONGER than the parts consume would leave
+  // characters on the floor, which is truncation by another name.
+  if (stripped.length !== expected) {
+    splitErrors.push({ key, raw, stripped, len: stripped.length, expected });
+    continue;                                    // nothing written for this key
+  }
+  let at = 0;
+  def.parts.forEach((part, i) => {
+    const chunk = stripped.slice(at, at + part.chars);
+    at += part.chars;
+    setText(part.target, part.format ? applyFormat(chunk, part.format) : chunk, `${key}.parts[${i}]`);
+  });
+}
+
 // named-option checkboxes
 for (const [key, options] of Object.entries(mapDoc.checkboxes || {})) {
   if (!options || typeof options !== 'object' || Array.isArray(options)) continue;
@@ -98,6 +141,17 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
     for (const [sub, options] of Object.entries(slot.checkboxes || {}))
       applyOption(`${gName}[${i}].${sub}`, options, row?.[sub]);
   });
+}
+
+if (splitErrors.length) {
+  console.error(`SPLIT LENGTH MISMATCH — ${splitErrors.length} value(s) do not fill their parts exactly. No PDF written.`);
+  for (const e of splitErrors) {
+    console.error(`  key "${e.key}": stripped length ${e.len}, expected ${e.expected}`);
+    console.error(`    input:    ${JSON.stringify(e.raw)}`);
+    console.error(`    stripped: ${JSON.stringify(e.stripped)}`);
+  }
+  console.error('  Correct the input — a split is never padded or truncated, and no part of a short value is written.');
+  process.exit(2);
 }
 
 if (capacityErrors.length) {

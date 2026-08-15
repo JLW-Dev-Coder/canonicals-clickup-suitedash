@@ -3,12 +3,14 @@
   "form_revision": "6-2026",
   "catalog": "20312N",
   "slice": "sections-1-3",
-  "authored_from": "adapters/pdf/maps/433a.labels.txt pages 1-2 (commit 2580dea)",
+  "map_version": 2,
+  "authored_from": "adapters/pdf/maps/433a.labels.txt pages 1-2 (commit 2580dea) + RC geometry disambiguation report (Prompt 10)",
   "_notes": [
+    "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
     "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
-    "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a target lookup fails on these two parents, the escaping was mangled - do not 'fix' it by deleting the backslash.",
-    "Every semantic assignment here is derived from correlated printed labels, not from field names. RC's 433-A report proved internal names can contradict the printed form.",
-    "Fields whose printed label was ambiguous or bled from an adjacent cell are NOT mapped. They are listed under _deferred with the reason. Leaving a cell blank is correct; filling it wrong is not."
+    "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a lookup fails on one of these, the escaping was mangled - do not 'fix' it by deleting the backslash.",
+    "Every semantic assignment is derived from correlated printed labels and rect geometry, never from field names. Internal names on this form are known to contradict the printed page.",
+    "KEY PREFIXES NOW FOLLOW PRINTED LINE NUMBERS, not internal field-name suffixes. The lawsuit block is printed line 7 (internal names say _6); bankruptcy is printed line 8 (internal names say _7). Renamed while free: no HubSpot properties exist for 433-A yet, and HubSpot property names are immutable once created."
   ],
 
   "map": {
@@ -28,34 +30,46 @@
 
     "4a_tp_employer_name": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t15_4a[0]",
     "4b_tp_employer_address": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t16_4b[0]",
+    "4e_tp_tenure_years": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
+    "4e_tp_tenure_months": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
     "4f_tp_occupation": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t21_4f[0]",
+    "4g_tp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
 
     "5a_sp_employer_name": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t23_5a[0]",
     "5b_sp_employer_address": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t24_5b[0]",
+    "5e_sp_tenure_years": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
+    "5e_sp_tenure_months": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]",
     "5f_sp_occupation": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t28_5f[0]",
+    "5g_sp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]",
 
     "6_income_change_explain": "topmostSubform[0].Page1[0].TextField1[0]",
     "6_income_change_amount": "topmostSubform[0].Page1[0].amountIncrease[0].p1_t34_6a[0]",
     "6_income_change_when": "topmostSubform[0].Page1[0].whenIncrease[0]",
 
-    "6_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
-    "6_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
-    "6_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
-    "6_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
-    "6_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
+    "7_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
+    "7_suit_represented_by": "topmostSubform[0].Page1[0].p1_t31_6[0]",
+    "7_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
+    "7_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
+    "7_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
+    "7_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
 
-    "7_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
-    "7_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
-    "7_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
-    "7_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
-    "7_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
+    "8_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
+    "8_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
+    "8_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
+    "8_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
+    "8_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
 
+    "8b_lived_abroad_from": "topmostSubform[0].page2[0].p2_t50_8b[0]",
+    "8b_lived_abroad_to": "topmostSubform[0].page2[0].p2_t51_8b[0]",
+    "8c_dual_citizenship_country": "topmostSubform[0].page2[0].p2_t50_8[0]",
+    "9a_inmate_number": "topmostSubform[0].page2[0].p2_t50_8[1]",
+
+    "9b_place_where_recorded": "topmostSubform[0].page2[0].p1_t44_9[0]",
     "9b_trust_name": "topmostSubform[0].page2[0].p1-t47_9[0]",
-    "9b_trust_ein": "topmostSubform[0].page2[0].p1-t45_9[0]",
     "9b_trust_anticipated_amount": "topmostSubform[0].page2[0].#subform[3].p1-t48_9[0]",
     "9b_trust_when_received": "topmostSubform[0].page2[0].p1-t49_9[0]",
 
-    "9c_trustee_ein": "topmostSubform[0].page2[0].p1-t02_9b[0]",
+    "9c_trust_name": "topmostSubform[0].page2[0].p2_t00_9b[0]",
 
     "10_sdb_location": "topmostSubform[0].page2[0].p1_t41_10[0]",
     "10_sdb_contents": "topmostSubform[0].page2[0].p1-t43_10[0]",
@@ -65,6 +79,52 @@
     "11_transfer_value_at_transfer": "topmostSubform[0].page2[0].#subform[0].#subform[1].p3_t2_11[0]",
     "11_transfer_date": "topmostSubform[0].page2[0].#subform[0].p3_t3_11[0]",
     "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]"
+  },
+
+  "split": {
+    "_why": "The form splits one real-world value across two abutting boxes with hard maxLength limits. Splitting in the engine rather than at intake means ONE HubSpot custom field per real value, not two - and CF names are immutable once provisioned. Consume `chars` source characters per part after applying `strip`; `format` masks the part with # as a digit placeholder. Every part must fit its target's /MaxLen or the fill stops.",
+    "1c_home_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 3, "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]" },
+        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]" }
+      ]
+    },
+    "1d_cell_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 3, "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]" },
+        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]" }
+      ]
+    },
+    "4c_tp_work_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 3, "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]" },
+        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]" }
+      ]
+    },
+    "5c_sp_work_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 3, "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]" },
+        { "chars": 7, "format": "###-####", "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]" }
+      ]
+    },
+    "9b_trust_ein": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 2, "target": "topmostSubform[0].page2[0].p1-t45_9[0]" },
+        { "chars": 7, "target": "topmostSubform[0].page2[0].p1-t46_9[0]" }
+      ]
+    },
+    "9c_trustee_ein": {
+      "strip": "[^0-9]",
+      "parts": [
+        { "chars": 2, "target": "topmostSubform[0].page2[0].p1-t02_9b[0]" },
+        { "chars": 7, "target": "topmostSubform[0].page2[0].p1-t01_9b[0]" }
+      ]
+    }
   },
 
   "checkboxes": {
@@ -102,13 +162,25 @@
       "bi-weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
       "other": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
     },
-    "6_lawsuit_role": {
+    "7_lawsuit_role": {
       "plaintiff": "topmostSubform[0].Page1[0].c1_6a_[2]",
       "defendant": "topmostSubform[0].Page1[0].c1_6a_[3]"
     },
-    "7_bankruptcy": {
+    "8_bankruptcy": {
       "yes": "topmostSubform[0].Page1[0].c1_7_[0]",
       "no": "topmostSubform[0].Page1[0].c1_7_[1]"
+    },
+    "8b_lived_abroad_6mo": {
+      "yes": "topmostSubform[0].page2[0].c1_8b_[0]",
+      "no": "topmostSubform[0].page2[0].c1_8b_[1]"
+    },
+    "8c_dual_citizenship": {
+      "yes": "topmostSubform[0].page2[0].c1_8_[0]",
+      "no": "topmostSubform[0].page2[0].c1_8_[1]"
+    },
+    "9a_incarcerated": {
+      "yes": "topmostSubform[0].page2[0].c1_9a_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9a_[1]"
     },
     "9b_beneficiary_of_trust_estate_policy": {
       "yes": "topmostSubform[0].page2[0].c1_9b_[0]",
@@ -258,35 +330,35 @@
       "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
       "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
     ],
-    "6_lawsuit_role": [
+    "7_lawsuit_role": [
       "topmostSubform[0].Page1[0].c1_6a_[2]",
       "topmostSubform[0].Page1[0].c1_6a_[3]"
     ],
-    "6_pair_a_unresolved": [
+    "unresolved_c1_6a_yesno": [
       "topmostSubform[0].Page1[0].c1_6a_[0]",
       "topmostSubform[0].Page1[0].c1_6a_[1]"
     ],
-    "6_pair_b_unresolved": [
+    "unresolved_c1_6_yesno": [
       "topmostSubform[0].Page1[0].c1_6_[0]",
       "topmostSubform[0].Page1[0].c1_6_[1]"
     ],
-    "7_bankruptcy": [
+    "8_bankruptcy": [
       "topmostSubform[0].Page1[0].c1_7_[0]",
       "topmostSubform[0].Page1[0].c1_7_[1]"
     ],
-    "8a_unresolved": [
+    "unresolved_8a": [
       "topmostSubform[0].page2[0].c1_8a_[0]",
       "topmostSubform[0].page2[0].c1_8a_[1]"
     ],
-    "8b_unresolved": [
+    "8b_lived_abroad_6mo": [
       "topmostSubform[0].page2[0].c1_8b_[0]",
       "topmostSubform[0].page2[0].c1_8b_[1]"
     ],
-    "8_unresolved": [
+    "8c_dual_citizenship": [
       "topmostSubform[0].page2[0].c1_8_[0]",
       "topmostSubform[0].page2[0].c1_8_[1]"
     ],
-    "9a_unresolved": [
+    "9a_incarcerated": [
       "topmostSubform[0].page2[0].c1_9a_[0]",
       "topmostSubform[0].page2[0].c1_9a_[1]"
     ],
@@ -349,61 +421,27 @@
   },
 
   "_deferred": {
-    "_why": "Printed label was ambiguous, duplicated, or bled from an adjacent cell. These targets are validated for existence but are NOT filled. PE resolves them from the labels.json candidate sets before they are mapped.",
-    "phone_pairs": {
-      "reason": "Two fields share each printed caption (Home Phone x2, Cell Phone x2, Work Telephone Number x2 per spouse). Cannot tell column split (taxpayer/spouse) from area-code/number split without rect x-ordering.",
+    "_why": "Still unresolved. Validated for existence, never filled. Two Yes/No pairs on page 1 and one on page 2 whose printed question is not yet established.",
+    "page1_yesno_pairs": {
+      "reason": "c1_6a_[0..1] and c1_6_[0..1] are structurally exclusive pairs, but which belongs to printed line 6 (income change) and which to printed line 7 (lawsuit) is not established. Their targets appear under `exclusive` so the guard covers them; they carry no checkbox mapping and are never checked.",
       "targets": [
-        "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]",
-        "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]",
-        "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]",
-        "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]",
-        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]",
-        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]",
-        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]",
-        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]"
+        "topmostSubform[0].Page1[0].c1_6a_[0]",
+        "topmostSubform[0].Page1[0].c1_6a_[1]",
+        "topmostSubform[0].Page1[0].c1_6_[0]",
+        "topmostSubform[0].Page1[0].c1_6_[1]"
       ]
     },
-    "how_long_with_employer_pairs": {
-      "reason": "Two fields per spouse both captioned 'How long with this employer' - likely years/months but unconfirmed.",
+    "line_8a": {
+      "reason": "c1_8a_[0..1] binds by y to printed line 8a, but 8a's printed question text was never captured - no text field correlates to it.",
       "targets": [
-        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
-        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
-        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
-        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]"
+        "topmostSubform[0].page2[0].c1_8a_[0]",
+        "topmostSubform[0].page2[0].c1_8a_[1]"
       ]
-    },
-    "line_4g_5g": {
-      "reason": "Label bled from the household table ('on your Form 1040'). Actual 4g/5g caption unknown.",
-      "targets": [
-        "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
-        "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]"
-      ]
-    },
-    "line_6_date_field": {
-      "reason": "Caption is only '(mmddyyyy)'. Which of the several line-6 dates it belongs to is unresolved.",
-      "targets": ["topmostSubform[0].Page1[0].p1_t31_6[0]"]
-    },
-    "section_8_9a_text_fields": {
-      "reason": "Each text field carries the question text of a neighbouring line, not its own caption. Question-to-field assignment for lines 8/8a/8b/9a is unresolved.",
-      "targets": [
-        "topmostSubform[0].page2[0].p2_t50_8b[0]",
-        "topmostSubform[0].page2[0].p2_t51_8b[0]",
-        "topmostSubform[0].page2[0].p2_t50_8[0]",
-        "topmostSubform[0].page2[0].p2_t50_8[1]"
-      ]
-    },
-    "line_9_misc": {
-      "reason": "Captions bled ('(If yes, answer the following)', 'Yes', and the safe-deposit question appearing on a line-9 field).",
-      "targets": [
-        "topmostSubform[0].page2[0].p1_t44_9[0]",
-        "topmostSubform[0].page2[0].p1-t46_9[0]",
-        "topmostSubform[0].page2[0].p2_t00_9b[0]",
-        "topmostSubform[0].page2[0].p1-t01_9b[0]"
-      ]
-    },
-    "line_11_freeform": {
-      "reason": "Caption is a fragment of the question's continuation text.",
-      "targets": ["topmostSubform[0].page2[0].p2-t1_11[0]"]
     }
+  },
+
+  "_section4_handoff": {
+    "_why": "Identified during Sections 1-3 work but belongs to Section 4. Do not map here.",
+    "12_total_cash_on_hand": "topmostSubform[0].page2[0].p2-t1_11[0]"
   }
 }
