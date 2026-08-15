@@ -3,8 +3,10 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
 const mapDoc = JSON.parse(readFileSync('adapters/pdf/maps/433f.map.json', 'utf8'));
 const data   = JSON.parse(readFileSync(process.argv[2] || 'samples/433f.sample.json', 'utf8'));
-const std    = existsSync('adapters/pdf/maps/433f.standards.json')
-  ? JSON.parse(readFileSync('adapters/pdf/maps/433f.standards.json', 'utf8')) : null;
+// The Collection Financial Standards table is form-agnostic — every form in the 433
+// series reads the same published figures — so it is NOT named after any one form.
+const STANDARDS = 'adapters/pdf/maps/irs-standards-2026.json';
+const std    = existsSync(STANDARDS) ? JSON.parse(readFileSync(STANDARDS, 'utf8')) : null;
 const pdf    = await PDFDocument.load(readFileSync(mapDoc.pdf));
 const form   = pdf.getForm();
 

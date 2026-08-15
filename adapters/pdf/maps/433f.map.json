@@ -20,7 +20,8 @@
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
       "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
       "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
-      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from 433f.standards.json. Housing/vehicle allowables intentionally not auto-filled.",
+      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from irs-standards-2026.json. Housing/vehicle allowables intentionally not auto-filled.",
+      "v3.1: the standards table was renamed 433f.standards.json -> irs-standards-2026.json. It holds the published Collection Financial Standards, which are form-agnostic; every form in the 433 series reads the same file. No figure and no target changed.",
       "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render."
     ]
   },
