@@ -92,6 +92,32 @@ const under = (path, root) => path === root || path.startsWith(`${root}.`) || pa
 
 const isBlankText = (v) => v === undefined || v === null || String(v) === '';
 
+// The one place a map's targets are sorted into writing bindings and guards. Exported so
+// run-form-gate.mjs asks the same question this file answers: a gate that classified
+// targets by its own rules could pass a form this tool fails, and the two disagreeing
+// about what "written" means is the failure neither would report.
+export function classifyMapTargets(mapDoc) {
+  const deferred = new Set(), never = new Set(), writable = new Map();   // target -> [paths]
+  for (const { path, target } of walkTargets(mapDoc)) {
+    if (under(path, GUARD_DEFERRED)) { deferred.add(target); continue; }
+    if (under(path, GUARD_NEVER))    { never.add(target);    continue; }
+    if (under(path, GUARD_EXCLUSIVE)) continue;                       // guard, not a binding
+    if (!writable.has(target)) writable.set(target, []);
+    writable.get(target).push(path);
+  }
+  const exclusiveSets = Object.entries(mapDoc.exclusive || {})
+    .filter(([, t]) => Array.isArray(t))
+    .map(([set, targets]) => ({ set, targets }));
+  return { deferred, never, writable, exclusiveSets };
+}
+
+// A map states its own scope. 433-A declares `slice: "COMPLETE - every field ... is mapped
+// or explicitly excluded"`; a map that has not made that claim is a declared partial slice
+// and cannot be held to full coverage without inventing a promise it never gave. Read from
+// the map, so a 433-B map earns the strict check by declaring the same thing.
+export const mapClaimsComplete = (mapDoc) =>
+  typeof mapDoc.slice === 'string' && /^\s*complete\b/i.test(mapDoc.slice);
+
 export async function verifyFormCoverage(form, filledPath) {
   const mapPath   = `adapters/pdf/maps/${form}.map.json`;
   const mapDoc    = JSON.parse(readFileSync(mapPath, 'utf8'));
@@ -113,20 +139,7 @@ export async function verifyFormCoverage(form, filledPath) {
   const byName = new Map(liveFields.map(f => [f.getName(), f]));
 
   // --- classify every target the map names -------------------------------------------
-  const refs = walkTargets(mapDoc);
-  const deferred = new Set(), never = new Set(), writable = new Map();  // target -> [paths]
-  const exclusiveSets = [];
-
-  for (const { path, target } of refs) {
-    if (under(path, GUARD_DEFERRED)) { deferred.add(target); continue; }
-    if (under(path, GUARD_NEVER))    { never.add(target);    continue; }
-    if (under(path, GUARD_EXCLUSIVE)) continue;                       // guard, not a binding
-    if (!writable.has(target)) writable.set(target, []);
-    writable.get(target).push(path);
-  }
-  for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
-    if (Array.isArray(targets)) exclusiveSets.push({ set, targets });
-  }
+  const { deferred, never, writable, exclusiveSets } = classifyMapTargets(mapDoc);
   const inExclusive = new Set(exclusiveSets.flatMap(s => s.targets));
 
   // --- put every FIELD in exactly one bucket -----------------------------------------

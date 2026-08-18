@@ -1,0 +1,186 @@
+{
+  "form": "433a",
+  "form_revision": "6-2026",
+  "catalog": "20312N",
+  "_why": "Which printed line adds which printed rows. Read by run-form-gate.mjs step 9, which recomputes every total FROM WHAT THE FILLED PDF PRINTS and compares it to the printed total. No figure lives here — only the structure of the form. Authored per form, so the gate code names no form and runs unchanged on 433-B.",
+  "authored_from": "The printed page text of adapters/pdf/forms/f433a.pdf, extracted from the content streams. Captions are quoted verbatim below. NOT from field names: on this form every internal suffix lags the printed line by one, so a totals table built from field names would be off by a row everywhere.",
+  "_notes": [
+    "GROUP TOTALS SUM PRINTED ROWS ONLY. Every group caption also says 'and amounts from any attachments'; overflow rows the form has no slot for are dropped to an attachment and are NOT in the printed total, per the standing rule (433a.map.json _notes[27]). That is what makes these lines checkable rather than open-ended.",
+    "15e: the printed caption names 15a, 15b and 15c, but the form prints FOUR digital-asset rows, 15a through 15d, each with its own money box. The caption is short by one row. Feeders below are the four PRINTED ROWS, because the tripwire's question is whether the total agrees with the rows a reader can see. Flagged for Principal.",
+    "13e does NOT include line 12. The Rev. 6-2026 caption reads 'Add lines 13a, 13b, 13c, 13d' — cash on hand is a separate printed line and is not folded into the bank-account total. Earlier revisions of this form did add line 12 here; do not carry that forward.",
+    "17f is a subtraction across three policy COLUMNS, not a column of rows: each policy contributes its 17d current cash value minus its 17e outstanding loan balance.",
+    "A feeder cell that carries text the `extract` pattern cannot read a number out of makes its whole line NOT CHECKABLE, named, rather than silently contributing zero. A tripwire that quietly reads a mis-typed cell as 0 would report a false match."
+  ],
+  "totals": [
+    {
+      "line": "13e",
+      "caption": "Total Cash (Add lines 13a, 13b, 13c, 13d and amounts from any attachments)",
+      "total_key": "13e_total_cash",
+      "feeders": [{ "group": "bank_accounts", "column": "account_balance" }]
+    },
+    {
+      "line": "15e",
+      "caption": "Total Equity (Add lines 15a, 15b, 15c and amounts from any attachments)",
+      "total_key": "15e_total_digital_asset_equity",
+      "feeders": [{
+        "group": "digital_assets",
+        "column": "amount_and_value_usd",
+        "extract": "USD[^0-9-]{0,4}([0-9][0-9,]*(?:\\.[0-9]+)?)",
+        "extract_why": "The printed cell is free text carrying both a quantity and a dollar value ('1 Bitcoins $38,000.00 USD' is the form's own example). Only the USD figure feeds the total, so it is pulled out by pattern; a cell the pattern cannot read makes the line not checkable rather than zero."
+      }]
+    },
+    {
+      "line": "16e",
+      "caption": "Total Available Credit (Add lines 16a, 16b, 16c, 16d and amounts from any attachments)",
+      "total_key": "16e_total_available_credit",
+      "feeders": [{ "group": "available_credit", "column": "available_credit" }]
+    },
+    {
+      "line": "17f",
+      "caption": "Total Available Cash (Subtract amounts on line 17e from line 17d and include amounts from any attachments)",
+      "total_key": "17f_total_life_insurance_equity",
+      "feeders": [
+        { "group": "life_insurance_policies", "column": "current_cash_value" },
+        { "group": "life_insurance_policies", "column": "outstanding_loan_balance", "sign": -1 }
+      ]
+    },
+    {
+      "line": "18d",
+      "caption": "Total Equity (Add lines 18a, 18b, 18c and amounts from any attachments)",
+      "total_key": "18d_total_equity_real_property",
+      "feeders": [{ "group": "real_property", "column": "equity" }]
+    },
+    {
+      "line": "19d",
+      "caption": "Total Equity (Add lines 19a, 19b, 19c and amounts from any attachments)",
+      "total_key": "19d_total_equity_vehicles",
+      "feeders": [{ "group": "vehicles", "column": "equity" }]
+    },
+    {
+      "line": "20c",
+      "caption": "Total Equity (Add lines 20a, 20b and amounts from any attachments)",
+      "total_key": "20c_total_equity_property_line_20",
+      "feeders": [{ "group": "property_line_20", "column": "equity" }]
+    },
+    {
+      "line": "35",
+      "caption": "Total Income (add lines 21-34)",
+      "total_key": "35_total_income",
+      "feeders": [{
+        "keys": [
+          "21_income_wages_taxpayer",
+          "22_income_wages_spouse",
+          "23_income_interest_dividends",
+          "24_income_net_business_income",
+          "25_income_net_rental_income",
+          "26_income_distributions",
+          "27_income_pension_taxpayer",
+          "28_income_pension_spouse",
+          "29_income_social_security_taxpayer",
+          "30_income_social_security_spouse",
+          "31_income_child_support",
+          "32_income_alimony",
+          "33_income_other_amount",
+          "34_income_other2_amount"
+        ]
+      }]
+    },
+    {
+      "line": "50",
+      "caption": "Total Living Expenses (add lines 36-49)",
+      "total_key": "50_total_living_expenses",
+      "feeders": [{
+        "keys": [
+          "36_exp_food_clothing_misc",
+          "37_exp_housing_and_utilities",
+          "38_exp_vehicle_ownership_costs",
+          "39_exp_vehicle_operating_costs",
+          "40_exp_public_transportation",
+          "41_exp_health_insurance",
+          "42_exp_out_of_pocket_health_care",
+          "43_exp_court_ordered_payments",
+          "44_exp_child_dependent_care",
+          "45_exp_life_insurance",
+          "46_exp_current_year_taxes",
+          "47_exp_secured_debts",
+          "48_exp_delinquent_state_local_taxes",
+          "49_exp_other_expenses"
+        ]
+      }]
+    },
+    {
+      "line": "51",
+      "caption": "Net difference (Line 35 minus 50)",
+      "total_key": "51_net_difference",
+      "feeders": [
+        { "keys": ["35_total_income"] },
+        { "keys": ["50_total_living_expenses"], "sign": -1 }
+      ]
+    },
+    {
+      "line": "65c",
+      "caption": "Total Cash in Banks (Add lines 65a, 65b and amounts from any attachments)",
+      "total_key": "65c_total_business_bank_balance",
+      "feeders": [{ "group": "business_bank_accounts", "column": "account_balance" }]
+    },
+    {
+      "line": "66f",
+      "caption": "Total Outstanding Balance (Add lines 66a through 66e and amounts from any attachments)",
+      "total_key": "66f_total_receivable_amount_due",
+      "feeders": [{ "group": "accounts_notes_receivable", "column": "amount_due" }]
+    },
+    {
+      "line": "67c",
+      "caption": "Total Equity (Add lines 67a, 67b and amounts from any attachments)",
+      "total_key": "67c_total_business_property_equity",
+      "feeders": [{ "group": "business_property", "column": "equity" }]
+    },
+    {
+      "line": "77",
+      "caption": "Total Income (Add lines 68 through 76)",
+      "total_key": "77_bizinc_total_income",
+      "feeders": [{
+        "keys": [
+          "68_bizinc_gross_receipts",
+          "69_bizinc_gross_rental_income",
+          "70_bizinc_interest",
+          "71_bizinc_dividends",
+          "72_bizinc_cash_receipts_not_in_68_to_71",
+          "73_bizinc_other_amount",
+          "74_bizinc_other_amount",
+          "75_bizinc_other_amount",
+          "76_bizinc_other_amount"
+        ]
+      }]
+    },
+    {
+      "line": "89",
+      "caption": "Total Expenses (Add lines 78 through 88)",
+      "total_key": "89_bizexp_total_expenses",
+      "feeders": [{
+        "keys": [
+          "78_bizexp_materials_purchased",
+          "79_bizexp_inventory_purchased",
+          "80_bizexp_gross_wages_and_salaries",
+          "81_bizexp_rent",
+          "82_bizexp_supplies",
+          "83_bizexp_utilities_telephone",
+          "84_bizexp_vehicle_gasoline_oil",
+          "85_bizexp_repairs_and_maintenance",
+          "86_bizexp_insurance",
+          "87_bizexp_current_taxes",
+          "88_bizexp_other_expenses"
+        ]
+      }]
+    },
+    {
+      "line": "90",
+      "caption": "Net Business Income (Line 77 minus 89)",
+      "total_key": "90_biz_net_business_income",
+      "feeders": [
+        { "keys": ["77_bizinc_total_income"] },
+        { "keys": ["89_bizexp_total_expenses"], "sign": -1 }
+      ]
+    }
+  ]
+}
