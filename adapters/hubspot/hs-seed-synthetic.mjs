@@ -1,16 +1,18 @@
 // Create (or delete) ONE synthetic contact carrying a representative spread of the 433
 // backbone, so the round trip can be proven against a live HubSpot record.
 //
-//   node adapters/hubspot/hs-seed-synthetic.mjs seed [samples/433a.sample.json]
+//   node adapters/hubspot/hs-seed-synthetic.mjs seed <form> [samplePath]
+//   node adapters/hubspot/hs-seed-synthetic.mjs seed [samples/433a.sample.json]   (433-A implied)
 //   node adapters/hubspot/hs-seed-synthetic.mjs delete <contactId>
 //
 // SYNTHETIC ONLY. The source record must declare `_synthetic: true` or this refuses to run —
 // the VLP no-customer-PII rule means a round-trip probe must never be built by copying a real
 // contact, and "I'll remember to use the fixture" is not a control.
 //
-// The email lands in the reserved `.invalid` TLD (RFC 2606), which can never route anywhere.
+// The email lands in the reserved `example.com` DOMAIN (RFC 2606). The `.invalid` TLD is the
+// stronger choice and HubSpot rejects it outright (INVALID_EMAIL) - see the note by `properties`.
 //
-// This is deliberately the MIRROR of hs-fetch-433a.mjs: groups serialize to JSON here and
+// This is deliberately the MIRROR of the form's hs-fetch script: groups serialize to JSON here and
 // parse back there, checkbox values translate to HubSpot's option values here and back to the
 // map's option keys there. Writing the two against one another is what makes the round trip a
 // test rather than a demonstration — a shared misunderstanding would have to be symmetric to
@@ -18,6 +20,7 @@
 
 import { readFileSync } from 'fs';
 import { hs } from './hs-lib.mjs';
+import { loadBindings } from './bindings.mjs';
 
 const [action, arg] = process.argv.slice(2);
 
@@ -40,7 +43,13 @@ if (action !== 'seed') {
   process.exit(1);
 }
 
-const samplePath = arg || 'samples/433a.sample.json';
+// `seed [form] [samplePath]`. The original call was `seed [samplePath]` with 433-A implied, so
+// a first argument that looks like a path is still read that way — the form is only ever
+// ambiguous with a path if someone names a form "samples/...".
+const looksLikePath = (s) => !!s && (s.includes('/') || s.endsWith('.json'));
+const form = looksLikePath(arg) ? '433a' : (arg || '433a');
+const samplePath = looksLikePath(arg) ? arg : (process.argv[4] || `samples/${form}.sample.json`);
+
 const sample = JSON.parse(readFileSync(samplePath, 'utf8'));
 // The repo's convention is that `_synthetic` carries a DESCRIPTION of what makes the fixture
 // synthetic, not a bare boolean — the 433-A sample's value names the placeholder ranges it
@@ -54,16 +63,20 @@ if (!declaration) {
 console.log(`source declares synthetic: ${typeof declaration === 'string' ? declaration.slice(0, 160) + (declaration.length > 160 ? '…' : '') : declaration}`);
 console.log('');
 
-const defs = JSON.parse(readFileSync('adapters/hubspot/fields.433a.json', 'utf8'));
+// One normalized binding list per form: generated from the map for 433-A, crosswalked to the
+// backbone for every form after it. See bindings.mjs for why those two cannot be one file, and
+// why `kind` is decided there rather than in each caller.
+const bindings = loadBindings(form);
+console.log(`bindings: ${bindings.length} for ${form} (from ${bindings[0]?.origin})`);
 
 // `example.com` is RFC 2606 reserved and can never be assigned to anyone, which is the
 // property that matters. The `.invalid` TLD is reserved by the same RFC and would be the
 // stronger choice, but HubSpot validates the TLD against a public list and rejects it outright
 // (INVALID_EMAIL) — so the reserved DOMAIN is the strongest form that survives the API.
 const properties = {
-  email: 'synthetic-433a-roundtrip@example.com',
+  email: `synthetic-${form}-roundtrip@example.com`,
   firstname: 'Synthetic',
-  lastname: 'Roundtrip Probe 433A',
+  lastname: `Roundtrip Probe ${form.toUpperCase()}`,
 };
 
 // Mirrors normalize() in fill-433a.mjs. The sample stores some yes/no answers as real JSON
@@ -76,23 +89,28 @@ const normalizeOption = (v) => (v === true ? 'yes' : v === false ? 'no' : String
 const written = { scalar: 0, checkboxes: 0, groups: 0 };
 const skipped = [];
 
-for (const p of defs.properties) {
-  const v = sample[p.key];
-  if (v === undefined || v === null || v === '') continue;
+for (const p of bindings) {
+  // A fixture may name an input by any spelling the FILL ENGINE accepts — the bare `pay_freq`
+  // and `household_size` predate the prefix rule and read naturally that way. The canonical
+  // key wins; the aliases are the crosswalk's own record of what else the engine answers to,
+  // not a guess made here.
+  const source = [p.key, ...(p.aliases || [])].find((k) => sample[k] !== undefined && sample[k] !== null && sample[k] !== '');
+  if (!source) continue;
+  const v = sample[source];
 
-  if (p.source.startsWith('groups')) {
-    if (!Array.isArray(v)) { skipped.push(`${p.key}: expected array in the sample, got ${typeof v}`); continue; }
-    properties[p.hs_name] = JSON.stringify(v);   // parsed back by hs-fetch-433a.mjs
+  if (p.kind === 'group') {
+    if (!Array.isArray(v)) { skipped.push(`${source}: expected array in the sample, got ${typeof v}`); continue; }
+    properties[p.hs_name] = JSON.stringify(v);   // parsed back by the form's hs-fetch script
     written.groups++;
     continue;
   }
 
-  if (p.source === 'checkboxes' && p.map_option_by_value) {
+  if (p.kind === 'option') {
     // The sample speaks the MAP's option keys ("yes"). HubSpot stores the provisioned option
     // VALUE ("true"). Invert the recorded table rather than re-deriving the rule.
     const want = normalizeOption(v);
     const toHs = Object.entries(p.map_option_by_value).find(([, mapKey]) => String(mapKey).toLowerCase() === want);
-    if (!toHs) { skipped.push(`${p.key}: sample value ${JSON.stringify(v)} is not one of [${Object.values(p.map_option_by_value).join(', ')}]`); continue; }
+    if (!toHs) { skipped.push(`${source}: sample value ${JSON.stringify(v)} is not one of [${Object.values(p.map_option_by_value).join(', ')}]`); continue; }
     properties[p.hs_name] = toHs[0];
     written.checkboxes++;
     continue;
@@ -110,5 +128,5 @@ if (skipped.length) {
 const created = await hs('/crm/v3/objects/contacts', { method: 'POST', body: { properties } });
 console.log(`created synthetic contact ${created.id}`);
 console.log(`  wrote ${written.scalar} scalar, ${written.checkboxes} checkbox, ${written.groups} group table(s)`);
-console.log(`  total 433 properties populated: ${written.scalar + written.checkboxes + written.groups} of ${defs.properties.length}`);
+console.log(`  total ${form} bindings populated: ${written.scalar + written.checkboxes + written.groups} of ${bindings.length}`);
 console.log(created.id);

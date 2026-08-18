@@ -1,6 +1,7 @@
 {
   "intake_id": "INT-SAMPLE-433F-MULTI",
-  "433f_tp_name": "ACME Holdings LLC \u2014 John Q. Sample",
+  "_synthetic": "Fabricated fixture. ACME Holdings LLC / John Q. Sample at 123 Example St, Denton TX; account numbers are XXXX-masked placeholders and every figure is invented. No real taxpayer, institution or account is referenced.",
+  "433f_tp_name": "ACME Holdings LLC — John Q. Sample",
   "433f_tp_address": "123 Example St, Denton, TX 76201",
   "433f_county": "Denton",
   "433f_biz_name": "ACME Holdings LLC",
