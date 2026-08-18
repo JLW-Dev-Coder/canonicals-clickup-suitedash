@@ -1,5 +1,5 @@
 {
-  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3, the whole of section 4, and the section 5 income/expense grid - it is not a realistic return.",
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3, the whole of section 4, the section 5 income/expense grid, and the section 6/7 business blocks (printed 65-90) - it is not a realistic return.",
   "_coverage_notes": [
     "SECTION 5 (map v5). All 31 grid values are DISTINCT across both panels - not merely distinct within a panel. On sheet 6 every internal field-name suffix lags its printed line by one, so a one-row shift would land plausible money in the wrong printed category; only a grid with no repeated figure makes that shift visible in the read-back.",
     "The totals are real arithmetic on the rows above them, so they cross-check the rows: 35_total_income 12545 = the fourteen income amounts (5210+3120+145+880+615+430+275+190+355+240+505+320+165+95), 50_total_living_expenses 12477 = the fourteen expense amounts (3210+2450+735+512+130+620+645+410+815+175+1190+960+285+340), and 51_net_difference 68 = 12545 - 12477. A row that printed one line off would break at least one of those sums.",
@@ -27,7 +27,21 @@
     "property_line_20 rows name their own printed row ('Row 20a' / 'Row 20b'). Line 20's location and lender blocks are INVERTED against the internal field names, the same way 18b/18c and 19b/19c are: row 20a takes p3_t55_19b + Lender-phone3 and row 20b takes p3_t47_19a + Lender-phone4. Distinct descriptions, lenders and phones per row are what make that inversion checkable in the read-back.",
     "All six Section 4 totals are arithmetic on the SLOTTED rows only, and each one is a different number, so a total written into the wrong cell shows up as a wrong number rather than a plausible one: 15e = 6105 (3800+1250+640+415, the dropped fifth digital asset's 9999 excluded), 16e = 5500 (2500+1800+900+300), 17f = 17000 (the three policies' cash value minus loan balance: 10000+4000+3000), 18d = 150000 (70000+55000+25000), 19d = 18000 (6000+7000+5000), 20c = 12500 (8000+4500).",
     "18d, 19d and 20c are the three cross-section totals whose targets correlated only to bled street-address fragments (p3_t20_17c, p3_t40_18c, p3_t56_19c). All three were confirmed against the PRINTED markers before this sample was written, not against the field names, which disagree with the print in every case.",
-    "The four 'as of' date cells (15_digital_asset_value_as_of, 16_amount_owed_as_of, 16_available_credit_as_of, and the two already present at 13/14) are /MaxLen 8 mmddyyyy column headers, not money - same size trap as the v3 pair."
+    "The four 'as of' date cells (15_digital_asset_value_as_of, 16_amount_owed_as_of, 16_available_credit_as_of, and the two already present at 13/14) are /MaxLen 8 mmddyyyy column headers, not money - same size trap as the v3 pair.",
+
+    "Section 7 two panels are INVERTED by internal name against the print. TotalMonthlyIncome[0].p6_t43_S6t is printed line 77 (Total Income, Add lines 68 through 76) and TotalMonthlyExpenses[0].p6_t42_S6t is printed line 88 (Other Expenses, Specify). They share one double-height y band at 241.2-262.8, which is why the income column holds a TOTAL there while the expense column still holds a DATA row. There is no p6_t41 on the form at all.",
+
+    "The business-income write-in descriptions lag their amount by one internal index: Blank72 is printed line 73, Blank73 is 74, Blank74 is 75, Blank75 is 76. Each description here names its own printed line, so a one-off shift shows up in the read-back instead of looking plausible.",
+
+    "Section 7 arithmetic is real and every figure is distinct: 68-76 sum to 77 (59585), 78-88 sum to 89 (50065), and 77 minus 89 is 90 (9520). A value written into the wrong printed row breaks one of the three sums rather than hiding.",
+
+    "accounts_notes_receivable carries SIX records against five printed slots (66a-66e). The sixth is expected to be logged as overflow and dropped, never written over 66e.",
+
+    "66f_total_receivable_amount_due (37785) totals only the FIVE receivables that reach a printed slot. Including the dropped sixth would make it 40190. The printed total is kept consistent with the printed rows, because an overflow row belongs on an attachment; the choice is recorded here rather than left implicit.",
+
+    "The printed markers for the sheet-7 tables are 65a/65b (business bank accounts) and 66a-66e (receivables), NOT the 64/65 their field names carry: Table64[0] prints 65 and Table64[1] prints 66. The receivables fifth row is the duplicated Line65d[1].#field[0..4] parent, whose five widgets share the exact x-ranges of rows 66a-66d.",
+
+    "business_property rows name their own printed row (Row 67a / Row 67b). Page6[0].p3_t11_17a[0] is the 67a title-holder cell and [1] is 67b - a field name carried over from the line-17 block on an earlier sheet, which is why it is keyed from the row parent and never from the leaf. The same applies to p2_t18_13c, which is the lender phone inside BOTH Lender-Phone[0] (67a) and Lender-Phone2[0] (67b)."
   ],
 
   "intake_id": "INT-SAMPLE-433A-001",
@@ -180,6 +194,40 @@
   "49_exp_other_expenses": "340",
   "50_total_living_expenses": "12477",
   "51_net_difference": "68",
+
+  "65_business_account_balance_as_of": "07312026",
+  "65c_total_business_bank_balance": "24705",
+  "66f_total_receivable_amount_due": "37785",
+  "67c_total_business_property_equity": "167000",
+
+  "68_bizinc_gross_receipts": "48500",
+  "69_bizinc_gross_rental_income": "3250",
+  "70_bizinc_interest": "415",
+  "71_bizinc_dividends": "690",
+  "72_bizinc_cash_receipts_not_in_68_to_71": "1275",
+  "73_bizinc_other_description": "Equipment Sublease Fees - printed line 73",
+  "73_bizinc_other_amount": "2140",
+  "74_bizinc_other_description": "Consulting Retainer - printed line 74",
+  "74_bizinc_other_amount": "1860",
+  "75_bizinc_other_description": "Royalty Income - printed line 75",
+  "75_bizinc_other_amount": "935",
+  "76_bizinc_other_description": "Vending Commission - printed line 76",
+  "76_bizinc_other_amount": "520",
+  "77_bizinc_total_income": "59585",
+
+  "78_bizexp_materials_purchased": "12400",
+  "79_bizexp_inventory_purchased": "8150",
+  "80_bizexp_gross_wages_and_salaries": "15720",
+  "81_bizexp_rent": "4300",
+  "82_bizexp_supplies": "1145",
+  "83_bizexp_utilities_telephone": "980",
+  "84_bizexp_vehicle_gasoline_oil": "765",
+  "85_bizexp_repairs_and_maintenance": "1530",
+  "86_bizexp_insurance": "1090",
+  "87_bizexp_current_taxes": "2375",
+  "88_bizexp_other_expenses": "1610",
+  "89_bizexp_total_expenses": "50065",
+  "90_biz_net_business_income": "9520",
 
   "household_members": [
     {
@@ -501,6 +549,95 @@
       "equity": "5000",
       "lender_name_address": "Sample Lease Holdings, 1200 Example Cir, Testville TS 00000",
       "lender_phone": "555-555-0173"
+    }
+  ],
+
+  "business_bank_accounts": [
+    {
+      "type_of_account": "Business Checking",
+      "institution_name_and_address": "Placeholder Business Bank, 1200 Example Pkwy, Testville TS 00000",
+      "account_number": "BACCT-65A-TEST",
+      "account_balance": "18430"
+    },
+    {
+      "type_of_account": "Business Money Market",
+      "institution_name_and_address": "Example Credit Union, 1310 Example Loop, Testville TS 00000",
+      "account_number": "BACCT-65B-TEST",
+      "account_balance": "6275"
+    }
+  ],
+
+  "accounts_notes_receivable": [
+    {
+      "receivable_name_and_address": "Placeholder Dispensary Group, 410 Example Rd, Testville TS 00000",
+      "status": "Current - within terms",
+      "date_due": "09152026",
+      "invoice_or_contract_number": "INV-66A-TEST",
+      "amount_due": "7850"
+    },
+    {
+      "receivable_name_and_address": "Example Wellness Retail LLC, 520 Example Ct, Testville TS 00000",
+      "status": "60 days past due",
+      "date_due": "08012026",
+      "invoice_or_contract_number": "INV-66B-TEST",
+      "amount_due": "4220"
+    },
+    {
+      "receivable_name_and_address": "Sample County Grant Office, 630 Example Blvd, Testville TS 00000",
+      "status": "Awarded, not yet billed",
+      "date_due": "10012026",
+      "invoice_or_contract_number": "GRANT-66C-TEST",
+      "amount_due": "12600"
+    },
+    {
+      "receivable_name_and_address": "Placeholder Distribution Co, 740 Example Way, Testville TS 00000",
+      "status": "Factored",
+      "date_due": "08202026",
+      "invoice_or_contract_number": "INV-66D-TEST",
+      "amount_due": "3975"
+    },
+    {
+      "receivable_name_and_address": "Example Municipal Contract Dept, 850 Example Sq, Testville TS 00000",
+      "status": "Current - net 30",
+      "date_due": "11152026",
+      "invoice_or_contract_number": "CONTR-66E-TEST",
+      "amount_due": "9140"
+    },
+    {
+      "receivable_name_and_address": "Overflow Receivable Sixth Record, 960 Example Ln, Testville TS 00000",
+      "status": "Current - net 45",
+      "date_due": "12012026",
+      "invoice_or_contract_number": "INV-66OVF-TEST",
+      "amount_due": "2405"
+    }
+  ],
+
+  "business_property": [
+    {
+      "description": "Commercial Kitchen - Row 67a",
+      "purchase_date": "04202017",
+      "current_fmv": "320000",
+      "current_loan_balance": "210000",
+      "monthly_payment": "1875",
+      "final_payment_date": "04202047",
+      "equity": "110000",
+      "title_holders": "Sample Business Holdings LLC, sole ownership",
+      "location": "1400 Example Industrial Dr, Testville, TS 00000, Example County, USA",
+      "lender_name_address": "Placeholder Commercial Lending, 1500 Example Pkwy, Testville TS 00000",
+      "lender_phone": "555-555-0191"
+    },
+    {
+      "description": "Delivery Van Fleet Depot - Row 67b",
+      "purchase_date": "11052020",
+      "current_fmv": "145000",
+      "current_loan_balance": "88000",
+      "monthly_payment": "1240",
+      "final_payment_date": "11052040",
+      "equity": "57000",
+      "title_holders": "Sample Taxpayer and Sample Business Holdings LLC, tenants in common",
+      "location": "1600 Example Commerce St, Testville, TS 00000, Example County, USA",
+      "lender_name_address": "Example Equipment Finance, 1700 Example Ave, Testville TS 00000",
+      "lender_phone": "555-555-0192"
     }
   ]
 }
