@@ -19,7 +19,6 @@
     "13_accounts_balance_as_of and 14_investments_loan_balance_as_of are the column-header 'As of' DATE cells (/MaxLen 8, mmddyyyy) - not money. The per-row balance cells beneath them are /MaxLen 12 money. Both carry the same bled 'mmddyyyy' caption, so the two are only distinguishable by cell size, and that is exactly the confusion these values are sized to catch.",
     "real_property descriptions are distinct per row ('Row 18a' / 'Row 18b' / 'Row 18c') and vehicles differ in year, make/model AND mileage (11111 / 22222 / 33333). The map's row indices are INVERTED against print order on both tables, so identical filler would have hidden a swapped row; distinct values make a swap visible in one glance at the read-back grid.",
     "Vehicle make_model writes to a target named ...18aMILE and mileage writes to one named ...MKMDL. That inversion is in the form, not in this sample: the printed columns are Make/Model (/MaxLen 16) and Mileage (/MaxLen 7). Five-digit mileages would not fit a 16-char Make/Model column error and vice versa, so a wrong-column write shows up as garbage rather than as a plausible number.",
-
     "SECTION 4 COMPLETION (map v4). digital_assets carries FIVE records against four slots - the fifth is dropped and logged. Every digital-asset cell is /MaxLen-free, so cell size proves NOTHING about which column a value landed in; that table is the one place in Section 4 where only distinct per-column values can expose a mis-assignment. Hence every one of the twenty cells is unique and names its own row and column.",
     "Digital-asset values are deliberately NOT wallet addresses, exchange account identifiers, seed phrases or key material - not even fabricated ones. The location column holds an obviously fictional custodian name and the name column holds 'Placeholder Coin' labels. Anything shaped like a real key would be a liability in a checked-in fixture regardless of whether it resolved to anything.",
     "life_insurance_policies is NOT a row table. The form prints three POLICY COLUMNS by five rows (17a name/address, 17b policy number, 17c owner, 17d cash value, 17e loan balance), so each record here is one printed column. Policy number and owner are distinct per column ('POL-17-COL1-TEST' / Sample Taxpayer, COL2 / Sample Spouse, COL3 / Sample Family Trust) so a column mix-up is visible at a glance rather than hiding behind repeated values.",
@@ -28,44 +27,39 @@
     "All six Section 4 totals are arithmetic on the SLOTTED rows only, and each one is a different number, so a total written into the wrong cell shows up as a wrong number rather than a plausible one: 15e = 6105 (3800+1250+640+415, the dropped fifth digital asset's 9999 excluded), 16e = 5500 (2500+1800+900+300), 17f = 17000 (the three policies' cash value minus loan balance: 10000+4000+3000), 18d = 150000 (70000+55000+25000), 19d = 18000 (6000+7000+5000), 20c = 12500 (8000+4500).",
     "18d, 19d and 20c are the three cross-section totals whose targets correlated only to bled street-address fragments (p3_t20_17c, p3_t40_18c, p3_t56_19c). All three were confirmed against the PRINTED markers before this sample was written, not against the field names, which disagree with the print in every case.",
     "The four 'as of' date cells (15_digital_asset_value_as_of, 16_amount_owed_as_of, 16_available_credit_as_of, and the two already present at 13/14) are /MaxLen 8 mmddyyyy column headers, not money - same size trap as the v3 pair.",
-
     "Section 7 two panels are INVERTED by internal name against the print. TotalMonthlyIncome[0].p6_t43_S6t is printed line 77 (Total Income, Add lines 68 through 76) and TotalMonthlyExpenses[0].p6_t42_S6t is printed line 88 (Other Expenses, Specify). They share one double-height y band at 241.2-262.8, which is why the income column holds a TOTAL there while the expense column still holds a DATA row. There is no p6_t41 on the form at all.",
-
     "The business-income write-in descriptions lag their amount by one internal index: Blank72 is printed line 73, Blank73 is 74, Blank74 is 75, Blank75 is 76. Each description here names its own printed line, so a one-off shift shows up in the read-back instead of looking plausible.",
-
     "Section 7 arithmetic is real and every figure is distinct: 68-76 sum to 77 (59585), 78-88 sum to 89 (50065), and 77 minus 89 is 90 (9520). A value written into the wrong printed row breaks one of the three sums rather than hiding.",
-
     "accounts_notes_receivable carries SIX records against five printed slots (66a-66e). The sixth is expected to be logged as overflow and dropped, never written over 66e.",
-
     "66f_total_receivable_amount_due (37785) totals only the FIVE receivables that reach a printed slot. Including the dropped sixth would make it 40190. The printed total is kept consistent with the printed rows, because an overflow row belongs on an attachment; the choice is recorded here rather than left implicit.",
-
     "The printed markers for the sheet-7 tables are 65a/65b (business bank accounts) and 66a-66e (receivables), NOT the 64/65 their field names carry: Table64[0] prints 65 and Table64[1] prints 66. The receivables fifth row is the duplicated Line65d[1].#field[0..4] parent, whose five widgets share the exact x-ranges of rows 66a-66d.",
-
-    "business_property rows name their own printed row (Row 67a / Row 67b). Page6[0].p3_t11_17a[0] is the 67a title-holder cell and [1] is 67b - a field name carried over from the line-17 block on an earlier sheet, which is why it is keyed from the row parent and never from the leaf. The same applies to p2_t18_13c, which is the lender phone inside BOTH Lender-Phone[0] (67a) and Lender-Phone2[0] (67b)."
+    "business_property rows name their own printed row (Row 67a / Row 67b). Page6[0].p3_t11_17a[0] is the 67a title-holder cell and [1] is 67b - a field name carried over from the line-17 block on an earlier sheet, which is why it is keyed from the row parent and never from the leaf. The same applies to p2_t18_13c, which is the lender phone inside BOTH Lender-Phone[0] (67a) and Lender-Phone2[0] (67b).",
+    "SHEET 7 / SHEET 8 CLOSING BLOCK (map v8). With this block the 433-A map is CLOSED: all 515 form fields are in exactly one of three states - 495 filled, 14 named under allowed._never_autofill and guarded, 6 under _deferred and never written. The partition assertion checks that the three sets sum to 515 and pairwise do not overlap, so a field can never silently belong to two states at once.",
+    "The printed markers on sheet 7 run 52-64, NOT 51-63. Keys follow the PRINTED marker as everywhere else in this fixture, because these become immutable HubSpot property names and a key named for an internal field suffix would be wrong forever.",
+    "AB61 IS NOT A UNIFORM SLOT TEMPLATE. Row 62a column 1 carries /MaxLen 93 and row 62b column 1 carries /MaxLen 172 - same group, same column, nearly double the capacity. The 62b value here is 122 characters ON PURPOSE: it fits 62b and would be REFUSED by 62a, so the asymmetry is exercised rather than assumed. A slot template does not imply identical cell capacity, and sizing a group's values to the FIRST slot is the mistake this row exists to catch.",
+    "credit_cards_accepted carries FOUR records against three printed slots (63a/63b/63c). The fourth is expected to be logged as overflow and dropped, never written over 63c. Neither new group has a printed total, so unlike the receivables block there is no arithmetic to keep consistent with the dropped row.",
+    "L62C is a third DATA row printed 63c - not a totals row. It carries its own printed marker in the same marker column as 63a and 63b, shares their exact x-ranges and maxLengths, and there is no 'Total' caption anywhere in the credit-card block. Treating it as a total would have left the form's third credit card unfillable.",
+    "53b_business_phone is written SPACE-SEPARATED ('555 555 0146'), a fifth input format alongside the parenthesised, dashed, bare-digit and dotted forms already in this fixture. All of them must strip to ten digits and land in the same 3 + 7 halves; a leading country code would strip to eleven and is a hard stop by design, not a silent truncation.",
+    "S7_accounting_method is set to 'accrual', deliberately NOT the first option in the map. A checkbox engine that fell back to positional order rather than matching the named option would check 'cash' here and the read-back would show it. 52, 56 and 61 likewise vary their input form (boolean false, 'YES', ' Yes ') to keep the trim + case-insensitive + boolean-fold match exercised.",
+    "Every value written by this run is now APPEARANCE-VERIFIED as well as read back: verify-appearances.mjs decodes each widget's normal appearance stream and requires the stored value to be drawn there. Read-back proves /V; only the appearance stream proves what the page prints."
   ],
-
   "intake_id": "INT-SAMPLE-433A-001",
-
   "1a_full_name": "Testcorp Sample Taxpayer and Sample Spouse",
   "1b_address": "100 Example Way, Testville, TS 00000",
   "1c_county_of_residence": "Example County",
   "1c_home_phone": "(555) 555-0142",
   "1d_cell_phone": "555-555-0143",
-
   "marital_status": "married",
-
   "2_tp_ssn_itin": "000-00-0000",
   "2_tp_dob": "01011980",
   "2_sp_ssn_itin": "000-00-0001",
   "2_sp_dob": "02021982",
-
   "3a_business_interest": "yes",
   "3a_pct_ownership": "50",
   "3a_title": "Managing Member",
   "3b_business_name": "Testcorp Industries LLC",
   "3c_business_type": "llc",
   "3c_business_type_other_desc": "Sample other-type description (coverage only)",
-
   "4a_tp_employer_name": "Testcorp Industries",
   "4b_tp_employer_address": "200 Example Blvd, Testville, TS 00000",
   "4c_tp_work_phone": "5555550144",
@@ -75,7 +69,6 @@
   "4f_tp_occupation": "Sample Occupation A",
   "4g_tp_dependents_claimed_on_1040": "3",
   "4h_tp_pay_period": "bi-weekly",
-
   "5a_sp_employer_name": "Placeholder Widgets Inc",
   "5b_sp_employer_address": "300 Example Ave, Testville, TS 00000",
   "5c_sp_work_phone": "555.555.0145",
@@ -85,11 +78,9 @@
   "5f_sp_occupation": "Sample Occupation B",
   "5g_sp_dependents_claimed_on_1040": "1",
   "5h_sp_pay_period": "monthly",
-
   "6_income_change_explain": "Sample anticipated income change - seasonal contract ends",
   "6_income_change_amount": "1200",
   "6_income_change_when": "09012026",
-
   "7_lawsuit_role": "defendant",
   "7_suit_location_of_filing": "Example County Superior Court, Testville TS",
   "7_suit_represented_by": "Sample Counsel LLP, Testville TS",
@@ -97,69 +88,54 @@
   "7_suit_amount": "5000",
   "7_suit_possible_completion_date": "12012026",
   "7_suit_subject": "Sample contract dispute (synthetic)",
-
   "8_bankruptcy": "yes",
   "8_bk_date_filed": "03012024",
   "8_bk_date_dismissed": "05012024",
   "8_bk_date_discharged": "07012024",
   "8_bk_petition_no": "BK-0000-TEST",
   "8_bk_location_filed": "Example District of Testville, TS",
-
   "8b_lived_abroad_6mo": "yes",
   "8b_lived_abroad_from": "01012019",
   "8b_lived_abroad_to": "06302020",
-
   "8c_dual_citizenship": "no",
   "8c_dual_citizenship_country": "Republic of Example (synthetic)",
-
   "9a_incarcerated": "no",
   "9a_inmate_number": "INMATE-0000-TEST",
-
   "9b_beneficiary_of_trust_estate_policy": "yes",
   "9b_place_where_recorded": "Example County Recorder, Testville TS",
   "9b_trust_name": "Sample Family Trust (synthetic)",
   "9b_trust_ein": "12-3456789",
   "9b_trust_anticipated_amount": "2500",
   "9b_trust_when_received": "06012027",
-
   "9c_trustee_fiduciary_contributor": "YES",
   "9c_trust_name": "Sample Fiduciary Trust (synthetic)",
   "9c_trustee_ein": "987654321",
-
   "10_safe_deposit_box": "yes",
   "10_sdb_location": "Placeholder Savings, 400 Example St, Testville TS",
   "10_sdb_contents": "Sample documents and one placeholder coin",
   "10_sdb_value": "750",
-
   "11_transferred_assets": "yes",
   "11_transfer_assets": "Sample vehicle and household goods (synthetic)",
   "11_transfer_value_at_transfer": "3000",
   "11_transfer_date": "08012025",
   "11_transfer_to_whom_or_where": "Sample Relative, Testville TS",
-
   "12_total_cash_on_hand": "1500",
   "13_accounts_balance_as_of": "08012026",
   "13e_total_cash": "20600",
   "14_investments_loan_balance_as_of": "08012026",
-
   "15_names_with_access_to_private_keys": "Sample Taxpayer and Sample Spouse (synthetic - no key material recorded)",
   "15_digital_asset_value_as_of": "08012026",
   "15e_total_digital_asset_equity": "6105",
-
   "16_amount_owed_as_of": "08012026",
   "16_available_credit_as_of": "08012026",
   "16e_total_available_credit": "5500",
-
   "17_has_life_insurance": "yes",
   "17f_total_life_insurance_equity": "17000",
-
   "18d_total_equity_real_property": "150000",
   "19d_total_equity_vehicles": "18000",
   "20c_total_equity_property_line_20": "12500",
-
   "allowable_under_65_count": "5",
   "allowable_65_over_count": "1",
-
   "21_income_wages_taxpayer": "5210",
   "22_income_wages_spouse": "3120",
   "23_income_interest_dividends": "145",
@@ -177,7 +153,6 @@
   "34_income_other2_description": "Sample Sublease Income",
   "34_income_other2_amount": "95",
   "35_total_income": "12545",
-
   "36_exp_food_clothing_misc": "3210",
   "37_exp_housing_and_utilities": "2450",
   "38_exp_vehicle_ownership_costs": "735",
@@ -194,12 +169,25 @@
   "49_exp_other_expenses": "340",
   "50_total_living_expenses": "12477",
   "51_net_difference": "68",
-
+  "52_sole_proprietorship_schedule_c": false,
+  "53a_business_name_and_address": "Testcorp Industries LLC, 1200 Example Pkwy Suite 300, Testville TS 00000",
+  "53b_business_phone": "555 555 0146",
+  "54_employer_identification_number": "45-6789012",
+  "55_type_of_business": "Retail dispensary and wholesale distribution",
+  "56_federal_contractor": "YES",
+  "57_business_website": "www.example-testcorp-placeholder.test",
+  "58_total_number_of_employees": "37",
+  "59_average_gross_monthly_payroll": "48200",
+  "60_frequency_of_tax_deposits": "Semi-weekly",
+  "61_engages_in_ecommerce": " Yes ",
+  "64_business_cash_on_hand": "3250",
   "65_business_account_balance_as_of": "07312026",
   "65c_total_business_bank_balance": "24705",
   "66f_total_receivable_amount_due": "37785",
   "67c_total_business_property_equity": "167000",
-
+  "S7_accounting_method": "accrual",
+  "S7_period_from": "01012026",
+  "S7_period_to": "06302026",
   "68_bizinc_gross_receipts": "48500",
   "69_bizinc_gross_rental_income": "3250",
   "70_bizinc_interest": "415",
@@ -214,7 +202,6 @@
   "76_bizinc_other_description": "Vending Commission - printed line 76",
   "76_bizinc_other_amount": "520",
   "77_bizinc_total_income": "59585",
-
   "78_bizexp_materials_purchased": "12400",
   "79_bizexp_inventory_purchased": "8150",
   "80_bizexp_gross_wages_and_salaries": "15720",
@@ -228,7 +215,6 @@
   "88_bizexp_other_expenses": "1610",
   "89_bizexp_total_expenses": "50065",
   "90_biz_net_business_income": "9520",
-
   "household_members": [
     {
       "name": "Sample Dependent One",
@@ -273,7 +259,6 @@
       "contributes_to_household_income": "no"
     }
   ],
-
   "bank_accounts": [
     {
       "type_of_account": "Checking",
@@ -306,7 +291,6 @@
       "account_balance": "9900"
     }
   ],
-
   "investments": [
     {
       "type_of_investment": "Brokerage Account",
@@ -341,7 +325,6 @@
       "equity": "2000"
     }
   ],
-
   "digital_assets": [
     {
       "type_of_digital_asset": "Row 15a type - Digital Currency",
@@ -379,7 +362,6 @@
       "amount_and_value_usd": "OVERFLOW amount - 9.0000 units (USD 9,999.00)"
     }
   ],
-
   "available_credit": [
     {
       "institution_name_and_address": "Row 16a - Placeholder Card Services, 1300 Example Way, Testville TS 00000",
@@ -410,7 +392,6 @@
       "available_credit": "300"
     }
   ],
-
   "life_insurance_policies": [
     {
       "company_name_and_address": "Policy column 1 - Placeholder Life Assurance Co, 1700 Example Way, Testville TS 00000",
@@ -434,7 +415,6 @@
       "outstanding_loan_balance": "0"
     }
   ],
-
   "property_line_20": [
     {
       "description": "Vacation Cabin - Row 20a",
@@ -461,7 +441,6 @@
       "lender_phone": "555-555-0182"
     }
   ],
-
   "real_property": [
     {
       "description": "Primary Residence - Row 18a",
@@ -503,7 +482,6 @@
       "lender_phone": "555-555-0163"
     }
   ],
-
   "vehicles": [
     {
       "year": "2018",
@@ -551,7 +529,6 @@
       "lender_phone": "555-555-0173"
     }
   ],
-
   "business_bank_accounts": [
     {
       "type_of_account": "Business Checking",
@@ -566,7 +543,6 @@
       "account_balance": "6275"
     }
   ],
-
   "accounts_notes_receivable": [
     {
       "receivable_name_and_address": "Placeholder Dispensary Group, 410 Example Rd, Testville TS 00000",
@@ -611,7 +587,6 @@
       "amount_due": "2405"
     }
   ],
-
   "business_property": [
     {
       "description": "Commercial Kitchen - Row 67a",
@@ -638,6 +613,38 @@
       "location": "1600 Example Commerce St, Testville, TS 00000, Example County, USA",
       "lender_name_address": "Example Equipment Finance, 1700 Example Ave, Testville TS 00000",
       "lender_phone": "555-555-0192"
+    }
+  ],
+  "payment_processors": [
+    {
+      "name_and_address": "Row 62a Placeholder Payment Systems Inc, 1500 Example Ave, Testville TS 00000",
+      "processor_account_number": "PROC-62A-TEST-0001"
+    },
+    {
+      "name_and_address": "Row 62b Example Merchant Services LLC, 1600 Example Boulevard Suite 220, Testville TS 00000, attention Accounts Receivable",
+      "processor_account_number": "PROC-62B-TEST-0002"
+    }
+  ],
+  "credit_cards_accepted": [
+    {
+      "credit_card": "Visa 63a",
+      "merchant_account_number": "MERCH-63A-TEST-0001",
+      "issuing_bank_name_and_address": "Row 63a Placeholder Community Bank NA, 1710 Example Street, Testville TS 00000"
+    },
+    {
+      "credit_card": "Mastercard 63b",
+      "merchant_account_number": "MERCH-63B-TEST-0002",
+      "issuing_bank_name_and_address": "Row 63b Example State Bank and Trust, 1820 Example Circle, Testville TS 00000"
+    },
+    {
+      "credit_card": "Discover 63c",
+      "merchant_account_number": "MERCH-63C-TEST-0003",
+      "issuing_bank_name_and_address": "Row 63c Sample Federal Credit Union, 1930 Example Terrace, Testville TS 00000"
+    },
+    {
+      "credit_card": "Amex 63OVF",
+      "merchant_account_number": "MERCH-63OVF-TEST-004",
+      "issuing_bank_name_and_address": "Row 63OVF Overflow Issuing Bank NA, 2040 Example Loop, Testville TS 00000"
     }
   ]
 }
