@@ -18,6 +18,24 @@
   that were provisioned from a superseded scheme stay where they are and stay populated;
   retiring them is a separate, destructive decision that this script does not make.
 .NOTES
+  SUPERSEDED FOR CREATES BY adapters/hubspot/hs-provision.mjs. Use that, not this.
+
+  PowerShell 5.1's Invoke-RestMethod encodes a STRING body as ISO-8859-1 unless it is handed
+  raw bytes, so every non-ASCII character in a property description leaves as 0x3F and HubSpot
+  rejects the entire batch:
+
+      ! batch 0 failed: Invalid input JSON on line 153, column 72:
+        Invalid UTF-8 middle byte 0x3f
+
+  Four 433-F descriptions carry an em-dash transcribed from the form's own printed label, and
+  those four characters blocked all twenty-seven v3 property creations. The loud failure is the
+  good case; the bad one is a mangled description that happens to be legal, on a property name
+  that can never be withdrawn. hs-lib.mjs already states the rule this restores - every
+  destructive or permanent call goes out over node's fetch - and creating an immutable name is
+  exactly that kind of call.
+
+  This script stays for the DRY RUN, which reads the same definitions and writes nothing.
+
   Credential: HubSpot Service Key (Bearer). Set it in the environment, never in the repo:
       $env:HUBSPOT_SERVICE_KEY = "pat-... or service-key-..."
   Required scopes on the key: crm.schemas.<object>.read  and  crm.schemas.<object>.write
