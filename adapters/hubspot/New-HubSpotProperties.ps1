@@ -46,6 +46,11 @@ if (-not $token) { throw "No token in `$env:$ServiceKeyEnv. Set it first: `$env:
 $base    = "https://api.hubapi.com"
 $headers = @{ Authorization = "Bearer $token"; "Content-Type" = "application/json" }
 
+# PowerShell 5.1 still negotiates from its .NET default, which on this box does not include
+# TLS 1.2. HubSpot requires it, and the failure surfaces as a bare "underlying connection was
+# closed" that reads like a network problem rather than a protocol one.
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 $reg = Get-Content $RegistryPath -Raw | ConvertFrom-Json
 Write-Host "Registry: $($reg.properties.Count) properties, $($reg.groups.Count) groups. Object: $ObjectType" -ForegroundColor Cyan
 
@@ -107,7 +112,13 @@ foreach ($p in $props) {
   if ($p.options) {
     $prop.options = @($p.options | ForEach-Object { @{ label=$_.label; value=$_.value; displayOrder=$_.displayOrder } })
   }
-  if ($p.pii) { $prop.description = "PII - handle per VLP PII rule" }
+  # The generated definitions carry a provenance description -- which form and printed line
+  # feeds the property, and whether the name is shared across the series. That matters more
+  # once the name no longer says which form it belongs to: without it, `irs433_full_name` in
+  # the CRM has nothing pointing back at 433-A line 1a. The PII sentence is folded into that
+  # string by the generator, so the older PII-only fallback applies only to registry rows.
+  if ($p.description)  { $prop.description = $p.description }
+  elseif ($p.pii)      { $prop.description = "PII - handle per VLP PII rule" }
   $toCreate += $prop
 }
 Write-Host "New properties to create: $($toCreate.Count) (skipping $($props.Count - $toCreate.Count) already present)" -ForegroundColor Cyan

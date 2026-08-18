@@ -47,12 +47,27 @@ const mapPath = `adapters/pdf/maps/${form}.map.json`;
 const outPath = `adapters/hubspot/fields.${form}.json`;
 const mapDoc  = JSON.parse(readFileSync(mapPath, 'utf8'));
 
-const PREFIX = `irs${form}`;               // irs433a — the group name too, matching the registry
+const SHARED_PREFIX = 'irs433';            // a fact the 433 SERIES shares
+const FORM_PREFIX = `irs${form}`;          // irs433a — a fact only this form carries
 const isProse = (k) => k.startsWith('_');  // `_why` / `_note` keys are documentation, not bindings
 
-// --- naming ------------------------------------------------------------------------------
-// Lowercased once, here, and then asserted. See the note above on why this is not cosmetic.
-const hsName = (key) => `${PREFIX}_${key}`.toLowerCase();
+// --- naming: FACT-LEVEL, NOT FORM-LEVEL --------------------------------------------------
+// A HubSpot property does not know which form it serves. The map already translates a fact to
+// a cell, differently per form, so putting the form name in the property name bought nothing
+// and cost a duplicate copy of every shared fact per form — seven forms at ~186 properties
+// each is ~1,300, which does not fit under the ceiling even starting from an empty portal.
+//
+// So the property is named for the FACT, and the map is left to say where that fact prints.
+// Concretely: the 433-A input key carries 433-A's PRINTED LINE MARKER as its own prefix
+// ("1a_full_name", "S7_period_from"), and that marker is 433-A's alone — the same fact sits on
+// a different line on 433-F and a different one again on 433-B. Stripping the marker is what
+// turns a 433-A input key into a series fact.
+//
+//   1a_full_name              -> irs433_full_name
+//   85_bizexp_repairs_and_...  -> irs433_bizexp_repairs_and_maintenance
+//
+// The input key survives on the property as `key`, so the fetch layer can still look up which
+// 433-A cell feeds it and a reviewer can still find the cell on the page.
 
 // The printed line marker a key carries as its prefix ("1a_full_name" -> "1a", "S7_..." -> "S7").
 // Reported as line_ref so a reviewer can find the cell on the page; null when the key names a
@@ -62,14 +77,97 @@ const lineRef = (key) => {
   return m ? m[1] : null;
 };
 
+const stripMarker = (key) => key.replace(/^(S?\d+[a-z]?)_/i, '');
+
+// --- facts whose stripped name is NOT yet a usable series name ----------------------------
+// Two failure modes, both of which only bite after the name is permanent:
+//
+// COLLISION. Two different 433-A lines strip to one name while naming two different
+// real-world values. Merging them would let one fact overwrite the other in the CRM.
+//   9b/9c trust: 9b is the trust you are a BENEFICIARY of, 9c is the one you act as TRUSTEE
+//   or fiduciary for. The map already distinguishes their EINs (trust_ein / trustee_ein), so
+//   the names here follow that split rather than inventing a third vocabulary.
+//   Lines 73-76 are FOUR SLOTS of one repeating "other business income" row. The slot ordinal
+//   is a property of the table, not of 433-A's page, so it belongs in the series name; 433-A's
+//   line numbers do not. Lines 33/34 are the same construct on the personal income table and
+//   are renamed to match, so one convention covers both.
+//
+// RESIDUAL 433-A LINE REFERENCE. The stripped name still quotes a 433-A line number, which
+// means nothing on any other form in the series. These are renamed to say what the cell IS.
+const FACT_RENAME = {
+  '9c_trust_name': 'trustee_trust_name',
+
+  '33_income_other_description': 'income_other_1_description',
+  '33_income_other_amount': 'income_other_1_amount',
+  '34_income_other2_description': 'income_other_2_description',
+  '34_income_other2_amount': 'income_other_2_amount',
+
+  '73_bizinc_other_description': 'bizinc_other_1_description',
+  '73_bizinc_other_amount': 'bizinc_other_1_amount',
+  '74_bizinc_other_description': 'bizinc_other_2_description',
+  '74_bizinc_other_amount': 'bizinc_other_2_amount',
+  '75_bizinc_other_description': 'bizinc_other_3_description',
+  '75_bizinc_other_amount': 'bizinc_other_3_amount',
+  '76_bizinc_other_description': 'bizinc_other_4_description',
+  '76_bizinc_other_amount': 'bizinc_other_4_amount',
+
+  // "line 20" is 433-A's printed numbering for Other Personal Property. The group and its
+  // total both quoted it.
+  'property_line_20': 'other_personal_property',
+  '20c_total_equity_property_line_20': 'total_equity_other_personal_property',
+
+  // "not in 68 to 71" quotes four 433-A line numbers to mean "not already counted above".
+  '72_bizinc_cash_receipts_not_in_68_to_71': 'bizinc_cash_receipts_not_otherwise_listed',
+};
+
+const factName = (key) => FACT_RENAME[key] ?? stripMarker(key);
+
+// --- scope: shared by default -------------------------------------------------------------
+// SHARED IS THE DEFAULT AND THE TIE-BREAK. A shared name can be used by one form; a
+// form-scoped name cannot be used by two, and no name can ever be withdrawn. The asymmetry
+// runs one way, so the default follows it.
+//
+// This set is where a fact that is CLEARLY unique to this form goes, with its reason. It is
+// deliberately EMPTY, and that is a finding rather than an omission: 433-A's personal sections
+// are very nearly a subset of 433-A(OIC), its income-and-expenses table is the table 433-F and
+// 433-H also print, and its self-employment sections cover the ground 433-B covers. Working
+// through all 186 facts, not one is clearly unique to 433-A and nowhere else in the series.
+//
+// There is also a structural reason the set must be empty AT THIS POINT IN THE SERIES: a fact
+// can only be SHOWN to be 433-A-only once the other six maps exist to check it against. Until
+// then every "unique to 433-A" claim is a guess, and the tie-break says a guess resolves to
+// shared.
+//
+// The `irs433a_` namespace stays reserved. The first later form whose map proves a 433-A fact
+// has no counterpart adds that fact here, and only that fact.
+const FORM_SPECIFIC = new Set([
+  // (empty — see above)
+]);
+
+const scopeOf = (key) => (FORM_SPECIFIC.has(key) ? form : 'shared');
+const hsName = (key) =>
+  `${scopeOf(key) === 'shared' ? SHARED_PREFIX : FORM_PREFIX}_${factName(key)}`.toLowerCase();
+
 const humanize = (key) => {
-  const s = key.replace(/^(S?\d+[a-z]?)_/i, '').replace(/_/g, ' ').trim();
+  const s = factName(key).replace(/_/g, ' ').trim();
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : key;
 };
 
-const label = (key, extra = '') => {
+// The label no longer claims the property belongs to 433-A, because a shared property does
+// not. Provenance moves to the DESCRIPTION, where it can name the form and line without
+// implying ownership.
+const label = (key, extra = '') => `[433] ${humanize(key)}${extra}`;
+
+const describe = (key, pii) => {
   const ref = lineRef(key);
-  return `[${form}] ${ref ? `${ref} ` : ''}${humanize(key)}${extra}`;
+  const parts = [
+    `433-A${ref ? ` line ${ref}` : ''} (input key: ${key}).`,
+    scopeOf(key) === 'shared'
+      ? 'Shared across the 433 series - named for the fact, not the form.'
+      : `Specific to form ${form}.`,
+  ];
+  if (pii) parts.push('PII - handle per VLP PII rule.');
+  return parts.join(' ');
 };
 
 // --- PII ---------------------------------------------------------------------------------
@@ -139,17 +237,24 @@ const typeFor = (key) => {
 // --- properties --------------------------------------------------------------------------
 const properties = [];
 const push = (key, extra) => {
+  const pii = extra.pii ?? PII.test(key);
+  const scope = scopeOf(key);
   properties.push({
-    key,
+    key,                             // the 433-A INPUT KEY that feeds this property. The fetch
+                                     // layer keys its output record by exactly this, because
+                                     // fill-433a.mjs reads `data[<map key>]` throughout.
+    fact: factName(key),             // the series-level fact name, form marker stripped
+    scope,                           // 'shared' | '433a'
     hs_name: hsName(key),
-    form,
+    form,                            // which form's map GENERATED this row (not ownership)
     field: key,
     label: extra.label ?? label(key),
-    group: PREFIX,
+    description: describe(key, pii),
+    group: scope === 'shared' ? SHARED_PREFIX : FORM_PREFIX,
     type: extra.type,
     fieldType: extra.fieldType,
     options: extra.options ?? null,
-    pii: extra.pii ?? PII.test(key),
+    pii,
     line_ref: lineRef(key),
     source: extra.source,            // which map construct produced this property
     type_basis: extra.basis,         // WHY this type — so the review can check the reasoning
@@ -205,7 +310,8 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
   }
   push(key, {
     type: 'string', fieldType: 'textarea', basis: 'repeatable table, serialized as a JSON array',
-    label: `[${form}] ${def.printed_line ? `${def.printed_line} ` : ''}${humanize(key)} (JSON array, up to ${cap} printed rows)`,
+    // The printed-row cap is 433-A's, so it is stated as 433-A's rather than as the fact's.
+    label: `[433] ${humanize(key)} (JSON array; ${cap} rows fit 433-A)`,
     pii: true,   // every table on this form carries account numbers, addresses or holder names
     source: `groups (${cap} printed slots x ${cols.size} columns, serialized)`,
     row_shape: [...cols],
@@ -230,7 +336,16 @@ for (const p of properties) {
   if (p.hs_name !== p.hs_name.toLowerCase()) errors.push(`not lowercase: ${p.hs_name}`);
   if (!/^[a-z][a-z0-9_]*$/.test(p.hs_name))  errors.push(`illegal HubSpot property name: ${p.hs_name}`);
   if (p.hs_name.length > 100)                errors.push(`name over 100 chars: ${p.hs_name}`);
-  if (seen.has(p.hs_name)) errors.push(`duplicate name: ${p.hs_name} (from "${seen.get(p.hs_name)}" and "${p.key}")`);
+  // THE assertion for fact-level naming. Stripping the form marker is exactly the step that
+  // can merge two distinct facts into one name, and a merge is invisible afterwards: the two
+  // 433-A cells simply start overwriting each other in the CRM with no error anywhere. Any
+  // collision belongs in FACT_RENAME with a reason, so this is a hard stop, not a warning.
+  if (seen.has(p.hs_name)) {
+    errors.push(
+      `duplicate name: ${p.hs_name} (from "${seen.get(p.hs_name)}" and "${p.key}") ` +
+      `— two 433-A input keys strip to one fact name. Add the distinguishing name to FACT_RENAME.`,
+    );
+  }
   seen.set(p.hs_name, p.key);
 }
 if (errors.length) {
@@ -249,10 +364,22 @@ const doc = {
     map_slice: mapDoc.slice,
     generator: 'adapters/hubspot/gen-fields-from-map.mjs',
     group_input_shape: 'serialized — one textarea property per repeatable table, holding a JSON array of row objects. NOT one property per slot: that shape needs 452 properties for this form against 366 free against HubSpot\'s 1,000-custom-property ceiling, and property names cannot be withdrawn.',
-    naming_rule: 'irs<form>_<map input key>, lowercase throughout. HubSpot silently lowercases stored names, so a mixed-case definition drifts from the portal permanently.',
+    naming_rule:
+      'FACT-LEVEL. irs433_<fact> for a fact the 433 series shares; irs<form>_<fact> only where a fact is ' +
+      'clearly unique to one form. The fact name is the map input key with the form\'s PRINTED LINE MARKER ' +
+      'stripped (1a_full_name -> full_name), because that marker is 433-A\'s alone and the same fact prints ' +
+      'on a different line on every other form. Shared is the default AND the tie-break: a shared name can be ' +
+      'used by one form, a form-scoped name cannot be used by two, and no name can ever be withdrawn. ' +
+      'Lowercase throughout — HubSpot silently lowercases stored names, so a mixed-case definition drifts ' +
+      'from the portal permanently.',
     counts: {},
   },
-  groups: [{ name: PREFIX, label: `Form ${form.replace(/^433/, '433-').toUpperCase()}`, displayOrder: 0 }],
+  // Only groups that actually carry a property are declared, so provisioning never creates an
+  // empty group in the CRM for a namespace nothing uses yet.
+  groups: [
+    { name: SHARED_PREFIX, label: 'Form 433 series (shared)', displayOrder: 0 },
+    { name: FORM_PREFIX, label: `Form ${form.replace(/^433/, '433-').toUpperCase()} (form-specific)`, displayOrder: 1 },
+  ].filter((g) => properties.some((p) => p.group === g.name)),
   properties,
 };
 
@@ -261,9 +388,20 @@ for (const p of properties) {
   const s = p.source.split(' ')[0];
   bySource[s] = (bySource[s] || 0) + 1;
 }
-doc.meta.counts = { total: properties.length, by_construct: bySource, pii: properties.filter(p => p.pii).length };
+const shared = properties.filter((p) => p.scope === 'shared').length;
+const formOnly = properties.length - shared;
+doc.meta.counts = {
+  total: properties.length,
+  shared,
+  form_specific: formOnly,
+  by_construct: bySource,
+  pii: properties.filter((p) => p.pii).length,
+  renamed_facts: properties.filter((p) => p.fact !== stripMarker(p.key)).length,
+};
 
 writeFileSync(outPath, JSON.stringify(doc, null, 2) + '\n');
 console.log(`${form}: ${properties.length} properties -> ${outPath}`);
+console.log(`  scope: ${shared} shared (irs433_), ${formOnly} form-specific (${FORM_PREFIX}_)`);
 console.log(`  by map construct: ${Object.entries(bySource).map(([k, v]) => `${k} ${v}`).join(', ')}`);
 console.log(`  flagged PII: ${doc.meta.counts.pii}`);
+console.log(`  facts renamed off their stripped name: ${doc.meta.counts.renamed_facts}`);
