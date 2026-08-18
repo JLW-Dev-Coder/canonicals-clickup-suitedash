@@ -49,6 +49,36 @@ import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
 
+// BAND MEMBERSHIP IS NOT ROW ORDER
+// --------------------------------
+// The heading check above proves each slot prints in the right SECTION. It does not prove the
+// slots run down the page in the order the map lists them. Both rows of 433-F's PERSONAL BANK
+// ACCOUNTS are in that band whichever way round they are bound, so the check that found D1
+// would not notice them swapped with each other. That matters wherever the rows are not
+// interchangeable: 433-A's `real_property` slots 1 and 2 bind Table_Line17b[1] and
+// Table_Line17b[0] — a hand-authored reversal read off the field order — and 18a, 18b and 18c
+// are three different properties on a signed statement.
+//
+// So: a group's slots must run in PRINTED order — the order a person reads them in. Page
+// ascending, then down the page, and for slots that share a printed line, left to right. A
+// group that lists them any other way routes the caller's first row to the second printed
+// position, and every row after it likewise, inside a section the heading check calls correct.
+//
+// LEFT-TO-RIGHT IS NOT A CONCESSION. 433-A's `life_insurance_policies` is three policies
+// printed as three COLUMNS at one y (Lines16b-f_Column1..3), not three stacked rows. A rule
+// that only knew "y must descend" would call that group broken and would have to be switched
+// off for it — and a check switched off for the one group it does not fit is a check nobody
+// trusts. Two slots share a printed line when their vertical extents overlap by more than half
+// the shorter one; that is measured off the page, so no group needs to declare its own layout.
+
+// Cells of one printed row share a y-centre, but not exactly: a taller description box sits at
+// a different centre from the figure boxes beside it, by a few points, on a perfectly good row.
+// So the spread is judged against the ROW PITCH — the distance to the nearest adjacent slot —
+// rather than a fixed number of points. A spread over half the pitch means some cell of this
+// slot is nearer the next row's centre than its own, which is the case where the median could
+// be reporting the wrong row. A fixed tolerance would either fire on every tall description
+// cell or miss it entirely on a densely printed table; both train people to ignore the note.
+
 const argv = process.argv.slice(2);
 const audit = argv.includes('--audit');
 const [form, filledPath] = argv.filter(a => !a.startsWith('--'));
@@ -185,6 +215,15 @@ const slotCheckTargets = (slot) => {
   return out;
 };
 
+/** Two slots share a printed line when their vertical extents overlap by more than half the
+ *  shorter one. Measured off the page: a group of side-by-side columns needs no declaration. */
+const sameLine = (a, b) => {
+  if (!a.extent || !b.extent) return false;
+  const overlap = Math.min(a.extent[1], b.extent[1]) - Math.max(a.extent[0], b.extent[0]);
+  const shorter = Math.min(a.extent[1] - a.extent[0], b.extent[1] - b.extent[0]);
+  return shorter > 0 && overlap > shorter / 2;
+};
+
 const mapGroups = Object.keys(mapDoc.groups || {});
 const declGroups = Object.keys(decl.groups || {});
 for (const g of mapGroups) if (!declGroups.includes(g)) err(`the map binds group "${g}" and ${headingsPath} declares no heading for it. Every group prints somewhere; a group with no declared heading is a group nobody has checked.`);
@@ -223,6 +262,22 @@ for (const g of mapGroups) {
     }
     const written = filledText ? cells.filter(c => (filledText(c.target) || '').trim() !== '').map(c => c.col) : null;
     const w0 = rectOf.get(cells[0]?.target);
+    // The row's y-centre, for the ORDER check below. Taken as the MEDIAN of every text cell's
+    // centre, not cells[0]'s: cells[0] is whichever column the map happens to list first, and
+    // on a row whose description box is taller than its figure boxes that one cell's centre is
+    // not the row's. `spread` is printed so a row whose cells are not co-linear — which would
+    // mean the slot is not one printed row at all — is visible rather than averaged away.
+    const cellRects = cells.map(c => rectOf.get(c.target)).filter(w => w && w.page !== null);
+    const cellCentres = cellRects.map(w => (w.rect[1] + w.rect[3]) / 2).sort((a, b) => a - b);
+    const cellX       = cellRects.map(w => (w.rect[0] + w.rect[2]) / 2).sort((a, b) => a - b);
+    const mid = (a) => a.length === 0 ? null
+      : a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2;
+    // The slot's whole vertical extent, across every cell — what decides whether two slots
+    // share a printed line. cells[0]'s rect alone would call a tall description box a line of
+    // its own.
+    const extent = cellRects.length
+      ? [Math.min(...cellRects.map(w => w.rect[1])), Math.max(...cellRects.map(w => w.rect[3]))]
+      : null;
     rows.push({
       i, cells, checks,
       actual: [...resolved.keys()],
@@ -230,6 +285,11 @@ for (const g of mapGroups) {
       unresolved, written,
       page: w0?.page ?? null,
       y: w0 ? [w0.rect[1], w0.rect[3]] : null,
+      yc: mid(cellCentres),
+      xc: mid(cellX),
+      cellCentres,
+      extent,
+      ycSpread: cellCentres.length ? cellCentres[cellCentres.length - 1] - cellCentres[0] : null,
       resolvedDetail: resolved,
     });
   }
@@ -260,9 +320,25 @@ for (const { g, d, rows, aligned } of report) {
     const actual = r.actual.length === 0 ? '(none)' : r.actual.join(' + ');
     const ok = r.unresolved.length === 0 && r.actual.length === 1 && r.actual[0] === r.expected;
     const fill = r.written === null ? '' : (r.written.length ? `  FILLED: ${r.written.join(',')}` : '  (empty on this record)');
-    console.log(`    slot[${r.i}]  p${r.page ?? '?'} y=[${r.y ? r.y.map(v => v.toFixed(1)).join(',') : '?'}]  ${pad(actual, 30)} ${ok ? 'ok ' : 'BAD'}  expected ${r.expected}${fill}`);
+    const yc = r.yc === null ? 'yc=?     ' : `yc=${r.yc.toFixed(1).padStart(6)}`;
+    console.log(`    slot[${r.i}]  p${r.page ?? '?'} y=[${r.y ? r.y.map(v => v.toFixed(1)).join(',') : '?'}] ${yc}  ${pad(actual, 30)} ${ok ? 'ok ' : 'BAD'}  expected ${r.expected}${fill}`);
     if (r.unresolved.length) r.unresolved.forEach(u => console.log(`             unresolved cell: ${u}`));
     if (r.actual.length > 1) for (const [id, cols] of r.resolvedDetail) console.log(`             under ${id}: ${cols.join(', ')}`);
+    // A slot whose cells span far more than one line of type is a multi-line BLOCK, not a row.
+    // Said out loud rather than smoothed over, because it is why the order check compares block
+    // TOPS: on these groups a block's centre can sit nearer the next block's centre than to its
+    // own first line, and ordering by centre would be reading a number that means less than it
+    // looks like it means.
+    if (r.ycSpread !== null && r.ycSpread > 20)
+      console.log(`             block: this slot is ${r.ycSpread.toFixed(1)}pt of printed lines, y=[${r.extent[0].toFixed(1)},${r.extent[1].toFixed(1)}] — ordered by its top, not its centre.`);
+  }
+  if (rows.length > 1) {
+    const sideways = rows.some((r, k) => k > 0 && r.page === rows[k - 1].page && sameLine(rows[k - 1], r));
+    const seq = sideways
+      ? rows.map(r => r.xc === null ? '?' : `x=${r.xc.toFixed(1)}`).join('  <  ')
+      : rows.map(r => r.extent ? r.extent[1].toFixed(1) : '?').join('  >  ');
+    console.log(`    printed order: slot[0..${rows.length - 1}] ${sideways ? 'share a line; x-centres' : 'block tops'}  ${seq}`
+              + `   (must run in reading order: page, then down, then left to right)`);
   }
   for (const a of aligned) {
     for (const e of a.entries) {
@@ -294,6 +370,40 @@ for (const { g, d, rows, aligned } of report) {
       else if (r.actual[0] !== r.expected) bad.push({ kind: 'WRONG HEADING', detail: `group "${g}" slot[${r.i}] prints under ${r.actual[0]}, declared ${r.expected}.`, rows: [r] });
     }
   }
+  // Row order WITHIN the band. Runs for every group, straddle or not: a declared straddle says
+  // which section each slot is in, never that the slots descend the page.
+  for (let k = 1; k < rows.length; k++) {
+    const a = rows[k - 1], b = rows[k];
+    if (a.yc === null || b.yc === null || a.page === null || b.page === null) continue;  // reported as UNRESOLVED
+    let ok, why;
+    if (a.page !== b.page) {
+      ok  = a.page < b.page;
+      why = `slot[${a.i}] is on page ${a.page} and slot[${b.i}] on page ${b.page}, so slot[${b.i}] prints on an EARLIER page`;
+    } else if (sameLine(a, b)) {
+      ok  = a.xc < b.xc;
+      why = `slot[${a.i}] and slot[${b.i}] share a printed line (y=${a.yc.toFixed(1)}), and slot[${a.i}] sits at x=${a.xc.toFixed(1)} `
+          + `with slot[${b.i}] at x=${b.xc.toFixed(1)}, so slot[${b.i}] prints to the LEFT of slot[${a.i}]`;
+    } else {
+      // Compared by the TOP of each slot's block, not by its centre. Several 433-A rows are
+      // multi-line BLOCKS — a property row runs a description line, then purchase date and
+      // price, then the loan line, ~92pt in all — and a block's centre says less about where it
+      // starts than its top does. Reading order is where a row begins.
+      ok  = a.extent[1] > b.extent[1];
+      why = `slot[${a.i}] starts at y=${a.extent[1].toFixed(1)} and slot[${b.i}] at y=${b.extent[1].toFixed(1)} on page ${a.page}, `
+          + `so slot[${b.i}] prints ABOVE slot[${a.i}]`;
+    }
+    if (!ok) {
+      bad.push({
+        kind: 'ROW ORDER',
+        detail: `group "${g}" lists slot[${a.i}] and slot[${b.i}] in an order the page does not print them in: ${why}. `
+              + `A caller fills a group in order, so its first row lands on the second printed position and every row after it `
+              + `likewise. Both slots are inside the declared heading band, which is why the heading check calls this correct: `
+              + `band membership is not row order.`,
+        rows: [a, b],
+      });
+    }
+  }
+
   for (const a of aligned) {
     for (const e of a.entries) {
       const slotHeading = rows[e.i]?.actual.length === 1 ? rows[e.i].actual[0] : null;
@@ -318,7 +428,7 @@ if (errors.length) {
 
 if (!errors.length && !bad.length) {
   const nRows = report.reduce((n, r) => n + r.rows.length, 0);
-  console.log(`OK — ${nRows} group row(s) across ${report.length} group(s) print under the heading declared for them.`);
+  console.log(`OK — ${nRows} group row(s) across ${report.length} group(s) print under the heading declared for them, and every group's slots run in printed order down the page.`);
   process.exit(0);
 }
 
