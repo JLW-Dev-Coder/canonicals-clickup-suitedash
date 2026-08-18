@@ -1,13 +1,34 @@
 {
   "intake_id": "INT-SAMPLE-433F-MULTI",
-  "_synthetic": "Fabricated fixture. ACME Holdings LLC / John Q. Sample at 123 Example St, Denton TX; account numbers are XXXX-masked placeholders and every figure is invented. No real taxpayer, institution or account is referenced.",
+  "_synthetic": "Fabricated fixture. ACME Holdings LLC / John Q. Sample at 123 Example St, Denton TX; account numbers are XXXX-masked placeholders, every telephone is in the 555-01XX block reserved for fiction, and every figure is invented. No real taxpayer, institution or account is referenced.",
+  "_no_wellformed_ssn": "The two SSN cells carry 000-00-0000 and 000-00-0001. The SSA has never issued and will never issue an area number of 000, and never issues a group number of 00, so both fail SSN validity on two independent counts and cannot collide with a living person the way a plausible-looking test value can. The EIN is 00-0000000, whose 00 prefix is likewise never assigned. The PII rule covers intermediates: no fixture, fetched-record file, log or review page may carry a real SSN, and no fixture may contain a well-formed one.",
+  "_saturation": "This fixture exists to reach EVERY mapped text cell, which is what --saturated checks. A real record does not; the production-mode run against the same map is the one that reports which slots a real record left empty. Every group is filled to its last printed slot on purpose.",
+
   "433f_tp_name": "ACME Holdings LLC — John Q. Sample",
   "433f_tp_address": "123 Example St, Denton, TX 76201",
   "433f_county": "Denton",
-  "433f_biz_name": "ACME Holdings LLC",
-  "433f_biz_type": "LLC / Sch C",
   "address_differs": true,
-  "_accounts_split": "Was one `accounts` array of three rows until defect D1. The map now binds PERSONAL BANK ACCOUNTS and INVESTMENTS as separate groups, so the fixture supplies them separately — which is the point: the flat array could not say which table a row belonged in, and slot order answered for it.",
+
+  "433f_tp_ssn": "000-00-0000",
+  "433f_sp_ssn": "000-00-0001",
+  "433f_tp_phone_home": "(940) 555-0101",
+  "433f_tp_phone_work": "(940) 555-0102",
+  "433f_tp_phone_cell": "(940) 555-0103",
+  "433f_sp_phone_home": "(940) 555-0104",
+  "433f_sp_phone_work": "(940) 555-0105",
+  "433f_sp_phone_cell": "(940) 555-0106",
+
+  "433f_hh_under65": "2",
+  "433f_hh_over65": "1",
+  "household_size": "3",
+  "age_band": "under_65",
+
+  "433f_biz_name": "ACME Holdings LLC",
+  "433f_business_ein": "00-0000000",
+  "433f_biz_type": "LLC / Sch C",
+  "433f_employee_count": "4",
+
+  "_accounts_split": "Was one `accounts` array of three rows until defect D1. The map binds PERSONAL BANK ACCOUNTS and INVESTMENTS as separate groups, so the fixture supplies them separately — which is the point: the flat array could not say which table a row belonged in, and slot order answered for it.",
   "bank_accounts": [
     {
       "institution": "First Example Bank, Denton TX",
@@ -15,6 +36,13 @@
       "type": "Checking",
       "balance": "2450.00",
       "bp": "Personal"
+    },
+    {
+      "institution": "Second Example Credit Union, Denton TX",
+      "acct": "XXXX5678",
+      "type": "Savings",
+      "balance": "8100.00",
+      "bp": "Business"
     }
   ],
   "investments": [
@@ -24,17 +52,35 @@
       "type": "Brokerage",
       "balance": "18200.00",
       "bp": "Business"
-    }
-  ],
-  "_deferred_digital_assets": {
-    "_why": "The DIGITAL ASSETS (CRYPTOCURRENCY) table is unbound, so this row deliberately prints nowhere. It is kept in the fixture rather than deleted so the read-back has something to prove: a record carrying a crypto wallet must leave the digital-assets table blank, not divert the wallet into a table that IS bound. No group reads this key.",
-    "row": {
-      "institution": "Coinbase",
-      "type": "BTC wallet",
-      "balance": "3100.00",
+    },
+    {
+      "institution": "Example Retirement Trust",
+      "acct": "XXXX9003",
+      "type": "IRA",
+      "balance": "31500.00",
       "bp": "Personal"
     }
-  },
+  ],
+
+  "_digital_assets_now_bound": "Was `_deferred_digital_assets` — a row deliberately printing nowhere, kept so the read-back could prove a crypto wallet was not diverted into a table that WAS bound. The table is bound now, so the row is a real row and the proof it carried is retired.",
+  "_digital_asset_value_maxlen": "The value column is /MaxLen 12 and the form's own printed example beside it, '10 Bitcoins $64,600 USD', is 23 characters — the cell cannot hold the example the IRS prints next to it. Both values below are exactly 12 characters, the longest the cell accepts. Anything longer stops the run and names the cell; it is never truncated.",
+  "digital_assets": [
+    {
+      "type_of_digital_asset": "Bitcoin",
+      "name_of_digital_asset": "Example Exchange (DCE) hot wallet",
+      "email_used_to_set_up": "sample.holder@example.invalid",
+      "location_of_digital_asset": "Online, exchange-custodied",
+      "amount_and_value_usd": "0.5 BTC $31k"
+    },
+    {
+      "type_of_digital_asset": "Ethereum",
+      "name_of_digital_asset": "Example hardware wallet, self-custodied",
+      "email_used_to_set_up": "sample.holder@example.invalid",
+      "location_of_digital_asset": "External hardware storage",
+      "amount_and_value_usd": "2 ETH $6,400"
+    }
+  ],
+
   "real_estate": [
     {
       "desc": "Primary residence, Denton TX",
@@ -57,6 +103,12 @@
       "equity": "60000"
     }
   ],
+  "_refinance_is_scalar": "The refinance pair is bound as two scalars per printed row, not as `real_estate` row columns — see 433f.map.json _notes v7 and crosswalk arguable A2-2. A caller supplying the array supplies these alongside it.",
+  "433f_re1_year_refinanced": "2022",
+  "433f_re1_refinance_amount": "265000",
+  "433f_re2_year_refinanced": "2023",
+  "433f_re2_refinance_amount": "185000",
+
   "other_assets": [
     {
       "desc": "2020 Toyota Camry",
@@ -68,11 +120,17 @@
     },
     {
       "desc": "Utility trailer",
+      "pmt": "75",
+      "year": "2018",
       "value": "3000",
       "bal": "0",
       "equity": "3000"
     }
   ],
+  "_final_payment_is_a_split": "'Date of Final Payment (mo/yr)' is two cells, each /MaxLen 2. These values are mo/yr with a TWO-digit year, which is all the form holds; the split writes nothing and stops the run unless the stripped value is exactly four digits, so 06/2027 would fail loudly rather than printing '20' as the year.",
+  "433f_veh_final_pmt": "06/27",
+  "433f_oa_final_pmt": "11/26",
+
   "credit_cards": [
     {
       "type": "Visa",
@@ -87,20 +145,103 @@
       "min": "60"
     }
   ],
+
+  "_section_e_row_shapes": "accounts_receivable and credit_cards_accepted use the SHARED row classes' own column names, so a row fetched from irs433_accounts_notes_receivable or irs433_credit_cards_accepted feeds them directly. The receivable money column is `amount_due` — the class's key — even though this form prints the header 'Amount Owed'.",
+  "accounts_receivable": [
+    {
+      "name": "Example Wellness Retail LLC",
+      "address": "520 Example Ct, Denton TX 76201",
+      "amount_due": "4220"
+    },
+    {
+      "name": "Sample County Grant Office",
+      "address": "630 Example Blvd, Denton TX 76205",
+      "amount_due": "6100"
+    }
+  ],
+  "433f_ar_additional_sheets_total": "1500",
+  "433f_ar_available_to_pay_now": "3000",
+  "433f_e2_account_holder": "ACME Holdings LLC",
+  "credit_cards_accepted": [
+    {
+      "credit_card": "Visa",
+      "issuing_bank_name_and_address": "First Example Merchant Bank, 700 Example Pkwy, Denton TX 76201",
+      "merchant_account_number": "XXXX-MERCH-0001"
+    },
+    {
+      "credit_card": "Master Card",
+      "issuing_bank_name_and_address": "Second Example Merchant Bank, 710 Example Pkwy, Denton TX 76201",
+      "merchant_account_number": "XXXX-MERCH-0002"
+    },
+    {
+      "credit_card": "Discover",
+      "issuing_bank_name_and_address": "Third Example Merchant Bank, 720 Example Pkwy, Denton TX 76201",
+      "merchant_account_number": "XXXX-MERCH-0003"
+    }
+  ],
+
   "433f_emp_name": "Example Corp",
   "433f_emp_gross": "6200",
   "433f_emp_fed": "780",
+  "433f_emp_state": "210",
+  "433f_emp_local": "35",
   "433f_emp_tenure": "36",
-  "433f_inc_netse": "1500",
-  "433f_inc_intdiv": "25",
-  "433f_exp_food": "867",
-  "433f_exp_rent": "1800",
-  "433f_exp_healthins": "420",
-  "433f_exp_student": "210",
   "pay_freq": "Bi-weekly",
+  "_spouse_block": "Closes the case where a spouse's pay frequency could be ticked on a form that named no spouse employer: spouse_pay_freq was bound before any of the six cells beside it were.",
+  "433f_sp_emp_name": "Example Regional Health, 810 Example Ave, Denton TX 76205",
+  "433f_sp_emp_gross": "3400",
+  "433f_sp_emp_fed": "395",
+  "433f_sp_emp_state": "120",
+  "433f_sp_emp_local": "18",
+  "433f_sp_emp_tenure": "52",
   "spouse_pay_freq": "Monthly",
-  "433f_hh_under65": "2",
-  "433f_hh_over65": "1",
-  "household_size": "3",
-  "age_band": "under_65"
+
+  "433f_inc_alimony": "400",
+  "433f_inc_childsup": "650",
+  "433f_inc_netse": "1500",
+  "433f_inc_rental": "900",
+  "433f_inc_unemp": "0",
+  "433f_inc_pension": "310",
+  "433f_inc_intdiv": "25",
+  "433f_inc_ssa": "1480",
+  "433f_inc_other": "120",
+  "433f_inc_other_desc": "Royalties",
+
+  "_section_h_totals": "The five printed Total cells are supplied here, not computed at fill time, and 433f.totals.json checks each against the rows printed above it. H1 1245 = 867+100+90+45+143. H2 380 = 320+60. H3 2575 = 1800+260+180+240+95. H4 503 = 420+83. H5 1880 = 300+150+45+120+80+35+90+210+400+250+60+75+40+25.",
+  "433f_exp_food": "867",
+  "433f_exp_housekeep": "100",
+  "433f_exp_clothing": "90",
+  "433f_exp_personalcare": "45",
+  "433f_exp_misc": "143",
+  "433f_exp_food_total": "1245",
+  "433f_exp_gas": "320",
+  "433f_exp_public": "60",
+  "433f_exp_transport_total": "380",
+  "433f_exp_rent": "1800",
+  "433f_exp_utilities": "260",
+  "433f_exp_phone": "180",
+  "433f_exp_retax": "240",
+  "433f_exp_maint": "95",
+  "433f_exp_housing_total": "2575",
+  "433f_exp_healthins": "420",
+  "433f_exp_oop": "83",
+  "433f_exp_medical_total": "503",
+  "433f_exp_depcare": "300",
+  "433f_exp_esttax": "150",
+  "433f_exp_termlife": "45",
+  "433f_exp_retire": "120",
+  "433f_exp_volretire": "80",
+  "433f_exp_union": "35",
+  "433f_exp_statetax": "90",
+  "433f_exp_student": "210",
+  "433f_exp_courtcs": "400",
+  "433f_exp_alimony": "250",
+  "433f_exp_courtother": "60",
+  "433f_exp_other1": "75",
+  "433f_exp_other1_desc": "Bank fees",
+  "433f_exp_other2": "40",
+  "433f_exp_other2_desc": "Professional dues",
+  "433f_exp_other3": "25",
+  "433f_exp_other3_desc": "Storage unit",
+  "433f_exp_other_total": "1880"
 }
