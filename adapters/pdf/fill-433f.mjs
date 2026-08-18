@@ -1,9 +1,16 @@
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
+import { checkRowShapes, reportRowShapes } from './check-row-shape.mjs';
 
+// --saturated is an assertion about the INPUT, not about the form — the same one the gate
+// makes at step 9. Here it decides whether a group row that carries no key for a column its
+// slot declares stops the run or is reported. Flags are filtered out of the positional
+// argument so the sample path stays argv-order-independent.
+const argv      = process.argv.slice(2);
+const saturated = argv.includes('--saturated');
 const mapDoc = JSON.parse(readFileSync('adapters/pdf/maps/433f.map.json', 'utf8'));
-const data   = JSON.parse(readFileSync(process.argv[2] || 'samples/433f.sample.json', 'utf8'));
+const data   = JSON.parse(readFileSync(argv.filter(a => !a.startsWith('--'))[0] || 'samples/433f.sample.json', 'utf8'));
 // The Collection Financial Standards table is form-agnostic — every form in the 433
 // series reads the same published figures — so it is NOT named after any one form.
 const STANDARDS = 'adapters/pdf/maps/irs-standards-2026.json';
@@ -104,17 +111,24 @@ for (const [key, def] of Object.entries(mapDoc.split || {})) {
 // always the second kind.
 const overflow = [];
 const groupRows = {};
+const groupSource = {};
 for (const [g, def] of Object.entries(mapDoc.groups || {})) {
   let rows = Array.isArray(data[def.array]) ? data[def.array] : null;
+  const fromArray = rows !== null;
   if (!rows) rows = (def.fallback || [])
     .map(fb => { const r = {}; for (const [sub, key] of Object.entries(fb)) r[sub] = data[key]; return r; })
     .filter(r => Object.values(r).some(v => v !== undefined && v !== null && v !== ''));
   groupRows[g] = rows;
+  groupSource[g] = { rows, fromArray };
   rows.forEach((row, i) => {
     if (i >= def.slots.length) { overflow.push(`${g}[${i}]`); return; }
     for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub], `groups.${g}.slots[${i}].${sub}`);
   });
 }
+
+// Every column the slot declares, or the run says which ones were not supplied. A partial
+// column match used to pass silently and print the rest of the row's cells empty.
+const rowShape = checkRowShapes(mapDoc, groupSource);
 
 // checkboxes (address-differs, account business flags, real-estate PR/CO, pay frequency)
 //
@@ -254,6 +268,10 @@ if (capacityErrors.length || splitErrors.length) {
   }
   process.exit(2);
 }
+
+// Row shape. Reported in every mode, and a STOP under --saturated, alongside the other
+// stops rather than before them so one run surfaces every problem it can see.
+if (reportRowShapes(rowShape, saturated)) process.exit(2);
 
 mkdirSync('adapters/pdf/out', { recursive: true });
 const outPath = `adapters/pdf/out/433f_filled_${data.intake_id || 'sample'}.pdf`;

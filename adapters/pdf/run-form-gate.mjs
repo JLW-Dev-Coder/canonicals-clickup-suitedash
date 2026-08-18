@@ -191,8 +191,12 @@ const steps = [
       : ok(`sum ${sum} vs ${fieldNames.length} field(s) — reported, not required, because this map declares no COMPLETE slice`);
   }],
 
+  // The mode travels INTO the fill engine, because the engine holds the one check that
+  // needs it before anything is written: a group row that carries no key for a column its
+  // slot declares. Step 9 asserts the CELL was reached; only the engine can say the record
+  // and the map disagreed about what the column is called.
   ['fill', async () =>
-    runTool(`fill-${form}.mjs`, [samplePath])
+    runTool(`fill-${form}.mjs`, [samplePath, ...(saturated ? ['--saturated'] : [])])
       ? (existsSync(outPath) ? ok(`wrote ${outPath}`) : fail(`fill reported success but ${outPath} does not exist`))
       : fail(`fill-${form}.mjs exited non-zero`)],
 
