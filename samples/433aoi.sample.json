@@ -1,0 +1,77 @@
+{
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433aoi.map.json map_version 1 - printed Sections 1 and 2, which are the whole of page 1 - and nothing else. Sections 3-10 are not mapped yet and this fixture carries no keys for them.",
+
+  "_coverage_notes": [
+    "SCOPE. 74 of this form's 425 fields are on page 1; 72 of those are bound and 2 are the never-autofill push buttons. This fixture reaches all 72. The other 351 fields are on pages 2-8 and are deliberately untouched - the read-back is a statement about the slice, not about the form.",
+
+    "EVERY SCALAR NAMES ITSELF. Twenty-six text cells, twenty-six distinct values, each saying which cell it belongs in. That is not decoration: this form declares a /MaxLen on only 13 of its 425 fields and on NONE of the 26 cells here, so cell SIZE proves nothing about which column a value landed in. On 433-A a 5-digit mileage in a 16-char Make/Model column is refused by the field; here the same mistake would print silently. Distinct self-naming values are the only thing that makes a mis-binding visible in the read-back.",
+
+    "MARITAL STATUS IS 'married' SO THE DATE OF MARRIAGE CELL IS COHERENT. s1_date_of_marriage is a mapped text cell and a saturated fixture must reach it; filling it while declaring 'unmarried' would exercise the cell at the cost of printing a contradiction.",
+
+    "HOUSING STATUS IS 'other' FOR THE SAME REASON. s1_housing_other_specify is the specify blank beneath 'Other (specify e.g., share rent, live with relative, etc.)', and it is the one arguable binding in this slice (the caption sits one printed row above the cell rather than beside it, because the 'Other' checkbox occupies the caption's own row). Choosing 'other' here means the read-back shows the specify text printed directly under the box it belongs to, which is the check a person makes by looking.",
+
+    "PAY PERIODS DIFFER ON PURPOSE - taxpayer bi-weekly, spouse monthly. The two sets are four boxes at IDENTICAL x columns, 86 points apart in y, under two captions that read the same word for word ('Pay period'). Identical values would hide a copy/paste between the You[0] and Spouse[0] subforms; different ones do not.",
+
+    "OWNERSHIP INTEREST DIFFERS TOO - taxpayer yes, spouse no. Same reason: the two questions are worded differently on the page but their checkbox pairs are structurally identical, and the Yes box of one sits at the same x as the Yes box of the other.",
+
+    "OPTION VALUES VARY IN CASE AND PADDING (' Married ', 'BI-WEEKLY', a boolean true, a string 'No') to exercise the trim + case-insensitive match rather than assuming every caller normalises first.",
+
+    "s1_community_property_state_last_10_years IS THE FORM'S LONE CHECK-HERE BOX. There is no 'No' cell for it anywhere on the page - the negative answer is the box left blank - so it exercises the `check_here` construct, which 433-A has no use for. It is set true here; a false or absent value is the same printed outcome and would prove nothing.",
+
+    "household_members CARRIES FIVE RECORDS AGAINST FOUR SLOTS. This form prints four dependent rows where 433-A prints five (433-A repeats Row4 under duplicate leaf names). The fifth record exists to prove overflow is LOGGED AND DROPPED rather than thrown or silently written over Row4, and to prove the 4-slot cap is read from the map rather than assumed from 433-A.",
+
+    "EACH DEPENDENT ROW NAMES ITS OWN PRINTED ROW ('Row 1 Dependent' ... 'Row 4 Dependent') and carries a distinct age and relationship. The four rows print at y 324.0, 309.6, 295.2 and 280.8, and the map binds Row1..Row4 in that descending order; identical filler would have hidden a reversal, which is exactly the defect that reached 433-F's account tables.",
+
+    "THE FOUR ROWS ANSWER THE TWO YES/NO PAIRS IN ALL FOUR COMBINATIONS (yes/yes, yes/no, no/yes, no/no). The 'Claimed as a dependent on your Form 1040' pair and the 'Contributes to household income' pair are two separate 9-point boxes 97 points apart on the same printed row; answering every row the same way would leave a swap between the two columns invisible.",
+
+    "AGES ARE FOUR CHARACTERS OR FEWER. The Age column is the only /MaxLen-bearing cell in this slice (/MaxLen 4, x 219.6..248.4). Nothing else on page 1 declares one.",
+
+    "NO SPLIT VALUES. 433-A splits every phone across two abutting /MaxLen-limited cells; this form prints primary phone, secondary phone and FAX as single cells (x 198.0..316.8, no /MaxLen), so the phone numbers here are written whole. If a future revision splits them, this fixture will fail loudly rather than truncate."
+  ],
+
+  "intake_id": "433aoi-slice1",
+
+  "s1_tp_last_name": "Sample-Taxpayer-LastName",
+  "s1_tp_first_name": "SampleFirstName",
+  "s1_tp_dob": "01/02/1975",
+  "s1_tp_ssn_itin": "000-00-0000",
+  "s1_home_physical_address": "100 Physical Address Ln, Testville, TS 00001",
+  "s1_marital_status": " Married ",
+  "s1_date_of_marriage": "06/07/1998",
+  "s1_housing_status": "OTHER",
+  "s1_housing_other_specify": "Shares rent with a relative - housing Other specify cell",
+  "s1_community_property_state_last_10_years": true,
+  "s1_county_of_residence": "Sample County Of Residence",
+  "s1_primary_phone": "(555) 555-0101",
+  "s1_secondary_phone": "(555) 555-0102",
+  "s1_fax_number": "(555) 555-0103",
+  "s1_home_mailing_address": "PO Box 200 Mailing Address, Testville, TS 00002",
+  "s1_sp_last_name": "Sample-Spouse-LastName",
+  "s1_sp_first_name": "SpouseFirstName",
+  "s1_sp_dob": "03/04/1977",
+  "s1_sp_ssn": "000-00-0001",
+
+  "household_members": [
+    { "name": "Row 1 Dependent", "age": "17", "relationship": "Row1 Child",      "claimed_on_1040": "Yes",  "contributes_to_household_income": "Yes" },
+    { "name": "Row 2 Dependent", "age": "14", "relationship": "Row2 Child",      "claimed_on_1040": "yes",  "contributes_to_household_income": false },
+    { "name": "Row 3 Dependent", "age": "71", "relationship": "Row3 Parent",     "claimed_on_1040": "No",   "contributes_to_household_income": true  },
+    { "name": "Row 4 Dependent", "age": "9",  "relationship": "Row4 Child",      "claimed_on_1040": false,  "contributes_to_household_income": "no"  },
+    { "name": "Row 5 OVERFLOW - must be dropped and logged", "age": "44", "relationship": "Row5 Cousin", "claimed_on_1040": "No", "contributes_to_household_income": "No" }
+  ],
+
+  "s2_tp_employer_name": "Testcorp Taxpayer Employer LLC",
+  "s2_tp_employer_address": "300 Taxpayer Employer Rd, Testville, TS 00003",
+  "s2_tp_pay_period": "BI-WEEKLY",
+  "s2_tp_business_ownership_interest": true,
+  "s2_tp_occupation": "Taxpayer Occupation Title",
+  "s2_tp_tenure_years": "12",
+  "s2_tp_tenure_months": "7",
+
+  "s2_sp_employer_name": "Testcorp Spouse Employer Inc",
+  "s2_sp_employer_address": "400 Spouse Employer Ave, Testville, TS 00004",
+  "s2_sp_pay_period": "monthly",
+  "s2_sp_business_ownership_interest": "No",
+  "s2_sp_occupation": "Spouse Occupation Title",
+  "s2_sp_tenure_years": "3",
+  "s2_sp_tenure_months": "11"
+}
