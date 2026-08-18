@@ -20,6 +20,7 @@
         302.4,
         644.4
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [
           {
@@ -85,6 +86,7 @@
         576,
         644.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -158,6 +160,7 @@
         86.4,
         601.2
       ],
+      "maxLen": 3,
       "candidates": {
         "left": [
           {
@@ -240,6 +243,7 @@
         169.2,
         601.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -326,6 +330,7 @@
         219.6,
         601.2
       ],
+      "maxLen": 3,
       "candidates": {
         "left": [
           {
@@ -404,6 +409,7 @@
         302.4,
         601.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -477,6 +483,7 @@
         123.2,
         589
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -563,6 +570,7 @@
         166.4,
         589
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -649,6 +657,7 @@
         302.4,
         622.8
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [
           {
@@ -714,6 +723,7 @@
         65.6,
         416.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -787,6 +797,7 @@
         200.3,
         417.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -873,6 +884,7 @@
         309.6,
         406.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -951,6 +963,7 @@
         227.6,
         416.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1037,6 +1050,7 @@
         576,
         428.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1110,6 +1124,7 @@
         339.2,
         405.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1188,6 +1203,7 @@
         429.2,
         405.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1270,6 +1286,7 @@
         501.2,
         405.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1348,6 +1365,7 @@
         339.2,
         394.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -1413,6 +1431,7 @@
         576,
         396
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -1478,6 +1497,7 @@
         343.4,
         568.8
       ],
+      "maxLen": 11,
       "candidates": {
         "left": [
           {
@@ -1547,6 +1567,7 @@
         573.8,
         568.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -1616,6 +1637,7 @@
         343.4,
         558
       ],
+      "maxLen": 11,
       "candidates": {
         "left": [
           {
@@ -1685,6 +1707,7 @@
         573.8,
         558
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -1754,6 +1777,7 @@
         212.4,
         511.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -1827,6 +1851,7 @@
         248.4,
         511.2
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -1900,6 +1925,7 @@
         385.2,
         511.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -1973,6 +1999,7 @@
         404,
         508
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -2046,6 +2073,7 @@
         450.8,
         508
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2124,6 +2152,7 @@
         501.2,
         508
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2202,6 +2231,7 @@
         544.4,
         508
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2280,6 +2310,7 @@
         212.4,
         496.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -2353,6 +2384,7 @@
         248.4,
         496.8
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -2426,6 +2458,7 @@
         385.2,
         496.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -2499,6 +2532,7 @@
         404,
         493.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -2572,6 +2606,7 @@
         450.8,
         493.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2650,6 +2685,7 @@
         501.2,
         493.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2728,6 +2764,7 @@
         544.4,
         493.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -2806,6 +2843,7 @@
         212.4,
         482.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -2879,6 +2917,7 @@
         248.4,
         482.4
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -2952,6 +2991,7 @@
         385.2,
         482.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3025,6 +3065,7 @@
         404,
         479.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3098,6 +3139,7 @@
         450.8,
         479.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3176,6 +3218,7 @@
         501.2,
         479.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3254,6 +3297,7 @@
         544.4,
         479.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3332,6 +3376,7 @@
         212.4,
         468
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3405,6 +3450,7 @@
         248.4,
         468
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -3478,6 +3524,7 @@
         385.2,
         468
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3551,6 +3598,7 @@
         404,
         464.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3624,6 +3672,7 @@
         450.8,
         464.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3702,6 +3751,7 @@
         501.2,
         464.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3780,6 +3830,7 @@
         544.4,
         464.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -3858,6 +3909,7 @@
         212.4,
         453.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -3931,6 +3983,7 @@
         248.4,
         453.6
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [
           {
@@ -4009,6 +4062,7 @@
         385.2,
         453.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4087,6 +4141,7 @@
         404,
         450.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -4160,6 +4215,7 @@
         450.8,
         450.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4238,6 +4294,7 @@
         501.2,
         450.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4316,6 +4373,7 @@
         544.4,
         450.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4394,6 +4452,7 @@
         302.4,
         333.6
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [
           {
@@ -4472,6 +4531,7 @@
         302.4,
         312
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4550,6 +4610,7 @@
         86.4,
         277.2
       ],
+      "maxLen": 3,
       "candidates": {
         "left": [
           {
@@ -4632,6 +4693,7 @@
         158.4,
         277.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -4718,6 +4780,7 @@
         188,
         275.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4804,6 +4867,7 @@
         231.2,
         275.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -4890,6 +4954,7 @@
         73.2,
         255.6
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -4968,6 +5033,7 @@
         123.1,
         255.6
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -5050,6 +5116,7 @@
         302.4,
         254.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -5136,6 +5203,7 @@
         158.4,
         223.2
       ],
+      "maxLen": 10,
       "candidates": {
         "left": [],
         "right": [
@@ -5209,6 +5277,7 @@
         180.8,
         232.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -5287,6 +5356,7 @@
         180.8,
         221.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -5360,6 +5430,7 @@
         245.6,
         232.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -5446,6 +5517,7 @@
         245.6,
         221.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -5524,6 +5596,7 @@
         576,
         333.6
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [
           {
@@ -5597,6 +5670,7 @@
         576,
         312
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -5670,6 +5744,7 @@
         352.8,
         277.2
       ],
+      "maxLen": 3,
       "candidates": {
         "left": [
           {
@@ -5756,6 +5831,7 @@
         424.8,
         277.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -5842,6 +5918,7 @@
         454.4,
         275.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -5924,6 +6001,7 @@
         497.6,
         275.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6002,6 +6080,7 @@
         338.9,
         255.6
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -6088,6 +6167,7 @@
         386.2,
         255.6
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -6174,6 +6254,7 @@
         576,
         254.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -6247,6 +6328,7 @@
         424.8,
         223.2
       ],
+      "maxLen": 10,
       "candidates": {
         "left": [
           {
@@ -6329,6 +6411,7 @@
         447.2,
         232.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6415,6 +6498,7 @@
         447.2,
         221.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6493,6 +6577,7 @@
         512,
         232.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6575,6 +6660,7 @@
         512,
         221.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6653,6 +6739,7 @@
         512,
         196.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6735,6 +6822,7 @@
         548,
         196.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6813,6 +6901,7 @@
         512,
         121
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6895,6 +6984,7 @@
         548,
         121
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -6973,6 +7063,7 @@
         65.6,
         99.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -7042,6 +7133,7 @@
         123.2,
         99.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7116,6 +7208,7 @@
         306,
         99.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7194,6 +7287,7 @@
         446.4,
         99.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7267,6 +7361,7 @@
         576,
         99.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7340,6 +7435,7 @@
         172.8,
         79.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -7422,6 +7518,7 @@
         306,
         133.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -7500,6 +7597,7 @@
         576,
         133.3
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7573,6 +7671,7 @@
         306,
         78
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -7651,6 +7750,7 @@
         576,
         78
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7724,6 +7824,7 @@
         512,
         67
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7806,6 +7907,7 @@
         548,
         67
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -7884,6 +7986,7 @@
         144,
         45.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [],
         "right": [
@@ -7949,6 +8052,7 @@
         244.8,
         45.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [],
         "right": [
@@ -8014,6 +8118,7 @@
         352.8,
         45.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [],
         "right": [
@@ -8079,6 +8184,7 @@
         446.4,
         45.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -8144,6 +8250,7 @@
         576,
         45.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -8204,6 +8311,7 @@
         576,
         175.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -8264,6 +8372,7 @@
         512,
         545.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8346,6 +8455,7 @@
         548,
         545.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8416,6 +8526,7 @@
         216,
         513.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -8481,6 +8592,7 @@
         316.8,
         514.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -8546,6 +8658,7 @@
         424.8,
         513.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -8611,6 +8724,7 @@
         576,
         513.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8676,6 +8790,7 @@
         512,
         589
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8750,6 +8865,7 @@
         548,
         589
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8820,6 +8936,7 @@
         374.4,
         556.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8898,6 +9015,7 @@
         496.8,
         556.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -8976,6 +9094,7 @@
         576,
         558
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -9049,6 +9168,7 @@
         512,
         664.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9118,6 +9238,7 @@
         548,
         664.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9183,6 +9304,7 @@
         453.6,
         644.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9253,6 +9375,7 @@
         489.6,
         644.4
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -9322,6 +9445,7 @@
         576,
         644.4
       ],
+      "maxLen": 7,
       "candidates": {
         "left": [
           {
@@ -9395,6 +9519,7 @@
         316.8,
         621.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9473,6 +9598,7 @@
         439.2,
         622.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -9555,6 +9681,7 @@
         576,
         621.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9628,6 +9755,7 @@
         512,
         610.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9702,6 +9830,7 @@
         548,
         610.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9772,6 +9901,7 @@
         453.6,
         601.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -9854,6 +9984,7 @@
         489.6,
         601.2
       ],
+      "maxLen": 2,
       "candidates": {
         "left": [
           {
@@ -9936,6 +10067,7 @@
         576,
         601.2
       ],
+      "maxLen": 7,
       "candidates": {
         "left": [
           {
@@ -10009,6 +10141,7 @@
         576,
         478.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -10082,6 +10215,7 @@
         568.8,
         432
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -10155,6 +10289,7 @@
         136.8,
         410.4
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {
@@ -10229,6 +10364,7 @@
         338.4,
         410.4
       ],
+      "maxLen": 86,
       "candidates": {
         "left": [
           {
@@ -10303,6 +10439,7 @@
         496.8,
         410.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -10377,6 +10514,7 @@
         576,
         410.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -10450,6 +10588,7 @@
         136.8,
         374.4
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {
@@ -10524,6 +10663,7 @@
         338.4,
         374.4
       ],
+      "maxLen": 86,
       "candidates": {
         "left": [
           {
@@ -10598,6 +10738,7 @@
         496.8,
         374.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -10672,6 +10813,7 @@
         576,
         374.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -10745,6 +10887,7 @@
         136.8,
         338.4
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {
@@ -10819,6 +10962,7 @@
         338.4,
         338.4
       ],
+      "maxLen": 86,
       "candidates": {
         "left": [
           {
@@ -10893,6 +11037,7 @@
         496.8,
         338.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -10967,6 +11112,7 @@
         576,
         338.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11040,6 +11186,7 @@
         136.8,
         302.4
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {
@@ -11110,6 +11257,7 @@
         338.4,
         302.4
       ],
+      "maxLen": 86,
       "candidates": {
         "left": [
           {
@@ -11180,6 +11328,7 @@
         496.8,
         302.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -11250,6 +11399,7 @@
         576,
         302.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11319,6 +11469,7 @@
         576,
         266.4
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -11392,6 +11543,7 @@
         483.3,
         204
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -11474,6 +11626,7 @@
         136.8,
         180
       ],
+      "maxLen": 54,
       "candidates": {
         "left": [
           {
@@ -11556,6 +11709,7 @@
         338.4,
         180
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -11634,6 +11788,7 @@
         338.4,
         156
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11716,6 +11871,7 @@
         410.4,
         180
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11798,6 +11954,7 @@
         496.8,
         180
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11876,6 +12033,7 @@
         576,
         180
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -11949,6 +12107,7 @@
         136.8,
         144
       ],
+      "maxLen": 54,
       "candidates": {
         "left": [
           {
@@ -12031,6 +12190,7 @@
         338.4,
         144
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -12109,6 +12269,7 @@
         338.4,
         120
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12191,6 +12352,7 @@
         410.4,
         144
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12273,6 +12435,7 @@
         496.8,
         144
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12351,6 +12514,7 @@
         576,
         144
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12424,6 +12588,7 @@
         136.8,
         108
       ],
+      "maxLen": 54,
       "candidates": {
         "left": [
           {
@@ -12506,6 +12671,7 @@
         338.4,
         108
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -12584,6 +12750,7 @@
         338.4,
         84
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12666,6 +12833,7 @@
         410.4,
         108
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12748,6 +12916,7 @@
         496.8,
         108
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12826,6 +12995,7 @@
         576,
         108
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -12899,6 +13069,7 @@
         136.8,
         72
       ],
+      "maxLen": 54,
       "candidates": {
         "left": [
           {
@@ -12977,6 +13148,7 @@
         338.4,
         72
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13055,6 +13227,7 @@
         338.4,
         48
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -13133,6 +13306,7 @@
         410.4,
         72
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -13219,6 +13393,7 @@
         496.8,
         72
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -13297,6 +13472,7 @@
         576,
         72
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -13370,6 +13546,7 @@
         512,
         740.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13443,6 +13620,7 @@
         548,
         740.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13512,6 +13690,7 @@
         512,
         729.5
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13581,6 +13760,7 @@
         548,
         729.5
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13646,6 +13826,7 @@
         316.8,
         720.1
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -13732,6 +13913,7 @@
         576,
         720.1
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -13805,6 +13987,7 @@
         512,
         707.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13874,6 +14057,7 @@
         548,
         707.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -13939,6 +14123,7 @@
         576,
         698.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -14008,6 +14193,7 @@
         512,
         686.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -14077,6 +14263,7 @@
         548,
         686.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -14142,6 +14329,7 @@
         576,
         676.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -14211,6 +14399,7 @@
         491.1,
         394.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -14293,6 +14482,7 @@
         569.7,
         394.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -14366,6 +14556,7 @@
         338.4,
         370.8
       ],
+      "maxLen": 189,
       "candidates": {
         "left": [
           {
@@ -14444,6 +14635,7 @@
         338.4,
         345.6
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -14526,6 +14718,7 @@
         410.4,
         370.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -14608,6 +14801,7 @@
         496.8,
         370.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -14686,6 +14880,7 @@
         576,
         370.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -14759,6 +14954,7 @@
         338.4,
         334.8
       ],
+      "maxLen": 189,
       "candidates": {
         "left": [
           {
@@ -14837,6 +15033,7 @@
         338.4,
         309.6
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -14919,6 +15116,7 @@
         410.4,
         334.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15001,6 +15199,7 @@
         496.8,
         334.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15079,6 +15278,7 @@
         576,
         334.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15152,6 +15352,7 @@
         338.4,
         298.8
       ],
+      "maxLen": 189,
       "candidates": {
         "left": [
           {
@@ -15230,6 +15431,7 @@
         338.4,
         273.6
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -15312,6 +15514,7 @@
         410.4,
         298.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15394,6 +15597,7 @@
         496.8,
         298.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15472,6 +15676,7 @@
         576,
         298.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15545,6 +15750,7 @@
         338.4,
         262.8
       ],
+      "maxLen": 189,
       "candidates": {
         "left": [
           {
@@ -15623,6 +15829,7 @@
         338.4,
         237.6
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -15701,6 +15908,7 @@
         410.4,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15783,6 +15991,7 @@
         496.8,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15861,6 +16070,7 @@
         576,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -15934,6 +16144,7 @@
         576,
         226.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -16007,6 +16218,7 @@
         65.6,
         189.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -16080,6 +16292,7 @@
         123.2,
         189.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -16154,6 +16367,7 @@
         324,
         176.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -16227,6 +16441,7 @@
         324,
         140.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -16296,6 +16511,7 @@
         324,
         126
       ],
+      "maxLen": 20,
       "candidates": {
         "left": [
           {
@@ -16365,6 +16581,7 @@
         324,
         111.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -16447,6 +16664,7 @@
         324,
         97.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -16529,6 +16747,7 @@
         446.4,
         176.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -16602,6 +16821,7 @@
         446.4,
         140.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -16671,6 +16891,7 @@
         446.4,
         126
       ],
+      "maxLen": 20,
       "candidates": {
         "left": [
           {
@@ -16740,6 +16961,7 @@
         446.4,
         111.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -16818,6 +17040,7 @@
         446.4,
         97.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -16896,6 +17119,7 @@
         576,
         176.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -16969,6 +17193,7 @@
         576,
         140.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -17038,6 +17263,7 @@
         576,
         126
       ],
+      "maxLen": 20,
       "candidates": {
         "left": [
           {
@@ -17107,6 +17333,7 @@
         576,
         111.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -17180,6 +17407,7 @@
         576,
         97.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -17253,6 +17481,7 @@
         576,
         82.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -17326,6 +17555,7 @@
         576,
         694.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -17386,6 +17616,7 @@
         561.6,
         627.1
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -17459,6 +17690,7 @@
         136.8,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17533,6 +17765,7 @@
         262.8,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17607,6 +17840,7 @@
         381.6,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17681,6 +17915,7 @@
         496.8,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17755,6 +17990,7 @@
         576,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17828,6 +18064,7 @@
         136.8,
         550.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17902,6 +18139,7 @@
         262.8,
         550.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -17976,6 +18214,7 @@
         381.6,
         550.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18050,6 +18289,7 @@
         496.8,
         550.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18124,6 +18364,7 @@
         576,
         550.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18197,6 +18438,7 @@
         136.8,
         514.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18271,6 +18513,7 @@
         262.8,
         514.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18345,6 +18588,7 @@
         381.6,
         514.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18419,6 +18663,7 @@
         496.8,
         514.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18493,6 +18738,7 @@
         576,
         514.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18566,6 +18812,7 @@
         136.8,
         478.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18636,6 +18883,7 @@
         262.8,
         478.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18706,6 +18954,7 @@
         381.6,
         478.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18776,6 +19025,7 @@
         496.8,
         478.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18846,6 +19096,7 @@
         576,
         478.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -18915,6 +19166,7 @@
         576,
         442.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -18988,6 +19240,7 @@
         575.9,
         57.6
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -19061,6 +19314,7 @@
         115.1,
         182.4
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -19134,6 +19388,7 @@
         201.5,
         182.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -19212,6 +19467,7 @@
         115.1,
         160.8
       ],
+      "maxLen": 7,
       "candidates": {
         "left": [],
         "right": [],
@@ -19272,6 +19528,7 @@
         201.5,
         160.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [],
         "right": [],
@@ -19332,6 +19589,7 @@
         201.5,
         139.2
       ],
+      "maxLen": 32,
       "candidates": {
         "left": [],
         "right": [
@@ -19397,6 +19655,7 @@
         575.9,
         92.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -19462,6 +19721,7 @@
         575.9,
         68.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -19527,6 +19787,7 @@
         575.9,
         126
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -19600,6 +19861,7 @@
         511.1,
         126
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -19678,6 +19940,7 @@
         453.7,
         126
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -19760,6 +20023,7 @@
         388.7,
         126
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -19846,6 +20110,7 @@
         323.9,
         126
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -19932,6 +20197,7 @@
         259.1,
         126
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -20018,6 +20284,7 @@
         115.1,
         114
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -20091,6 +20358,7 @@
         201.5,
         114
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -20169,6 +20437,7 @@
         115.1,
         92.4
       ],
+      "maxLen": 7,
       "candidates": {
         "left": [],
         "right": [],
@@ -20229,6 +20498,7 @@
         201.5,
         92.4
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [],
         "right": [],
@@ -20289,6 +20559,7 @@
         201.5,
         70.8
       ],
+      "maxLen": 32,
       "candidates": {
         "left": [],
         "right": [
@@ -20354,6 +20625,7 @@
         259.1,
         194.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -20440,6 +20712,7 @@
         323.9,
         194.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -20526,6 +20799,7 @@
         388.7,
         194.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -20612,6 +20886,7 @@
         453.7,
         194.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -20694,6 +20969,7 @@
         511.1,
         194.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -20772,6 +21048,7 @@
         575.9,
         194.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -20845,6 +21122,7 @@
         575.9,
         160.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -20910,6 +21188,7 @@
         575.9,
         136.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -20983,6 +21262,7 @@
         575.9,
         364.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -21043,6 +21323,7 @@
         575.9,
         338.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -21108,6 +21389,7 @@
         295.1,
         364.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -21173,6 +21455,7 @@
         575.9,
         400.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -21233,6 +21516,7 @@
         201.5,
         429.2
       ],
+      "maxLen": 36,
       "candidates": {
         "left": [],
         "right": [
@@ -21306,6 +21590,7 @@
         259.1,
         439.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -21388,6 +21673,7 @@
         323.9,
         439.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -21474,6 +21760,7 @@
         388.7,
         439.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -21556,6 +21843,7 @@
         453.5,
         439.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -21634,6 +21922,7 @@
         511.1,
         439.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -21712,6 +22001,7 @@
         576,
         439.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -21785,6 +22075,7 @@
         575.9,
         512
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -21845,6 +22136,7 @@
         295.1,
         476
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -21910,6 +22202,7 @@
         576,
         476
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -21970,6 +22263,7 @@
         576,
         450
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -22043,6 +22337,7 @@
         575.9,
         327.6
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -22116,6 +22411,7 @@
         115.1,
         250.8
       ],
+      "maxLen": 4,
       "candidates": {
         "left": [],
         "right": [
@@ -22189,6 +22485,7 @@
         201.5,
         250.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -22267,6 +22564,7 @@
         115.1,
         229.2
       ],
+      "maxLen": 7,
       "candidates": {
         "left": [],
         "right": [],
@@ -22327,6 +22625,7 @@
         201.5,
         229.2
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [],
         "right": [],
@@ -22387,6 +22686,7 @@
         201.5,
         207.6
       ],
+      "maxLen": 32,
       "candidates": {
         "left": [],
         "right": [
@@ -22452,6 +22752,7 @@
         259.1,
         262.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -22538,6 +22839,7 @@
         323.9,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -22624,6 +22926,7 @@
         388.7,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -22710,6 +23013,7 @@
         453.5,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -22792,6 +23096,7 @@
         511.1,
         262.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -22870,6 +23175,7 @@
         575.9,
         262.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -22943,6 +23249,7 @@
         575.9,
         229.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -23008,6 +23315,7 @@
         575.9,
         205.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23081,6 +23389,7 @@
         295.2,
         587.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -23146,6 +23455,7 @@
         576,
         587.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -23206,6 +23516,7 @@
         576,
         561.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23279,6 +23590,7 @@
         201.5,
         540.8
       ],
+      "maxLen": 36,
       "candidates": {
         "left": [],
         "right": [
@@ -23352,6 +23664,7 @@
         259.1,
         550.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -23434,6 +23747,7 @@
         323.9,
         550.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23520,6 +23834,7 @@
         388.7,
         550.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23602,6 +23917,7 @@
         453.5,
         550.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23680,6 +23996,7 @@
         511.1,
         550.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -23758,6 +24075,7 @@
         575.9,
         550.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -23831,6 +24149,7 @@
         576,
         623.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -23891,6 +24210,7 @@
         201.6,
         651.6
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [],
         "right": [
@@ -23964,6 +24284,7 @@
         259.2,
         662.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -24046,6 +24367,7 @@
         324,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24132,6 +24454,7 @@
         388.8,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24214,6 +24537,7 @@
         453.6,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24292,6 +24616,7 @@
         511.2,
         662.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -24370,6 +24695,7 @@
         576,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24443,6 +24769,7 @@
         201.6,
         675.6
       ],
+      "maxLen": 36,
       "candidates": {
         "left": [],
         "right": [
@@ -24516,6 +24843,7 @@
         259.2,
         687.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -24602,6 +24930,7 @@
         324,
         687.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24688,6 +25017,7 @@
         388.8,
         687.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24774,6 +25104,7 @@
         453.6,
         687.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -24856,6 +25187,7 @@
         511.2,
         687.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -24938,6 +25270,7 @@
         576,
         687.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25011,6 +25344,7 @@
         295.2,
         654
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -25076,6 +25410,7 @@
         576,
         654
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -25136,6 +25471,7 @@
         576,
         630
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25209,6 +25545,7 @@
         201.4,
         607.2
       ],
+      "maxLen": 36,
       "candidates": {
         "left": [],
         "right": [
@@ -25282,6 +25619,7 @@
         259,
         619.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -25368,6 +25706,7 @@
         323.9,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25454,6 +25793,7 @@
         388.8,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25540,6 +25880,7 @@
         453.8,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25622,6 +25963,7 @@
         511.3,
         619.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -25704,6 +26046,7 @@
         576.2,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25777,6 +26120,7 @@
         295.2,
         585.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -25842,6 +26186,7 @@
         576,
         585.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -25902,6 +26247,7 @@
         576,
         561.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -25967,6 +26313,7 @@
         576,
         550.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -26040,6 +26387,7 @@
         266.4,
         684
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26126,6 +26474,7 @@
         266.4,
         673.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26212,6 +26561,7 @@
         266.4,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26298,6 +26648,7 @@
         266.4,
         651.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26384,6 +26735,7 @@
         266.4,
         640.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26470,6 +26822,7 @@
         266.4,
         630
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26556,6 +26909,7 @@
         266.4,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26642,6 +26996,7 @@
         266.4,
         608.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26728,6 +27083,7 @@
         266.4,
         597.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26814,6 +27170,7 @@
         266.4,
         586.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26900,6 +27257,7 @@
         266.4,
         576
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -26986,6 +27344,7 @@
         266.4,
         565.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27072,6 +27431,7 @@
         194.4,
         543.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -27154,6 +27514,7 @@
         266.4,
         543.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27240,6 +27601,7 @@
         194.4,
         532.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -27322,6 +27684,7 @@
         266.4,
         532.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27408,6 +27771,7 @@
         266.4,
         522
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27494,6 +27858,7 @@
         496.8,
         684
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27576,6 +27941,7 @@
         496.8,
         673.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27658,6 +28024,7 @@
         496.8,
         662.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27740,6 +28107,7 @@
         496.8,
         651.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27822,6 +28190,7 @@
         496.8,
         640.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27904,6 +28273,7 @@
         496.8,
         630
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -27986,6 +28356,7 @@
         496.8,
         619.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28068,6 +28439,7 @@
         496.8,
         608.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28150,6 +28522,7 @@
         496.8,
         597.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28232,6 +28605,7 @@
         496.8,
         586.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28314,6 +28688,7 @@
         496.8,
         576
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28396,6 +28771,7 @@
         496.8,
         565.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28478,6 +28854,7 @@
         496.8,
         554.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28560,6 +28937,7 @@
         496.8,
         543.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -28642,6 +29020,7 @@
         496.8,
         532.8
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -28724,6 +29103,7 @@
         496.8,
         522
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -28802,6 +29182,7 @@
         576,
         684
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -28875,6 +29256,7 @@
         576,
         673.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -28948,6 +29330,7 @@
         576,
         662.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29021,6 +29404,7 @@
         576,
         651.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29094,6 +29478,7 @@
         576,
         640.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29167,6 +29552,7 @@
         576,
         630
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29240,6 +29626,7 @@
         576,
         619.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29313,6 +29700,7 @@
         576,
         608.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29386,6 +29774,7 @@
         576,
         597.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29459,6 +29848,7 @@
         576,
         586.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29532,6 +29922,7 @@
         576,
         576
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29605,6 +29996,7 @@
         576,
         565.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29678,6 +30070,7 @@
         576,
         554.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29751,6 +30144,7 @@
         576,
         543.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29824,6 +30218,7 @@
         576,
         532.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29897,6 +30292,7 @@
         576,
         522
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -29970,6 +30366,7 @@
         288.8,
         715
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30048,6 +30445,7 @@
         461.6,
         715
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30118,6 +30516,7 @@
         410.4,
         682.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30196,6 +30595,7 @@
         475.2,
         684
       ],
+      "maxLen": 3,
       "candidates": {
         "left": [
           {
@@ -30274,6 +30674,7 @@
         576,
         684
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -30347,6 +30748,7 @@
         165.6,
         661.2
       ],
+      "maxLen": 10,
       "candidates": {
         "left": [
           {
@@ -30425,6 +30827,7 @@
         410.4,
         661.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30507,6 +30910,7 @@
         519.2,
         661
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30585,6 +30989,7 @@
         555.2,
         661
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30659,6 +31064,7 @@
         280.8,
         639.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30733,6 +31139,7 @@
         410.4,
         639.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30806,6 +31213,7 @@
         576,
         639.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -30879,6 +31287,7 @@
         280.8,
         618
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -30952,6 +31361,7 @@
         519.2,
         617.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -31034,6 +31444,7 @@
         555.2,
         617.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -31108,6 +31519,7 @@
         439.2,
         558
       ],
+      "maxLen": 93,
       "candidates": {
         "left": [
           {
@@ -31173,6 +31585,7 @@
         576,
         558
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -31238,6 +31651,7 @@
         439.2,
         536.4
       ],
+      "maxLen": 172,
       "candidates": {
         "left": [
           {
@@ -31303,6 +31717,7 @@
         576,
         536.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -31372,6 +31787,7 @@
         136.8,
         486
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -31437,6 +31853,7 @@
         273.6,
         486
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -31502,6 +31919,7 @@
         576,
         486
       ],
+      "maxLen": 134,
       "candidates": {
         "left": [
           {
@@ -31567,6 +31985,7 @@
         136.8,
         464.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -31632,6 +32051,7 @@
         273.6,
         464.4
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -31697,6 +32117,7 @@
         576,
         464.4
       ],
+      "maxLen": 134,
       "candidates": {
         "left": [
           {
@@ -31762,6 +32183,7 @@
         136.8,
         442.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -31827,6 +32249,7 @@
         273.6,
         442.8
       ],
+      "maxLen": 24,
       "candidates": {
         "left": [
           {
@@ -31892,6 +32315,7 @@
         576,
         442.8
       ],
+      "maxLen": 134,
       "candidates": {
         "left": [
           {
@@ -31957,6 +32381,7 @@
         576,
         421.2
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -32030,6 +32455,7 @@
         568.2,
         369.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -32103,6 +32529,7 @@
         122.4,
         345.6
       ],
+      "maxLen": 25,
       "candidates": {
         "left": [
           {
@@ -32173,6 +32600,7 @@
         360,
         345.6
       ],
+      "maxLen": 104,
       "candidates": {
         "left": [
           {
@@ -32243,6 +32671,7 @@
         496.8,
         345.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -32313,6 +32742,7 @@
         576,
         345.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -32382,6 +32812,7 @@
         122.4,
         324
       ],
+      "maxLen": 25,
       "candidates": {
         "left": [
           {
@@ -32452,6 +32883,7 @@
         360,
         324
       ],
+      "maxLen": 104,
       "candidates": {
         "left": [
           {
@@ -32522,6 +32954,7 @@
         496.8,
         324
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -32592,6 +33025,7 @@
         576,
         324
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -32661,6 +33095,7 @@
         576,
         302.4
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -32734,6 +33169,7 @@
         280.7,
         241.2
       ],
+      "maxLen": 100,
       "candidates": {
         "left": [
           {
@@ -32804,6 +33240,7 @@
         345.5,
         241.2
       ],
+      "maxLen": 26,
       "candidates": {
         "left": [
           {
@@ -32874,6 +33311,7 @@
         403.1,
         241.2
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -32944,6 +33382,7 @@
         496.7,
         241.2
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -33014,6 +33453,7 @@
         575.9,
         241.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -33083,6 +33523,7 @@
         280.7,
         219.6
       ],
+      "maxLen": 100,
       "candidates": {
         "left": [
           {
@@ -33153,6 +33594,7 @@
         345.5,
         219.6
       ],
+      "maxLen": 26,
       "candidates": {
         "left": [
           {
@@ -33223,6 +33665,7 @@
         403.1,
         219.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -33293,6 +33736,7 @@
         496.7,
         219.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -33363,6 +33807,7 @@
         575.9,
         219.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -33432,6 +33877,7 @@
         280.7,
         198
       ],
+      "maxLen": 100,
       "candidates": {
         "left": [
           {
@@ -33502,6 +33948,7 @@
         345.5,
         198
       ],
+      "maxLen": 26,
       "candidates": {
         "left": [
           {
@@ -33572,6 +34019,7 @@
         403.1,
         198
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -33642,6 +34090,7 @@
         496.7,
         198
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -33712,6 +34161,7 @@
         575.9,
         198
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -33781,6 +34231,7 @@
         280.7,
         176.4
       ],
+      "maxLen": 100,
       "candidates": {
         "left": [
           {
@@ -33851,6 +34302,7 @@
         345.5,
         176.4
       ],
+      "maxLen": 26,
       "candidates": {
         "left": [
           {
@@ -33921,6 +34373,7 @@
         403.1,
         176.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -33991,6 +34444,7 @@
         496.7,
         176.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -34061,6 +34515,7 @@
         575.9,
         176.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -34130,6 +34585,7 @@
         280.7,
         154.8
       ],
+      "maxLen": 100,
       "candidates": {
         "left": [
           {
@@ -34200,6 +34656,7 @@
         345.5,
         154.8
       ],
+      "maxLen": 26,
       "candidates": {
         "left": [
           {
@@ -34270,6 +34727,7 @@
         403.1,
         154.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -34340,6 +34798,7 @@
         496.7,
         154.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -34410,6 +34869,7 @@
         575.9,
         154.8
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -34479,6 +34939,7 @@
         576,
         133.2
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -34552,6 +35013,7 @@
         201.6,
         675.6
       ],
+      "maxLen": 34,
       "candidates": {
         "left": [],
         "right": [
@@ -34625,6 +35087,7 @@
         259.2,
         675.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -34703,6 +35166,7 @@
         324,
         675.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -34785,6 +35249,7 @@
         388.8,
         675.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -34867,6 +35332,7 @@
         453.6,
         675.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -34945,6 +35411,7 @@
         511.2,
         675.6
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -35023,6 +35490,7 @@
         576,
         675.6
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35096,6 +35564,7 @@
         576,
         656
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -35156,6 +35625,7 @@
         302.4,
         625.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -35221,6 +35691,7 @@
         576,
         625.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -35281,6 +35752,7 @@
         576,
         601.2
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35354,6 +35826,7 @@
         201.8,
         578.4
       ],
+      "maxLen": 45,
       "candidates": {
         "left": [],
         "right": [
@@ -35427,6 +35900,7 @@
         259.4,
         578.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -35505,6 +35979,7 @@
         324.2,
         578.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35587,6 +36062,7 @@
         389,
         578.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35669,6 +36145,7 @@
         453.8,
         578.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35747,6 +36224,7 @@
         511.4,
         578.4
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -35825,6 +36303,7 @@
         576.2,
         578.4
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -35898,6 +36377,7 @@
         576,
         558.8
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -35958,6 +36438,7 @@
         302.4,
         528
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [
@@ -36023,6 +36504,7 @@
         576,
         528
       ],
+      "maxLen": null,
       "candidates": {
         "left": [],
         "right": [],
@@ -36083,6 +36565,7 @@
         576,
         504
       ],
+      "maxLen": 12,
       "candidates": {
         "left": [
           {
@@ -36148,6 +36631,7 @@
         576,
         493.2
       ],
+      "maxLen": 14,
       "candidates": {
         "left": [
           {
@@ -36221,6 +36705,7 @@
         152,
         445
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -36295,6 +36780,7 @@
         202.4,
         445
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -36369,6 +36855,7 @@
         388.8,
         424.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -36443,6 +36930,7 @@
         576,
         424.8
       ],
+      "maxLen": 8,
       "candidates": {
         "left": [
           {
@@ -36516,6 +37004,7 @@
         302.4,
         370.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -36602,6 +37091,7 @@
         302.4,
         360
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -36688,6 +37178,7 @@
         302.4,
         349.2
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -36774,6 +37265,7 @@
         302.4,
         338.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -36860,6 +37352,7 @@
         302.4,
         327.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -36946,6 +37439,7 @@
         208.8,
         306
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -37024,6 +37518,7 @@
         302.4,
         306
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37110,6 +37605,7 @@
         208.8,
         295.2
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -37192,6 +37688,7 @@
         302.4,
         295.2
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37278,6 +37775,7 @@
         208.8,
         284.4
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -37360,6 +37858,7 @@
         302.4,
         284.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37446,6 +37945,7 @@
         208.8,
         273.6
       ],
+      "maxLen": null,
       "candidates": {
         "left": [
           {
@@ -37528,6 +38028,7 @@
         302.4,
         273.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37614,6 +38115,7 @@
         302.4,
         262.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37700,6 +38202,7 @@
         576,
         370.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37773,6 +38276,7 @@
         576,
         360
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37846,6 +38350,7 @@
         576,
         349.2
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37919,6 +38424,7 @@
         576,
         338.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -37992,6 +38498,7 @@
         576,
         327.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38065,6 +38572,7 @@
         576,
         316.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38138,6 +38646,7 @@
         576,
         306
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38211,6 +38720,7 @@
         576,
         295.2
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38284,6 +38794,7 @@
         576,
         284.4
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38357,6 +38868,7 @@
         576,
         273.6
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38430,6 +38942,7 @@
         576,
         262.8
       ],
+      "maxLen": 16,
       "candidates": {
         "left": [
           {
@@ -38503,6 +39016,7 @@
         576,
         241.2
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {
@@ -38576,6 +39090,7 @@
         576,
         230.4
       ],
+      "maxLen": 18,
       "candidates": {
         "left": [
           {

@@ -143,7 +143,7 @@ const records = [];
 for (const g of geometry) {
   const { name, type } = g;
   if (g.rect === null) {
-    records.push({ name, type, page: null, rect: null, candidates: EMPTY, marker: '', label: '', option: '', context: '', labelFrom: '', best: '' });
+    records.push({ name, type, page: null, rect: null, maxLen: g.maxLen ?? null, candidates: EMPTY, marker: '', label: '', option: '', context: '', labelFrom: '', best: '' });
     continue;
   }
   const r = { x1: g.rect[0], y1: g.rect[1], x2: g.rect[2], y2: g.rect[3] };
@@ -157,6 +157,10 @@ for (const g of geometry) {
     widgets: g.widgets,
     page: g.page,
     rect: [round(r.x1), round(r.y1), round(r.x2), round(r.y2)],
+    // The field's /MaxLen ceiling. Published on the line because the fill engines HARD STOP
+    // on overflow rather than truncating a filed form, so a map authored without it can be
+    // correct about WHICH cell a value goes in and still refuse the value.
+    maxLen: g.maxLen ?? null,
     candidates: c,
     marker: p.marker,       // printed line marker, from the bucket that supplied the label
     label: p.label,         // printed caption, verbatim
@@ -169,41 +173,93 @@ for (const g of geometry) {
 
 // ------------------------------------------------------------------ self-check
 // A correlation tool that is quietly off by one row is worse than no tool, because
-// everything downstream inherits the error. These three pairings are known from the
-// printed form; if any fails, nothing is written.
+// everything downstream inherits the error. Each probe below is a pairing known from the
+// PRINTED form — established with align-block.mjs, by reading a caption's x-range against
+// the widget's, never by trusting the widget's leaf name. If any fails, nothing is written.
+//
+// PROBES ARE PER FORM. They were hard-coded to 433-A's field names, so running this against
+// any other form failed all three and wrote nothing — which reads exactly like a broken
+// correlation and is not one. A form with no probes is REFUSED rather than waved through:
+// authoring three known pairings is the cheapest part of taking on a new form, and a tool
+// that silently skips its own check on unfamiliar input is the failure mode this guards.
+//
+// Each probe names a field by its FULL path from topmostSubform[0]. Reconstructing a prefix
+// from a fragment is where two rounds of 433-F defects entered; nothing here does it.
+const PROBES = {
+  '433a': [
+    { label: 'Page-1 taxpayer name field -> label containing "Name"',
+      field: 'topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]', want: /name/i },
+    { label: 'Page3 Line18a vehicle field -> Year / Make / Model / Mileage',
+      any: /^topmostSubform\[0\]\.Page3\[0\]\.Line18a\[0\]/, want: /(year|make|model|mileage)/i },
+    { label: 'Page4[0].IRS35[0] -> IRS-allowed / standards column',
+      field: 'topmostSubform[0].Page4[0].IRS35[0]', want: /(irs|allow|standard)/i },
+  ],
+  '433aoi': [
+    // "Last name" prints at y 561.1, x 36..73.4; the widget spans x 36..176.4 with its top at
+    // y 548.6 — directly beneath, sharing a left edge. An off-by-one row here would report
+    // "Marital status", which is 29pt lower.
+    { label: 'Page1 Section 1 last-name cell -> "Last name"',
+      field: 'topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].lastName[0]', want: /last\s*name/i },
+    // Section 3's real-property block: "How title is held" prints at x 306..362, and the
+    // widget beneath it starts at exactly x 306. Its neighbours on the same row are "Amount
+    // of mortgage payment" (x 36) and "Date of final payment" (x 176.4), so a column shift
+    // is visible rather than plausible.
+    { label: 'Page3 real-property row -> "How title is held"',
+      field: 'topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].how_title_held[0]', want: /title/i },
+    // THE PROBE THAT MATTERS. Page 6 has THREE widgets whose leaf name says Interest_Dividends
+    // and only ONE of them is interest and dividends: [1] (y 550.8) is printed line (33)
+    // "Interest, dividends, and royalties", while [0] (y 576) is line (32)'s amount cell for
+    // "Additional sources of income used to support the household". The suffix lags the
+    // printed line by one, exactly as every internal suffix on 433-A did. A correlation that
+    // drifts one row in this column returns "Additional sources" or "Distributions" here, and
+    // the whole point of the probe is that the field NAME would agree with the wrong answer.
+    //
+    // ASSERTED ON THE LEFT BUCKET, not on `best`. Section 7's money column is the case
+    // pickLabel's `above`-first rule was not built for: the row caption is to the LEFT, and
+    // what sits ABOVE every cell in the column is the shared header "Round to the nearest
+    // whole dollar." So `best` reports that header for all thirteen expense cells and all
+    // nine income cells — one caption, twenty-two widgets — and the collapse is invisible
+    // because each individual answer is a real piece of text from the page. The printed line
+    // marker immediately left of the cell is what identifies the ROW, so that is what this
+    // probe pins. The heuristic is deliberately NOT changed for it: `above`-first is right
+    // for 433-A and for most of this form, and Section 7 is authored from align-block.mjs.
+    { label: 'Page6 Interest_Dividends[1] -> nearest LEFT is printed line marker (33)',
+      field: 'topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]', wantNearestLeft: /^\(33\)/ },
+  ],
+};
+
 const allText = (rec) =>
   [...rec.candidates.left, ...rec.candidates.above, ...rec.candidates.inside, ...rec.candidates.nearest]
     .map(x => x.text).join(' | ');
 
-const find = (n) => records.find(r => r.name === n);
-const checks = [];
+const probes = PROBES[form];
+if (!probes) {
+  console.error(`form ${form}: ${fieldNames.length} fields, ${records.length} widgets, ${pageCount} pages`);
+  console.error(`NO PROBES DECLARED for ${form} — nothing written.`);
+  console.error('  Add three pairings to PROBES in this file, each established from the PRINTED');
+  console.error(`  page with:  node adapters/pdf/align-block.mjs ${form} <page> [yMin] [yMax]`);
+  console.error('  Establish them from caption geometry, never from a widget leaf name.');
+  process.exit(2);
+}
 
-const c1 = find('topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]');
-checks.push({
-  label: 'Page-1 taxpayer name field -> label containing "Name"',
-  field: c1?.name,
-  best: c1?.best ?? '(field not found)',
-  all: c1 ? allText(c1) : '',
-  pass: !!c1 && /name/i.test(c1.best),
-});
+// A probe asserts EITHER on the chosen label (`want`) or on the nearest text printed to the
+// widget's left (`wantNearestLeft`) — see the Section 7 note above for why the second exists.
+const holds = (p, r) => (p.wantNearestLeft
+  ? p.wantNearestLeft.test(r?.candidates?.left?.[0]?.text ?? '')
+  : p.want.test(r?.best ?? ''));
 
-const vehicles = records.filter(r => /Page3\[0\]\.Line18a\[0\]/.test(r.name));
-const vehHit = vehicles.find(r => /(year|make|model|mileage)/i.test(r.best));
-checks.push({
-  label: 'Page3 Line18a vehicle field -> Year / Make / Model / Mileage',
-  field: vehHit?.name ?? vehicles[0]?.name,
-  best: (vehHit ?? vehicles[0])?.best ?? '(no Line18a fields found)',
-  all: vehHit ? allText(vehHit) : (vehicles[0] ? allText(vehicles[0]) : ''),
-  pass: !!vehHit,
-});
-
-const irs = find('topmostSubform[0].Page4[0].IRS35[0]');
-checks.push({
-  label: 'Page4[0].IRS35[0] -> IRS-allowed / standards column',
-  field: irs?.name,
-  best: irs?.best ?? '(field not found)',
-  all: irs ? allText(irs) : '',
-  pass: !!irs && /(irs|allow|standard)/i.test(irs.best),
+const checks = probes.map((p) => {
+  const pool = p.any ? records.filter((r) => p.any.test(r.name)) : records.filter((r) => r.name === p.field);
+  const hit = pool.find((r) => holds(p, r)) ?? pool[0];
+  return {
+    label: p.label,
+    field: hit?.name ?? p.field ?? '(no field matched the pattern)',
+    best: p.wantNearestLeft
+      ? `nearest left: ${JSON.stringify(hit?.candidates?.left?.[0]?.text ?? '(none)')}  |  best: ${hit?.best ?? '(field not found)'}`
+      : (hit?.best ?? '(field not found)'),
+    all: hit ? allText(hit) : '',
+    pass: !!hit && holds(p, hit),
+  };
 });
 
 console.log(`form ${form}: ${fieldNames.length} fields, ${records.length} widgets, ${pageCount} pages`);
@@ -243,7 +299,11 @@ const ordered = [...records].sort((a, b) =>
   Math.round((b.rect?.[3] ?? 0) / 4) - Math.round((a.rect?.[3] ?? 0) / 4) ||
   (a.rect?.[0] ?? 0) - (b.rect?.[0] ?? 0));
 
-writeFileSync(outTxt, ordered.map(r => `p${r.page ?? '?'} | ${r.best} | ${r.name}`).join('\n') + '\n');
+// /MaxLen rides on the line because a map author needs the ceiling at the same moment as the
+// label: the fill engines refuse an over-long value rather than truncating a filed form, so a
+// binding can be right about WHICH cell and still be unusable. "-" means the field declares none.
+const mx = (r) => (r.maxLen == null ? 'MaxLen -' : `MaxLen ${r.maxLen}`);
+writeFileSync(outTxt, ordered.map(r => `p${r.page ?? '?'} | ${mx(r)} | ${r.best} | ${r.name}`).join('\n') + '\n');
 
 const namesInTxt = new Set(ordered.map(r => r.name));
 const namesInJson = new Set(records.map(r => r.name));

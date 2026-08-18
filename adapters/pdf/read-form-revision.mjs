@@ -60,7 +60,16 @@ export function readFormRevision(form) {
   // and searched in the DRAWN LITERALS only: a bare /Form\d{3}/ over the whole file
   // matches arbitrary digit runs in the binary and returns a confident wrong answer
   // (it read "222" for 433-F and "498" for 433-A). The anchor is what makes it right.
+  //
+  // THE PARENTHESISED SUFFIX. `squash` strips the parentheses, so 433-A(OIC)'s footer
+  // reaches here as "Form433-AOICRev4-2026" and the old pattern — which allowed nothing
+  // between the letter and "Rev" — returned a false ABSENT on a form whose number is
+  // printed eleven times. The suffix is matched as its own group and re-parenthesised, so
+  // the answer reads 433-A(OIC) the way the footer prints it. Same shape will carry
+  // 433-B(OIC). Sibling of the Catalog Number / Cat. No. fix directly below.
+  const oicForm = drawn.match(/Form(\d{3,4}-[A-Z])(OIC)\(?Rev/i);
   const formNumber =
+    (oicForm ? `${oicForm[1]}(${oicForm[2].toUpperCase()})` : null) ||
     (drawn.match(/Form(\d{3,4}(?:-[A-Z])?)\(?Rev/i) || [])[1] ||
     (drawn.match(/Form(\d{3,4}-[A-Z])(?![A-Za-z0-9])/) || [])[1] ||
     null;

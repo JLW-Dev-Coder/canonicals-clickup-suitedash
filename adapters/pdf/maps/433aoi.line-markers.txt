@@ -1,0 +1,108 @@
+adapters/pdf/forms/f433aoi.pdf — 8 pages, 89 printed marker(s)
+
+--- page 1: 0 marker(s) ---
+
+--- page 2: 15 marker(s) ---
+      1a  y= 610.5  x=   447.. 470.2  -> topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Total_Amount_1[0]
+      1b  y= 567.3  x=   447.. 470.2  -> topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Total_Amount_2[0]
+      1c  y= 552.9  x= 447.5.. 470.2  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Accounts_Attachment[0]
+       1  y= 539.2  x= 449.2.. 470.2  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Amount_3[0]
+      2a  y= 466.5  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Total_Current_Market_Value[0]
+      2b  y= 394.5  x= 444.7.. 467.9  -> topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Total_Current_Market_Value[0]
+      2c  y= 315.3  x= 445.3..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].TotalCurrentMarketValue[0]
+      2d  y= 300.9  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Acct_Attached[0]
+       2  y= 286.7  x=   447..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Accounts[0]
+      3a  y= 214.5  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Total_Current_Market_Value[0]
+      3b  y= 200.1  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Investment_Account_Attached[0]
+       3  y= 186.4  x=   447..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Retirement_Accounts[0]
+      4a  y=  99.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Total_Current_Cash_Value[0]
+      4b  y=  66.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].Total_Life_Insurance[0]
+       4  y=  51.4  x= 449.5..   468  -> topmostSubform[0].F433-A-OIC_Page2[0].TotalCashLife[0].Total_Insurance[0]
+
+--- page 3: 10 marker(s) ---
+      5a  y= 563.7  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].total_real_estate[0]
+      5b  y= 430.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].total_real_estate[0]
+      5c  y= 416.1  x= 447.6..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].TotalValueProperty[0].Total_Value_Property_Attached[0]
+       5  y= 400.6  x= 449.5..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].TotalValueProperty[0].Total_Value_Property[0]
+      6a  y= 279.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Total_Value_Vehicle[0]
+      6b  y= 259.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].line6b[0]
+      6c  y= 160.5  x= 447.6..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Total_Value_Vehicle[0]
+      6d  y= 135.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Attached[0]
+      6e  y= 106.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Enter_Allowance[0]
+       6  y=  85.6  x= 449.5..   468  -> topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Amount[0]
+
+--- page 4: 10 marker(s) ---
+      7a  y= 686.1  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].Total_Other_Asset[0]
+      7b  y= 617.7  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].Total_Other_Asset[0]
+      7c  y= 603.3  x= 447.6..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].TotalOther[0].Total_Value_Attached[0]
+       7  y= 589.6  x= 449.5..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].TotalOther[0].Total_Value_Other_Valuable_Items[0]
+   Box A  y= 570.1  x= 448.6.. 471.7  -> (no widget to its right on this row)
+      8a  y= 196.5  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].Total_Account[0]
+      8b  y= 156.9  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].Total_Account[0]
+      8c  y=  77.7  x= 445.3..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].TotalCurrentMarketValue[0]
+      8d  y=  63.3  x= 444.9..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Accounts_Attached[0]
+       8  y=  49.6  x= 449.5..   468  -> topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]
+
+--- page 5: 26 marker(s) ---
+      9a  y= 696.9  x= 452.1.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].Total_Value[0]
+      9b  y= 653.7  x= 452.1.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].Total_Value[0]
+      9c  y= 639.3  x= 452.5.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Value_Assets_Attached[0]
+       9  y= 625.6  x= 456.7.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Value_Assets[0]
+      10  y= 610.5  x= 452.1.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Line10[0]
+      11  y= 596.8  x= 451.7.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Assets_Less_Deduction[0]
+   Box B  y= 489.2  x= 453.6.. 476.7  -> (no widget to its right on this row)
+      12  y= 351.3  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Receipts[0]
+      13  y= 336.9  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Rental_Income[0]
+      14  y= 322.5  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Interest_Income[0]
+      15  y= 308.1  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Dividend_Income[0]
+      16  y= 293.7  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Income[0]
+      17  y=   280  x= 451.7.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Income[0]
+      18  y= 250.5  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Materials_Purchased[0]
+      19  y= 236.1  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Inventory_Purchased[0]
+      20  y= 221.7  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Wages_Salaries[0]
+      21  y= 207.3  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Rent[0]
+      22  y= 192.9  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Supplies[0]
+      23  y= 178.5  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Utilities_Telephones[0]
+      24  y= 164.1  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Vehicle_Costs[0]
+      25  y= 149.7  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Business_Insurance[0]
+      26  y= 126.9  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Current_Business_Taxes[0]
+      27  y= 113.7  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Secured_Debts[0]
+      28  y=  99.3  x= 454.3.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Business_Expenses[0]
+      29  y=  85.6  x= 451.7.. 475.2  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Expenses[0]
+   Box C  y=  70.1  x= 453.6.. 476.7  -> topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Expenses[0]
+
+--- page 6: 25 marker(s) ---
+      30  y= 628.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Total_Primary_Taxpayer_Income[0]
+      31  y= 588.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Total_Spouse_Other_Income[0]
+      32  y= 562.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0]
+      33  y= 549.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]
+      34  y= 534.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Distributions[0]
+      35  y= 520.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Net_Rental_Income[0]
+      36  y= 502.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Net_Business_Income_BoxC[0]
+      37  y= 484.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Child_Support_Received[0]
+      38  y= 470.1  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Alimony_Received[0]
+   Box D  y= 455.1  x= 446.4.. 469.5  -> (no widget to its right on this row)
+      39  y= 342.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Food_Clothing_Misc[0]
+      40  y= 310.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Housing_Utilities[0]
+      41  y= 297.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Vehicle_Loan_Lease_Payments[0]
+      42  y= 274.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Vehicle_Operating_Costs[0]
+      43  y= 252.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Public_Transportation_Costs[0]
+      44  y= 239.7  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Health_Insurance_Premiums[0]
+      45  y= 216.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Out_Of_Pocket_Health_Care_Costs[0]
+      46  y= 203.7  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Court_Ordered_Payments[0]
+      47  y= 189.3  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Child_Dependent_Care_Expenses[0]
+      48  y= 174.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Life_Insurance_Premiums[0]
+      49  y= 160.5  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Current_Taxes[0]
+      50  y= 135.1  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Other_Secured_Debts[0]
+      51  y= 120.9  x= 447.1..   468  -> topmostSubform[0].F433-A-OIC_Page6[0].Delinquent_State_Local_Taxes[0]
+   Box E  y= 105.9  x= 446.4.. 469.1  -> (no widget to its right on this row)
+   Box F  y=  69.9  x= 446.4.. 468.6  -> (no widget to its right on this row)
+
+--- page 7: 3 marker(s) ---
+   Box G  y= 647.7  x= 370.8.. 510.3  -> (no widget to its right on this row)
+   Box H  y= 593.7  x= 370.8.. 509.8  -> (no widget to its right on this row)
+   Box G  y= 531.1  x= 219.6.. 286.1  -> (no widget to its right on this row)
+
+--- page 8: 0 marker(s) ---
+
+81 of 89 marker(s) have a widget on the same row to their right.

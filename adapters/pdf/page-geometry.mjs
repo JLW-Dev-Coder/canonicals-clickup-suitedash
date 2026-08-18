@@ -130,6 +130,16 @@ export async function readWidgetGeometry(bytes) {
       widgets.push({ name, type, widget: 0, widgets: 0, page: null, rect: null });
       continue;
     }
+    // /MaxLen is the field's, not the widget's — it lives on the terminal field dict and is
+    // inheritable, so a cell inside a subform can carry the parent's ceiling and report none
+    // of its own. Read here rather than at each call site: the fill engines HARD STOP on
+    // overflow (they refuse to truncate a filed form), so the ceiling is a real input
+    // constraint, and a tool that reports a widget's position without its ceiling has
+    // reported half of what the map author needs.
+    // pdf-lib's getMaxLength() already walks the inheritance chain, and it is the SAME call
+    // fill-433a.mjs and fill-433f.mjs guard against, so what is reported here is exactly what
+    // will refuse a value at fill time rather than a second reading of the same dict.
+    const maxLen = typeof f.getMaxLength === 'function' ? (f.getMaxLength() ?? null) : null;
     ws.forEach((w, wi) => {
       const pageIdx = widgetPage(w);
       const g = w.getRectangle();
@@ -137,6 +147,7 @@ export async function readWidgetGeometry(bytes) {
         name, type, widget: wi, widgets: ws.length,
         page: pageIdx === null ? null : pageIdx + 1,
         rect: [g.x, g.y, g.x + g.width, g.y + g.height],
+        maxLen,
       });
     });
   }
