@@ -1,0 +1,54 @@
+{
+  "form": "433a",
+  "form_revision": "6-2026",
+  "catalog": "20312N",
+  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A. Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
+  "_why": "433-A's fourteen groups are bound by field names that carry no meaning (p2_t23_14a[0]) and, on this form, are frequently out of printed order — real_property already binds Table_Line17b[1] BEFORE Table_Line17b[0] because that is the order the rows print in. Nothing proved that until now; it was authored by hand and believed. This file lets geometry state it.",
+  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle's vertical centre. Headings are declared densely enough to bound every group — including headings no group claims (CASH ON HAND, BUSINESS CASH ON HAND, the Section rules), because an undeclared heading between two declared ones silently widens the band above it.",
+
+  "headings": [
+    { "id": "SECTION_1_PERSONAL",        "page": 1, "text": "Section 1: Personal Information" },
+    { "id": "HOUSEHOLD_MEMBERS",         "page": 1, "text": "Provide information for all other persons in the household or claimed as a dependent." },
+    { "id": "SECTION_2_EMPLOYMENT",      "page": 1, "text": "Section 2: Employment Information for Wage Earners" },
+
+    { "id": "SECTION_4_PERSONAL_ASSETS", "page": 2, "text": "Section 4: Personal Asset Information for all Individuals (Foreign and Domestic). Include assets located in" },
+    { "id": "CASH_ON_HAND",              "page": 2, "text": "CASH ON HAND" },
+    { "id": "PERSONAL_BANK_ACCOUNTS",    "page": 2, "text": "PERSONAL BANK ACCOUNTS" },
+    { "id": "INVESTMENTS",               "page": 2, "text": "INVESTMENTS" },
+
+    { "id": "DIGITAL_ASSETS",            "page": 3, "text": "DIGITAL ASSETS" },
+    { "id": "AVAILABLE_CREDIT",          "page": 3, "text": "AVAILABLE CREDIT" },
+    { "id": "LIFE_INSURANCE",            "page": 3, "text": "LIFE INSURANCE" },
+
+    { "id": "REAL_PROPERTY",             "page": 4, "text": "REAL PROPERTY" },
+    { "id": "PERSONAL_VEHICLES",         "page": 4, "text": "PERSONAL VEHICLES LEASED AND PURCHASED" },
+
+    { "id": "PERSONAL_ASSETS",           "page": 5, "text": "PERSONAL ASSETS" },
+
+    { "id": "SECTION_6_BUSINESS",        "page": 7, "text": "Section 6: Business Information (Foreign and Domestic)" },
+    { "id": "PAYMENT_PROCESSOR",         "page": 7, "text": "PAYMENT PROCESSOR" },
+    { "id": "CREDIT_CARDS_ACCEPTED",     "page": 7, "text": "CREDIT CARDS ACCEPTED BY THE BUSINESS" },
+    { "id": "BUSINESS_CASH_ON_HAND",     "page": 7, "text": "BUSINESS CASH ON HAND" },
+    { "id": "BUSINESS_BANK_ACCOUNTS",    "page": 7, "text": "BUSINESS BANK ACCOUNTS" },
+    { "id": "ACCOUNTS_NOTES_RECEIVABLE", "page": 7, "text": "ACCOUNTS/NOTES RECEIVABLE" },
+
+    { "id": "BUSINESS_ASSETS",           "page": 8, "text": "BUSINESS ASSETS" }
+  ],
+
+  "groups": {
+    "household_members":        { "heading": "HOUSEHOLD_MEMBERS",         "_why": "Line 2c's table. The caption above it is a sentence, not an all-caps banner; the declaration takes the printed text as it is rather than inventing a tidier one." },
+    "bank_accounts":            { "heading": "PERSONAL_BANK_ACCOUNTS",    "_why": "Lines 13a-13d, under the PERSONAL BANK ACCOUNTS banner. The 13e total sits inside the same band." },
+    "investments":              { "heading": "INVESTMENTS",               "_why": "Lines 14a-14d." },
+    "digital_assets":           { "heading": "DIGITAL_ASSETS",            "_why": "The digital-asset table on page 3. Its internal name is Table_Line14de while its sibling investments table is Table_Line14 — one character apart, on different pages, under different headings." },
+    "available_credit":         { "heading": "AVAILABLE_CREDIT",          "_why": "Lines 15a-15d." },
+    "life_insurance_policies":  { "heading": "LIFE_INSURANCE",            "_why": "Line 16's three policy columns. This group's slots are COLUMNS of one printed block, not rows; they still all sit in one band." },
+    "real_property":            { "heading": "REAL_PROPERTY",             "_why": "Lines 18a-18c. The map binds Table_Line17b[1] as slot[1] and Table_Line17b[0] as slot[2] because that is the printed order; both are inside this band, so this check confirms the band, not the within-band order." },
+    "vehicles":                 { "heading": "PERSONAL_VEHICLES",         "_why": "Lines 19a-19c." },
+    "property_line_20":         { "heading": "PERSONAL_ASSETS",           "_why": "Lines 20a-20b. Internal names say Table_Line19a/Table_Line19b; the page says 20a/20b. The name is wrong and the band is right." },
+    "payment_processors":       { "heading": "PAYMENT_PROCESSOR",         "_why": "Lines 61a-61b." },
+    "credit_cards_accepted":    { "heading": "CREDIT_CARDS_ACCEPTED",     "_why": "Lines 62a-62c." },
+    "business_bank_accounts":   { "heading": "BUSINESS_BANK_ACCOUNTS",    "_why": "Lines 65a-65b. Same printed caption family as the personal accounts on page 2 and a different band; only geometry separates them." },
+    "accounts_notes_receivable":{ "heading": "ACCOUNTS_NOTES_RECEIVABLE", "_why": "Lines 66a-66e." },
+    "business_property":        { "heading": "BUSINESS_ASSETS",           "_why": "Lines 67a-67b." }
+  }
+}

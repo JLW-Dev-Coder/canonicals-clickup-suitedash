@@ -17,9 +17,8 @@
 // Out: adapters/pdf/maps/<form>.labels.json   full per-widget candidate record
 //      adapters/pdf/maps/<form>.labels.txt    reading order, one line per widget
 
-import { PDFDocument, PDFName, PDFArray } from 'pdf-lib';
-import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
 
 const form = process.argv[2] || '433a';
 const src = `adapters/pdf/forms/f${form}.pdf`;
@@ -27,94 +26,13 @@ const outJson = `adapters/pdf/maps/${form}.labels.json`;
 const outTxt = `adapters/pdf/maps/${form}.labels.txt`;
 
 const TOL = 2;          // point slack on the overlap tests
-const MERGE_GAP = 1.2;  // merge adjacent text runs only on clear intra-phrase kerning splits
 
 const bytes = readFileSync(src);
 
-// ---------------------------------------------------------------- text geometry
-const doc = await pdfjs.getDocument({
-  data: new Uint8Array(bytes),
-  disableFontFace: true,
-  isEvalSupported: false,
-  useSystemFonts: false,
-  verbosity: 0,
-}).promise;
-
-/** Text items for one page, as boxes in PDF user space. */
-async function pageText(pageNo) {
-  const page = await doc.getPage(pageNo);
-  const view = page.view; // [x0, y0, x1, y1]
-  const tc = await page.getTextContent();
-  const raw = [];
-  for (const it of tc.items) {
-    if (!it.str || !it.str.trim()) continue;
-    const x = it.transform[4];
-    const y = it.transform[5];          // baseline
-    const w = it.width || 0;
-    const h = it.height || Math.abs(it.transform[3]) || 7;
-    raw.push({ str: it.str, x1: x, y1: y, x2: x + w, y2: y + h });
-  }
-  // Merge only tight same-baseline splits. Over-merging invents compound labels that
-  // span table cells, and a wrong label is worse than a short one.
-  raw.sort((a, b) => (Math.abs(a.y1 - b.y1) > 0.8 ? b.y1 - a.y1 : a.x1 - b.x1));
-  const merged = [];
-  for (const t of raw) {
-    const prev = merged[merged.length - 1];
-    if (prev && Math.abs(prev.y1 - t.y1) <= 0.8 && t.x1 - prev.x2 >= -0.5 && t.x1 - prev.x2 < MERGE_GAP) {
-      prev.str += t.str;
-      prev.x2 = Math.max(prev.x2, t.x2);
-      prev.y2 = Math.max(prev.y2, t.y2);
-      continue;
-    }
-    merged.push({ ...t });
-  }
-  return { view, items: merged.map(t => ({ ...t, str: t.str.replace(/\s+/g, ' ').trim() })).filter(t => t.str) };
-}
-
-const pageCount = doc.numPages;
-const text = [];
-for (let p = 1; p <= pageCount; p++) text.push(await pageText(p));
-
-// ------------------------------------------------------------- widget geometry
-const pdf = await PDFDocument.load(bytes, { updateMetadata: false });
-const pages = pdf.getPages();
-
-// MediaBox origin check — the two coordinate sets are only comparable at origin 0,0.
-const originNotes = [];
-pages.forEach((pg, i) => {
-  const mb = pg.getMediaBox();
-  if (mb.x !== 0 || mb.y !== 0) originNotes.push(`page ${i + 1} MediaBox origin (${mb.x}, ${mb.y})`);
-});
-
-// Resolve each widget's page by scanning the pages' /Annots for its ref. The widget's
-// own /P entry is absent on some widgets of these forms, so /P is the fallback, not
-// the source of truth.
-const dictToRef = new Map();
-for (const [ref, obj] of pdf.context.enumerateIndirectObjects()) dictToRef.set(obj, ref);
-
-const refTagToPage = new Map();
-pages.forEach((pg, i) => {
-  const annots = pdf.context.lookup(pg.node.get(PDFName.of('Annots')));
-  if (!(annots instanceof PDFArray)) return;
-  for (let k = 0; k < annots.size(); k++) {
-    const entry = annots.get(k);
-    if (entry?.tag) refTagToPage.set(entry.tag, i);
-  }
-});
-const pageRefTagToIndex = new Map();
-pages.forEach((pg, i) => {
-  const ref = dictToRef.get(pg.node);
-  if (ref) pageRefTagToIndex.set(ref.tag, i);
-});
-
-function widgetPage(w) {
-  const ref = dictToRef.get(w.dict);
-  if (ref && refTagToPage.has(ref.tag)) return refTagToPage.get(ref.tag);
-  const p = w.dict.get(PDFName.of('P'));      // fallback only
-  if (p?.tag && pageRefTagToIndex.has(p.tag)) return pageRefTagToIndex.get(p.tag);
-  return null;
-}
-
+// Both coordinate sets come from page-geometry.mjs so that this tool and verify-headings.mjs
+// can never disagree about where a widget is. See that file for the MediaBox reasoning.
+const text = await readPrintedText(bytes);
+const { widgets: geometry, fieldNames, originNotes, pageCount } = await readWidgetGeometry(bytes);
 // ----------------------------------------------------------------- correlation
 const round = (n) => Math.round(n * 10) / 10;
 
@@ -222,36 +140,30 @@ function pickLabel(c, type) {
 }
 
 const records = [];
-const fields = pdf.getForm().getFields();
-for (const f of fields) {
-  const name = f.getName();
-  const type = f.constructor.name;
-  const widgets = f.acroField.getWidgets();
-  if (widgets.length === 0) {
+for (const g of geometry) {
+  const { name, type } = g;
+  if (g.rect === null) {
     records.push({ name, type, page: null, rect: null, candidates: EMPTY, marker: '', label: '', option: '', context: '', labelFrom: '', best: '' });
     continue;
   }
-  widgets.forEach((w, wi) => {
-    const pageIdx = widgetPage(w);
-    const g = w.getRectangle();
-    const r = { x1: g.x, y1: g.y, x2: g.x + g.width, y2: g.y + g.height };
-    const c = pageIdx === null ? EMPTY : candidates(pageIdx, r);
-    const p = pickLabel(c, type);
-    records.push({
-      name,
-      type,
-      widget: wi,
-      widgets: widgets.length,
-      page: pageIdx === null ? null : pageIdx + 1,
-      rect: [round(r.x1), round(r.y1), round(r.x2), round(r.y2)],
-      candidates: c,
-      marker: p.marker,       // printed line marker, from the bucket that supplied the label
-      label: p.label,         // printed caption, verbatim
-      option: p.option,       // checkboxes only: this box's own option, printed to its right
-      context: p.context,     // checkboxes only: the question the box belongs to
-      labelFrom: p.dir,       // which direction supplied it
-      best: p.best,           // composed from the parts above — every part extracted, none invented
-    });
+  const r = { x1: g.rect[0], y1: g.rect[1], x2: g.rect[2], y2: g.rect[3] };
+  const pageIdx = g.page === null ? null : g.page - 1;
+  const c = pageIdx === null ? EMPTY : candidates(pageIdx, r);
+  const p = pickLabel(c, type);
+  records.push({
+    name,
+    type,
+    widget: g.widget,
+    widgets: g.widgets,
+    page: g.page,
+    rect: [round(r.x1), round(r.y1), round(r.x2), round(r.y2)],
+    candidates: c,
+    marker: p.marker,       // printed line marker, from the bucket that supplied the label
+    label: p.label,         // printed caption, verbatim
+    option: p.option,       // checkboxes only: this box's own option, printed to its right
+    context: p.context,     // checkboxes only: the question the box belongs to
+    labelFrom: p.dir,       // which direction supplied it
+    best: p.best,           // composed from the parts above — every part extracted, none invented
   });
 }
 
@@ -294,7 +206,7 @@ checks.push({
   pass: !!irs && /(irs|allow|standard)/i.test(irs.best),
 });
 
-console.log(`form ${form}: ${fields.length} fields, ${records.length} widgets, ${pageCount} pages`);
+console.log(`form ${form}: ${fieldNames.length} fields, ${records.length} widgets, ${pageCount} pages`);
 if (originNotes.length) console.log(`NOTE non-zero MediaBox origin: ${originNotes.join('; ')}`);
 console.log('--- self-check ---');
 for (const c of checks) {
@@ -315,7 +227,7 @@ const pct = ((unlabelled.length / records.length) * 100);
 writeFileSync(outJson, JSON.stringify({
   form,
   source: src,
-  fieldCount: fields.length,
+  fieldCount: fieldNames.length,
   widgetCount: records.length,
   pages: pageCount,
   unlabelledWidgets: unlabelled.length,
@@ -335,11 +247,11 @@ writeFileSync(outTxt, ordered.map(r => `p${r.page ?? '?'} | ${r.best} | ${r.name
 
 const namesInTxt = new Set(ordered.map(r => r.name));
 const namesInJson = new Set(records.map(r => r.name));
-const missingTxt = fields.map(f => f.getName()).filter(n => !namesInTxt.has(n));
-const missingJson = fields.map(f => f.getName()).filter(n => !namesInJson.has(n));
+const missingTxt = fieldNames.filter(n => !namesInTxt.has(n));
+const missingJson = fieldNames.filter(n => !namesInJson.has(n));
 
 console.log('--- counts ---');
-console.log(`fields in .json: ${namesInJson.size}/${fields.length}   fields in .txt: ${namesInTxt.size}/${fields.length}`);
+console.log(`fields in .json: ${namesInJson.size}/${fieldNames.length}   fields in .txt: ${namesInTxt.size}/${fieldNames.length}`);
 console.log(`unlabelled widgets (no candidate in ANY direction): ${unlabelled.length} of ${records.length} (${pct.toFixed(1)}%)`);
 if (pct > 15) console.log(`QUALITY WARNING: unlabelled rate ${pct.toFixed(1)}% exceeds ~15% — report this to Principal rather than treating the output as complete.`);
 console.log(`wrote ${outJson}`);

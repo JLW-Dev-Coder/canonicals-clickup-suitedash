@@ -7,6 +7,7 @@
     "gate": "node adapters/pdf/run-form-gate.mjs",
     "gate:433a": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json",
     "gate:433f": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json",
+    "headings": "node adapters/pdf/verify-headings.mjs",
     "cu:create": "tsx scripts/cu-create.ts",
     "sync:cu": "tsx scripts/cu-router.ts",
     "module-config:mark-authored": "tsx scripts/_lib/mark-authored.ts"

@@ -1,0 +1,38 @@
+{
+  "form": "433f",
+  "form_revision": "7-2024",
+  "catalog": "62053J",
+  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-F. Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; nothing here is a paraphrase, and the tool refuses to run if a string cannot be found on its declared page.",
+  "_why": "Nothing else in this repo ties a widget to the words printed above it. The field names actively mislead: AccountsTable[1] prints ABOVE AccountsTable[0], so reading the names in order puts the personal bank accounts second and the investments first. This file states the intent in the form's own printed language so geometry can contradict it.",
+  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle's vertical centre. Headings are therefore declared densely enough to bound every group — a missing intermediate heading would silently widen the band above it.",
+
+  "headings": [
+    { "id": "A_ACCOUNTS_LINES_OF_CREDIT", "page": 1, "text": "A. ACCOUNTS / LINES OF CREDIT" },
+    { "id": "PERSONAL_BANK_ACCOUNTS",     "page": 1, "text": "PERSONAL BANK ACCOUNTS" },
+    { "id": "INVESTMENTS",                "page": 1, "text": "INVESTMENTS" },
+    { "id": "DIGITAL_ASSETS",             "page": 1, "text": "DIGITAL ASSETS (CRYPTOCURRENCY)" },
+    { "id": "B_REAL_ESTATE",              "page": 1, "text": "B. REAL ESTATE" },
+    { "id": "C_OTHER_ASSETS",             "page": 1, "text": "C. OTHER ASSETS" },
+    { "id": "D_CREDIT_CARDS",             "page": 1, "text": "D. CREDIT CARDS" }
+  ],
+
+  "groups": {
+    "accounts": {
+      "heading": "PERSONAL_BANK_ACCOUNTS",
+      "aligned_checkboxes": ["account_business"],
+      "_why": "The map feeds this group from the `accounts` array and its scalar fallback leads with 433f_bank_* — a personal bank account. A caller with one bank account supplies one row and it lands in slot[0]. So the group is declared against the heading that row has to print under. It binds a single ordered slot list, so it gets a single heading: if the slots in fact span PERSONAL BANK ACCOUNTS and INVESTMENTS, slot order alone decides which section each row is filed in, and that is the thing this file exists to make visible."
+    },
+    "real_estate": {
+      "heading": "B_REAL_ESTATE",
+      "_why": "Section B is one printed table with two rows; both slots are that table."
+    },
+    "other_assets": {
+      "heading": "C_OTHER_ASSETS",
+      "_why": "Section C is one printed table with two rows. The map's fallback puts a vehicle in slot[0] and a non-vehicle asset in slot[1], but the form prints no sub-heading between them — one section, one heading."
+    },
+    "credit_cards": {
+      "heading": "D_CREDIT_CARDS",
+      "_why": "Section D is one printed table with two rows."
+    }
+  }
+}

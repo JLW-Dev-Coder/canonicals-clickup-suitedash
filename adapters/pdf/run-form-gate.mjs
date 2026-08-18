@@ -1,4 +1,4 @@
-// The release gate for one form in the 433 series. Nine steps, in order, stopping at the
+// The release gate for one form in the 433 series. Ten steps, in order, stopping at the
 // first failure.
 //
 // CLI:  node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]
@@ -12,8 +12,9 @@
 //   5  partition              writable + never-autofill + deferred = the field count, disjoint
 //   6  fill                   produce the PDF
 //   7  verify-appearances     every written value is actually drawn on the page
-//   8  verify-form-coverage   the whole-form accounting closes
-//   9  arithmetic tripwires   every printed total agrees with the rows it prints above it
+//   8  printed-heading        every group row sits beneath the heading it is declared to belong to
+//   9  verify-form-coverage   the whole-form accounting closes
+//  10  arithmetic tripwires   every printed total agrees with the rows it prints above it
 //
 // WHY A GATE AND NOT A CHECKLIST
 // ------------------------------
@@ -42,7 +43,14 @@
 // here and again inside step 8, because a coverage report that does not say which rule it ran
 // under is a number nobody can act on.
 //
-// STEP 9 ALSO FOLLOWS THE MAP'S DECLARED SCOPE. A map that declares COMPLETE and has no
+// STEP 8 RUNS BEFORE THE ACCOUNTING AND THE TRIPWIRES ON PURPOSE. Steps 9 and 10 measure a
+// form against itself: every field accounted for, every total agreeing with the rows above
+// it. Both hold perfectly on a statement whose rows are filed under the wrong printed
+// headings — the figures are individually correct and the arithmetic still reconciles. A run
+// that reached the tripwires while rows sat under wrong headings would be reporting
+// reconciled totals for a misfiled statement, so the heading assertion is asked first.
+//
+// STEP 10 ALSO FOLLOWS THE MAP'S DECLARED SCOPE. A map that declares COMPLETE and has no
 // totals file FAILS — it promised the whole form and cannot prove its own arithmetic. A map
 // that declares no COMPLETE slice and has no totals file is SKIPPED with the reason stated,
 // because a partial slice may not contain a printed total to check yet, and failing it would
@@ -192,6 +200,11 @@ const steps = [
     runTool('verify-appearances.mjs', [outPath])
       ? ok('every stored value is drawn by its widget normal appearance stream')
       : fail('verify-appearances.mjs exited non-zero')],
+
+  ['printed-heading assertion', async () =>
+    runTool('verify-headings.mjs', [form, outPath])
+      ? ok('every group row sits beneath the printed heading it is declared to belong to')
+      : fail('verify-headings.mjs exited non-zero — a group row prints under a heading it does not belong under, or the form has no heading declaration')],
 
   ['verify-form-coverage', async () =>
     runTool('verify-form-coverage.mjs', [form, outPath, ...(saturated ? ['--saturated'] : [])])
