@@ -35,7 +35,9 @@
 //   checkbox unchecked (exclusive)  the alternatives, correctly left off
 //   checkbox checked (independent)  a mapped checkbox in no exclusive set
 //   checkbox unchecked (independent)
-//   never-autofill blank            allowed._never_autofill — mapped, understood, blank on purpose
+//   never-autofill blank            allowed._never_autofill (or top-level _never_autofill on a
+//                                   form with no allowable column) — mapped, understood,
+//                                   blank on purpose
 //   deferred blank                  _deferred — not resolved yet, validated for existence, never filled
 //   mapped, other field type        neither text nor checkbox (a button, a signature)
 //   unreferenced by the map         the map does not mention this field at all
@@ -86,7 +88,18 @@ const TARGET_PREFIX = 'topmostSubform[0].';
 // construct. Same three names on 433-F, and the convention a 433-B map inherits.
 const GUARD_EXCLUSIVE = 'exclusive';
 const GUARD_DEFERRED  = '_deferred';
-const GUARD_NEVER     = 'allowed._never_autofill';
+// TWO ROOTS FOR ONE CONSTRUCT, because `allowed` is not universal.
+//
+// On 433-A and 433-F the never-autofill list lives INSIDE the IRS-allowable block, since
+// that is where most of its entries come from: the cells in the "IRS USE ONLY" column that
+// depend on a county table or an examiner's discretion. 433-A(OIC) prints no allowable
+// column at all and therefore has no `allowed` block to hang the list under — but it still
+// has fields that are mapped, understood and deliberately blank (three push buttons). A map
+// forced to author an empty `allowed` wrapper solely to reach this guard would be asserting
+// an IRS-allowable column that the form does not print.
+//
+// So the root is either. Both are checked; a map declares one of them, never both.
+const GUARD_NEVER     = ['allowed._never_autofill', '_never_autofill'];
 
 // Collect [path, target] for every field-target string anywhere in the map, at any depth,
 // under any key — the same schema-agnostic walk validate-map.mjs uses, and for the same
@@ -117,7 +130,7 @@ export function classifyMapTargets(mapDoc) {
   const deferred = new Set(), never = new Set(), writable = new Map();   // target -> [paths]
   for (const { path, target } of walkTargets(mapDoc)) {
     if (under(path, GUARD_DEFERRED)) { deferred.add(target); continue; }
-    if (under(path, GUARD_NEVER))    { never.add(target);    continue; }
+    if (GUARD_NEVER.some(root => under(path, root))) { never.add(target); continue; }
     if (under(path, GUARD_EXCLUSIVE)) continue;                       // guard, not a binding
     if (!writable.has(target)) writable.set(target, []);
     writable.get(target).push(path);

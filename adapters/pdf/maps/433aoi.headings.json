@@ -1,0 +1,30 @@
+{
+  "form": "433aoi",
+  "form_revision": "4-2026",
+  "catalog": "55896Q",
+  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A(OIC). Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
+  "_why": "This form's internal names are semantic rather than positional, which removes 433-A's off-by-one trap and installs a worse one: a name that describes the wrong thing reads as correct. Five such names are already measured (see 433aoi.map.json `_notes`). Nothing in a name can be trusted to say which printed section a row is in, so geometry says it.",
+  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle. Headings are declared densely enough to bound every group - INCLUDING headings no group claims, because an undeclared heading between two declared ones silently widens the band above it. On page 1 that means declaring the spouse sub-heading and both section rules, not only the one banner household_members sits under.",
+  "_slice": "Page 1 only. Sections 3-10 are not mapped yet, so no heading on pages 2-8 is declared: a declaration for a page nobody has read would be an unchecked claim, and verify-headings.mjs requires the map and this file to agree group-for-group.",
+
+  "headings": [
+    { "id": "SECTION_1_PERSONAL",    "page": 1, "text": "Personal and Household Information",
+      "_at": "y 577.7, x 144.0..319.0. The words 'Section 1' are drawn as a separate text item at x 36.0..80.5, so the banner is declared by the part that names the subject." },
+
+    { "id": "SPOUSE_INFORMATION",    "page": 1, "text": "Provide information about your spouse.",
+      "_at": "y 401.7, x 36.0..187.6. Claimed by no group - declared so it does not silently widen SECTION_1_PERSONAL's band down over the household grid." },
+
+    { "id": "HOUSEHOLD_MEMBERS",     "page": 1, "text": "Provide information for all other persons in the household or claimed as a dependent.",
+      "_at": "y 358.1, x 36.0..362.3. A sentence rather than an all-caps banner; the declaration takes the printed text as it is rather than inventing a tidier one, the same way 433-A's household_members heading does." },
+
+    { "id": "SECTION_2_EMPLOYMENT",  "page": 1, "text": "Employment Information for Wage Earners",
+      "_at": "y 264.5, x 144.0..347.4. Closes the HOUSEHOLD_MEMBERS band at the bottom of the dependent grid (last row y 280.8), which is what makes that band a bound and not an open-ended tail." }
+  ],
+
+  "groups": {
+    "household_members": {
+      "heading": "HOUSEHOLD_MEMBERS",
+      "_why": "The four dependent rows print at y 324.0, 309.6, 295.2 and 280.8, between the HOUSEHOLD_MEMBERS sentence at y 358.1 and the Section 2 rule at y 264.5. The spouse block above (y 375.8) is under SPOUSE_INFORMATION and is bound as four scalars, not as rows of this group - which is the distinction this file exists to hold: a spouse is not a row of the household table on this form, and slot order must never be able to put one there."
+    }
+  }
+}

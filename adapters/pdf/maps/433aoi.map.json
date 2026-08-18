@@ -1,0 +1,314 @@
+{
+  "form": "433aoi",
+  "form_revision": "4-2026",
+  "catalog": "55896Q",
+  "pdf": "adapters/pdf/forms/f433aoi.pdf",
+  "fields_source": "adapters/pdf/maps/433aoi.fields.json",
+  "slice": "PARTIAL - Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners), which together are the whole of printed page 1. Sections 3-10 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
+  "map_version": 1,
+  "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
+
+  "_notes": [
+    "KEY NAMING. 433-A keys are prefixed with the printed line marker (1a_full_name, 4f_tp_occupation). 433-A(OIC) PRINTS NO LINE MARKER ANYWHERE ON PAGE 1 - line-markers.mjs reports 0 markers on page 1 of 8, and the first printed marker on the form is (1a) on page 2. So the keys in this slice are prefixed with the printed SECTION number instead: s1_ for 'Section 1 Personal and Household Information', s2_ for 'Section 2 Employment Information for Wage Earners'. From page 2 onward the form does print markers and those keys will follow the marker without its parentheses - printed (32) gives 32_.",
+
+    "THE KEY IS NOT THE PROPERTY NAME. Keys here name cells on this form. Where the same fact already exists in the backbone the crosswalk binds it as exact, and the HubSpot property name comes from the crosswalk, not from the key.",
+
+    "THE INTERNAL NAMES ON THIS FORM ARE SEMANTIC, NOT POSITIONAL, AND FIVE OF THEM ARE WRONG. 433-A's leaf suffixes lag the printed line by exactly one, form-wide, which is a trap that announces itself the moment you count. This form's names carry no line reference at all (75 of 80 marker-attached widgets have no line token; 2 carry one and it agrees; 0 lag), so they read as descriptions - and a description that is wrong reads as right. The five measured so far, none of them in this slice, recorded here because someone will later read the name and try to 'fix' the map: (1) topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0] is printed line (32), 'Additional sources of income used to support the household' - NOT interest and dividends; (2) topmostSubform[0].F433-A-OIC_Page6[0].tab_order[1].Interest_Dividends[0] is (32)'s 'List source(s)' free text; (3) topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1] is printed line (33) and IS interest, dividends and royalties - the only true one of the four; (4) topmostSubform[0].F433-A-OIC_Page6[0].tab_order[2].Interest_Dividends[0] is on the EXPENSE half of the page, printed line (50), 'List debt(s)/expense(s)' - seventeen printed lines away from any income; (5) topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] sits under a printed 'X .8 = $' at printed line (3a). Its name says seven; the page says point eight. Binding it by name would print a 0.7 multiplier on a statement signed under penalty of perjury.",
+
+    "NO ALLOWED BLOCK, BY RULING. 433-A prints an 'IRS USE ONLY / Allowable Expenses' column beside every expense line and 433-F prints its Section H equivalent; 433-A(OIC) prints no such column anywhere. Its printed instruction folds the standard INTO the taxpayer's own figure on two lines only - 'For expenses claimed in boxes (39) and (45) only, you should list the full amount of the allowable standard even if the actual amount you pay is less' - and says nothing about it elsewhere. So nothing on this form is auto-filled from irs-standards-2026.json, and this map has no `allowed` key at all.",
+
+    "WHERE NEVER-AUTOFILL LIVES ON THIS MAP. Because there is no `allowed` block, the never-autofill declaration is at the TOP LEVEL as `_never_autofill`, not at `allowed._never_autofill`. verify-form-coverage.mjs accepts either root. The construct itself is unchanged: entries are objects whose `target` is a string, so the schema-agnostic validator checks every one of them for existence, and each is validated and never written.",
+
+    "SLICE BOUNDARY. This slice is the two printed sections that begin and end on page 1, and page 1 carries nothing else. That coincidence of section boundary and page boundary happens nowhere else on this form: Section 3 spans pages 2-4, Section 5 straddles 4-5, Section 6 shares page 5 with the tail of Section 5, and Section 9 spans 7-8. Taking Section 1 alone would have split a page; taking page 1 alone splits nothing, because page 1 is exactly these two sections. 74 of 425 fields.",
+
+    "ROW ORDER IS PRINTED ORDER. household_members binds Row1..Row4 in descending y (324.0, 309.6, 295.2, 280.8), which is the order a person reads them in.",
+
+    "THE DEPENDENT TABLE HAS ONE FEWER ROW THAN 433-A's. 433-A's household_members group has five slots because that form prints Row4 twice (Row4[0] and Row4[1] carry the same leaf names). This form prints four rows and enumerates four; max is 4. A fifth household member goes to an attachment - the form has no slot for it, and inventing one would print a person outside the printed rule."
+  ],
+
+  "map": {
+    "s1_tp_last_name":            "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].lastName[0]",
+    "s1_tp_first_name":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].firstName[0]",
+    "s1_tp_dob":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dateOfBirth[0]",
+    "s1_tp_ssn_itin":             "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ssnITIN[0]",
+    "s1_home_physical_address":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homePhysicalAddress[0]",
+    "s1_date_of_marriage":        "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].dateOfMarrage[0]",
+    "s1_housing_other_specify":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecifyLiving[0]",
+    "s1_county_of_residence":     "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].countyOfResidence[0]",
+    "s1_primary_phone":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].primaryPhone[0]",
+    "s1_secondary_phone":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].secondaryPhone[0]",
+    "s1_fax_number":              "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].faxNumber[0]",
+    "s1_home_mailing_address":    "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homeMailingAddress[0]",
+    "s1_sp_last_name":            "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseLastName[0]",
+    "s1_sp_first_name":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseFirstName[0]",
+    "s1_sp_dob":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseDateBirth[0]",
+    "s1_sp_ssn":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseSSN[0]",
+
+    "s2_tp_employer_name":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Name[0]",
+    "s2_tp_employer_address":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Address[0]",
+    "s2_tp_occupation":           "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Occupation[0]",
+    "s2_tp_tenure_years":         "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Years_With_Employer_1[0]",
+    "s2_tp_tenure_months":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Months_With_Employer_1[0]",
+    "s2_sp_employer_name":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Name[0]",
+    "s2_sp_employer_address":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Address[0]",
+    "s2_sp_occupation":           "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Occupation[0]",
+    "s2_sp_tenure_years":         "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Years_With_Employer_2[0]",
+    "s2_sp_tenure_months":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Months_With_Employer_2[0]"
+  },
+
+  "_map_evidence": {
+    "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
+    "s1_tp_last_name":          { "page": 1, "caption": "Last name",                                                     "caption_at": "y 561.1, x 36.0..73.4",                                            "widget_at": "y 548.6, x 36.0..176.4" },
+    "s1_tp_first_name":         { "page": 1, "caption": "First name",                                                    "caption_at": "y 561.1, x 183.6..221.4",                                          "widget_at": "y 548.6, x 183.6..316.8" },
+    "s1_tp_dob":                { "page": 1, "caption": "Date of birth (mm/dd/yyyy)",                                    "caption_at": "y 559.5, x 324.0..367.6 + y 558.5, x 370.4..412.4",                "widget_at": "y 548.6, x 324.0..453.6" },
+    "s1_tp_ssn_itin":           { "page": 1, "caption": "Social Security Number or ITIN",                                "caption_at": "y 559.7, x 460.8..571.0",                                          "widget_at": "y 548.6, x 460.8..576.0" },
+    "s1_home_physical_address": { "page": 1, "caption": "Home physical address (street, city, state, ZIP code)",         "caption_at": "y 530.7, x 183.6..266.7 + y 529.7, x 269.5..357.1",                "widget_at": "y 519.8, x 183.6..378.0" },
+    "s1_date_of_marriage":      { "page": 1, "caption": "If married, date of marriage (mm/dd/yyyy)",                     "caption_at": "y 503.5, x 36.0..132.5 + y 502.5, x 134.7..176.7",                 "widget_at": "y 491.0, x 36.0..176.4" },
+    "s1_housing_other_specify": { "page": 1, "caption": "Other (specify e.g., share rent, live with relative, etc.)",    "caption_at": "y 502.5, x 399.6..419.6 + y 501.5, x 421.8..565.8",                "widget_at": "y 489.6, x 399.6..576.0",
+      "_arguable": "The caption is one printed row ABOVE this cell rather than beside it, because the 'Other' checkbox occupies the caption's own row at x 385.2..394.2. The binding is made on x instead: the cell's left edge, 399.6, is exactly the left edge of the 'Do you' option-label column ('Own your home' 399.6, 'Other' 399.6), and no caption at all is drawn in the band y 489..501 anywhere right of x 385. Reported, not resolved." },
+    "s1_county_of_residence":   { "page": 1, "caption": "County of residence",                                           "caption_at": "y 460.3, x 36.0..107.1",                                           "widget_at": "y 447.8, x 36.0..190.8" },
+    "s1_primary_phone":         { "page": 1, "caption": "Primary phone",                                                 "caption_at": "y 460.3, x 198.0..250.0",                                          "widget_at": "y 447.8, x 198.0..316.8" },
+    "s1_home_mailing_address":  { "page": 1, "caption": "Home mailing address (if different from above or post office box number)", "caption_at": "y 460.3, x 324.0..403.6 + y 459.3, x 405.8..559.1",     "widget_at": "y 447.8, x 324.0..576.0" },
+    "s1_secondary_phone":       { "page": 1, "caption": "Secondary phone",                                               "caption_at": "y 431.5, x 36.0..98.7",                                            "widget_at": "y 419.0, x 36.0..190.8" },
+    "s1_fax_number":            { "page": 1, "caption": "FAX number",                                                    "caption_at": "y 431.5, x 198.0..242.9",                                          "widget_at": "y 419.0, x 198.0..316.8" },
+    "s1_sp_last_name":          { "page": 1, "caption": "Spouse's last name",                                            "caption_at": "y 388.3, x 36.0..105.6",                                           "widget_at": "y 375.8, x 36.0..190.8" },
+    "s1_sp_first_name":         { "page": 1, "caption": "Spouse's first name",                                           "caption_at": "y 388.3, x 198.0..268.0",                                          "widget_at": "y 375.8, x 198.0..316.8" },
+    "s1_sp_dob":                { "page": 1, "caption": "Date of birth (mm/dd/yyyy)",                                    "caption_at": "y 388.3, x 324.0..367.6 + y 387.3, x 369.8..411.8",                "widget_at": "y 375.8, x 324.0..453.6" },
+    "s1_sp_ssn":                { "page": 1, "caption": "Social Security Number",                                        "caption_at": "y 386.9, x 460.8..544.4",                                          "widget_at": "y 375.8, x 460.8..576.0" },
+    "s2_tp_employer_name":      { "page": 1, "caption": "Your employer's name",                                          "caption_at": "y 222.7, x 36.0..116.0",                                           "widget_at": "y 210.2, x 36.0..190.8" },
+    "s2_tp_employer_address":   { "page": 1, "caption": "Employer's address (street, city, state, ZIP code)",            "caption_at": "y 222.7, x 378.0..448.2 + y 221.7, x 450.5..538.0",                "widget_at": "y 210.2, x 378.0..576.0" },
+    "s2_tp_occupation":         { "page": 1, "caption": "Your occupation",                                               "caption_at": "y 165.1, x 36.0..93.8",                                            "widget_at": "y 152.6, x 36.0..190.8" },
+    "s2_tp_tenure_years":       { "page": 1, "caption": "How long with this employer / (years)",                         "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 239.6..264.4 (unit)", "widget_at": "y 151.2, x 198.0..237.6",
+      "_unit_label_is_to_the_RIGHT": "The unit label sits to the RIGHT of the cell it labels: the years cell ends at x 237.6 and '(years)' starts at 239.6; the months cell ends at 306.0 and '(months)' starts at 311.8. Nearest-neighbour correlation therefore reports '(years)' as the label of Months_With_Employer_1 in 433aoi.labels.txt, and that correlation is wrong. Both cells here are bound by rectangle." },
+    "s2_tp_tenure_months":      { "page": 1, "caption": "How long with this employer / (months)",                        "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 311.8..343.4 (unit)", "widget_at": "y 151.2, x 266.4..306.0" },
+    "s2_sp_employer_name":      { "page": 1, "caption": "Spouse's employer's name",                                      "caption_at": "y 136.3, x 36.0..131.8",                                           "widget_at": "y 123.8, x 36.0..190.8" },
+    "s2_sp_employer_address":   { "page": 1, "caption": "Employer's address (street, city, state, ZIP code)",            "caption_at": "y 136.3, x 378.0..448.2 + y 135.3, x 450.5..538.0",                "widget_at": "y 123.8, x 378.0..576.0" },
+    "s2_sp_occupation":         { "page": 1, "caption": "Spouse's occupation",                                           "caption_at": "y 78.7, x 36.0..109.6",                                            "widget_at": "y 66.2, x 36.0..190.8" },
+    "s2_sp_tenure_years":       { "page": 1, "caption": "How long with this employer / (years)",                         "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 239.6..264.4 (unit)",  "widget_at": "y 64.8, x 198.0..237.6" },
+    "s2_sp_tenure_months":      { "page": 1, "caption": "How long with this employer / (months)",                        "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 311.8..343.4 (unit)",  "widget_at": "y 64.8, x 266.4..306.0" }
+  },
+
+  "_nesting_note": "AcroForm nesting depth is NOT uniform inside Section1[0], which is why every path above is quoted whole from topmostSubform[0]. countyOfResidence, primaryPhone, secondaryPhone and faxNumber sit under Col1[0]. dateOfMarrage, statusUnmarried and statusMarried sit under maritalStatus[0]. homePhysicalAddress, homeMailingAddress, otherSpecifyLiving, ownYourHome, rent, otherSpecify, marriedLivedIn and the four spouse cells are DIRECT children of Section1[0]. There is no Section 1 prefix that generalises, and reconstructing a path from a fragment is how two earlier rounds of defects entered this engine.",
+
+  "checkboxes": {
+    "s1_marital_status": {
+      "unmarried": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusUnmarried[0]",
+      "married":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusMarried[0]",
+      "_printed":  "Caption 'Marital status' y 532.3, x 36.0..83.6. 'Unmarried' y 516.9, x 50.4..87.7 with its box at y 515.7, x 36.0..45.0; 'Married' y 516.9, x 122.4..149.5 with its box at y 515.7, x 108.0..117.0. Each box is drawn to the LEFT of the word it labels, which is the convention everywhere on this page."
+    },
+    "s1_housing_status": {
+      "own":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ownYourHome[0]",
+      "rent":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].rent[0]",
+      "other": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecify[0]",
+      "_printed": "Caption 'Do you' y 532.3, x 385.2..410.5. 'Own your home' y 516.9, x 399.6..456.1 with its box at y 515.7, x 385.2..394.2; 'Rent' y 516.9, x 493.2..510.1 with its box at y 515.7, x 478.8..487.8; 'Other (specify e.g., share rent, live with relative, etc.)' y 502.5, x 399.6..565.8 with its box at y 501.3, x 385.2..394.2. Three options, one printed question, one column. The 'other' box shares its x with the 'own' box because it is the next printed ROW of the same option list, not a second column."
+    },
+    "s2_tp_pay_period": {
+      "weekly":    "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].weekly[0]",
+      "bi-weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].biweekly[0]",
+      "monthly":   "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].monthly[0]",
+      "other":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].other[0]",
+      "_printed": "Column caption 'Pay period' y 222.7, x 198.0..236.2, inside the taxpayer's own employer block. 'Weekly' y 221.7, x 270.0..296.2 (box y 220.5, x 255.6..264.6); 'Bi-weekly' y 221.7, x 331.2..365.4 (box y 220.5, x 316.8..325.8); 'Monthly' y 207.3, x 270.0..298.0 (box y 206.1, x 255.6..264.6); 'Other' y 207.3, x 331.2..351.2 (box y 206.1, x 316.8..325.8). Bound by rectangle, not by leaf name and not by the label file: 433aoi.labels.txt correlates all four of these to the Section 2 instruction paragraph ('you file a Schedule C, E, F, etc. ...'), which is the nearest drawn text and says nothing about pay periods."
+    },
+    "s2_sp_pay_period": {
+      "weekly":    "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].weekly[0]",
+      "bi-weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].biweekly[0]",
+      "monthly":   "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].monthly[0]",
+      "other":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].other[0]",
+      "_printed": "The second, identically captioned 'Pay period' column at y 136.3, x 198.0..236.2, inside the spouse's employer block. 'Weekly'/'Bi-weekly' y 135.3 (boxes y 134.1); 'Monthly'/'Other' y 120.9 (boxes y 119.7). Same x columns as the taxpayer set, 86 points lower on the page. The two sets are told apart by y and by subform (You[0] vs Spouse[0]), never by the identical caption."
+    },
+    "s2_tp_business_ownership_interest": {
+      "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_22[0]",
+      "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_23[0]",
+      "_printed": "Question 'Do you have an ownership interest in this business' y 193.9, x 36.0..216.1. 'Yes' y 180.3, x 50.4..64.2 with its box at y 179.1, x 36.0..45.0, followed by '(also complete and submit Form 433-B)' y 179.3, x 66.4..189.3; 'No' y 180.3, x 212.4..222.6 with its box at y 179.1, x 198.0..207.0."
+    },
+    "s2_sp_business_ownership_interest": {
+      "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_27[0]",
+      "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_28[0]",
+      "_printed": "Question 'Does your spouse have an ownership interest in this business' y 107.5, x 36.0..255.2. 'Yes' y 93.9, x 50.4..64.2 with its box at y 92.7, x 36.0..45.0, followed by '(also complete and submit Form 433-B)' y 92.9, x 66.4..189.3; 'No' y 93.9, x 212.4..222.6 with its box at y 92.7, x 198.0..207.0."
+    }
+  },
+
+  "check_here": {
+    "_why": "A construct this form needs and 433-A does not. Every checkbox set on 433-A pairs an affirmative target with a negative one, so `checkboxes` can always name an option for either answer. This form prints a lone 'check here' box with NO counterpart cell: the negative answer is the box left blank. Modelling it as a yes/no option set would mean inventing a target for 'no', and there is no cell to invent it into. A truthy input checks the box; a falsy input leaves it blank; a value that is neither stops the run rather than being guessed at.",
+    "s1_community_property_state_last_10_years": {
+      "target": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].marriedLivedIn[0]",
+      "_printed": "If you were married and lived in AZ, CA, ID, LA, NM, NV, TX, WA or WI within the last ten years check here",
+      "_printed_at": "caption y 473.7, x 50.4..429.2; box y 472.5, x 36.0..45.0. The sentence begins at x 50.4, immediately right of the box, in the left column - it is not part of the 'Do you' housing column, which starts at x 385.2."
+    }
+  },
+
+  "exclusive": {
+    "_note": "Guard, not a binding. Yes/No pairs and option sets on these forms are INDEPENDENT AcroForm checkboxes - nothing in the PDF stops two of them being checked at once - so the constraint is asserted here and read back off the saved form. Every target below is also bound above; that duplication is the point, and verify-form-coverage.mjs treats this root as a guard so it is not counted as a second binding. s1_community_property_state_last_10_years is deliberately ABSENT: a lone box has nothing to be exclusive with.",
+    "s1_marital_status": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusUnmarried[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusMarried[0]"
+    ],
+    "s1_housing_status": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ownYourHome[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].rent[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecify[0]"
+    ],
+    "s2_tp_pay_period": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].weekly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].biweekly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].monthly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].other[0]"
+    ],
+    "s2_sp_pay_period": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].weekly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].biweekly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].monthly[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].other[0]"
+    ],
+    "s2_tp_business_ownership_interest": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_22[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_23[0]"
+    ],
+    "s2_sp_business_ownership_interest": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_27[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_28[0]"
+    ],
+    "household_members[0].claimed_on_1040": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_06[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_07[0]"
+    ],
+    "household_members[0].contributes_to_household_income": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_08[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_09[0]"
+    ],
+    "household_members[1].claimed_on_1040": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_10[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_11[0]"
+    ],
+    "household_members[1].contributes_to_household_income": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_12[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_13[0]"
+    ],
+    "household_members[2].claimed_on_1040": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_14[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_15[0]"
+    ],
+    "household_members[2].contributes_to_household_income": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_16[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_17[0]"
+    ],
+    "household_members[3].claimed_on_1040": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_18[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_19[0]"
+    ],
+    "household_members[3].contributes_to_household_income": [
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_20[0]",
+      "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_21[0]"
+    ]
+  },
+
+  "groups": {
+    "household_members": {
+      "source": "household_members",
+      "max": 4,
+      "overflow": "log",
+      "_printed_heading": "Provide information for all other persons in the household or claimed as a dependent.",
+      "_heading_at": "y 358.1, x 36.0..362.3",
+      "_columns_by_x": "Name x 36.0..212.4, header 'Name' at x 115.1..136.9. Age x 219.6..248.4 with /MaxLen 4, header 'Age' at x 226.4..241.6. Relationship x 255.6..385.2, header 'Relationship' at x 296.4..344.4. 'Claimed as a dependent' (y 345.3, x 391.6..483.2) / 'on your Form 1040' (y 335.7, x 401.6..473.2) heads the pair Yes x 396.0..405.0 / No x 442.8..451.8, whose own printed 'Yes' and 'No' sit at x 410.4..424.2 and x 457.2..467.4. 'Contributes to' (y 345.3, x 503.7..558.3) / 'household income' (y 335.7, x 495.7..566.3) heads the pair Yes x 493.2..502.2 / No x 536.4..545.4, whose printed 'Yes' and 'No' sit at x 507.6..521.4 and x 550.8..561.6. Every header's x-range sits over the cells it heads.",
+      "_row_order": "Row1 y 324.0, Row2 y 309.6, Row3 y 295.2, Row4 y 280.8 - descending y, which is printed order.",
+      "_column_names_match_433a": "name / age / relationship / claimed_on_1040 / contributes_to_household_income are the same column names 433-A's household_members group uses, so the crosswalk binds these rows onto the backbone shape that already exists instead of declaring a second vocabulary for the same fact.",
+      "slots": [
+        {
+          "text": {
+            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Name_01[0]",
+            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Age_01[0]",
+            "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Relationship_01[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_06[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_07[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_08[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_09[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Name_02[0]",
+            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Age_02[0]",
+            "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Relationship_02[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_10[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_11[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_12[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_13[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Name_03[0]",
+            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Age_03[0]",
+            "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Relationship_03[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_14[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_15[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_16[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_17[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Name_04[0]",
+            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Age_04[0]",
+            "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Relationship_04[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_18[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_19[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_20[0]",
+              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_21[0]"
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "_never_autofill": {
+    "_why": "Mapped, understood, and deliberately blank - a stronger claim than `_deferred`, which means 'not resolved yet'. Listed as objects whose `target` is a string VALUE, so the schema-agnostic validator checks every one of them for existence. Same construct 433a.map.json and 433f.map.json use; it sits at the TOP LEVEL here because this form has no `allowed` block to hang it under.",
+    "fields": [
+      {
+        "target": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].form_433b[0]",
+        "reason": "NOT A DATA FIELD. A PDFButton whose rectangle (y 170.6..183.6, x 151.2..190.8) lies over the printed words 'Form 433-B' inside the caption '(also complete and submit Form 433-B)' at y 179.3, x 66.4..189.3 - a link, with no value to write. Enumerated here so it is in a declared state rather than counted as an unreferenced cell. Same treatment as national_standards[0] on 433-F."
+      },
+      {
+        "target": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].form_433b[0]",
+        "reason": "NOT A DATA FIELD. The second of the pair, over the identical printed caption in the spouse's employment block (button y 84.2..97.2, x 151.2..190.8; caption y 92.9, x 66.4..189.3). The third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is NOT declared here: it is on page 6, which belongs to a slice nobody has read yet, and declaring it now would claim coverage of a page this map has not looked at."
+      }
+    ]
+  },
+
+  "_partition": {
+    "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
+    "form_fields_total": 425,
+    "in_this_slice": 74,
+    "bound_writable": 72,
+    "excluded_never_autofill": 2,
+    "deferred": 0,
+    "unaccounted": 351,
+    "_check": "72 + 2 + 0 = 74, which is every field on page 1 (433aoi.labels.txt lists 74 for p1). 425 - 74 = 351 still unaccounted, all of them on pages 2-8.",
+    "_bound_breakdown": "Section 1: 16 scalars + 2 marital + 3 housing + 1 check-here + 28 dependent-grid targets (4 rows x [3 text + 4 checkbox]) = 50. Section 2: 10 scalars + 4 taxpayer pay-period + 4 spouse pay-period + 2 taxpayer ownership + 2 spouse ownership = 22. 50 + 22 = 72.",
+    "_unaccounted_by_page": "p2 68, p3 59, p4 66, p5 40, p6 39, p7 50, p8 29 = 351."
+  }
+}
