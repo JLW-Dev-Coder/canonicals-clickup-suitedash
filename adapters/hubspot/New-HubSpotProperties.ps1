@@ -34,7 +34,10 @@
   destructive or permanent call goes out over node's fetch - and creating an immutable name is
   exactly that kind of call.
 
-  This script stays for the DRY RUN, which reads the same definitions and writes nothing.
+  REFUSES TO WRITE, in every mode. -DryRun still prints exactly what would be created, which
+  is what this script is now FOR; without -DryRun it prints the same list, states this reason,
+  and exits 3 without a single POST. The refusal is deliberate rather than a doc note: a doc
+  note does not stop the next person who runs it without the switch.
 
   Credential: HubSpot Service Key (Bearer). Set it in the environment, never in the repo:
       $env:HUBSPOT_SERVICE_KEY = "pat-... or service-key-..."
@@ -117,9 +120,9 @@ $existingProps = @{}
 foreach ($g in $groups) {
   if ($existingGroups[$g.name]) { Write-Host "  group exists: $($g.name)"; continue }
   $body = @{ name=$g.name; label=$g.label; displayOrder=$g.displayOrder } | ConvertTo-Json
-  if ($DryRun) { Write-Host "  [dry] create group $($g.name) ($($g.label))" -ForegroundColor Yellow; continue }
-  Invoke-RestMethod -Uri "$base/crm/v3/properties/$ObjectType/groups" -Headers $headers -Method Post -Body $body | Out-Null
-  Write-Host "  + group $($g.name)" -ForegroundColor Green
+  Write-Host "  [would create] group $($g.name) ($($g.label))" -ForegroundColor Yellow
+  # Refuses to POST in every mode, dry run or not. See REFUSES TO WRITE in .NOTES.
+  $null = $body
 }
 
 # ---- build property inputs for those not already present ----
@@ -148,17 +151,25 @@ if ($DryRun) {
   return
 }
 
-# ---- batch create (chunks of 100) ----
-$created = 0
-for ($i = 0; $i -lt $toCreate.Count; $i += 100) {
-  $chunk = $toCreate[$i..([Math]::Min($i+99, $toCreate.Count-1))]
-  $body  = @{ inputs = $chunk } | ConvertTo-Json -Depth 6
-  try {
-    $resp = Invoke-RestMethod -Uri "$base/crm/v3/properties/$ObjectType/batch/create" -Headers $headers -Method Post -Body $body
-    $created += $chunk.Count
-    Write-Host "  + created $($chunk.Count) (total $created)" -ForegroundColor Green
-  } catch {
-    Write-Host "  ! batch $i failed: $($_.ErrorDetails.Message)" -ForegroundColor Red
-  }
-}
-Write-Host "Done. Created $created properties on $ObjectType." -ForegroundColor Cyan
+# ---- batch create: REFUSED ----
+# This script no longer writes. PowerShell 5.1's Invoke-RestMethod encodes a STRING body as
+# ISO-8859-1 unless it is handed raw bytes, so a non-ASCII character in a property description
+# leaves as 0x3F. Four em-dashes, transcribed from 433-F's own printed labels, took out all
+# twenty-seven v3 property creations in one batch:
+#
+#     ! batch 0 failed: Invalid input JSON on line 153, column 72:
+#       Invalid UTF-8 middle byte 0x3f
+#
+# That failure was LOUD, which is the good case. The bad case is a mangled description that
+# happens to be legal UTF-8, attached to a property name that can never be withdrawn.
+#
+# THE STANDING RULE: PowerShell orchestrates and reads. Any call that writes permanent state -
+# properties, options, schema - goes out over node's fetch, and the result is read back from
+# the portal rather than trusted from the create response.
+Write-Host ""
+Write-Host "REFUSING TO CREATE. $($toCreate.Count) property/ies would be created and this script does not write." -ForegroundColor Red
+Write-Host "  Reason: PS 5.1 Invoke-RestMethod sends a string body as ISO-8859-1; a non-ASCII" -ForegroundColor Red
+Write-Host "  character in a description leaves as 0x3F, onto a property name that is permanent." -ForegroundColor Red
+Write-Host "  Create them with:  node adapters/hubspot/hs-provision.mjs <form>" -ForegroundColor Yellow
+Write-Host "  This script's DRY RUN is still current — re-run it with -DryRun to see the list." -ForegroundColor Yellow
+exit 3

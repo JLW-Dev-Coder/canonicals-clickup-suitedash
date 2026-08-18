@@ -624,7 +624,20 @@
             "lender_phone": "topmostSubform[0].Page3[0].#subform[4].p2_t18_13c[0]"
           }
         }
-      ]
+      ],
+      "union_columns": [
+        "year_purchased",
+        "purchase_price",
+        "kind"
+      ],
+      "_union_why": "433-F's B. REAL ESTATE prints three cells 433-A prints none for: Year Purchased, Purchase Price, and the Primary Residence / Other Property tick. They are columns of the CANONICAL real_property row (asset-row-shapes.json class real_property), so the shared property must publish them or the next form is told they do not exist — the same reason bank_accounts declares is_business_account. ADD-ONLY: every column 433-A already prints keeps its key and its target, and none of these three has a slot on this form, so nothing here reaches a 433-A page.",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "real_property"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "vehicles": {
       "source": "vehicles",
@@ -778,7 +791,19 @@
             "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t28_14b[0]"
           }
         }
-      ]
+      ],
+      "union_columns": [
+        "card_or_line_type",
+        "minimum_monthly_payment"
+      ],
+      "_union_why": "433-F's D. CREDIT CARDS prints two cells 433-A prints none for: the card or line TYPE (Visa, department store card, line of credit) and the Minimum Monthly Payment. Both are columns of the canonical credit_line row. 433-A's own available_credit column is the reverse case — 433-F prints no cell for it — and it stays, because the union is the union. ADD-ONLY: nothing here reaches a 433-A page.",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "credit_line"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "life_insurance_policies": {
       "source": "life_insurance_policies",

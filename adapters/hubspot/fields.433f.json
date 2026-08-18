@@ -7,12 +7,12 @@
     "generator": "adapters/hubspot/gen-fields-from-crosswalk.mjs",
     "naming_rule": "The translation registry for 433-F. One row per INPUT KEY the 433-F fill engine can consume, saying which HubSpot property feeds it. hs-fetch-433f.mjs reads this file and never re-derives the translation; gen-fields-from-crosswalk.mjs reads it to emit the provisioning definitions for the rows that need creating.",
     "contains": "ONLY the properties this form ADDS. The rows the crosswalk classed `exact` bind to properties the backbone already owns and are deliberately not re-declared here — one property with two definition files follows whichever provisioner ran last.",
-    "reused_not_recreated": 39,
+    "reused_not_recreated": 41,
     "counts": {
-      "total": 58,
+      "total": 56,
       "shared": 49,
-      "form_specific": 9,
-      "pii": 7
+      "form_specific": 7,
+      "pii": 5
     }
   },
   "groups": [
@@ -561,24 +561,6 @@
       "classification": "new_shared"
     },
     {
-      "key": "real_estate",
-      "scope": "433f",
-      "hs_name": "irs433f_real_estate",
-      "form": "433f",
-      "field": "real_estate",
-      "label": "[433] Real estate (JSON array; 9 columns)",
-      "description": "433-F: B. REAL ESTATE (input key: real_estate). Specific to form 433-F - see crosswalk.433f.json entry real_estate for why this one could not be shared. JSON array of row objects with keys: description, monthly_payment, year_purchased, purchase_price, current_fmv, current_loan_balance, equity, kind, asset_class. PII - handle per VLP PII rule.",
-      "group": "irs433f",
-      "type": "string",
-      "fieldType": "textarea",
-      "options": null,
-      "map_option_by_value": null,
-      "pii": true,
-      "source": "groups (serialized: description, monthly_payment, year_purchased, purchase_price, current_fmv, current_loan_balance, equity, kind, asset_class)",
-      "type_basis": "repeatable table, serialized as a JSON array",
-      "classification": "form_specific"
-    },
-    {
       "key": "other_assets",
       "scope": "433f",
       "hs_name": "irs433f_other_assets",
@@ -593,24 +575,6 @@
       "map_option_by_value": null,
       "pii": true,
       "source": "groups (serialized: description, monthly_payment, year_purchased, current_fmv, current_loan_balance, equity, asset_class)",
-      "type_basis": "repeatable table, serialized as a JSON array",
-      "classification": "form_specific"
-    },
-    {
-      "key": "credit_cards",
-      "scope": "433f",
-      "hs_name": "irs433f_credit_cards",
-      "form": "433f",
-      "field": "credit_cards",
-      "label": "[433] Credit cards (JSON array; 5 columns)",
-      "description": "433-F: D. CREDIT CARDS (input key: credit_cards). Specific to form 433-F - see crosswalk.433f.json entry credit_cards for why this one could not be shared. JSON array of row objects with keys: card_or_line_type, credit_limit, amount_owed, minimum_monthly_payment, asset_class. PII - handle per VLP PII rule.",
-      "group": "irs433f",
-      "type": "string",
-      "fieldType": "textarea",
-      "options": null,
-      "map_option_by_value": null,
-      "pii": true,
-      "source": "groups (serialized: card_or_line_type, credit_limit, amount_owed, minimum_monthly_payment, asset_class)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "classification": "form_specific"
     },
