@@ -254,6 +254,7 @@ const push = (key, extra) => {
     type: extra.type,
     fieldType: extra.fieldType,
     options: extra.options ?? null,
+    map_option_by_value: extra.map_option_by_value ?? null,
     pii,
     line_ref: lineRef(key),
     source: extra.source,            // which map construct produced this property
@@ -278,22 +279,39 @@ for (const [key, def] of Object.entries(mapDoc.split || {})) {
   });
 }
 
-// 3. `checkboxes` — the map's own option keys BECOME the property's option values, so a value
-//    chosen in HubSpot is a value the fill engine already knows how to resolve. Inventing
-//    prettier values here would put a translation table between the CRM and the form.
+// 3. `checkboxes` — for a `select`, the map's own option keys BECOME the property's option
+//    values, so a value chosen in HubSpot is a value the fill engine already knows how to
+//    resolve. Inventing prettier values there would put a translation table between the CRM
+//    and the form.
+//
+//    ⚠️ A yes/no pair CANNOT work that way. HubSpot's `booleancheckbox` only accepts the
+//    literal values "true" and "false" — it will not store "yes" — so for these one property
+//    there IS a translation, and the fill engine is on the far side of it: `resolveOption`
+//    matches the raw value against the MAP's option keys, and normalize() converts a real
+//    boolean to yes/no but leaves the STRING "true" as "true". So a value round-tripped out
+//    of HubSpot resolves against nothing.
+//
+//    That is the same shape as the bug that cost 433-F its entire checkbox layer: a value the
+//    engine cannot resolve, produced by the fetch layer, with the two sides never compared.
+//    Rather than leave the fetch layer to re-derive the rule below (which is exactly how the
+//    two drift apart), the mapping is RECORDED here, by the code that chose it.
 for (const [key, options] of Object.entries(mapDoc.checkboxes || {})) {
   if (isProse(key) || !options || typeof options !== 'object' || Array.isArray(options)) continue;
   const values = Object.keys(options);
   const yesno = values.length === 2 && values.every(v => /^(yes|no)$/i.test(v));
+  const optionValue = (v) => (yesno ? String(/^yes$/i.test(v)) : v);
   push(key, {
     type: 'enumeration',
     fieldType: yesno ? 'booleancheckbox' : 'select',
     basis: yesno ? 'yes/no checkbox pair' : `named-option checkbox set (${values.length} options)`,
     options: values.map((v, i) => ({
       label: v.charAt(0).toUpperCase() + v.slice(1).replace(/[-_]/g, ' '),
-      value: yesno ? String(/^yes$/i.test(v)) : v,
+      value: optionValue(v),
       displayOrder: i,
     })),
+    // HubSpot stored value -> the MAP's option key. Identity for a select; the real work is
+    // "true" -> "yes" / "false" -> "no". The fetch layer applies this and never re-derives it.
+    map_option_by_value: Object.fromEntries(values.map(v => [optionValue(v), v])),
     source: 'checkboxes',
   });
 }

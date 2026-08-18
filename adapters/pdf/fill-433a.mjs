@@ -196,7 +196,41 @@ const HH_INPUT  = 'allowable_household_size';
 const U65_INPUT = 'allowable_under_65_count';
 const O65_INPUT = 'allowable_65_over_count';
 
-// mmddyyyy -> whole years as of today, or null when the value is absent or unusable.
+// The date the age cross-check is computed AS OF.
+//
+// ⚠️ THIS MUST NOT BE "TODAY". The cross-check compares ages derived from dates of birth
+// against the two supplied age-band headcounts, and today's date is not an input to the run --
+// it is ambient state. A fixture that passes in August starts failing on its own the following
+// January when someone crosses 65, with nothing in the repo having changed, and the warning it
+// emits then is indistinguishable from a genuine data problem. A drifting check is worse than
+// no check: it trains the reader to ignore the one line that would have carried a real finding.
+//
+// Resolution order, most explicit first:
+//   --as-of=YYYY-MM-DD   the operator states the date the statement speaks as of
+//   record._age_as_of    the record carries it (a fixture pins itself, and stays pinned)
+//   AGE_AS_OF_DEFAULT    a fixed, committed date
+//
+// The resolved date and where it came from are printed with the warning, so a reader is never
+// left guessing which date the ages were computed against.
+const AGE_AS_OF_DEFAULT = '2026-01-01';
+
+const resolveAsOf = () => {
+  const flag = process.argv.find(a => a.startsWith('--as-of='));
+  const raw = flag ? flag.slice('--as-of='.length) : (data._age_as_of ?? AGE_AS_OF_DEFAULT);
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(raw).trim());
+  if (!m) {
+    console.error(`--as-of / _age_as_of must be YYYY-MM-DD, received ${JSON.stringify(raw)}.`);
+    process.exit(2);
+  }
+  return {
+    label: `${m[1]}-${m[2]}-${m[3]}`,
+    source: flag ? '--as-of' : (data._age_as_of ? 'record._age_as_of' : 'AGE_AS_OF_DEFAULT'),
+    y: +m[1], m: +m[2], d: +m[3],
+  };
+};
+const AS_OF = resolveAsOf();
+
+// mmddyyyy -> whole years as of AS_OF, or null when the value is absent or unusable.
 // Only ever feeds a WARNING, never a written figure, so an unparseable date degrades to
 // "no evidence" rather than to a wrong allowance.
 const ageFromDob = (raw) => {
@@ -205,10 +239,9 @@ const ageFromDob = (raw) => {
   if (s.length !== 8) return null;
   const mm = +s.slice(0, 2), dd = +s.slice(2, 4), yyyy = +s.slice(4, 8);
   if (!mm || !dd || !yyyy || mm > 12 || dd > 31) return null;
-  const now = new Date();
-  let age = now.getFullYear() - yyyy;
-  const monthsPast = (now.getMonth() + 1) - mm;
-  if (monthsPast < 0 || (monthsPast === 0 && now.getDate() < dd)) age--;
+  let age = AS_OF.y - yyyy;
+  const monthsPast = AS_OF.m - mm;
+  if (monthsPast < 0 || (monthsPast === 0 && AS_OF.d < dd)) age--;
   return age >= 0 && age < 130 ? age : null;
 };
 
@@ -383,6 +416,7 @@ if (A) {
               `age-band cross-check DISAGREES with the supplied counts (not corrected — the form's ages are a snapshot and you may know better).`,
               `  supplied: ${U65_INPUT} ${u65}, ${O65_INPUT} ${o65}`,
               `  form says: ${evU} under 65, ${evO} aged 65 or over${unknown.length ? `, ${unknown.length} with no usable age` : ''}`,
+              `  ages computed as of ${AS_OF.label} (from ${AS_OF.source}) — NOT today, so this reading does not drift as the fixture ages`,
             ];
             for (const p of people) lines.push(`    ${p.age === null ? '  ?' : String(p.age).padStart(3)}  ${p.who} (${p.src})`);
             if (unknown.length) lines.push(`  A person with no usable age is counted in NEITHER band above, so a disagreement of exactly ${unknown.length} may be nothing more than that.`);

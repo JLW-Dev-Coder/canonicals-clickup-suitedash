@@ -11,6 +11,7 @@ __pycache__/
 *.bak
 adapters/pdf/out/
 samples/433f.from-hubspot-*.json
+samples/433a.from-hubspot-*.json
 
 # HubSpot pre-reset backup — REAL CUSTOMER PII. Never enters git (VLP no-customer-PII rule).
 adapters/hubspot/backup/
