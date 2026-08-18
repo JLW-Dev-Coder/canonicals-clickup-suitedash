@@ -12,9 +12,26 @@ const pdf    = await PDFDocument.load(readFileSync(mapDoc.pdf));
 const form   = pdf.getForm();
 
 let filled = 0; const skipped = [];
-const setText = (name, val) => {
+// A value the FIELD refuses is a HARD failure, not a skip — the same rule fill-433a.mjs
+// already runs under. 433-F carries cells that cannot hold what the IRS prints beside
+// them: the digital-asset value column is /MaxLen 12 while the form's own printed example,
+// "10 Bitcoins $64,600 USD", is 23 characters, and the two final-payment year boxes are
+// /MaxLen 2. pdf-lib throws rather than truncating; catching that as a "skip" would leave
+// the cell blank on a filed statement with nothing but a one-line note about it, and
+// truncating would print a crypto holding the taxpayer never gave. So an over-long value
+// stops the run and NAMES the cell, so an operator shortens it deliberately.
+const capacityErrors = [];
+const setText = (name, val, key) => {
   if (val === undefined || val === null || val === '') return;
-  try { form.getTextField(name).setText(String(val)); filled++; } catch { skipped.push(name); }
+  let field;
+  try { field = form.getTextField(name); } catch { skipped.push(name); return; }
+  const s = String(val), max = field.getMaxLength();
+  if (max !== undefined && s.length > max) {
+    capacityErrors.push({ key: key ?? name, name, len: s.length, max, value: s });
+    return;
+  }
+  try { field.setText(s); filled++; }
+  catch (e) { capacityErrors.push({ key: key ?? name, name, len: s.length, max, value: s, why: e.message }); }
 };
 
 let cbFilled = 0;
@@ -38,7 +55,43 @@ if (comp) { const parts = comp.from.map(k => data[k]).filter(Boolean); if (parts
 // next one silently too. The map now binds that target exactly once, through the composite,
 // so the loop needs no exception and the duplicate-write gate can actually see the map.
 for (const [key, name] of Object.entries(mapDoc.map)) {
-  setText(name, data[key]);
+  setText(name, data[key], key);
+}
+
+// split — one input value across abutting boxes.
+//
+// THE SAME CONSTRUCT fill-433a.mjs RUNS, not a second mechanism. 433-F needs it for exactly
+// one thing: Section C's "Date of Final Payment (mo/yr)" is two cells, each /MaxLen 2, so a
+// canonical four-digit-year date cannot pass through and the year on the page is the printed
+// two. `strip` removes the caller's formatting, each part consumes `chars` source characters,
+// and `format` masks a chunk ('#' takes one chunk character, anything else is literal).
+//
+// The length check is EXACT, not "at least": a stripped value longer than the parts consume
+// would leave characters on the floor, which is truncation by another name. That is the
+// property worth having here — an operator who supplies 06/2027 gets a loud stop rather than
+// a silent "20" printed in the year box, which would read as the year 2020 on a signed form.
+const splitErrors = [];
+const applyFormat = (chunk, format) => {
+  let out = '', i = 0;
+  for (const ch of format) out += ch === '#' ? chunk[i++] : ch;
+  return out;
+};
+for (const [key, def] of Object.entries(mapDoc.split || {})) {
+  if (!def || typeof def !== 'object' || !Array.isArray(def.parts)) continue;   // `_why` prose
+  const raw = data[key];
+  if (raw === undefined || raw === null || String(raw).trim() === '') continue;  // absent is fine
+  const stripped = def.strip ? String(raw).replace(new RegExp(def.strip, 'g'), '') : String(raw);
+  const expected = def.parts.reduce((n, p) => n + (p.chars ?? 0), 0);
+  if (stripped.length !== expected) {
+    splitErrors.push({ key, raw, stripped, len: stripped.length, expected });
+    continue;                                    // nothing written for this key
+  }
+  let at = 0;
+  def.parts.forEach((part, i) => {
+    const chunk = stripped.slice(at, at + part.chars);
+    at += part.chars;
+    setText(part.target, part.format ? applyFormat(chunk, part.format) : chunk, `${key}.parts[${i}]`);
+  });
 }
 
 // repeatable groups (array input, else scalar fallback)
@@ -59,7 +112,7 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
   groupRows[g] = rows;
   rows.forEach((row, i) => {
     if (i >= def.slots.length) { overflow.push(`${g}[${i}]`); return; }
-    for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub]);
+    for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub], `groups.${g}.slots[${i}].${sub}`);
   });
 }
 
@@ -174,6 +227,32 @@ if (std && mapDoc.allowed) {
   const oop = ageBand === '65_over' ? std.oop['65_over'] : std.oop['under_65'];
   if (mapDoc.allowed.oop_by_age && (ageBand || rawHH)) setText(mapDoc.allowed.oop_by_age, oop);
   allowedFilled = filled - before;
+}
+
+// Values the FORM refuses, and splits that do not fill their parts exactly. Both stop the
+// run BEFORE anything is written, and both name the input key rather than only the widget,
+// because the fix is always to the record. Reported together so one run surfaces every one.
+if (capacityErrors.length || splitErrors.length) {
+  if (capacityErrors.length) {
+    console.error(`CAPACITY — ${capacityErrors.length} value(s) are longer than the cell the form provides. No PDF written.`);
+    for (const e of capacityErrors) {
+      console.error(`  ${e.key}: ${e.len} characters into a /MaxLen ${e.max} cell`);
+      console.error(`    field: ${e.name}`);
+      console.error(`    value: ${JSON.stringify(e.value)}`);
+      if (e.why) console.error(`    pdf-lib: ${e.why}`);
+    }
+    console.error('  Shorten the value in the record. The cell is never truncated here: a shortened');
+    console.error('  figure on a signed collection statement is a number the taxpayer did not give.');
+  }
+  if (splitErrors.length) {
+    console.error(`SPLIT LENGTH MISMATCH — ${splitErrors.length} value(s) do not fill their parts exactly. No PDF written.`);
+    for (const e of splitErrors) {
+      console.error(`  ${e.key}: ${JSON.stringify(e.raw)} strips to ${JSON.stringify(e.stripped)} (${e.len} chars), the parts consume ${e.expected}`);
+    }
+    console.error('  Correct the input — a split is never padded or truncated, and no part of a');
+    console.error('  short value is written. Section C wants mo/yr with a TWO-digit year: 06/27.');
+  }
+  process.exit(2);
 }
 
 mkdirSync('adapters/pdf/out', { recursive: true });

@@ -49,7 +49,14 @@ const backboneByKey = new Map(back.properties.map((p) => [p.key, p]));
 const engineInputs = new Set([
   ...(map.special?.composite_name_address?.from || []),
   ...Object.keys(map.map || {}),
-  ...Object.keys(map.split || {}),
+  // `split` carries prose keys alongside its definitions (`_why`, and on 433-F a note on why
+  // the two Section C keys are scalars rather than row columns). The fill engines skip any
+  // entry without a `parts` array, so those keys are not engine inputs and a crosswalk row for
+  // one would be a property provisioned for a comment. Filtered the same way the engine skips
+  // them, rather than by name, so a third prose key needs no edit here.
+  ...Object.entries(map.split || {})
+    .filter(([, v]) => v && typeof v === 'object' && Array.isArray(v.parts))
+    .map(([k]) => k),
   ...Object.entries(map.checkboxes || {})
     .filter(([, v]) => v && typeof v === 'object' && !Array.isArray(v) && !v.index)
     .map(([k]) => k),

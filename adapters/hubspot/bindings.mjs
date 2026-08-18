@@ -80,7 +80,12 @@ export function consumableKeys(form, mapDoc) {
   const base = [
     ...(mapDoc.special?.composite_name_address?.from || []),
     ...Object.keys(mapDoc.map || {}),
-    ...Object.keys(mapDoc.split || {}),
+    // `split` carries prose keys beside its definitions. The fill engines skip any entry with
+    // no `parts` array, so those are not consumable inputs — filtered the same way the engine
+    // skips them, and mirrored in validate-crosswalk.mjs.
+    ...Object.entries(mapDoc.split || {})
+      .filter(([, v]) => v && typeof v === 'object' && Array.isArray(v.parts))
+      .map(([k]) => k),
     ...Object.entries(mapDoc.checkboxes || {})
       .filter(([, v]) => v && typeof v === 'object' && !Array.isArray(v) && !v.index)
       .map(([k]) => k),

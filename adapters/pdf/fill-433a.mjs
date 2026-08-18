@@ -153,9 +153,34 @@ for (const [key, options] of Object.entries(mapDoc.checkboxes || {})) {
   applyOption(key, options, data[key]);
 }
 
+// A row composite joins several canonical row keys into ONE printed cell.
+//
+// The shared row classes take the finer granularity wherever two forms disagree: the
+// receivable row carries `name` and `address` separately because 433-F prints two cells,
+// while 433-A prints one box headed "Accounts/Notes Receivable & Address". So the row is
+// composed here, at the form, rather than stored pre-joined — a stored separator is a
+// derivation somebody eventually tries to reverse.
+//
+// Composed onto a COPY of the row. The source array is the caller's, and mutating it would
+// leave a joined string sitting in a record this process also hands to other layers.
+// An absent part is skipped, not printed as a stray separator; a row that supplies none of
+// the parts composes to nothing and the cell stays empty, same as any other absent value.
+const composeRow = (def, row) => {
+  const spec = def.row_composites;
+  if (!spec || !row || typeof row !== 'object') return row;
+  const out = { ...row };
+  for (const [target, c] of Object.entries(spec)) {
+    if (!c || typeof c !== 'object' || !Array.isArray(c.from)) continue;   // `_why` prose
+    const parts = c.from.map(k => row[k]).filter(v => !absent(v)).map(v => String(v).trim());
+    if (parts.length) out[target] = parts.join(c.join ?? ' ');
+  }
+  return out;
+};
+
 // repeatable groups — text + per-row yes/no pairs, overflow logged and dropped
 for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
-  const rows = Array.isArray(data[def.source || gName]) ? data[def.source || gName] : [];
+  const rowsIn = Array.isArray(data[def.source || gName]) ? data[def.source || gName] : [];
+  const rows = rowsIn.map(r => composeRow(def, r));
   const cap = Math.min(def.max ?? def.slots.length, def.slots.length);
   rows.forEach((row, i) => {
     if (i >= cap) { overflow.push(`${gName}[${i}]`); return; }   // drop, do not throw

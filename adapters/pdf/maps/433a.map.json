@@ -896,7 +896,19 @@
             "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[4]"
           }
         }
-      ]
+      ],
+      "row_composites": {
+        "_why": "One printed cell fed by two canonical row keys. Applied to the row BEFORE the slot targets are written, so every slot composes identically and the slot list needs no per-slot special case.",
+        "receivable_name_and_address": {
+          "from": [
+            "name",
+            "address"
+          ],
+          "join": ", ",
+          "_join_why": "Comma-space, because the printed caption asks for the party AND its street address in one box and that is how an address is written after a name. The separator is a PRESENTATION choice made here, at the form, and never stored — crosswalk A6 already ruled that deriving two facts back out of one combined string is what a stored separator invites."
+        }
+      },
+      "_split_note": "The shared row class SPLIT receivable_name_and_address into name + address, the one non-additive change in the fourteen-table union. Free on the day it was made: adapters/hubspot/asset-row-shapes.json records held_data = false on every irs433_ property, so no record needed migrating. The slot targets below did not move and their printed column did not change; what changed is that the row arriving from the backbone now carries two keys where it carried one, and this map joins them."
     },
     "business_property": {
       "source": "business_property",

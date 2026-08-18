@@ -5,27 +5,77 @@
   "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-F. Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; nothing here is a paraphrase, and the tool refuses to run if a string cannot be found on its declared page.",
   "_why": "Nothing else in this repo ties a widget to the words printed above it. The field names actively mislead: AccountsTable[1] prints ABOVE AccountsTable[0], so reading the names in order puts the personal bank accounts second and the investments first. This file states the intent in the form's own printed language so geometry can contradict it.",
   "_d1": "That contradiction is no longer hypothetical. The single `accounts` group straddled both tables and this file caught it; the map now binds `bank_accounts` and `investments` separately, one heading each, and no group on 433-F declares a straddle.",
-  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle's vertical centre. Headings are therefore declared densely enough to bound every group — a missing intermediate heading would silently widen the band above it.",
-
+  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle's vertical centre. Headings are therefore declared densely enough to bound every group — a missing intermediate heading would silently widen the band above it. Two of page 2's four anchors (E. BUSINESS INFORMATION and F. EMPLOYMENT INFORMATION) bind no group of their own; they are declared solely to close the bands above and below Section E. An anchor with no group is not a spare - removing it silently widens its neighbour.",
   "headings": [
-    { "id": "A_ACCOUNTS_LINES_OF_CREDIT", "page": 1, "text": "A. ACCOUNTS / LINES OF CREDIT" },
-    { "id": "PERSONAL_BANK_ACCOUNTS",     "page": 1, "text": "PERSONAL BANK ACCOUNTS" },
-    { "id": "INVESTMENTS",                "page": 1, "text": "INVESTMENTS" },
-    { "id": "DIGITAL_ASSETS",             "page": 1, "text": "DIGITAL ASSETS (CRYPTOCURRENCY)" },
-    { "id": "B_REAL_ESTATE",              "page": 1, "text": "B. REAL ESTATE" },
-    { "id": "C_OTHER_ASSETS",             "page": 1, "text": "C. OTHER ASSETS" },
-    { "id": "D_CREDIT_CARDS",             "page": 1, "text": "D. CREDIT CARDS" }
+    {
+      "id": "A_ACCOUNTS_LINES_OF_CREDIT",
+      "page": 1,
+      "text": "A. ACCOUNTS / LINES OF CREDIT"
+    },
+    {
+      "id": "PERSONAL_BANK_ACCOUNTS",
+      "page": 1,
+      "text": "PERSONAL BANK ACCOUNTS"
+    },
+    {
+      "id": "INVESTMENTS",
+      "page": 1,
+      "text": "INVESTMENTS"
+    },
+    {
+      "id": "DIGITAL_ASSETS",
+      "page": 1,
+      "text": "DIGITAL ASSETS (CRYPTOCURRENCY)"
+    },
+    {
+      "id": "B_REAL_ESTATE",
+      "page": 1,
+      "text": "B. REAL ESTATE"
+    },
+    {
+      "id": "C_OTHER_ASSETS",
+      "page": 1,
+      "text": "C. OTHER ASSETS"
+    },
+    {
+      "id": "D_CREDIT_CARDS",
+      "page": 1,
+      "text": "D. CREDIT CARDS"
+    },
+    {
+      "id": "E_BUSINESS_INFORMATION",
+      "page": 2,
+      "text": "E. BUSINESS INFORMATION"
+    },
+    {
+      "id": "E1_ACCOUNTS_RECEIVABLE",
+      "page": 2,
+      "text": "Accounts Receivable owed to you or your business"
+    },
+    {
+      "id": "E2_CREDIT_CARDS_ACCEPTED",
+      "page": 2,
+      "text": "Name of individual or business on account"
+    },
+    {
+      "id": "F_EMPLOYMENT_INFORMATION",
+      "page": 2,
+      "text": "F. EMPLOYMENT INFORMATION"
+    }
   ],
-
   "groups": {
     "bank_accounts": {
       "heading": "PERSONAL_BANK_ACCOUNTS",
-      "aligned_checkboxes": ["account_business_bank"],
+      "aligned_checkboxes": [
+        "account_business_bank"
+      ],
       "_why": "AccountsTable[1], the two rows printed under PERSONAL BANK ACCOUNTS. The field names put this table SECOND and the page puts it FIRST, which is the whole reason this file exists. Declared against the heading rather than the subform index so the page, not the name, decides whether the binding is right."
     },
     "investments": {
       "heading": "INVESTMENTS",
-      "aligned_checkboxes": ["account_business_investments"],
+      "aligned_checkboxes": [
+        "account_business_investments"
+      ],
       "_why": "AccountsTable[0], the two rows printed under INVESTMENTS. Until the D1 split these were slots 0-1 of a single `accounts` group whose declared heading was PERSONAL_BANK_ACCOUNTS, so a caller's first row — a bank account by every reading of the fallback order — printed here."
     },
     "real_estate": {
@@ -39,6 +89,18 @@
     "credit_cards": {
       "heading": "D_CREDIT_CARDS",
       "_why": "Section D is one printed table with two rows."
+    },
+    "digital_assets": {
+      "heading": "DIGITAL_ASSETS",
+      "_why": "Table_Line14, the two rows printed under DIGITAL ASSETS (CRYPTOCURRENCY). The leaf names are 433-A line-13 names carried into this form wholesale, so they say nothing about which table these widgets are drawn in; the band does."
+    },
+    "accounts_receivable": {
+      "heading": "E1_ACCOUNTS_RECEIVABLE",
+      "_why": "The two rows printed under E1's own heading. The two cells printed BELOW those rows and above E2 - the additional-sheets total and the amount available to pay now - are in this band too but are scalars, not group rows, so they are bound in `map` and are not checked here."
+    },
+    "credit_cards_accepted": {
+      "heading": "E2_CREDIT_CARDS_ACCEPTED",
+      "_why": "E2's three rows. E2 prints no section letter of its own on the heading line, so the anchor is the caption the form does print - 'Name of individual or business on account' - which is also the printed label of the table-level scalar bound beside it."
     }
   }
 }

@@ -545,42 +545,48 @@
   ],
   "accounts_notes_receivable": [
     {
-      "receivable_name_and_address": "Placeholder Dispensary Group, 410 Example Rd, Testville TS 00000",
+      "name": "Placeholder Dispensary Group",
+      "address": "410 Example Rd, Testville TS 00000",
       "status": "Current - within terms",
       "date_due": "09152026",
       "invoice_or_contract_number": "INV-66A-TEST",
       "amount_due": "7850"
     },
     {
-      "receivable_name_and_address": "Example Wellness Retail LLC, 520 Example Ct, Testville TS 00000",
+      "name": "Example Wellness Retail LLC",
+      "address": "520 Example Ct, Testville TS 00000",
       "status": "60 days past due",
       "date_due": "08012026",
       "invoice_or_contract_number": "INV-66B-TEST",
       "amount_due": "4220"
     },
     {
-      "receivable_name_and_address": "Sample County Grant Office, 630 Example Blvd, Testville TS 00000",
+      "name": "Sample County Grant Office",
+      "address": "630 Example Blvd, Testville TS 00000",
       "status": "Awarded, not yet billed",
       "date_due": "10012026",
       "invoice_or_contract_number": "GRANT-66C-TEST",
       "amount_due": "12600"
     },
     {
-      "receivable_name_and_address": "Placeholder Distribution Co, 740 Example Way, Testville TS 00000",
+      "name": "Placeholder Distribution Co",
+      "address": "740 Example Way, Testville TS 00000",
       "status": "Factored",
       "date_due": "08202026",
       "invoice_or_contract_number": "INV-66D-TEST",
       "amount_due": "3975"
     },
     {
-      "receivable_name_and_address": "Example Municipal Contract Dept, 850 Example Sq, Testville TS 00000",
+      "name": "Example Municipal Contract Dept",
+      "address": "850 Example Sq, Testville TS 00000",
       "status": "Current - net 30",
       "date_due": "11152026",
       "invoice_or_contract_number": "CONTR-66E-TEST",
       "amount_due": "9140"
     },
     {
-      "receivable_name_and_address": "Overflow Receivable Sixth Record, 960 Example Ln, Testville TS 00000",
+      "name": "Overflow Receivable Sixth Record",
+      "address": "960 Example Ln, Testville TS 00000",
       "status": "Current - net 45",
       "date_due": "12012026",
       "invoice_or_contract_number": "INV-66OVF-TEST",
@@ -646,5 +652,6 @@
       "merchant_account_number": "MERCH-63OVF-TEST-004",
       "issuing_bank_name_and_address": "Row 63OVF Overflow Issuing Bank NA, 2040 Example Loop, Testville TS 00000"
     }
-  ]
+  ],
+  "_receivable_split_note": "The receivable rows carry `name` and `address` separately: the shared `receivable` row class took the finer granularity when 433-F was bound, because that form prints Name and Address as two cells. 433-A prints one box and 433a.map.json composes the two back into it with \", \", so the printed string is unchanged. Re-keyed while adapters/hubspot/asset-row-shapes.json reported held_data = false on every irs433_ property, which is the only reason this was free."
 }

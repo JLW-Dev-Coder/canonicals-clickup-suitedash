@@ -204,7 +204,9 @@
         "printed_heading": "ACCOUNTS/NOTES RECEIVABLE - include e-payment accounts receivable and factoring companies, and any bartering or online auction accounts",
         "slots": 5,
         "columns": [
-          { "key": "receivable_name_and_address", "printed_label": "Accounts/Notes Receivable & Address", "cell": "PDFTextField", "max_len": 100, "multiline": true },
+          { "key": "name", "printed_label": "Accounts/Notes Receivable & Address - the party owing", "cell": "PDFTextField", "max_len": 100, "multiline": true, "shares_one_printed_cell_with": "address" },
+          { "key": "address", "printed_label": "Accounts/Notes Receivable & Address - (Street, City, State, ZIP code, and Country)", "cell": "PDFTextField", "max_len": 100, "multiline": true, "shares_one_printed_cell_with": "name" },
+          { "_split_applied": "APPLIED at 433-F v2, in the same change that bound 433-F's E1 table. 433-A prints ONE cell for both parts, /MaxLen 100 - which is why the ceiling is stated on both columns above: it bounds the JOINED value, not either part. 433a.map.json's group now declares row_composites.receivable_name_and_address = {from: [name, address], join: ', '} and composes them at fill time; the printed string is byte-for-byte what the single column produced, verified by reading the filled PDF back. 433-F prints Name and Address as two cells and binds them directly." },
           { "key": "status", "printed_label": "Status (e.g., age, factored, other)", "cell": "PDFTextField", "max_len": 26, "multiline": true },
           { "key": "date_due", "printed_label": "Date Due (mmddyyyy)", "cell": "PDFTextField", "max_len": 8 },
           { "key": "invoice_or_contract_number", "printed_label": "Invoice Number or Government Grant or Contract Number", "cell": "PDFTextField", "max_len": 16 },
@@ -309,6 +311,15 @@
         ]
       }
     ],
+
+    "433f_now_mapped_in_v2": {
+      "_note": "SUPERSEDES the heading below, which is kept unchanged because it is the enumeration the union was built from and its per-column geometry is the evidence those columns were authored against the printed page rather than the leaf names. All three tables are bound in 433f.map.json as of v2, each reusing the shared class outright.",
+      "digital_assets": { "group": "groups.digital_assets", "property": "irs433_digital_assets", "classification": "exact", "columns_changed": "none - the class was already the union", "maxlen_defect": "The value column (p2_t11_13a / p2_t15_13b) is /MaxLen 12 and the form's own printed example beside it, '10 Bitcoins $64,600 USD', is 23 characters. The cell cannot hold the example the IRS prints next to it. That is a defect in the form; the remedy is the capacity guard stopping the run so an operator shortens the value, never truncation. Longest value that fits: 12 characters." },
+      "receivables": { "group": "groups.accounts_receivable", "property": "irs433_accounts_notes_receivable", "classification": "exact", "columns_changed": "the class's SPLIT, applied to BOTH maps in this change - see accounts_notes_receivable above", "money_column_key": "`amount_due`, the class's name, NOT the `amount_owed` this enumeration recorded from 433-F's printed header. 433-A prints 'Amount Due' and 433-F prints 'Amount Owed' for one fact. Two keys would have left the 433-F cell blank on every row fetched from the backbone, and hs-fetch-433f.mjs's row-shape check would still have passed on name and address - a silent empty column, which is the failure the form-scoping of irs433f_accounts existed to avoid." },
+      "credit_cards_accepted": { "group": "groups.credit_cards_accepted", "property": "irs433_credit_cards_accepted", "classification": "exact", "columns_changed": "none - the class was already the union", "leaf_name_warning_held": "Confirmed on the page rather than assumed. I_ype3 / Crad_i_L_m_t3 / M_n_mim_Mon_hly_Payment3 occupy x=[36,180] / [180,468] / [468,576] and the printed captions above them are 'Credit Card' / 'Issuing Bank Name and Address' / 'Merchant Account Number'. Binding by leaf name would have printed the taxpayer's credit LIMIT into the Issuing Bank column." },
+      "one_leaf_name_two_captions": "I_ype3 is the same leaf name on E1 and E2 and its printed caption is 'Name' on the first and 'Credit Card' on the second. The name is right on one table and wrong on the other, so a spot check on either one confirms the wrong rule. This is the strongest case in either form's evidence for the standing rule that internal names are suspects and only the printed page is a witness.",
+      "nesting_depth_is_not_uniform": "All 15 Section E table cells sit at depth 2 under their sub-table subform. The three scalars printed among them - E2NameIndividualBusi[0] and M_n_mim_Mon_hly_Payment3[2] and [3] - sit at depth 0, as direct children of sectionE[0] and siblings of BOTH sub-tables. A cell drawn between two subforms cannot be inside either. Printed association is not tree parentage; carry this into 433-A(OIC)."
+    },
 
     "433f_printed_but_unmapped": [
       {
@@ -708,21 +719,21 @@
       { "table": "bank_accounts", "property": "irs433_bank_accounts", "shape_change": "RENAME + ADD", "detail": "financial_institution -> institution_name_and_address; add is_business_account. Then absorbs irs433_business_bank_accounts." },
       { "table": "business_bank_accounts", "property": "irs433_business_bank_accounts", "shape_change": "SUPERSEDED", "detail": "The same four columns as line 13. Becomes rows of bank_account with is_business_account = true; the 433-A map routes them to line 65." },
       { "table": "investments", "property": "irs433_investments", "shape_change": "RENAME + ADD", "detail": "name_and_address -> institution_name_and_address; add account_number and is_business_account." },
-      { "table": "digital_assets", "property": "irs433_digital_assets", "shape_change": "NONE", "detail": "Already the union. 433-F binds it unchanged once its map gains the group." },
+      { "table": "digital_assets", "property": "irs433_digital_assets", "shape_change": "NONE", "detail": "Already the union. 433-F binds it unchanged once its map gains the group.", "status": "APPLIED at 433-F v2 - the group exists and binds the class unchanged." },
       { "table": "available_credit", "property": "irs433_available_credit", "shape_change": "ADD", "detail": "add card_or_line_type and minimum_monthly_payment." },
       { "table": "life_insurance_policies", "property": "irs433_life_insurance_policies", "shape_change": "ADD", "detail": "add equity, monthly_premium, year_purchased." },
       { "table": "real_property", "property": "irs433_real_property", "shape_change": "ADD", "detail": "add year_purchased, purchase_price, kind, year_refinanced, refinance_amount, and county if Principal accepts A1-7. Five or six new columns, no rename." },
       { "table": "vehicles", "property": "irs433_vehicles", "shape_change": "RENAME + ADD", "detail": "year -> model_year (the A1-1 collision); add year_purchased. This rename is the only one in the migration REQUIRED for correctness rather than tidiness." },
       { "table": "property_line_20", "property": "irs433_other_personal_property", "shape_change": "ADD", "detail": "add year_purchased." },
       { "table": "business_property", "property": "irs433_business_property", "shape_change": "ADD", "detail": "add year_purchased." },
-      { "table": "accounts_notes_receivable", "property": "irs433_accounts_notes_receivable", "shape_change": "SPLIT", "detail": "receivable_name_and_address -> name + address. The only non-additive change in the set." },
+      { "table": "accounts_notes_receivable", "property": "irs433_accounts_notes_receivable", "shape_change": "SPLIT", "detail": "receivable_name_and_address -> name + address. The only non-additive change in the set.", "status": "APPLIED at 433-F v2, to both maps in one change. 433-F binds the two columns directly; 433-A composes them back into its single printed cell with row_composites, and the printed string is byte-for-byte unchanged. Free, because the audit still reported held_data = false on every irs433_ property when it was made - the cost_note on the receivable class said it would not stay free later." },
       { "table": "payment_processors", "property": "irs433_payment_processors", "shape_change": "NONE" },
-      { "table": "credit_cards_accepted", "property": "irs433_credit_cards_accepted", "shape_change": "NONE", "detail": "Already the union; 433-F E2 binds it unchanged if Principal extends that map." }
+      { "table": "credit_cards_accepted", "property": "irs433_credit_cards_accepted", "shape_change": "NONE", "detail": "Already the union; 433-F E2 binds it unchanged if Principal extends that map.", "status": "APPLIED at 433-F v2 - Principal extended the map and E2 binds the class unchanged." }
     ],
     "_433a_table_change_summary": { "of_fourteen": 14, "unchanged": 4, "additive_only": 5, "rename_plus_additive": 3, "split": 1, "superseded_into_another_table": 1 },
 
     "433f_tables_superseded": [
-      { "property": "irs433f_accounts", "superseded_by": ["irs433_bank_accounts", "irs433_investments", "irs433_digital_assets"], "note": "Requires D1 to be fixed in the same change - three classes, three routed sub-tables." },
+      { "property": "irs433f_accounts", "superseded_by": ["irs433_bank_accounts", "irs433_investments", "irs433_digital_assets"], "note": "Requires D1 to be fixed in the same change - three classes, three routed sub-tables.", "status": "PARTLY, and RETIRED either way at 433-F v2. Its digital-asset rows now reach irs433_digital_assets directly. Its bank and investment rows moved to NEW form-scoped properties irs433f_bank_accounts and irs433f_investments, NOT to the backbone classes: those two groups' slot columns are 433-F's abbreviated vocabulary (institution / acct / type / balance, plus a `bp` flag the backbone has no column for), so a backbone row handed to that engine matches no column and prints an empty table with a valid PDF and exit 0. The property that could not say WHICH printed table a row belonged in is gone; the vocabulary gap that keeps two of them form-scoped is crosswalk.433f.json arguable A2-3, recommended as the first item of v3." },
       { "property": "irs433f_real_estate", "superseded_by": ["irs433_real_property"] },
       { "property": "irs433f_other_assets", "superseded_by": ["irs433_vehicles", "irs433_life_insurance_policies", "irs433_other_personal_property", "irs433_business_property"], "note": "One 433-F table draining from four backbone classes; the map decides which rows fit its two printed slots and logs the rest." },
       { "property": "irs433f_credit_cards", "superseded_by": ["irs433_available_credit"] }
@@ -753,6 +764,14 @@
   },
 
   "rulings_recorded": {
+    "V2-SSN": {
+      "subject": "Whether 433-F stores and binds the taxpayer's and spouse's SSN/ITIN",
+      "ruling": "Store it, and bind it on BOTH forms. Telephones bind too.",
+      "by": "Owner, at 433-F v2.",
+      "reasoning_as_given": "433-A already maps AND stores it, so the recommendation to exclude it on 433-F would have left the same client pre-filled on one form and hand-typed on the other. The inconsistency was the defect, not the storage.",
+      "status": "IMPLEMENTED. 433f_tp_ssn and 433f_sp_ssn bind to irs433_tp_ssn_itin and irs433_sp_ssn_itin - the same shared facts 433-A uses, reused rather than recreated. All six telephone cells bind.",
+      "scope_extension": "The PII rule now covers INTERMEDIATES explicitly: fetched-record files, sample fixtures, logs and the HTML review page must never carry a real SSN, and no fixture may contain a well-formed one. The v2 fixture uses 000-00-0000, which SSA has never issued and never will - an all-zero area number is invalid by construction, so it cannot collide with a living person the way a plausible-looking test value can."
+    },
     "A3": {
       "subject": "433f_inc_pension and 433f_inc_ssa - pension and social security",
       "ruling": "Keep the taxpayer/spouse split as the canonical facts and have 433-F's fill sum them. BUT if either component is absent, leave the cell BLANK rather than summing what is present.",

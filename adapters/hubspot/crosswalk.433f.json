@@ -16,28 +16,37 @@
     "the_rule_that_decided_the_hard_ones": "A match is by the FACT, never by the label. Two forms asking 'county of residence' is one fact. Two forms asking an amount over different line ranges, or one form asking for a COMPONENT of what another asks for as a TOTAL, is two facts - and merging those would put a component figure on a line that must carry a total, on a filed collection statement. Where the two readings were both defensible the row is marked arguable and listed under `arguable` for Principal; where a merge would have been irreversible the row defaults to NOT merging, because a redundant property costs a name and a wrong merge costs a filed figure.",
     "type_inference_does_not_transfer": "gen-fields-from-map.mjs decides money STRUCTURALLY, from the printed-line number a 433-A key carries as its own prefix (lines 12-20, 21-51, 64-90 are the money bands). 433-F keys carry no printed line number at all, so that rule has nothing to read and would type every 433-F money cell as text. Types are therefore stated explicitly on each row here, with a basis, rather than inferred.",
     "counts": {
-      "total_input_keys": 57,
-      "exact": 25,
-      "new_shared": 28,
-      "form_specific": 4,
-      "to_provision": 32,
+      "total_input_keys": 97,
+      "exact": 37,
+      "new_shared": 49,
+      "form_specific": 11,
+      "to_provision": 60,
       "option_extensions": 2
-    }
+    },
+    "v2_note": "433-F v2 completes the map, so the crosswalk grows with it: 41 rows added and 1 retired (irs433f_accounts, which no group binds since defect D1 split it into bank_accounts and investments). Of the 41 new rows, 14 reuse a backbone fact outright — including all five serialized tables — which is what a shared backbone is for."
   },
-
   "option_extensions": [
     {
       "hs_name": "irs433_tp_pay_period",
-      "add": [{ "label": "Semi-monthly", "value": "semi-monthly" }],
+      "add": [
+        {
+          "label": "Semi-monthly",
+          "value": "semi-monthly"
+        }
+      ],
       "why": "433-A prints four pay-period boxes (weekly / bi-weekly / monthly / other) and the property was provisioned with exactly those. 433-F prints Weekly / Biweekly / Semi-monthly / Monthly - it has a SEMI-MONTHLY box and no OTHER box. Without this option a semi-monthly taxpayer cannot be recorded at all, and 433-F's semi-monthly box could never be ticked. Adding an option is additive and reverses nothing; renaming or removing one would not be, and neither is done here. A 433-A fill fed 'semi-monthly' fails loudly in resolveOption rather than silently, which is the correct behaviour for a form with no box for it."
     },
     {
       "hs_name": "irs433_sp_pay_period",
-      "add": [{ "label": "Semi-monthly", "value": "semi-monthly" }],
+      "add": [
+        {
+          "label": "Semi-monthly",
+          "value": "semi-monthly"
+        }
+      ],
       "why": "Same as irs433_tp_pay_period, for the spouse column of 433-F section F."
     }
   ],
-
   "bindings": [
     {
       "key": "433f_tp_name",
@@ -574,7 +583,9 @@
       "hs_name": "irs433_allowable_household_size",
       "backbone_key": "allowable_household_size",
       "why": "Both forms use the same headcount, under the same published basis, to select the National Standards row. 433-A declares it in map.allowed.national_standards_total.input; 433-F's map declares only the TARGETS and leaves the input name to the engine, which is why the accepted key names are recorded on this row rather than read from the map.",
-      "also_accepted_by_engine": ["household_size"]
+      "also_accepted_by_engine": [
+        "household_size"
+      ]
     },
     {
       "key": "433f_age_band",
@@ -589,11 +600,24 @@
       "type_basis": "two-value band the fill engine compares by literal",
       "pii": false,
       "options": [
-        { "label": "Under 65", "value": "under_65", "displayOrder": 0 },
-        { "label": "65 and over", "value": "65_over", "displayOrder": 1 }
+        {
+          "label": "Under 65",
+          "value": "under_65",
+          "displayOrder": 0
+        },
+        {
+          "label": "65 and over",
+          "value": "65_over",
+          "displayOrder": 1
+        }
       ],
-      "map_option_by_value": { "under_65": "under_65", "65_over": "65_over" },
-      "also_accepted_by_engine": ["age_band"]
+      "map_option_by_value": {
+        "under_65": "under_65",
+        "65_over": "65_over"
+      },
+      "also_accepted_by_engine": [
+        "age_band"
+      ]
     },
     {
       "key": "433f_address_differs",
@@ -607,11 +631,25 @@
       "type_basis": "yes/no checkbox",
       "pii": false,
       "options": [
-        { "label": "Yes", "value": "true", "displayOrder": 0 },
-        { "label": "No", "value": "false", "displayOrder": 1 }
+        {
+          "label": "Yes",
+          "value": "true",
+          "displayOrder": 0
+        },
+        {
+          "label": "No",
+          "value": "false",
+          "displayOrder": 1
+        }
       ],
-      "map_option_by_value": { "true": "yes", "false": "no" },
-      "also_accepted_by_engine": ["address_differs", "433f_addr_differs"]
+      "map_option_by_value": {
+        "true": "yes",
+        "false": "no"
+      },
+      "also_accepted_by_engine": [
+        "address_differs",
+        "433f_addr_differs"
+      ]
     },
     {
       "key": "433f_pay_freq",
@@ -628,7 +666,9 @@
         "monthly": "monthly",
         "other": "other"
       },
-      "also_accepted_by_engine": ["pay_freq"]
+      "also_accepted_by_engine": [
+        "pay_freq"
+      ]
     },
     {
       "key": "433f_spouse_pay_freq",
@@ -645,22 +685,9 @@
         "monthly": "monthly",
         "other": "other"
       },
-      "also_accepted_by_engine": ["spouse_pay_freq"]
-    },
-
-    {
-      "key": "accounts",
-      "consumed_by": "groups.accounts.array",
-      "printed_label": "A. ACCOUNTS / LINES OF CREDIT (personal bank accounts, investments, digital assets)",
-      "classification": "form_specific",
-      "hs_name": "irs433f_accounts",
-      "arguable": true,
-      "row_shape": ["institution", "acct", "type", "balance", "bp"],
-      "why": "SEE `arguable` - THIS IS THE ONE REAL LIMIT THE METHOD HIT. The backbone holds these rows in THREE separate tables (irs433_bank_accounts, irs433_investments, irs433_digital_assets) whose column keys are 433-A's map's: {type_of_account, financial_institution, account_number, account_balance}. 433-F's engine reads row['institution'], row['acct'], row['type'], row['balance'] - so a 433-A row handed to it matches nothing and prints an EMPTY table with no error, no skip and a valid PDF. That is the exact failure class this whole build exists to prevent, and it is why a serialized table cannot be shared across forms on column names alone. 433-F also merges three asset classes into one table and adds a `bp` business/personal flag with no backbone column. Scoped to the form and flagged.",
-      "type": "string",
-      "fieldType": "textarea",
-      "type_basis": "repeatable table, serialized as a JSON array",
-      "pii": true
+      "also_accepted_by_engine": [
+        "spouse_pay_freq"
+      ]
     },
     {
       "key": "real_estate",
@@ -669,7 +696,16 @@
       "classification": "form_specific",
       "hs_name": "irs433f_real_estate",
       "arguable": true,
-      "row_shape": ["desc", "pmt", "year", "price", "fmv", "bal", "equity", "kind"],
+      "row_shape": [
+        "desc",
+        "pmt",
+        "year",
+        "price",
+        "fmv",
+        "bal",
+        "equity",
+        "kind"
+      ],
       "why": "The column mismatch here is CONTENT, not just naming, so no rename could bridge it: 433-F needs `year` (Year Purchased) and `price` (Purchase Price) where irs433_real_property stores `purchase_date` and no price at all, and it needs `kind` to tick the Primary Residence / Other boxes, which no backbone column supplies. fill-433f.mjs already records that gap in its own comment. See `arguable`.",
       "type": "string",
       "fieldType": "textarea",
@@ -683,7 +719,14 @@
       "classification": "form_specific",
       "hs_name": "irs433f_other_assets",
       "arguable": true,
-      "row_shape": ["desc", "pmt", "year", "value", "bal", "equity"],
+      "row_shape": [
+        "desc",
+        "pmt",
+        "year",
+        "value",
+        "bal",
+        "equity"
+      ],
       "why": "433-F prints ONE table where the backbone keeps three (irs433_vehicles, irs433_life_insurance_policies, irs433_other_personal_property), each with its own columns - vehicles alone carries year/make_model/mileage/license_tag/vin, none of which 433-F's single `desc` column can receive without a derivation. See `arguable`.",
       "type": "string",
       "fieldType": "textarea",
@@ -697,15 +740,479 @@
       "classification": "form_specific",
       "hs_name": "irs433f_credit_cards",
       "arguable": true,
-      "row_shape": ["type", "limit", "bal", "min"],
+      "row_shape": [
+        "type",
+        "limit",
+        "bal",
+        "min"
+      ],
       "why": "Closest of the four to a shared shape, and still not one: irs433_available_credit stores {institution_name_and_address, account_number, credit_limit, amount_owed, available_credit} - it has no minimum-monthly-payment column, which 433-F prints, and it computes available credit, which 433-F does not ask for. Note also irs433_credit_cards_accepted is a different fact entirely (cards the taxpayer's BUSINESS accepts, 433-A section 5) - same two words, opposite direction. See `arguable`.",
       "type": "string",
       "fieldType": "textarea",
       "type_basis": "repeatable table, serialized as a JSON array",
       "pii": true
+    },
+    {
+      "key": "433f_tp_ssn",
+      "consumed_by": "map",
+      "printed_label": "Your Social Security Number or Individual Taxpayer Identification Number",
+      "classification": "exact",
+      "hs_name": "irs433_tp_ssn_itin",
+      "backbone_key": "2_tp_ssn_itin",
+      "backbone_label": "2b SSN or ITIN (taxpayer)",
+      "why": "One fact, asked identically on both forms. Owner ruling: 433-A already maps AND stores this, so excluding it here would have left the same client pre-filled on one form and hand-typed on the other. That inconsistency was the defect, not the storage. The PII rule is unchanged and now covers intermediates explicitly — no fetched-record file, fixture, log or review page may carry a real SSN, and no fixture may contain a well-formed one."
+    },
+    {
+      "key": "433f_sp_ssn",
+      "consumed_by": "map",
+      "printed_label": "Your Spouse's Social Security Number or Individual Taxpayer Identification Number",
+      "classification": "exact",
+      "hs_name": "irs433_sp_ssn_itin",
+      "backbone_key": "2_sp_ssn_itin",
+      "backbone_label": "2c SSN or ITIN (spouse)",
+      "why": "Same fact as the taxpayer cell, for the spouse. See 433f_tp_ssn."
+    },
+    {
+      "key": "433f_tp_phone_home",
+      "consumed_by": "map",
+      "printed_label": "Your telephone numbers > Home:",
+      "classification": "exact",
+      "hs_name": "irs433_home_phone",
+      "backbone_key": "1c_home_phone",
+      "backbone_label": "Home Phone",
+      "why": "433-A prints one Home Phone in its Section 1 personal-information block; 433-F prints the taxpayer's under 'Your telephone numbers'. Same number, same question. Reusing it is the whole reason the backbone exists — irs433f_tp_home_phone beside irs433_home_phone would be two names for one fact.",
+      "arguable": "A2-1"
+    },
+    {
+      "key": "433f_tp_phone_work",
+      "consumed_by": "map",
+      "printed_label": "Your telephone numbers > Work:",
+      "classification": "exact",
+      "hs_name": "irs433_tp_work_phone",
+      "backbone_key": "4c_tp_work_phone",
+      "backbone_label": "4c Work Telephone Number (taxpayer)",
+      "why": "Exact, and the least arguable of the six: both forms ask the taxpayer's work number as a field of its own."
+    },
+    {
+      "key": "433f_tp_phone_cell",
+      "consumed_by": "map",
+      "printed_label": "Your telephone numbers > Cell:",
+      "classification": "exact",
+      "hs_name": "irs433_cell_phone",
+      "backbone_key": "1d_cell_phone",
+      "backbone_label": "Cell Phone",
+      "why": "Same reading as 433f_tp_phone_home: 433-A prints one Cell Phone in the shared personal block and 433-F prints the taxpayer's.",
+      "arguable": "A2-1"
+    },
+    {
+      "key": "433f_sp_phone_home",
+      "consumed_by": "map",
+      "printed_label": "Spouse's telephone numbers > Home:",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_home_phone",
+      "type": "string",
+      "fieldType": "text",
+      "why": "433-A has no per-spouse home number to reuse — its Section 1 prints ONE Home Phone for the household. 433-F asks each spouse separately, so this is a fact the backbone does not carry. NOT merged into irs433_home_phone: filing the household's number as the spouse's would assert a number the spouse never gave, and a merge is the direction that cannot be undone.",
+      "arguable": "A2-1",
+      "pii": true
+    },
+    {
+      "key": "433f_sp_phone_work",
+      "consumed_by": "map",
+      "printed_label": "Spouse's telephone numbers > Work:",
+      "classification": "exact",
+      "hs_name": "irs433_sp_work_phone",
+      "backbone_key": "5c_sp_work_phone",
+      "backbone_label": "5c Work Telephone Number (spouse)",
+      "why": "Exact. 433-A prints the spouse's work number as its own field on line 5c."
+    },
+    {
+      "key": "433f_sp_phone_cell",
+      "consumed_by": "map",
+      "printed_label": "Spouse's telephone numbers > Cell:",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_cell_phone",
+      "type": "string",
+      "fieldType": "text",
+      "why": "Same reasoning as 433f_sp_phone_home. 433-A prints one Cell Phone for the household and nothing per spouse.",
+      "arguable": "A2-1",
+      "pii": true
+    },
+    {
+      "key": "433f_business_ein",
+      "consumed_by": "map",
+      "printed_label": "Business EIN",
+      "classification": "exact",
+      "hs_name": "irs433_employer_identification_number",
+      "backbone_key": "54_employer_identification_number",
+      "backbone_label": "54 Employer Identification Number",
+      "why": "Identical question. 433-A splits the printed EIN across two boxes and uses `split` to fill them; 433-F prints one box. Two printings of one number, which is the map's job and not a second fact."
+    },
+    {
+      "key": "433f_employee_count",
+      "consumed_by": "map",
+      "printed_label": "Number of Employees",
+      "classification": "exact",
+      "hs_name": "irs433_total_number_of_employees",
+      "backbone_key": "58_total_number_of_employees",
+      "backbone_label": "58 Total Number of Employees",
+      "why": "433-F's printed caption is 'Number of Employees' with the widget named NumberEmployeesnotCo — the form's parenthetical excludes the owner/officer, which is exactly what 433-A's line 58 asks. Same count."
+    },
+    {
+      "key": "433f_re1_year_refinanced",
+      "consumed_by": "map",
+      "printed_label": "B. REAL ESTATE row 1 > Year Refinanced",
+      "classification": "form_specific",
+      "hs_name": "irs433f_re1_year_refinanced",
+      "type": "string",
+      "fieldType": "text",
+      "why": "A scalar bound to ONE printed row, which is a shape only this map has. The shared `real_property` row class declares year_refinanced as a ROW column (asset-row-shapes.json), and once 433-F's real_estate group draws from irs433_real_property these four scalars should be withdrawn in favour of it. Provisioned as form_specific rather than pre-empting that: a per-printed-row scalar is not a shared fact, and naming it irs433_ would make it look like one forever.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_re1_refinance_amount",
+      "consumed_by": "map",
+      "printed_label": "B. REAL ESTATE row 1 > Amount of Refinance",
+      "classification": "form_specific",
+      "hs_name": "irs433f_re1_refinance_amount",
+      "type": "number",
+      "fieldType": "number",
+      "why": "See 433f_re1_year_refinanced.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_re2_year_refinanced",
+      "consumed_by": "map",
+      "printed_label": "B. REAL ESTATE row 2 > Year Refinanced",
+      "classification": "form_specific",
+      "hs_name": "irs433f_re2_year_refinanced",
+      "type": "string",
+      "fieldType": "text",
+      "why": "See 433f_re1_year_refinanced.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_re2_refinance_amount",
+      "consumed_by": "map",
+      "printed_label": "B. REAL ESTATE row 2 > Amount of Refinance",
+      "classification": "form_specific",
+      "hs_name": "irs433f_re2_refinance_amount",
+      "type": "number",
+      "fieldType": "number",
+      "why": "See 433f_re1_year_refinanced.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_veh_final_pmt",
+      "consumed_by": "split",
+      "printed_label": "C. OTHER ASSETS row 1 > Date of Final Payment (mo/yr)",
+      "classification": "form_specific",
+      "hs_name": "irs433f_veh_final_pmt",
+      "type": "string",
+      "fieldType": "text",
+      "why": "Stored as the printed mo/yr string, not a HubSpot date. The two cells it feeds are /MaxLen 2 each, so the form holds four digits and a two-digit year; a date property would round-trip a century the page cannot print and the split's exact-length rule would then reject it on every record. Same per-printed-row scalar shape as the refinance keys, and the same arguable.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_oa_final_pmt",
+      "consumed_by": "split",
+      "printed_label": "C. OTHER ASSETS row 2 > Date of Final Payment (mo/yr)",
+      "classification": "form_specific",
+      "hs_name": "irs433f_oa_final_pmt",
+      "type": "string",
+      "fieldType": "text",
+      "why": "See 433f_veh_final_pmt.",
+      "arguable": "A2-2"
+    },
+    {
+      "key": "433f_e2_account_holder",
+      "consumed_by": "map",
+      "printed_label": "E2. Name of individual or business on account",
+      "classification": "new_shared",
+      "hs_name": "irs433_merchant_account_holder_name",
+      "type": "string",
+      "fieldType": "text",
+      "why": "The name the merchant account is held in. A TABLE-LEVEL scalar serving all three E2 rows, not a row column — asset-row-shapes.json records it that way on the credit_cards_accepted class. Not merged with irs433_self_employment_business_name: the account may be held in an individual's name where the business has one, which is why the form asks 'individual or business'.",
+      "pii": true
+    },
+    {
+      "key": "433f_ar_additional_sheets_total",
+      "consumed_by": "map",
+      "printed_label": "E1. List total amount owed from additional sheets",
+      "classification": "new_shared",
+      "hs_name": "irs433_receivable_additional_sheets_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "A figure about rows that are NOT on the form. It is deliberately not an arithmetic tripwire: everything it sums lives on an attachment, so nothing printed on the page could verify it. Distinct from irs433_total_receivable_amount_due, which 433-A prints as the total of the rows that ARE on the page."
+    },
+    {
+      "key": "433f_ar_available_to_pay_now",
+      "consumed_by": "map",
+      "printed_label": "E1. Total amount of accounts receivable available to pay to IRS now",
+      "classification": "new_shared",
+      "hs_name": "irs433_receivable_available_to_pay_now",
+      "type": "number",
+      "fieldType": "number",
+      "why": "A determination, not a sum — receivables that exist are not all collectible now — so it is not a tripwire either. Both reasons are recorded in 433f.totals.json under `not_checkable`."
+    },
+    {
+      "key": "433f_sp_emp_name",
+      "consumed_by": "map",
+      "printed_label": "Spouse's current Employer (name and address)",
+      "classification": "exact",
+      "hs_name": "irs433_sp_employer_name",
+      "backbone_key": "5a_sp_employer_name",
+      "backbone_label": "5a Spouse's Employer Name",
+      "why": "Exact. This closes the case where a spouse's pay frequency could be ticked on a form that named no spouse employer: the checkbox layer already bound irs433_sp_pay_period while the cell beside it was unmapped."
+    },
+    {
+      "key": "433f_sp_emp_gross",
+      "consumed_by": "map",
+      "printed_label": "Gross per pay period (spouse)",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_gross_per_pay_period",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Mirrors irs433_tp_gross_per_pay_period, created in this same crosswalk for column 1. 433-A carries no per-pay-period figures at all — it asks monthly income — so neither column has a backbone fact to reuse."
+    },
+    {
+      "key": "433f_sp_emp_fed",
+      "consumed_by": "map",
+      "printed_label": "Taxes per pay period (Fed) (spouse)",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_taxes_per_pay_period_federal",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Mirrors irs433_tp_taxes_per_pay_period_federal."
+    },
+    {
+      "key": "433f_sp_emp_state",
+      "consumed_by": "map",
+      "printed_label": "Taxes per pay period (State) (spouse)",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_taxes_per_pay_period_state",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Mirrors irs433_tp_taxes_per_pay_period_state."
+    },
+    {
+      "key": "433f_sp_emp_local",
+      "consumed_by": "map",
+      "printed_label": "Taxes per pay period (Local) (spouse)",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_taxes_per_pay_period_local",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Mirrors irs433_tp_taxes_per_pay_period_local."
+    },
+    {
+      "key": "433f_sp_emp_tenure",
+      "consumed_by": "map",
+      "printed_label": "How long at current employer (spouse)",
+      "classification": "new_shared",
+      "hs_name": "irs433_sp_tenure_at_employer",
+      "type": "string",
+      "fieldType": "text",
+      "why": "Mirrors irs433_tp_tenure_at_employer."
+    },
+    {
+      "key": "433f_exp_volretire",
+      "consumed_by": "map",
+      "printed_label": "Retirement (Voluntary)",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_retirement_voluntary",
+      "type": "number",
+      "fieldType": "number",
+      "why": "433-A prints no voluntary-retirement line. NOT folded into irs433_exp_retirement_employer_required: the form prints the two on separate rows because the IRS allows them differently, and merging a voluntary contribution into the required line would claim an allowance the taxpayer is not entitled to."
+    },
+    {
+      "key": "433f_exp_alimony",
+      "consumed_by": "map",
+      "printed_label": "Court Ordered Alimony",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_court_ordered_alimony",
+      "type": "number",
+      "fieldType": "number",
+      "why": "An EXPENSE. Deliberately not irs433_income_alimony, which is alimony RECEIVED and is already bound by 433f_inc_alimony. Opposite sides of the statement; the shared word is the whole trap. 433-A folds all court-ordered payments into one line (irs433_exp_court_ordered_payments), which 433f_exp_courtother already binds, so this is a component and not that total."
+    },
+    {
+      "key": "433f_exp_other2",
+      "consumed_by": "map",
+      "printed_label": "Other (specify) row 2 — amount",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_other_2_amount",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Second of the three free-text Other rows 433-F prints. Mirrors irs433_exp_other_1_amount."
+    },
+    {
+      "key": "433f_exp_other2_desc",
+      "consumed_by": "map",
+      "printed_label": "Other (specify) row 2 — description",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_other_2_description",
+      "type": "string",
+      "fieldType": "textarea",
+      "why": "Mirrors irs433_exp_other_1_description."
+    },
+    {
+      "key": "433f_exp_other3",
+      "consumed_by": "map",
+      "printed_label": "Other (specify) row 3 — amount",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_other_3_amount",
+      "type": "number",
+      "fieldType": "number",
+      "why": "Third of the three. Mirrors irs433_exp_other_1_amount."
+    },
+    {
+      "key": "433f_exp_other3_desc",
+      "consumed_by": "map",
+      "printed_label": "Other (specify) row 3 — description",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_other_3_description",
+      "type": "string",
+      "fieldType": "textarea",
+      "why": "Mirrors irs433_exp_other_1_description."
+    },
+    {
+      "key": "433f_exp_food_total",
+      "consumed_by": "map",
+      "printed_label": "1. Food / Personal Care > Total",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_food_personal_care_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "A printed sub-total the operator supplies and 433f.totals.json checks against the five rows above it. Not irs433_exp_food_clothing_misc: 433-A prints ONE cell for the whole food-and-clothing group where 433-F prints five components AND their total, and a component figure on a line that must carry a total is exactly the merge the crosswalk's own rule forbids."
+    },
+    {
+      "key": "433f_exp_transport_total",
+      "consumed_by": "map",
+      "printed_label": "2. Transportation > Total",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_transportation_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "The printed total of the two transportation rows. 433-A prints its transportation figures as three separate lines with no total cell."
+    },
+    {
+      "key": "433f_exp_housing_total",
+      "consumed_by": "map",
+      "printed_label": "3. Housing & Utilities > Total",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_housing_utilities_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "The printed total of the five housing rows. Not irs433_exp_housing_and_utilities, which is 433-A line 37 — one cell for the whole group, a component-versus-total distinction again."
+    },
+    {
+      "key": "433f_exp_medical_total",
+      "consumed_by": "map",
+      "printed_label": "4. Medical > Total",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_medical_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "The printed total of health insurance plus out-of-pocket care. 433-A prints those two as lines 41 and 42 with no total cell."
+    },
+    {
+      "key": "433f_exp_other_total",
+      "consumed_by": "map",
+      "printed_label": "5. Other > Total",
+      "classification": "new_shared",
+      "hs_name": "irs433_exp_other_total",
+      "type": "number",
+      "fieldType": "number",
+      "why": "The printed total of all fourteen rows in column 2's Other block. Not irs433_total_living_expenses: that is 433-A line 50, the whole column including food, transportation, housing and medical, and this is one of five sub-totals beneath it."
+    },
+    {
+      "key": "bank_accounts",
+      "consumed_by": "groups.bank_accounts.array",
+      "printed_label": "A > PERSONAL BANK ACCOUNTS",
+      "classification": "form_specific",
+      "hs_name": "irs433f_bank_accounts",
+      "why": "NOT bound to irs433_bank_accounts, and the reason is the one the retired irs433f_accounts row gave: this map's slots read row['institution'], row['acct'], row['type'] and row['balance'], while the backbone table holds 433-A's column vocabulary (institution_name_and_address, account_number, type_of_account, account_balance). A backbone row handed to this engine matches NO column and prints an empty table with no error, no skip and a valid PDF. 433-F also carries a `bp` business/personal flag the backbone has no column for. Scoped to the form until the group's columns are re-keyed to the shared class — see arguable A2-3.",
+      "type": "string",
+      "fieldType": "textarea",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "institution",
+        "acct",
+        "type",
+        "balance",
+        "bp"
+      ],
+      "pii": true,
+      "arguable": "A2-3"
+    },
+    {
+      "key": "investments",
+      "consumed_by": "groups.investments.array",
+      "printed_label": "A > INVESTMENTS",
+      "classification": "form_specific",
+      "hs_name": "irs433f_investments",
+      "why": "Same shape mismatch as bank_accounts, against irs433_investments. See that row and arguable A2-3.",
+      "type": "string",
+      "fieldType": "textarea",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "institution",
+        "acct",
+        "type",
+        "balance",
+        "bp"
+      ],
+      "pii": true,
+      "arguable": "A2-3"
+    },
+    {
+      "key": "digital_assets",
+      "consumed_by": "groups.digital_assets.array",
+      "printed_label": "A > DIGITAL ASSETS (CRYPTOCURRENCY)",
+      "classification": "exact",
+      "hs_name": "irs433_digital_assets",
+      "backbone_key": "digital_assets",
+      "backbone_label": "Digital assets (serialized table)",
+      "why": "The strongest reuse in the set: five columns, same order, on both forms. The class needed no change at all — asset-row-shapes.json already recorded shape_change NONE and 'binds unchanged once its map gains the group'.",
+      "row_shape": [
+        "type_of_digital_asset",
+        "name_of_digital_asset",
+        "email_used_to_set_up",
+        "location_of_digital_asset",
+        "amount_and_value_usd"
+      ]
+    },
+    {
+      "key": "accounts_receivable",
+      "consumed_by": "groups.accounts_receivable.array",
+      "printed_label": "E1. Accounts Receivable owed to you or your business",
+      "classification": "exact",
+      "hs_name": "irs433_accounts_notes_receivable",
+      "backbone_key": "accounts_notes_receivable",
+      "backbone_label": "Accounts/notes receivable (serialized table)",
+      "why": "The one non-additive change in the fourteen-table union: the row's receivable_name_and_address column SPLITS into name + address, because this form prints them as two cells and the finer granularity loses nothing. 433a.map.json composes the two back into its single printed box, so no printed string changed. Free on the day it was made — the audit reports held_data = false on every irs433_ property.",
+      "row_shape": [
+        "name",
+        "address",
+        "amount_due"
+      ]
+    },
+    {
+      "key": "credit_cards_accepted",
+      "consumed_by": "groups.credit_cards_accepted.array",
+      "printed_label": "E2. Credit Card / Issuing Bank / Merchant Account Number",
+      "classification": "exact",
+      "hs_name": "irs433_credit_cards_accepted",
+      "backbone_key": "credit_cards_accepted",
+      "backbone_label": "Credit cards accepted (serialized table)",
+      "why": "Binds unchanged; only the printed left-to-right order differs from 433-A line 63. The leaf names on this form would have bound the taxpayer's credit LIMIT into the Issuing Bank column, which is why the columns are authored from the printed captions.",
+      "row_shape": [
+        "credit_card",
+        "issuing_bank_name_and_address",
+        "merchant_account_number"
+      ]
     }
   ],
-
   "not_provisioned": {
     "group_fallback_scalars": {
       "what": "433f.map.json declares a `fallback` per group - flat scalar keys (433f_bank_institution, 433f_re_desc, 433f_veh_desc, 433f_cc_type, ...) that fill the first slot(s) when no array is supplied.",
@@ -713,16 +1220,20 @@
       "consequence": "A record fetched from HubSpot never exercises the fallback path. Hand-authored samples still can, and 433f.sample.json does."
     },
     "printed_but_unmapped": {
-      "what": "433-F prints cells that 433f.map.json does not bind: Business EIN, Number of Employees, Retirement (Voluntary), Court Ordered Alimony, two further Other (specify) rows, the E1 accounts-receivable table, the E2 merchant-account table, spouse employment cells other than pay frequency, and the IRS Allowed columns outside the two the standards engine fills.",
-      "decision": "No property is created for any of them. A property nobody writes to and a cell nobody fills look identical from the CRM, so provisioning ahead of the map would manufacture exactly the drift the generated-from-the-map rule exists to prevent.",
-      "note": "Several of these DO exist on the backbone already (irs433_employer_identification_number, irs433_total_number_of_employees, irs433_accounts_notes_receivable, irs433_payment_processors, irs433_sp_employer_name). They are simply unconsumed by this form's map. Extending 433-F's coverage is a map change and therefore Principal's."
+      "what": "SUPERSEDED and kept because it is the record of what was unmapped. It read: Business EIN, Number of Employees, Retirement (Voluntary), Court Ordered Alimony, two further Other (specify) rows, the E1 accounts-receivable table, the E2 merchant-account table, spouse employment cells other than pay frequency, and the IRS Allowed columns outside the two the standards engine fills.",
+      "now": "Every one of those is bound except the IRS Allowed columns. Those 26 cells are declared under allowed._never_autofill in the map, each with its own reason, and no property is created for them: they are the IRS’s determination, not taxpayer input.",
+      "still_not_provisioned": "The group `fallback` scalars — see not_provisioned.group_fallback_scalars, unchanged."
     }
   },
-
   "arguable": [
     {
       "id": "A1-group-tables",
-      "rows": ["accounts", "real_estate", "other_assets", "credit_cards"],
+      "rows": [
+        "accounts",
+        "real_estate",
+        "other_assets",
+        "credit_cards"
+      ],
       "question": "Should the four repeatable tables reuse the backbone's seven, or be scoped to 433-F?",
       "decided": "Scoped to 433-F (irs433f_*).",
       "reasoning": "For SCALAR facts the generator's tie-break is right: shared is the default, because a shared name can be used by one form and a form-scoped name cannot be used by two. For SERIALIZED TABLES that asymmetry inverts. A table's value is a JSON array whose keys are one map's column names, so a shared table name reused by a form with a different row shape produces an empty table SILENTLY - correct exit code, valid PDF, no rows. A duplicated table name costs four property names per form; a silent shape mismatch costs a filed collection statement. And these shapes genuinely differ in CONTENT, not only naming: 433-F needs Year Purchased and Purchase Price where 433-A stores a purchase date, it needs a Primary/Other flag no backbone column supplies, and its accounts table merges three backbone tables into one.",
@@ -731,7 +1242,9 @@
     },
     {
       "id": "A2-exp-gas",
-      "rows": ["433f_exp_gas"],
+      "rows": [
+        "433f_exp_gas"
+      ],
       "question": "Is 433-F's 'Gas / Insurance / Licenses / Parking / Maintenance etc.' the same fact as 433-A line 39 Vehicle Operating Costs?",
       "decided": "Yes - bound to irs433_exp_vehicle_operating_costs.",
       "reasoning": "433-F's label is the IRS Local Standards definition of operating costs spelled out. Vehicle ownership cost is carried elsewhere on 433-F (the section C Other Assets Monthly Payment column), so the cell is not a merged ownership+operating figure.",
@@ -740,7 +1253,10 @@
     },
     {
       "id": "A3-household-aggregates",
-      "rows": ["433f_inc_pension", "433f_inc_ssa"],
+      "rows": [
+        "433f_inc_pension",
+        "433f_inc_ssa"
+      ],
       "question": "Should 433-F's single household pension / social security cells reuse the backbone's taxpayer+spouse pair, summed?",
       "decided": "No - new facts irs433_income_pension_household and irs433_income_social_security_household.",
       "reasoning": "Summing is arithmetically exact but produces a figure no property holds, and it cannot distinguish an absent spouse pension from an unrecorded one - a blank and a zero print identically on a filed statement. Binding to either half alone would under-report a two-pension household.",
@@ -749,7 +1265,10 @@
     },
     {
       "id": "A4-emp-name-and-tenure",
-      "rows": ["433f_emp_name", "433f_emp_tenure"],
+      "rows": [
+        "433f_emp_name",
+        "433f_emp_tenure"
+      ],
       "question": "433-F prints one box where 433-A prints two cells - employer '(name and address)', and tenure as years+months. Compose, or bind to one?",
       "decided": "433f_emp_name binds to irs433_tp_employer_name alone (address unprinted). 433f_emp_tenure gets a new free-text fact.",
       "reasoning": "Composition is a derivation in the fetch layer with a join separator this task would be inventing, and it would make the pre-reset baseline comparison unprovable - the baseline strings were single values. For tenure specifically, every pre-reset record carried a bare unitless number ('36', '4') whose unit cannot be recovered, so binding to irs433_tp_tenure_years would have printed 36 YEARS for a 36-month tenure.",
@@ -758,7 +1277,11 @@
     },
     {
       "id": "A5-label-vs-instruction-matches",
-      "rows": ["433f_inc_netse", "433f_exp_esttax", "433f_exp_termlife"],
+      "rows": [
+        "433f_inc_netse",
+        "433f_exp_esttax",
+        "433f_exp_termlife"
+      ],
       "question": "Three matches rest on the forms' INSTRUCTIONS agreeing where their printed labels do not.",
       "decided": "All three bound as exact.",
       "reasoning": "'Net Self Employment Income' / 'Net Income from Business' - both instruct monthly net after business expenses. 'Estimated Tax Payments' / 'Current year taxes (income taxes only)' - both are the current-year income tax figure, and both forms carry prior-year tax debt on a separate delinquent line this crosswalk binds separately. 'Term Life Insurance' / 'Life Insurance' - the IRS allows only term premiums as a necessary living expense on either form, and 433-F instructs whole life policies into the section C asset table.",
@@ -767,7 +1290,11 @@
     },
     {
       "id": "A6-biz-name-and-other-expense",
-      "rows": ["433f_biz_name", "433f_exp_other1", "433f_exp_other1_desc"],
+      "rows": [
+        "433f_biz_name",
+        "433f_exp_other1",
+        "433f_exp_other1_desc"
+      ],
       "question": "Two cases where the backbone holds a nearby fact in the wrong SHAPE rather than a different fact.",
       "decided": "New facts in both cases.",
       "reasoning": "433-F's self-employment 'Name of Business' corresponds to 433-A Section 5, but the backbone holds Section 5's name only as irs433_business_name_and_address - name AND street address in one cell - so binding it would print an address into a name box. Splitting that backbone fact into name and address would be a 433-A map change. Separately, 433-A line 49 'Other Expenses' is an undescribed aggregate while 433-F's row is a described item, so binding the aggregate would print a sum beside one item's description.",
@@ -776,12 +1303,38 @@
     },
     {
       "id": "A7-age-band",
-      "rows": ["433f_age_band"],
+      "rows": [
+        "433f_age_band"
+      ],
       "question": "Store the taxpayer's age band, or derive it from irs433_tp_dob?",
       "decided": "Store it.",
       "reasoning": "A derived age is a computation against an as-of date, and the wrong as-of date prints the wrong IRS allowable. The engine also compares the value against the literal '65_over', so the stored vocabulary is fixed by fill-433f.mjs regardless.",
       "against": "It is derivable, and a stored band can go stale the year a taxpayer turns 65 while the DOB never does.",
       "impact_if_overturned": "One property."
+    },
+    {
+      "id": "A2-1",
+      "what": "433-F asks the taxpayer AND the spouse for a home, work and cell number each. 433-A prints ONE Home Phone and ONE Cell Phone in a Section 1 block headed 'Full Name of Taxpayer and Spouse', plus a work number per person on lines 4c and 5c.",
+      "taken": "The taxpayer's home and cell bind to the existing irs433_home_phone / irs433_cell_phone; the spouse's home and cell are created. The work numbers were already per-person on both forms and bind exactly.",
+      "the_other_reading": "433-A's 1c/1d sit in a block that names both people, so they could be read as household numbers belonging to neither — which would argue for creating irs433_tp_home_phone and irs433_tp_cell_phone as well and leaving the 433-A pair for the household.",
+      "why_this_way": "The filer is the taxpayer, and 433-A gives the spouse a separate field wherever it wants a spouse-specific number. Reading 1c/1d as the taxpayer's is the reading 433-A's own layout supports. The asymmetry is real and is why this is recorded: the spouse side is CREATED rather than merged, because filing the household's number as the spouse's would assert a number the spouse never gave and a merge cannot be undone.",
+      "for_principal": "Confirm the taxpayer half. If Principal prefers strict symmetry, two more irs433_ names and no data migration — held_data is false."
+    },
+    {
+      "id": "A2-2",
+      "what": "Six keys bind to ONE printed row each: the two refinance pairs in Section B and the two Section C final-payment dates. The shared row classes already declare year_refinanced, refinance_amount and final_payment_date as ROW columns.",
+      "taken": "Provisioned as form_specific irs433f_ scalars, one per printed row, because that is the shape the map Principal specified consumes.",
+      "the_other_reading": "Add them to the `real_estate` and `other_assets` group slots as row columns, so they arrive inside the serialized table with the row they describe and no property is indexed by printed position.",
+      "why_this_way": "The scalars are what the specified map binds, and provisioning against the map rather than ahead of it is the standing rule. Naming them irs433f_ rather than irs433_ keeps them from looking like shared facts, so retiring them later costs a deletion and not a reinterpretation.",
+      "for_principal": "These are the only properties in either crosswalk indexed by printed row position — the shape not_provisioned.group_fallback_scalars declined for every other table. Recommend folding them into the row classes when 433-F's real_estate and other_assets groups are re-pointed at irs433_real_property / irs433_vehicles; six deletions, no migration."
+    },
+    {
+      "id": "A2-3",
+      "what": "Five of 433-F's serialized tables use the form's own abbreviated column vocabulary — bank_accounts and investments (institution / acct / type / balance / bp), real_estate, other_assets and credit_cards — where the shared row classes in asset-row-shapes.json use fuller names. The three tables bound in v2 use the class names and reuse the backbone properties outright.",
+      "taken": "The five keep form-scoped irs433f_ properties. bank_accounts and investments are newly provisioned under that rule; the other three already were.",
+      "the_other_reading": "Re-key the five groups’ slot columns to the shared class names and re-point them at irs433_bank_accounts, irs433_investments, irs433_real_property, irs433_vehicles and irs433_available_credit. Five properties retire and nothing is created.",
+      "why_this_way": "Re-keying a group that already binds correctly was not in the v2 specification, and doing it silently alongside the new bindings would put a change nobody asked for in the same commit as the ones they did. Classing them `exact` WITHOUT re-keying is the option ruled out: it would claim reuse the engine cannot actually perform, and the failure mode is an empty printed table with a valid PDF and exit 0.",
+      "for_principal": "This is now the largest remaining gap between 433-F and the shared backbone, and it is mechanical: five column-key renames in 433f.map.json, the matching keys in the fixture, and five properties deleted. Worth doing before 433-A(OIC) so the OIC map inherits one vocabulary rather than two. Recommend it as the first item of v3, together with A2-2's six per-printed-row scalars."
     }
   ]
 }
