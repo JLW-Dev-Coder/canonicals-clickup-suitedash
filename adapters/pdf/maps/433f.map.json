@@ -22,12 +22,12 @@
       "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
       "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from irs-standards-2026.json. Housing/vehicle allowables intentionally not auto-filled.",
       "v3.1: the standards table was renamed 433f.standards.json -> irs-standards-2026.json. It holds the published Collection Financial Standards, which are form-agnostic; every form in the 433 series reads the same file. No figure and no target changed.",
-      "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render."
+      "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render.",
+    "v5: `433f_tp_name` was ALSO bound directly in `map` to NamesAddress[0], the same target `special.composite_name_address` writes — a double binding that only a bespoke `if (comp.from.includes(key)) continue` line in fill-433f.mjs kept from firing. The composite is the intended binding, so the direct entry is gone and the special case with it. `433f_tp_name` and `433f_tp_address` are now symmetric: both are composite-only inputs, neither appears in `map`."
     ]
   },
   "map": {
     "433f_county": "topmostSubform[0].Page1[0].address[0].CountyResidence[0]",
-    "433f_tp_name": "topmostSubform[0].Page1[0].address[0].NamesAddress[0]",
     "433f_biz_name": "topmostSubform[0].Page1[0].age[0].NameBusiness[0]",
     "433f_biz_type": "topmostSubform[0].Page1[0].age[0].TypeBusiness[0]",
     "433f_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].fieldXmlnshttpwwwxfa[0]",

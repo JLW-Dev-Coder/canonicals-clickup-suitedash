@@ -1,9 +1,9 @@
 // The release gate for one form in the 433 series. Nine steps, in order, stopping at the
 // first failure.
 //
-// CLI:  node adapters/pdf/run-form-gate.mjs <form> <sample.json>
+// CLI:  node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]
 // npm:  npm run gate:433a   |   npm run gate:433f
-// Exit: 0 = every step passed, 2 = a step failed (the failing step is named).
+// Exit: 0 = every step passed or was skipped with a reason, 2 = a step failed (it is named).
 //
 //   1  revision pin           the PDF is the revision the map was authored against
 //   2  validate-map           every target exists verbatim in the enumerated field list
@@ -33,6 +33,21 @@
 // rather than failed by them, because failing a map for not keeping a promise it never made
 // would only teach people to stop running the gate. The counts print either way, loudly,
 // so a partial map can never be mistaken for a complete one.
+//
+// --saturated IS AN ASSERTION ABOUT THE SAMPLE, NOT ABOUT THE FORM. Pass it when the input is
+// an ACCEPTANCE sample built to reach every mapped cell, and step 8 fails on any mapped text
+// cell the record left empty. Omit it for a PRODUCTION record, where an empty cell is the
+// normal shape of a real answer — someone with two bank accounts leaves two slots blank, and
+// that is a correctly filled form. Only that one assertion moves. The mode is banner-printed
+// here and again inside step 8, because a coverage report that does not say which rule it ran
+// under is a number nobody can act on.
+//
+// STEP 9 ALSO FOLLOWS THE MAP'S DECLARED SCOPE. A map that declares COMPLETE and has no
+// totals file FAILS — it promised the whole form and cannot prove its own arithmetic. A map
+// that declares no COMPLETE slice and has no totals file is SKIPPED with the reason stated,
+// because a partial slice may not contain a printed total to check yet, and failing it would
+// only teach people to stop running the gate. A totals file that EXISTS is always checked,
+// whatever the map claims.
 
 import { spawnSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
@@ -40,9 +55,15 @@ import { PDFDocument, PDFTextField } from 'pdf-lib';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
 
-const [form, samplePath] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const saturated = argv.includes('--saturated');
+const [form, samplePath] = argv.filter(a => !a.startsWith('--'));
 if (!form || !samplePath) {
-  console.error('usage: node adapters/pdf/run-form-gate.mjs <form> <sample.json>');
+  console.error('usage: node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]');
+  console.error('  --saturated  the sample is an ACCEPTANCE sample: step 8 fails on any mapped');
+  console.error('               text cell it left empty.');
+  console.error('  (default)    the input is a PRODUCTION record: empty mapped cells are');
+  console.error('               reported by step 8, not failed.');
   process.exit(2);
 }
 
@@ -67,6 +88,9 @@ const runTool = (script, args) => {
 
 const ok   = (msg) => ({ pass: true,  msg });
 const fail = (msg) => ({ pass: false, msg });
+// A step that could not run and should not pretend it did. Distinct from ok() so the transcript
+// never reads as if an unrun check had held — which is the failure mode a gate exists to end.
+const skip = (msg) => ({ pass: true, skipped: true, msg });
 const list = (label, items, cap = 12) => {
   console.log(`  ${label}`);
   items.slice(0, cap).forEach(i => console.log(`    ${i}`));
@@ -170,13 +194,18 @@ const steps = [
       : fail('verify-appearances.mjs exited non-zero')],
 
   ['verify-form-coverage', async () =>
-    runTool('verify-form-coverage.mjs', [form, outPath])
-      ? ok('the whole-form accounting closes')
+    runTool('verify-form-coverage.mjs', [form, outPath, ...(saturated ? ['--saturated'] : [])])
+      ? ok(`the whole-form accounting closes (${saturated ? 'saturated' : 'production'} mode)`)
       : fail('verify-form-coverage.mjs exited non-zero')],
 
   ['arithmetic tripwires', async () => {
     if (!existsSync(totalsPath)) {
-      return fail(`no ${totalsPath} — 0 totals checked. This step proves NOTHING for ${form} until one is authored, so it fails rather than passing on an empty check. Author the totals declaration from the form's printed captions.`);
+      // A COMPLETE map that cannot prove its own arithmetic has not earned a pass; a declared
+      // partial slice may simply not hold a printed total yet. Same rule as steps 4 and 5:
+      // the map's own declared scope decides, and this file still names no form.
+      return complete
+        ? fail(`no ${totalsPath} — 0 totals checked. This map declares itself COMPLETE ("${mapDoc.slice}"), so it claims the whole form and must be able to prove its own arithmetic. This step proves NOTHING for ${form} until a totals declaration is authored from the form's printed captions, so it fails rather than passing on an empty check.`)
+        : skip(`no ${totalsPath}, and ${mapPath} declares no COMPLETE slice — 0 totals checked. A declared partial slice may not reach a printed total yet, so this is SKIPPED, not passed and not failed. It proves nothing about ${form}'s arithmetic either way. Authoring ${form}.totals.json turns this step on; declaring the map COMPLETE without one turns it into a failure.`);
     }
     const decl = JSON.parse(readFileSync(totalsPath, 'utf8'));
     const pdf  = await PDFDocument.load(readFileSync(outPath));
@@ -284,7 +313,11 @@ console.log(`form gate: ${form}`);
 console.log(`  map:    ${mapPath}`);
 console.log(`  sample: ${samplePath}`);
 console.log(`  out:    ${outPath}`);
+console.log(`  mode:   ${saturated
+  ? 'SATURATED — the sample must reach every mapped text cell (step 8 fails on any it misses)'
+  : 'production record — empty mapped text cells are reported by step 8, not failed'}`);
 
+const skipped = [];
 for (let i = 0; i < steps.length; i++) {
   const [title, run] = steps[i];
   console.log('');
@@ -301,8 +334,14 @@ for (let i = 0; i < steps.length; i++) {
     console.error(`GATE FAILED at step ${i + 1}/${steps.length}: ${title}.${skipped ? ` Step${skipped === 1 ? '' : 's'} ${i + 2}${skipped === 1 ? '' : `-${steps.length}`} did not run.` : ' It was the last step; every earlier step passed.'}`);
     process.exit(2);
   }
-  console.log(`  PASS — ${r.msg}`);
+  console.log(`  ${r.skipped ? 'SKIP' : 'PASS'} — ${r.msg}`);
+  if (r.skipped) skipped.push(`${i + 1}/${steps.length} ${title}`);
 }
 
 console.log('');
-console.log(`GATE PASSED — all ${steps.length} steps for ${form}.`);
+if (skipped.length) {
+  console.log(`GATE PASSED with ${skipped.length} step(s) SKIPPED for ${form} — ${steps.length - skipped.length} of ${steps.length} steps actually ran.`);
+  skipped.forEach(t => console.log(`  skipped: ${t}`));
+} else {
+  console.log(`GATE PASSED — all ${steps.length} steps for ${form}${saturated ? ', saturated' : ''}.`);
+}

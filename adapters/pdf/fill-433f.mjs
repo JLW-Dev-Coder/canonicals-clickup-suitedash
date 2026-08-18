@@ -30,8 +30,14 @@ const comp = mapDoc.special?.composite_name_address;
 if (comp) { const parts = comp.from.map(k => data[k]).filter(Boolean); if (parts.length) setText(comp.pdf, parts.join(comp.join)); }
 
 // scalar 1:1
+//
+// No composite-key skip here. `433f_tp_name` used to appear BOTH in `map` (bound straight to
+// NamesAddress[0]) and in `special.composite_name_address.from`, and the only thing stopping
+// the second write from clobbering the first was a `comp.from.includes(key)` guard on this
+// loop. That guard hid a double binding rather than fixing one — and it would have hidden the
+// next one silently too. The map now binds that target exactly once, through the composite,
+// so the loop needs no exception and the duplicate-write gate can actually see the map.
 for (const [key, name] of Object.entries(mapDoc.map)) {
-  if (comp && comp.from.includes(key)) continue;
   setText(name, data[key]);
 }
 

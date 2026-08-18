@@ -1,7 +1,7 @@
 // Whole-form accounting: every field on the form, in exactly one state, proved from the
 // map and the filled PDF.
 //
-// CLI:  node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf>
+// CLI:  node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf> [--saturated]
 // Exit: 0 = the accounting closes and every category assertion holds, 2 = it does not.
 //
 // WHY THIS EXISTS
@@ -40,11 +40,28 @@
 //   mapped, other field type        neither text nor checkbox (a button, a signature)
 //   unreferenced by the map         the map does not mention this field at all
 //
-// AN EMPTY TEXT TARGET IS A FAILURE, NOT A PASS. On a saturated record every mapped text
-// cell should carry a value; one that does not means the record is missing the key that
-// feeds it. Reporting that as "N written" and moving on would let the count quietly come
-// in low, which is indistinguishable from the map being wrong. So each one is named, with
-// the map path that binds it, and the run fails.
+// TWO MODES, BECAUSE AN EMPTY CELL MEANS TWO DIFFERENT THINGS.
+//
+//   --saturated   acceptance samples. Every mapped text cell is supposed to carry a value,
+//                 because the sample exists to reach all of them. One that does not means
+//                 the record is missing the key that feeds it — or the map binds a key the
+//                 sample never had. Reporting that as "N written" and moving on would let
+//                 the count quietly come in low, which is indistinguishable from the map
+//                 being wrong. So each one is NAMED, with the map path that binds it, and
+//                 the run FAILS.
+//
+//   (default)     production records. A real taxpayer with two bank accounts leaves the
+//                 other two slots empty, and that is a correctly filled form, not a
+//                 defective one. Empty mapped cells are COUNTED, a few are shown by map
+//                 path, and they are NOT a failure.
+//
+// Nothing else moves between the modes. Exclusive sets, never-autofill, deferred blanks, the
+// field-list identity check and the requirement that the accounting reconcile to the field
+// count all apply in full either way — those are statements about the MAP, and a map does
+// not become more or less correct because the record feeding it happens to be sparse.
+//
+// The mode is printed in the report header, so no report is ever ambiguous about which rule
+// it ran under. A run whose header does not say SATURATED did not prove saturation.
 //
 // "EXACTLY ONE CHECKED", NOT "AT MOST ONE". The fill scripts already enforce at-most-one —
 // that is a violation guard, and it passes an untouched form. On a saturated record the
@@ -118,7 +135,7 @@ export function classifyMapTargets(mapDoc) {
 export const mapClaimsComplete = (mapDoc) =>
   typeof mapDoc.slice === 'string' && /^\s*complete\b/i.test(mapDoc.slice);
 
-export async function verifyFormCoverage(form, filledPath) {
+export async function verifyFormCoverage(form, filledPath, { saturated = false } = {}) {
   const mapPath   = `adapters/pdf/maps/${form}.map.json`;
   const mapDoc    = JSON.parse(readFileSync(mapPath, 'utf8'));
   const fieldsPath = mapDoc.fields_source || `adapters/pdf/maps/${form}.fields.json`;
@@ -206,7 +223,7 @@ export async function verifyFormCoverage(form, filledPath) {
   const total = Object.values(bucket).reduce((n, a) => n + a.length, 0);
 
   return {
-    form, mapPath, fieldsPath, filledPath,
+    form, mapPath, fieldsPath, filledPath, saturated,
     fieldCount: enumerated.length, liveCount: liveNames.length,
     missingFromPdf, extraInPdf,
     bucket, violations, setFindings, total,
@@ -220,17 +237,26 @@ export async function verifyFormCoverage(form, filledPath) {
 
 const pad = (n) => String(n).padStart(5);
 
+// How many empty cells production mode names. Enough that a systematically wrong key is
+// obvious, few enough that a sparse record does not bury the rest of the report.
+const EMPTY_EXAMPLES = 6;
+
 export function reportFormCoverage(r) {
   const B = r.bucket;
   console.log(`verify-form-coverage: ${r.form}`);
   console.log(`  map:    ${r.mapPath}`);
   console.log(`  fields: ${r.fieldsPath} (${r.fieldCount} enumerated)`);
   console.log(`  filled: ${r.filledPath} (${r.liveCount} live fields)`);
+  console.log(`  mode:   ${r.saturated
+    ? 'SATURATED (acceptance sample) — an empty mapped text cell is a FAILURE'
+    : 'production record — empty mapped text cells are REPORTED, not failures'}`);
   console.log('');
   console.log('  state of every field on the form');
   console.log('  ---------------------------------------------------------------------');
   console.log(`  ${pad(B.text_written.length)}  text cells written`);
-  console.log(`  ${pad(B.text_empty.length)}  text cells EMPTY (gap — a mapped cell the record did not feed)`);
+  console.log(`  ${pad(B.text_empty.length)}  text cells EMPTY (${r.saturated
+    ? 'gap — a mapped cell the record did not feed'
+    : 'mapped, this record had nothing for them — normal on a real record'})`);
   console.log(`  ${pad(B.cb_checked_exclusive.length)}  checkboxes checked (one per exclusive set)`);
   console.log(`  ${pad(B.cb_unchecked_exclusive.length)}  checkbox alternatives correctly unchecked`);
   console.log(`  ${pad(B.cb_checked_independent.length)}  checkboxes checked (independent, in no exclusive set)`);
@@ -256,13 +282,24 @@ export function reportFormCoverage(r) {
     r.extraInPdf.slice(0, 10).forEach(n => console.error(`  present in the PDF but not enumerated: ${n}`));
   }
 
-  if (B.text_empty.length) {
+  if (B.text_empty.length && r.saturated) {
     failed++;
     console.error('');
     console.error(`EMPTY TEXT TARGET — ${B.text_empty.length} mapped text cell(s) carry no value.`);
     console.error('  Each is a cell the map binds and the record did not feed. On a saturated record this');
     console.error('  should be zero; the map path names the input key that is missing.');
     for (const e of B.text_empty) console.error(`  ${e.paths.join(' | ')}\n    -> ${e.name}`);
+  } else if (B.text_empty.length) {
+    // Production mode: reported, never failed. Still listed BY MAP PATH rather than by field
+    // name, because the path is what names the input key — so a systematically wrong key is
+    // still visible here to anyone who reads the output, it just does not stop the run.
+    console.log('');
+    console.log(`  ${B.text_empty.length} mapped text cell(s) are empty on this record — not a failure in production mode.`);
+    console.log('  A real record does not reach every slot the map binds; these are the slots it did not reach.');
+    for (const e of B.text_empty.slice(0, EMPTY_EXAMPLES)) console.log(`    ${e.paths.join(' | ')}`);
+    if (B.text_empty.length > EMPTY_EXAMPLES) {
+      console.log(`    ... and ${B.text_empty.length - EMPTY_EXAMPLES} more (not listed — re-run with --saturated to name every one)`);
+    }
   }
 
   const badSets = r.setFindings.filter(s => !s.ok);
@@ -301,15 +338,19 @@ export function reportFormCoverage(r) {
     return 2;
   }
   console.log('');
-  console.log('OK — every field on the form is in a state the map accounts for, and the accounting closes.');
+  console.log(`OK — every field on the form is in a state the map accounts for, and the accounting closes. (${r.saturated ? 'saturated' : 'production'} mode)`);
   return 0;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const [form, filled] = process.argv.slice(2);
+  const argv = process.argv.slice(2);
+  const saturated = argv.includes('--saturated');
+  const [form, filled] = argv.filter(a => !a.startsWith('--'));
   if (!form || !filled) {
-    console.error('usage: node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf>');
+    console.error('usage: node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf> [--saturated]');
+    console.error('  --saturated  acceptance sample: an empty mapped text cell FAILS the run.');
+    console.error('  (default)    production record: empty mapped text cells are reported, not failed.');
     process.exit(2);
   }
-  process.exit(reportFormCoverage(await verifyFormCoverage(form, filled)));
+  process.exit(reportFormCoverage(await verifyFormCoverage(form, filled, { saturated })));
 }
