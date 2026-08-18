@@ -15,3 +15,10 @@ samples/433a.from-hubspot-*.json
 
 # HubSpot pre-reset backup — REAL CUSTOMER PII. Never enters git (VLP no-customer-PII rule).
 adapters/hubspot/backup/
+
+# Klaritie bank ingest — CLIENT FINANCIAL DATA. The transaction CSV and anything
+# derived from it that contains individual rows never enters git.
+data/
+*.csv
+scripts/.klaritie-digits-state.json
+scripts/klaritie-digits-batches/
