@@ -4,6 +4,7 @@
   "catalog": "62053J",
   "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-F. Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; nothing here is a paraphrase, and the tool refuses to run if a string cannot be found on its declared page.",
   "_why": "Nothing else in this repo ties a widget to the words printed above it. The field names actively mislead: AccountsTable[1] prints ABOVE AccountsTable[0], so reading the names in order puts the personal bank accounts second and the investments first. This file states the intent in the form's own printed language so geometry can contradict it.",
+  "_d1": "That contradiction is no longer hypothetical. The single `accounts` group straddled both tables and this file caught it; the map now binds `bank_accounts` and `investments` separately, one heading each, and no group on 433-F declares a straddle.",
   "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle's vertical centre. Headings are therefore declared densely enough to bound every group — a missing intermediate heading would silently widen the band above it.",
 
   "headings": [
@@ -17,10 +18,15 @@
   ],
 
   "groups": {
-    "accounts": {
+    "bank_accounts": {
       "heading": "PERSONAL_BANK_ACCOUNTS",
-      "aligned_checkboxes": ["account_business"],
-      "_why": "The map feeds this group from the `accounts` array and its scalar fallback leads with 433f_bank_* — a personal bank account. A caller with one bank account supplies one row and it lands in slot[0]. So the group is declared against the heading that row has to print under. It binds a single ordered slot list, so it gets a single heading: if the slots in fact span PERSONAL BANK ACCOUNTS and INVESTMENTS, slot order alone decides which section each row is filed in, and that is the thing this file exists to make visible."
+      "aligned_checkboxes": ["account_business_bank"],
+      "_why": "AccountsTable[1], the two rows printed under PERSONAL BANK ACCOUNTS. The field names put this table SECOND and the page puts it FIRST, which is the whole reason this file exists. Declared against the heading rather than the subform index so the page, not the name, decides whether the binding is right."
+    },
+    "investments": {
+      "heading": "INVESTMENTS",
+      "aligned_checkboxes": ["account_business_investments"],
+      "_why": "AccountsTable[0], the two rows printed under INVESTMENTS. Until the D1 split these were slots 0-1 of a single `accounts` group whose declared heading was PERSONAL_BANK_ACCOUNTS, so a caller's first row — a bank account by every reading of the fallback order — printed here."
     },
     "real_estate": {
       "heading": "B_REAL_ESTATE",

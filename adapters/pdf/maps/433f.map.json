@@ -16,14 +16,17 @@
     },
     "notes": [
       "Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.",
-      "433-F merges vehicle ownership+operating and parking/maintenance into gas_monthly; mortgage shares the rent line. Those registry fields are intentionally unmapped for 433-F.",
+      "433-F's printed instruction for the Transportation line reads: “Transportation – Include the total of maintenance, repairs, insurance, fuel, registrations, licenses, inspections, parking, and tolls for one month.” That is the Local Standards definition of OPERATING COSTS item for item, with loan and lease payments absent. The cell therefore does NOT merge ownership with operating: ownership is the monthly payment on the Section C asset row. 433f_exp_gas -> irs433_exp_vehicle_operating_costs is settled on the printed instruction, not provisional. Mortgage does share the rent line; that registry field stays intentionally unmapped for 433-F.",
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
       "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
       "v2: repeatable slots added under `groups` (accounts\u00d74, real_estate\u00d72, other_assets\u00d72, credit_cards\u00d72). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
       "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from irs-standards-2026.json. Housing/vehicle allowables intentionally not auto-filled.",
       "v3.1: the standards table was renamed 433f.standards.json -> irs-standards-2026.json. It holds the published Collection Financial Standards, which are form-agnostic; every form in the 433 series reads the same file. No figure and no target changed.",
       "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render.",
-    "v5: `433f_tp_name` was ALSO bound directly in `map` to NamesAddress[0], the same target `special.composite_name_address` writes — a double binding that only a bespoke `if (comp.from.includes(key)) continue` line in fill-433f.mjs kept from firing. The composite is the intended binding, so the direct entry is gone and the special case with it. `433f_tp_name` and `433f_tp_address` are now symmetric: both are composite-only inputs, neither appears in `map`."
+    "v5: `433f_tp_name` was ALSO bound directly in `map` to NamesAddress[0], the same target `special.composite_name_address` writes — a double binding that only a bespoke `if (comp.from.includes(key)) continue` line in fill-433f.mjs kept from firing. The composite is the intended binding, so the direct entry is gone and the special case with it. `433f_tp_name` and `433f_tp_address` are now symmetric: both are composite-only inputs, neither appears in `map`.",
+      "v6: defect D1. The single `accounts` group bound one ordered four-slot list spanning TWO printed tables — slots 0-1 were AccountsTable[0] (INVESTMENTS) and slots 2-3 AccountsTable[1] (PERSONAL BANK ACCOUNTS), the reverse of printed order. A caller supplying one bank account got it printed under INVESTMENTS. Split into `bank_accounts` (max 2) and `investments` (max 2), each declaring its own heading in 433f.headings.json, with the business-flag array split to match. No target moved; what changed is which input row reaches which target.",
+      "v6 consequence, unresolved: the serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is no longer bound by any group. Its rows carry no asset class, so nothing here can decide which of the two tables a given row belongs in — that is exactly the decision D1 was made of. A record supplying only that key now fills neither table instead of filling the wrong one. Principal binds `bank_accounts` and `investments` as separate properties in the 433-F v2 re-map.",
+      "v6: `433f_vc_wallet`, `433f_vc_type` and `433f_vc_value` are removed from the accounts fallback and recorded under `_deferred`. See _deferred.digital_assets."
     ]
   },
   "map": {
@@ -74,26 +77,62 @@
     "433f_hh_under65": "topmostSubform[0].Page1[0].age[0].Under65[0]",
     "433f_hh_over65": "topmostSubform[0].Page1[0].age[0]._65Over[0]"
   },
+  "_deferred": {
+    "_why": "Named here, validated for existence by validate-map.mjs, never filled by fill-433f.mjs.",
+    "digital_assets": {
+      "reason": "The DIGITAL ASSETS (CRYPTOCURRENCY) table is unbound; 433f_vc_wallet, 433f_vc_type and 433f_vc_value were the third row of the accounts fallback and printed a crypto wallet into the accounts table. After the D1 split that row would land in PERSONAL BANK ACCOUNTS, so the keys are withdrawn rather than re-pointed. A blank digital-assets table is wrong by omission; a wallet printed under PERSONAL BANK ACCOUNTS is wrong by commission, and only the second one is a claim the taxpayer never made.",
+      "withdrawn_input_keys": ["433f_vc_wallet", "433f_vc_type", "433f_vc_value"],
+      "not_bound_because": "The targets below exist, but their leaf names are lifted wholesale from another table (Table_Line14 / Row13a / Row13b / p2_t11..p2_t17 are 433-A line-13 names) and say nothing about which printed column each holds. Which key belongs in which column is authored from the printed labels, not guessed from the names — the same defect class already recorded for 433-A's vehicles table. Principal authors the binding in the 433-F v2 re-map.",
+      "targets": [
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].Line13A[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].#field[1]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].Line13B[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].#field[1]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
+        "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
+      ]
+    }
+  },
   "groups": {
-    "accounts": {
-      "array": "accounts",
+    "bank_accounts": {
+      "_why": "PERSONAL BANK ACCOUNTS. AccountsTable[1] prints ABOVE AccountsTable[0] on the page, so the printed order and the field-name order are opposites; the binding here follows the page. Two printed rows, so max 2. Was slots 2-3 of the single `accounts` group until defect D1.",
+      "array": "bank_accounts",
       "fallback": [
         {
           "institution": "433f_bank_institution",
           "acct": "433f_bank_acct",
           "type": "433f_bank_type",
           "balance": "433f_bank_balance"
+        }
+      ],
+      "slots": [
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
         },
+        {
+          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
+          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
+          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
+          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
+        }
+      ]
+    },
+    "investments": {
+      "_why": "INVESTMENTS. AccountsTable[0] prints BELOW AccountsTable[1]. Two printed rows, so max 2. Was slots 0-1 of the single `accounts` group, which is why a caller with one bank account and no investments printed that bank account under INVESTMENTS.",
+      "array": "investments",
+      "fallback": [
         {
           "institution": "433f_inv_institution",
           "acct": "433f_inv_acct",
           "type": "433f_inv_type",
           "balance": "433f_inv_value"
-        },
-        {
-          "institution": "433f_vc_wallet",
-          "type": "433f_vc_type",
-          "balance": "433f_vc_value"
         }
       ],
       "slots": [
@@ -108,18 +147,6 @@
           "acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
           "type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
           "balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
-        },
-        {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
-        },
-        {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
         }
       ]
     },
@@ -220,11 +247,14 @@
   },
   "checkboxes": {
     "address_differs": "topmostSubform[0].Page1[0].address[0].If_address_provided_above_is_different_then_last_r[0]",
-    "account_business": [
-      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].CheckBox11[0]",
-      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].CheckBox11[1]",
+    "_account_business_why": "One flag array per accounts group since the D1 split. A single four-entry array index-aligned to a single four-slot list inherited that list's routing whole: entries 0-1 were the INVESTMENTS table and 2-3 the bank table, in that order, which is the opposite of the printed order. Two arrays, each aligned to its own group, cannot express that error.",
+    "account_business_bank": [
       "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].CheckBox11[0]",
       "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].CheckBox11[1]"
+    ],
+    "account_business_investments": [
+      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].CheckBox11[0]",
+      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].CheckBox11[1]"
     ],
     "real_estate": [
       {

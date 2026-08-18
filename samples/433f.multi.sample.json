@@ -7,28 +7,34 @@
   "433f_biz_name": "ACME Holdings LLC",
   "433f_biz_type": "LLC / Sch C",
   "address_differs": true,
-  "accounts": [
+  "_accounts_split": "Was one `accounts` array of three rows until defect D1. The map now binds PERSONAL BANK ACCOUNTS and INVESTMENTS as separate groups, so the fixture supplies them separately — which is the point: the flat array could not say which table a row belonged in, and slot order answered for it.",
+  "bank_accounts": [
     {
       "institution": "First Example Bank, Denton TX",
       "acct": "XXXX1234",
       "type": "Checking",
       "balance": "2450.00",
       "bp": "Personal"
-    },
+    }
+  ],
+  "investments": [
     {
       "institution": "Example Brokerage",
       "acct": "XXXX9002",
       "type": "Brokerage",
       "balance": "18200.00",
       "bp": "Business"
-    },
-    {
+    }
+  ],
+  "_deferred_digital_assets": {
+    "_why": "The DIGITAL ASSETS (CRYPTOCURRENCY) table is unbound, so this row deliberately prints nowhere. It is kept in the fixture rather than deleted so the read-back has something to prove: a record carrying a crypto wallet must leave the digital-assets table blank, not divert the wallet into a table that IS bound. No group reads this key.",
+    "row": {
       "institution": "Coinbase",
       "type": "BTC wallet",
       "balance": "3100.00",
       "bp": "Personal"
     }
-  ],
+  },
   "real_estate": [
     {
       "desc": "Primary residence, Denton TX",

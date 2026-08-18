@@ -85,12 +85,20 @@ const cb = mapDoc.checkboxes;
 if (cb) {
   if (cb.address_differs && truthy(input('address_differs') ?? data['433f_addr_differs'])) checkBox(cb.address_differs);
 
-  // account business flag — index-aligned to the rows the text layer actually printed
-  const acctRows = groupRows.accounts || [];
-  if (Array.isArray(cb.account_business)) {
-    acctRows.forEach((acct, i) => {
-      if (i < cb.account_business.length && String(acct?.bp ?? '').trim().toLowerCase() === 'business')
-        checkBox(cb.account_business[i]);
+  // account business flag — index-aligned to the rows the text layer actually printed.
+  //
+  // ONE ARRAY PER ACCOUNTS GROUP. Until defect D1 this read a single `cb.account_business` of
+  // four entries against a single four-slot `accounts` group that spanned two printed tables,
+  // so the flag inherited that group's routing whole — including the part that filed a bank
+  // account under INVESTMENTS. The groups are separate now and so are their flag columns; each
+  // array aligns to its own group's rows and cannot reach the other table.
+  for (const [g, key] of [['bank_accounts', 'account_business_bank'],
+                          ['investments',   'account_business_investments']]) {
+    const flags = cb[key];
+    if (!Array.isArray(flags)) continue;
+    (groupRows[g] || []).forEach((acct, i) => {
+      if (i < flags.length && String(acct?.bp ?? '').trim().toLowerCase() === 'business')
+        checkBox(flags[i]);
     });
   }
 
