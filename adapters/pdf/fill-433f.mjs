@@ -42,12 +42,21 @@ for (const [key, name] of Object.entries(mapDoc.map)) {
 }
 
 // repeatable groups (array input, else scalar fallback)
+//
+// The resolved rows are KEPT (groupRows), because the checkbox layer below flags individual
+// ROWS — an account being a business account, a property being the primary residence — and
+// it has to flag the same rows the text layer just printed. Reading `data.accounts` directly
+// down there meant the flags only ever fired for records that supplied ARRAYS, and silently
+// did nothing for every record that came through the scalar fallback. A HubSpot record is
+// always the second kind.
 const overflow = [];
+const groupRows = {};
 for (const [g, def] of Object.entries(mapDoc.groups || {})) {
   let rows = Array.isArray(data[def.array]) ? data[def.array] : null;
   if (!rows) rows = (def.fallback || [])
     .map(fb => { const r = {}; for (const [sub, key] of Object.entries(fb)) r[sub] = data[key]; return r; })
     .filter(r => Object.values(r).some(v => v !== undefined && v !== null && v !== ''));
+  groupRows[g] = rows;
   rows.forEach((row, i) => {
     if (i >= def.slots.length) { overflow.push(`${g}[${i}]`); return; }
     for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub]);
@@ -55,21 +64,47 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
 }
 
 // checkboxes (address-differs, account business flags, real-estate PR/CO, pay frequency)
+//
+// INPUT KEYS ARE READ THROUGH `input()`, NEVER OFF `data` DIRECTLY.
+//
+// A hand-authored sample writes `pay_freq`. A record fetched from HubSpot writes
+// `433f_pay_freq`, because hs-fetch-433f.mjs keys the record by the registry's LOGICAL key
+// and every logical key on this form carries the form prefix. The text layers never noticed:
+// `map` is keyed by prefixed names already, and the group fallback names its own keys. Only
+// this layer reached for bare names, so on a real HubSpot record the ENTIRE checkbox layer
+// silently did nothing and the form came out with no boxes ticked at all. Nothing errored,
+// nothing was skipped, and a PDF was written — which is why the round trip is worth running
+// against a live record instead of only against the sample that was written to satisfy it.
+//
+// `address_differs` already had the prefixed alias spelled out inline; this generalises that
+// one-off into the rule.
+const PREFIX = `${mapDoc.form}_`;                     // "433f_" — from the map, not hardcoded
+const input = (name) => data[name] ?? data[PREFIX + name];
+
 const cb = mapDoc.checkboxes;
 if (cb) {
-  if (cb.address_differs && truthy(data.address_differs ?? data['433f_addr_differs'])) checkBox(cb.address_differs);
+  if (cb.address_differs && truthy(input('address_differs') ?? data['433f_addr_differs'])) checkBox(cb.address_differs);
 
-  // account business flag — index-aligned to the accounts array/slots; bp === 'Business'
-  if (Array.isArray(cb.account_business) && Array.isArray(data.accounts)) {
-    data.accounts.forEach((acct, i) => {
+  // account business flag — index-aligned to the rows the text layer actually printed
+  const acctRows = groupRows.accounts || [];
+  if (Array.isArray(cb.account_business)) {
+    acctRows.forEach((acct, i) => {
       if (i < cb.account_business.length && String(acct?.bp ?? '').trim().toLowerCase() === 'business')
         checkBox(cb.account_business[i]);
     });
   }
 
-  // real estate PR/CO by row kind ('primary' -> primary box, 'other' -> other box)
-  if (Array.isArray(cb.real_estate) && Array.isArray(data.real_estate)) {
-    data.real_estate.forEach((re, i) => {
+  // real estate PR/CO by row kind ('primary' -> primary box, 'other' -> other box).
+  //
+  // NOTE: the scalar fallback for this group carries no `kind`, and no registry property
+  // supplies one, so a record that arrives from HubSpot cannot answer PR/CO at all and both
+  // boxes stay blank. That is a gap in the PROPERTY SET, not in this code, and it is left
+  // visible rather than guessed at — inferring "primary" from a description that happens to
+  // read "Primary residence" would put a claim on a filed collection statement that the
+  // taxpayer never made.
+  const reRows = groupRows.real_estate || [];
+  if (Array.isArray(cb.real_estate)) {
+    reRows.forEach((re, i) => {
       if (i >= cb.real_estate.length) return;
       const kind = String(re?.kind ?? '').trim().toLowerCase();
       if (kind === 'primary') checkBox(cb.real_estate[i].primary);
@@ -82,8 +117,8 @@ if (cb) {
     const idx = cb.pay_freq.index || {};
     const freqIndex = (v) => idx[String(v ?? '').trim().toLowerCase().replace(/[\s._-]/g, '')];
     const fill = (val, arr) => { const i = freqIndex(val); if (i !== undefined && Array.isArray(arr) && arr[i]) checkBox(arr[i]); };
-    fill(data.pay_freq, cb.pay_freq.you);
-    fill(data.spouse_pay_freq, cb.pay_freq.spouse);
+    fill(input('pay_freq'), cb.pay_freq.you);
+    fill(input('spouse_pay_freq'), cb.pay_freq.spouse);
   }
 }
 
@@ -117,6 +152,7 @@ let allowedFilled = 0;
 if (std && mapDoc.allowed) {
   const before = filled;
   const rawHH = parseInt(data.household_size ?? data['433f_hh_size'] ?? '', 10);
+  const ageBand = input('age_band');
   const hhKey = String(Math.min(4, Math.max(1, rawHH || 1)));
   const natl = std.national[hhKey];
   const A = mapDoc.allowed.national_by_household;
@@ -127,8 +163,8 @@ if (std && mapDoc.allowed) {
     const total = rawHH > 4 ? std.national['4'].total + std.national_addl_total * (rawHH - 4) : natl.total;
     setText(A.total, total);
   }
-  const oop = data.age_band === '65_over' ? std.oop['65_over'] : std.oop['under_65'];
-  if (mapDoc.allowed.oop_by_age && (data.age_band || rawHH)) setText(mapDoc.allowed.oop_by_age, oop);
+  const oop = ageBand === '65_over' ? std.oop['65_over'] : std.oop['under_65'];
+  if (mapDoc.allowed.oop_by_age && (ageBand || rawHH)) setText(mapDoc.allowed.oop_by_age, oop);
   allowedFilled = filled - before;
 }
 
