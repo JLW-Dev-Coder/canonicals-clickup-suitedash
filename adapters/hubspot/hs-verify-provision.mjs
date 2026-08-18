@@ -10,11 +10,33 @@
 // It also reports the custom-property count against the ceiling, so the headroom left for the
 // remaining six forms is on the record rather than inferred later from a stale number.
 
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { hs } from './hs-lib.mjs';
 
 const form = process.argv[2] || '433a';
 const doc = JSON.parse(readFileSync(`adapters/hubspot/fields.${form}.json`, 'utf8'));
+
+// --- what the portal is EXPECTED to hold is the definition file PLUS every crosswalk extension
+//
+// A later form can need an option value an earlier form never printed. 433-F prints a
+// Semi-monthly pay-period box that 433-A does not, so irs433_tp_pay_period — which
+// fields.433a.json declares with four options — correctly carries five once 433-F is
+// provisioned. Without this, verifying 433-A after that point reports a DIFF on a property
+// that is exactly right, and a check that cries wolf is a check people stop running.
+//
+// So the expected option set is the UNION: the declaring form's list, plus anything a
+// crosswalk in this repo has recorded as an additive extension. It is read from the crosswalk
+// files rather than listed here, so the next form's extension needs no edit to this file.
+const optionExtensions = new Map();     // hs_name -> Set(added values)
+const extensionSource = new Map();      // hs_name -> which crosswalk asked for it
+for (const f of readdirSync('adapters/hubspot').filter((n) => /^crosswalk\..+\.json$/.test(n))) {
+  const xw = JSON.parse(readFileSync(`adapters/hubspot/${f}`, 'utf8'));
+  for (const e of xw.option_extensions || []) {
+    if (!optionExtensions.has(e.hs_name)) optionExtensions.set(e.hs_name, new Set());
+    for (const a of e.add) optionExtensions.get(e.hs_name).add(String(a.value));
+    extensionSource.set(e.hs_name, f);
+  }
+}
 
 const live = (await hs('/crm/v3/properties/contacts')).results || [];
 const byName = new Map(live.map((p) => [p.name, p]));
@@ -31,11 +53,21 @@ for (const p of doc.properties) {
   // Option VALUES are what the fill engine resolves against, so they are compared; labels are
   // cosmetic and are not.
   if (p.options) {
-    const want = p.options.map((o) => String(o.value)).sort().join(',');
+    const extended = optionExtensions.get(p.hs_name);
+    const want = [...new Set([...p.options.map((o) => String(o.value)), ...(extended || [])])].sort().join(',');
     const got = (l.options || []).map((o) => String(o.value)).sort().join(',');
-    if (want !== got) diffs.push(`options [${got}] != [${want}]`);
+    if (want !== got) {
+      const via = extended ? ` (expected set includes the extension from ${extensionSource.get(p.hs_name)})` : '';
+      diffs.push(`options [${got}] != [${want}]${via}`);
+    }
   }
   if (diffs.length) mismatched.push(`${p.hs_name}: ${diffs.join('; ')}`);
+}
+
+if (optionExtensions.size) {
+  console.log(`option extensions folded into the expected set: ${optionExtensions.size} property/ies`);
+  for (const [n, vals] of optionExtensions) console.log(`  ${n} += [${[...vals].join(', ')}]  (${extensionSource.get(n)})`);
+  console.log('');
 }
 
 console.log(`declared in fields.${form}.json: ${doc.properties.length}`);
