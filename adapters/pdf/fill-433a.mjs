@@ -33,6 +33,7 @@
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
+import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 
 // The published Collection Financial Standards. Form-agnostic — every form in the 433
 // series reads this one table, so it is not named after any of them. The map's
@@ -489,7 +490,20 @@ if (violations.length) {
 
 mkdirSync('adapters/pdf/out', { recursive: true });
 const outPath = `adapters/pdf/out/433a_filled_${data.intake_id || 'sample'}.pdf`;
-writeFileSync(outPath, await pdf.save());
+// `updateFieldAppearances: true` is passed EXPLICITLY. It is pdf-lib's current default,
+// but a default is not a guarantee: a version bump — or anyone adding an unrelated save
+// option here, which drops it — produces a file with a complete, correct set of /V
+// values that PRINTS BLANK, because a viewer draws the appearance stream, not /V. Such a
+// file passes map validation, field-by-field read-back, the duplicate-write assertion
+// and the coverage assertion. See verify-appearances.mjs, which also records why
+// /NeedAppearances was considered as a third remedy and deliberately declined.
+writeFileSync(outPath, await pdf.save({ updateFieldAppearances: true }));
+
+// Pinning the flag states the intent; this proves the outcome. Every value stored above
+// must be DRAWN by its widget's normal appearance stream or the run fails here — a fill
+// that reports success has to mean the page actually shows the values.
+if (reportAppearances(await verifyAppearances(outPath)) !== 0) process.exit(2);
+
 console.log(`filled ${filled} text fields + ${cbFilled} checkboxes -> ${outPath}`);
 
 if (allowedAudit.length) {

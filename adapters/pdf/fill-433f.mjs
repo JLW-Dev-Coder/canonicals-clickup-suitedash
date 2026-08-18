@@ -1,5 +1,6 @@
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 
 const mapDoc = JSON.parse(readFileSync('adapters/pdf/maps/433f.map.json', 'utf8'));
 const data   = JSON.parse(readFileSync(process.argv[2] || 'samples/433f.sample.json', 'utf8'));
@@ -127,7 +128,15 @@ if (std && mapDoc.allowed) {
 
 mkdirSync('adapters/pdf/out', { recursive: true });
 const outPath = `adapters/pdf/out/433f_filled_${data.intake_id || 'sample'}.pdf`;
-writeFileSync(outPath, await pdf.save());
+// Explicit, for the same reason as fill-433a.mjs: pdf-lib defaults this to true today,
+// but a file whose appearance streams were never regenerated carries every correct /V
+// value and PRINTS BLANK. Pinning it means a change of default cannot silently produce
+// one. See verify-appearances.mjs, including why /NeedAppearances was declined.
+writeFileSync(outPath, await pdf.save({ updateFieldAppearances: true }));
+
+// And prove it, rather than trusting the flag: every stored value must be drawn.
+if (reportAppearances(await verifyAppearances(outPath)) !== 0) process.exit(2);
+
 console.log(`filled ${filled} fields (${allowedFilled} allowable-standard) + ${cbFilled} checkboxes -> ${outPath}`);
 if (skipped.length) console.log(`skipped ${skipped.length}: ${skipped.slice(0,4).join(', ')}${skipped.length>4?' ...':''}`);
 if (overflow.length) console.log(`OVERFLOW: ${overflow.join(', ')}`);
