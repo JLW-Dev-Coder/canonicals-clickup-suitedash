@@ -38,7 +38,8 @@
       "v7: the form has SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the identity block is 2 SSN + 6 telephone = 8 scalars, not the 9 the first specification named. Reported rather than raised as a STOP, because no named target failed to resolve — the count was wrong, not the targets.",
       "v7: `433f_re*_year_refinanced` and `433f_re*_refinance_amount` bind as SCALARS, one pair per printed real-estate row, not as `real_estate` row columns. The group's rows do not carry refinance data, so a caller supplying the array supplies these alongside it. Same shape as the `split` keys in Section C and for the same reason.",
       "v7: the map now declares itself COMPLETE, so gate steps 4, 5 and 10 REQUIRE rather than report. writable + never_autofill + deferred partitions all 214 fields; every excluded field carries its own reason under allowed._never_autofill. 'No declared state' is the condition that let defect D1 sit unexamined, so nothing on this form is left silent.",
-      "v7: the five Section H 'Total' cells bind as ordinary operator-supplied map keys, not as fill-time sums. The printed captions on this form say only 'Total' — none of them says 'Add lines X, Y, Z' the way 433-A's do — and the Food / Personal Care block prints its own instruction that a taxpayer at or under the standard may 'fill in the Total amount only'. So the total is a figure the operator gives and 433f.totals.json checks it against the rows printed above it; computing it here and then checking it would compare the record to itself."
+      "v7: the five Section H 'Total' cells bind as ordinary operator-supplied map keys, not as fill-time sums. The printed captions on this form say only 'Total' — none of them says 'Add lines X, Y, Z' the way 433-A's do — and the Food / Personal Care block prints its own instruction that a taxpayer at or under the standard may 'fill in the Total amount only'. So the total is a figure the operator gives and 433f.totals.json checks it against the rows printed above it; computing it here and then checking it would compare the record to itself.",
+      "v7: THE PARTITION IS DECLARED AND THE MAP IS COMPLETE. writable + never_autofill + deferred covers all 214 enumerated fields, disjoint, with every excluded field carrying its own reason and `_deferred` explicitly empty. Gate steps 4, 5 and 10 now REQUIRE rather than report, and step 10 fails rather than skipping if 433f.totals.json goes missing. The two E1 footer cells are the only printed total-shaped money cells not covered by a tripwire, and they are declared under `not_checkable` in that file with their reasons, so no total-shaped cell on this form is silent either way."
     ]
   },
   "map": {
@@ -410,7 +411,134 @@
       "misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_allowed[0]",
       "total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_allowed[0]"
     },
-    "oop_by_age": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_allowed[0]"
+    "oop_by_age": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_allowed[0]",
+    "_never_autofill": {
+      "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator — which walks string VALUES — checks every one of them for existence. Each is validated and never written. Same construct and same reason as 433a.map.json's list.",
+      "_what_is_here": "The 26 IRS Allowed cells the published standards cannot fill, the Section H push button, and the three cells of the signature block. Every one carries its own reason; none is here because nobody looked at it.",
+      "_the_six_that_ARE_filled": "For contrast, six IRS Allowed cells are auto-filled and are NOT in this list: the five National Standards food-group cells plus their Total (by household size) and the Out of Pocket Health Care cell (by age band). Those are published figures the IRS grants outright, so a blank there is a cell an examiner has to look up that the standards table already answers. Everything below depends on a county, a census region, a term of employment, or examiner discretion — and in that column a figure that is present but wrong is far worse than a blank the examiner completes.",
+      "fields": [
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row1[0].gas_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by census region; no regional table is held. Printed row: Gas / Insurance / Licenses / Parking / Maintenance etc. — the Local Standards OPERATING COSTS figure."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row2[0].transportation_allowed[0]",
+          "reason": "IRS Allowed - Public Transportation is a greater-of judgement against the taxpayer's vehicle costs, not a lookup."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row3[0].total_allowed[0]",
+          "reason": "IRS Allowed - the sum of the Transportation block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row1[0].rent_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Rent."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row2[0].electric_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Electric, Oil/Gas, Water/Trash."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row3[0].telephone_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Telephone/Cell/Cable/Internet."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row4[0].real_estate_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Real Estate Taxes and Insurance."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row5[0].maintenance_allowed[0]",
+          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Maintenance and Repairs."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row6[0].total_allowed[0]",
+          "reason": "IRS Allowed - the sum of the Housing & Utilities block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row1[0].health_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Health Insurance — there is no published health-insurance standard."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row3[0].total_allowed[0]",
+          "reason": "IRS Allowed - the sum of the Medical block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it. One of its two feeders IS auto-filled (Out of Pocket Health Care, from the published per-age-band figure), which makes a computed total here worse than a blank one: it would look complete while resting on one real figure and one empty cell."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row1[0].child_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Child / Dependent Care."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row2[0].tax_payments_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Estimated Tax Payments — the current-year liability, not a standard."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row3[0].term_life_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Term Life Insurance."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row4[0].required_retirement_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Retirement (Employer Required) — allowed only to the extent the employer requires it, which is a term of the taxpayer's employment."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row5[0].voluntary_retirement_allowed[0]",
+          "reason": "IRS Allowed - Retirement (Voluntary) is generally NOT an allowable expense, and where an examiner allows part of it that is a discretionary determination. Auto-filling anything here, zero included, would state a conclusion the examiner has not reached."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row6[0].union_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Union Dues."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row7[0].delinquent_allowed[0]",
+          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Delinquent State & Local Taxes (minimum payment) — allowed on a pro-rata basis the examiner computes against the federal liability."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row8[0].student_loans_allowed[0]",
+          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Student Loans (minimum payment) — allowed only for federally guaranteed loans of the taxpayer, which this engine cannot establish."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Child Support — allowed to the extent actually paid under the order."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row10[0].alimony_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Alimony — same test as child support."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_allowed[0]",
+          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Other Court Ordered Payments."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_allowed[0]",
+          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the first Other (specify) — the taxpayer names the expense, so no standard can exist for it in advance."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other_allowed[0]",
+          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the second Other (specify)."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other_allowed[0]",
+          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the third Other (specify)."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row15[0].total_allowed[0]",
+          "reason": "IRS Allowed - the sum of the Other block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].sectionH[0].national_standards[0]",
+          "reason": "NOT A DATA FIELD. A push button the form draws beside the Section H heading, linking to the published National Standards; it has no value to write. Enumerated and named here so it is in a declared state rather than counted as an unreferenced text cell."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].YourSignature[0]",
+          "reason": "THE SIGNATURE. Filling it would forge the taxpayer's attestation on a statement made under penalty of perjury. The one cell on this form where writing a correct-looking value is worse than any blank."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].SpousesSignature[0]",
+          "reason": "The spouse's signature. Same reason."
+        },
+        {
+          "target": "topmostSubform[0].Page2[0].DateReview[0]",
+          "reason": "The date beside the signatures — the date the taxpayer SIGNS, which is not a date this engine knows. Auto-dating it would date an attestation that has not been made yet, and it would also make the output depend on the wall clock (the same drift AGE_AS_OF_DEFAULT exists to avoid in fill-433a.mjs)."
+        }
+      ]
+    }
   },
   "split": {
     "_why": "Section C's 'Date of Final Payment (mo/yr)' is TWO abutting cells, each /MaxLen 2. A canonical date cannot pass through: four digits is all the form holds, and the year is the printed two, not the calendar four. Same construct fill-433a.mjs uses for phone and EIN - `strip` removes the caller's formatting, each part consumes `chars` source characters, and a stripped value that is not EXACTLY four characters writes nothing and stops the run. That exactness is the point: an operator who supplies 06/2027 gets a loud stop, not a silent 20 in the year box.",
@@ -441,5 +569,6 @@
         }
       ]
     }
-  }
+  },
+  "slice": "COMPLETE - every field on 433-F is mapped or explicitly excluded"
 }

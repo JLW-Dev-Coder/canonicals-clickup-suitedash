@@ -1,0 +1,125 @@
+{
+  "form": "433f",
+  "form_revision": "7-2024",
+  "catalog": "62053J",
+  "_why": "Which printed total adds which printed rows. Read by run-form-gate.mjs step 10, which recomputes every total FROM WHAT THE FILLED PDF PRINTS and compares it to the printed total. No figure lives here — only the structure of the form. Authored per form, so the gate code names no form and runs unchanged on 433-B.",
+  "authored_from": "The printed page text of adapters/pdf/forms/f433f.pdf, extracted from the content streams and read in printed order down each Section H column. NOT from field names — though on this form the Section H leaf names happen to agree with the printed rows, which is exactly why they were checked rather than trusted: the Section E leaf names on the same page do not.",
+  "_notes": [
+    "433-F NUMBERS NO LINES. 433-A's captions name their feeders outright ('Add lines 13a, 13b, 13c, 13d'); every printed total on 433-F says only the word 'Total'. So the feeder list cannot be transcribed from a caption here — it is the rows printed between the block's own heading and its Total row, in printed order, and that is what the `printed_rows` field on each entry records. The `line` ids below (H1..H5) are this file's own labels for the five numbered Section H blocks the form prints; the form itself prints '1. Food / Personal Care' through '5. Other' and no line numbers at all.",
+    "EACH TOTAL SUMS ITS OWN BLOCK, NOT THE COLUMN. Section H prints five numbered blocks over two columns, each with its own Total row, and prints NO grand total for living expenses — 433-A's line 50 has no counterpart here. So there are five tripwires and no sixth summing them.",
+    "THE ACTUAL MONTHLY COLUMN ONLY. Every Section H row prints two cells, Actual Monthly and IRS Allowed. These totals feed from the Actual Monthly column, because that is the column the taxpayer fills. The IRS Allowed column is the examiner's and is declared under allowed._never_autofill in the map — except the six cells the published National Standards fix outright, which the standards engine writes. Its own Total cell is therefore NOT a tripwire: five of its six feeders are blank by design, so a computed sum would disagree with the printed figure on every correctly filled form.",
+    "The Food / Personal Care block prints its own instruction: 'If you do not spend more than the standard allowable amount for your family size, fill in the Total amount only.' A record that takes the form up on that fills the Total and leaves the five rows blank, and this tripwire would then report a mismatch against a correctly filled page. That is a real limit and it is stated rather than worked around — the saturated acceptance fixture fills all five rows, which is what the fixture is for, and a production record that fills the Total alone should be read with this note in hand.",
+    "A feeder cell that carries text the tripwire cannot read a number out of makes its whole line NOT CHECKABLE, named, rather than silently contributing zero. A tripwire that quietly read a mis-typed cell as 0 would report a false match."
+  ],
+  "totals": [
+    {
+      "line": "H1",
+      "caption": "1. Food / Personal Care > Total",
+      "printed_rows": "Food, Housekeeping Supplies, Clothing and Clothing Services, Personal Care Products & Services, Miscellaneous",
+      "total_key": "433f_exp_food_total",
+      "feeders": [
+        {
+          "keys": [
+            "433f_exp_food",
+            "433f_exp_housekeep",
+            "433f_exp_clothing",
+            "433f_exp_personalcare",
+            "433f_exp_misc"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "H2",
+      "caption": "2. Transportation > Total",
+      "printed_rows": "Gas / Insurance / Licenses / Parking / Maintenance etc., Public Transportation",
+      "total_key": "433f_exp_transport_total",
+      "feeders": [
+        {
+          "keys": [
+            "433f_exp_gas",
+            "433f_exp_public"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "H3",
+      "caption": "3. Housing & Utilities > Total",
+      "printed_rows": "Rent, Electric/Oil-Gas/Water-Trash, Telephone/Cell/Cable/Internet, Real Estate Taxes and Insurance, Maintenance and Repairs",
+      "total_key": "433f_exp_housing_total",
+      "feeders": [
+        {
+          "keys": [
+            "433f_exp_rent",
+            "433f_exp_utilities",
+            "433f_exp_phone",
+            "433f_exp_retax",
+            "433f_exp_maint"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "H4",
+      "caption": "4. Medical > Total",
+      "printed_rows": "Health Insurance, Out of Pocket Health Care Expenses",
+      "total_key": "433f_exp_medical_total",
+      "feeders": [
+        {
+          "keys": [
+            "433f_exp_healthins",
+            "433f_exp_oop"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "H5",
+      "caption": "5. Other > Total",
+      "printed_rows": "Child / Dependent Care, Estimated Tax Payments, Term Life Insurance, Retirement (Employer Required), Retirement (Voluntary), Union Dues, Delinquent State & Local Taxes (minimum payment), Student Loans (minimum payment), Court Ordered Child Support, Court Ordered Alimony, Other Court Ordered Payments, and the three Other (specify) rows",
+      "_fourteen_feeders": "Four of these were unbound until 433-F v2 — Retirement (Voluntary), Court Ordered Alimony and the second and third Other (specify) rows. This is the fifth roll-up and it was not authorable before them: a total checked against eleven of its fourteen printed rows would have reported a mismatch on every record that used one of the other three, and the natural reading of that report is that the operator's total is wrong.",
+      "total_key": "433f_exp_other_total",
+      "feeders": [
+        {
+          "keys": [
+            "433f_exp_depcare",
+            "433f_exp_esttax",
+            "433f_exp_termlife",
+            "433f_exp_retire",
+            "433f_exp_volretire",
+            "433f_exp_union",
+            "433f_exp_statetax",
+            "433f_exp_student",
+            "433f_exp_courtcs",
+            "433f_exp_alimony",
+            "433f_exp_courtother",
+            "433f_exp_other1",
+            "433f_exp_other2",
+            "433f_exp_other3"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_checkable": {
+    "_why": "Printed money cells that hold a total-shaped figure and are DELIBERATELY not tripwires. Declared, with the reason, rather than left out — a cell absent from this file is indistinguishable from one nobody looked at, and 'no declared state' is the condition that let defect D1 sit unexamined. The same discipline as allowed._never_autofill in the map, which names every IRS-column cell it declines to auto-fill and why.",
+    "_the_test_that_decided_both": "Every printed total this repo has made a tripwire says 'Add lines X, Y, Z'. Neither of these does. That is not a formality: a caption naming its addends is the form telling you what the arithmetic is, and where the form does not say, a computed figure is this engine's assertion rather than the page's.",
+    "entries": [
+      {
+        "map_key": "433f_ar_additional_sheets_total",
+        "printed_caption": "List total amount owed from additional sheets",
+        "target": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[2]",
+        "why_not_checkable": "Everything it sums is on an ATTACHMENT and not on the form, so nothing printed on the page could verify it. This is the mirror image of the standing overflow rule (433a.map.json _notes[27]): rows the form has no slot for are dropped to an attachment and are NOT in a printed total, which is what makes the other totals checkable. Here the cell is about precisely those dropped rows, so the same rule that makes the rest checkable makes this one not.",
+        "still_written": "Yes — it is an ordinary writable map key. Not checkable is not the same as not filled."
+      },
+      {
+        "map_key": "433f_ar_available_to_pay_now",
+        "printed_caption": "Total amount of accounts receivable available to pay to IRS now",
+        "target": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[3]",
+        "why_not_checkable": "A DETERMINATION, not a sum. Receivables that exist are not all collectible now — a 90-day-past-due invoice from a party in liquidation is on the page above and is not available to pay anyone. Computing this from the rows would assert a judgement about collectability the operator has not made, on a statement signed under penalty of perjury.",
+        "still_written": "Yes — an ordinary writable map key."
+      }
+    ]
+  }
+}

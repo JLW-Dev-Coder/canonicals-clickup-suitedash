@@ -307,8 +307,22 @@ const steps = [
       console.log(`  0 of ${rows.length} line(s) not checkable — every feeder resolved to a printed cell on this form.`);
     }
 
+    // Totals the DECLARATION says it deliberately does not check. Printed here so the
+    // decision is visible in the gate output rather than only in the file: a total-shaped
+    // cell that appears in neither list reads as "checked" to anyone skimming this step,
+    // and "no declared state" is the condition defect D1 sat in.
+    const declined = decl.not_checkable?.entries || [];
+    if (declined.length) {
+      console.log('');
+      console.log(`  ${declined.length} printed total-shaped cell(s) DECLARED not checkable — written, deliberately not verified:`);
+      for (const e of declined) {
+        console.log(`    ${e.map_key} — "${e.printed_caption}"`);
+        console.log(`      ${e.why_not_checkable}`);
+      }
+    }
+
     const bad = rows.filter(r => r.checkable && !r.match);
-    if (!bad.length) return ok(`${rows.length - unchecked.length} of ${rows.length} total(s) checked, all agree with the rows printed above them`);
+    if (!bad.length) return ok(`${rows.length - unchecked.length} of ${rows.length} total(s) checked, all agree with the rows printed above them${declined.length ? `; ${declined.length} more declared not checkable, with reasons` : ''}`);
     console.error('');
     console.error(`ARITHMETIC TRIPWIRE — ${bad.length} printed total(s) disagree with the printed rows that feed them.`);
     for (const r of bad) {
