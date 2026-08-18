@@ -1,0 +1,33 @@
+{
+  "business_id": "PENDING_PRINCIPAL",
+  "bank_category_id": "PENDING_PRINCIPAL",
+  "debit_rules": [
+    { "pattern": "^CHECK #",                                  "category_id": "2539ed0c-5c97-48e9-b001-db20ffaf2104", "label": "Uncategorized Expense", "review": true, "note": "payee unknown pending cancelled checks" },
+    { "pattern": "^CASHIERS CHECK",                            "category_id": "2539ed0c-5c97-48e9-b001-db20ffaf2104", "label": "Uncategorized Expense", "review": true },
+    { "pattern": "NSF|OVERDRAFT|RETURNED ITEM",                "category_id": "0b4bd52e-58a2-46c4-8c2c-3c3dfe457a43", "label": "Bank Fees", "review": false },
+    { "pattern": "FC CAPITAL",                                 "category_id": "7b727fa9-30b1-4937-b060-628f17398cf1", "label": "Short-term Debt", "review": true, "note": "MCA repayment; principal/fee split needs the funding agreement" },
+    { "pattern": "HZCU",                                       "category_id": "7b727fa9-30b1-4937-b060-628f17398cf1", "label": "Short-term Debt", "review": true },
+    { "pattern": "IRS USATAXPYMT",                             "category_id": "c4559af8-976b-4ec2-83e1-7755eaaf81c9", "label": "Taxes", "review": true, "note": "confirm 941 vs income tax" },
+    { "pattern": "STATE OF WA-ESD|LABOR&INDUSTRIES|LABOR & IND", "category_id": "58433b80-38de-4b58-a1d2-e953eccc5bef", "label": "Employer Payroll Taxes", "review": false },
+    { "pattern": "WA DEPT REVENUE|DEPT REVENUE",               "category_id": "d82a7469-ac4a-483c-97b3-00c495a0bbc8", "label": "SG&A - Other State & Local Taxes", "review": false },
+    { "pattern": "VTE OF STEV|STEVENS C",                      "category_id": "d82a7469-ac4a-483c-97b3-00c495a0bbc8", "label": "SG&A - Other State & Local Taxes", "review": true },
+    { "pattern": "ULINE|STICKERGIANT|INNOVATIVE PACKAGING",    "category_id": "9b2004aa-5fc2-4a73-a85a-b771342227d7", "label": "COGS - Cultivation - Packaging - Direct", "review": false },
+    { "pattern": "AVISTA|CNGC|PUD|CLARK",                      "category_id": "f71d7d08-1679-4163-b184-b69142a8421e", "label": "Utilities", "review": true, "note": "conservative: NOT auto-routed to COGS; grow-vs-admin split is a 280E decision" },
+    { "pattern": "COMCAST|CENTURYLINK|LUMEN",                  "category_id": "88cefba0-0851-43b4-9ac3-60581319e6d4", "label": "SG&A - Telephone & Internet - Admin", "review": false },
+    { "pattern": "GROWFLOW|GOOGLE|ADOBE|MICROSOFT|INTUIT|QUICKBOOKS|PISTIL DATA", "category_id": "5940fcf6-c940-4c2e-8f51-bf4fdcf897a9", "label": "Business Applications & Software", "review": true, "note": "GrowFlow is seed-to-sale compliance; may be production overhead" },
+    { "pattern": "BUCHALTER|ATTORNEY|LAW ",                    "category_id": "b788280a-4f90-4c60-9027-2d210e4f5fa6", "label": "Legal", "review": false },
+    { "pattern": "TEPCO PREMIUM|INSPREMIUM|INSURANCE",         "category_id": "29d6bcda-6e41-4169-bc6d-a4bcd408a5be", "label": "Insurance", "review": true },
+    { "pattern": "PENWAY MEDIA|MINUTEMAN PRESS",               "category_id": "eb08461c-2231-4970-b7d9-1cfebe3736ea", "label": "Advertising", "review": false },
+    { "pattern": "JUBITZ",                                     "category_id": "b2966796-f7e3-4e26-a0fe-294ee1f1e001", "label": "Ground Transportation", "review": true, "note": "fuel; may be production or delivery" },
+    { "pattern": "CASH \\+ CARRY|US FOODSERVICE",              "category_id": "a642eb20-9647-4d99-a024-f77c84e2c825", "label": "Other Supplies & Materials", "review": true },
+    { "pattern": "CAINE AND WEINER",                           "category_id": "b26df2e7-f1ab-4c48-a6dc-b71eedbe95e3", "label": "Other Miscellaneous Expenses", "review": true, "note": "collections agency" },
+    { "pattern": "AMZN|AMAZON",                                "category_id": "9496562c-a566-48d4-8d6e-59d66c779a4b", "label": "Office Supplies", "review": false },
+    { "pattern": ".*",                                         "category_id": "2539ed0c-5c97-48e9-b001-db20ffaf2104", "label": "Uncategorized Expense", "review": true }
+  ],
+  "credit_rules": [
+    { "pattern": "FC CAPITAL.*(FUNDING|REVERSAL)",             "category_id": "7b727fa9-30b1-4937-b060-628f17398cf1", "label": "Short-term Debt", "review": true, "note": "loan proceeds, NOT revenue" },
+    { "pattern": "^DEPOSIT",                                   "category_id": "4fcba487-1894-4277-bbcb-139563c32dd6", "label": "Revenue - Wholesale - Other", "review": true, "note": "cash deposits; product split needs GrowFlow" },
+    { "pattern": "APEX CANNABIS|DANS HERBS|MOLLYS MARKET|HIGHER LEAF|NEW VANSTERDAM|SULLIVAN H|CASCADE HERB|WHITE RABBIT|TEKA INVEST|ORIGINS|PLAUSIBLE|CRAFT ANDRESEN|JETCIT|Q'ANAPSU|HARBOR CHOICE|REACH ISLAND|SUFFICIENT SYSTE|THE LINK|FIRE CANNABIS|PRIMO CANNABIS|WENATCHEE VALLEY|THUNDER CANNABIS|ALEXANDER INDUST|KEYSTONECREATION|SEASHORE|ALKALOID|GLOBODYNE|WAMSLEY", "category_id": "75064fdd-7805-4de3-b14d-250fc0507029", "label": "Revenue - Wholesale - Flower", "review": true, "note": "flower vs biomass split needs GrowFlow" },
+    { "pattern": ".*",                                         "category_id": "9dd6589c-8c98-4d25-9eaa-8b84bf0e7ed7", "label": "Uncategorized Income", "review": true }
+  ]
+}

@@ -22,3 +22,6 @@ data/
 *.csv
 scripts/.klaritie-digits-state.json
 scripts/klaritie-digits-batches/
+# Dry-run report: derived from the transaction CSV and prints individual rows
+# (dates, amounts, check numbers, counterparties, a client street address).
+reports/
