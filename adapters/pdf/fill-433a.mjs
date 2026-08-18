@@ -34,7 +34,7 @@ import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
-import { checkRowShapes, reportRowShapes } from './check-row-shape.mjs';
+import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
 
 // The published Collection Financial Standards. Form-agnostic — every form in the 433
 // series reads this one table, so it is not named after any of them. The map's
@@ -208,6 +208,10 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
 // Every column the slot declares, or the run says which ones were not supplied. A partial
 // column match used to pass silently and print the rest of the row's cells empty.
 const rowShape = checkRowShapes(mapDoc, groupRows);
+// And a row must be allowed to say what it IS — see check-row-shape.mjs. 433-A prints bank
+// accounts on line 13 and BUSINESS bank accounts on line 65 from one canonical class; the
+// class is what keeps a row out of the other table.
+const rowClass = checkRowClasses(mapDoc, groupRows);
 
 // ---------------------------------------------------------------------------
 // IRS USE ONLY / Allowable Expenses column.
@@ -567,7 +571,7 @@ if (violations.length) {
 
 // Row shape. Reported in every mode, and a STOP under --saturated, alongside the other
 // stops rather than before them so one run surfaces every problem it can see.
-if (reportRowShapes(rowShape, saturated)) process.exit(2);
+if (reportRowShapes(rowShape, saturated) + reportRowClasses(rowClass)) process.exit(2);
 
 mkdirSync('adapters/pdf/out', { recursive: true });
 const outPath = `adapters/pdf/out/433a_filled_${data.intake_id || 'sample'}.pdf`;

@@ -249,7 +249,11 @@ const push = (key, extra) => {
     form,                            // which form's map GENERATED this row (not ownership)
     field: key,
     label: extra.label ?? label(key),
-    description: describe(key, pii),
+    // A serialized table is unreadable without its row shape, and after the v3 re-key the
+    // shape is the CANONICAL row, shared across the series. It belongs in the property's own
+    // description for the same reason gen-fields-from-crosswalk.mjs puts it there: the next
+    // form to reach for this property reads the portal, not this repo.
+    description: [describe(key, pii), extra.row_shape ? `JSON array of row objects with keys: ${extra.row_shape.join(', ')}.` : null].filter(Boolean).join(' '),
     group: scope === 'shared' ? SHARED_PREFIX : FORM_PREFIX,
     type: extra.type,
     fieldType: extra.fieldType,
@@ -259,6 +263,7 @@ const push = (key, extra) => {
     line_ref: lineRef(key),
     source: extra.source,            // which map construct produced this property
     type_basis: extra.basis,         // WHY this type — so the review can check the reasoning
+    row_shape: extra.row_shape ?? null,   // serialized tables only; null everywhere else
   });
 };
 
@@ -326,6 +331,24 @@ for (const [gName, def] of Object.entries(mapDoc.groups || {})) {
     Object.keys(s.text || {}).forEach(c => cols.add(c));
     Object.keys(s.checkboxes || {}).forEach(c => cols.add(c));
   }
+  // A SHARED property's row shape is the CANONICAL row, not this form's slice of it.
+  // irs433_bank_accounts is read by 433-F too, and 433-F ticks a Business Account box off
+  // `is_business_account` — a column 433-A prints no cell for and would therefore never
+  // derive from its own slots. Describing the property by one form's printed columns would
+  // tell the next form the column does not exist, which is how a value silently stops
+  // reaching a page. `union_columns` is the map stating the rest of the canonical row.
+  for (const c of def.union_columns || []) cols.add(c);
+  // A row_composite TARGET is a column the MAP produces at fill time from other columns —
+  // 433-A prints party and street address in one box and composes them there. What the record
+  // STORES is the sources, so the row shape names the sources. Publishing the target would
+  // name a column no record ever carries, on the property's own description.
+  for (const [target, c] of Object.entries(def.row_composites || {})) {
+    if (!c || typeof c !== 'object' || !Array.isArray(c.from)) continue;   // `_why` prose
+    cols.delete(target);
+    c.from.forEach(f => cols.add(f));
+  }
+  // And the class the row states, wherever the map declares one — see check-row-shape.mjs.
+  if (def.row_class?.column) cols.add(def.row_class.column);
   push(key, {
     type: 'string', fieldType: 'textarea', basis: 'repeatable table, serialized as a JSON array',
     // The printed-row cap is 433-A's, so it is stated as 433-A's rather than as the fact's.

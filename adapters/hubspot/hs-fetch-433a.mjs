@@ -33,6 +33,7 @@
 
 import { readFileSync, writeFileSync } from 'fs';
 import { hs, chunk } from './hs-lib.mjs';
+import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
 
 const contactId = process.argv[2];
 if (!contactId) {
@@ -80,6 +81,27 @@ for (const p of defs.properties) {
     if (!Array.isArray(parsed)) {
       errors.push(`${p.hs_name} (-> ${p.key}): parsed to ${typeof parsed}, expected an ARRAY of row objects. The fill engine tests Array.isArray and silently prints nothing otherwise.`);
       continue;
+    }
+    // ROW SHAPE. This file had no column check at all — a row keyed by another form's
+    // vocabulary parsed to a valid array, cleared every test here, and printed its cells
+    // empty. Since the v3 re-key the tables are SHARED, so a row written for one form is
+    // routinely handed to the other and the mismatch is no longer hypothetical.
+    //
+    // Measured against the SLOTS. The property's own row_shape is the CANONICAL row — the
+    // union across the series — and a column 433-A prints no cell for (is_business_account,
+    // an investment's account_number) is legitimately absent from a record fed to 433-A.
+    const slotCols = slotColumnsOf(mapDoc, p.key);
+    if (slotCols && slotCols.length) {
+      parsed.forEach((row, i) => {
+        if (!row || typeof row !== 'object' || Array.isArray(row)) {
+          errors.push(`${p.hs_name}[${i}]: row is not an object`);
+          return;
+        }
+        const missing = slotCols.filter((c) => !(c in row));
+        if (missing.length) {
+          errors.push(`${p.hs_name}[${i}]: carries no key for ${missing.length} of the ${slotCols.length} column(s) ${form}'s slots declare — missing [${missing.join(', ')}]; row supplies [${Object.keys(row).join(', ')}]. Those cells would print empty with no error.`);
+        }
+      });
     }
     record[p.key] = parsed;
     coerced.groups++;

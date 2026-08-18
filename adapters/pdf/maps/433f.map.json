@@ -133,146 +133,190 @@
       "array": "bank_accounts",
       "fallback": [
         {
-          "institution": "433f_bank_institution",
-          "acct": "433f_bank_acct",
-          "type": "433f_bank_type",
-          "balance": "433f_bank_balance"
+          "institution_name_and_address": "433f_bank_institution",
+          "account_number": "433f_bank_acct",
+          "type_of_account": "433f_bank_type",
+          "account_balance": "433f_bank_balance",
+          "_class": "bank_account"
         }
       ],
       "slots": [
         {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
+          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
+          "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
+          "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
+          "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
         },
         {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
+          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
+          "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
+          "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
+          "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
         }
-      ]
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "bank_account"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "investments": {
       "_why": "INVESTMENTS. AccountsTable[0] prints BELOW AccountsTable[1]. Two printed rows, so max 2. Was slots 0-1 of the single `accounts` group, which is why a caller with one bank account and no investments printed that bank account under INVESTMENTS.",
       "array": "investments",
       "fallback": [
         {
-          "institution": "433f_inv_institution",
-          "acct": "433f_inv_acct",
-          "type": "433f_inv_type",
-          "balance": "433f_inv_value"
+          "institution_name_and_address": "433f_inv_institution",
+          "account_number": "433f_inv_acct",
+          "type_of_investment": "433f_inv_type",
+          "current_value": "433f_inv_value",
+          "_class": "investment"
         }
       ],
       "slots": [
         {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]"
+          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
+          "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
+          "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
+          "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]"
         },
         {
-          "institution": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
-          "acct": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
-          "type": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
-          "balance": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
+          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
+          "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
+          "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
+          "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
         }
-      ]
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "investment"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "real_estate": {
       "array": "real_estate",
       "fallback": [
         {
-          "desc": "433f_re_desc",
-          "pmt": "433f_re_pmt",
-          "year": "433f_re_year",
-          "price": "433f_re_price",
-          "fmv": "433f_re_fmv",
-          "bal": "433f_re_bal",
-          "equity": "433f_re_equity"
+          "description": "433f_re_desc",
+          "monthly_payment": "433f_re_pmt",
+          "year_purchased": "433f_re_year",
+          "purchase_price": "433f_re_price",
+          "current_fmv": "433f_re_fmv",
+          "current_loan_balance": "433f_re_bal",
+          "equity": "433f_re_equity",
+          "_class": "real_property"
         }
       ],
       "slots": [
         {
-          "desc": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
-          "pmt": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
-          "year": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
-          "price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
-          "fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
-          "bal": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
+          "description": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
+          "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
+          "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
+          "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
+          "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
+          "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
           "equity": "topmostSubform[0].Page1[0].real_estate[0].row1[0].Equity[0]"
         },
         {
-          "desc": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].description[0]",
-          "pmt": "topmostSubform[0].Page1[0].real_estate[0].row2[0].MonthlyPayments[0]",
-          "year": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearPurchased[0]",
-          "price": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].PurchasePrice[0]",
-          "fmv": "topmostSubform[0].Page1[0].real_estate[0].row2[0].CurrentValue[0]",
-          "bal": "topmostSubform[0].Page1[0].real_estate[0].row2[0].BalanceOwed[0]",
+          "description": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].description[0]",
+          "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row2[0].MonthlyPayments[0]",
+          "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearPurchased[0]",
+          "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].PurchasePrice[0]",
+          "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row2[0].CurrentValue[0]",
+          "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row2[0].BalanceOwed[0]",
           "equity": "topmostSubform[0].Page1[0].real_estate[0].row2[0].Equity[0]"
         }
-      ]
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "real_property"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "other_assets": {
       "array": "other_assets",
       "fallback": [
         {
-          "desc": "433f_veh_desc",
-          "pmt": "433f_veh_pmt",
-          "year": "433f_veh_year",
-          "value": "433f_veh_value",
-          "bal": "433f_veh_bal"
+          "description": "433f_veh_desc",
+          "monthly_payment": "433f_veh_pmt",
+          "year_purchased": "433f_veh_year",
+          "current_fmv": "433f_veh_value",
+          "current_loan_balance": "433f_veh_bal",
+          "_class": "vehicle"
         },
         {
-          "desc": "433f_oa_desc",
-          "value": "433f_oa_value",
-          "bal": "433f_oa_bal"
+          "description": "433f_oa_desc",
+          "current_fmv": "433f_oa_value",
+          "current_loan_balance": "433f_oa_bal",
+          "_class": "personal_property"
         }
       ],
       "slots": [
         {
-          "desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
-          "pmt": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
-          "year": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
-          "value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
-          "bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
+          "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
+          "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
+          "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
+          "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
+          "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
           "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Equity1[0]"
         },
         {
-          "desc": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
-          "pmt": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Monthly_Payment2[0]",
-          "year": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Year_Purchased2[0]",
-          "value": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
-          "bal": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
+          "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
+          "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Monthly_Payment2[0]",
+          "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Year_Purchased2[0]",
+          "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
+          "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
           "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Equity2[0]"
         }
-      ]
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "vehicle",
+          "life_insurance_policy",
+          "personal_property",
+          "business_property"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "credit_cards": {
       "array": "credit_cards",
       "fallback": [
         {
-          "type": "433f_cc_type",
-          "limit": "433f_cc_limit",
-          "bal": "433f_cc_bal",
-          "min": "433f_cc_min"
+          "card_or_line_type": "433f_cc_type",
+          "credit_limit": "433f_cc_limit",
+          "amount_owed": "433f_cc_bal",
+          "minimum_monthly_payment": "433f_cc_min",
+          "_class": "credit_line"
         }
       ],
       "slots": [
         {
-          "type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
-          "limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
-          "bal": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
-          "min": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]"
+          "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
+          "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
+          "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
+          "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]"
         },
         {
-          "type": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].I_ype1[0]",
-          "limit": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].Crad_i_L_m_t1[0]",
-          "bal": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
-          "min": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
+          "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].I_ype1[0]",
+          "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].Crad_i_L_m_t1[0]",
+          "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
+          "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
         }
-      ]
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "credit_line"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
     },
     "digital_assets": {
       "_why": "DIGITAL ASSETS (CRYPTOCURRENCY), two printed rows. The shared `digital_asset` row class binds unchanged - the five columns are identical on 433-A line 15 and here, in the same printed order. Authored against the printed column captions, never the leaf names: Table_Line14 / Row13a / p2_t11..p2_t17 are 433-A line-13 names carried wholesale into this form and they name a different table.",

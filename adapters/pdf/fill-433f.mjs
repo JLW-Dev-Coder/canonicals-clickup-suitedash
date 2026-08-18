@@ -1,7 +1,7 @@
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
-import { checkRowShapes, reportRowShapes } from './check-row-shape.mjs';
+import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
 
 // --saturated is an assertion about the INPUT, not about the form — the same one the gate
 // makes at step 9. Here it decides whether a group row that carries no key for a column its
@@ -115,9 +115,19 @@ const groupSource = {};
 for (const [g, def] of Object.entries(mapDoc.groups || {})) {
   let rows = Array.isArray(data[def.array]) ? data[def.array] : null;
   const fromArray = rows !== null;
+  // A fallback entry may declare `_class` — the asset class the map knows it produced. It is
+  // the map's own statement, not a column, so it is set on the row rather than read from a
+  // property. Underscore-prefixed keys are prose or declaration everywhere else in this map;
+  // the same convention holds here.
   if (!rows) rows = (def.fallback || [])
-    .map(fb => { const r = {}; for (const [sub, key] of Object.entries(fb)) r[sub] = data[key]; return r; })
-    .filter(r => Object.values(r).some(v => v !== undefined && v !== null && v !== ''));
+    .map(fb => {
+      const r = {};
+      for (const [sub, key] of Object.entries(fb)) if (!sub.startsWith('_')) r[sub] = data[key];
+      const built = Object.values(r).some(v => v !== undefined && v !== null && v !== '');
+      if (built && fb._class && def.row_class?.column) r[def.row_class.column] = fb._class;
+      return r;
+    })
+    .filter(r => Object.entries(r).some(([k, v]) => k !== def.row_class?.column && v !== undefined && v !== null && v !== ''));
   groupRows[g] = rows;
   groupSource[g] = { rows, fromArray };
   rows.forEach((row, i) => {
@@ -129,6 +139,10 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
 // Every column the slot declares, or the run says which ones were not supplied. A partial
 // column match used to pass silently and print the rest of the row's cells empty.
 const rowShape = checkRowShapes(mapDoc, groupSource);
+// And a row must be allowed to say what it IS — see check-row-shape.mjs. With one vocabulary
+// across the five serialized tables a bank-account row and an investment row are structurally
+// identical, so the class is the only thing that can keep them in their own printed tables.
+const rowClass = checkRowClasses(mapDoc, groupSource);
 
 // checkboxes (address-differs, account business flags, real-estate PR/CO, pay frequency)
 //
@@ -164,8 +178,10 @@ if (cb) {
     const flags = cb[key];
     if (!Array.isArray(flags)) continue;
     (groupRows[g] || []).forEach((acct, i) => {
-      if (i < flags.length && String(acct?.bp ?? '').trim().toLowerCase() === 'business')
-        checkBox(flags[i]);
+      // `is_business_account` — the canonical row flag, replacing this form's `bp`
+      // business/personal string. Read through the same truthy() every other flag on this
+      // form goes through, so a boolean, "yes" and "true" all behave the same way.
+      if (i < flags.length && truthy(acct?.is_business_account)) checkBox(flags[i]);
     });
   }
 
@@ -271,7 +287,7 @@ if (capacityErrors.length || splitErrors.length) {
 
 // Row shape. Reported in every mode, and a STOP under --saturated, alongside the other
 // stops rather than before them so one run surfaces every problem it can see.
-if (reportRowShapes(rowShape, saturated)) process.exit(2);
+if (reportRowShapes(rowShape, saturated) + reportRowClasses(rowClass)) process.exit(2);
 
 mkdirSync('adapters/pdf/out', { recursive: true });
 const outPath = `adapters/pdf/out/433f_filled_${data.intake_id || 'sample'}.pdf`;

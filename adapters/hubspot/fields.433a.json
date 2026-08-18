@@ -49,7 +49,8 @@
       "pii": true,
       "line_ref": "1a",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "1b_address",
@@ -68,7 +69,8 @@
       "pii": true,
       "line_ref": "1b",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "1c_county_of_residence",
@@ -87,7 +89,8 @@
       "pii": false,
       "line_ref": "1c",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "2_tp_ssn_itin",
@@ -106,7 +109,8 @@
       "pii": true,
       "line_ref": "2",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "2_tp_dob",
@@ -125,7 +129,8 @@
       "pii": true,
       "line_ref": "2",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "2_sp_ssn_itin",
@@ -144,7 +149,8 @@
       "pii": true,
       "line_ref": "2",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "2_sp_dob",
@@ -163,7 +169,8 @@
       "pii": true,
       "line_ref": "2",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "3a_pct_ownership",
@@ -182,7 +189,8 @@
       "pii": false,
       "line_ref": "3a",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "3a_title",
@@ -201,7 +209,8 @@
       "pii": false,
       "line_ref": "3a",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "3b_business_name",
@@ -220,7 +229,8 @@
       "pii": true,
       "line_ref": "3b",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "3c_business_type_other_desc",
@@ -239,7 +249,8 @@
       "pii": false,
       "line_ref": "3c",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "4a_tp_employer_name",
@@ -258,7 +269,8 @@
       "pii": true,
       "line_ref": "4a",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "4b_tp_employer_address",
@@ -277,7 +289,8 @@
       "pii": true,
       "line_ref": "4b",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "4e_tp_tenure_years",
@@ -296,7 +309,8 @@
       "pii": false,
       "line_ref": "4e",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "4e_tp_tenure_months",
@@ -315,7 +329,8 @@
       "pii": false,
       "line_ref": "4e",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "4f_tp_occupation",
@@ -334,7 +349,8 @@
       "pii": false,
       "line_ref": "4f",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "4g_tp_dependents_claimed_on_1040",
@@ -353,7 +369,8 @@
       "pii": false,
       "line_ref": "4g",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "5a_sp_employer_name",
@@ -372,7 +389,8 @@
       "pii": true,
       "line_ref": "5a",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "5b_sp_employer_address",
@@ -391,7 +409,8 @@
       "pii": true,
       "line_ref": "5b",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "5e_sp_tenure_years",
@@ -410,7 +429,8 @@
       "pii": false,
       "line_ref": "5e",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "5e_sp_tenure_months",
@@ -429,7 +449,8 @@
       "pii": false,
       "line_ref": "5e",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "5f_sp_occupation",
@@ -448,7 +469,8 @@
       "pii": false,
       "line_ref": "5f",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "5g_sp_dependents_claimed_on_1040",
@@ -467,7 +489,8 @@
       "pii": false,
       "line_ref": "5g",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "6_income_change_explain",
@@ -486,7 +509,8 @@
       "pii": false,
       "line_ref": "6",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "6_income_change_amount",
@@ -505,7 +529,8 @@
       "pii": false,
       "line_ref": "6",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "6_income_change_when",
@@ -524,7 +549,8 @@
       "pii": false,
       "line_ref": "6",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "7_suit_location_of_filing",
@@ -543,7 +569,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "7_suit_represented_by",
@@ -562,7 +589,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "7_suit_docket_case_no",
@@ -581,7 +609,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "7_suit_amount",
@@ -600,7 +629,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "7_suit_possible_completion_date",
@@ -619,7 +649,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "7_suit_subject",
@@ -638,7 +669,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "8_bk_date_filed",
@@ -657,7 +689,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "8_bk_date_dismissed",
@@ -676,7 +709,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "8_bk_date_discharged",
@@ -695,7 +729,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "8_bk_petition_no",
@@ -714,7 +749,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "8_bk_location_filed",
@@ -733,7 +769,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "8b_lived_abroad_from",
@@ -752,7 +789,8 @@
       "pii": false,
       "line_ref": "8b",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "8b_lived_abroad_to",
@@ -771,7 +809,8 @@
       "pii": false,
       "line_ref": "8b",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "8c_dual_citizenship_country",
@@ -790,7 +829,8 @@
       "pii": false,
       "line_ref": "8c",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "9a_inmate_number",
@@ -809,7 +849,8 @@
       "pii": false,
       "line_ref": "9a",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "9b_place_where_recorded",
@@ -828,7 +869,8 @@
       "pii": false,
       "line_ref": "9b",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "9b_trust_name",
@@ -847,7 +889,8 @@
       "pii": true,
       "line_ref": "9b",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "9b_trust_anticipated_amount",
@@ -866,7 +909,8 @@
       "pii": false,
       "line_ref": "9b",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "9b_trust_when_received",
@@ -885,7 +929,8 @@
       "pii": false,
       "line_ref": "9b",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "9c_trust_name",
@@ -904,7 +949,8 @@
       "pii": true,
       "line_ref": "9c",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "10_sdb_location",
@@ -923,7 +969,8 @@
       "pii": false,
       "line_ref": "10",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "10_sdb_contents",
@@ -942,7 +989,8 @@
       "pii": false,
       "line_ref": "10",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "10_sdb_value",
@@ -961,7 +1009,8 @@
       "pii": false,
       "line_ref": "10",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "11_transfer_assets",
@@ -980,7 +1029,8 @@
       "pii": false,
       "line_ref": "11",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "11_transfer_value_at_transfer",
@@ -999,7 +1049,8 @@
       "pii": false,
       "line_ref": "11",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "11_transfer_date",
@@ -1018,7 +1069,8 @@
       "pii": false,
       "line_ref": "11",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "11_transfer_to_whom_or_where",
@@ -1037,7 +1089,8 @@
       "pii": false,
       "line_ref": "11",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "12_total_cash_on_hand",
@@ -1056,7 +1109,8 @@
       "pii": false,
       "line_ref": "12",
       "source": "map",
-      "type_basis": "money — printed line 12 falls in a money band"
+      "type_basis": "money — printed line 12 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "13_accounts_balance_as_of",
@@ -1075,7 +1129,8 @@
       "pii": false,
       "line_ref": "13",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "13e_total_cash",
@@ -1094,7 +1149,8 @@
       "pii": false,
       "line_ref": "13e",
       "source": "map",
-      "type_basis": "money — printed line 13 falls in a money band"
+      "type_basis": "money — printed line 13 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "14_investments_loan_balance_as_of",
@@ -1113,7 +1169,8 @@
       "pii": false,
       "line_ref": "14",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "15_names_with_access_to_private_keys",
@@ -1132,7 +1189,8 @@
       "pii": true,
       "line_ref": "15",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "15_digital_asset_value_as_of",
@@ -1151,7 +1209,8 @@
       "pii": false,
       "line_ref": "15",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "15e_total_digital_asset_equity",
@@ -1170,7 +1229,8 @@
       "pii": false,
       "line_ref": "15e",
       "source": "map",
-      "type_basis": "money — printed line 15 falls in a money band"
+      "type_basis": "money — printed line 15 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "16_amount_owed_as_of",
@@ -1189,7 +1249,8 @@
       "pii": false,
       "line_ref": "16",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "16_available_credit_as_of",
@@ -1208,7 +1269,8 @@
       "pii": false,
       "line_ref": "16",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "16e_total_available_credit",
@@ -1227,7 +1289,8 @@
       "pii": false,
       "line_ref": "16e",
       "source": "map",
-      "type_basis": "money — printed line 16 falls in a money band"
+      "type_basis": "money — printed line 16 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "17f_total_life_insurance_equity",
@@ -1246,7 +1309,8 @@
       "pii": false,
       "line_ref": "17f",
       "source": "map",
-      "type_basis": "money — printed line 17 falls in a money band"
+      "type_basis": "money — printed line 17 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "18d_total_equity_real_property",
@@ -1265,7 +1329,8 @@
       "pii": false,
       "line_ref": "18d",
       "source": "map",
-      "type_basis": "money — printed line 18 falls in a money band"
+      "type_basis": "money — printed line 18 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "19d_total_equity_vehicles",
@@ -1284,7 +1349,8 @@
       "pii": false,
       "line_ref": "19d",
       "source": "map",
-      "type_basis": "money — printed line 19 falls in a money band"
+      "type_basis": "money — printed line 19 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "20c_total_equity_property_line_20",
@@ -1303,7 +1369,8 @@
       "pii": false,
       "line_ref": "20c",
       "source": "map",
-      "type_basis": "money — printed line 20 falls in a money band"
+      "type_basis": "money — printed line 20 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "21_income_wages_taxpayer",
@@ -1322,7 +1389,8 @@
       "pii": false,
       "line_ref": "21",
       "source": "map",
-      "type_basis": "money — printed line 21 falls in a money band"
+      "type_basis": "money — printed line 21 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "22_income_wages_spouse",
@@ -1341,7 +1409,8 @@
       "pii": false,
       "line_ref": "22",
       "source": "map",
-      "type_basis": "money — printed line 22 falls in a money band"
+      "type_basis": "money — printed line 22 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "23_income_interest_dividends",
@@ -1360,7 +1429,8 @@
       "pii": false,
       "line_ref": "23",
       "source": "map",
-      "type_basis": "money — printed line 23 falls in a money band"
+      "type_basis": "money — printed line 23 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "24_income_net_business_income",
@@ -1379,7 +1449,8 @@
       "pii": false,
       "line_ref": "24",
       "source": "map",
-      "type_basis": "money — printed line 24 falls in a money band"
+      "type_basis": "money — printed line 24 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "25_income_net_rental_income",
@@ -1398,7 +1469,8 @@
       "pii": false,
       "line_ref": "25",
       "source": "map",
-      "type_basis": "money — printed line 25 falls in a money band"
+      "type_basis": "money — printed line 25 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "26_income_distributions",
@@ -1417,7 +1489,8 @@
       "pii": false,
       "line_ref": "26",
       "source": "map",
-      "type_basis": "money — printed line 26 falls in a money band"
+      "type_basis": "money — printed line 26 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "27_income_pension_taxpayer",
@@ -1436,7 +1509,8 @@
       "pii": false,
       "line_ref": "27",
       "source": "map",
-      "type_basis": "money — printed line 27 falls in a money band"
+      "type_basis": "money — printed line 27 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "28_income_pension_spouse",
@@ -1455,7 +1529,8 @@
       "pii": false,
       "line_ref": "28",
       "source": "map",
-      "type_basis": "money — printed line 28 falls in a money band"
+      "type_basis": "money — printed line 28 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "29_income_social_security_taxpayer",
@@ -1474,7 +1549,8 @@
       "pii": false,
       "line_ref": "29",
       "source": "map",
-      "type_basis": "money — printed line 29 falls in a money band"
+      "type_basis": "money — printed line 29 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "30_income_social_security_spouse",
@@ -1493,7 +1569,8 @@
       "pii": false,
       "line_ref": "30",
       "source": "map",
-      "type_basis": "money — printed line 30 falls in a money band"
+      "type_basis": "money — printed line 30 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "31_income_child_support",
@@ -1512,7 +1589,8 @@
       "pii": false,
       "line_ref": "31",
       "source": "map",
-      "type_basis": "money — printed line 31 falls in a money band"
+      "type_basis": "money — printed line 31 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "32_income_alimony",
@@ -1531,7 +1609,8 @@
       "pii": false,
       "line_ref": "32",
       "source": "map",
-      "type_basis": "money — printed line 32 falls in a money band"
+      "type_basis": "money — printed line 32 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "33_income_other_description",
@@ -1550,7 +1629,8 @@
       "pii": false,
       "line_ref": "33",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "33_income_other_amount",
@@ -1569,7 +1649,8 @@
       "pii": false,
       "line_ref": "33",
       "source": "map",
-      "type_basis": "money — printed line 33 falls in a money band"
+      "type_basis": "money — printed line 33 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "34_income_other2_description",
@@ -1588,7 +1669,8 @@
       "pii": false,
       "line_ref": "34",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "34_income_other2_amount",
@@ -1607,7 +1689,8 @@
       "pii": false,
       "line_ref": "34",
       "source": "map",
-      "type_basis": "money — printed line 34 falls in a money band"
+      "type_basis": "money — printed line 34 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "35_total_income",
@@ -1626,7 +1709,8 @@
       "pii": false,
       "line_ref": "35",
       "source": "map",
-      "type_basis": "money — printed line 35 falls in a money band"
+      "type_basis": "money — printed line 35 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "36_exp_food_clothing_misc",
@@ -1645,7 +1729,8 @@
       "pii": false,
       "line_ref": "36",
       "source": "map",
-      "type_basis": "money — printed line 36 falls in a money band"
+      "type_basis": "money — printed line 36 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "37_exp_housing_and_utilities",
@@ -1664,7 +1749,8 @@
       "pii": false,
       "line_ref": "37",
       "source": "map",
-      "type_basis": "money — printed line 37 falls in a money band"
+      "type_basis": "money — printed line 37 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "38_exp_vehicle_ownership_costs",
@@ -1683,7 +1769,8 @@
       "pii": false,
       "line_ref": "38",
       "source": "map",
-      "type_basis": "money — printed line 38 falls in a money band"
+      "type_basis": "money — printed line 38 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "39_exp_vehicle_operating_costs",
@@ -1702,7 +1789,8 @@
       "pii": false,
       "line_ref": "39",
       "source": "map",
-      "type_basis": "money — printed line 39 falls in a money band"
+      "type_basis": "money — printed line 39 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "40_exp_public_transportation",
@@ -1721,7 +1809,8 @@
       "pii": false,
       "line_ref": "40",
       "source": "map",
-      "type_basis": "money — printed line 40 falls in a money band"
+      "type_basis": "money — printed line 40 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "41_exp_health_insurance",
@@ -1740,7 +1829,8 @@
       "pii": false,
       "line_ref": "41",
       "source": "map",
-      "type_basis": "money — printed line 41 falls in a money band"
+      "type_basis": "money — printed line 41 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "42_exp_out_of_pocket_health_care",
@@ -1759,7 +1849,8 @@
       "pii": false,
       "line_ref": "42",
       "source": "map",
-      "type_basis": "money — printed line 42 falls in a money band"
+      "type_basis": "money — printed line 42 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "43_exp_court_ordered_payments",
@@ -1778,7 +1869,8 @@
       "pii": false,
       "line_ref": "43",
       "source": "map",
-      "type_basis": "money — printed line 43 falls in a money band"
+      "type_basis": "money — printed line 43 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "44_exp_child_dependent_care",
@@ -1797,7 +1889,8 @@
       "pii": false,
       "line_ref": "44",
       "source": "map",
-      "type_basis": "money — printed line 44 falls in a money band"
+      "type_basis": "money — printed line 44 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "45_exp_life_insurance",
@@ -1816,7 +1909,8 @@
       "pii": false,
       "line_ref": "45",
       "source": "map",
-      "type_basis": "money — printed line 45 falls in a money band"
+      "type_basis": "money — printed line 45 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "46_exp_current_year_taxes",
@@ -1835,7 +1929,8 @@
       "pii": false,
       "line_ref": "46",
       "source": "map",
-      "type_basis": "money — printed line 46 falls in a money band"
+      "type_basis": "money — printed line 46 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "47_exp_secured_debts",
@@ -1854,7 +1949,8 @@
       "pii": false,
       "line_ref": "47",
       "source": "map",
-      "type_basis": "money — printed line 47 falls in a money band"
+      "type_basis": "money — printed line 47 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "48_exp_delinquent_state_local_taxes",
@@ -1873,7 +1969,8 @@
       "pii": false,
       "line_ref": "48",
       "source": "map",
-      "type_basis": "money — printed line 48 falls in a money band"
+      "type_basis": "money — printed line 48 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "49_exp_other_expenses",
@@ -1892,7 +1989,8 @@
       "pii": false,
       "line_ref": "49",
       "source": "map",
-      "type_basis": "money — printed line 49 falls in a money band"
+      "type_basis": "money — printed line 49 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "50_total_living_expenses",
@@ -1911,7 +2009,8 @@
       "pii": true,
       "line_ref": "50",
       "source": "map",
-      "type_basis": "money — printed line 50 falls in a money band"
+      "type_basis": "money — printed line 50 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "51_net_difference",
@@ -1930,7 +2029,8 @@
       "pii": false,
       "line_ref": "51",
       "source": "map",
-      "type_basis": "money — printed line 51 falls in a money band"
+      "type_basis": "money — printed line 51 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "65_business_account_balance_as_of",
@@ -1949,7 +2049,8 @@
       "pii": false,
       "line_ref": "65",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "65c_total_business_bank_balance",
@@ -1968,7 +2069,8 @@
       "pii": false,
       "line_ref": "65c",
       "source": "map",
-      "type_basis": "money — printed line 65 falls in a money band"
+      "type_basis": "money — printed line 65 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "66f_total_receivable_amount_due",
@@ -1987,7 +2089,8 @@
       "pii": false,
       "line_ref": "66f",
       "source": "map",
-      "type_basis": "money — printed line 66 falls in a money band"
+      "type_basis": "money — printed line 66 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "67c_total_business_property_equity",
@@ -2006,7 +2109,8 @@
       "pii": false,
       "line_ref": "67c",
       "source": "map",
-      "type_basis": "money — printed line 67 falls in a money band"
+      "type_basis": "money — printed line 67 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "68_bizinc_gross_receipts",
@@ -2025,7 +2129,8 @@
       "pii": false,
       "line_ref": "68",
       "source": "map",
-      "type_basis": "money — printed line 68 falls in a money band"
+      "type_basis": "money — printed line 68 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "69_bizinc_gross_rental_income",
@@ -2044,7 +2149,8 @@
       "pii": false,
       "line_ref": "69",
       "source": "map",
-      "type_basis": "money — printed line 69 falls in a money band"
+      "type_basis": "money — printed line 69 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "70_bizinc_interest",
@@ -2063,7 +2169,8 @@
       "pii": false,
       "line_ref": "70",
       "source": "map",
-      "type_basis": "money — printed line 70 falls in a money band"
+      "type_basis": "money — printed line 70 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "71_bizinc_dividends",
@@ -2082,7 +2189,8 @@
       "pii": false,
       "line_ref": "71",
       "source": "map",
-      "type_basis": "money — printed line 71 falls in a money band"
+      "type_basis": "money — printed line 71 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "72_bizinc_cash_receipts_not_in_68_to_71",
@@ -2101,7 +2209,8 @@
       "pii": false,
       "line_ref": "72",
       "source": "map",
-      "type_basis": "money — printed line 72 falls in a money band"
+      "type_basis": "money — printed line 72 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "73_bizinc_other_description",
@@ -2120,7 +2229,8 @@
       "pii": false,
       "line_ref": "73",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "73_bizinc_other_amount",
@@ -2139,7 +2249,8 @@
       "pii": false,
       "line_ref": "73",
       "source": "map",
-      "type_basis": "money — printed line 73 falls in a money band"
+      "type_basis": "money — printed line 73 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "74_bizinc_other_description",
@@ -2158,7 +2269,8 @@
       "pii": false,
       "line_ref": "74",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "74_bizinc_other_amount",
@@ -2177,7 +2289,8 @@
       "pii": false,
       "line_ref": "74",
       "source": "map",
-      "type_basis": "money — printed line 74 falls in a money band"
+      "type_basis": "money — printed line 74 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "75_bizinc_other_description",
@@ -2196,7 +2309,8 @@
       "pii": false,
       "line_ref": "75",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "75_bizinc_other_amount",
@@ -2215,7 +2329,8 @@
       "pii": false,
       "line_ref": "75",
       "source": "map",
-      "type_basis": "money — printed line 75 falls in a money band"
+      "type_basis": "money — printed line 75 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "76_bizinc_other_description",
@@ -2234,7 +2349,8 @@
       "pii": false,
       "line_ref": "76",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "76_bizinc_other_amount",
@@ -2253,7 +2369,8 @@
       "pii": false,
       "line_ref": "76",
       "source": "map",
-      "type_basis": "money — printed line 76 falls in a money band"
+      "type_basis": "money — printed line 76 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "77_bizinc_total_income",
@@ -2272,7 +2389,8 @@
       "pii": false,
       "line_ref": "77",
       "source": "map",
-      "type_basis": "money — printed line 77 falls in a money band"
+      "type_basis": "money — printed line 77 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "78_bizexp_materials_purchased",
@@ -2291,7 +2409,8 @@
       "pii": false,
       "line_ref": "78",
       "source": "map",
-      "type_basis": "money — printed line 78 falls in a money band"
+      "type_basis": "money — printed line 78 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "79_bizexp_inventory_purchased",
@@ -2310,7 +2429,8 @@
       "pii": false,
       "line_ref": "79",
       "source": "map",
-      "type_basis": "money — printed line 79 falls in a money band"
+      "type_basis": "money — printed line 79 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "80_bizexp_gross_wages_and_salaries",
@@ -2329,7 +2449,8 @@
       "pii": false,
       "line_ref": "80",
       "source": "map",
-      "type_basis": "money — printed line 80 falls in a money band"
+      "type_basis": "money — printed line 80 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "81_bizexp_rent",
@@ -2348,7 +2469,8 @@
       "pii": false,
       "line_ref": "81",
       "source": "map",
-      "type_basis": "money — printed line 81 falls in a money band"
+      "type_basis": "money — printed line 81 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "82_bizexp_supplies",
@@ -2367,7 +2489,8 @@
       "pii": false,
       "line_ref": "82",
       "source": "map",
-      "type_basis": "money — printed line 82 falls in a money band"
+      "type_basis": "money — printed line 82 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "83_bizexp_utilities_telephone",
@@ -2386,7 +2509,8 @@
       "pii": true,
       "line_ref": "83",
       "source": "map",
-      "type_basis": "money — printed line 83 falls in a money band"
+      "type_basis": "money — printed line 83 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "84_bizexp_vehicle_gasoline_oil",
@@ -2405,7 +2529,8 @@
       "pii": false,
       "line_ref": "84",
       "source": "map",
-      "type_basis": "money — printed line 84 falls in a money band"
+      "type_basis": "money — printed line 84 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "85_bizexp_repairs_and_maintenance",
@@ -2424,7 +2549,8 @@
       "pii": false,
       "line_ref": "85",
       "source": "map",
-      "type_basis": "money — printed line 85 falls in a money band"
+      "type_basis": "money — printed line 85 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "86_bizexp_insurance",
@@ -2443,7 +2569,8 @@
       "pii": false,
       "line_ref": "86",
       "source": "map",
-      "type_basis": "money — printed line 86 falls in a money band"
+      "type_basis": "money — printed line 86 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "87_bizexp_current_taxes",
@@ -2462,7 +2589,8 @@
       "pii": false,
       "line_ref": "87",
       "source": "map",
-      "type_basis": "money — printed line 87 falls in a money band"
+      "type_basis": "money — printed line 87 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "88_bizexp_other_expenses",
@@ -2481,7 +2609,8 @@
       "pii": false,
       "line_ref": "88",
       "source": "map",
-      "type_basis": "money — printed line 88 falls in a money band"
+      "type_basis": "money — printed line 88 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "89_bizexp_total_expenses",
@@ -2500,7 +2629,8 @@
       "pii": false,
       "line_ref": "89",
       "source": "map",
-      "type_basis": "money — printed line 89 falls in a money band"
+      "type_basis": "money — printed line 89 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "90_biz_net_business_income",
@@ -2519,7 +2649,8 @@
       "pii": false,
       "line_ref": "90",
       "source": "map",
-      "type_basis": "money — printed line 90 falls in a money band"
+      "type_basis": "money — printed line 90 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "53a_business_name_and_address",
@@ -2538,7 +2669,8 @@
       "pii": true,
       "line_ref": "53a",
       "source": "map",
-      "type_basis": "prose cell"
+      "type_basis": "prose cell",
+      "row_shape": null
     },
     {
       "key": "54_employer_identification_number",
@@ -2557,7 +2689,8 @@
       "pii": false,
       "line_ref": "54",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "55_type_of_business",
@@ -2576,7 +2709,8 @@
       "pii": false,
       "line_ref": "55",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "57_business_website",
@@ -2595,7 +2729,8 @@
       "pii": false,
       "line_ref": "57",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "58_total_number_of_employees",
@@ -2614,7 +2749,8 @@
       "pii": false,
       "line_ref": "58",
       "source": "map",
-      "type_basis": "count or percentage"
+      "type_basis": "count or percentage",
+      "row_shape": null
     },
     {
       "key": "59_average_gross_monthly_payroll",
@@ -2633,7 +2769,8 @@
       "pii": false,
       "line_ref": "59",
       "source": "map",
-      "type_basis": "money — named amount outside the printed bands"
+      "type_basis": "money — named amount outside the printed bands",
+      "row_shape": null
     },
     {
       "key": "60_frequency_of_tax_deposits",
@@ -2652,7 +2789,8 @@
       "pii": false,
       "line_ref": "60",
       "source": "map",
-      "type_basis": "identifier or short text"
+      "type_basis": "identifier or short text",
+      "row_shape": null
     },
     {
       "key": "64_business_cash_on_hand",
@@ -2671,7 +2809,8 @@
       "pii": false,
       "line_ref": "64",
       "source": "map",
-      "type_basis": "money — printed line 64 falls in a money band"
+      "type_basis": "money — printed line 64 falls in a money band",
+      "row_shape": null
     },
     {
       "key": "S7_period_from",
@@ -2690,7 +2829,8 @@
       "pii": false,
       "line_ref": "S7",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "S7_period_to",
@@ -2709,7 +2849,8 @@
       "pii": false,
       "line_ref": "S7",
       "source": "map",
-      "type_basis": "date cell (mmddyyyy), kept as string"
+      "type_basis": "date cell (mmddyyyy), kept as string",
+      "row_shape": null
     },
     {
       "key": "1c_home_phone",
@@ -2728,7 +2869,8 @@
       "pii": true,
       "line_ref": "1c",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "1d_cell_phone",
@@ -2747,7 +2889,8 @@
       "pii": true,
       "line_ref": "1d",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "4c_tp_work_phone",
@@ -2766,7 +2909,8 @@
       "pii": true,
       "line_ref": "4c",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "5c_sp_work_phone",
@@ -2785,7 +2929,8 @@
       "pii": true,
       "line_ref": "5c",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "9b_trust_ein",
@@ -2804,7 +2949,8 @@
       "pii": true,
       "line_ref": "9b",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "9c_trustee_ein",
@@ -2823,7 +2969,8 @@
       "pii": true,
       "line_ref": "9c",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "53b_business_phone",
@@ -2842,7 +2989,8 @@
       "pii": true,
       "line_ref": "53b",
       "source": "split (2 printed boxes, 1 property)",
-      "type_basis": "one real-world value the FORM splits across printed boxes"
+      "type_basis": "one real-world value the FORM splits across printed boxes",
+      "row_shape": null
     },
     {
       "key": "marital_status",
@@ -2875,7 +3023,8 @@
       "pii": false,
       "line_ref": null,
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (2 options)"
+      "type_basis": "named-option checkbox set (2 options)",
+      "row_shape": null
     },
     {
       "key": "3a_business_interest",
@@ -2908,7 +3057,8 @@
       "pii": false,
       "line_ref": "3a",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "3c_business_type",
@@ -2953,7 +3103,8 @@
       "pii": false,
       "line_ref": "3c",
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (4 options)"
+      "type_basis": "named-option checkbox set (4 options)",
+      "row_shape": null
     },
     {
       "key": "4d_tp_contact_at_work",
@@ -2986,7 +3137,8 @@
       "pii": false,
       "line_ref": "4d",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "4h_tp_pay_period",
@@ -3031,7 +3183,8 @@
       "pii": false,
       "line_ref": "4h",
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (4 options)"
+      "type_basis": "named-option checkbox set (4 options)",
+      "row_shape": null
     },
     {
       "key": "5d_sp_contact_at_work",
@@ -3064,7 +3217,8 @@
       "pii": false,
       "line_ref": "5d",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "5h_sp_pay_period",
@@ -3109,7 +3263,8 @@
       "pii": false,
       "line_ref": "5h",
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (4 options)"
+      "type_basis": "named-option checkbox set (4 options)",
+      "row_shape": null
     },
     {
       "key": "7_lawsuit_role",
@@ -3142,7 +3297,8 @@
       "pii": false,
       "line_ref": "7",
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (2 options)"
+      "type_basis": "named-option checkbox set (2 options)",
+      "row_shape": null
     },
     {
       "key": "8_bankruptcy",
@@ -3175,7 +3331,8 @@
       "pii": false,
       "line_ref": "8",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "8b_lived_abroad_6mo",
@@ -3208,7 +3365,8 @@
       "pii": false,
       "line_ref": "8b",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "8c_dual_citizenship",
@@ -3241,7 +3399,8 @@
       "pii": false,
       "line_ref": "8c",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "9a_incarcerated",
@@ -3274,7 +3433,8 @@
       "pii": false,
       "line_ref": "9a",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "9b_beneficiary_of_trust_estate_policy",
@@ -3307,7 +3467,8 @@
       "pii": false,
       "line_ref": "9b",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "9c_trustee_fiduciary_contributor",
@@ -3340,7 +3501,8 @@
       "pii": false,
       "line_ref": "9c",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "10_safe_deposit_box",
@@ -3373,7 +3535,8 @@
       "pii": false,
       "line_ref": "10",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "11_transferred_assets",
@@ -3406,7 +3569,8 @@
       "pii": false,
       "line_ref": "11",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "17_has_life_insurance",
@@ -3439,7 +3603,8 @@
       "pii": false,
       "line_ref": "17",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "52_sole_proprietorship_schedule_c",
@@ -3472,7 +3637,8 @@
       "pii": false,
       "line_ref": "52",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "56_federal_contractor",
@@ -3505,7 +3671,8 @@
       "pii": false,
       "line_ref": "56",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "61_engages_in_ecommerce",
@@ -3538,7 +3705,8 @@
       "pii": false,
       "line_ref": "61",
       "source": "checkboxes",
-      "type_basis": "yes/no checkbox pair"
+      "type_basis": "yes/no checkbox pair",
+      "row_shape": null
     },
     {
       "key": "S7_accounting_method",
@@ -3571,7 +3739,8 @@
       "pii": false,
       "line_ref": "S7",
       "source": "checkboxes",
-      "type_basis": "named-option checkbox set (2 options)"
+      "type_basis": "named-option checkbox set (2 options)",
+      "row_shape": null
     },
     {
       "key": "household_members",
@@ -3581,7 +3750,7 @@
       "form": "433a",
       "field": "household_members",
       "label": "[433] Household members (JSON array; 5 rows fit 433-A)",
-      "description": "433-A (input key: household_members). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: household_members). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name, age, relationship, claimed_on_1040, contributes_to_household_income.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3590,7 +3759,14 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (5 printed slots x 5 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "name",
+        "age",
+        "relationship",
+        "claimed_on_1040",
+        "contributes_to_household_income"
+      ]
     },
     {
       "key": "bank_accounts",
@@ -3600,7 +3776,7 @@
       "form": "433a",
       "field": "bank_accounts",
       "label": "[433] Bank accounts (JSON array; 4 rows fit 433-A)",
-      "description": "433-A (input key: bank_accounts). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: bank_accounts). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_account, institution_name_and_address, account_number, account_balance, is_business_account, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3608,8 +3784,16 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (4 printed slots x 4 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "source": "groups (4 printed slots x 6 columns, serialized)",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "type_of_account",
+        "institution_name_and_address",
+        "account_number",
+        "account_balance",
+        "is_business_account",
+        "asset_class"
+      ]
     },
     {
       "key": "investments",
@@ -3619,7 +3803,7 @@
       "form": "433a",
       "field": "investments",
       "label": "[433] Investments (JSON array; 4 rows fit 433-A)",
-      "description": "433-A (input key: investments). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: investments). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_investment, institution_name_and_address, phone, current_value, loan_balance, equity, account_number, is_business_account, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3627,8 +3811,19 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (4 printed slots x 6 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "source": "groups (4 printed slots x 9 columns, serialized)",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "type_of_investment",
+        "institution_name_and_address",
+        "phone",
+        "current_value",
+        "loan_balance",
+        "equity",
+        "account_number",
+        "is_business_account",
+        "asset_class"
+      ]
     },
     {
       "key": "real_property",
@@ -3638,7 +3833,7 @@
       "form": "433a",
       "field": "real_property",
       "label": "[433] Real property (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: real_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: real_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, title_holders, location, lender_name_address, lender_phone.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3647,7 +3842,20 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (3 printed slots x 11 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "description",
+        "purchase_date",
+        "current_fmv",
+        "current_loan_balance",
+        "monthly_payment",
+        "final_payment_date",
+        "equity",
+        "title_holders",
+        "location",
+        "lender_name_address",
+        "lender_phone"
+      ]
     },
     {
       "key": "vehicles",
@@ -3657,7 +3865,7 @@
       "form": "433a",
       "field": "vehicles",
       "label": "[433] Vehicles (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: vehicles). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: vehicles). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: model_year, make_model, mileage, license_tag, vin, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, lender_name_address, lender_phone, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3665,8 +3873,24 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (3 printed slots x 13 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "source": "groups (3 printed slots x 14 columns, serialized)",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "model_year",
+        "make_model",
+        "mileage",
+        "license_tag",
+        "vin",
+        "purchase_date",
+        "current_fmv",
+        "current_loan_balance",
+        "monthly_payment",
+        "final_payment_date",
+        "equity",
+        "lender_name_address",
+        "lender_phone",
+        "asset_class"
+      ]
     },
     {
       "key": "digital_assets",
@@ -3676,7 +3900,7 @@
       "form": "433a",
       "field": "digital_assets",
       "label": "[433] Digital assets (JSON array; 4 rows fit 433-A)",
-      "description": "433-A (input key: digital_assets). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: digital_assets). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_digital_asset, name_of_digital_asset, email_used_to_set_up, location_of_digital_asset, amount_and_value_usd.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3685,7 +3909,14 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (4 printed slots x 5 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "type_of_digital_asset",
+        "name_of_digital_asset",
+        "email_used_to_set_up",
+        "location_of_digital_asset",
+        "amount_and_value_usd"
+      ]
     },
     {
       "key": "available_credit",
@@ -3695,7 +3926,7 @@
       "form": "433a",
       "field": "available_credit",
       "label": "[433] Available credit (JSON array; 4 rows fit 433-A)",
-      "description": "433-A (input key: available_credit). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: available_credit). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: institution_name_and_address, account_number, credit_limit, amount_owed, available_credit.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3704,7 +3935,14 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (4 printed slots x 5 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "institution_name_and_address",
+        "account_number",
+        "credit_limit",
+        "amount_owed",
+        "available_credit"
+      ]
     },
     {
       "key": "life_insurance_policies",
@@ -3714,7 +3952,7 @@
       "form": "433a",
       "field": "life_insurance_policies",
       "label": "[433] Life insurance policies (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: company_name_and_address, policy_number, owner_of_policy, current_cash_value, outstanding_loan_balance.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3723,7 +3961,14 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (3 printed slots x 5 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "company_name_and_address",
+        "policy_number",
+        "owner_of_policy",
+        "current_cash_value",
+        "outstanding_loan_balance"
+      ]
     },
     {
       "key": "property_line_20",
@@ -3733,7 +3978,7 @@
       "form": "433a",
       "field": "property_line_20",
       "label": "[433] Other personal property (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: property_line_20). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: property_line_20). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, location, lender_name_address, lender_phone.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3742,7 +3987,19 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (2 printed slots x 10 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "description",
+        "purchase_date",
+        "current_fmv",
+        "current_loan_balance",
+        "monthly_payment",
+        "final_payment_date",
+        "equity",
+        "location",
+        "lender_name_address",
+        "lender_phone"
+      ]
     },
     {
       "key": "business_bank_accounts",
@@ -3752,7 +4009,7 @@
       "form": "433a",
       "field": "business_bank_accounts",
       "label": "[433] Business bank accounts (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: business_bank_accounts). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: business_bank_accounts). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_account, institution_name_and_address, account_number, account_balance, is_business_account, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3760,8 +4017,16 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (2 printed slots x 4 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "source": "groups (2 printed slots x 6 columns, serialized)",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "type_of_account",
+        "institution_name_and_address",
+        "account_number",
+        "account_balance",
+        "is_business_account",
+        "asset_class"
+      ]
     },
     {
       "key": "accounts_notes_receivable",
@@ -3771,7 +4036,7 @@
       "form": "433a",
       "field": "accounts_notes_receivable",
       "label": "[433] Accounts notes receivable (JSON array; 5 rows fit 433-A)",
-      "description": "433-A (input key: accounts_notes_receivable). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: accounts_notes_receivable). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: status, date_due, invoice_or_contract_number, amount_due, name, address.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3779,8 +4044,16 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (5 printed slots x 5 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "source": "groups (5 printed slots x 6 columns, serialized)",
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "status",
+        "date_due",
+        "invoice_or_contract_number",
+        "amount_due",
+        "name",
+        "address"
+      ]
     },
     {
       "key": "business_property",
@@ -3790,7 +4063,7 @@
       "form": "433a",
       "field": "business_property",
       "label": "[433] Business property (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: business_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: business_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, title_holders, location, lender_name_address, lender_phone.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3799,7 +4072,20 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (2 printed slots x 11 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "description",
+        "purchase_date",
+        "current_fmv",
+        "current_loan_balance",
+        "monthly_payment",
+        "final_payment_date",
+        "equity",
+        "title_holders",
+        "location",
+        "lender_name_address",
+        "lender_phone"
+      ]
     },
     {
       "key": "payment_processors",
@@ -3809,7 +4095,7 @@
       "form": "433a",
       "field": "payment_processors",
       "label": "[433] Payment processors (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: payment_processors). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: payment_processors). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name_and_address, processor_account_number.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3818,7 +4104,11 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (2 printed slots x 2 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "name_and_address",
+        "processor_account_number"
+      ]
     },
     {
       "key": "credit_cards_accepted",
@@ -3828,7 +4118,7 @@
       "form": "433a",
       "field": "credit_cards_accepted",
       "label": "[433] Credit cards accepted (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: credit_cards_accepted). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule.",
+      "description": "433-A (input key: credit_cards_accepted). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: credit_card, merchant_account_number, issuing_bank_name_and_address.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3837,7 +4127,12 @@
       "pii": true,
       "line_ref": null,
       "source": "groups (3 printed slots x 3 columns, serialized)",
-      "type_basis": "repeatable table, serialized as a JSON array"
+      "type_basis": "repeatable table, serialized as a JSON array",
+      "row_shape": [
+        "credit_card",
+        "merchant_account_number",
+        "issuing_bank_name_and_address"
+      ]
     },
     {
       "key": "allowable_household_size",
@@ -3856,7 +4151,8 @@
       "pii": false,
       "line_ref": null,
       "source": "allowed",
-      "type_basis": "headcount feeding an IRS allowable-standard lookup"
+      "type_basis": "headcount feeding an IRS allowable-standard lookup",
+      "row_shape": null
     },
     {
       "key": "allowable_under_65_count",
@@ -3875,7 +4171,8 @@
       "pii": false,
       "line_ref": null,
       "source": "allowed",
-      "type_basis": "headcount feeding an IRS allowable-standard lookup"
+      "type_basis": "headcount feeding an IRS allowable-standard lookup",
+      "row_shape": null
     },
     {
       "key": "allowable_65_over_count",
@@ -3894,7 +4191,8 @@
       "pii": false,
       "line_ref": null,
       "source": "allowed",
-      "type_basis": "headcount feeding an IRS allowable-standard lookup"
+      "type_basis": "headcount feeding an IRS allowable-standard lookup",
+      "row_shape": null
     }
   ]
 }

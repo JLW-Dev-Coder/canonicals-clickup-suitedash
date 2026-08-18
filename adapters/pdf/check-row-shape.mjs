@@ -60,6 +60,33 @@ export const declaredColumns = (slot) => {
 };
 
 /**
+ * Every column a STORED ROW must carry for one group, found by group name or by the input key
+ * the group reads (`array` on 433-F, `source` on 433-A). Used by the fetch layers, which hold
+ * the map but not the resolved rows, so a record can be refused before a PDF is ever produced.
+ *
+ * A row_composite TARGET is resolved back to its SOURCES. 433-A's receivable slot declares
+ * `receivable_name_and_address`, and no record anywhere carries that key — the map composes it
+ * at fill time from `name` and `address`. Asking a record for the target would fail every
+ * correctly stored row, which is why the engine checks AFTER composition and this checks the
+ * columns a record is actually expected to hold.
+ * @returns {string[]|null} null when the key names no group
+ */
+export const slotColumnsOf = (mapDoc, key) => {
+  const entry = Object.entries(mapDoc.groups || {})
+    .find(([g, d]) => d && Array.isArray(d.slots) && (g === key || d.array === key || d.source === key));
+  if (!entry) return null;
+  const def = entry[1];
+  const cols = new Set();
+  for (const s of def.slots) declaredColumns(s).forEach((c) => cols.add(c));
+  for (const [target, c] of Object.entries(def.row_composites || {})) {
+    if (!c || typeof c !== 'object' || !Array.isArray(c.from)) continue;   // `_why` prose
+    cols.delete(target);
+    c.from.forEach((f) => cols.add(f));
+  }
+  return [...cols];
+};
+
+/**
  * @param {object} mapDoc          the form map
  * @param {object} rowsByGroup     { group: { rows: [...], fromArray: boolean } }
  * @returns {{ rows: object[], absent: number, blank: number, fallbackGroups: string[] }}
@@ -146,4 +173,65 @@ export const reportRowShapes = (result, saturated) => {
   }
   console.error(`  The input is an ACCEPTANCE fixture (--saturated), which asserts every mapped cell is reached. No PDF written.`);
   return withAbsent.length;
+};
+
+// ---------------------------------------------------------------------------------------
+// A ROW MUST BE ALLOWED TO SAY WHAT IT IS.
+//
+// Defect D1 filed a bank account under INVESTMENTS. One `accounts` group spanned two printed
+// tables, so which sub-table a row landed in was decided by slot ORDER — and slot order was
+// the thing that was wrong. asset-row-shapes.json D1 records the conclusion: "It is the
+// strongest argument for the canonical shape carrying an explicit asset class per row. A flat
+// merged array with a fixed slot list has no way to say which sub-table a row belongs in, so
+// it takes the answer from slot ORDER."
+//
+// Now that the five serialized tables share one vocabulary, a bank-account row and an
+// investment row are STRUCTURALLY IDENTICAL — same five column names, same types. Nothing but
+// which property it was stored in distinguishes them, and a crosswalk that repointed one
+// property would move rows between printed tables with every cell still passing every check.
+// So the row carries its class, the group declares which classes it prints, and a mismatch is
+// a HARD STOP in every mode: a row printed under the wrong printed heading is a
+// misrepresentation on a signed statement, never a reportable degradation.
+//
+// A row with NO class is reported, not failed. Only the map can say what a scalar-fallback row
+// is (it declares `_class` per fallback entry), and a hand-authored fixture predating this
+// construct is a gap in the record, not a wrong claim.
+
+export const checkRowClasses = (mapDoc, rowsByGroup) => {
+  const wrong = [], unstated = [];
+  for (const [group, def] of Object.entries(mapDoc.groups || {})) {
+    const rc = def.row_class;
+    if (!rc || !Array.isArray(rc.accepts)) continue;
+    const entry = rowsByGroup[group];
+    if (!entry) continue;
+    const cap = Math.min(def.max ?? def.slots.length, def.slots.length);
+    (entry.rows || []).forEach((row, i) => {
+      if (i >= cap) return;
+      const stated = row && typeof row === 'object' ? row[rc.column] : undefined;
+      const v = stated === undefined || stated === null ? '' : String(stated).trim();
+      if (!v) { unstated.push({ group, index: i, accepts: rc.accepts }); return; }
+      if (!rc.accepts.includes(v)) wrong.push({ group, index: i, stated: v, accepts: rc.accepts });
+    });
+  }
+  return { wrong, unstated };
+};
+
+/** Print the finding. Returns the number of rows that must STOP the run. */
+export const reportRowClasses = (result) => {
+  const { wrong, unstated } = result;
+  if (unstated.length) {
+    console.log(`ROW CLASS: ${unstated.length} slotted row(s) state no asset class — reported, not failed. The group still prints them under its own declared heading.`);
+    for (const u of unstated) console.log(`  ${u.group}[${u.index}]: no asset_class (group accepts ${u.accepts.join(', ')})`);
+  }
+  if (!wrong.length) {
+    console.log('ROW CLASS: every slotted row that states an asset class states one its group prints.');
+    return 0;
+  }
+  console.error(`ROW CLASS MISMATCH — ${wrong.length} row(s) claim an asset class the group does not print. No PDF written.`);
+  for (const w of wrong) {
+    console.error(`  ${w.group}[${w.index}]: row says asset_class ${JSON.stringify(w.stated)}, this group prints ${w.accepts.map((a) => JSON.stringify(a)).join(', ')}`);
+  }
+  console.error('  Printing it anyway would file the row under a printed heading it does not belong under —');
+  console.error('  which is what defect D1 did, and the reason a row is allowed to say what it is.');
+  return wrong.length;
 };

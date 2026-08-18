@@ -43,6 +43,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { hs } from './hs-lib.mjs';
 import { loadBindings, consumableKeys } from './bindings.mjs';
+import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
 
 const contactId = process.argv[2];
 if (!contactId) {
@@ -92,18 +93,28 @@ for (const b of bindings) {
       continue;
     }
     // A row whose COLUMN KEYS belong to another form's map prints an empty slot exactly as
-    // silently as a raw string does — that is why these four tables are form-scoped in the
-    // first place. Columns a form does not use are legitimately absent, so a partial match is
-    // fine; a row sharing NO column with this form's shape is a shape mismatch and stops.
-    if (b.row_shape) {
+    // silently as a raw string does.
+    //
+    // THIS USED TO ACCEPT A PARTIAL MATCH — "at least one column in common" — and that was not
+    // a check. A backbone receivable row keyed {name, address, amount_owed} against a slot
+    // declaring {name, address, amount_due} matched two of three, cleared it, and printed
+    // Amount Owed empty. So the requirement is now EVERY COLUMN THE SLOTS DECLARE.
+    //
+    // Measured against the SLOTS, not against the crosswalk's row_shape. Since the v3 re-key a
+    // shared table's row_shape is the CANONICAL row — the union across the series — and a
+    // column this form prints no cell for is legitimately absent from a record fed to it.
+    // irs433_investments carries `phone` for 433-A; 433-F prints no phone cell for an
+    // investment and must not fail for its absence. The slots are what this engine will read.
+    const slotCols = slotColumnsOf(mapDoc, b.key);
+    if (slotCols && slotCols.length) {
       parsed.forEach((row, i) => {
         if (!row || typeof row !== 'object' || Array.isArray(row)) {
           errors.push(`${b.hs_name}[${i}]: row is not an object`);
           return;
         }
-        const known = Object.keys(row).filter((c) => b.row_shape.includes(c));
-        if (!known.length) {
-          errors.push(`${b.hs_name}[${i}]: no column matches this form's row shape [${b.row_shape.join(', ')}] — got [${Object.keys(row).join(', ')}]. The engine would print an empty slot without saying so.`);
+        const missing = slotCols.filter((c) => !(c in row));
+        if (missing.length) {
+          errors.push(`${b.hs_name}[${i}]: carries no key for ${missing.length} of the ${slotCols.length} column(s) ${form}'s slots declare — missing [${missing.join(', ')}]; row supplies [${Object.keys(row).join(', ')}]. Those cells would print empty with no error.`);
         }
       });
     }

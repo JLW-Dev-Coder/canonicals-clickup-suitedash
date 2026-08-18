@@ -17,13 +17,14 @@
     "type_inference_does_not_transfer": "gen-fields-from-map.mjs decides money STRUCTURALLY, from the printed-line number a 433-A key carries as its own prefix (lines 12-20, 21-51, 64-90 are the money bands). 433-F keys carry no printed line number at all, so that rule has nothing to read and would type every 433-F money cell as text. Types are therefore stated explicitly on each row here, with a basis, rather than inferred.",
     "counts": {
       "total_input_keys": 97,
-      "exact": 37,
+      "exact": 39,
       "new_shared": 49,
-      "form_specific": 11,
-      "to_provision": 60,
+      "form_specific": 9,
+      "to_provision": 58,
       "option_extensions": 2
     },
-    "v2_note": "433-F v2 completes the map, so the crosswalk grows with it: 41 rows added and 1 retired (irs433f_accounts, which no group binds since defect D1 split it into bank_accounts and investments). Of the 41 new rows, 14 reuse a backbone fact outright — including all five serialized tables — which is what a shared backbone is for."
+    "v2_note": "433-F v2 completes the map, so the crosswalk grows with it: 41 rows added and 1 retired (irs433f_accounts, which no group binds since defect D1 split it into bank_accounts and investments). Of the 41 new rows, 14 reuse a backbone fact outright — including all five serialized tables — which is what a shared backbone is for.",
+    "v3_note": "v3 re-keys the five serialized tables that carried 433-F's abbreviated vocabulary (bank_accounts, investments, real_estate, other_assets, credit_cards) onto the canonical column names in asset-row-shapes.json, across BOTH maps - 433-A's financial_institution and name_and_address become institution_name_and_address, and its vehicles table takes the model_year rename asset-row-shapes.json marks as the one rename in the migration REQUIRED for correctness rather than tidiness. Two form-scoped properties retire outright: irs433f_bank_accounts and irs433f_investments become exact bindings to irs433_bank_accounts and irs433_investments. Neither had been provisioned, so nothing is deleted and no record moves. Every re-keyed row shape now also carries asset_class, and each group declares which classes it prints - the answer asset-row-shapes.json D1 asked for, and what stops a bank account printing under INVESTMENTS ever again. Nothing on either filled form changed: both were re-run and compared cell by cell against their pre-re-key read-backs and came back content-identical."
   },
   "option_extensions": [
     {
@@ -697,16 +698,17 @@
       "hs_name": "irs433f_real_estate",
       "arguable": true,
       "row_shape": [
-        "desc",
-        "pmt",
-        "year",
-        "price",
-        "fmv",
-        "bal",
+        "description",
+        "monthly_payment",
+        "year_purchased",
+        "purchase_price",
+        "current_fmv",
+        "current_loan_balance",
         "equity",
-        "kind"
+        "kind",
+        "asset_class"
       ],
-      "why": "The column mismatch here is CONTENT, not just naming, so no rename could bridge it: 433-F needs `year` (Year Purchased) and `price` (Purchase Price) where irs433_real_property stores `purchase_date` and no price at all, and it needs `kind` to tick the Primary Residence / Other boxes, which no backbone column supplies. fill-433f.mjs already records that gap in its own comment. See `arguable`.",
+      "why": "RE-KEYED at v3 onto the canonical real_property row; STILL form-scoped. The naming objection is gone - year_purchased, purchase_price and kind are canonical columns now. What has NOT happened is the re-point: irs433_real_property's own row shape is 433-A's slice and does not yet carry those three, so binding to it today would print three cells EMPTY on a filed form. Re-pointing is a 433-A map change and is recommended to Principal under A2-3-v3, not taken here.",
       "type": "string",
       "fieldType": "textarea",
       "type_basis": "repeatable table, serialized as a JSON array",
@@ -720,14 +722,15 @@
       "hs_name": "irs433f_other_assets",
       "arguable": true,
       "row_shape": [
-        "desc",
-        "pmt",
-        "year",
-        "value",
-        "bal",
-        "equity"
+        "description",
+        "monthly_payment",
+        "year_purchased",
+        "current_fmv",
+        "current_loan_balance",
+        "equity",
+        "asset_class"
       ],
-      "why": "433-F prints ONE table where the backbone keeps three (irs433_vehicles, irs433_life_insurance_policies, irs433_other_personal_property), each with its own columns - vehicles alone carries year/make_model/mileage/license_tag/vin, none of which 433-F's single `desc` column can receive without a derivation. See `arguable`.",
+      "why": "RE-KEYED at v3 onto the canonical column names; STILL form-scoped, and this is the one of the five where that is a CONTENT answer rather than a deferral. 433-F prints ONE Section C table that receives four backbone classes - vehicle, life_insurance_policy, personal_property, business_property. No single backbone property is its home: re-pointing it at irs433_vehicles would store a whole-life policy in the vehicles table. asset_class is what makes the union safe - the row says which class it is, groups.other_assets.row_class declares which four this table prints, and a fifth is a hard stop.",
       "type": "string",
       "fieldType": "textarea",
       "type_basis": "repeatable table, serialized as a JSON array",
@@ -741,12 +744,13 @@
       "hs_name": "irs433f_credit_cards",
       "arguable": true,
       "row_shape": [
-        "type",
-        "limit",
-        "bal",
-        "min"
+        "card_or_line_type",
+        "credit_limit",
+        "amount_owed",
+        "minimum_monthly_payment",
+        "asset_class"
       ],
-      "why": "Closest of the four to a shared shape, and still not one: irs433_available_credit stores {institution_name_and_address, account_number, credit_limit, amount_owed, available_credit} - it has no minimum-monthly-payment column, which 433-F prints, and it computes available credit, which 433-F does not ask for. Note also irs433_credit_cards_accepted is a different fact entirely (cards the taxpayer's BUSINESS accepts, 433-A section 5) - same two words, opposite direction. See `arguable`.",
+      "why": "RE-KEYED at v3 onto the canonical credit_line row; STILL form-scoped. The v2 objection was that irs433_available_credit has no minimum-monthly-payment column and computes an available-credit figure 433-F does not ask for. The canonical credit_line row carries both, so the objection now rests only on irs433_available_credit's own shape still being 433-A's slice. Re-pointing is a 433-A map change - see A2-3-v3.",
       "type": "string",
       "fieldType": "textarea",
       "type_basis": "repeatable table, serialized as a JSON array",
@@ -1129,41 +1133,42 @@
       "key": "bank_accounts",
       "consumed_by": "groups.bank_accounts.array",
       "printed_label": "A > PERSONAL BANK ACCOUNTS",
-      "classification": "form_specific",
-      "hs_name": "irs433f_bank_accounts",
-      "why": "NOT bound to irs433_bank_accounts, and the reason is the one the retired irs433f_accounts row gave: this map's slots read row['institution'], row['acct'], row['type'] and row['balance'], while the backbone table holds 433-A's column vocabulary (institution_name_and_address, account_number, type_of_account, account_balance). A backbone row handed to this engine matches NO column and prints an empty table with no error, no skip and a valid PDF. 433-F also carries a `bp` business/personal flag the backbone has no column for. Scoped to the form until the group's columns are re-keyed to the shared class — see arguable A2-3.",
-      "type": "string",
-      "fieldType": "textarea",
-      "type_basis": "repeatable table, serialized as a JSON array",
+      "classification": "exact",
+      "hs_name": "irs433_bank_accounts",
+      "why": "EXACT at v3. The v2 objection was NAMING and nothing else: this map's slots read the abbreviated columns institution / acct / type / balance where the backbone held 433-A's vocabulary, so a backbone row matched no column and printed an empty table with a valid PDF. v3 re-keys the slots onto the canonical bank_account row in asset-row-shapes.json, so the reuse the engine could not perform it now performs. The bp business/personal string becomes the canonical row flag is_business_account, which is the same discriminator 433-A uses to route a row to line 65 rather than line 13 - one column, two forms, opposite mechanisms. irs433f_bank_accounts is RETIRED; it was never provisioned, so nothing is deleted and no record moves.",
       "row_shape": [
-        "institution",
-        "acct",
-        "type",
-        "balance",
-        "bp"
+        "type_of_account",
+        "institution_name_and_address",
+        "account_number",
+        "account_balance",
+        "is_business_account",
+        "asset_class"
       ],
-      "pii": true,
-      "arguable": "A2-3"
+      "backbone_key": "bank_accounts",
+      "backbone_label": "Bank accounts (serialized table)",
+      "retired_in_favour_of_this": "irs433f_bank_accounts"
     },
     {
       "key": "investments",
       "consumed_by": "groups.investments.array",
       "printed_label": "A > INVESTMENTS",
-      "classification": "form_specific",
-      "hs_name": "irs433f_investments",
-      "why": "Same shape mismatch as bank_accounts, against irs433_investments. See that row and arguable A2-3.",
-      "type": "string",
-      "fieldType": "textarea",
-      "type_basis": "repeatable table, serialized as a JSON array",
+      "classification": "exact",
+      "hs_name": "irs433_investments",
+      "why": "EXACT at v3, for the reason given on bank_accounts. 433-A prints no account-number cell for an investment and 433-F prints no phone cell, so the shared row is the UNION and each form simply leaves the other's column unprinted - which is what a canonical row shape is for. irs433f_investments is RETIRED; it was never provisioned.",
       "row_shape": [
-        "institution",
-        "acct",
-        "type",
-        "balance",
-        "bp"
+        "type_of_investment",
+        "institution_name_and_address",
+        "phone",
+        "current_value",
+        "loan_balance",
+        "equity",
+        "account_number",
+        "is_business_account",
+        "asset_class"
       ],
-      "pii": true,
-      "arguable": "A2-3"
+      "backbone_key": "investments",
+      "backbone_label": "Investments (serialized table)",
+      "retired_in_favour_of_this": "irs433f_investments"
     },
     {
       "key": "digital_assets",
@@ -1334,7 +1339,18 @@
       "taken": "The five keep form-scoped irs433f_ properties. bank_accounts and investments are newly provisioned under that rule; the other three already were.",
       "the_other_reading": "Re-key the five groups’ slot columns to the shared class names and re-point them at irs433_bank_accounts, irs433_investments, irs433_real_property, irs433_vehicles and irs433_available_credit. Five properties retire and nothing is created.",
       "why_this_way": "Re-keying a group that already binds correctly was not in the v2 specification, and doing it silently alongside the new bindings would put a change nobody asked for in the same commit as the ones they did. Classing them `exact` WITHOUT re-keying is the option ruled out: it would claim reuse the engine cannot actually perform, and the failure mode is an empty printed table with a valid PDF and exit 0.",
-      "for_principal": "This is now the largest remaining gap between 433-F and the shared backbone, and it is mechanical: five column-key renames in 433f.map.json, the matching keys in the fixture, and five properties deleted. Worth doing before 433-A(OIC) so the OIC map inherits one vocabulary rather than two. Recommend it as the first item of v3, together with A2-2's six per-printed-row scalars."
+      "for_principal": "This is now the largest remaining gap between 433-F and the shared backbone, and it is mechanical: five column-key renames in 433f.map.json, the matching keys in the fixture, and five properties deleted. Worth doing before 433-A(OIC) so the OIC map inherits one vocabulary rather than two. Recommend it as the first item of v3, together with A2-2's six per-printed-row scalars.",
+      "resolved_at": "v3",
+      "resolution": "TAKEN, in the form recommended. All five groups are re-keyed to the canonical class names in both maps. Two of the five properties retire (irs433f_bank_accounts, irs433f_investments -> exact bindings to the backbone), not five: real_estate, other_assets and credit_cards keep their form-scoped properties because re-pointing them needs irs433_real_property, irs433_vehicles and irs433_available_credit to carry the canonical columns first, which is a 433-A MAP change and a separate decision. See A2-3-v3."
+    },
+    {
+      "id": "A2-3-v3",
+      "what": "After the v3 re-key, two of the three remaining tables are re-pointable at the backbone by a 433-A map change alone: real_estate -> irs433_real_property (needs year_purchased, purchase_price and kind on 433-A's real_property row) and credit_cards -> irs433_available_credit (needs card_or_line_type and minimum_monthly_payment). Both are the ADD-only migrations asset-row-shapes.json migration_cost already priced.",
+      "taken": "NOT taken. v3 retires exactly the two properties whose only objection was naming.",
+      "the_other_reading": "Re-point both now and retire irs433f_real_estate and irs433f_credit_cards too, on the same argument that carried bank_accounts and investments.",
+      "why_this_way": "Those two ARE different: their backbone counterparts do not yet hold the columns 433-F prints, so re-pointing without adding them first prints three real-estate cells and two credit cells EMPTY on a filed form - the exact silent-empty failure the whole re-key exists to end. Adding union columns to 433-A's map is a change to a form that is already passing all ten, and it belongs in its own commit with its own content-identical proof.",
+      "not_re_pointable": "other_assets, and not for want of a migration. 433-F prints one Section C table receiving four backbone classes; no single backbone property is its home. It stays form-scoped and is made safe by asset_class instead.",
+      "for_principal": "Two properties and one 433-A map change each. No data migration - held_data is false on every irs433_ property."
     }
   ]
 }
