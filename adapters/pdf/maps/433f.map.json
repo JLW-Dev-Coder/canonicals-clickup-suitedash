@@ -15,7 +15,7 @@
       "join": " \u2014 "
     },
     "notes": [
-      "Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.",
+      "v1, SUPERSEDED and WRONG, kept because it is where the defect entered: “Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.” Bank is AccountsTable[1], not table0; investments is AccountsTable[0] row 1, not row 2; and the digital-assets table is Table_Line14, not AccountsTable[1]. Every one of those three was read off the field names. See v6.",
       "433-F's printed instruction for the Transportation line reads: “Transportation – Include the total of maintenance, repairs, insurance, fuel, registrations, licenses, inspections, parking, and tolls for one month.” That is the Local Standards definition of OPERATING COSTS item for item, with loan and lease payments absent. The cell therefore does NOT merge ownership with operating: ownership is the monthly payment on the Section C asset row. 433f_exp_gas -> irs433_exp_vehicle_operating_costs is settled on the printed instruction, not provisional. Mortgage does share the rent line; that registry field stays intentionally unmapped for 433-F.",
       "'*_allowed' expense columns (IRS standard) are left unmapped \u2014 filled later by the standards engine, not taxpayer input.",
       "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
