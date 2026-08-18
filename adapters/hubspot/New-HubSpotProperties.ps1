@@ -1,6 +1,22 @@
-<#
+﻿<#
 .SYNOPSIS
   Provision HubSpot custom properties + groups from fields.registry.json using a Service Key.
+.DESCRIPTION
+  Property definitions come from two places, in this order of authority:
+
+    fields.registry.json     the original hand-authored registry, still the source for
+                             every form that has no generated file.
+    fields.<form>.json       GENERATED FROM THAT FORM'S CLOSED MAP by
+                             adapters/hubspot/gen-fields-from-map.mjs. When one exists it is
+                             AUTHORITATIVE for its form and the registry's rows for that form
+                             are dropped, loudly. A closed map knows which keys the fill
+                             engine actually consumes; the pre-map registry rows were authored
+                             before there was a map to read, so keeping both would provision
+                             two competing naming schemes for one form.
+
+  Dropping the registry rows does NOT remove anything already live in the portal. Properties
+  that were provisioned from a superseded scheme stay where they are and stay populated;
+  retiring them is a separate, destructive decision that this script does not make.
 .NOTES
   Credential: HubSpot Service Key (Bearer). Set it in the environment, never in the repo:
       $env:HUBSPOT_SERVICE_KEY = "pat-... or service-key-..."
@@ -14,7 +30,10 @@
 #>
 [CmdletBinding()]
 param(
-  [string]$RegistryPath = ".\fields.registry.json",
+  # Resolved against the SCRIPT's directory, not the caller's. The whole point of this file
+  # is to be run from the repo root as .\adapters\hubspot\New-HubSpotProperties.ps1, and a
+  # cwd-relative default silently fails to find its own registry when you do that.
+  [string]$RegistryPath = (Join-Path $PSScriptRoot "fields.registry.json"),
   [string]$ObjectType   = "contacts",              # contacts | companies | deals | <custom object id>
   [string[]]$Forms      = @(),                      # e.g. 433f,vlp  (empty = all forms in the registry)
   [string]$ServiceKeyEnv= "HUBSPOT_SERVICE_KEY",
@@ -30,13 +49,36 @@ $headers = @{ Authorization = "Bearer $token"; "Content-Type" = "application/jso
 $reg = Get-Content $RegistryPath -Raw | ConvertFrom-Json
 Write-Host "Registry: $($reg.properties.Count) properties, $($reg.groups.Count) groups. Object: $ObjectType" -ForegroundColor Cyan
 
+$props  = @($reg.properties)
+$groups = @($reg.groups)
+
+# ---- generated per-form definitions supersede the registry for their own form ----
+$generated = Get-ChildItem -Path $PSScriptRoot -Filter "fields.*.json" |
+             Where-Object { $_.Name -ne "fields.registry.json" }
+foreach ($g in $generated) {
+  $doc = Get-Content $g.FullName -Raw | ConvertFrom-Json
+  $formName = $doc.meta.form
+  if (-not $formName) { Write-Host "  ! $($g.Name) declares no meta.form - ignored" -ForegroundColor Red; continue }
+  $superseded = @($props | Where-Object { $_.form -eq $formName })
+  $props  = @($props  | Where-Object { $_.form -ne $formName })
+  $groups = @($groups | Where-Object { $_.name -notin @($doc.groups | ForEach-Object { $_.name }) })
+  $props  += @($doc.properties)
+  $groups += @($doc.groups)
+  Write-Host "  $($g.Name): $($doc.properties.Count) generated properties for form '$formName' (from $($doc.meta.generated_from), map v$($doc.meta.map_version))" -ForegroundColor Cyan
+  if ($superseded.Count -gt 0) {
+    Write-Host "    supersedes $($superseded.Count) registry row(s) for '$formName' - they are NOT provisioned from here." -ForegroundColor Yellow
+    Write-Host "    Any of those already live in the portal stay live and stay populated; retiring them is a separate decision." -ForegroundColor Yellow
+  }
+}
+
 # ---- filter by -Forms ----
-$props  = $reg.properties
-$groups = $reg.groups
 if ($Forms.Count -gt 0) {
-  $props  = $props  | Where-Object { $Forms -contains $_.form }
-  $keep   = ($props | Select-Object -ExpandProperty group -Unique)
-  $groups = $groups | Where-Object { $keep -contains $_.name }
+  # @() around every result: PowerShell 5.1 unwraps a one-element pipeline to a scalar, and a
+  # scalar has no .Count — so a filter that legitimately matched ONE group printed "" groups
+  # on the line below, which reads exactly like a filter that matched none.
+  $props  = @($props  | Where-Object { $Forms -contains $_.form })
+  $keep   = @($props | Select-Object -ExpandProperty group -Unique)
+  $groups = @($groups | Where-Object { $keep -contains $_.name })
   Write-Host "Filtered to forms [$($Forms -join ', ')]: $($props.Count) properties, $($groups.Count) groups." -ForegroundColor Cyan
 }
 
