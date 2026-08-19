@@ -1,652 +1,652 @@
 {
-  "form": "433f",
-  "form_revision": "7-2024",
-  "catalog": "62053J",
-  "hs_name_rule": "HubSpot property = 'irs'+<key> (e.g. 433f_exp_food -> irs433f_exp_food)",
-  "pdf": "adapters/pdf/forms/f433f.pdf",
-  "fields_source": "adapters/pdf/maps/433f.fields.json",
-  "special": {
-    "composite_name_address": {
-      "pdf": "topmostSubform[0].Page1[0].address[0].NamesAddress[0]",
-      "from": [
-        "433f_tp_name",
-        "433f_tp_address"
-      ],
-      "join": " — "
-    },
-    "notes": [
-      "v1, SUPERSEDED and WRONG, kept because it is where the defect entered: “Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.” Bank is AccountsTable[1], not table0; investments is AccountsTable[0] row 1, not row 2; and the digital-assets table is Table_Line14, not AccountsTable[1]. Every one of those three was read off the field names. See v6.",
-      "433-F's printed instruction for the Transportation line reads: “Transportation – Include the total of maintenance, repairs, insurance, fuel, registrations, licenses, inspections, parking, and tolls for one month.” That is the Local Standards definition of OPERATING COSTS item for item, with loan and lease payments absent. The cell therefore does NOT merge ownership with operating: ownership is the monthly payment on the Section C asset row. 433f_exp_gas -> irs433_exp_vehicle_operating_costs is settled on the printed instruction, not provisional. Mortgage does share the rent line; that registry field stays intentionally unmapped for 433-F.",
-      "'*_allowed' expense columns (IRS standard) are left unmapped — filled later by the standards engine, not taxpayer input.",
-      "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
-      "v2: repeatable slots added under `groups` (accounts×4, real_estate×2, other_assets×2, credit_cards×2). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
-      "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from irs-standards-2026.json. Housing/vehicle allowables intentionally not auto-filled.",
-      "v3.1: the standards table was renamed 433f.standards.json -> irs-standards-2026.json. It holds the published Collection Financial Standards, which are form-agnostic; every form in the 433 series reads the same file. No figure and no target changed.",
-      "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render.",
-      "v5: `433f_tp_name` was ALSO bound directly in `map` to NamesAddress[0], the same target `special.composite_name_address` writes — a double binding that only a bespoke `if (comp.from.includes(key)) continue` line in fill-433f.mjs kept from firing. The composite is the intended binding, so the direct entry is gone and the special case with it. `433f_tp_name` and `433f_tp_address` are now symmetric: both are composite-only inputs, neither appears in `map`.",
-      "v6: defect D1. The single `accounts` group bound one ordered four-slot list spanning TWO printed tables — slots 0-1 were AccountsTable[0] (INVESTMENTS) and slots 2-3 AccountsTable[1] (PERSONAL BANK ACCOUNTS), the reverse of printed order. A caller supplying one bank account got it printed under INVESTMENTS. Split into `bank_accounts` (max 2) and `investments` (max 2), each declaring its own heading in 433f.headings.json, with the business-flag array split to match. No target moved; what changed is which input row reaches which target.",
-      "v6 consequence, unresolved: the serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is no longer bound by any group. Its rows carry no asset class, so nothing here can decide which of the two tables a given row belongs in — that is exactly the decision D1 was made of. A record supplying only that key now fills neither table instead of filling the wrong one. Principal binds `bank_accounts` and `investments` as separate properties in the 433-F v2 re-map.",
-      "v6: `433f_vc_wallet`, `433f_vc_type` and `433f_vc_value` are removed from the accounts fallback and recorded under `_deferred`. See _deferred.digital_assets.",
-      "v7: PRINTED ASSOCIATION IS NOT TREE PARENTAGE, and this form is where that stopped being a hunch. All 15 Section E table cells sit at depth 2 under their sub-table subform. The three scalars printed among them — E2NameIndividualBusi[0] and M_n_mim_Mon_hly_Payment3[2] and [3] — sit at depth 0, as direct children of sectionE[0] and siblings of both sub-tables. A cell drawn BETWEEN two subforms cannot be inside either one. Two rounds of the v2 specification got this wrong the same way, each time by assuming a cell printed between two tables lived in one of them, so it is recorded as a standing constraint rather than a note: nesting depth is not uniform within a section, and a table's prefix does not generalise to that section's loose scalars.",
-      "v7: I_ype3 is the same leaf name on two adjacent printed tables and its printed caption is 'Name' on E1 and 'Credit Card' on E2. The name is right on one table and wrong on the other, which means a spot check on either one confirms the wrong rule. This is the strongest case on either form for the standing rule that internal names are suspects and only the printed page is a witness.",
-      "v7: E2's third column is M_n_mim_Mon_hly_Payment3[4][5][6] while its first two are [2][3][4]. Not a misalignment. [2] and [3] are the two E1 footer cells, which print between the tables in the same Amount-Owed column; the form spends cells in printed order and the third column resumes after them. Do not realign.",
-      "v7: the two E1 footer cells are WRITABLE SCALARS and deliberately not arithmetic tripwires, and the printed caption is the reason. Every total this repo has made a tripwire says 'Add lines X, Y, Z'. Neither of these does. 'List total amount owed from additional sheets' sums figures that are on an attachment and not on the form, so nothing on the page could verify it. 'Total amount of accounts receivable available to pay to IRS now' is a determination, not a sum — receivables that exist are not all collectible now — so a computed figure would assert a judgement the operator has not made. Both are recorded in 433f.totals.json under `not_checkable` with those reasons.",
-      "v7: `433f_vc_type`, `433f_vc_wallet` and `433f_vc_value`, withdrawn in v6 because the only table they could reach was the wrong one, are restored as the scalar fallback of the new `digital_assets` group. `_deferred` is now empty.",
-      "v7: the digital-asset value column is /MaxLen 12 and the form's own printed example beside it, '10 Bitcoins $64,600 USD', is 23 characters. The cell cannot hold the example the IRS prints next to it. Flagged, not worked around: fill-433f.mjs now carries the same capacity guard as fill-433a.mjs, so an over-long value stops the run and names the cell instead of being truncated into a figure the taxpayer never gave.",
-      "v7: Section C's final-payment cells (month1/year1, month2/year2) are each /MaxLen 2, so the form wants a 2-digit year in 'mo/yr' and a canonical four-digit date cannot pass through. Bound through the existing `split` construct rather than a second date mechanism; because a split writes nothing unless the stripped value fills its parts exactly, an operator supplying 06/2027 gets a loud stop rather than a silent '20' in the year box.",
-      "v7: Owner ruling on identity. Both SSN cells bind, to the same shared facts 433-A already maps and stores. Excluding SSN here while 433-A pre-fills it would have left the same client pre-filled on one form and hand-typed on the other, and that inconsistency is the defect, not the storage. All six telephone cells bind. The PII rule extends explicitly to intermediates: no fetched-record file, sample fixture, log or HTML review page may carry a real SSN, and no fixture may contain a well-formed one.",
-      "v7: the form has SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the identity block is 2 SSN + 6 telephone = 8 scalars, not the 9 the first specification named. Reported rather than raised as a STOP, because no named target failed to resolve — the count was wrong, not the targets.",
-      "v7: `433f_re*_year_refinanced` and `433f_re*_refinance_amount` bind as SCALARS, one pair per printed real-estate row, not as `real_estate` row columns. The group's rows do not carry refinance data, so a caller supplying the array supplies these alongside it. Same shape as the `split` keys in Section C and for the same reason.",
-      "v7: the map now declares itself COMPLETE, so gate steps 4, 5 and 10 REQUIRE rather than report. writable + never_autofill + deferred partitions all 214 fields; every excluded field carries its own reason under allowed._never_autofill. 'No declared state' is the condition that let defect D1 sit unexamined, so nothing on this form is left silent.",
-      "v7: the five Section H 'Total' cells bind as ordinary operator-supplied map keys, not as fill-time sums. The printed captions on this form say only 'Total' — none of them says 'Add lines X, Y, Z' the way 433-A's do — and the Food / Personal Care block prints its own instruction that a taxpayer at or under the standard may 'fill in the Total amount only'. So the total is a figure the operator gives and 433f.totals.json checks it against the rows printed above it; computing it here and then checking it would compare the record to itself.",
-      "v7: THE PARTITION IS DECLARED AND THE MAP IS COMPLETE. writable + never_autofill + deferred covers all 214 enumerated fields, disjoint, with every excluded field carrying its own reason and `_deferred` explicitly empty. Gate steps 4, 5 and 10 now REQUIRE rather than report, and step 10 fails rather than skipping if 433f.totals.json goes missing. The two E1 footer cells are the only printed total-shaped money cells not covered by a tripwire, and they are declared under `not_checkable` in that file with their reasons, so no total-shaped cell on this form is silent either way."
-    ]
+ "form": "433f",
+ "form_revision": "7-2024",
+ "catalog": "62053J",
+ "hs_name_rule": "HubSpot property = 'irs'+<key> (e.g. 433f_exp_food -> irs433f_exp_food)",
+ "pdf": "adapters/pdf/forms/f433f.pdf",
+ "fields_source": "adapters/pdf/maps/433f.fields.json",
+ "special": {
+  "composite_name_address": {
+   "pdf": "topmostSubform[0].Page1[0].address[0].NamesAddress[0]",
+   "from": [
+    "433f_tp_name",
+    "433f_tp_address"
+   ],
+   "join": " — "
   },
-  "map": {
-    "433f_county": "topmostSubform[0].Page1[0].address[0].CountyResidence[0]",
-    "433f_biz_name": "topmostSubform[0].Page1[0].age[0].NameBusiness[0]",
-    "433f_biz_type": "topmostSubform[0].Page1[0].age[0].TypeBusiness[0]",
-    "433f_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].fieldXmlnshttpwwwxfa[0]",
-    "433f_emp_gross": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].GrossPerPayPeriod[0]",
-    "433f_emp_fed": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].TaxesPerPayPeriodFed[0]",
-    "433f_emp_state": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].State[0]",
-    "433f_emp_local": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].Local[0]",
-    "433f_emp_tenure": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].HowLongAtCurrentEmpl[0]",
-    "433f_inc_alimony": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].AlimonyIncome[0]",
-    "433f_inc_childsup": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].ChildSupportIncome[0]",
-    "433f_inc_netse": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].NetSelfEmploymentInc[0]",
-    "433f_inc_rental": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].NetRentalIncome[0]",
-    "433f_inc_unemp": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].UnemploymentIncome[0]",
-    "433f_inc_pension": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].PensionIncome[0]",
-    "433f_inc_intdiv": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].InterestDividendsInc[0]",
-    "433f_inc_ssa": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].SocialSecurityIncome[0]",
-    "433f_inc_other": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].Other[0]",
-    "433f_inc_other_desc": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].if_other[0]",
-    "433f_exp_food": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row1[0].food_monthly[0]",
-    "433f_exp_housekeep": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row2[0].housekeeping_monthly[0]",
-    "433f_exp_clothing": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row3[0].clothing_monthly[0]",
-    "433f_exp_personalcare": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row4[0].personal_care_monthly[0]",
-    "433f_exp_misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_monthly[0]",
-    "433f_exp_gas": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row1[0].gas_monthly[0]",
-    "433f_exp_public": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row2[0].transportation_monthly[0]",
-    "433f_exp_rent": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row1[0].rent_monthly[0]",
-    "433f_exp_utilities": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row2[0].electric_monthly[0]",
-    "433f_exp_phone": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row3[0].telephone_monthly[0]",
-    "433f_exp_retax": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row4[0].real_estate_monthly[0]",
-    "433f_exp_maint": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row5[0].maintenance_monthly[0]",
-    "433f_exp_healthins": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row1[0].health_monthly[0]",
-    "433f_exp_oop": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_monthly[0]",
-    "433f_exp_depcare": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row1[0].child_monthly[0]",
-    "433f_exp_esttax": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row2[0].tax_payments_monthly[0]",
-    "433f_exp_termlife": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row3[0].term_life_monthly[0]",
-    "433f_exp_retire": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row4[0].required_retirement_monthly[0]",
-    "433f_exp_union": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row6[0].union_monthly[0]",
-    "433f_exp_statetax": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row7[0].delinquent_monthly[0]",
-    "433f_exp_student": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row8[0].student_loans_monthly[0]",
-    "433f_exp_courtcs": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_monthly[0]",
-    "433f_exp_courtother": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_monthly[0]",
-    "433f_exp_other1": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_monthly[0]",
-    "433f_exp_other1_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other[0]",
-    "433f_hh_under65": "topmostSubform[0].Page1[0].age[0].Under65[0]",
-    "433f_hh_over65": "topmostSubform[0].Page1[0].age[0]._65Over[0]",
-    "433f_tp_ssn": "topmostSubform[0].Page1[0].ssn[0].YourSocialSecurityNu[0]",
-    "433f_sp_ssn": "topmostSubform[0].Page1[0].ssn[0].YourSpousesSocialSec[0]",
-    "433f_tp_phone_home": "topmostSubform[0].Page1[0].your_telephone[0].Home11[0]",
-    "433f_tp_phone_work": "topmostSubform[0].Page1[0].your_telephone[0].Work11[0]",
-    "433f_tp_phone_cell": "topmostSubform[0].Page1[0].your_telephone[0].Cell11[0]",
-    "433f_sp_phone_home": "topmostSubform[0].Page1[0].spouses_telephone[0].Home21[0]",
-    "433f_sp_phone_work": "topmostSubform[0].Page1[0].spouses_telephone[0].Work21[0]",
-    "433f_sp_phone_cell": "topmostSubform[0].Page1[0].spouses_telephone[0].Cell21[0]",
-    "433f_business_ein": "topmostSubform[0].Page1[0].age[0].BusinessEIN[0]",
-    "433f_employee_count": "topmostSubform[0].Page1[0].age[0].NumberEmployeesnotCo[0]",
-    "433f_re1_year_refinanced": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Year_Refinanced[0]",
-    "433f_re1_refinance_amount": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Refinance_Amount[0]",
-    "433f_re2_year_refinanced": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearRefinanced[0]",
-    "433f_re2_refinance_amount": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].RefinanceAmount[0]",
-    "433f_e2_account_holder": "topmostSubform[0].Page2[0].sectionE[0].E2NameIndividualBusi[0]",
-    "433f_ar_additional_sheets_total": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[2]",
-    "433f_ar_available_to_pay_now": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[3]",
-    "433f_sp_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].FillText65[0]",
-    "433f_sp_emp_gross": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Gross1[0]",
-    "433f_sp_emp_fed": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Fed1[0]",
-    "433f_sp_emp_state": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].State1[0]",
-    "433f_sp_emp_local": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Local1[0]",
-    "433f_sp_emp_tenure": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].How_long_at_current_employer[0]",
-    "433f_exp_volretire": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row5[0].voluntary_retirement_monthly[0]",
-    "433f_exp_alimony": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row10[0].alimony_monthly[0]",
-    "433f_exp_other2": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other_monthly[0]",
-    "433f_exp_other2_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other[0]",
-    "433f_exp_other3": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other_monthly[0]",
-    "433f_exp_other3_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other[0]",
-    "433f_exp_food_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_monthly[0]",
-    "433f_exp_transport_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row3[0].total_monthly[0]",
-    "433f_exp_housing_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row6[0].total_monthly[0]",
-    "433f_exp_medical_total": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row3[0].total_monthly[0]",
-    "433f_exp_other_total": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row15[0].total_monthly[0]"
-  },
-  "_deferred": {
-    "_why": "EMPTY. Nothing on 433-F is deferred any more. The DIGITAL ASSETS table that stood here through v6 is bound in `groups.digital_assets` against the printed column captions; the three withdrawn input keys 433f_vc_type / 433f_vc_wallet / 433f_vc_value are restored as that group’s scalar fallback, where they reach the table they were always about. Kept as an empty declaration rather than deleted so the state is stated rather than inferred from absence."
-  },
-  "groups": {
-    "bank_accounts": {
-      "_why": "PERSONAL BANK ACCOUNTS. AccountsTable[1] prints ABOVE AccountsTable[0] on the page, so the printed order and the field-name order are opposites; the binding here follows the page. Two printed rows, so max 2. Was slots 2-3 of the single `accounts` group until defect D1.",
-      "array": "bank_accounts",
-      "fallback": [
-        {
-          "institution_name_and_address": "433f_bank_institution",
-          "account_number": "433f_bank_acct",
-          "type_of_account": "433f_bank_type",
-          "account_balance": "433f_bank_balance",
-          "_class": "bank_account"
-        }
-      ],
-      "slots": [
-        {
-          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
-          "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
-          "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
-          "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
-        },
-        {
-          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
-          "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
-          "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
-          "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
-        }
-      ],
-      "row_class": {
-        "column": "asset_class",
-        "accepts": [
-          "bank_account"
-        ],
-        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-      }
-    },
-    "investments": {
-      "_why": "INVESTMENTS. AccountsTable[0] prints BELOW AccountsTable[1]. Two printed rows, so max 2. Was slots 0-1 of the single `accounts` group, which is why a caller with one bank account and no investments printed that bank account under INVESTMENTS.",
-      "array": "investments",
-      "fallback": [
-        {
-          "institution_name_and_address": "433f_inv_institution",
-          "account_number": "433f_inv_acct",
-          "type_of_investment": "433f_inv_type",
-          "current_value": "433f_inv_value",
-          "_class": "investment"
-        }
-      ],
-      "slots": [
-        {
-          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
-          "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
-          "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
-          "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]"
-        },
-        {
-          "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
-          "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
-          "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
-          "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
-        }
-      ],
-      "row_class": {
-        "column": "asset_class",
-        "accepts": [
-          "investment"
-        ],
-        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-      }
-    },
-    "real_estate": {
-      "array": "real_estate",
-      "fallback": [
-        {
-          "description": "433f_re_desc",
-          "monthly_payment": "433f_re_pmt",
-          "year_purchased": "433f_re_year",
-          "purchase_price": "433f_re_price",
-          "current_fmv": "433f_re_fmv",
-          "current_loan_balance": "433f_re_bal",
-          "equity": "433f_re_equity",
-          "_class": "real_property"
-        }
-      ],
-      "slots": [
-        {
-          "description": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
-          "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
-          "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
-          "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
-          "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
-          "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
-          "equity": "topmostSubform[0].Page1[0].real_estate[0].row1[0].Equity[0]"
-        },
-        {
-          "description": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].description[0]",
-          "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row2[0].MonthlyPayments[0]",
-          "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearPurchased[0]",
-          "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].PurchasePrice[0]",
-          "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row2[0].CurrentValue[0]",
-          "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row2[0].BalanceOwed[0]",
-          "equity": "topmostSubform[0].Page1[0].real_estate[0].row2[0].Equity[0]"
-        }
-      ],
-      "row_class": {
-        "column": "asset_class",
-        "accepts": [
-          "real_property"
-        ],
-        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-      }
-    },
-    "other_assets": {
-      "array": "other_assets",
-      "fallback": [
-        {
-          "description": "433f_veh_desc",
-          "monthly_payment": "433f_veh_pmt",
-          "year_purchased": "433f_veh_year",
-          "current_fmv": "433f_veh_value",
-          "current_loan_balance": "433f_veh_bal",
-          "_class": "vehicle"
-        },
-        {
-          "description": "433f_oa_desc",
-          "current_fmv": "433f_oa_value",
-          "current_loan_balance": "433f_oa_bal",
-          "_class": "personal_property"
-        }
-      ],
-      "slots": [
-        {
-          "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
-          "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
-          "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
-          "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
-          "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
-          "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Equity1[0]"
-        },
-        {
-          "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
-          "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Monthly_Payment2[0]",
-          "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Year_Purchased2[0]",
-          "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
-          "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
-          "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Equity2[0]"
-        }
-      ],
-      "row_class": {
-        "column": "asset_class",
-        "accepts": [
-          "vehicle",
-          "life_insurance_policy",
-          "personal_property",
-          "business_property"
-        ],
-        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-      }
-    },
-    "credit_cards": {
-      "array": "credit_cards",
-      "fallback": [
-        {
-          "card_or_line_type": "433f_cc_type",
-          "credit_limit": "433f_cc_limit",
-          "amount_owed": "433f_cc_bal",
-          "minimum_monthly_payment": "433f_cc_min",
-          "_class": "credit_line"
-        }
-      ],
-      "slots": [
-        {
-          "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
-          "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
-          "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
-          "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]"
-        },
-        {
-          "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].I_ype1[0]",
-          "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].Crad_i_L_m_t1[0]",
-          "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
-          "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
-        }
-      ],
-      "row_class": {
-        "column": "asset_class",
-        "accepts": [
-          "credit_line"
-        ],
-        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-      }
-    },
-    "digital_assets": {
-      "_why": "DIGITAL ASSETS (CRYPTOCURRENCY), two printed rows. The shared `digital_asset` row class binds unchanged - the five columns are identical on 433-A line 15 and here, in the same printed order. Authored against the printed column captions, never the leaf names: Table_Line14 / Row13a / p2_t11..p2_t17 are 433-A line-13 names carried wholesale into this form and they name a different table.",
-      "maxlen_defect": "The value column (p2_t11_13a / p2_t15_13b) carries /MaxLen 12, and the form's own printed example beside it - '10 Bitcoins $64,600 USD' - is 23 characters. The cell cannot hold the example the IRS prints next to it. That is a defect in the form, not in this map. The remedy is the capacity guard stopping the run so an operator shortens the value; it is never truncation, because a silently shortened crypto holding on a signed statement is a figure the taxpayer did not give.",
-      "array": "digital_assets",
-      "fallback": [
-        {
-          "type_of_digital_asset": "433f_vc_type",
-          "name_of_digital_asset": "433f_vc_wallet",
-          "amount_and_value_usd": "433f_vc_value"
-        }
-      ],
-      "slots": [
-        {
-          "type_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].Line13A[0]",
-          "name_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].#field[1]",
-          "email_used_to_set_up": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
-          "location_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
-          "amount_and_value_usd": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]"
-        },
-        {
-          "type_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].Line13B[0]",
-          "name_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].#field[1]",
-          "email_used_to_set_up": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
-          "location_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
-          "amount_and_value_usd": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
-        }
-      ]
-    },
-    "accounts_receivable": {
-      "_why": "E1. Accounts Receivable owed to you or your business - two printed rows, columns Name / Address / Amount Owed. The shared `receivable` row class binds here after its one non-additive change: 433-A's single receivable_name_and_address cell splits into `name` + `address`, because this form prints them as two cells and the finer granularity is the one that loses nothing. 433-A's map composes them back into its one printed cell.",
-      "leaf_name_warning": "I_ype3 reads 'Type'. Here the printed column is NAME; on E2 the same leaf name holds the credit-card brand, where 'Type' is right. One leaf name, right on one table and wrong on the other - so a spot check on either table confirms the wrong rule. Bound from the printed captions.",
-      "array": "accounts_receivable",
-      "slots": [
-        {
-          "name": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].I_ype3[0]",
-          "address": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].Crad_i_L_m_t3[0]",
-          "amount_due": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].M_n_mim_Mon_hly_Payment3[0]"
-        },
-        {
-          "name": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].I_ype3[1]",
-          "address": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].Crad_i_L_m_t3[1]",
-          "amount_due": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].M_n_mim_Mon_hly_Payment3[1]"
-        }
-      ],
-      "column_name_note": "The money column's key is `amount_due`, the shared `receivable` class's name for the fact, though this form prints the header 'Amount Owed' and 433-A prints 'Amount Due'. Following the printed caption instead would have given one fact two keys and left the cell blank on every row fetched from the backbone — matching on name and address is enough to clear the fetch layer's shape check, so the blank would have been silent."
-    },
-    "credit_cards_accepted": {
-      "_why": "E2 - three printed rows, columns Credit Card / Issuing Bank Name and Address / Merchant Account Number. The shared `credit_cards_accepted` row class binds unchanged; only the printed left-to-right order differs from 433-A's line 63, which is the map's job.",
-      "nesting_note": "E2 sits at sectionE[0].#subform[4].#subform[6..8] - ONE level shallower than E1 at sectionE[0].#subform[0].#subform[2..3]. Depth is not uniform across this section and a prefix lifted from E1 does not resolve here.",
-      "index_offset": "The first two columns run I_ype3[2][3][4] and Crad_i_L_m_t3[2][3][4]; the third runs M_n_mim_Mon_hly_Payment3[4][5][6], not [2][3][4]. M_n_mim_Mon_hly_Payment3[2] and [3] are the two E1 footer cells, printed BETWEEN the tables in the same Amount-Owed column and bound as scalars above. The form spends cells in printed order and the third column resumes after them. This is the form’s numbering, not a misalignment - do not realign it.",
-      "array": "credit_cards_accepted",
-      "slots": [
-        {
-          "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].I_ype3[2]",
-          "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].Crad_i_L_m_t3[2]",
-          "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].M_n_mim_Mon_hly_Payment3[4]"
-        },
-        {
-          "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].I_ype3[3]",
-          "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].Crad_i_L_m_t3[3]",
-          "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].M_n_mim_Mon_hly_Payment3[5]"
-        },
-        {
-          "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].I_ype3[4]",
-          "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].Crad_i_L_m_t3[4]",
-          "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].M_n_mim_Mon_hly_Payment3[6]"
-        }
-      ]
+  "notes": [
+   "v1, SUPERSEDED and WRONG, kept because it is where the defect entered: “Repeatables mapped to slot 1 only (bank=table0/row1, investments=table0/row2, digital=table1/row1, RE=row1, vehicle=RowSubform1, other asset=RowSubform2, credit card=row1). Slots 2+ added later.” Bank is AccountsTable[1], not table0; investments is AccountsTable[0] row 1, not row 2; and the digital-assets table is Table_Line14, not AccountsTable[1]. Every one of those three was read off the field names. See v6.",
+   "433-F's printed instruction for the Transportation line reads: “Transportation – Include the total of maintenance, repairs, insurance, fuel, registrations, licenses, inspections, parking, and tolls for one month.” That is the Local Standards definition of OPERATING COSTS item for item, with loan and lease payments absent. The cell therefore does NOT merge ownership with operating: ownership is the monthly payment on the Section C asset row. 433f_exp_gas -> irs433_exp_vehicle_operating_costs is settled on the printed instruction, not provisional. Mortgage does share the rent line; that registry field stays intentionally unmapped for 433-F.",
+   "'*_allowed' expense columns (IRS standard) are left unmapped — filled later by the standards engine, not taxpayer input.",
+   "Checkboxes (business/personal, age band, pay-period frequency) unmapped for the first fill.",
+   "v2: repeatable slots added under `groups` (accounts×4, real_estate×2, other_assets×2, credit_cards×2). Input arrays fill slots in order; if no array, scalar `fallback` keys fill the first slot(s). Overflow beyond form slots is logged.",
+   "v3: `allowed` section fills the National Standard food-group per-category (by household_size) + OOP (by age_band) into the *_allowed columns from irs-standards-2026.json. Housing/vehicle allowables intentionally not auto-filled.",
+   "v3.1: the standards table was renamed 433f.standards.json -> irs-standards-2026.json. It holds the published Collection Financial Standards, which are form-agnostic; every form in the 433 series reads the same file. No figure and no target changed.",
+   "v4: `checkboxes` section — address-differs flag, account business flags (index-aligned to accounts slots, bp==='Business'), real-estate PR/CO by row kind, and pay-frequency for taxpayer/spouse. Age band is NOT a checkbox: 433f_hh_under65 / 433f_hh_over65 are TEXT counts, now in `map`. Pay-frequency index order (Weekly/Bi-weekly/Semi-monthly/Monthly=0/1/2/3) is ASSUMED — confirm on render.",
+   "v5: `433f_tp_name` was ALSO bound directly in `map` to NamesAddress[0], the same target `special.composite_name_address` writes — a double binding that only a bespoke `if (comp.from.includes(key)) continue` line in fill-433f.mjs kept from firing. The composite is the intended binding, so the direct entry is gone and the special case with it. `433f_tp_name` and `433f_tp_address` are now symmetric: both are composite-only inputs, neither appears in `map`.",
+   "v6: defect D1. The single `accounts` group bound one ordered four-slot list spanning TWO printed tables — slots 0-1 were AccountsTable[0] (INVESTMENTS) and slots 2-3 AccountsTable[1] (PERSONAL BANK ACCOUNTS), the reverse of printed order. A caller supplying one bank account got it printed under INVESTMENTS. Split into `bank_accounts` (max 2) and `investments` (max 2), each declaring its own heading in 433f.headings.json, with the business-flag array split to match. No target moved; what changed is which input row reaches which target.",
+   "v6 consequence, unresolved: the serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is no longer bound by any group. Its rows carry no asset class, so nothing here can decide which of the two tables a given row belongs in — that is exactly the decision D1 was made of. A record supplying only that key now fills neither table instead of filling the wrong one. Principal binds `bank_accounts` and `investments` as separate properties in the 433-F v2 re-map.",
+   "v6: `433f_vc_wallet`, `433f_vc_type` and `433f_vc_value` are removed from the accounts fallback and recorded under `_deferred`. See _deferred.digital_assets.",
+   "v7: PRINTED ASSOCIATION IS NOT TREE PARENTAGE, and this form is where that stopped being a hunch. All 15 Section E table cells sit at depth 2 under their sub-table subform. The three scalars printed among them — E2NameIndividualBusi[0] and M_n_mim_Mon_hly_Payment3[2] and [3] — sit at depth 0, as direct children of sectionE[0] and siblings of both sub-tables. A cell drawn BETWEEN two subforms cannot be inside either one. Two rounds of the v2 specification got this wrong the same way, each time by assuming a cell printed between two tables lived in one of them, so it is recorded as a standing constraint rather than a note: nesting depth is not uniform within a section, and a table's prefix does not generalise to that section's loose scalars.",
+   "v7: I_ype3 is the same leaf name on two adjacent printed tables and its printed caption is 'Name' on E1 and 'Credit Card' on E2. The name is right on one table and wrong on the other, which means a spot check on either one confirms the wrong rule. This is the strongest case on either form for the standing rule that internal names are suspects and only the printed page is a witness.",
+   "v7: E2's third column is M_n_mim_Mon_hly_Payment3[4][5][6] while its first two are [2][3][4]. Not a misalignment. [2] and [3] are the two E1 footer cells, which print between the tables in the same Amount-Owed column; the form spends cells in printed order and the third column resumes after them. Do not realign.",
+   "v7: the two E1 footer cells are WRITABLE SCALARS and deliberately not arithmetic tripwires, and the printed caption is the reason. Every total this repo has made a tripwire says 'Add lines X, Y, Z'. Neither of these does. 'List total amount owed from additional sheets' sums figures that are on an attachment and not on the form, so nothing on the page could verify it. 'Total amount of accounts receivable available to pay to IRS now' is a determination, not a sum — receivables that exist are not all collectible now — so a computed figure would assert a judgement the operator has not made. Both are recorded in 433f.totals.json under `not_checkable` with those reasons.",
+   "v7: `433f_vc_type`, `433f_vc_wallet` and `433f_vc_value`, withdrawn in v6 because the only table they could reach was the wrong one, are restored as the scalar fallback of the new `digital_assets` group. `_deferred` is now empty.",
+   "v7: the digital-asset value column is /MaxLen 12 and the form's own printed example beside it, '10 Bitcoins $64,600 USD', is 23 characters. The cell cannot hold the example the IRS prints next to it. Flagged, not worked around: fill-433f.mjs now carries the same capacity guard as fill-433a.mjs, so an over-long value stops the run and names the cell instead of being truncated into a figure the taxpayer never gave.",
+   "v7: Section C's final-payment cells (month1/year1, month2/year2) are each /MaxLen 2, so the form wants a 2-digit year in 'mo/yr' and a canonical four-digit date cannot pass through. Bound through the existing `split` construct rather than a second date mechanism; because a split writes nothing unless the stripped value fills its parts exactly, an operator supplying 06/2027 gets a loud stop rather than a silent '20' in the year box.",
+   "v7: Owner ruling on identity. Both SSN cells bind, to the same shared facts 433-A already maps and stores. Excluding SSN here while 433-A pre-fills it would have left the same client pre-filled on one form and hand-typed on the other, and that inconsistency is the defect, not the storage. All six telephone cells bind. The PII rule extends explicitly to intermediates: no fetched-record file, sample fixture, log or HTML review page may carry a real SSN, and no fixture may contain a well-formed one.",
+   "v7: the form has SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the identity block is 2 SSN + 6 telephone = 8 scalars, not the 9 the first specification named. Reported rather than raised as a STOP, because no named target failed to resolve — the count was wrong, not the targets.",
+   "v7: `433f_re*_year_refinanced` and `433f_re*_refinance_amount` bind as SCALARS, one pair per printed real-estate row, not as `real_estate` row columns. The group's rows do not carry refinance data, so a caller supplying the array supplies these alongside it. Same shape as the `split` keys in Section C and for the same reason.",
+   "v7: the map now declares itself COMPLETE, so gate steps 4, 5 and 10 REQUIRE rather than report. writable + never_autofill + deferred partitions all 214 fields; every excluded field carries its own reason under allowed._never_autofill. 'No declared state' is the condition that let defect D1 sit unexamined, so nothing on this form is left silent.",
+   "v7: the five Section H 'Total' cells bind as ordinary operator-supplied map keys, not as fill-time sums. The printed captions on this form say only 'Total' — none of them says 'Add lines X, Y, Z' the way 433-A's do — and the Food / Personal Care block prints its own instruction that a taxpayer at or under the standard may 'fill in the Total amount only'. So the total is a figure the operator gives and 433f.totals.json checks it against the rows printed above it; computing it here and then checking it would compare the record to itself.",
+   "v7: THE PARTITION IS DECLARED AND THE MAP IS COMPLETE. writable + never_autofill + deferred covers all 214 enumerated fields, disjoint, with every excluded field carrying its own reason and `_deferred` explicitly empty. Gate steps 4, 5 and 10 now REQUIRE rather than report, and step 10 fails rather than skipping if 433f.totals.json goes missing. The two E1 footer cells are the only printed total-shaped money cells not covered by a tripwire, and they are declared under `not_checkable` in that file with their reasons, so no total-shaped cell on this form is silent either way."
+  ]
+ },
+ "map": {
+  "433f_county": "topmostSubform[0].Page1[0].address[0].CountyResidence[0]",
+  "433f_biz_name": "topmostSubform[0].Page1[0].age[0].NameBusiness[0]",
+  "433f_biz_type": "topmostSubform[0].Page1[0].age[0].TypeBusiness[0]",
+  "433f_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].fieldXmlnshttpwwwxfa[0]",
+  "433f_emp_gross": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].GrossPerPayPeriod[0]",
+  "433f_emp_fed": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].TaxesPerPayPeriodFed[0]",
+  "433f_emp_state": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].State[0]",
+  "433f_emp_local": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].Local[0]",
+  "433f_emp_tenure": "topmostSubform[0].Page2[0].sectionF[0].column_1[0].HowLongAtCurrentEmpl[0]",
+  "433f_inc_alimony": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].AlimonyIncome[0]",
+  "433f_inc_childsup": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].ChildSupportIncome[0]",
+  "433f_inc_netse": "topmostSubform[0].Page2[0].sectionG[0].column_1[0].NetSelfEmploymentInc[0]",
+  "433f_inc_rental": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].NetRentalIncome[0]",
+  "433f_inc_unemp": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].UnemploymentIncome[0]",
+  "433f_inc_pension": "topmostSubform[0].Page2[0].sectionG[0].column_2[0].PensionIncome[0]",
+  "433f_inc_intdiv": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].InterestDividendsInc[0]",
+  "433f_inc_ssa": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].SocialSecurityIncome[0]",
+  "433f_inc_other": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].Other[0]",
+  "433f_inc_other_desc": "topmostSubform[0].Page2[0].sectionG[0].column_3[0].if_other[0]",
+  "433f_exp_food": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row1[0].food_monthly[0]",
+  "433f_exp_housekeep": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row2[0].housekeeping_monthly[0]",
+  "433f_exp_clothing": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row3[0].clothing_monthly[0]",
+  "433f_exp_personalcare": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row4[0].personal_care_monthly[0]",
+  "433f_exp_misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_monthly[0]",
+  "433f_exp_gas": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row1[0].gas_monthly[0]",
+  "433f_exp_public": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row2[0].transportation_monthly[0]",
+  "433f_exp_rent": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row1[0].rent_monthly[0]",
+  "433f_exp_utilities": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row2[0].electric_monthly[0]",
+  "433f_exp_phone": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row3[0].telephone_monthly[0]",
+  "433f_exp_retax": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row4[0].real_estate_monthly[0]",
+  "433f_exp_maint": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row5[0].maintenance_monthly[0]",
+  "433f_exp_healthins": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row1[0].health_monthly[0]",
+  "433f_exp_oop": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_monthly[0]",
+  "433f_exp_depcare": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row1[0].child_monthly[0]",
+  "433f_exp_esttax": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row2[0].tax_payments_monthly[0]",
+  "433f_exp_termlife": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row3[0].term_life_monthly[0]",
+  "433f_exp_retire": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row4[0].required_retirement_monthly[0]",
+  "433f_exp_union": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row6[0].union_monthly[0]",
+  "433f_exp_statetax": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row7[0].delinquent_monthly[0]",
+  "433f_exp_student": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row8[0].student_loans_monthly[0]",
+  "433f_exp_courtcs": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_monthly[0]",
+  "433f_exp_courtother": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_monthly[0]",
+  "433f_exp_other1": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_monthly[0]",
+  "433f_exp_other1_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other[0]",
+  "433f_hh_under65": "topmostSubform[0].Page1[0].age[0].Under65[0]",
+  "433f_hh_over65": "topmostSubform[0].Page1[0].age[0]._65Over[0]",
+  "433f_tp_ssn": "topmostSubform[0].Page1[0].ssn[0].YourSocialSecurityNu[0]",
+  "433f_sp_ssn": "topmostSubform[0].Page1[0].ssn[0].YourSpousesSocialSec[0]",
+  "433f_tp_phone_home": "topmostSubform[0].Page1[0].your_telephone[0].Home11[0]",
+  "433f_tp_phone_work": "topmostSubform[0].Page1[0].your_telephone[0].Work11[0]",
+  "433f_tp_phone_cell": "topmostSubform[0].Page1[0].your_telephone[0].Cell11[0]",
+  "433f_sp_phone_home": "topmostSubform[0].Page1[0].spouses_telephone[0].Home21[0]",
+  "433f_sp_phone_work": "topmostSubform[0].Page1[0].spouses_telephone[0].Work21[0]",
+  "433f_sp_phone_cell": "topmostSubform[0].Page1[0].spouses_telephone[0].Cell21[0]",
+  "433f_business_ein": "topmostSubform[0].Page1[0].age[0].BusinessEIN[0]",
+  "433f_employee_count": "topmostSubform[0].Page1[0].age[0].NumberEmployeesnotCo[0]",
+  "433f_re1_year_refinanced": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Year_Refinanced[0]",
+  "433f_re1_refinance_amount": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Refinance_Amount[0]",
+  "433f_re2_year_refinanced": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearRefinanced[0]",
+  "433f_re2_refinance_amount": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].RefinanceAmount[0]",
+  "433f_e2_account_holder": "topmostSubform[0].Page2[0].sectionE[0].E2NameIndividualBusi[0]",
+  "433f_ar_additional_sheets_total": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[2]",
+  "433f_ar_available_to_pay_now": "topmostSubform[0].Page2[0].sectionE[0].M_n_mim_Mon_hly_Payment3[3]",
+  "433f_sp_emp_name": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].FillText65[0]",
+  "433f_sp_emp_gross": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Gross1[0]",
+  "433f_sp_emp_fed": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Fed1[0]",
+  "433f_sp_emp_state": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].State1[0]",
+  "433f_sp_emp_local": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].Local1[0]",
+  "433f_sp_emp_tenure": "topmostSubform[0].Page2[0].sectionF[0].column_2[0].How_long_at_current_employer[0]",
+  "433f_exp_volretire": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row5[0].voluntary_retirement_monthly[0]",
+  "433f_exp_alimony": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row10[0].alimony_monthly[0]",
+  "433f_exp_other2": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other_monthly[0]",
+  "433f_exp_other2_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other[0]",
+  "433f_exp_other3": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other_monthly[0]",
+  "433f_exp_other3_desc": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other[0]",
+  "433f_exp_food_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_monthly[0]",
+  "433f_exp_transport_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row3[0].total_monthly[0]",
+  "433f_exp_housing_total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row6[0].total_monthly[0]",
+  "433f_exp_medical_total": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row3[0].total_monthly[0]",
+  "433f_exp_other_total": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row15[0].total_monthly[0]"
+ },
+ "_deferred": {
+  "_why": "EMPTY. Nothing on 433-F is deferred any more. The DIGITAL ASSETS table that stood here through v6 is bound in `groups.digital_assets` against the printed column captions; the three withdrawn input keys 433f_vc_type / 433f_vc_wallet / 433f_vc_value are restored as that group’s scalar fallback, where they reach the table they were always about. Kept as an empty declaration rather than deleted so the state is stated rather than inferred from absence."
+ },
+ "groups": {
+  "bank_accounts": {
+   "_why": "PERSONAL BANK ACCOUNTS. AccountsTable[1] prints ABOVE AccountsTable[0] on the page, so the printed order and the field-name order are opposites; the binding here follows the page. Two printed rows, so max 2. Was slots 2-3 of the single `accounts` group until defect D1.",
+   "array": "bank_accounts",
+   "fallback": [
+    {
+     "institution_name_and_address": "433f_bank_institution",
+     "account_number": "433f_bank_acct",
+     "type_of_account": "433f_bank_type",
+     "account_balance": "433f_bank_balance",
+     "_class": "bank_account"
     }
-  },
-  "checkboxes": {
-    "address_differs": "topmostSubform[0].Page1[0].address[0].If_address_provided_above_is_different_then_last_r[0]",
-    "_account_business_why": "One flag array per accounts group since the D1 split. A single four-entry array index-aligned to a single four-slot list inherited that list's routing whole: entries 0-1 were the INVESTMENTS table and 2-3 the bank table, in that order, which is the opposite of the printed order. Two arrays, each aligned to its own group, cannot express that error.",
-    "account_business_bank": [
-      "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].CheckBox11[0]",
-      "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].CheckBox11[1]"
-    ],
-    "account_business_investments": [
-      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].CheckBox11[0]",
-      "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].CheckBox11[1]"
-    ],
-    "real_estate": [
-      {
-        "primary": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].PR1[0]",
-        "other": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].CO1[0]"
-      },
-      {
-        "primary": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].PR2[0]",
-        "other": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].CO2[0]"
-      }
-    ],
-    "pay_freq": {
-      "order_assumed": "Printed-form order Weekly/Bi-weekly/Semi-monthly/Monthly = index 0/1/2/3. On-values encode nothing about order — CONFIRM ON RENDER.",
-      "index": {
-        "weekly": 0,
-        "biweekly": 1,
-        "semimonthly": 2,
-        "monthly": 3
-      },
-      "you": [
-        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
-      ],
-      "spouse": [
-        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
-        "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
-      ]
-    }
-  },
-  "exclusive": {
-    "_note": "At most one target per set may end up checked. These are INDEPENDENT checkboxes in the PDF, not a radio group — nothing in the form prevents both. fill-433f.mjs fails loudly on a violation rather than picking a winner.",
-    "pay_freq_you": [
-      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
-    ],
-    "pay_freq_spouse": [
-      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
-      "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
-    ]
-  },
-  "allowed": {
-    "national_by_household": {
-      "food": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row1[0].food_allowed[0]",
-      "housekeeping": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row2[0].housekeeping_allowed[0]",
-      "apparel": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row3[0].clothing_allowed[0]",
-      "personal_care": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row4[0].personal_care_allowed[0]",
-      "misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_allowed[0]",
-      "total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_allowed[0]"
+   ],
+   "slots": [
+    {
+     "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Name_and_Address_of_Institution[0]",
+     "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Account_Number[0]",
+     "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Type_of_Accour_I[0]",
+     "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].Cuirenl_Balance_I_Value[0]"
     },
-    "oop_by_age": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_allowed[0]",
-    "_never_autofill": {
-      "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator — which walks string VALUES — checks every one of them for existence. Each is validated and never written. Same construct and same reason as 433a.map.json's list.",
-      "_what_is_here": "The 26 IRS Allowed cells the published standards cannot fill, the Section H push button, and the three cells of the signature block. Every one carries its own reason; none is here because nobody looked at it.",
-      "_the_six_that_ARE_filled": "For contrast, six IRS Allowed cells are auto-filled and are NOT in this list: the five National Standards food-group cells plus their Total (by household size) and the Out of Pocket Health Care cell (by age band). Those are published figures the IRS grants outright, so a blank there is a cell an examiner has to look up that the standards table already answers. Everything below depends on a county, a census region, a term of employment, or examiner discretion — and in that column a figure that is present but wrong is far worse than a blank the examiner completes.",
-      "fields": [
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row1[0].gas_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by census region; no regional table is held. Printed row: Gas / Insurance / Licenses / Parking / Maintenance etc. — the Local Standards OPERATING COSTS figure."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row2[0].transportation_allowed[0]",
-          "reason": "IRS Allowed - Public Transportation is a greater-of judgement against the taxpayer's vehicle costs, not a lookup."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row3[0].total_allowed[0]",
-          "reason": "IRS Allowed - the sum of the Transportation block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row1[0].rent_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Rent."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row2[0].electric_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Electric, Oil/Gas, Water/Trash."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row3[0].telephone_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Telephone/Cell/Cable/Internet."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row4[0].real_estate_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Real Estate Taxes and Insurance."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row5[0].maintenance_allowed[0]",
-          "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Maintenance and Repairs."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row6[0].total_allowed[0]",
-          "reason": "IRS Allowed - the sum of the Housing & Utilities block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row1[0].health_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Health Insurance — there is no published health-insurance standard."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row3[0].total_allowed[0]",
-          "reason": "IRS Allowed - the sum of the Medical block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it. One of its two feeders IS auto-filled (Out of Pocket Health Care, from the published per-age-band figure), which makes a computed total here worse than a blank one: it would look complete while resting on one real figure and one empty cell."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row1[0].child_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Child / Dependent Care."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row2[0].tax_payments_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Estimated Tax Payments — the current-year liability, not a standard."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row3[0].term_life_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Term Life Insurance."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row4[0].required_retirement_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Retirement (Employer Required) — allowed only to the extent the employer requires it, which is a term of the taxpayer's employment."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row5[0].voluntary_retirement_allowed[0]",
-          "reason": "IRS Allowed - Retirement (Voluntary) is generally NOT an allowable expense, and where an examiner allows part of it that is a discretionary determination. Auto-filling anything here, zero included, would state a conclusion the examiner has not reached."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row6[0].union_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Union Dues."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row7[0].delinquent_allowed[0]",
-          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Delinquent State & Local Taxes (minimum payment) — allowed on a pro-rata basis the examiner computes against the federal liability."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row8[0].student_loans_allowed[0]",
-          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Student Loans (minimum payment) — allowed only for federally guaranteed loans of the taxpayer, which this engine cannot establish."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Child Support — allowed to the extent actually paid under the order."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row10[0].alimony_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Alimony — same test as child support."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_allowed[0]",
-          "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Other Court Ordered Payments."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_allowed[0]",
-          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the first Other (specify) — the taxpayer names the expense, so no standard can exist for it in advance."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other_allowed[0]",
-          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the second Other (specify)."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other_allowed[0]",
-          "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the third Other (specify)."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row15[0].total_allowed[0]",
-          "reason": "IRS Allowed - the sum of the Other block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].sectionH[0].national_standards[0]",
-          "reason": "NOT A DATA FIELD. A push button the form draws beside the Section H heading, linking to the published National Standards; it has no value to write. Enumerated and named here so it is in a declared state rather than counted as an unreferenced text cell."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].YourSignature[0]",
-          "reason": "THE SIGNATURE. Filling it would forge the taxpayer's attestation on a statement made under penalty of perjury. The one cell on this form where writing a correct-looking value is worse than any blank."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].SpousesSignature[0]",
-          "reason": "The spouse's signature. Same reason."
-        },
-        {
-          "target": "topmostSubform[0].Page2[0].DateReview[0]",
-          "reason": "The date beside the signatures — the date the taxpayer SIGNS, which is not a date this engine knows. Auto-dating it would date an attestation that has not been made yet, and it would also make the output depend on the wall clock (the same drift AGE_AS_OF_DEFAULT exists to avoid in fill-433a.mjs)."
-        }
-      ]
+    {
+     "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Name_and_Address_of_Institution[1]",
+     "account_number": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Account_Number[1]",
+     "type_of_account": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Type_of_Accour_I[1]",
+     "account_balance": "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].Cuirenl_Balance_I_Value[1]"
     }
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "bank_account"
+    ],
+    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+   }
   },
-  "split": {
-    "_why": "Section C's 'Date of Final Payment (mo/yr)' is TWO abutting cells, each /MaxLen 2. A canonical date cannot pass through: four digits is all the form holds, and the year is the printed two, not the calendar four. Same construct fill-433a.mjs uses for phone and EIN - `strip` removes the caller's formatting, each part consumes `chars` source characters, and a stripped value that is not EXACTLY four characters writes nothing and stops the run. That exactness is the point: an operator who supplies 06/2027 gets a loud stop, not a silent 20 in the year box.",
-    "_scalar_not_row": "These are top-level scalar keys, not `other_assets` row columns. The group’s array rows carry no final-payment date and the two printed rows are the only slots, so the value is supplied per printed row (veh = RowSubform1, oa = RowSubform2) exactly as the group’s own scalar fallback names them. A caller supplying the array supplies these two alongside it.",
-    "433f_veh_final_pmt": {
-      "strip": "[^0-9]",
-      "parts": [
-        {
-          "chars": 2,
-          "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].month1[0]"
-        },
-        {
-          "chars": 2,
-          "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].year1[0]"
-        }
-      ]
+  "investments": {
+   "_why": "INVESTMENTS. AccountsTable[0] prints BELOW AccountsTable[1]. Two printed rows, so max 2. Was slots 0-1 of the single `accounts` group, which is why a caller with one bank account and no investments printed that bank account under INVESTMENTS.",
+   "array": "investments",
+   "fallback": [
+    {
+     "institution_name_and_address": "433f_inv_institution",
+     "account_number": "433f_inv_acct",
+     "type_of_investment": "433f_inv_type",
+     "current_value": "433f_inv_value",
+     "_class": "investment"
+    }
+   ],
+   "slots": [
+    {
+     "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Name_and_Address_of_Institution[0]",
+     "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Account_Number[0]",
+     "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Type_of_Accour_I[0]",
+     "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].Cuirenl_Balance_I_Value[0]"
     },
-    "433f_oa_final_pmt": {
-      "strip": "[^0-9]",
-      "parts": [
-        {
-          "chars": 2,
-          "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].month2[0]"
-        },
-        {
-          "chars": 2,
-          "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].year2[0]"
-        }
-      ]
+    {
+     "institution_name_and_address": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Name_and_Address_of_Institution[1]",
+     "account_number": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Account_Number[1]",
+     "type_of_investment": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Type_of_Accour_I[1]",
+     "current_value": "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].Cuirenl_Balance_I_Value[1]"
     }
-  },
-  "slice": "COMPLETE - every field on 433-F is mapped or explicitly excluded",
-  "_partition": {
-    "_why": "Declared as the map is authored, not assembled in a closing pass, and MANDATORY: a map that declares no partition is a STOP in validate-map.mjs, not a skip. It was optional until slice 6, which meant 433-A and 433-F passed the new derive-and-check guards by declaring nothing for them to check — a map that DROPS a declaration was still uncaught, which is the no-declared-state defect wearing a third coat.",
-    "form_fields_total": 214,
-    "in_this_slice": 214,
-    "bound_writable": 184,
-    "excluded_never_autofill": 30,
-    "deferred": 0,
-    "unaccounted": 0,
-    "_check": "184 + 30 + 0 = 214, which is every field on pages 1, 2 (page-geometry.mjs reports 93 for p1, 121 for p2). 214 - 214 = 0 unaccounted. EVERY FIGURE IN THIS BLOCK WAS DERIVED, NEVER TYPED: it was written by a script that read the field list, this map's own targets and the PDF's widget geometry, and it is re-derived and checked on every gate run by adapters/pdf/count-sweep.mjs.",
-    "_unaccounted_by_page": "0 unaccounted. Every page of this form is authored, so no page appears in this breakdown. Stated rather than left empty: an absent breakdown and one that says zero read the same from outside, and that is the silence this repo keeps finding.",
-    "_backfilled": "BACKFILLED IN SLICE 6 FROM DERIVATION. The one prior written figure about 433-F's partition is special.notes[22]: \"writable + never_autofill + deferred partitions all 214 fields\". Derivation agrees with it exactly — 184 + 30 + 0 = 214 — and that note is now derived and checked rather than read. What the note did NOT state is the three components, which is why a map that dropped one of them would have passed it."
-  },
-  "_carried": {
-    "_rule": "An item leaves this ledger by being resolved or by being withdrawn with a reason, never by being forgotten. The counts below are DERIVED from the arrays by length and checked against the declared _count on every run.",
-    "_backfilled": "BACKFILLED IN SLICE 6 from what special.notes already recorded. Both entries are transcribed from there — notes[10] for F-01, notes[20] for F-02 — and neither is new.",
-    "open": [
-      {
-        "id": "F-01",
-        "raised": "v6, recorded in special.notes[10]",
-        "what": "The serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is bound by no group since defect D1 split `accounts` into `bank_accounts` and `investments`. Its rows carry no asset class, so nothing in this map can decide which of the two printed tables a given row belongs in — which is exactly the decision D1 was made of. A record supplying only that key binds nothing."
-      }
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "investment"
     ],
-    "resolved": [
-      {
-        "id": "F-02",
-        "raised": "v7, recorded in special.notes[20]",
-        "how": "Reported, not a STOP. The first specification named NINE identity scalars; the form prints SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the block is 2 SSN + 6 telephone = 8. The count was wrong, not the targets — no named target failed to resolve — so the map was corrected and nothing was blocked."
-      }
-    ],
-    "_count": {
-      "open": 1,
-      "resolved": 1
+    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+   }
+  },
+  "real_estate": {
+   "array": "real_estate",
+   "fallback": [
+    {
+     "description": "433f_re_desc",
+     "monthly_payment": "433f_re_pmt",
+     "year_purchased": "433f_re_year",
+     "purchase_price": "433f_re_price",
+     "current_fmv": "433f_re_fmv",
+     "current_loan_balance": "433f_re_bal",
+     "equity": "433f_re_equity",
+     "_class": "real_property"
     }
+   ],
+   "slots": [
+    {
+     "description": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].description[0]",
+     "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row1[0].MonthlyPayments[0]",
+     "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].YearPurchased[0]",
+     "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row1[0].financing[0].Purchase_Price[0]",
+     "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row1[0].CurrentValue[0]",
+     "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row1[0].BalanceOwed[0]",
+     "equity": "topmostSubform[0].Page1[0].real_estate[0].row1[0].Equity[0]"
+    },
+    {
+     "description": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].description[0]",
+     "monthly_payment": "topmostSubform[0].Page1[0].real_estate[0].row2[0].MonthlyPayments[0]",
+     "year_purchased": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].YearPurchased[0]",
+     "purchase_price": "topmostSubform[0].Page1[0].real_estate[0].row2[0].financing[0].PurchasePrice[0]",
+     "current_fmv": "topmostSubform[0].Page1[0].real_estate[0].row2[0].CurrentValue[0]",
+     "current_loan_balance": "topmostSubform[0].Page1[0].real_estate[0].row2[0].BalanceOwed[0]",
+     "equity": "topmostSubform[0].Page1[0].real_estate[0].row2[0].Equity[0]"
+    }
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "real_property"
+    ],
+    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+   }
+  },
+  "other_assets": {
+   "array": "other_assets",
+   "fallback": [
+    {
+     "description": "433f_veh_desc",
+     "monthly_payment": "433f_veh_pmt",
+     "year_purchased": "433f_veh_year",
+     "current_fmv": "433f_veh_value",
+     "current_loan_balance": "433f_veh_bal",
+     "_class": "vehicle"
+    },
+    {
+     "description": "433f_oa_desc",
+     "current_fmv": "433f_oa_value",
+     "current_loan_balance": "433f_oa_bal",
+     "_class": "personal_property"
+    }
+   ],
+   "slots": [
+    {
+     "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Description1[0]",
+     "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Monthly_Payment1[0]",
+     "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Year_Purchased1[0]",
+     "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Current_Value1[0]",
+     "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Balance_Owed1[0]",
+     "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].Equity1[0]"
+    },
+    {
+     "description": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Description2[0]",
+     "monthly_payment": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Monthly_Payment2[0]",
+     "year_purchased": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Year_Purchased2[0]",
+     "current_fmv": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Current_Value2[0]",
+     "current_loan_balance": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Balance_Owed2[0]",
+     "equity": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].Equity2[0]"
+    }
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "vehicle",
+     "life_insurance_policy",
+     "personal_property",
+     "business_property"
+    ],
+    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+   }
+  },
+  "credit_cards": {
+   "array": "credit_cards",
+   "fallback": [
+    {
+     "card_or_line_type": "433f_cc_type",
+     "credit_limit": "433f_cc_limit",
+     "amount_owed": "433f_cc_bal",
+     "minimum_monthly_payment": "433f_cc_min",
+     "_class": "credit_line"
+    }
+   ],
+   "slots": [
+    {
+     "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].I_ype[0]",
+     "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].Crad_i_L_m_t[0]",
+     "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].BalanLe_Owea[0]",
+     "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row1[0].M_n_mim_Mon_hly_Payment[0]"
+    },
+    {
+     "card_or_line_type": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].I_ype1[0]",
+     "credit_limit": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].Crad_i_L_m_t1[0]",
+     "amount_owed": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].BalanLe_Owea1[0]",
+     "minimum_monthly_payment": "topmostSubform[0].Page1[0].credit_cards[0].row2[0].M_n_mim_Mon_hly_Payment1[0]"
+    }
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "credit_line"
+    ],
+    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+   }
+  },
+  "digital_assets": {
+   "_why": "DIGITAL ASSETS (CRYPTOCURRENCY), two printed rows. The shared `digital_asset` row class binds unchanged - the five columns are identical on 433-A line 15 and here, in the same printed order. Authored against the printed column captions, never the leaf names: Table_Line14 / Row13a / p2_t11..p2_t17 are 433-A line-13 names carried wholesale into this form and they name a different table.",
+   "maxlen_defect": "The value column (p2_t11_13a / p2_t15_13b) carries /MaxLen 12, and the form's own printed example beside it - '10 Bitcoins $64,600 USD' - is 23 characters. The cell cannot hold the example the IRS prints next to it. That is a defect in the form, not in this map. The remedy is the capacity guard stopping the run so an operator shortens the value; it is never truncation, because a silently shortened crypto holding on a signed statement is a figure the taxpayer did not give.",
+   "array": "digital_assets",
+   "fallback": [
+    {
+     "type_of_digital_asset": "433f_vc_type",
+     "name_of_digital_asset": "433f_vc_wallet",
+     "amount_and_value_usd": "433f_vc_value"
+    }
+   ],
+   "slots": [
+    {
+     "type_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].Line13A[0]",
+     "name_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].#field[1]",
+     "email_used_to_set_up": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
+     "location_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
+     "amount_and_value_usd": "topmostSubform[0].Page1[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]"
+    },
+    {
+     "type_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].Line13B[0]",
+     "name_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].#field[1]",
+     "email_used_to_set_up": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
+     "location_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
+     "amount_and_value_usd": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
+    }
+   ]
+  },
+  "accounts_receivable": {
+   "_why": "E1. Accounts Receivable owed to you or your business - two printed rows, columns Name / Address / Amount Owed. The shared `receivable` row class binds here after its one non-additive change: 433-A's single receivable_name_and_address cell splits into `name` + `address`, because this form prints them as two cells and the finer granularity is the one that loses nothing. 433-A's map composes them back into its one printed cell.",
+   "leaf_name_warning": "I_ype3 reads 'Type'. Here the printed column is NAME; on E2 the same leaf name holds the credit-card brand, where 'Type' is right. One leaf name, right on one table and wrong on the other - so a spot check on either table confirms the wrong rule. Bound from the printed captions.",
+   "array": "accounts_receivable",
+   "slots": [
+    {
+     "name": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].I_ype3[0]",
+     "address": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].Crad_i_L_m_t3[0]",
+     "amount_due": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[2].M_n_mim_Mon_hly_Payment3[0]"
+    },
+    {
+     "name": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].I_ype3[1]",
+     "address": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].Crad_i_L_m_t3[1]",
+     "amount_due": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].M_n_mim_Mon_hly_Payment3[1]"
+    }
+   ],
+   "column_name_note": "The money column's key is `amount_due`, the shared `receivable` class's name for the fact, though this form prints the header 'Amount Owed' and 433-A prints 'Amount Due'. Following the printed caption instead would have given one fact two keys and left the cell blank on every row fetched from the backbone — matching on name and address is enough to clear the fetch layer's shape check, so the blank would have been silent."
+  },
+  "credit_cards_accepted": {
+   "_why": "E2 - three printed rows, columns Credit Card / Issuing Bank Name and Address / Merchant Account Number. The shared `credit_cards_accepted` row class binds unchanged; only the printed left-to-right order differs from 433-A's line 63, which is the map's job.",
+   "nesting_note": "E2 sits at sectionE[0].#subform[4].#subform[6..8] - ONE level shallower than E1 at sectionE[0].#subform[0].#subform[2..3]. Depth is not uniform across this section and a prefix lifted from E1 does not resolve here.",
+   "index_offset": "The first two columns run I_ype3[2][3][4] and Crad_i_L_m_t3[2][3][4]; the third runs M_n_mim_Mon_hly_Payment3[4][5][6], not [2][3][4]. M_n_mim_Mon_hly_Payment3[2] and [3] are the two E1 footer cells, printed BETWEEN the tables in the same Amount-Owed column and bound as scalars above. The form spends cells in printed order and the third column resumes after them. This is the form’s numbering, not a misalignment - do not realign it.",
+   "array": "credit_cards_accepted",
+   "slots": [
+    {
+     "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].I_ype3[2]",
+     "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].Crad_i_L_m_t3[2]",
+     "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[6].M_n_mim_Mon_hly_Payment3[4]"
+    },
+    {
+     "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].I_ype3[3]",
+     "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].Crad_i_L_m_t3[3]",
+     "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[7].M_n_mim_Mon_hly_Payment3[5]"
+    },
+    {
+     "credit_card": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].I_ype3[4]",
+     "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].Crad_i_L_m_t3[4]",
+     "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].M_n_mim_Mon_hly_Payment3[6]"
+    }
+   ]
   }
+ },
+ "checkboxes": {
+  "address_differs": "topmostSubform[0].Page1[0].address[0].If_address_provided_above_is_different_then_last_r[0]",
+  "_account_business_why": "One flag array per accounts group since the D1 split. A single four-entry array index-aligned to a single four-slot list inherited that list's routing whole: entries 0-1 were the INVESTMENTS table and 2-3 the bank table, in that order, which is the opposite of the printed order. Two arrays, each aligned to its own group, cannot express that error.",
+  "account_business_bank": [
+   "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].CheckBox11[0]",
+   "topmostSubform[0].Page1[0].AccountsTable[1].#subform[2].CheckBox11[1]"
+  ],
+  "account_business_investments": [
+   "topmostSubform[0].Page1[0].AccountsTable[0].#subform[1].CheckBox11[0]",
+   "topmostSubform[0].Page1[0].AccountsTable[0].#subform[2].CheckBox11[1]"
+  ],
+  "real_estate": [
+   {
+    "primary": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].PR1[0]",
+    "other": "topmostSubform[0].Page1[0].real_estate[0].row1[0].description[0].CO1[0]"
+   },
+   {
+    "primary": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].PR2[0]",
+    "other": "topmostSubform[0].Page1[0].real_estate[0].row2[0].description[0].CO2[0]"
+   }
+  ],
+  "pay_freq": {
+   "order_assumed": "Printed-form order Weekly/Bi-weekly/Semi-monthly/Monthly = index 0/1/2/3. On-values encode nothing about order — CONFIRM ON RENDER.",
+   "index": {
+    "weekly": 0,
+    "biweekly": 1,
+    "semimonthly": 2,
+    "monthly": 3
+   },
+   "you": [
+    "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
+   ],
+   "spouse": [
+    "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
+    "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
+   ]
+  }
+ },
+ "exclusive": {
+  "_note": "At most one target per set may end up checked. These are INDEPENDENT checkboxes in the PDF, not a radio group — nothing in the form prevents both. fill-433f.mjs fails loudly on a violation rather than picking a winner.",
+  "pay_freq_you": [
+   "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[0]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[1]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[2]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_1[0].YourEmployer[3]"
+  ],
+  "pay_freq_spouse": [
+   "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[0]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[1]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[2]",
+   "topmostSubform[0].Page2[0].sectionF[0].column_2[0].SpouseEmployer[3]"
+  ]
+ },
+ "allowed": {
+  "national_by_household": {
+   "food": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row1[0].food_allowed[0]",
+   "housekeeping": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row2[0].housekeeping_allowed[0]",
+   "apparel": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row3[0].clothing_allowed[0]",
+   "personal_care": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row4[0].personal_care_allowed[0]",
+   "misc": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row5[0].miscellaneous_allowed[0]",
+   "total": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].food_personal_care[0].food_personal_care[0].Row6[0].total_allowed[0]"
+  },
+  "oop_by_age": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row2[0].out_of_allowed[0]",
+  "_never_autofill": {
+   "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator — which walks string VALUES — checks every one of them for existence. Each is validated and never written. Same construct and same reason as 433a.map.json's list.",
+   "_what_is_here": "The 26 IRS Allowed cells the published standards cannot fill, the Section H push button, and the three cells of the signature block. Every one carries its own reason; none is here because nobody looked at it.",
+   "_the_six_that_ARE_filled": "For contrast, six IRS Allowed cells are auto-filled and are NOT in this list: the five National Standards food-group cells plus their Total (by household size) and the Out of Pocket Health Care cell (by age band). Those are published figures the IRS grants outright, so a blank there is a cell an examiner has to look up that the standards table already answers. Everything below depends on a county, a census region, a term of employment, or examiner discretion — and in that column a figure that is present but wrong is far worse than a blank the examiner completes.",
+   "fields": [
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row1[0].gas_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by census region; no regional table is held. Printed row: Gas / Insurance / Licenses / Parking / Maintenance etc. — the Local Standards OPERATING COSTS figure."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row2[0].transportation_allowed[0]",
+     "reason": "IRS Allowed - Public Transportation is a greater-of judgement against the taxpayer's vehicle costs, not a lookup."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].transportation[0].Row3[0].total_allowed[0]",
+     "reason": "IRS Allowed - the sum of the Transportation block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row1[0].rent_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Rent."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row2[0].electric_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Electric, Oil/Gas, Water/Trash."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row3[0].telephone_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Telephone/Cell/Cable/Internet."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row4[0].real_estate_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Real Estate Taxes and Insurance."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row5[0].maintenance_allowed[0]",
+     "reason": "IRS Allowed - Local Standards, varies by county; no county table is held. Printed row: Maintenance and Repairs."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_1[0].housing_utilities[0].Row6[0].total_allowed[0]",
+     "reason": "IRS Allowed - the sum of the Housing & Utilities block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row1[0].health_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Health Insurance — there is no published health-insurance standard."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].medical[0].Row3[0].total_allowed[0]",
+     "reason": "IRS Allowed - the sum of the Medical block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it. One of its two feeders IS auto-filled (Out of Pocket Health Care, from the published per-age-band figure), which makes a computed total here worse than a blank one: it would look complete while resting on one real figure and one empty cell."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row1[0].child_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Child / Dependent Care."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row2[0].tax_payments_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Estimated Tax Payments — the current-year liability, not a standard."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row3[0].term_life_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Term Life Insurance."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row4[0].required_retirement_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Retirement (Employer Required) — allowed only to the extent the employer requires it, which is a term of the taxpayer's employment."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row5[0].voluntary_retirement_allowed[0]",
+     "reason": "IRS Allowed - Retirement (Voluntary) is generally NOT an allowable expense, and where an examiner allows part of it that is a discretionary determination. Auto-filling anything here, zero included, would state a conclusion the examiner has not reached."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row6[0].union_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Union Dues."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row7[0].delinquent_allowed[0]",
+     "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Delinquent State & Local Taxes (minimum payment) — allowed on a pro-rata basis the examiner computes against the federal liability."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row8[0].student_loans_allowed[0]",
+     "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: Student Loans (minimum payment) — allowed only for federally guaranteed loans of the taxpayer, which this engine cannot establish."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row9[0].support_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Child Support — allowed to the extent actually paid under the order."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row10[0].alimony_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Court Ordered Alimony — same test as child support."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row11[0].court_ordered_allowed[0]",
+     "reason": "IRS Allowed - allowed at ACTUAL, so there is no published figure to fill; the examiner enters what the taxpayer substantiates. Printed row: Other Court Ordered Payments."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row12[0].other_allowed[0]",
+     "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the first Other (specify) — the taxpayer names the expense, so no standard can exist for it in advance."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row13[0].other_allowed[0]",
+     "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the second Other (specify)."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row14[0].other_allowed[0]",
+     "reason": "IRS Allowed - examiner discretion, no published standard. Printed row: the third Other (specify)."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].column_2[0].other[0].Row15[0].total_allowed[0]",
+     "reason": "IRS Allowed - the sum of the Other block's own IRS Allowed column, which is only meaningful once an examiner has completed the cells above it."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].sectionH[0].national_standards[0]",
+     "reason": "NOT A DATA FIELD. A push button the form draws beside the Section H heading, linking to the published National Standards; it has no value to write. Enumerated and named here so it is in a declared state rather than counted as an unreferenced text cell."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].YourSignature[0]",
+     "reason": "THE SIGNATURE. Filling it would forge the taxpayer's attestation on a statement made under penalty of perjury. The one cell on this form where writing a correct-looking value is worse than any blank."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].SpousesSignature[0]",
+     "reason": "The spouse's signature. Same reason."
+    },
+    {
+     "target": "topmostSubform[0].Page2[0].DateReview[0]",
+     "reason": "The date beside the signatures — the date the taxpayer SIGNS, which is not a date this engine knows. Auto-dating it would date an attestation that has not been made yet, and it would also make the output depend on the wall clock (the same drift AGE_AS_OF_DEFAULT exists to avoid in fill-433a.mjs)."
+    }
+   ]
+  }
+ },
+ "split": {
+  "_why": "Section C's 'Date of Final Payment (mo/yr)' is TWO abutting cells, each /MaxLen 2. A canonical date cannot pass through: four digits is all the form holds, and the year is the printed two, not the calendar four. Same construct fill-433a.mjs uses for phone and EIN - `strip` removes the caller's formatting, each part consumes `chars` source characters, and a stripped value that is not EXACTLY four characters writes nothing and stops the run. That exactness is the point: an operator who supplies 06/2027 gets a loud stop, not a silent 20 in the year box.",
+  "_scalar_not_row": "These are top-level scalar keys, not `other_assets` row columns. The group’s array rows carry no final-payment date and the two printed rows are the only slots, so the value is supplied per printed row (veh = RowSubform1, oa = RowSubform2) exactly as the group’s own scalar fallback names them. A caller supplying the array supplies these two alongside it.",
+  "433f_veh_final_pmt": {
+   "strip": "[^0-9]",
+   "parts": [
+    {
+     "chars": 2,
+     "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].month1[0]"
+    },
+    {
+     "chars": 2,
+     "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform1[0].year1[0]"
+    }
+   ]
+  },
+  "433f_oa_final_pmt": {
+   "strip": "[^0-9]",
+   "parts": [
+    {
+     "chars": 2,
+     "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].month2[0]"
+    },
+    {
+     "chars": 2,
+     "target": "topmostSubform[0].Page1[0].OtherAssetsTableSubform[0].RowSubform2[0].year2[0]"
+    }
+   ]
+  }
+ },
+ "slice": "COMPLETE - every field on 433-F is mapped or explicitly excluded",
+ "_partition": {
+  "_why": "Declared as the map is authored, not assembled in a closing pass, and MANDATORY: a map that declares no partition is a STOP in validate-map.mjs, not a skip. It was optional until slice 6, which meant 433-A and 433-F passed the new derive-and-check guards by declaring nothing for them to check — a map that DROPS a declaration was still uncaught, which is the no-declared-state defect wearing a third coat.",
+  "form_fields_total": 214,
+  "in_this_slice": 214,
+  "bound_writable": 184,
+  "excluded_never_autofill": 30,
+  "deferred": 0,
+  "unaccounted": 0,
+  "_check": "184 + 30 + 0 = 214, which is every field on pages 1, 2 (page-geometry.mjs reports 93 for p1, 121 for p2). 214 - 214 = 0 unaccounted. EVERY FIGURE IN THIS BLOCK WAS DERIVED, NEVER TYPED: it was written by a script that read the field list, this map's own targets and the PDF's widget geometry, and it is re-derived and checked on every gate run by adapters/pdf/count-sweep.mjs.",
+  "_unaccounted_by_page": "0 unaccounted. Every page of this form is authored, so no page appears in this breakdown. Stated rather than left empty: an absent breakdown and one that says zero read the same from outside, and that is the silence this repo keeps finding.",
+  "_backfilled": "BACKFILLED IN SLICE 6 FROM DERIVATION. The one prior written figure about 433-F's partition is special.notes[22]: \"writable + never_autofill + deferred partitions all 214 fields\". Derivation agrees with it exactly — 184 + 30 + 0 = 214 — and that note is now derived and checked rather than read. What the note did NOT state is the three components, which is why a map that dropped one of them would have passed it."
+ },
+ "_carried": {
+  "_rule": "An item leaves this ledger by being resolved or by being withdrawn with a reason, never by being forgotten. The counts below are DERIVED from the arrays by length and checked against the declared _count on every run.",
+  "_backfilled": "BACKFILLED IN SLICE 6 from what special.notes already recorded. Both entries are transcribed from there — notes[10] for F-01, notes[20] for F-02 — and neither is new.",
+  "open": [
+   {
+    "id": "F-01",
+    "raised": "v6, recorded in special.notes[10]",
+    "what": "The serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is bound by no group since defect D1 split `accounts` into `bank_accounts` and `investments`. Its rows carry no asset class, so nothing in this map can decide which of the two printed tables a given row belongs in — which is exactly the decision D1 was made of. A record supplying only that key binds nothing."
+   }
+  ],
+  "resolved": [
+   {
+    "id": "F-02",
+    "raised": "v7, recorded in special.notes[20]",
+    "how": "Reported, not a STOP. The first specification named NINE identity scalars; the form prints SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the block is 2 SSN + 6 telephone = 8. The count was wrong, not the targets — no named target failed to resolve — so the map was corrected and nothing was blocked."
+   }
+  ],
+  "_count": {
+   "open": 1,
+   "resolved": 1
+  }
+ }
 }
