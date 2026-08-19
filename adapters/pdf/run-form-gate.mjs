@@ -95,6 +95,21 @@ const complete   = mapClaimsComplete(mapDoc);
 const fieldNames = fieldsDoc.fields.map(f => f.name);
 const { deferred, never, writable } = classifyMapTargets(mapDoc);
 
+// ---------------------------------------------------------------------------------------
+// THE MACHINE-READABLE SUMMARY BLOCK.
+//
+// Every cycle the run's figures were transcribed out of this transcript by hand into the
+// cycle log, which is the same retyped-count failure the whole of count-sweep.mjs is about,
+// one layer out: the gate derives a number, a person reads it off the screen, types it
+// somewhere else, and the two drift. So the run ENDS by emitting the figures in a stable,
+// copy-pasteable block. Everything in it is derived by the step that produced it, in this
+// run, from this tree. Anything a report states that is NOT in this block is a declared
+// figure and not a derived one, and should be labelled that way.
+//
+// STABLE KEY ORDER, one `key: value` per line, no blank lines inside the block, delimited
+// top and bottom. Values never contain a newline.
+const SUMMARY = { tripwires: null };
+
 // Run a sibling tool as its own process, with its output inline. process.execPath, never a
 // shell: a .cmd shim cannot be spawned on this box, and a shell would need the paths quoted.
 const runTool = (script, args) => {
@@ -591,6 +606,11 @@ const steps = [
 
     const bad     = rows.filter(r => r.checkable && !r.skipped && !r.match);
     const checked = rows.filter(r => r.checkable && !r.skipped);
+    // Captured for the machine-readable summary block at the end of the run. Three numbers,
+    // never one: a single "tripwires passed" figure cannot say whether a line was checked,
+    // skipped because the form is not on its printed branch, or failed.
+    SUMMARY.tripwires = { checked: checked.length, skipped: skippedRows.length, failed: bad.length,
+      not_checkable: unchecked.length, declared_lines: rows.length, declared_not_checkable: declined.length };
     // Never collapsed to a pass count. Checked, skipped and failed are three different
     // things and a single number cannot say which one a line was in.
     const tally = `${checked.length} checked, ${skippedRows.length} skipped, ${bad.length} failed`
@@ -670,4 +690,64 @@ if (skipped.length) {
   skipped.forEach(t => console.log(`  skipped: ${t}`));
 } else {
   console.log(`GATE PASSED — all ${steps.length} steps for ${form}${saturated ? ', saturated' : ''}.`);
+}
+
+// ---------------------------------------------------------------------------------------
+// EMIT THE SUMMARY. See SUMMARY's declaration for why this exists.
+{
+  const part = mapDoc._partition || {};
+  const lies = existsSync(`adapters/pdf/maps/${form}.name-lies.json`)
+    ? JSON.parse(readFileSync(`adapters/pdf/maps/${form}.name-lies.json`, 'utf8')) : null;
+  const ents = lies?.entries || [];
+  const kindCount = (k) => ents.filter(e => e.kind === k).length;
+  const carried = mapDoc._carried || {};
+
+  // Fields remaining, BY PAGE, derived here rather than read from the partition prose: the
+  // pages a map has authored are the pages its bound targets sit on, and the remainder is
+  // every other page's widget count.
+  const { readWidgetGeometry } = await import('./page-geometry.mjs');
+  const { widgets } = await readWidgetGeometry(readFileSync(mapDoc.pdf || `adapters/pdf/forms/f${form}.pdf`));
+  const pageOf = new Map(widgets.map(w => [w.name, w.page]));
+  const byPage = new Map();
+  for (const w of widgets) byPage.set(w.page, (byPage.get(w.page) || 0) + 1);
+  const referenced = new Set([...writable.keys(), ...never, ...deferred]);
+  const authored = [...new Set([...referenced].map(t => pageOf.get(t)).filter(Boolean))].sort((a, b) => a - b);
+  const remaining = [...byPage.keys()].filter(p => !authored.includes(p)).sort((a, b) => a - b);
+
+  const head = spawnSync(process.execPath, ['-e', "const{execSync}=require('child_process');try{process.stdout.write(execSync('git rev-parse --short HEAD',{stdio:['ignore','pipe','ignore']}).toString().trim())}catch(e){process.stdout.write('(not a git tree)')}"], { encoding: 'utf8' }).stdout || '(unknown)';
+
+  const t = SUMMARY.tripwires;
+  const L = [];
+  L.push(`form: ${form}`);
+  L.push(`revision: ${mapDoc.form_revision || '(none)'}`);
+  L.push(`catalog: ${mapDoc.catalog || '(none)'}`);
+  L.push(`sample: ${samplePath}`);
+  L.push(`mode: ${saturated ? 'saturated' : 'production'}`);
+  L.push(`gate: PASSED ${steps.length - skipped.length}/${steps.length} ran, ${skipped.length} skipped`);
+  L.push(`partition_form_fields_total: ${part.form_fields_total ?? fieldNames.length}`);
+  L.push(`partition_in_this_slice: ${part.in_this_slice ?? referenced.size}`);
+  L.push(`partition_bound_writable: ${writable.size}`);
+  L.push(`partition_excluded_never_autofill: ${never.size}`);
+  L.push(`partition_deferred: ${deferred.size}`);
+  L.push(`partition_unaccounted: ${remaining.reduce((a, p) => a + byPage.get(p), 0)}`);
+  L.push(`fields_remaining_by_page: ${remaining.length ? remaining.map(p => `p${p}=${byPage.get(p)}`).join(' ') : 'none'}`);
+  L.push(`pages_authored: ${authored.map(p => `p${p}=${byPage.get(p)}`).join(' ')}`);
+  L.push(`tripwires_checked: ${t ? t.checked : 'n/a'}`);
+  L.push(`tripwires_skipped: ${t ? t.skipped : 'n/a'}`);
+  L.push(`tripwires_failed: ${t ? t.failed : 'n/a'}`);
+  L.push(`tripwires_declared_lines: ${t ? t.declared_lines : 'n/a'}`);
+  L.push(`tripwires_declared_not_checkable: ${t ? t.declared_not_checkable : 'n/a'}`);
+  L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : 'none declared'}`);
+  L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : 'none declared'}`);
+  L.push(`registry_page_imprecise: ${lies ? kindCount('page_imprecise') : 'none declared'}`);
+  L.push(`registry_total_entries: ${lies ? ents.length : 'none declared'}`);
+  L.push(`carried_open: ${(carried.open || []).length}`);
+  L.push(`carried_resolved: ${(carried.resolved || []).length}`);
+  L.push(`carried_open_ids: ${(carried.open || []).map(o => o.id).join(',') || 'none'}`);
+  L.push(`head: ${head}`);
+
+  console.log('');
+  console.log('----- GATE SUMMARY (derived this run; quote verbatim) -----');
+  L.forEach(l => console.log(l));
+  console.log('----- END GATE SUMMARY -----');
 }

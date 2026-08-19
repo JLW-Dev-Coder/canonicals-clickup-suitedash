@@ -614,5 +614,39 @@
       ]
     }
   },
-  "slice": "COMPLETE - every field on 433-F is mapped or explicitly excluded"
+  "slice": "COMPLETE - every field on 433-F is mapped or explicitly excluded",
+  "_partition": {
+    "_why": "Declared as the map is authored, not assembled in a closing pass, and MANDATORY: a map that declares no partition is a STOP in validate-map.mjs, not a skip. It was optional until slice 6, which meant 433-A and 433-F passed the new derive-and-check guards by declaring nothing for them to check — a map that DROPS a declaration was still uncaught, which is the no-declared-state defect wearing a third coat.",
+    "form_fields_total": 214,
+    "in_this_slice": 214,
+    "bound_writable": 184,
+    "excluded_never_autofill": 30,
+    "deferred": 0,
+    "unaccounted": 0,
+    "_check": "184 + 30 + 0 = 214, which is every field on pages 1, 2 (page-geometry.mjs reports 93 for p1, 121 for p2). 214 - 214 = 0 unaccounted. EVERY FIGURE IN THIS BLOCK WAS DERIVED, NEVER TYPED: it was written by a script that read the field list, this map's own targets and the PDF's widget geometry, and it is re-derived and checked on every gate run by adapters/pdf/count-sweep.mjs.",
+    "_unaccounted_by_page": "0 unaccounted. Every page of this form is authored, so no page appears in this breakdown. Stated rather than left empty: an absent breakdown and one that says zero read the same from outside, and that is the silence this repo keeps finding.",
+    "_backfilled": "BACKFILLED IN SLICE 6 FROM DERIVATION. The one prior written figure about 433-F's partition is special.notes[22]: \"writable + never_autofill + deferred partitions all 214 fields\". Derivation agrees with it exactly — 184 + 30 + 0 = 214 — and that note is now derived and checked rather than read. What the note did NOT state is the three components, which is why a map that dropped one of them would have passed it."
+  },
+  "_carried": {
+    "_rule": "An item leaves this ledger by being resolved or by being withdrawn with a reason, never by being forgotten. The counts below are DERIVED from the arrays by length and checked against the declared _count on every run.",
+    "_backfilled": "BACKFILLED IN SLICE 6 from what special.notes already recorded. Both entries are transcribed from there — notes[10] for F-01, notes[20] for F-02 — and neither is new.",
+    "open": [
+      {
+        "id": "F-01",
+        "raised": "v6, recorded in special.notes[10]",
+        "what": "The serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is bound by no group since defect D1 split `accounts` into `bank_accounts` and `investments`. Its rows carry no asset class, so nothing in this map can decide which of the two printed tables a given row belongs in — which is exactly the decision D1 was made of. A record supplying only that key binds nothing."
+      }
+    ],
+    "resolved": [
+      {
+        "id": "F-02",
+        "raised": "v7, recorded in special.notes[20]",
+        "how": "Reported, not a STOP. The first specification named NINE identity scalars; the form prints SIX telephone cells (your Home/Work/Cell, spouse's Home/Work/Cell), so the block is 2 SSN + 6 telephone = 8. The count was wrong, not the targets — no named target failed to resolve — so the map was corrected and nothing was blocked."
+      }
+    ],
+    "_count": {
+      "open": 1,
+      "resolved": 1
+    }
+  }
 }

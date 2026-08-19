@@ -1,1327 +1,1360 @@
 {
- "form": "433a",
- "form_revision": "6-2026",
- "catalog": "20312N",
- "slice": "COMPLETE - every field on 433-A is mapped or explicitly excluded",
- "map_version": 8,
- "authored_from": "433a.labels.txt sheets 1-8 + RC alignment reports for sheets 3, 6, 7, 8 (Prompts 13-16)",
- "_notes": [
-  "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
-  "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
-  "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a lookup fails on one of these, the escaping was mangled - do not 'fix' it by deleting the backslash.",
-  "Every semantic assignment is derived from correlated printed labels and rect geometry, never from field names. Internal names on this form are known to contradict the printed page.",
-  "KEY PREFIXES NOW FOLLOW PRINTED LINE NUMBERS, not internal field-name suffixes. The lawsuit block is printed line 7 (internal names say _6); bankruptcy is printed line 8 (internal names say _7). Renamed while free: no HubSpot properties exist for 433-A yet, and HubSpot property names are immutable once created.",
-  "v3 adds Section 4 lines 12, 13 (bank x4), 14 (investments x4), 18a-c (real property x3), 19a-c (vehicles x3). Digital assets (15), available credit (16) and life insurance are deferred to Prompt 13 pending printed column headers.",
-  "Vehicle make_model uses p3_t22_18aMILE and mileage uses Line18aMKMDL. The internal names are INVERTED against the printed columns - confirmed twice, by label correlation and by maxLength (16 chars for Make/Model, 7 for Mileage). Do not \"correct\" this.",
-  "Real property and vehicle money/date blocks share one maxLength signature in column order: 8,12,12,12,8,12 = purchase date, current FMV, current loan balance, monthly payment, final payment date, equity. This is how the bled captions on rows 18b/18c and 19b/19c were resolved.",
-  "Real property and vehicle row indices are INVERTED: Table_Line17b[1] prints as 18b and [0] as 18c; Lender-phone18b[1] pairs with Line18b[0] (19b) and [0] with Line18b[1] (19c).",
-  "v4 completes Section 4: digital assets (15) x4, available credit (16) x4, life insurance (17) as THREE POLICY COLUMNS x five printed rows 17a-17e, and the line-20 property rows x2 on sheet 5, plus every Section 4 total. Column assignment came from printed column-header x-ranges, not per-field nearest-text.",
-  "Life insurance prints as line 17 (rows 17a-17e, total 17f). The sheet-3 sentence saying \"blocks 16b through 16f\" is stale text from a prior revision sitting above the 17a-17f markers. Internal suffixes _16c.._16f lag the printed rows by one.",
-  "Digital-asset row cells are ALL unlimited length, so maxLength gives no column signal there. Those five columns were assigned purely from header x-ranges: 50.4|136.8|262.8|381.6|507.6.",
-  "Line-20 location/lender blocks are INVERTED against their internal names, same pattern as 18b/18c and 19b/19c: row 20a takes p3_t55_19b + Lender-phone3, row 20b takes p3_t47_19a + Lender-phone4. Assigned by printed reading order.",
-  "v5 adds the Section 5 income and expense grid, printed lines 21-51, plus the allowed column. On sheet 6 EVERY internal suffix lags the printed line by one, in all three panels - keys follow the printed marker column.",
-  "Only two allowed cells are auto-filled: IRS35 (printed line 36, national standards total by household size) and IRS41 (printed line 42, out-of-pocket health by age band). The other 14 are listed under allowed._never_autofill with a reason each, validated for existence and never written.",
-  "Income prints 15 rows (21-35), expenses print 16 (36-51). The extra expense row is absorbed where the income side prints the \"Other Income (Specify below)\" sub-header instead of a field. Lines 33 and 34 are write-in rows with a description cell plus an amount cell.",
-  "v6 replaces the single household_size input with allowable_household_size (derived by the IRS default when absent, operator-overridable with a loud warning) and replaces the single age_band with allowable_under_65_count + allowable_65_over_count.",
-  "The age-band change fixes a real mispricing: 433-A prints ONE out-of-pocket line for the whole household, so a single age_band would have priced every person at one rate. A household containing anyone 65 or over was being under-allowed.",
-  "Allowable household size follows IRS National Standards guidance: generally the persons allowed as dependents on the most recent return, plus the taxpayer and spouse. \"Generally\" is why the operator override exists.",
-  "v7 adds sheet-7 business bank accounts (65a/65b), accounts and notes receivable (66a-66e), sheet-8 business property (67a/67b), all four of their totals, and the Section 7 business income and expense grid (printed 68-90).",
-  "Section 7 totals row is INVERTED by name across the two panels: TotalMonthlyExpenses.p6_t42_S6t is printed line 88 while TotalMonthlyIncome.p6_t43_S6t is printed line 77. There is no p6_t41. Different parents, so full paths keep them apart.",
-  "Section 7 write-in descriptions lag by one: Blank72 is printed line 73, Blank73 is 74, Blank74 is 75, Blank75 is 76.",
-  "67a and 67b share seven identical columns to within 0.2pt but their description cells differ in size (34 vs 45), so the two rows are NOT interchangeable. p3_t11_17a[0] is 67a title holders, [1] is 67b - a sheet-3 leaf name reused on sheet 8, and p2_t18_13c is reused inside both Lender-Phone and Lender-Phone2. Author from the parent, never the leaf.",
-  "v8 CLOSES THE MAP. Adds the sheet-7 business identification block (printed 52-64), payment processors (62a/62b), credit cards accepted (63a/63b/63c), and the sheet-8 accounting method and reporting period. Only the three unresolved page-1/page-2 Yes/No pairs remain deferred.",
-  "Table62 L62C is a THIRD DATA ROW printed 63c, not a totals row - it carries its own printed marker and shares the exact x-ranges and maxLengths of 63a/63b. There is no total in the credit-card block.",
-  "AB61 column 1 maxLength differs by row: 62a is 93, 62b is 172. Column 2 is 24 on both. Do not assume slot templates imply identical cell capacity.",
-  "Printed markers on sheet 7 run 52-64, and Table64[1] prints 66a-66e while Table64[0] prints 65a/65b - the internal 64/65 names lag the print by one as everywhere else on this form.",
-  "GROUP TOTALS COUNT PRINTED ROWS ONLY. A total field is the sum of the rows that fit the form; overflow records are dropped and belong on an attachment, so including them would make the printed total disagree with the printed rows. Confirmed as the standing rule."
- ],
- "map": {
-  "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
-  "1b_address": "topmostSubform[0].Page1[0].c1[0].#subform[1].p1-t5[0]",
-  "1c_county_of_residence": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[1].p1-t4[0]",
-  "2_tp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_030_0_[0]",
-  "2_tp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_031_0_[0]",
-  "2_sp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_034_0_[0]",
-  "2_sp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_035_0_[0]",
-  "3a_pct_ownership": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].PercentageOfOwnership[0]",
-  "3a_title": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0]",
-  "3b_business_name": "topmostSubform[0].Page1[0].c2[0].Lines3b[0].BusinessName[0]",
-  "3c_business_type_other_desc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].ListOther[0]",
-  "4a_tp_employer_name": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t15_4a[0]",
-  "4b_tp_employer_address": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t16_4b[0]",
-  "4e_tp_tenure_years": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
-  "4e_tp_tenure_months": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
-  "4f_tp_occupation": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t21_4f[0]",
-  "4g_tp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
-  "5a_sp_employer_name": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t23_5a[0]",
-  "5b_sp_employer_address": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t24_5b[0]",
-  "5e_sp_tenure_years": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
-  "5e_sp_tenure_months": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]",
-  "5f_sp_occupation": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t28_5f[0]",
-  "5g_sp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]",
-  "6_income_change_explain": "topmostSubform[0].Page1[0].TextField1[0]",
-  "6_income_change_amount": "topmostSubform[0].Page1[0].amountIncrease[0].p1_t34_6a[0]",
-  "6_income_change_when": "topmostSubform[0].Page1[0].whenIncrease[0]",
-  "7_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
-  "7_suit_represented_by": "topmostSubform[0].Page1[0].p1_t31_6[0]",
-  "7_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
-  "7_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
-  "7_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
-  "7_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
-  "8_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
-  "8_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
-  "8_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
-  "8_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
-  "8_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
-  "8b_lived_abroad_from": "topmostSubform[0].page2[0].p2_t50_8b[0]",
-  "8b_lived_abroad_to": "topmostSubform[0].page2[0].p2_t51_8b[0]",
-  "8c_dual_citizenship_country": "topmostSubform[0].page2[0].p2_t50_8[0]",
-  "9a_inmate_number": "topmostSubform[0].page2[0].p2_t50_8[1]",
-  "9b_place_where_recorded": "topmostSubform[0].page2[0].p1_t44_9[0]",
-  "9b_trust_name": "topmostSubform[0].page2[0].p1-t47_9[0]",
-  "9b_trust_anticipated_amount": "topmostSubform[0].page2[0].#subform[3].p1-t48_9[0]",
-  "9b_trust_when_received": "topmostSubform[0].page2[0].p1-t49_9[0]",
-  "9c_trust_name": "topmostSubform[0].page2[0].p2_t00_9b[0]",
-  "10_sdb_location": "topmostSubform[0].page2[0].p1_t41_10[0]",
-  "10_sdb_contents": "topmostSubform[0].page2[0].p1-t43_10[0]",
-  "10_sdb_value": "topmostSubform[0].page2[0].value[0].p1-t42_10[0]",
-  "11_transfer_assets": "topmostSubform[0].page2[0].#subform[0].p3_t1_11[0]",
-  "11_transfer_value_at_transfer": "topmostSubform[0].page2[0].#subform[0].#subform[1].p3_t2_11[0]",
-  "11_transfer_date": "topmostSubform[0].page2[0].#subform[0].p3_t3_11[0]",
-  "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]",
-  "12_total_cash_on_hand": "topmostSubform[0].page2[0].p2-t1_11[0]",
-  "13_accounts_balance_as_of": "topmostSubform[0].page2[0].Table_Line13[0].Line12[0].AcctBal12[0].F02_001_11[0]",
-  "13e_total_cash": "topmostSubform[0].page2[0].p2-t8_12c[0]",
-  "14_investments_loan_balance_as_of": "topmostSubform[0].page2[0].Table_Line14[0].HeaderRow[0].LoanBal[0].p2-t9_13[0]",
-  "15_names_with_access_to_private_keys": "topmostSubform[0].Page2[0].ListAccessPrivateKeys[0]",
-  "15_digital_asset_value_as_of": "topmostSubform[0].Page2[0].Table_Line14de[0].HeaderRow[0].assetAmount[0].mmddyyyy[0]",
-  "15e_total_digital_asset_equity": "topmostSubform[0].Page2[0].Line14f[1]",
-  "16_amount_owed_as_of": "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column3_14[0].F02_001_14[0]",
-  "16_available_credit_as_of": "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column4_14[0].F02_002_14[0]",
-  "16e_total_available_credit": "topmostSubform[0].Page2[0].p2_t29_14c[0]",
-  "17f_total_life_insurance_equity": "topmostSubform[0].Page2[0].p2_t45_15g[0]",
-  "18d_total_equity_real_property": "topmostSubform[0].Page3[0].p3_t20_17c[0]",
-  "19d_total_equity_vehicles": "topmostSubform[0].Page3[0].p3_t40_18c[0]",
-  "20c_total_equity_property_line_20": "topmostSubform[0].#subform[4].p3_t56_19c[0]",
-  "21_income_wages_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t57_20[0]",
-  "22_income_wages_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t59_21[0]",
-  "23_income_interest_dividends": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t61_22[0]",
-  "24_income_net_business_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t63_23[0]",
-  "25_income_net_rental_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t65_24[0]",
-  "26_income_distributions": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t67_25[0]",
-  "27_income_pension_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t69_26[0]",
-  "28_income_pension_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t71_27[0]",
-  "29_income_social_security_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t73_28[0]",
-  "30_income_social_security_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t75_29[0]",
-  "31_income_child_support": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t79_30[0]",
-  "32_income_alimony": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_31[0]",
-  "33_income_other_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank32[0]",
-  "33_income_other_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_32[0]",
-  "34_income_other2_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank33[0]",
-  "34_income_other2_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_33[0]",
-  "35_total_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_34[0]",
-  "36_exp_food_clothing_misc": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t58_35[0]",
-  "37_exp_housing_and_utilities": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t60_36[0]",
-  "38_exp_vehicle_ownership_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t62_37[0]",
-  "39_exp_vehicle_operating_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t64_38[0]",
-  "40_exp_public_transportation": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t66_39[0]",
-  "41_exp_health_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t68_40[0]",
-  "42_exp_out_of_pocket_health_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t70_41[0]",
-  "43_exp_court_ordered_payments": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t72_42[0]",
-  "44_exp_child_dependent_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t74_43[0]",
-  "45_exp_life_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t76_44[0]",
-  "46_exp_current_year_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t78_45[0]",
-  "47_exp_secured_debts": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t80_46[0]",
-  "48_exp_delinquent_state_local_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t82_47[0]",
-  "49_exp_other_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t83_48[0]",
-  "50_total_living_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t84_49[0]",
-  "51_net_difference": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t85_50[0]",
-  "65_business_account_balance_as_of": "topmostSubform[0].Page5[0].Table64[0].#subform[0].#subform[1].p5_t22_64[0]",
-  "65c_total_business_bank_balance": "topmostSubform[0].Page5[0].p5_t31_64c[0]",
-  "66f_total_receivable_amount_due": "topmostSubform[0].Page5[0].p5_t52_65e[0]",
-  "67c_total_business_property_equity": "topmostSubform[0].Page6[0].p6_t19_66c[0]",
-  "68_bizinc_gross_receipts": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t22_S6t[0]",
-  "69_bizinc_gross_rental_income": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t24_S6t[0]",
-  "70_bizinc_interest": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t26_S6t[0]",
-  "71_bizinc_dividends": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t28_S6t[0]",
-  "72_bizinc_cash_receipts_not_in_68_to_71": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t30_S6t[0]",
-  "73_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank72[0]",
-  "73_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t33_S6t[0]",
-  "74_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank73[0]",
-  "74_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t35_S6t[0]",
-  "75_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank74[0]",
-  "75_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t37_S6t[0]",
-  "76_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank75[0]",
-  "76_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t39_S6t[0]",
-  "77_bizinc_total_income": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t43_S6t[0]",
-  "78_bizexp_materials_purchased": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t23_S6t[0]",
-  "79_bizexp_inventory_purchased": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t25_S6t[0]",
-  "80_bizexp_gross_wages_and_salaries": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t27_S6t[0]",
-  "81_bizexp_rent": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t29_S6t[0]",
-  "82_bizexp_supplies": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t31_S6t[0]",
-  "83_bizexp_utilities_telephone": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t32_S6t[0]",
-  "84_bizexp_vehicle_gasoline_oil": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t34_S6t[0]",
-  "85_bizexp_repairs_and_maintenance": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t36_S6t[0]",
-  "86_bizexp_insurance": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t38_S6t[0]",
-  "87_bizexp_current_taxes": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t40_S6t[0]",
-  "88_bizexp_other_expenses": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t42_S6t[0]",
-  "89_bizexp_total_expenses": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t44_S6t[0]",
-  "90_biz_net_business_income": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t45_S6t[0]",
-  "53a_business_name_and_address": "topmostSubform[0].Page5[0].#subform[0].p5_t1_52[0]",
-  "54_employer_identification_number": "topmostSubform[0].Page5[0].p5_t2_53[0]",
-  "55_type_of_business": "topmostSubform[0].Page5[0].p5_t3_54[0]",
-  "57_business_website": "topmostSubform[0].Page5[0].p5_t4_56[0]",
-  "58_total_number_of_employees": "topmostSubform[0].Page5[0].p5_t5_57[0]",
-  "59_average_gross_monthly_payroll": "topmostSubform[0].Page5[0].p5_t6_58a[0]",
-  "60_frequency_of_tax_deposits": "topmostSubform[0].Page5[0].p5_t7_59b[0]",
-  "64_business_cash_on_hand": "topmostSubform[0].Page5[0].p5_t21_63[0]",
-  "S7_period_from": "topmostSubform[0].Page6[0].p6_t20_S6[0]",
-  "S7_period_to": "topmostSubform[0].Page6[0].p6_t21_S6[0]"
- },
- "split": {
-  "_why": "The form splits one real-world value across two abutting boxes with hard maxLength limits. Splitting in the engine rather than at intake means ONE HubSpot custom field per real value, not two - and CF names are immutable once provisioned. Consume `chars` source characters per part after applying `strip`; `format` masks the part with # as a digit placeholder. Every part must fit its target's /MaxLen or the fill stops.",
-  "1c_home_phone": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 3,
-     "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]"
+  "form": "433a",
+  "form_revision": "6-2026",
+  "catalog": "20312N",
+  "slice": "COMPLETE - every field on 433-A is mapped or explicitly excluded",
+  "map_version": 8,
+  "authored_from": "433a.labels.txt sheets 1-8 + RC alignment reports for sheets 3, 6, 7, 8 (Prompts 13-16)",
+  "_notes": [
+    "v2 resolves all 24 previously-deferred Sections 1-3 targets from printed-coordinate geometry, adds the split construct, and corrects key prefixes to PRINTED line numbers.",
+    "TARGETS ARE VERBATIM from 433a.fields.json. Never edit a target string.",
+    "Field names under Taxpayer and Spouse contain a LITERAL BACKSLASH before the dot: Taxpayer\\.L4a-h[0]. In JSON that is written \\\\. and must survive JSON.parse as a single backslash. If a lookup fails on one of these, the escaping was mangled - do not 'fix' it by deleting the backslash.",
+    "Every semantic assignment is derived from correlated printed labels and rect geometry, never from field names. Internal names on this form are known to contradict the printed page.",
+    "KEY PREFIXES NOW FOLLOW PRINTED LINE NUMBERS, not internal field-name suffixes. The lawsuit block is printed line 7 (internal names say _6); bankruptcy is printed line 8 (internal names say _7). Renamed while free: no HubSpot properties exist for 433-A yet, and HubSpot property names are immutable once created.",
+    "v3 adds Section 4 lines 12, 13 (bank x4), 14 (investments x4), 18a-c (real property x3), 19a-c (vehicles x3). Digital assets (15), available credit (16) and life insurance are deferred to Prompt 13 pending printed column headers.",
+    "Vehicle make_model uses p3_t22_18aMILE and mileage uses Line18aMKMDL. The internal names are INVERTED against the printed columns - confirmed twice, by label correlation and by maxLength (16 chars for Make/Model, 7 for Mileage). Do not \"correct\" this.",
+    "Real property and vehicle money/date blocks share one maxLength signature in column order: 8,12,12,12,8,12 = purchase date, current FMV, current loan balance, monthly payment, final payment date, equity. This is how the bled captions on rows 18b/18c and 19b/19c were resolved.",
+    "Real property and vehicle row indices are INVERTED: Table_Line17b[1] prints as 18b and [0] as 18c; Lender-phone18b[1] pairs with Line18b[0] (19b) and [0] with Line18b[1] (19c).",
+    "v4 completes Section 4: digital assets (15) x4, available credit (16) x4, life insurance (17) as THREE POLICY COLUMNS x five printed rows 17a-17e, and the line-20 property rows x2 on sheet 5, plus every Section 4 total. Column assignment came from printed column-header x-ranges, not per-field nearest-text.",
+    "Life insurance prints as line 17 (rows 17a-17e, total 17f). The sheet-3 sentence saying \"blocks 16b through 16f\" is stale text from a prior revision sitting above the 17a-17f markers. Internal suffixes _16c.._16f lag the printed rows by one.",
+    "Digital-asset row cells are ALL unlimited length, so maxLength gives no column signal there. Those five columns were assigned purely from header x-ranges: 50.4|136.8|262.8|381.6|507.6.",
+    "Line-20 location/lender blocks are INVERTED against their internal names, same pattern as 18b/18c and 19b/19c: row 20a takes p3_t55_19b + Lender-phone3, row 20b takes p3_t47_19a + Lender-phone4. Assigned by printed reading order.",
+    "v5 adds the Section 5 income and expense grid, printed lines 21-51, plus the allowed column. On sheet 6 EVERY internal suffix lags the printed line by one, in all three panels - keys follow the printed marker column.",
+    "Only two allowed cells are auto-filled: IRS35 (printed line 36, national standards total by household size) and IRS41 (printed line 42, out-of-pocket health by age band). The other 14 are listed under allowed._never_autofill with a reason each, validated for existence and never written.",
+    "Income prints 15 rows (21-35), expenses print 16 (36-51). The extra expense row is absorbed where the income side prints the \"Other Income (Specify below)\" sub-header instead of a field. Lines 33 and 34 are write-in rows with a description cell plus an amount cell.",
+    "v6 replaces the single household_size input with allowable_household_size (derived by the IRS default when absent, operator-overridable with a loud warning) and replaces the single age_band with allowable_under_65_count + allowable_65_over_count.",
+    "The age-band change fixes a real mispricing: 433-A prints ONE out-of-pocket line for the whole household, so a single age_band would have priced every person at one rate. A household containing anyone 65 or over was being under-allowed.",
+    "Allowable household size follows IRS National Standards guidance: generally the persons allowed as dependents on the most recent return, plus the taxpayer and spouse. \"Generally\" is why the operator override exists.",
+    "v7 adds sheet-7 business bank accounts (65a/65b), accounts and notes receivable (66a-66e), sheet-8 business property (67a/67b), all four of their totals, and the Section 7 business income and expense grid (printed 68-90).",
+    "Section 7 totals row is INVERTED by name across the two panels: TotalMonthlyExpenses.p6_t42_S6t is printed line 88 while TotalMonthlyIncome.p6_t43_S6t is printed line 77. There is no p6_t41. Different parents, so full paths keep them apart.",
+    "Section 7 write-in descriptions lag by one: Blank72 is printed line 73, Blank73 is 74, Blank74 is 75, Blank75 is 76.",
+    "67a and 67b share seven identical columns to within 0.2pt but their description cells differ in size (34 vs 45), so the two rows are NOT interchangeable. p3_t11_17a[0] is 67a title holders, [1] is 67b - a sheet-3 leaf name reused on sheet 8, and p2_t18_13c is reused inside both Lender-Phone and Lender-Phone2. Author from the parent, never the leaf.",
+    "v8 CLOSES THE MAP. Adds the sheet-7 business identification block (printed 52-64), payment processors (62a/62b), credit cards accepted (63a/63b/63c), and the sheet-8 accounting method and reporting period. Only the three unresolved page-1/page-2 Yes/No pairs remain deferred.",
+    "Table62 L62C is a THIRD DATA ROW printed 63c, not a totals row - it carries its own printed marker and shares the exact x-ranges and maxLengths of 63a/63b. There is no total in the credit-card block.",
+    "AB61 column 1 maxLength differs by row: 62a is 93, 62b is 172. Column 2 is 24 on both. Do not assume slot templates imply identical cell capacity.",
+    "Printed markers on sheet 7 run 52-64, and Table64[1] prints 66a-66e while Table64[0] prints 65a/65b - the internal 64/65 names lag the print by one as everywhere else on this form.",
+    "GROUP TOTALS COUNT PRINTED ROWS ONLY. A total field is the sum of the rows that fit the form; overflow records are dropped and belong on an attachment, so including them would make the printed total disagree with the printed rows. Confirmed as the standing rule."
+  ],
+  "map": {
+    "1a_full_name": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]",
+    "1b_address": "topmostSubform[0].Page1[0].c1[0].#subform[1].p1-t5[0]",
+    "1c_county_of_residence": "topmostSubform[0].Page1[0].c1[0].Lines1a-b[1].p1-t4[0]",
+    "2_tp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_030_0_[0]",
+    "2_tp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row1[0].F02_031_0_[0]",
+    "2_sp_ssn_itin": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_034_0_[0]",
+    "2_sp_dob": "topmostSubform[0].Page1[0].c2[0].Table_Part4-Line5[0].Row2[0].F02_035_0_[0]",
+    "3a_pct_ownership": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].PercentageOfOwnership[0]",
+    "3a_title": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0]",
+    "3b_business_name": "topmostSubform[0].Page1[0].c2[0].Lines3b[0].BusinessName[0]",
+    "3c_business_type_other_desc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].ListOther[0]",
+    "4a_tp_employer_name": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t15_4a[0]",
+    "4b_tp_employer_address": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t16_4b[0]",
+    "4e_tp_tenure_years": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t19_4e[0]",
+    "4e_tp_tenure_months": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4e[0].p1_t20_4e[0]",
+    "4f_tp_occupation": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t21_4f[0]",
+    "4g_tp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].p1_t22_4g[0]",
+    "5a_sp_employer_name": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t23_5a[0]",
+    "5b_sp_employer_address": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t24_5b[0]",
+    "5e_sp_tenure_years": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t26_5e[0]",
+    "5e_sp_tenure_months": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].Line5e[0].p1_t27_5e[0]",
+    "5f_sp_occupation": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t28_5f[0]",
+    "5g_sp_dependents_claimed_on_1040": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].p1_t29_5g[0]",
+    "6_income_change_explain": "topmostSubform[0].Page1[0].TextField1[0]",
+    "6_income_change_amount": "topmostSubform[0].Page1[0].amountIncrease[0].p1_t34_6a[0]",
+    "6_income_change_when": "topmostSubform[0].Page1[0].whenIncrease[0]",
+    "7_suit_location_of_filing": "topmostSubform[0].Page1[0].p1_t30_6[0]",
+    "7_suit_represented_by": "topmostSubform[0].Page1[0].p1_t31_6[0]",
+    "7_suit_docket_case_no": "topmostSubform[0].Page1[0].p1_t32_6[0]",
+    "7_suit_amount": "topmostSubform[0].Page1[0].amountSuit[0].p1_t34_6[0]",
+    "7_suit_possible_completion_date": "topmostSubform[0].Page1[0].p1_t35_6[0]",
+    "7_suit_subject": "topmostSubform[0].Page1[0].p1_t36_6[0]",
+    "8_bk_date_filed": "topmostSubform[0].Page1[0].p1_t37_7[0]",
+    "8_bk_date_dismissed": "topmostSubform[0].Page1[0].p1_t38_7[0]",
+    "8_bk_date_discharged": "topmostSubform[0].Page1[0].p1_t38_7[1]",
+    "8_bk_petition_no": "topmostSubform[0].Page1[0].p1_t39_7[0]",
+    "8_bk_location_filed": "topmostSubform[0].Page1[0].p1_t40_7[0]",
+    "8b_lived_abroad_from": "topmostSubform[0].page2[0].p2_t50_8b[0]",
+    "8b_lived_abroad_to": "topmostSubform[0].page2[0].p2_t51_8b[0]",
+    "8c_dual_citizenship_country": "topmostSubform[0].page2[0].p2_t50_8[0]",
+    "9a_inmate_number": "topmostSubform[0].page2[0].p2_t50_8[1]",
+    "9b_place_where_recorded": "topmostSubform[0].page2[0].p1_t44_9[0]",
+    "9b_trust_name": "topmostSubform[0].page2[0].p1-t47_9[0]",
+    "9b_trust_anticipated_amount": "topmostSubform[0].page2[0].#subform[3].p1-t48_9[0]",
+    "9b_trust_when_received": "topmostSubform[0].page2[0].p1-t49_9[0]",
+    "9c_trust_name": "topmostSubform[0].page2[0].p2_t00_9b[0]",
+    "10_sdb_location": "topmostSubform[0].page2[0].p1_t41_10[0]",
+    "10_sdb_contents": "topmostSubform[0].page2[0].p1-t43_10[0]",
+    "10_sdb_value": "topmostSubform[0].page2[0].value[0].p1-t42_10[0]",
+    "11_transfer_assets": "topmostSubform[0].page2[0].#subform[0].p3_t1_11[0]",
+    "11_transfer_value_at_transfer": "topmostSubform[0].page2[0].#subform[0].#subform[1].p3_t2_11[0]",
+    "11_transfer_date": "topmostSubform[0].page2[0].#subform[0].p3_t3_11[0]",
+    "11_transfer_to_whom_or_where": "topmostSubform[0].page2[0].#subform[0].p3_t4_11[0]",
+    "12_total_cash_on_hand": "topmostSubform[0].page2[0].p2-t1_11[0]",
+    "13_accounts_balance_as_of": "topmostSubform[0].page2[0].Table_Line13[0].Line12[0].AcctBal12[0].F02_001_11[0]",
+    "13e_total_cash": "topmostSubform[0].page2[0].p2-t8_12c[0]",
+    "14_investments_loan_balance_as_of": "topmostSubform[0].page2[0].Table_Line14[0].HeaderRow[0].LoanBal[0].p2-t9_13[0]",
+    "15_names_with_access_to_private_keys": "topmostSubform[0].Page2[0].ListAccessPrivateKeys[0]",
+    "15_digital_asset_value_as_of": "topmostSubform[0].Page2[0].Table_Line14de[0].HeaderRow[0].assetAmount[0].mmddyyyy[0]",
+    "15e_total_digital_asset_equity": "topmostSubform[0].Page2[0].Line14f[1]",
+    "16_amount_owed_as_of": "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column3_14[0].F02_001_14[0]",
+    "16_available_credit_as_of": "topmostSubform[0].Page2[0].Table_Line15[0].HeaderRow14[0].Column4_14[0].F02_002_14[0]",
+    "16e_total_available_credit": "topmostSubform[0].Page2[0].p2_t29_14c[0]",
+    "17f_total_life_insurance_equity": "topmostSubform[0].Page2[0].p2_t45_15g[0]",
+    "18d_total_equity_real_property": "topmostSubform[0].Page3[0].p3_t20_17c[0]",
+    "19d_total_equity_vehicles": "topmostSubform[0].Page3[0].p3_t40_18c[0]",
+    "20c_total_equity_property_line_20": "topmostSubform[0].#subform[4].p3_t56_19c[0]",
+    "21_income_wages_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t57_20[0]",
+    "22_income_wages_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t59_21[0]",
+    "23_income_interest_dividends": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t61_22[0]",
+    "24_income_net_business_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t63_23[0]",
+    "25_income_net_rental_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t65_24[0]",
+    "26_income_distributions": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t67_25[0]",
+    "27_income_pension_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t69_26[0]",
+    "28_income_pension_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t71_27[0]",
+    "29_income_social_security_taxpayer": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t73_28[0]",
+    "30_income_social_security_spouse": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t75_29[0]",
+    "31_income_child_support": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t79_30[0]",
+    "32_income_alimony": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_31[0]",
+    "33_income_other_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank32[0]",
+    "33_income_other_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_32[0]",
+    "34_income_other2_description": "topmostSubform[0].Page4[0].TotalIncome[0].Blank33[0]",
+    "34_income_other2_amount": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_33[0]",
+    "35_total_income": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t81_34[0]",
+    "36_exp_food_clothing_misc": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t58_35[0]",
+    "37_exp_housing_and_utilities": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t60_36[0]",
+    "38_exp_vehicle_ownership_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t62_37[0]",
+    "39_exp_vehicle_operating_costs": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t64_38[0]",
+    "40_exp_public_transportation": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t66_39[0]",
+    "41_exp_health_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t68_40[0]",
+    "42_exp_out_of_pocket_health_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t70_41[0]",
+    "43_exp_court_ordered_payments": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t72_42[0]",
+    "44_exp_child_dependent_care": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t74_43[0]",
+    "45_exp_life_insurance": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t76_44[0]",
+    "46_exp_current_year_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t78_45[0]",
+    "47_exp_secured_debts": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t80_46[0]",
+    "48_exp_delinquent_state_local_taxes": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t82_47[0]",
+    "49_exp_other_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t83_48[0]",
+    "50_total_living_expenses": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t84_49[0]",
+    "51_net_difference": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t85_50[0]",
+    "65_business_account_balance_as_of": "topmostSubform[0].Page5[0].Table64[0].#subform[0].#subform[1].p5_t22_64[0]",
+    "65c_total_business_bank_balance": "topmostSubform[0].Page5[0].p5_t31_64c[0]",
+    "66f_total_receivable_amount_due": "topmostSubform[0].Page5[0].p5_t52_65e[0]",
+    "67c_total_business_property_equity": "topmostSubform[0].Page6[0].p6_t19_66c[0]",
+    "68_bizinc_gross_receipts": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t22_S6t[0]",
+    "69_bizinc_gross_rental_income": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t24_S6t[0]",
+    "70_bizinc_interest": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t26_S6t[0]",
+    "71_bizinc_dividends": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t28_S6t[0]",
+    "72_bizinc_cash_receipts_not_in_68_to_71": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t30_S6t[0]",
+    "73_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank72[0]",
+    "73_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t33_S6t[0]",
+    "74_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank73[0]",
+    "74_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t35_S6t[0]",
+    "75_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank74[0]",
+    "75_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t37_S6t[0]",
+    "76_bizinc_other_description": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].Blank75[0]",
+    "76_bizinc_other_amount": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t39_S6t[0]",
+    "77_bizinc_total_income": "topmostSubform[0].Page6[0].TotalMonthlyIncome[0].p6_t43_S6t[0]",
+    "78_bizexp_materials_purchased": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t23_S6t[0]",
+    "79_bizexp_inventory_purchased": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t25_S6t[0]",
+    "80_bizexp_gross_wages_and_salaries": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t27_S6t[0]",
+    "81_bizexp_rent": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t29_S6t[0]",
+    "82_bizexp_supplies": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t31_S6t[0]",
+    "83_bizexp_utilities_telephone": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t32_S6t[0]",
+    "84_bizexp_vehicle_gasoline_oil": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t34_S6t[0]",
+    "85_bizexp_repairs_and_maintenance": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t36_S6t[0]",
+    "86_bizexp_insurance": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t38_S6t[0]",
+    "87_bizexp_current_taxes": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t40_S6t[0]",
+    "88_bizexp_other_expenses": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t42_S6t[0]",
+    "89_bizexp_total_expenses": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t44_S6t[0]",
+    "90_biz_net_business_income": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t45_S6t[0]",
+    "53a_business_name_and_address": "topmostSubform[0].Page5[0].#subform[0].p5_t1_52[0]",
+    "54_employer_identification_number": "topmostSubform[0].Page5[0].p5_t2_53[0]",
+    "55_type_of_business": "topmostSubform[0].Page5[0].p5_t3_54[0]",
+    "57_business_website": "topmostSubform[0].Page5[0].p5_t4_56[0]",
+    "58_total_number_of_employees": "topmostSubform[0].Page5[0].p5_t5_57[0]",
+    "59_average_gross_monthly_payroll": "topmostSubform[0].Page5[0].p5_t6_58a[0]",
+    "60_frequency_of_tax_deposits": "topmostSubform[0].Page5[0].p5_t7_59b[0]",
+    "64_business_cash_on_hand": "topmostSubform[0].Page5[0].p5_t21_63[0]",
+    "S7_period_from": "topmostSubform[0].Page6[0].p6_t20_S6[0]",
+    "S7_period_to": "topmostSubform[0].Page6[0].p6_t21_S6[0]"
+  },
+  "split": {
+    "_why": "The form splits one real-world value across two abutting boxes with hard maxLength limits. Splitting in the engine rather than at intake means ONE HubSpot custom field per real value, not two - and CF names are immutable once provisioned. Consume `chars` source characters per part after applying `strip`; `format` masks the part with # as a digit placeholder. Every part must fit its target's /MaxLen or the fill stops.",
+    "1c_home_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t6c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "format": "###-####",
-     "target": "topmostSubform[0].Page1[0].c1[0].Line1c[0].p1-t7c[0]"
-    }
-   ]
-  },
-  "1d_cell_phone": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 3,
-     "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]"
+    "1d_cell_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t8d[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "format": "###-####",
-     "target": "topmostSubform[0].Page1[0].c1[0].Line1d[0].p1-t9d[0]"
-    }
-   ]
-  },
-  "4c_tp_work_phone": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 3,
-     "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]"
+    "4c_tp_work_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t17_4c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "format": "###-####",
-     "target": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].Line4cWork[0].p1-t18_4c[0]"
-    }
-   ]
-  },
-  "5c_sp_work_phone": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 3,
-     "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]"
+    "5c_sp_work_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1_t24_5c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "format": "###-####",
-     "target": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].#subform[0].p1-t25_5c[0]"
-    }
-   ]
-  },
-  "9b_trust_ein": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 2,
-     "target": "topmostSubform[0].page2[0].p1-t45_9[0]"
+    "9b_trust_ein": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 2,
+          "target": "topmostSubform[0].page2[0].p1-t45_9[0]"
+        },
+        {
+          "chars": 7,
+          "target": "topmostSubform[0].page2[0].p1-t46_9[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "target": "topmostSubform[0].page2[0].p1-t46_9[0]"
-    }
-   ]
-  },
-  "9c_trustee_ein": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 2,
-     "target": "topmostSubform[0].page2[0].p1-t02_9b[0]"
+    "9c_trustee_ein": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 2,
+          "target": "topmostSubform[0].page2[0].p1-t02_9b[0]"
+        },
+        {
+          "chars": 7,
+          "target": "topmostSubform[0].page2[0].p1-t01_9b[0]"
+        }
+      ]
     },
-    {
-     "chars": 7,
-     "target": "topmostSubform[0].page2[0].p1-t01_9b[0]"
+    "53b_business_phone": {
+      "strip": "[^0-9]",
+      "parts": [
+        {
+          "chars": 3,
+          "target": "topmostSubform[0].Page5[0].#subform[0].Line1c[0].p1-t6c[0]"
+        },
+        {
+          "chars": 7,
+          "format": "###-####",
+          "target": "topmostSubform[0].Page5[0].#subform[0].Line1c[0].p1-t7c[0]"
+        }
+      ]
     }
-   ]
   },
-  "53b_business_phone": {
-   "strip": "[^0-9]",
-   "parts": [
-    {
-     "chars": 3,
-     "target": "topmostSubform[0].Page5[0].#subform[0].Line1c[0].p1-t6c[0]"
+  "checkboxes": {
+    "marital_status": {
+      "married": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
+      "unmarried": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
     },
-    {
-     "chars": 7,
-     "format": "###-####",
-     "target": "topmostSubform[0].Page5[0].#subform[0].Line1c[0].p1-t7c[0]"
+    "3a_business_interest": {
+      "yes": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
+      "no": "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
+    },
+    "3c_business_type": {
+      "partnership": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
+      "llc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
+      "corporation": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
+      "other": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
+    },
+    "4d_tp_contact_at_work": {
+      "yes": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
+      "no": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
+    },
+    "4h_tp_pay_period": {
+      "weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
+      "monthly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
+      "bi-weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
+      "other": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
+    },
+    "5d_sp_contact_at_work": {
+      "yes": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
+      "no": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
+    },
+    "5h_sp_pay_period": {
+      "weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
+      "monthly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
+      "bi-weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
+      "other": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
+    },
+    "7_lawsuit_role": {
+      "plaintiff": "topmostSubform[0].Page1[0].c1_6a_[2]",
+      "defendant": "topmostSubform[0].Page1[0].c1_6a_[3]"
+    },
+    "8_bankruptcy": {
+      "yes": "topmostSubform[0].Page1[0].c1_7_[0]",
+      "no": "topmostSubform[0].Page1[0].c1_7_[1]"
+    },
+    "8b_lived_abroad_6mo": {
+      "yes": "topmostSubform[0].page2[0].c1_8b_[0]",
+      "no": "topmostSubform[0].page2[0].c1_8b_[1]"
+    },
+    "8c_dual_citizenship": {
+      "yes": "topmostSubform[0].page2[0].c1_8_[0]",
+      "no": "topmostSubform[0].page2[0].c1_8_[1]"
+    },
+    "9a_incarcerated": {
+      "yes": "topmostSubform[0].page2[0].c1_9a_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9a_[1]"
+    },
+    "9b_beneficiary_of_trust_estate_policy": {
+      "yes": "topmostSubform[0].page2[0].c1_9b_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9b_[1]"
+    },
+    "9c_trustee_fiduciary_contributor": {
+      "yes": "topmostSubform[0].page2[0].c1_9c_[0]",
+      "no": "topmostSubform[0].page2[0].c1_9c_[1]"
+    },
+    "10_safe_deposit_box": {
+      "yes": "topmostSubform[0].page2[0].c1_10_[0]",
+      "no": "topmostSubform[0].page2[0].c1_10_[1]"
+    },
+    "11_transferred_assets": {
+      "yes": "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
+      "no": "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
+    },
+    "17_has_life_insurance": {
+      "yes": "topmostSubform[0].Page2[0].c1_07_0_[0]",
+      "no": "topmostSubform[0].Page2[0].c1_07_0_[1]"
+    },
+    "52_sole_proprietorship_schedule_c": {
+      "yes": "topmostSubform[0].Page5[0].#subform[0].p5_0_51[0]",
+      "no": "topmostSubform[0].Page5[0].#subform[0].p5_0_51[1]"
+    },
+    "56_federal_contractor": {
+      "yes": "topmostSubform[0].Page5[0].p5_0_55[0]",
+      "no": "topmostSubform[0].Page5[0].p5_0_55[1]"
+    },
+    "61_engages_in_ecommerce": {
+      "yes": "topmostSubform[0].Page5[0].p5_0_60[0]",
+      "no": "topmostSubform[0].Page5[0].p5_0_60[1]"
+    },
+    "S7_accounting_method": {
+      "cash": "topmostSubform[0].Page6[0].p6_0_7[0]",
+      "accrual": "topmostSubform[0].Page6[0].p6_0_7[1]"
     }
-   ]
-  }
- },
- "checkboxes": {
-  "marital_status": {
-   "married": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
-   "unmarried": "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
   },
-  "3a_business_interest": {
-   "yes": "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
-   "no": "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
-  },
-  "3c_business_type": {
-   "partnership": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
-   "llc": "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
-   "corporation": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
-   "other": "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
-  },
-  "4d_tp_contact_at_work": {
-   "yes": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
-   "no": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
-  },
-  "4h_tp_pay_period": {
-   "weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
-   "monthly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
-   "bi-weekly": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
-   "other": "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
-  },
-  "5d_sp_contact_at_work": {
-   "yes": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
-   "no": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
-  },
-  "5h_sp_pay_period": {
-   "weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
-   "monthly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
-   "bi-weekly": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
-   "other": "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
-  },
-  "7_lawsuit_role": {
-   "plaintiff": "topmostSubform[0].Page1[0].c1_6a_[2]",
-   "defendant": "topmostSubform[0].Page1[0].c1_6a_[3]"
-  },
-  "8_bankruptcy": {
-   "yes": "topmostSubform[0].Page1[0].c1_7_[0]",
-   "no": "topmostSubform[0].Page1[0].c1_7_[1]"
-  },
-  "8b_lived_abroad_6mo": {
-   "yes": "topmostSubform[0].page2[0].c1_8b_[0]",
-   "no": "topmostSubform[0].page2[0].c1_8b_[1]"
-  },
-  "8c_dual_citizenship": {
-   "yes": "topmostSubform[0].page2[0].c1_8_[0]",
-   "no": "topmostSubform[0].page2[0].c1_8_[1]"
-  },
-  "9a_incarcerated": {
-   "yes": "topmostSubform[0].page2[0].c1_9a_[0]",
-   "no": "topmostSubform[0].page2[0].c1_9a_[1]"
-  },
-  "9b_beneficiary_of_trust_estate_policy": {
-   "yes": "topmostSubform[0].page2[0].c1_9b_[0]",
-   "no": "topmostSubform[0].page2[0].c1_9b_[1]"
-  },
-  "9c_trustee_fiduciary_contributor": {
-   "yes": "topmostSubform[0].page2[0].c1_9c_[0]",
-   "no": "topmostSubform[0].page2[0].c1_9c_[1]"
-  },
-  "10_safe_deposit_box": {
-   "yes": "topmostSubform[0].page2[0].c1_10_[0]",
-   "no": "topmostSubform[0].page2[0].c1_10_[1]"
-  },
-  "11_transferred_assets": {
-   "yes": "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
-   "no": "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
-  },
-  "17_has_life_insurance": {
-   "yes": "topmostSubform[0].Page2[0].c1_07_0_[0]",
-   "no": "topmostSubform[0].Page2[0].c1_07_0_[1]"
-  },
-  "52_sole_proprietorship_schedule_c": {
-   "yes": "topmostSubform[0].Page5[0].#subform[0].p5_0_51[0]",
-   "no": "topmostSubform[0].Page5[0].#subform[0].p5_0_51[1]"
-  },
-  "56_federal_contractor": {
-   "yes": "topmostSubform[0].Page5[0].p5_0_55[0]",
-   "no": "topmostSubform[0].Page5[0].p5_0_55[1]"
-  },
-  "61_engages_in_ecommerce": {
-   "yes": "topmostSubform[0].Page5[0].p5_0_60[0]",
-   "no": "topmostSubform[0].Page5[0].p5_0_60[1]"
-  },
-  "S7_accounting_method": {
-   "cash": "topmostSubform[0].Page6[0].p6_0_7[0]",
-   "accrual": "topmostSubform[0].Page6[0].p6_0_7[1]"
-  }
- },
- "groups": {
-  "household_members": {
-   "source": "household_members",
-   "max": 5,
-   "overflow": "log",
-   "slots": [
-    {
-     "text": {
-      "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Name_01[0]",
-      "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Age_01[0]",
-      "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Relationship_01[0]"
-     },
-     "checkboxes": {
-      "claimed_on_1040": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
+  "groups": {
+    "household_members": {
+      "source": "household_members",
+      "max": 5,
+      "overflow": "log",
+      "slots": [
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Name_01[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Age_01[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Relationship_01[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Name_02[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Age_02[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Relationship_02[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Name_03[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Age_03[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Relationship_03[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Name_04[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Age_04[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Relationship_04[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Name_04[0]",
+            "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Age_04[0]",
+            "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Relationship_04[0]"
+          },
+          "checkboxes": {
+            "claimed_on_1040": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
+            },
+            "contributes_to_household_income": {
+              "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
+              "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+            }
+          }
+        }
+      ]
+    },
+    "bank_accounts": {
+      "source": "bank_accounts",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "13",
+      "slots": [
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].Line12A[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t2_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t3_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t4_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].Line12B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t7_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].Line12B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t7_12[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].Line12B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t5_12[0]",
+            "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t6_12[0]",
+            "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t7_12[0]"
+          }
+        }
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "bank_account"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible.",
+        "discriminator": {
+          "column": "is_business_account",
+          "equals": false,
+          "_why": "C-05, FOUND ON THIS FORM BY THE SAME-CLASS ASSERTION AUTHORED FOR 433-A(OIC). 433-A prints bank accounts TWICE and the printed page names both: “PERSONAL BANK ACCOUNTS” at page 2 y 464.1 x 43.2..159.8 over this table, and “BUSINESS BANK ACCOUNTS” at page 7 y 405.4 x 43.2..156.6 over the other. Both are class bank_account - correctly, because it IS the same class - and before this discriminator nothing decided which table a row landed in except which input property it happened to be stored in. The form itself draws the split: “Report Personal Accounts in Section 4.” is printed beside the BUSINESS heading at page 7 y 395.4 x 312.4..452.9."
+        }
       },
-      "contributes_to_household_income": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
-      }
-     }
+      "union_columns": [
+        "is_business_account"
+      ],
+      "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
     },
-    {
-     "text": {
-      "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Name_02[0]",
-      "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Age_02[0]",
-      "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Relationship_02[0]"
-     },
-     "checkboxes": {
-      "claimed_on_1040": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
+    "investments": {
+      "source": "investments",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "14",
+      "slots": [
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].Line13A[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2-t61_13a[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2_t10_13a[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].Line13B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].Line13B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].Line13B[0]",
+            "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2-t62_13b[0]",
+            "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2_t14_13b[0]",
+            "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t17_13b[0]",
+            "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t16_13b[0]",
+            "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t15_13b[0]"
+          }
+        }
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "investment"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
       },
-      "contributes_to_household_income": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
-      }
-     }
+      "union_columns": [
+        "account_number",
+        "is_business_account"
+      ],
+      "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
     },
-    {
-     "text": {
-      "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Name_03[0]",
-      "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Age_03[0]",
-      "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Relationship_03[0]"
-     },
-     "checkboxes": {
-      "claimed_on_1040": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
+    "real_property": {
+      "source": "real_property",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "18a/18b/18c",
+      "slots": [
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].Line17[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t5_17a[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t6_17a[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t7_17a[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t8_17a[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t9_17a[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t10_17a[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[3]",
+            "location": "topmostSubform[0].Page3[0].p3_t11_17a[2]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[15].p3_t12_17a[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[15].p2_t18_13c[2]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].Line17b[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t13_17b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t14_17b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t15_17b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t16_17b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t17_17b[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t18_17b[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[1]",
+            "location": "topmostSubform[0].Page3[0].p3_t18_17b[1]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[6].p3_t19_17b[1]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[6].p2_t18_13c[1]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].Line17b[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t13_17b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t14_17b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t15_17b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t16_17b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t17_17b[0]",
+            "equity": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t18_17b[0]",
+            "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[0]",
+            "location": "topmostSubform[0].Page3[0].p3_t18_17b[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].#subform[4].p3_t19_17b[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].#subform[4].p2_t18_13c[0]"
+          }
+        }
+      ],
+      "union_columns": [
+        "year_purchased",
+        "purchase_price",
+        "kind"
+      ],
+      "_union_why": "433-F's B. REAL ESTATE prints three cells 433-A prints none for: Year Purchased, Purchase Price, and the Primary Residence / Other Property tick. They are columns of the CANONICAL real_property row (asset-row-shapes.json class real_property), so the shared property must publish them or the next form is told they do not exist — the same reason bank_accounts declares is_business_account. ADD-ONLY: every column 433-A already prints keeps its key and its target, and none of these three has a slot on this form, so nothing here reaches a 433-A page.",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "real_property"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
+    },
+    "vehicles": {
+      "source": "vehicles",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "19a/19b/19c",
+      "slots": [
+        {
+          "text": {
+            "model_year": "topmostSubform[0].Page3[0].Line18a[0].p3_t21_18aYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18a[0].p3_t22_18aMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18a[0].Line18aMKMDL[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aTGNUM[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].Purchase[0].p3_t23_18a[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].CurrentFMV[0].p3_t24_18a[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].CurrentLoan[0].p3_t25_18a[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].AmountPayment[0].p3_t26_18a[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].DateFinal[0].p3_t27_18a[0]",
+            "equity": "topmostSubform[0].Page3[0].Equity[0].p3_t28_18a[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone[0].p3_t30_18a[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone[0].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "model_year": "topmostSubform[0].Page3[0].Line18b[0].p3_t00_18bYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18b[0].p3_t31_18bMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18b[0].Line18b[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18b[0].p3_t38_18b[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18b[0].p3_t29_18bVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[1]",
+            "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[1]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[1]",
+            "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[1]",
+            "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[1]",
+            "equity": "topmostSubform[0].Page3[0].p3_t37_18b[1]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[1].p3_t39_18bLLN[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[1].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "model_year": "topmostSubform[0].Page3[0].Line18b[1].p3_t00_18bYR[0]",
+            "make_model": "topmostSubform[0].Page3[0].Line18b[1].p3_t31_18bMILE[0]",
+            "mileage": "topmostSubform[0].Page3[0].Line18b[1].Line18b[0]",
+            "license_tag": "topmostSubform[0].Page3[0].Line18b[1].p3_t38_18b[0]",
+            "vin": "topmostSubform[0].Page3[0].Line18b[1].p3_t29_18bVIN[0]",
+            "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[0]",
+            "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[0]",
+            "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[0]",
+            "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[0]",
+            "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[0]",
+            "equity": "topmostSubform[0].Page3[0].p3_t37_18b[0]",
+            "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[0].p3_t39_18bLLN[0]",
+            "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[0].p2_t18_13c[0]"
+          }
+        }
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "vehicle"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
+    },
+    "digital_assets": {
+      "source": "digital_assets",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "15",
+      "slots": [
+        {
+          "text": {
+            "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].Line13A[0]",
+            "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].#field[1]",
+            "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t13_13a[0]",
+            "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t12_13a[0]",
+            "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t11_13a[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].Line13B[0]",
+            "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].#field[1]",
+            "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t17_13b[0]",
+            "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t16_13b[0]",
+            "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].Line13B[0]",
+            "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].#field[1]",
+            "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t17_13b[0]",
+            "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t16_13b[0]",
+            "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t15_13b[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].Line13B[0]",
+            "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].#field[1]",
+            "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t17_13b[0]",
+            "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t16_13b[0]",
+            "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t15_13b[0]"
+          }
+        }
+      ]
+    },
+    "available_credit": {
+      "source": "available_credit",
+      "max": 4,
+      "overflow": "log",
+      "printed_line": "16",
+      "slots": [
+        {
+          "text": {
+            "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].p2-t72_14a[0]",
+            "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].AcctNo14A[0]",
+            "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t23_14a[0]",
+            "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t24_14a[0]",
+            "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t25_14a[0]"
+          }
+        },
+        {
+          "text": {
+            "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].p2-t73_14b[0]",
+            "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].Line14B[0]",
+            "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t26_14b[0]",
+            "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t27_14b[0]",
+            "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t28_14b[0]"
+          }
+        },
+        {
+          "text": {
+            "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].p2-t73_14b[0]",
+            "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].Line14B[0]",
+            "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t26_14b[0]",
+            "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t27_14b[0]",
+            "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t28_14b[0]"
+          }
+        },
+        {
+          "text": {
+            "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].p2-t73_14b[0]",
+            "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].Line14B[0]",
+            "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t26_14b[0]",
+            "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t27_14b[0]",
+            "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t28_14b[0]"
+          }
+        }
+      ],
+      "union_columns": [
+        "card_or_line_type",
+        "minimum_monthly_payment"
+      ],
+      "_union_why": "433-F's D. CREDIT CARDS prints two cells 433-A prints none for: the card or line TYPE (Visa, department store card, line of credit) and the Minimum Monthly Payment. Both are columns of the canonical credit_line row. 433-A's own available_credit column is the reverse case — 433-F prints no cell for it — and it stays, because the union is the union. ADD-ONLY: nothing here reaches a 433-A page.",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "credit_line"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
+      }
+    },
+    "life_insurance_policies": {
+      "source": "life_insurance_policies",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "17a-17e (three policy columns)",
+      "slots": [
+        {
+          "text": {
+            "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t30_16[0]",
+            "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t33_16c[0]",
+            "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t36_16d[0]",
+            "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t39_16e[0]",
+            "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t42_16f[0]"
+          }
+        },
+        {
+          "text": {
+            "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t31_16[0]",
+            "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t34_16c[0]",
+            "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t37_16d[0]",
+            "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t40_16e[0]",
+            "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t43_16f[0]"
+          }
+        },
+        {
+          "text": {
+            "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t32_16[0]",
+            "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t35_16c[0]",
+            "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t38_16d[0]",
+            "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t41_16e[0]",
+            "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t44_16f[0]"
+          }
+        }
+      ]
+    },
+    "property_line_20": {
+      "source": "property_line_20",
+      "max": 2,
+      "overflow": "log",
+      "printed_line": "20a/20b",
+      "slots": [
+        {
+          "text": {
+            "description": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].Line19a[0]",
+            "purchase_date": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t41_19a[0]",
+            "current_fmv": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t42_19a[0]",
+            "current_loan_balance": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t43_19a[0]",
+            "monthly_payment": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t44_19a[0]",
+            "final_payment_date": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t45_19a[0]",
+            "equity": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t46_19a[0]",
+            "location": "topmostSubform[0].#subform[4].p3_t55_19b[0]",
+            "lender_name_address": "topmostSubform[0].#subform[4].Lender-phone3[0].p3_t55_19bLLNA[0]",
+            "lender_phone": "topmostSubform[0].#subform[4].Lender-phone3[0].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].Line19b[0]",
+            "purchase_date": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t49_19b[0]",
+            "current_fmv": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t50_19b[0]",
+            "current_loan_balance": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t51_19b[0]",
+            "monthly_payment": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t52_19b[0]",
+            "final_payment_date": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t53_19b[0]",
+            "equity": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t54_19b[0]",
+            "location": "topmostSubform[0].#subform[4].p3_t47_19a[0]",
+            "lender_name_address": "topmostSubform[0].#subform[4].Lender-phone4[0].p3_t48_19aLLNAS[0]",
+            "lender_phone": "topmostSubform[0].#subform[4].Lender-phone4[0].p2_t18_13c[0]"
+          }
+        }
+      ]
+    },
+    "business_bank_accounts": {
+      "source": "business_bank_accounts",
+      "max": 2,
+      "overflow": "log",
+      "printed_line": "65a/65b",
+      "slots": [
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t23_64a[0]",
+            "institution_name_and_address": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t24_64a[0]",
+            "account_number": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t25_64a[0]",
+            "account_balance": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t26_64a[0]"
+          }
+        },
+        {
+          "text": {
+            "type_of_account": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t27_64b[0]",
+            "institution_name_and_address": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t28_64b[0]",
+            "account_number": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t29_64b[0]",
+            "account_balance": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t30_64b[0]"
+          }
+        }
+      ],
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "bank_account"
+        ],
+        "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible.",
+        "discriminator": {
+          "column": "is_business_account",
+          "equals": true,
+          "_why": "The other half. Same column, opposite value. This is the table printed under “BUSINESS BANK ACCOUNTS” at page 7 y 405.4, whose own caption at y 395.4 says “Report Personal Accounts in Section 4.” - the page telling the two apart in terms, and this is that sentence declared. NOTE the widget names say Page5[0] and the cells render on printed PAGE 7; the coordinates above are the printed page, which is what a discriminator is evidenced from."
+        }
       },
-      "contributes_to_household_income": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
-      }
-     }
+      "union_columns": [
+        "is_business_account"
+      ],
+      "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
     },
-    {
-     "text": {
-      "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Name_04[0]",
-      "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Age_04[0]",
-      "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Relationship_04[0]"
-     },
-     "checkboxes": {
-      "claimed_on_1040": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
+    "accounts_notes_receivable": {
+      "source": "accounts_notes_receivable",
+      "max": 5,
+      "overflow": "log",
+      "printed_line": "66a-66e",
+      "slots": [
+        {
+          "text": {
+            "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t32_65a[0]",
+            "status": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t33_65a[0]",
+            "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t34_65a[0]",
+            "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t35_65a[0]",
+            "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t36_65a[0]"
+          }
+        },
+        {
+          "text": {
+            "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t37_65b[0]",
+            "status": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t38_65b[0]",
+            "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t39_65b[0]",
+            "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t40_65b[0]",
+            "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t41_65b[0]"
+          }
+        },
+        {
+          "text": {
+            "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t42_65c[0]",
+            "status": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t43_65c[0]",
+            "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t44_65c[0]",
+            "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t45_65c[0]",
+            "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t46_65c[0]"
+          }
+        },
+        {
+          "text": {
+            "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t47_65d[0]",
+            "status": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t48_65d[0]",
+            "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t49_65d[0]",
+            "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t50_65d[0]",
+            "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t51_65d[0]"
+          }
+        },
+        {
+          "text": {
+            "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[0]",
+            "status": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[1]",
+            "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[2]",
+            "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[3]",
+            "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[4]"
+          }
+        }
+      ],
+      "row_composites": {
+        "_why": "One printed cell fed by two canonical row keys. Applied to the row BEFORE the slot targets are written, so every slot composes identically and the slot list needs no per-slot special case.",
+        "receivable_name_and_address": {
+          "from": [
+            "name",
+            "address"
+          ],
+          "join": ", ",
+          "_join_why": "Comma-space, because the printed caption asks for the party AND its street address in one box and that is how an address is written after a name. The separator is a PRESENTATION choice made here, at the form, and never stored — crosswalk A6 already ruled that deriving two facts back out of one combined string is what a stored separator invites."
+        }
       },
-      "contributes_to_household_income": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
-      }
-     }
+      "_split_note": "The shared row class SPLIT receivable_name_and_address into name + address, the one non-additive change in the fourteen-table union. Free on the day it was made: adapters/hubspot/asset-row-shapes.json records held_data = false on every irs433_ property, so no record needed migrating. The slot targets below did not move and their printed column did not change; what changed is that the row arriving from the backbone now carries two keys where it carried one, and this map joins them."
     },
-    {
-     "text": {
-      "name": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Name_04[0]",
-      "age": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Age_04[0]",
-      "relationship": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Relationship_04[0]"
-     },
-     "checkboxes": {
-      "claimed_on_1040": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
+    "business_property": {
+      "source": "business_property",
+      "max": 2,
+      "overflow": "log",
+      "printed_line": "67a/67b",
+      "slots": [
+        {
+          "text": {
+            "description": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t1_66a[0]",
+            "purchase_date": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t2_66a[0]",
+            "current_fmv": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t3_66a[0]",
+            "current_loan_balance": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t4_66a[0]",
+            "monthly_payment": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t5_66a[0]",
+            "final_payment_date": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t6_66a[0]",
+            "equity": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t7_66a[0]",
+            "title_holders": "topmostSubform[0].Page6[0].p3_t11_17a[0]",
+            "location": "topmostSubform[0].Page6[0].p6_t8_66a[0]",
+            "lender_name_address": "topmostSubform[0].Page6[0].Lender-Phone[0].p6_t9_66a[0]",
+            "lender_phone": "topmostSubform[0].Page6[0].Lender-Phone[0].p2_t18_13c[0]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t10_66b[0]",
+            "purchase_date": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t11_66b[0]",
+            "current_fmv": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t12_66b[0]",
+            "current_loan_balance": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t13_66b[0]",
+            "monthly_payment": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t14_66b[0]",
+            "final_payment_date": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t15_66b[0]",
+            "equity": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t16_66b[0]",
+            "title_holders": "topmostSubform[0].Page6[0].p3_t11_17a[1]",
+            "location": "topmostSubform[0].Page6[0].p6_t17_66b[0]",
+            "lender_name_address": "topmostSubform[0].Page6[0].Lender-Phone2[0].p6_t18_66b[0]",
+            "lender_phone": "topmostSubform[0].Page6[0].Lender-Phone2[0].p2_t18_13c[0]"
+          }
+        }
+      ]
+    },
+    "payment_processors": {
+      "source": "payment_processors",
+      "max": 2,
+      "overflow": "log",
+      "printed_line": "62a/62b",
+      "slots": [
+        {
+          "text": {
+            "name_and_address": "topmostSubform[0].Page5[0].AB61[0].a61[0].p5_t8_61a[0]",
+            "processor_account_number": "topmostSubform[0].Page5[0].AB61[0].a61[0].p5_t9_61a[0]"
+          }
+        },
+        {
+          "text": {
+            "name_and_address": "topmostSubform[0].Page5[0].AB61[0].b61[0].p5_t10_61b[0]",
+            "processor_account_number": "topmostSubform[0].Page5[0].AB61[0].b61[0].p5_t11_61b[0]"
+          }
+        }
+      ]
+    },
+    "credit_cards_accepted": {
+      "source": "credit_cards_accepted",
+      "max": 3,
+      "overflow": "log",
+      "printed_line": "63a/63b/63c",
+      "slots": [
+        {
+          "text": {
+            "credit_card": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t12_62a[0]",
+            "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t13_62a[0]",
+            "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t14_62a[0]"
+          }
+        },
+        {
+          "text": {
+            "credit_card": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t15_62b[0]",
+            "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t16_62b[0]",
+            "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t17_62b[0]"
+          }
+        },
+        {
+          "text": {
+            "credit_card": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t18_62c[0]",
+            "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t19_62c[0]",
+            "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t20_62c[0]"
+          }
+        }
+      ]
+    }
+  },
+  "exclusive": {
+    "marital_status": [
+      "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
+      "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
+    ],
+    "3a_business_interest": [
+      "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
+    ],
+    "3c_business_type": [
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
+      "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
+    ],
+    "4d_tp_contact_at_work": [
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
+    ],
+    "4h_tp_pay_period": [
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
+      "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
+    ],
+    "5d_sp_contact_at_work": [
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
+    ],
+    "5h_sp_pay_period": [
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
+      "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
+    ],
+    "7_lawsuit_role": [
+      "topmostSubform[0].Page1[0].c1_6a_[2]",
+      "topmostSubform[0].Page1[0].c1_6a_[3]"
+    ],
+    "unresolved_c1_6a_yesno": [
+      "topmostSubform[0].Page1[0].c1_6a_[0]",
+      "topmostSubform[0].Page1[0].c1_6a_[1]"
+    ],
+    "unresolved_c1_6_yesno": [
+      "topmostSubform[0].Page1[0].c1_6_[0]",
+      "topmostSubform[0].Page1[0].c1_6_[1]"
+    ],
+    "8_bankruptcy": [
+      "topmostSubform[0].Page1[0].c1_7_[0]",
+      "topmostSubform[0].Page1[0].c1_7_[1]"
+    ],
+    "unresolved_8a": [
+      "topmostSubform[0].page2[0].c1_8a_[0]",
+      "topmostSubform[0].page2[0].c1_8a_[1]"
+    ],
+    "8b_lived_abroad_6mo": [
+      "topmostSubform[0].page2[0].c1_8b_[0]",
+      "topmostSubform[0].page2[0].c1_8b_[1]"
+    ],
+    "8c_dual_citizenship": [
+      "topmostSubform[0].page2[0].c1_8_[0]",
+      "topmostSubform[0].page2[0].c1_8_[1]"
+    ],
+    "9a_incarcerated": [
+      "topmostSubform[0].page2[0].c1_9a_[0]",
+      "topmostSubform[0].page2[0].c1_9a_[1]"
+    ],
+    "9b_beneficiary_of_trust_estate_policy": [
+      "topmostSubform[0].page2[0].c1_9b_[0]",
+      "topmostSubform[0].page2[0].c1_9b_[1]"
+    ],
+    "9c_trustee_fiduciary_contributor": [
+      "topmostSubform[0].page2[0].c1_9c_[0]",
+      "topmostSubform[0].page2[0].c1_9c_[1]"
+    ],
+    "10_safe_deposit_box": [
+      "topmostSubform[0].page2[0].c1_10_[0]",
+      "topmostSubform[0].page2[0].c1_10_[1]"
+    ],
+    "11_transferred_assets": [
+      "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
+      "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
+    ],
+    "hh1_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
+    ],
+    "hh1_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
+    ],
+    "hh2_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
+    ],
+    "hh2_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
+    ],
+    "hh3_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
+    ],
+    "hh3_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
+    ],
+    "hh4_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
+    ],
+    "hh4_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
+    ],
+    "hh5_claimed_on_1040": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
+    ],
+    "hh5_contributes": [
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
+      "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+    ],
+    "17_has_life_insurance": [
+      "topmostSubform[0].Page2[0].c1_07_0_[0]",
+      "topmostSubform[0].Page2[0].c1_07_0_[1]"
+    ],
+    "52_sole_proprietorship_schedule_c": [
+      "topmostSubform[0].Page5[0].#subform[0].p5_0_51[0]",
+      "topmostSubform[0].Page5[0].#subform[0].p5_0_51[1]"
+    ],
+    "56_federal_contractor": [
+      "topmostSubform[0].Page5[0].p5_0_55[0]",
+      "topmostSubform[0].Page5[0].p5_0_55[1]"
+    ],
+    "61_engages_in_ecommerce": [
+      "topmostSubform[0].Page5[0].p5_0_60[0]",
+      "topmostSubform[0].Page5[0].p5_0_60[1]"
+    ],
+    "S7_accounting_method": [
+      "topmostSubform[0].Page6[0].p6_0_7[0]",
+      "topmostSubform[0].Page6[0].p6_0_7[1]"
+    ]
+  },
+  "_deferred": {
+    "_why": "Still unresolved. Validated for existence, never filled. Two Yes/No pairs on page 1 and one on page 2 whose printed question is not yet established.",
+    "page1_yesno_pairs": {
+      "reason": "c1_6a_[0..1] and c1_6_[0..1] are structurally exclusive pairs, but which belongs to printed line 6 (income change) and which to printed line 7 (lawsuit) is not established. Their targets appear under `exclusive` so the guard covers them; they carry no checkbox mapping and are never checked.",
+      "targets": [
+        "topmostSubform[0].Page1[0].c1_6a_[0]",
+        "topmostSubform[0].Page1[0].c1_6a_[1]",
+        "topmostSubform[0].Page1[0].c1_6_[0]",
+        "topmostSubform[0].Page1[0].c1_6_[1]"
+      ]
+    },
+    "line_8a": {
+      "reason": "c1_8a_[0..1] binds by y to printed line 8a, but 8a's printed question text was never captured - no text field correlates to it.",
+      "targets": [
+        "topmostSubform[0].page2[0].c1_8a_[0]",
+        "topmostSubform[0].page2[0].c1_8a_[1]"
+      ]
+    }
+  },
+  "allowed": {
+    "_why": "The IRS USE ONLY / Allowable Expenses column. Only the two lines IRS grants at a FIXED published amount are auto-filled. Everything else in this column is left blank on purpose: a wrong allowable printed on a filed collection statement is worse than an empty cell an examiner fills in. Same rule already proven on 433-F.",
+    "_offset_warning": "The IRS* field names are offset by one from the printed line they serve. IRS35 is the allowed cell for PRINTED LINE 36, IRS41 for printed line 42, IRS49 for printed line 50, IRS50 for printed line 51. Never bind an allowed target by matching its own number to a line number.",
+    "standards_source": "adapters/pdf/maps/433f.standards.json (2026 IRS Collection Financial Standards; form-agnostic despite the 433f prefix - renamed in Commit 1 of this prompt)",
+    "national_standards_total": {
+      "printed_line": "36 Food, Clothing and Misc.",
+      "target": "topmostSubform[0].Page4[0].IRS35[0]",
+      "basis": "IRS National Standards: \"Generally, the total number of persons allowed for National Standards should be the same as those allowed as dependents on the taxpayer's most recent year income tax return.\" Source: irs.gov/businesses/small-businesses-self-employed/national-standards-food-clothing-and-other-items",
+      "input": "allowable_household_size",
+      "derive_when_absent": "1 (taxpayer) + 1 if marital_status is married + the count of household_members with claimed_on_1040 = yes that fit the printed table. This is what the form itself shows, and it is the IRS default.",
+      "override": "If allowable_household_size IS supplied it WINS and is used as given - the IRS wording is \"generally\", so the operator may depart from the default. Warn loudly, showing both figures, so the departure is recorded rather than silent.",
+      "lookup": "National Standards TOTAL for that number of persons, clamped to the published 1-4 range, plus the published per-additional-person amount for each person above 4."
+    },
+    "out_of_pocket_health": {
+      "printed_line": "42 Out of Pocket Health Care Costs",
+      "target": "topmostSubform[0].Page4[0].IRS41[0]",
+      "inputs": [
+        "allowable_under_65_count",
+        "allowable_65_over_count"
+      ],
+      "lookup": "(under_65_count x the published under-65 per-person amount) + (65_over_count x the published 65-and-over per-person amount). Read oop_basis from the standards file and STOP if it is not per-person; do not assume.",
+      "why_two_counts": "433-A prints ONE out-of-pocket line for the whole household, unlike 433-F which prints the per-person rate beside separate age-band headcounts. A household can span both age bands, so a single age_band input cannot express it and would silently price an over-65 person at the under-65 rate.",
+      "consistency_check": "under_65_count + 65_over_count must equal the household size actually used for the national standards line. Mismatch is a hard stop, not a warning: the two allowed cells would otherwise be computed on different households.",
+      "cross_check": "Compare the supplied counts against the ages printed in the household_members table plus the taxpayer and spouse dates of birth where available. Warn on disagreement; do not auto-correct."
+    },
+    "_never_autofill": {
+      "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator (which walks string VALUES) checks every one of them for existence. Each is validated and never written.",
+      "fields": [
+        {
+          "target": "topmostSubform[0].Page4[0].IRS36[0]",
+          "reason": "printed line 37 Housing and Utilities - varies by county, no county table held"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS37[0]",
+          "reason": "printed line 38 Vehicle Ownership Costs - depends on car count and lease/loan status"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS38[0]",
+          "reason": "printed line 39 Vehicle Operating Costs - varies by census region"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS39[0]",
+          "reason": "printed line 40 Public Transportation - greater-of judgement against vehicle costs"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS40[0]",
+          "reason": "printed line 41 Health Insurance - actual, no published standard"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS42[0]",
+          "reason": "printed line 43 Court Ordered Payments - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS43[0]",
+          "reason": "printed line 44 Child/Dependent Care - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS44[0]",
+          "reason": "printed line 45 Life Insurance - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS45[0]",
+          "reason": "printed line 46 Current year taxes - actual"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS46[0]",
+          "reason": "printed line 47 Secured Debts - actual, examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS47[0]",
+          "reason": "printed line 48 Delinquent State or Local Taxes - examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS48[0]",
+          "reason": "printed line 49 Other Expenses - examiner discretion"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS49[0]",
+          "reason": "printed line 50 Total Living Expenses - a sum of the column, only meaningful once an examiner completes it"
+        },
+        {
+          "target": "topmostSubform[0].Page4[0].IRS50[0]",
+          "reason": "printed line 51 Net difference - same"
+        }
+      ]
+    }
+  },
+  "_partition": {
+    "_why": "Declared as the map is authored, not assembled in a closing pass, and MANDATORY: a map that declares no partition is a STOP in validate-map.mjs, not a skip. It was optional until slice 6, which meant 433-A and 433-F passed the new derive-and-check guards by declaring nothing for them to check — a map that DROPS a declaration was still uncaught, which is the no-declared-state defect wearing a third coat.",
+    "form_fields_total": 515,
+    "in_this_slice": 515,
+    "bound_writable": 495,
+    "excluded_never_autofill": 14,
+    "deferred": 6,
+    "unaccounted": 0,
+    "_check": "495 + 14 + 6 = 515, which is every field on pages 1, 2, 3, 4, 5, 6, 7, 8 (page-geometry.mjs reports 108 for p1, 80 for p2, 64 for p3, 74 for p4, 21 for p5, 49 for p6, 65 for p7, 54 for p8). 515 - 515 = 0 unaccounted. EVERY FIGURE IN THIS BLOCK WAS DERIVED, NEVER TYPED: it was written by a script that read the field list, this map's own targets and the PDF's widget geometry, and it is re-derived and checked on every gate run by adapters/pdf/count-sweep.mjs.",
+    "_unaccounted_by_page": "0 unaccounted. Every page of this form is authored, so no page appears in this breakdown. Stated rather than left empty: an absent breakdown and one that says zero read the same from outside, and that is the silence this repo keeps finding.",
+    "_backfilled": "BACKFILLED IN SLICE 6 FROM DERIVATION. This map is COMPLETE and always was; what it lacked was the declaration. Nothing written anywhere in this repo previously stated 433-A's partition as a set of figures — the only prior written figure about it is _notes[23], \"Only the three unresolved page-1/page-2 Yes/No pairs remain deferred\", which names three PAIRS and is a statement about pairs, not about the six checkbox fields those pairs hold. The derived deferred count is 6 and both statements are true of the same cells."
+  },
+  "_carried": {
+    "_rule": "An item leaves this ledger by being resolved or by being withdrawn with a reason, never by being forgotten. The counts below are DERIVED from the arrays by length and checked against the declared _count on every run.",
+    "_backfilled": "BACKFILLED IN SLICE 6. 433-A carried open questions before this ledger existed; they were recorded inside the constructs where they arose, which meant each was visible only to someone already reading that construct. Both entries below are transcribed from where they already stood — _deferred._why and _deferred.page1_yesno_pairs.reason for A-01, _deferred.line_8a.reason for A-02 — and neither is new. Nothing was invented to fill the ledger; if 433-A had held no open question it would declare an empty one.",
+    "open": [
+      {
+        "id": "A-01",
+        "raised": "v2, recorded in _deferred.page1_yesno_pairs",
+        "what": "Which of the two page-1 Yes/No checkbox pairs belongs to printed line 6 (income change) and which to printed line 7 (lawsuit). c1_6a_[0..1] and c1_6_[0..1] are structurally exclusive pairs and are guarded as such; the printed question each answers is not established. Four fields, never checked, validated for existence only."
       },
-      "contributes_to_household_income": {
-       "yes": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
-       "no": "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
+      {
+        "id": "A-02",
+        "raised": "v2, recorded in _deferred.line_8a",
+        "what": "Printed line 8a's question text was never captured — no text field correlates to it — so c1_8a_[0..1] binds to 8a by y alone. Two fields, never checked, validated for existence only."
       }
-     }
-    }
-   ]
-  },
-  "bank_accounts": {
-   "source": "bank_accounts",
-   "max": 4,
-   "overflow": "log",
-   "printed_line": "13",
-   "slots": [
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].Line12A[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t2_12[0]",
-      "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t3_12[0]",
-      "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12a[0].p2-t4_12[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].Line12B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t5_12[0]",
-      "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t6_12[0]",
-      "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].p2-t7_12[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].Line12B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t5_12[0]",
-      "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t6_12[0]",
-      "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].p2-t7_12[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].Line12B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t5_12[0]",
-      "account_number": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t6_12[0]",
-      "account_balance": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t7_12[0]"
-     }
-    }
-   ],
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "bank_account"
     ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible.",
-    "discriminator": {
-     "column": "is_business_account",
-     "equals": false,
-     "_why": "C-05, FOUND ON THIS FORM BY THE SAME-CLASS ASSERTION AUTHORED FOR 433-A(OIC). 433-A prints bank accounts TWICE and the printed page names both: “PERSONAL BANK ACCOUNTS” at page 2 y 464.1 x 43.2..159.8 over this table, and “BUSINESS BANK ACCOUNTS” at page 7 y 405.4 x 43.2..156.6 over the other. Both are class bank_account - correctly, because it IS the same class - and before this discriminator nothing decided which table a row landed in except which input property it happened to be stored in. The form itself draws the split: “Report Personal Accounts in Section 4.” is printed beside the BUSINESS heading at page 7 y 395.4 x 312.4..452.9."
+    "resolved": [],
+    "_count": {
+      "open": 2,
+      "resolved": 0
     }
-   },
-   "union_columns": [
-    "is_business_account"
-   ],
-   "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
-  },
-  "investments": {
-   "source": "investments",
-   "max": 4,
-   "overflow": "log",
-   "printed_line": "14",
-   "slots": [
-    {
-     "text": {
-      "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].Line13A[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2-t61_13a[0]",
-      "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].#subform[0].p2_t10_13a[0]",
-      "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t13_13a[0]",
-      "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t12_13a[0]",
-      "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].Line13B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2-t62_13b[0]",
-      "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].#subform[0].p2_t14_13b[0]",
-      "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t17_13b[0]",
-      "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
-      "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].Line13B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2-t62_13b[0]",
-      "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].#subform[0].p2_t14_13b[0]",
-      "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t17_13b[0]",
-      "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t16_13b[0]",
-      "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t15_13b[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_investment": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].Line13B[0]",
-      "institution_name_and_address": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2-t62_13b[0]",
-      "phone": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2_t14_13b[0]",
-      "current_value": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t17_13b[0]",
-      "loan_balance": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t16_13b[0]",
-      "equity": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t15_13b[0]"
-     }
-    }
-   ],
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "investment"
-    ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-   },
-   "union_columns": [
-    "account_number",
-    "is_business_account"
-   ],
-   "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
-  },
-  "real_property": {
-   "source": "real_property",
-   "max": 3,
-   "overflow": "log",
-   "printed_line": "18a/18b/18c",
-   "slots": [
-    {
-     "text": {
-      "description": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].Line17[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t5_17a[0]",
-      "current_fmv": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t6_17a[0]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t7_17a[0]",
-      "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t8_17a[0]",
-      "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t9_17a[0]",
-      "equity": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t10_17a[0]",
-      "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[3]",
-      "location": "topmostSubform[0].Page3[0].p3_t11_17a[2]",
-      "lender_name_address": "topmostSubform[0].Page3[0].#subform[15].p3_t12_17a[0]",
-      "lender_phone": "topmostSubform[0].Page3[0].#subform[15].p2_t18_13c[2]"
-     }
-    },
-    {
-     "text": {
-      "description": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].Line17b[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t13_17b[0]",
-      "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t14_17b[0]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t15_17b[0]",
-      "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t16_17b[0]",
-      "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t17_17b[0]",
-      "equity": "topmostSubform[0].Page3[0].Table_Line17b[1].Line17b[0].p3_t18_17b[0]",
-      "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[1]",
-      "location": "topmostSubform[0].Page3[0].p3_t18_17b[1]",
-      "lender_name_address": "topmostSubform[0].Page3[0].#subform[6].p3_t19_17b[1]",
-      "lender_phone": "topmostSubform[0].Page3[0].#subform[6].p2_t18_13c[1]"
-     }
-    },
-    {
-     "text": {
-      "description": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].Line17b[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t13_17b[0]",
-      "current_fmv": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t14_17b[0]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t15_17b[0]",
-      "monthly_payment": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t16_17b[0]",
-      "final_payment_date": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t17_17b[0]",
-      "equity": "topmostSubform[0].Page3[0].Table_Line17b[0].Line17b[0].p3_t18_17b[0]",
-      "title_holders": "topmostSubform[0].Page3[0].p3_t11_17a[0]",
-      "location": "topmostSubform[0].Page3[0].p3_t18_17b[0]",
-      "lender_name_address": "topmostSubform[0].Page3[0].#subform[4].p3_t19_17b[0]",
-      "lender_phone": "topmostSubform[0].Page3[0].#subform[4].p2_t18_13c[0]"
-     }
-    }
-   ],
-   "union_columns": [
-    "year_purchased",
-    "purchase_price",
-    "kind"
-   ],
-   "_union_why": "433-F's B. REAL ESTATE prints three cells 433-A prints none for: Year Purchased, Purchase Price, and the Primary Residence / Other Property tick. They are columns of the CANONICAL real_property row (asset-row-shapes.json class real_property), so the shared property must publish them or the next form is told they do not exist — the same reason bank_accounts declares is_business_account. ADD-ONLY: every column 433-A already prints keeps its key and its target, and none of these three has a slot on this form, so nothing here reaches a 433-A page.",
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "real_property"
-    ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-   }
-  },
-  "vehicles": {
-   "source": "vehicles",
-   "max": 3,
-   "overflow": "log",
-   "printed_line": "19a/19b/19c",
-   "slots": [
-    {
-     "text": {
-      "model_year": "topmostSubform[0].Page3[0].Line18a[0].p3_t21_18aYR[0]",
-      "make_model": "topmostSubform[0].Page3[0].Line18a[0].p3_t22_18aMILE[0]",
-      "mileage": "topmostSubform[0].Page3[0].Line18a[0].Line18aMKMDL[0]",
-      "license_tag": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aTGNUM[0]",
-      "vin": "topmostSubform[0].Page3[0].Line18a[0].p3_t29_18aVIN[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].Purchase[0].p3_t23_18a[0]",
-      "current_fmv": "topmostSubform[0].Page3[0].CurrentFMV[0].p3_t24_18a[0]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].CurrentLoan[0].p3_t25_18a[0]",
-      "monthly_payment": "topmostSubform[0].Page3[0].AmountPayment[0].p3_t26_18a[0]",
-      "final_payment_date": "topmostSubform[0].Page3[0].DateFinal[0].p3_t27_18a[0]",
-      "equity": "topmostSubform[0].Page3[0].Equity[0].p3_t28_18a[0]",
-      "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone[0].p3_t30_18a[0]",
-      "lender_phone": "topmostSubform[0].Page3[0].Lender-phone[0].p2_t18_13c[0]"
-     }
-    },
-    {
-     "text": {
-      "model_year": "topmostSubform[0].Page3[0].Line18b[0].p3_t00_18bYR[0]",
-      "make_model": "topmostSubform[0].Page3[0].Line18b[0].p3_t31_18bMILE[0]",
-      "mileage": "topmostSubform[0].Page3[0].Line18b[0].Line18b[0]",
-      "license_tag": "topmostSubform[0].Page3[0].Line18b[0].p3_t38_18b[0]",
-      "vin": "topmostSubform[0].Page3[0].Line18b[0].p3_t29_18bVIN[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[1]",
-      "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[1]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[1]",
-      "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[1]",
-      "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[1]",
-      "equity": "topmostSubform[0].Page3[0].p3_t37_18b[1]",
-      "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[1].p3_t39_18bLLN[0]",
-      "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[1].p2_t18_13c[0]"
-     }
-    },
-    {
-     "text": {
-      "model_year": "topmostSubform[0].Page3[0].Line18b[1].p3_t00_18bYR[0]",
-      "make_model": "topmostSubform[0].Page3[0].Line18b[1].p3_t31_18bMILE[0]",
-      "mileage": "topmostSubform[0].Page3[0].Line18b[1].Line18b[0]",
-      "license_tag": "topmostSubform[0].Page3[0].Line18b[1].p3_t38_18b[0]",
-      "vin": "topmostSubform[0].Page3[0].Line18b[1].p3_t29_18bVIN[0]",
-      "purchase_date": "topmostSubform[0].Page3[0].p3_t32_18b[0]",
-      "current_fmv": "topmostSubform[0].Page3[0].p3_t33_18b[0]",
-      "current_loan_balance": "topmostSubform[0].Page3[0].p3_t34_18b[0]",
-      "monthly_payment": "topmostSubform[0].Page3[0].p3_t35_18b[0]",
-      "final_payment_date": "topmostSubform[0].Page3[0].p3_t36_18b[0]",
-      "equity": "topmostSubform[0].Page3[0].p3_t37_18b[0]",
-      "lender_name_address": "topmostSubform[0].Page3[0].Lender-phone18b[0].p3_t39_18bLLN[0]",
-      "lender_phone": "topmostSubform[0].Page3[0].Lender-phone18b[0].p2_t18_13c[0]"
-     }
-    }
-   ],
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "vehicle"
-    ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-   }
-  },
-  "digital_assets": {
-   "source": "digital_assets",
-   "max": 4,
-   "overflow": "log",
-   "printed_line": "15",
-   "slots": [
-    {
-     "text": {
-      "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].Line13A[0]",
-      "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].#field[1]",
-      "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t13_13a[0]",
-      "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t12_13a[0]",
-      "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13a[0].p2_t11_13a[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].Line13B[0]",
-      "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].#field[1]",
-      "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t17_13b[0]",
-      "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t16_13b[0]",
-      "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[0].p2_t15_13b[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].Line13B[0]",
-      "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].#field[1]",
-      "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t17_13b[0]",
-      "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t16_13b[0]",
-      "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[1].p2_t15_13b[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].Line13B[0]",
-      "name_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].#field[1]",
-      "email_used_to_set_up": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t17_13b[0]",
-      "location_of_digital_asset": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t16_13b[0]",
-      "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t15_13b[0]"
-     }
-    }
-   ]
-  },
-  "available_credit": {
-   "source": "available_credit",
-   "max": 4,
-   "overflow": "log",
-   "printed_line": "16",
-   "slots": [
-    {
-     "text": {
-      "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].p2-t72_14a[0]",
-      "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].Line14a[0].AcctNo14A[0]",
-      "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t23_14a[0]",
-      "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t24_14a[0]",
-      "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t25_14a[0]"
-     }
-    },
-    {
-     "text": {
-      "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].p2-t73_14b[0]",
-      "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].Line14B[0]",
-      "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t26_14b[0]",
-      "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t27_14b[0]",
-      "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t28_14b[0]"
-     }
-    },
-    {
-     "text": {
-      "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].p2-t73_14b[0]",
-      "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].Line14B[0]",
-      "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t26_14b[0]",
-      "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t27_14b[0]",
-      "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t28_14b[0]"
-     }
-    },
-    {
-     "text": {
-      "institution_name_and_address": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].p2-t73_14b[0]",
-      "account_number": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].Line14B[0]",
-      "credit_limit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t26_14b[0]",
-      "amount_owed": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t27_14b[0]",
-      "available_credit": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t28_14b[0]"
-     }
-    }
-   ],
-   "union_columns": [
-    "card_or_line_type",
-    "minimum_monthly_payment"
-   ],
-   "_union_why": "433-F's D. CREDIT CARDS prints two cells 433-A prints none for: the card or line TYPE (Visa, department store card, line of credit) and the Minimum Monthly Payment. Both are columns of the canonical credit_line row. 433-A's own available_credit column is the reverse case — 433-F prints no cell for it — and it stays, because the union is the union. ADD-ONLY: nothing here reaches a 433-A page.",
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "credit_line"
-    ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible."
-   }
-  },
-  "life_insurance_policies": {
-   "source": "life_insurance_policies",
-   "max": 3,
-   "overflow": "log",
-   "printed_line": "17a-17e (three policy columns)",
-   "slots": [
-    {
-     "text": {
-      "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t30_16[0]",
-      "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t33_16c[0]",
-      "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t36_16d[0]",
-      "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t39_16e[0]",
-      "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column1[0].p2_t42_16f[0]"
-     }
-    },
-    {
-     "text": {
-      "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t31_16[0]",
-      "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t34_16c[0]",
-      "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t37_16d[0]",
-      "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t40_16e[0]",
-      "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column2[0].p2_t43_16f[0]"
-     }
-    },
-    {
-     "text": {
-      "company_name_and_address": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t32_16[0]",
-      "policy_number": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t35_16c[0]",
-      "owner_of_policy": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t38_16d[0]",
-      "current_cash_value": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t41_16e[0]",
-      "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t44_16f[0]"
-     }
-    }
-   ]
-  },
-  "property_line_20": {
-   "source": "property_line_20",
-   "max": 2,
-   "overflow": "log",
-   "printed_line": "20a/20b",
-   "slots": [
-    {
-     "text": {
-      "description": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].Line19a[0]",
-      "purchase_date": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t41_19a[0]",
-      "current_fmv": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t42_19a[0]",
-      "current_loan_balance": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t43_19a[0]",
-      "monthly_payment": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t44_19a[0]",
-      "final_payment_date": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t45_19a[0]",
-      "equity": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t46_19a[0]",
-      "location": "topmostSubform[0].#subform[4].p3_t55_19b[0]",
-      "lender_name_address": "topmostSubform[0].#subform[4].Lender-phone3[0].p3_t55_19bLLNA[0]",
-      "lender_phone": "topmostSubform[0].#subform[4].Lender-phone3[0].p2_t18_13c[0]"
-     }
-    },
-    {
-     "text": {
-      "description": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].Line19b[0]",
-      "purchase_date": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t49_19b[0]",
-      "current_fmv": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t50_19b[0]",
-      "current_loan_balance": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t51_19b[0]",
-      "monthly_payment": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t52_19b[0]",
-      "final_payment_date": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t53_19b[0]",
-      "equity": "topmostSubform[0].#subform[4].Table_Line19b[0].Line19b[0].p3_t54_19b[0]",
-      "location": "topmostSubform[0].#subform[4].p3_t47_19a[0]",
-      "lender_name_address": "topmostSubform[0].#subform[4].Lender-phone4[0].p3_t48_19aLLNAS[0]",
-      "lender_phone": "topmostSubform[0].#subform[4].Lender-phone4[0].p2_t18_13c[0]"
-     }
-    }
-   ]
-  },
-  "business_bank_accounts": {
-   "source": "business_bank_accounts",
-   "max": 2,
-   "overflow": "log",
-   "printed_line": "65a/65b",
-   "slots": [
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t23_64a[0]",
-      "institution_name_and_address": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t24_64a[0]",
-      "account_number": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t25_64a[0]",
-      "account_balance": "topmostSubform[0].Page5[0].Table64[0].#subform[2].p5_t26_64a[0]"
-     }
-    },
-    {
-     "text": {
-      "type_of_account": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t27_64b[0]",
-      "institution_name_and_address": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t28_64b[0]",
-      "account_number": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t29_64b[0]",
-      "account_balance": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t30_64b[0]"
-     }
-    }
-   ],
-   "row_class": {
-    "column": "asset_class",
-    "accepts": [
-     "bank_account"
-    ],
-    "_why": "Which asset class the rows in this group ARE. A shared table is only safe to reuse if a row can SAY what it is: defect D1 filed a bank account under INVESTMENTS because a single group spanned two printed tables and took the answer from slot ORDER, and slot order was the thing that was wrong. A row whose asset_class is not accepted here is a HARD STOP, so that defect is no longer expressible.",
-    "discriminator": {
-     "column": "is_business_account",
-     "equals": true,
-     "_why": "The other half. Same column, opposite value. This is the table printed under “BUSINESS BANK ACCOUNTS” at page 7 y 405.4, whose own caption at y 395.4 says “Report Personal Accounts in Section 4.” - the page telling the two apart in terms, and this is that sentence declared. NOTE the widget names say Page5[0] and the cells render on printed PAGE 7; the coordinates above are the printed page, which is what a discriminator is evidenced from."
-    }
-   },
-   "union_columns": [
-    "is_business_account"
-   ],
-   "_union_why": "Columns of the CANONICAL row (asset-row-shapes.json) that this form prints no cell for, and which therefore cannot be derived from these slots. They belong in the shared property's row shape because another form in the series reads them: 433-F ticks its Business Account box off is_business_account and prints an account number for an investment, neither of which 433-A prints."
-  },
-  "accounts_notes_receivable": {
-   "source": "accounts_notes_receivable",
-   "max": 5,
-   "overflow": "log",
-   "printed_line": "66a-66e",
-   "slots": [
-    {
-     "text": {
-      "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t32_65a[0]",
-      "status": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t33_65a[0]",
-      "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t34_65a[0]",
-      "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t35_65a[0]",
-      "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t36_65a[0]"
-     }
-    },
-    {
-     "text": {
-      "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t37_65b[0]",
-      "status": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t38_65b[0]",
-      "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t39_65b[0]",
-      "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t40_65b[0]",
-      "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t41_65b[0]"
-     }
-    },
-    {
-     "text": {
-      "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t42_65c[0]",
-      "status": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t43_65c[0]",
-      "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t44_65c[0]",
-      "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t45_65c[0]",
-      "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t46_65c[0]"
-     }
-    },
-    {
-     "text": {
-      "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t47_65d[0]",
-      "status": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t48_65d[0]",
-      "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t49_65d[0]",
-      "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t50_65d[0]",
-      "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t51_65d[0]"
-     }
-    },
-    {
-     "text": {
-      "receivable_name_and_address": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[0]",
-      "status": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[1]",
-      "date_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[2]",
-      "invoice_or_contract_number": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[3]",
-      "amount_due": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[4]"
-     }
-    }
-   ],
-   "row_composites": {
-    "_why": "One printed cell fed by two canonical row keys. Applied to the row BEFORE the slot targets are written, so every slot composes identically and the slot list needs no per-slot special case.",
-    "receivable_name_and_address": {
-     "from": [
-      "name",
-      "address"
-     ],
-     "join": ", ",
-     "_join_why": "Comma-space, because the printed caption asks for the party AND its street address in one box and that is how an address is written after a name. The separator is a PRESENTATION choice made here, at the form, and never stored — crosswalk A6 already ruled that deriving two facts back out of one combined string is what a stored separator invites."
-    }
-   },
-   "_split_note": "The shared row class SPLIT receivable_name_and_address into name + address, the one non-additive change in the fourteen-table union. Free on the day it was made: adapters/hubspot/asset-row-shapes.json records held_data = false on every irs433_ property, so no record needed migrating. The slot targets below did not move and their printed column did not change; what changed is that the row arriving from the backbone now carries two keys where it carried one, and this map joins them."
-  },
-  "business_property": {
-   "source": "business_property",
-   "max": 2,
-   "overflow": "log",
-   "printed_line": "67a/67b",
-   "slots": [
-    {
-     "text": {
-      "description": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t1_66a[0]",
-      "purchase_date": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t2_66a[0]",
-      "current_fmv": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t3_66a[0]",
-      "current_loan_balance": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t4_66a[0]",
-      "monthly_payment": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t5_66a[0]",
-      "final_payment_date": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t6_66a[0]",
-      "equity": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t7_66a[0]",
-      "title_holders": "topmostSubform[0].Page6[0].p3_t11_17a[0]",
-      "location": "topmostSubform[0].Page6[0].p6_t8_66a[0]",
-      "lender_name_address": "topmostSubform[0].Page6[0].Lender-Phone[0].p6_t9_66a[0]",
-      "lender_phone": "topmostSubform[0].Page6[0].Lender-Phone[0].p2_t18_13c[0]"
-     }
-    },
-    {
-     "text": {
-      "description": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t10_66b[0]",
-      "purchase_date": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t11_66b[0]",
-      "current_fmv": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t12_66b[0]",
-      "current_loan_balance": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t13_66b[0]",
-      "monthly_payment": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t14_66b[0]",
-      "final_payment_date": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t15_66b[0]",
-      "equity": "topmostSubform[0].Page6[0].Line59b[0].Line66b[0].p6_t16_66b[0]",
-      "title_holders": "topmostSubform[0].Page6[0].p3_t11_17a[1]",
-      "location": "topmostSubform[0].Page6[0].p6_t17_66b[0]",
-      "lender_name_address": "topmostSubform[0].Page6[0].Lender-Phone2[0].p6_t18_66b[0]",
-      "lender_phone": "topmostSubform[0].Page6[0].Lender-Phone2[0].p2_t18_13c[0]"
-     }
-    }
-   ]
-  },
-  "payment_processors": {
-   "source": "payment_processors",
-   "max": 2,
-   "overflow": "log",
-   "printed_line": "62a/62b",
-   "slots": [
-    {
-     "text": {
-      "name_and_address": "topmostSubform[0].Page5[0].AB61[0].a61[0].p5_t8_61a[0]",
-      "processor_account_number": "topmostSubform[0].Page5[0].AB61[0].a61[0].p5_t9_61a[0]"
-     }
-    },
-    {
-     "text": {
-      "name_and_address": "topmostSubform[0].Page5[0].AB61[0].b61[0].p5_t10_61b[0]",
-      "processor_account_number": "topmostSubform[0].Page5[0].AB61[0].b61[0].p5_t11_61b[0]"
-     }
-    }
-   ]
-  },
-  "credit_cards_accepted": {
-   "source": "credit_cards_accepted",
-   "max": 3,
-   "overflow": "log",
-   "printed_line": "63a/63b/63c",
-   "slots": [
-    {
-     "text": {
-      "credit_card": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t12_62a[0]",
-      "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t13_62a[0]",
-      "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].#subform[1].p5_t14_62a[0]"
-     }
-    },
-    {
-     "text": {
-      "credit_card": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t15_62b[0]",
-      "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t16_62b[0]",
-      "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].#subform[2].p5_t17_62b[0]"
-     }
-    },
-    {
-     "text": {
-      "credit_card": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t18_62c[0]",
-      "merchant_account_number": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t19_62c[0]",
-      "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t20_62c[0]"
-     }
-    }
-   ]
   }
- },
- "exclusive": {
-  "marital_status": [
-   "topmostSubform[0].Page1[0].c1[0].C1_01_2a[0]",
-   "topmostSubform[0].Page1[0].c1[0].C1_01_2a[1]"
-  ],
-  "3a_business_interest": [
-   "topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Yes[0]",
-   "topmostSubform[0].Page1[0].c2[0].Line3a[0].No[0]"
-  ],
-  "3c_business_type": [
-   "topmostSubform[0].Page1[0].c2[0].Line3c[0].Partnership[0]",
-   "topmostSubform[0].Page1[0].c2[0].Line3c[0].LLC[0]",
-   "topmostSubform[0].Page1[0].c2[0].Line3c[0].Corporation[0]",
-   "topmostSubform[0].Page1[0].c2[0].Line3c[0].Other[0]"
-  ],
-  "4d_tp_contact_at_work": [
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[0]",
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4d_[1]"
-  ],
-  "4h_tp_pay_period": [
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[0]",
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[1]",
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[2]",
-   "topmostSubform[0].Page1[0].Taxpayer\\.L4a-h[0].c1_4h_[3]"
-  ],
-  "5d_sp_contact_at_work": [
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[0]",
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5d_[1]"
-  ],
-  "5h_sp_pay_period": [
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[0]",
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[1]",
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[2]",
-   "topmostSubform[0].Page1[0].Spouse\\.L5a-h[0].c1_5h_[3]"
-  ],
-  "7_lawsuit_role": [
-   "topmostSubform[0].Page1[0].c1_6a_[2]",
-   "topmostSubform[0].Page1[0].c1_6a_[3]"
-  ],
-  "unresolved_c1_6a_yesno": [
-   "topmostSubform[0].Page1[0].c1_6a_[0]",
-   "topmostSubform[0].Page1[0].c1_6a_[1]"
-  ],
-  "unresolved_c1_6_yesno": [
-   "topmostSubform[0].Page1[0].c1_6_[0]",
-   "topmostSubform[0].Page1[0].c1_6_[1]"
-  ],
-  "8_bankruptcy": [
-   "topmostSubform[0].Page1[0].c1_7_[0]",
-   "topmostSubform[0].Page1[0].c1_7_[1]"
-  ],
-  "unresolved_8a": [
-   "topmostSubform[0].page2[0].c1_8a_[0]",
-   "topmostSubform[0].page2[0].c1_8a_[1]"
-  ],
-  "8b_lived_abroad_6mo": [
-   "topmostSubform[0].page2[0].c1_8b_[0]",
-   "topmostSubform[0].page2[0].c1_8b_[1]"
-  ],
-  "8c_dual_citizenship": [
-   "topmostSubform[0].page2[0].c1_8_[0]",
-   "topmostSubform[0].page2[0].c1_8_[1]"
-  ],
-  "9a_incarcerated": [
-   "topmostSubform[0].page2[0].c1_9a_[0]",
-   "topmostSubform[0].page2[0].c1_9a_[1]"
-  ],
-  "9b_beneficiary_of_trust_estate_policy": [
-   "topmostSubform[0].page2[0].c1_9b_[0]",
-   "topmostSubform[0].page2[0].c1_9b_[1]"
-  ],
-  "9c_trustee_fiduciary_contributor": [
-   "topmostSubform[0].page2[0].c1_9c_[0]",
-   "topmostSubform[0].page2[0].c1_9c_[1]"
-  ],
-  "10_safe_deposit_box": [
-   "topmostSubform[0].page2[0].c1_10_[0]",
-   "topmostSubform[0].page2[0].c1_10_[1]"
-  ],
-  "11_transferred_assets": [
-   "topmostSubform[0].page2[0].#subform[0].c1_11_[0]",
-   "topmostSubform[0].page2[0].#subform[0].c1_11_[1]"
-  ],
-  "hh1_claimed_on_1040": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_06[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Dependent[0].CB_07[0]"
-  ],
-  "hh1_contributes": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_08[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row1[0].Contributes[0].CB_09[0]"
-  ],
-  "hh2_claimed_on_1040": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_10[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Dependent[0].CB_11[0]"
-  ],
-  "hh2_contributes": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_12[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row2[0].Contributes[0].CB_13[0]"
-  ],
-  "hh3_claimed_on_1040": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_14[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Dependent[0].CB_15[0]"
-  ],
-  "hh3_contributes": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_16[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row3[0].Contributes[0].CB_17[0]"
-  ],
-  "hh4_claimed_on_1040": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_18[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Dependent[0].CB_19[0]"
-  ],
-  "hh4_contributes": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_20[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[0].Contributes[0].CB_21[0]"
-  ],
-  "hh5_claimed_on_1040": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_18[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Dependent[0].CB_19[0]"
-  ],
-  "hh5_contributes": [
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_20[0]",
-   "topmostSubform[0].Page1[0].c2[0].Table1[0].Row4[1].Contributes[0].CB_21[0]"
-  ],
-  "17_has_life_insurance": [
-   "topmostSubform[0].Page2[0].c1_07_0_[0]",
-   "topmostSubform[0].Page2[0].c1_07_0_[1]"
-  ],
-  "52_sole_proprietorship_schedule_c": [
-   "topmostSubform[0].Page5[0].#subform[0].p5_0_51[0]",
-   "topmostSubform[0].Page5[0].#subform[0].p5_0_51[1]"
-  ],
-  "56_federal_contractor": [
-   "topmostSubform[0].Page5[0].p5_0_55[0]",
-   "topmostSubform[0].Page5[0].p5_0_55[1]"
-  ],
-  "61_engages_in_ecommerce": [
-   "topmostSubform[0].Page5[0].p5_0_60[0]",
-   "topmostSubform[0].Page5[0].p5_0_60[1]"
-  ],
-  "S7_accounting_method": [
-   "topmostSubform[0].Page6[0].p6_0_7[0]",
-   "topmostSubform[0].Page6[0].p6_0_7[1]"
-  ]
- },
- "_deferred": {
-  "_why": "Still unresolved. Validated for existence, never filled. Two Yes/No pairs on page 1 and one on page 2 whose printed question is not yet established.",
-  "page1_yesno_pairs": {
-   "reason": "c1_6a_[0..1] and c1_6_[0..1] are structurally exclusive pairs, but which belongs to printed line 6 (income change) and which to printed line 7 (lawsuit) is not established. Their targets appear under `exclusive` so the guard covers them; they carry no checkbox mapping and are never checked.",
-   "targets": [
-    "topmostSubform[0].Page1[0].c1_6a_[0]",
-    "topmostSubform[0].Page1[0].c1_6a_[1]",
-    "topmostSubform[0].Page1[0].c1_6_[0]",
-    "topmostSubform[0].Page1[0].c1_6_[1]"
-   ]
-  },
-  "line_8a": {
-   "reason": "c1_8a_[0..1] binds by y to printed line 8a, but 8a's printed question text was never captured - no text field correlates to it.",
-   "targets": [
-    "topmostSubform[0].page2[0].c1_8a_[0]",
-    "topmostSubform[0].page2[0].c1_8a_[1]"
-   ]
-  }
- },
- "allowed": {
-  "_why": "The IRS USE ONLY / Allowable Expenses column. Only the two lines IRS grants at a FIXED published amount are auto-filled. Everything else in this column is left blank on purpose: a wrong allowable printed on a filed collection statement is worse than an empty cell an examiner fills in. Same rule already proven on 433-F.",
-  "_offset_warning": "The IRS* field names are offset by one from the printed line they serve. IRS35 is the allowed cell for PRINTED LINE 36, IRS41 for printed line 42, IRS49 for printed line 50, IRS50 for printed line 51. Never bind an allowed target by matching its own number to a line number.",
-  "standards_source": "adapters/pdf/maps/433f.standards.json (2026 IRS Collection Financial Standards; form-agnostic despite the 433f prefix - renamed in Commit 1 of this prompt)",
-  "national_standards_total": {
-   "printed_line": "36 Food, Clothing and Misc.",
-   "target": "topmostSubform[0].Page4[0].IRS35[0]",
-   "basis": "IRS National Standards: \"Generally, the total number of persons allowed for National Standards should be the same as those allowed as dependents on the taxpayer's most recent year income tax return.\" Source: irs.gov/businesses/small-businesses-self-employed/national-standards-food-clothing-and-other-items",
-   "input": "allowable_household_size",
-   "derive_when_absent": "1 (taxpayer) + 1 if marital_status is married + the count of household_members with claimed_on_1040 = yes that fit the printed table. This is what the form itself shows, and it is the IRS default.",
-   "override": "If allowable_household_size IS supplied it WINS and is used as given - the IRS wording is \"generally\", so the operator may depart from the default. Warn loudly, showing both figures, so the departure is recorded rather than silent.",
-   "lookup": "National Standards TOTAL for that number of persons, clamped to the published 1-4 range, plus the published per-additional-person amount for each person above 4."
-  },
-  "out_of_pocket_health": {
-   "printed_line": "42 Out of Pocket Health Care Costs",
-   "target": "topmostSubform[0].Page4[0].IRS41[0]",
-   "inputs": [
-    "allowable_under_65_count",
-    "allowable_65_over_count"
-   ],
-   "lookup": "(under_65_count x the published under-65 per-person amount) + (65_over_count x the published 65-and-over per-person amount). Read oop_basis from the standards file and STOP if it is not per-person; do not assume.",
-   "why_two_counts": "433-A prints ONE out-of-pocket line for the whole household, unlike 433-F which prints the per-person rate beside separate age-band headcounts. A household can span both age bands, so a single age_band input cannot express it and would silently price an over-65 person at the under-65 rate.",
-   "consistency_check": "under_65_count + 65_over_count must equal the household size actually used for the national standards line. Mismatch is a hard stop, not a warning: the two allowed cells would otherwise be computed on different households.",
-   "cross_check": "Compare the supplied counts against the ages printed in the household_members table plus the taxpayer and spouse dates of birth where available. Warn on disagreement; do not auto-correct."
-  },
-  "_never_autofill": {
-   "_why": "Listed as objects, not as object KEYS, so the schema-agnostic validator (which walks string VALUES) checks every one of them for existence. Each is validated and never written.",
-   "fields": [
-    {
-     "target": "topmostSubform[0].Page4[0].IRS36[0]",
-     "reason": "printed line 37 Housing and Utilities - varies by county, no county table held"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS37[0]",
-     "reason": "printed line 38 Vehicle Ownership Costs - depends on car count and lease/loan status"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS38[0]",
-     "reason": "printed line 39 Vehicle Operating Costs - varies by census region"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS39[0]",
-     "reason": "printed line 40 Public Transportation - greater-of judgement against vehicle costs"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS40[0]",
-     "reason": "printed line 41 Health Insurance - actual, no published standard"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS42[0]",
-     "reason": "printed line 43 Court Ordered Payments - actual"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS43[0]",
-     "reason": "printed line 44 Child/Dependent Care - actual"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS44[0]",
-     "reason": "printed line 45 Life Insurance - actual"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS45[0]",
-     "reason": "printed line 46 Current year taxes - actual"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS46[0]",
-     "reason": "printed line 47 Secured Debts - actual, examiner discretion"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS47[0]",
-     "reason": "printed line 48 Delinquent State or Local Taxes - examiner discretion"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS48[0]",
-     "reason": "printed line 49 Other Expenses - examiner discretion"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS49[0]",
-     "reason": "printed line 50 Total Living Expenses - a sum of the column, only meaningful once an examiner completes it"
-    },
-    {
-     "target": "topmostSubform[0].Page4[0].IRS50[0]",
-     "reason": "printed line 51 Net difference - same"
-    }
-   ]
-  }
- }
 }

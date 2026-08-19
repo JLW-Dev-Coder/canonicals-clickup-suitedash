@@ -15,6 +15,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { auditRounding, reportRounding } from './rounding.mjs';
+import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -143,110 +144,69 @@ if (!existsSync(liesPath)) {
     }
   }
 
-  // THE TALLY IS RECOMPUTED FROM entries[] AND CHECKED AGAINST THE ONE THE FILE DECLARES.
+  // ═════════════════════════════════════════════════════════════════════════════════════
+  // THE META-RULE. Written here, beside the sentence that proved it.
   //
-  // This is the assertion the eleven-versus-twelve error asked for. The count reached "eleven"
-  // and stayed there because it was a SENTENCE re-typed each cycle while the list underneath it
-  // changed — and the sentence that carried it contradicted its own sub-item. A number derived
-  // from a list by length cannot drift from the list; a number a person retypes always can.
-  // So the file still declares its tally, because a reader should be able to see it without
-  // running anything, and the declared figure is now checked against the derived one.
-  const ents = lies.entries || [];
-  const derived = {
-    active_lies: ents.filter(e => COUNTED_AS_LIE.has(e.kind)).length,
-    of_which_leaf: ents.filter(e => e.kind === 'lie').length,
-    of_which_container: ents.filter(e => e.kind === 'container').length,
-    inherited_not_counted: ents.filter(e => e.kind === 'inherited').length,
-    controls_verified_true: ents.filter(e => e.kind === 'control').length,
-    page_imprecise_not_counted: ents.filter(e => e.kind === 'page_imprecise').length,
-    total_entries: ents.length,
-  };
-  const t = lies._tally || {};
-  for (const [k, v] of Object.entries(derived)) {
-    if (t[k] === undefined) problems.push(`_tally declares no "${k}" — the derived value is ${v}. Every count the registry reports must be stated so it can be checked.`);
-    else if (t[k] !== v) problems.push(`_tally says ${k} = ${t[k]}, but entries[] holds ${v}. The count and the list disagree — and a retyped count drifting from the list underneath it is exactly how "eleven" survived three slices when the honest figure was ten.`);
-  }
-  // THREE COUNTS, NEVER ONE. A single "how many lies" number cannot say whether a name family is
-  // unreliable or merely unread, and cannot hold a name the page itself is loose about.
-  console.log(`name-lie registry: ${liesPath} — ${ents.length} entries, THREE counts: ${derived.active_lies} active lies (${derived.of_which_leaf} leaf + ${derived.of_which_container} container), ${derived.controls_verified_true} verified-true controls, ${derived.page_imprecise_not_counted} page-imprecise. ${t.bound_today ?? '?'} bound today.`);
-  console.log(`  counts DERIVED from entries[] and checked against the declared _tally — not read from it.`);
-  if (problems.length) {
-    console.error(`NAME-LIE REGISTRY — ${problems.length} problem(s):`);
-    problems.forEach(m => console.error(`  ${m}`));
-    process.exit(2);
-  }
+  //   WHEN A DEFECT CLASS EARNS A GUARD, THE SAME COMMIT ENUMERATES EVERY INSTANCE OF THAT
+  //   CLASS IN THE SAME ARTEFACT AND DISPOSES OF EACH — derived, or declared underivable
+  //   with the reason. A guard applied only where the defect was noticed is a guard that
+  //   certifies its own blind spot.
+  //
+  // This file is where that rule was earned. It once carried, right here, a derivation of the
+  // registry's `_tally` from `entries[]`, with the reason in plain English: "a retyped count
+  // drifting from the list underneath it is exactly how 'eleven' survived three slices when
+  // the honest figure was ten." That guard was correct, it worked, and it was built once and
+  // applied once. Three more retyped counts sat in this same file, one key over, unguarded —
+  // and `_partition` was ALREADY self-contradicting on the day the guard shipped beside it.
+  //
+  // Two slices later the same shape happened again, one level down: the fix for `_partition`
+  // added a check for `_unaccounted_by_page` whose regex reached disk with its backslashes
+  // eaten, so it matched nothing — and the check was written `if (nums.length && ...)`, which
+  // turned "I could not read my input" into "I agree". Dead from the commit that introduced
+  // it, with PASS printed underneath.
+  //
+  // So every count in this repo now goes through adapters/pdf/count-sweep.mjs, which
+  // enumerates EVERY claim site across the map and every sidecar and requires each to be in
+  // exactly one of two states. There is no third state, an unreadable extraction is a STOP
+  // rather than a pass, and the `_tally` derivation that used to live here lives there — with
+  // two more keys than it ever checked, because `bound_today` was being printed straight out
+  // of the file as though it were a result.
+  console.log(`name-lie registry: ${liesPath} — ${(lies.entries || []).length} entries; every count it declares is derived and checked by adapters/pdf/count-sweep.mjs [S-11, S-12, S-13].`);
   console.log('OK — every declared path exists, no path is declared twice, and every declared binding resolves through the map to exactly the field the registry names.');
 }
 
 // ---------------------------------------------------------------------------------------
-// EVERY OTHER COUNT THE MAP DECLARES ABOUT ITSELF.
+// EVERY MAP DECLARES ITS PARTITION AND ITS CARRIED-QUESTIONS LEDGER. BOTH. ALWAYS.
 //
-// The name-lie registry above derives its tally from a list and checks the declared figure
-// against it. That guard was built because a retyped count drifted for three slices. It was
-// then applied to exactly one of this map's four self-describing counts, and the other three
-// drifted the same way within two slices: `_carried._count` said 5 open when open[] held 6,
-// and `_partition` described the map as it stood a page ago while contradicting its own
-// per-page breakdown. Same defect, same file, one key over.
+// A SKIP IS NOT A PASS. Both declarations were optional, and 433-A and 433-F declared
+// neither — so the guards that derive and check them passed those two forms by finding
+// nothing to check, and a map that DROPPED a declaration would have passed the same way.
+// That is the no-declared-state defect for the third time in this repo: silence read as
+// agreement. A missing declaration is a STOP, not a skip.
 //
-// So the rule is now the one the registry states: a number a person retypes always can drift,
-// and a number derived from a list by length cannot. Both counts stay DECLARED, so a reader
-// sees them without running anything, and both are now derived and checked.
+// The counts inside them are not checked here. They are checked, along with every other
+// count this map or any of its sidecars states about itself, by the sweep below.
 {
-  const problems = [];
-
-  // ---- _carried: the open-questions ledger. Derived from the arrays, not from the sentence.
-  const carried = mapDoc._carried;
-  if (carried) {
-    const derived = { open: (carried.open || []).length, resolved: (carried.resolved || []).length };
-    const declared = carried._count || {};
-    for (const [k, v] of Object.entries(derived)) {
-      if (declared[k] === undefined)
-        problems.push(`_carried._count declares no "${k}" — the derived value is ${v}. A ledger whose length is not stated cannot be checked for over- or under-reporting.`);
-      else if (declared[k] !== v)
-        problems.push(`_carried._count says ${k} = ${declared[k]}, but _carried.${k}[] holds ${v}. An item left this ledger by being forgotten, or joined it without being counted — which is the one way _carried._rule says an item may never leave.`);
-    }
-    const ids = (carried.open || []).concat(carried.resolved || []).map(o => o.id);
-    const dupe = ids.filter((id, i) => ids.indexOf(id) !== i);
-    if (dupe.length) problems.push(`_carried declares id(s) twice: ${[...new Set(dupe)].join(', ')} — an item cannot be both open and resolved.`);
-    console.log(`carried questions: ${derived.open} open, ${derived.resolved} resolved/withdrawn — DERIVED from the arrays and checked against the declared _count.`);
-    if (derived.open) console.log(`  open: ${(carried.open || []).map(o => o.id).join(', ')}`);
-  }
-
-  // ---- _partition: what the map claims to have accounted for, against what it references.
-  //
-  // in_this_slice is checked against the map's OWN unique target count, which is derived a
-  // hundred lines above and is the same number the gate's partition step reports. That is the
-  // cross-check that makes the declaration a claim rather than a caption: authoring a page
-  // without updating the partition now fails here instead of being noticed two slices later.
-  const part = mapDoc._partition;
-  if (part) {
-    const sum = (part.bound_writable || 0) + (part.excluded_never_autofill || 0) + (part.deferred || 0);
-    if (sum !== part.in_this_slice)
-      problems.push(`_partition: bound_writable ${part.bound_writable} + never_autofill ${part.excluded_never_autofill} + deferred ${part.deferred} = ${sum}, but in_this_slice says ${part.in_this_slice}.`);
-    if (part.in_this_slice !== unique.size)
-      problems.push(`_partition says in_this_slice = ${part.in_this_slice}, but the map references ${unique.size} unique field(s). The partition describes a map that is no longer this one — re-derive it for the pages now authored.`);
-    if (part.form_fields_total !== names.size)
-      problems.push(`_partition says form_fields_total = ${part.form_fields_total}, but the field list holds ${names.size}.`);
-    if ((part.in_this_slice || 0) + (part.unaccounted || 0) !== names.size)
-      problems.push(`_partition: in_this_slice ${part.in_this_slice} + unaccounted ${part.unaccounted} = ${(part.in_this_slice || 0) + (part.unaccounted || 0)}, but the form has ${names.size} field(s).`);
-    // The per-page breakdown is prose with numbers in it, and prose with numbers in it is the
-    // thing that drifted. Its arithmetic is read back out and checked against `unaccounted`.
-    if (typeof part._unaccounted_by_page === 'string') {
-      const nums = [...part._unaccounted_by_page.matchAll(/p[1-8]s+(d+)/g)].map(m => Number(m[1]));
-      const tot = nums.reduce((a, b) => a + b, 0);
-      if (nums.length && tot !== part.unaccounted)
-        problems.push(`_partition._unaccounted_by_page lists pages summing to ${tot}, but the declared unaccounted says ${part.unaccounted}. The breakdown and the total disagree.`);
-    }
-    console.log(`partition: ${part.bound_writable} writable + ${part.excluded_never_autofill} never-autofill + ${part.deferred} deferred = ${part.in_this_slice} of ${part.form_fields_total}; ${part.unaccounted} unaccounted — CHECKED against the ${unique.size} target(s) this map actually references.`);
-  }
-
-  if (problems.length) {
-    console.error(`SELF-DESCRIBING COUNTS — ${problems.length} problem(s):`);
-    problems.forEach(m => console.error(`  ${m}`));
+  const missing = [];
+  if (!mapDoc._partition) missing.push('`_partition` — what this map accounts for, against what the form holds. Derive it: form_fields_total, in_this_slice, bound_writable, excluded_never_autofill, deferred, unaccounted, plus `_check` and `_unaccounted_by_page`.');
+  if (!mapDoc._carried)   missing.push('`_carried` — the questions one slice raised and no slice has answered, with `open[]`, `resolved[]` and a derived `_count`. A map with no open question declares an empty ledger; it does not omit one.');
+  if (missing.length) {
+    console.error(`MANDATORY DECLARATION MISSING — ${mapPath} declares ${missing.length} of the two required self-descriptions not at all:`);
+    missing.forEach(m => console.error(`  ${m}`));
+    console.error('  A map that declares nothing passes every check that derives what it declares. That is why this is a STOP.');
     process.exit(2);
   }
-  if (carried || part) console.log('OK — every count the map declares about itself was re-derived and agrees.');
+  console.log(`mandatory declarations: _partition and _carried both present on ${mapPath}.`);
 }
+
+// ---------------------------------------------------------------------------------------
+// THE COUNT SWEEP. See adapters/pdf/count-sweep.mjs for the meta-rule it enforces and for
+// the enumeration itself. Every count this map, its totals file, its headings file, its
+// name-lie registry, the shared row-class spec, the crosswalk and the IRS standards sidecar
+// state about themselves is either DERIVED AND CHECKED here, or declared underivable with
+// the reason. A claim site in neither state is a STOP.
+const sweep = await runCountSweep(form);
+if (reportCountSweep(sweep, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.

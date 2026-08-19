@@ -1,924 +1,924 @@
 {
- "form": "433aoi",
- "form_revision": "4-2026",
- "catalog": "55896Q",
- "_why": "Which printed cell on 433-A(OIC) is computed from which other printed cells. Read by run-form-gate.mjs step 11, which recomputes every entry FROM WHAT THE FILLED PDF PRINTS and compares it to the printed figure. No figure lives here except the ones the FORM ITSELF PRINTS as constants — the $1,000 on line (1), the $3,450 vehicle allowance on line (6b), and the .8 quick-sale multiplier that appears five times — and every one is quoted from the caption that prints it.",
- "authored_from": "The printed page text of adapters/pdf/forms/f433aoi.pdf, extracted from the content streams and read alongside the widget rectangles by adapters/pdf/align-block.mjs. Captions below are quoted verbatim. NOT from field names: ELEVEN leaf names on this form are known to be actively wrong about what their cell means — including the page-3 pair Total_Value_Vehicles_Attached[0] and Enter_Allowance[0], which are printed lines (6d) and (6e) respectively and so hold each other's job. One of the eleven — RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] — is a feeder of entry (3a) QSV below, where the leaf says .7 and the page says .8.",
- "_slice": "PRINTED PAGES 1, 2 AND 3. Page 1 prints no total. Page 2’s eleven computed cells and page 3’s nine are all here. Pages 4-8 are not in this file yet; a printed total absent from both `totals` and `not_checkable` has not been declined, it has simply not been read. SLICE 4 adds printed pages 4: lines (7a) QSV, (7a), (7b) QSV, (7b), (7), Box A, (8c) and (8). Box A is the first CROSS-PAGE total on this form. SLICE 5 ADDS PRINTED PAGE 5: (9a) QSV, (9b) QSV, (9), (11), Box B, (17), (29) and Box C — eight entries, of which THREE are Boxes or feed one. Box B is the SECOND cross-page total on this form. Box C is the first printed formula on five pages whose prose operand order is the reverse of its arithmetic.",
- "_notes": [
-  "THIS FILE EXISTS BECAUSE THE SCHEMA CAN NOW CARRY THE FORM. It was deliberately not authored during slice 2: the feeder schema then added and subtracted and had no factor and no constant, so (3a)'s X .8 and (1)'s minus $1,000 — the two cells on page 2 that most need checking — would have been the two it could not express. Nine clean passes printed beside two silently-absent checks is worse than a SKIP that says nothing was checked.",
-  "A FACTOR AND A CONSTANT, NOT AN EXPRESSION LANGUAGE. `factor` and `constant` are two numbers per feeder, and a feeder contributes sign x (factor x sum-of-its-cells + constant). That is enough for every printed formula on pages 1-3 that is not a conditional, and it is deliberately not enough to invent arithmetic here: this file can still only say which printed cells feed a line and by how much.",
-  "`floor` IS THE FORM'S OWN PRINTED INSTRUCTION, not a tolerance. Page 2 y 668.1 prints: 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' Only a line that subtracts a printed constant can go negative, so exactly two lines declare it: (1) on page 2 and (6b) on page 3, whose own caption repeats the instruction as '(If line (6a) minus $3,450 is a negative number, enter \"0\")'. When the floor actually fires the gate prints 'floored at 0.00' on that line, so a match that depended on it can never read as an unconditional match.",
-  "ROUNDING IS NOW MODELLED, PER PRINTED BLOCK, AND THIS NOTE RECORDS WHAT REPLACED THE OLD LIMIT. It used to read \"ROUNDING IS NOT MODELLED, AND THAT IS A KNOWN LIMIT — comparison here is exact to the cent\". It no longer is. `rounding.blocks` in 433aoi.map.json declares, per printed block, which sentence rounds it and where that sentence is drawn; adapters/pdf/rounding.mjs applies it at OUTPUT and this step applies it at COMPARISON, using the mode of the block THE TOTAL CELL ITSELF sits in. Round first, then floor — the order page 2 y 668.1 prints the two sentences in. STILL NO TOLERANCE ANYWHERE: both sides are brought to the same precision by a printed instruction, and a cell that cannot be is declared not checkable instead. The old note's own example is the case this catches — a market value that is not a multiple of 5 makes X .8 land on a fraction of a dollar, and the page prints the rounded figure while an unrounded recomputation would report a false failure of up to 50 cents per operand.",
-  "PER-ROW ENTRIES ARE NOT GROUP TOTALS. Eleven entries below address a single printed ROW via `total_cell` with a row index, because their printed caption states a formula across the cells of that one row — 'Current market value X .8 = [cell] - [cell] = (3a)'. A group total sums a column; these do not. Both shapes are in this file and they are told apart by `total_cell` versus `total_key`.",
-  "(2c) IS DECLARED CHECKABLE ON THE ARGUABLE READING. The map records it as a one-operand equation — the page draws an '=' between the dollar-equivalent cell and the (2c) marker and draws no other operator — with the case against stated: a lone '=' could be decoration on a row the taxpayer carries across by hand, in which case (2c) is plain input. Included here because the arithmetic is identical under both readings, so this entry cannot be the thing that makes a wrong answer look right. Still reported as arguable rather than resolved.",
-  "WHAT THE ATTACHMENT CELLS DO AND DO NOT PROVE. (1c), (2d), (3b), (4b-source) and (4b-loans) are declared not_checkable below: what they sum is on an attachment this engine never sees. They are nevertheless OPERANDS of (1), (2), (3), (4) and (4b), which ARE checkable — the page prints those cells, and a recomputation reads what the page prints. The rule is about where a formula's operands are PRINTED, not where their figures came from.",
-  "FIVE QUICK-SALE TRIPWIRES NOW, ACROSS TWO PAGES: (3a) on page 2 and (5a), (5b), (6a), (6c) on page 3. Every one of them is the same printed shape - a cell whose only identifying text is the ‘X .8 = $’ drawn immediately to its left, with nothing printed above it - and every one is checked against the market-value cell beside it rather than against any leaf name. Four of the five leaf names happen to say times_8 or Times_8; the fifth says Times_7 and carries the same printed X .8. That is why none of the five is bound or checked by name.",
-  "THE VEHICLE QUICK-SALE CELLS ARE UNCONDITIONAL AND THE VEHICLE TOTALS ARE NOT. The ‘if the vehicle is leased, enter 0 as the total value’ instruction is printed against ‘Total value of vehicle’, which is the (6a)/(6c) cell, NOT against the X .8 cell. So both vehicle quick-sale entries below are checked on every row whatever the lease answer, while (6a)/(6c) itself is declared not checkable.",
-  "(6e) IS NOT AN ALLOWANCE, WHATEVER ITS LEAF NAME SAYS. Enter_Allowance[0] is printed line (6e), ‘Total value of vehicles listed from attachment’ - attachment-sourced input, declared not checkable. The allowance on page 3 is the $3,450 printed at (6b) and (6d), which is a constant the form draws itself and therefore checkable at (6b).",
-  "TWO PRINTED CONDITIONALS ARE DECLINED RATHER THAN APPROXIMATED, and they are declined for different reasons. (6a)/(6c) branches on the row's own Lease/Own box, which IS printed here - one declarative predicate would recover it, and that is reported to Principal rather than built, because the schema change authorised for this slice was a factor and a constant. (6d) branches on whether the offer is joint, which is NOT recorded anywhere on this form's eight pages - no predicate over a printed cell could recover it, now or later. Recording the difference matters: the first is a gap that can close and the second never can.",
-  "THE MIXED-SCOPE FINDING, RECORDED HERE BECAUSE IT IS AN ARITHMETIC FACT ABOUT BOX A. Box A is drawn under \"Round to the nearest whole dollar\" at page 4 y 567.5 and adds lines (1) through (7). THREE of its seven operands are drawn under no rounding instruction at all: (5) and (6) are on page 3, which prints none anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence — the sentence is drawn between (7) and Box A. Every operand is nevertheless a PRINTED cell that this step reads back, so the recomputation of Box A sums exactly what the page shows and the tripwire is sound whatever precision those cells carry. What the mixed scope changes is the maximum divergence between Box A and the sum of its operands ROUNDED: see 433aoi.map.json rounding._the_mixed_scope_finding."
- ],
- "totals": [
-  {
-   "line": "1",
-   "caption": "Add lines (1a) through (1c) minus ($1,000) =",
-   "total_key": "1_total_bank_and_cash",
-   "floor": 0,
-   "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
-   "feeders": [
-    {
-     "group": "1ab_bank_accounts",
-     "column": "account_balance"
-    },
-    {
-     "keys": [
-      "1c_bank_accounts_from_attachment"
-     ]
-    },
-    {
-     "constant": -1000,
-     "constant_caption": "minus ($1,000)",
-     "constant_why": "The form prints the figure itself, on the same line, in its own caption. It is not an allowance looked up in a standards table this repo does not hold — it is a number drawn on the page, which is what makes it a printed constant rather than an input."
-    }
-   ]
-  },
-  {
-   "line": "2a",
-   "caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $",
-   "total_cell": {
-    "group": "2ab_investment_accounts",
-    "column": "equity",
-    "row": 0
-   },
-   "_no_multiplier": "NOTHING is drawn between the two cells on this row except '– $' at x 263.8..277.2. The investment table applies no quick-sale discount and the retirement table below it does. That difference is the whole reason retirement_account is a separate class.",
-   "feeders": [
-    {
-     "group": "2ab_investment_accounts",
-     "column": "current_value",
-     "row": 0
-    },
-    {
-     "group": "2ab_investment_accounts",
-     "column": "loan_balance",
-     "row": 0,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "2b",
-   "caption": "$ [Current market value] – $ [Minus loan balance] = (2b) $",
-   "total_cell": {
-    "group": "2ab_investment_accounts",
-    "column": "equity",
-    "row": 1
-   },
-   "feeders": [
-    {
-     "group": "2ab_investment_accounts",
-     "column": "current_value",
-     "row": 1
-    },
-    {
-     "group": "2ab_investment_accounts",
-     "column": "loan_balance",
-     "row": 1,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "2c",
-   "caption": "$ [US dollar equivalent of the digital asset as of today] = (2c) $",
-   "total_key": "2c_total_digital_assets",
-   "_arguable": "A one-operand equation — see _notes. Checked because both readings give the same figure.",
-   "feeders": [
-    {
-     "keys": [
-      "2c_us_dollar_equivalent_today"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "2",
-   "caption": "Add lines (2a) through (2d) =",
-   "total_key": "2_total_investment_accounts",
-   "feeders": [
-    {
-     "group": "2ab_investment_accounts",
-     "column": "equity"
-    },
-    {
-     "keys": [
-      "2c_total_digital_assets",
-      "2d_investment_accounts_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "3a QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "3a_retirement_accounts",
-    "column": "quick_sale_value",
-    "row": 0
-   },
-   "_the_tripwire": "The cell this entry checks is topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]. The leaf name says .7. The page says .8, drawn at x 154.7..184.7 immediately to the cell's left, and says it twice more on page 3. Binding by leaf name and multiplying by 0.7 would understate the quick sale value by 12.5% of market value AND still leave every printed total on the page reconciling, because (3a) and (3) would both be computed from the same wrong figure. This entry is the only thing on the form that reads the multiplier off the page.",
-   "feeders": [
-    {
-     "group": "3a_retirement_accounts",
-     "column": "current_value",
-     "row": 0,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $",
-     "factor_why": "Printed on the row between the current-market-value cell and this one. The quick-sale discount the IRS applies to a retirement account it would have to liquidate."
-    }
-   ]
-  },
-  {
-   "line": "3a",
-   "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] = (3a) $",
-   "total_cell": {
-    "group": "3a_retirement_accounts",
-    "column": "quick_sale_equity",
-    "row": 0
-   },
-   "_not_fmv_minus_loan": "The subtrahend is taken off the QUICK SALE VALUE, not off current market value. That is why the column is named quick_sale_equity and not equity, and it is why this entry and the one above it are two separate checks: together they prove both halves of the row, and either alone would let a wrong multiplier through.",
-   "feeders": [
-    {
-     "group": "3a_retirement_accounts",
-     "column": "quick_sale_value",
-     "row": 0
-    },
-    {
-     "group": "3a_retirement_accounts",
-     "column": "loan_balance",
-     "row": 0,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "3",
-   "caption": "Add lines (3a) through (3b) =",
-   "total_key": "3_total_retirement_accounts",
-   "feeders": [
-    {
-     "group": "3a_retirement_accounts",
-     "column": "quick_sale_equity"
-    },
-    {
-     "keys": [
-      "3b_retirement_accounts_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "4a",
-   "caption": "$ [Current cash value] – $ [Minus loan balance] = (4a) $",
-   "total_cell": {
-    "group": "4a_life_insurance_policies",
-    "column": "equity",
-    "row": 0
-   },
-   "_no_multiplier": "A life policy's cash surrender value is not quick-sale discounted on this form. No multiplier is drawn on the row.",
-   "feeders": [
-    {
-     "group": "4a_life_insurance_policies",
-     "column": "current_cash_value"
-    },
-    {
-     "group": "4a_life_insurance_policies",
-     "column": "outstanding_loan_balance",
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "4b",
-   "caption": "$ [Total cash value of life insurance policies from attachment] – $ [Minus loan balance(s)] = (4b) $",
-   "total_key": "4b_total_life_insurance_from_attachment",
-   "_both_operands_are_attachment_sourced_and_it_is_still_checkable": "Both feeders are declared not_checkable below, and this subtraction is checkable anyway, because both of them are cells PRINTED ON THIS PAGE. Same shape as (1), which sums (1c).",
-   "feeders": [
-    {
-     "keys": [
-      "4b_life_insurance_from_attachment"
-     ]
-    },
-    {
-     "keys": [
-      "4b_minus_loan_balances"
-     ],
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "4",
-   "caption": "Add lines (4a) through (4b) =",
-   "total_key": "4_total_life_insurance",
-   "feeders": [
-    {
-     "group": "4a_life_insurance_policies",
-     "column": "equity"
-    },
-    {
-     "keys": [
-      "4b_total_life_insurance_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "5a QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "5ab_real_property",
-    "column": "quick_sale_value",
-    "row": 0
-   },
-   "_tripwire": "Quick-sale tripwire 2 of 5. Printed at y 563.9, x 118.7..148.8, immediately left of the cell it governs. Nothing is printed above that cell; this caption is the only text identifying it.",
-   "feeders": [
-    {
-     "group": "5ab_real_property",
-     "column": "current_fmv",
-     "row": 0,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "5b QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "5ab_real_property",
-    "column": "quick_sale_value",
-    "row": 1
-   },
-   "_tripwire": "Quick-sale tripwire 3 of 5. Printed at y 430.7, x 118.7..148.8.",
-   "feeders": [
-    {
-     "group": "5ab_real_property",
-     "column": "current_fmv",
-     "row": 1,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "5a",
-   "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] (total value of real estate) = (5a) $",
-   "total_cell": {
-    "group": "5ab_real_property",
-    "column": "quick_sale_equity",
-    "row": 0
-   },
-   "_not_fmv_minus_loan": "The subtrahend comes off the QUICK SALE VALUE, not off current market value. No lease conditional is printed on a real-property row, so unlike the vehicle rows this cell is fully checkable.",
-   "feeders": [
-    {
-     "group": "5ab_real_property",
-     "column": "quick_sale_value",
-     "row": 0
-    },
-    {
-     "group": "5ab_real_property",
-     "column": "current_loan_balance",
-     "row": 0,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "5b",
-   "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] (total value of real estate) = (5b) $",
-   "total_cell": {
-    "group": "5ab_real_property",
-    "column": "quick_sale_equity",
-    "row": 1
-   },
-   "feeders": [
-    {
-     "group": "5ab_real_property",
-     "column": "quick_sale_value",
-     "row": 1
-    },
-    {
-     "group": "5ab_real_property",
-     "column": "current_loan_balance",
-     "row": 1,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "5",
-   "caption": "Add lines (5a) through (5c) =",
-   "total_key": "5_total_real_estate",
-   "feeders": [
-    {
-     "group": "5ab_real_property",
-     "column": "quick_sale_equity"
-    },
-    {
-     "keys": [
-      "5c_property_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "6a QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_value",
-    "row": 0
-   },
-   "_tripwire": "Quick-sale tripwire 4 of 5. Printed at y 279.5, x 115.1..145.2.",
-   "feeders": [
-    {
-     "group": "6ac_vehicles",
-     "column": "current_fmv",
-     "row": 0,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "6c QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_value",
-    "row": 1
-   },
-   "_tripwire": "Quick-sale tripwire 5 of 5. Printed at y 160.7, x 115.1..145.2. CHECKED EVEN WHEN THE ROW IS LEASED: the acceptance fixture leases this vehicle, its (6c) total prints 0, and this cell still prints market value times .8 because the lease instruction governs the total and not this cell.",
-   "feeders": [
-    {
-     "group": "6ac_vehicles",
-     "column": "current_fmv",
-     "row": 1,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "6a own",
-   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_equity",
-    "row": 0
-   },
-   "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 328.5 and 314.1. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
-   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
-   "feeders": [
-    {
-     "group": "6ac_vehicles",
-     "column": "quick_sale_value",
-     "row": 0,
-     "when": {
-      "key": "6ac_vehicles[0].lease_or_own",
-      "equals": "own"
-     },
-     "_why": "The DISCOUNTED value, not market value. The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan], so the subtraction is taken off the cell the X .8 produced."
-    },
-    {
-     "group": "6ac_vehicles",
-     "column": "current_loan_balance",
-     "row": 0,
-     "sign": -1,
-     "when": {
-      "key": "6ac_vehicles[0].lease_or_own",
-      "equals": "own"
-     }
-    }
-   ]
-  },
-  {
-   "line": "6a leased",
-   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_equity",
-    "row": 0
-   },
-   "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 328.5 and 314.1. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
-   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
-   "feeders": [
-    {
-     "constant": 0,
-     "constant_caption": "if the vehicle is leased, enter 0 as the total value",
-     "when": {
-      "key": "6ac_vehicles[0].lease_or_own",
-      "equals": "lease"
-     },
-     "_why": "The zero is DRAWN ON THE PAGE in the caption, on the same footing as the -$1,000 at (1) and the -$3,450 at (6b). It is a printed constant, not an assumption that an unfilled cell means zero."
-    }
-   ]
-  },
-  {
-   "line": "6c own",
-   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_equity",
-    "row": 1
-   },
-   "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 209.7 and 195.3. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
-   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
-   "feeders": [
-    {
-     "group": "6ac_vehicles",
-     "column": "quick_sale_value",
-     "row": 1,
-     "when": {
-      "key": "6ac_vehicles[1].lease_or_own",
-      "equals": "own"
-     },
-     "_why": "The DISCOUNTED value, not market value. The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan], so the subtraction is taken off the cell the X .8 produced."
-    },
-    {
-     "group": "6ac_vehicles",
-     "column": "current_loan_balance",
-     "row": 1,
-     "sign": -1,
-     "when": {
-      "key": "6ac_vehicles[1].lease_or_own",
-      "equals": "own"
-     }
-    }
-   ]
-  },
-  {
-   "line": "6c leased",
-   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
-   "total_cell": {
-    "group": "6ac_vehicles",
-    "column": "quick_sale_equity",
-    "row": 1
-   },
-   "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 209.7 and 195.3. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
-   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
-   "feeders": [
-    {
-     "constant": 0,
-     "constant_caption": "if the vehicle is leased, enter 0 as the total value",
-     "when": {
-      "key": "6ac_vehicles[1].lease_or_own",
-      "equals": "lease"
-     },
-     "_why": "The zero is DRAWN ON THE PAGE in the caption, on the same footing as the -$1,000 at (1) and the -$3,450 at (6b). It is a printed constant, not an assumption that an unfilled cell means zero."
-    }
-   ]
-  },
-  {
-   "line": "6b",
-   "caption": "Subtract $3,450 from line (6a)   /   (If line (6a) minus $3,450 is a negative number, enter \"0\")",
-   "total_key": "6b_vehicle_1_less_allowance",
-   "floor": 0,
-   "floor_caption": "(If line (6a) minus $3,450 is a negative number, enter \"0\")",
-   "_this_is_the_vehicle_allowance": "The $3,450 is DRAWN ON THE PAGE in this caption, which is what makes it a printed constant on the same footing as the -$1,000 at line (1) and NOT a standards-table lookup. Its sibling (6d) applies the same figure and is not checkable, because (6d) applies it only on a joint offer and nothing on this form records whether the offer is joint.",
-   "feeders": [
-    {
-     "group": "6ac_vehicles",
-     "column": "quick_sale_equity",
-     "row": 0
-    },
-    {
-     "constant": -3450,
-     "constant_caption": "Subtract $3,450 from line (6a)"
-    }
-   ]
-  },
-  {
-   "line": "6",
-   "caption": "Total lines (6b), (6d), and (6e) =",
-   "total_key": "6_total_vehicles",
-   "_not_6a_and_6c": "It totals (6b), (6d) and (6e). The two per-vehicle totals reach this line only through the allowance lines that follow them, so a reader checking (6) against (6a)+(6c) would be checking the wrong three cells.",
-   "feeders": [
-    {
-     "keys": [
-      "6b_vehicle_1_less_allowance",
-      "6d_vehicle_2_less_allowance",
-      "6e_vehicles_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "7a QSV",
-   "caption": "X .8 = $",
-   "total_cell": {
-    "group": "7a_other_valuable_items",
-    "column": "quick_sale_value",
-    "row": 0
-   },
-   "_tripwire": "Quick-sale tripwire 6 of 7. Printed at y 686.3, x 154.7..184.8. Its leaf name is Times_8[0] and AGREES with the page - checked exactly as hard as the one on page 2 whose name says seven, because a name that happens to be right is not evidence. Control C02 in 433aoi.name-lies.json.",
-   "feeders": [
-    {
-     "group": "7a_other_valuable_items",
-     "column": "current_fmv",
-     "row": 0,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "7a",
-   "caption": "Total value of other valuable items = (7a) $",
-   "total_cell": {
-    "group": "7a_other_valuable_items",
-    "column": "quick_sale_equity",
-    "row": 0
-   },
-   "_the_loan_comes_off_the_discounted_figure": "The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan] = (7a) $. The subtraction is taken off the cell the X .8 produced, not off market value. Same shape as (3a) on page 2 and (5a)/(5b) on page 3. NO PREDICATE: this row prints no conditional - there is no lease/own selector on (7a) and nothing on the page makes this cell conditional on anything.",
-   "feeders": [
-    {
-     "group": "7a_other_valuable_items",
-     "column": "quick_sale_value",
-     "row": 0
-    },
-    {
-     "group": "7a_other_valuable_items",
-     "column": "current_loan_balance",
-     "row": 0,
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "7b QSV",
-   "caption": "X .8 = $",
-   "total_key": "7b_quick_sale_value",
-   "_tripwire": "Quick-sale tripwire 7 of 7 on this form so far. Printed at y 617.9, x 154.7..184.7. Addressed by total_key rather than total_cell because (7b) is bound as scalars, not as a row - see 433aoi.map.json._map_evidence_page4.",
-   "feeders": [
-    {
-     "keys": [
-      "7b_current_market_value"
-     ],
-     "factor": 0.8,
-     "factor_caption": "X .8 = $"
-    }
-   ]
-  },
-  {
-   "line": "7b",
-   "caption": "Total value of remaining furniture and personal effects = (7b) $",
-   "total_key": "7b_total_remaining_furniture",
-   "feeders": [
-    {
-     "keys": [
-      "7b_quick_sale_value"
-     ]
-    },
-    {
-     "keys": [
-      "7b_minus_loan_balance"
-     ],
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "7",
-   "caption": "Add lines (7a) through (7c) minus IRS deduction of $11,980 =",
-   "total_key": "7_total_other_valuable_items",
-   "floor": 0,
-   "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
-   "_the_floor_is_arguable_and_is_declared_anyway": "The floor sentence is drawn at y 557.1, x 141.3..435.6 - BELOW this line and above the Box A row - where page 2's equivalent is drawn at the top of its section. Declared as a floor here because the $11,980 deduction can drive this line negative exactly as the $1,000 can drive (1) negative, because the same words answer it, and because 'any line item' is what the sentence says. It does not fire on the slice-4 fixture, so the declaration is a claim about the page and not one the fixture proves. Reported as arguable P4-3.",
-   "_the_constant_is_printed": "The $11,980 is DRAWN ON THE PAGE in this caption, on the same footing as the -$1,000 at line (1) and the -$3,450 at (6b). It is a printed constant and NOT a standards-table lookup - which is the distinction that went wrong once already on this form, at (6e).",
-   "feeders": [
-    {
-     "total_cell_note": "the (7a) row total",
-     "group": "7a_other_valuable_items",
-     "column": "quick_sale_equity",
-     "row": 0
-    },
-    {
-     "keys": [
-      "7b_total_remaining_furniture",
-      "7c_valuable_items_from_attachment"
-     ]
-    },
-    {
-     "constant": -11980,
-     "constant_caption": "minus IRS deduction of $11,980"
-    }
-   ]
-  },
-  {
-   "line": "Box A",
-   "caption": "Add lines (1) through (7) and enter the amount in Box A =",
-   "total_key": "box_a_available_individual_equity_in_assets",
-   "_first_cross_page_total_on_this_form": "Four operands are on page 2, two on page 3 and one on page 4. Nothing in the totals schema needed to change for that: a feeder names map keys, and a map key names a field wherever it is drawn. Every tripwire before this one has been a within-page check, so this is also the first that would catch a page-3 figure that failed to reach a page-4 total.",
-   "_why_seven_operands_and_not_twenty": "The page prints 'Do not include amount on the lines with a letter beside the number.' at y 567.5, x 74.5..435.6. That sentence is the whole reason this entry lists (1) (2) (3) (4) (5) (6) (7) and not (1a) (1b) (1c) (2a) ... A recomputation that added the lettered lines would double-count every asset on three pages and produce a confident number that agreed with nothing.",
-   "_no_floor": "Declared with NO floor. Each of the seven operands is already floored where the page says so, so their sum cannot be negative, and a floor here would assert a rule the page does not print.",
-   "feeders": [
-    {
-     "keys": [
-      "1_total_bank_and_cash",
-      "2_total_investment_accounts",
-      "3_total_retirement_accounts",
-      "4_total_life_insurance",
-      "5_total_real_estate",
-      "6_total_vehicles",
-      "7_total_other_valuable_items"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "8c",
-   "caption": "= (8c) $",
-   "total_key": "8c_total_digital_assets",
-   "_arguable": "A one-operand equation, identical in shape to (2c) on page 2 and read the same way. The page draws an '=' at x 430.9..435.6 between the dollar-equivalent cell and the (8c) marker and draws no other operator on the row. Read one way it is an identity and this cell is a copy; read the other, the '=' is decoration and this is plain input. Declared computed on the identity reading, matching (2c) - reading two identically-drawn rows two different ways would be worse than reading them both wrong. Carried item C-03.",
-   "feeders": [
-    {
-     "keys": [
-      "8c_us_dollar_equivalent_today"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "8",
-   "caption": "Add lines (8a) through (8d) =",
-   "total_key": "8_total_business_bank_accounts",
-   "_no_1000_deduction_here_and_that_is_the_point": "Printed line (1) on page 2 is the same shape and reads 'Add lines (1a) through (1c) minus ($1,000) ='. This line prints no deduction at all. The $1,000 bank-account exemption is a personal-side allowance and Section 5 does not get it. An entry copied from (1) would understate this line by $1,000 with every other figure on the page still agreeing - which is exactly the class of error a tripwire exists to catch and the class it cannot catch if the tripwire itself carries the mistake.",
-   "_four_operands_and_one_is_not_a_bank_account": "(8c) is the DIGITAL ASSET total and it adds in here, which is why the leaf name Total_Value_Bank_Accounts[0] understates what this cell holds. Not entered in the name-lie registry: the page is loose here too, printing \"Total bank accounts from attachment\" at (8d) while (8) sums it with (8c). Reported as arguable P4-2.",
-   "feeders": [
-    {
-     "group": "8ab_business_bank_accounts",
-     "column": "account_balance"
-    },
-    {
-     "keys": [
-      "8c_total_digital_assets",
-      "8d_bank_accounts_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "9a QSV",
-   "caption": "$ [Current market value] X .8 = $ [quick sale value]",
-   "total_cell": {
-    "group": "9ab_business_assets",
-    "column": "quick_sale_value",
-    "row": 0
-   },
-   "_the_conditional_is_NOT_on_this_cell": "The '(if leased or used in the production of income, enter 0 as the total value)' instruction is drawn at y 711.8..694.9, x 334.8..424.7 — in the TOTAL VALUE column. This cell is at x 158.4..234.0 under 'X .8 = $' at x 125.9..155.9. Same split as page 3's vehicles, where the quick-sale cells are unconditional and the row totals are not.",
-   "feeders": [
-    {
-     "group": "9ab_business_assets",
-     "column": "current_fmv",
-     "row": 0,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $",
-     "factor_why": "The form prints the multiplier itself, on the row, at y 697.1 x 125.9..155.9. Sixth printed 'X .8' on this form and the second on a business-side table."
-    }
-   ]
-  },
-  {
-   "line": "9b QSV",
-   "caption": "$ [Current market value] X .8 = $ [quick sale value]",
-   "total_cell": {
-    "group": "9ab_business_assets",
-    "column": "quick_sale_value",
-    "row": 1
-   },
-   "feeders": [
-    {
-     "group": "9ab_business_assets",
-     "column": "current_fmv",
-     "row": 1,
-     "factor": 0.8,
-     "factor_caption": "X .8 = $",
-     "factor_why": "Printed at y 653.9, x 125.9..155.9. Same row shape as slot 0."
-    }
-   ]
-  },
-  {
-   "line": "9",
-   "caption": "Add lines (9a) through (9c) =",
-   "total_key": "9_total_business_assets",
-   "_the_operands_INCLUDE_the_lettered_lines": "The caption names (9a) through (9c) explicitly. That is the opposite of Box B's instruction four rows below, and the two are not in conflict: (9) is a sub-total OF the lettered lines, and Box B is a total of the unlettered ones.",
-   "feeders": [
-    {
-     "group": "9ab_business_assets",
-     "column": "quick_sale_equity"
-    },
-    {
-     "keys": [
-      "9c_business_assets_from_attachment"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "11",
-   "caption": "Enter the value of line (9) minus line (10). If less than zero enter zero. =",
-   "total_key": "11_business_assets_less_deduction",
-   "floor": 0,
-   "floor_caption": "If less than zero enter zero.",
-   "_the_floor_is_in_this_LINES_OWN_caption": "Not inherited from a block instruction. Same shape as (6b) on page 3, whose caption repeats its own floor. Page 5's block instruction at y 380.1 also carries a floor sentence, but it is drawn over Section 6 and this line is in Section 5.",
-   "feeders": [
-    {
-     "keys": [
-      "9_total_business_assets"
-     ]
-    },
-    {
-     "keys": [
-      "10_irs_allowed_deduction_books_and_tools"
-     ],
-     "sign": -1
-    }
-   ]
-  },
-  {
-   "line": "Box B",
-   "caption": "Add lines (8) and (11) and enter the amount in Box B =",
-   "total_key": "box_b_available_business_equity_in_assets",
-   "floor": 0,
-   "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
-   "_printed_operand_list_verbatim": "\"Add lines (8) and (11) and enter the amount in Box B =\" at y 460.0, x 211.0..442.8. TWO operands, named in the caption.",
-   "_the_do_not_include_instruction": "\"Do not include amounts from the lines with a letter beside the number [for example: (9c)].\" at y 488.6, x 128.0..442.8. Box A's version of this sentence names no example; Box B's does, and the example is the tell — (9c) is a lettered sub-line of (9), (9) feeds (11), and adding (9a)/(9b)/(9c) here would double-count every business asset on this page.",
-   "_second_cross_page_total": "(8) is printed on page 4 and (11) on page 5. Box A was the first.",
-   "feeders": [
-    {
-     "keys": [
-      "8_total_business_bank_accounts"
-     ]
-    },
-    {
-     "keys": [
-      "11_business_assets_less_deduction"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "17",
-   "caption": "Add lines (12) through (16) =",
-   "total_key": "17_total_business_income",
-   "_the_P_and_L_route": "The Section 6 preamble at y 429.3 authorises a filed form on which this cell is entered from a profit-and-loss statement and (12)-(16) are all blank. This entry is declared and left EXACT anyway: blank feeders contribute zero, so on such a record the check would FAIL against a legitimate filing. Carried as C-06 rather than weakened, because the only two fixes are a predicate over a cell this page does not print, and a tolerance.",
-   "feeders": [
-    {
-     "keys": [
-      "12_gross_receipts",
-      "13_gross_rental_income",
-      "14_interest_income",
-      "15_dividends",
-      "16_other_income"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "29",
-   "caption": "Add lines (18) through (28) =",
-   "total_key": "29_total_business_expenses",
-   "_eleven_operands_no_gap_no_letters": "The printed list runs (18) through (28) with no missing number and no lettered line anywhere in Section 6.",
-   "_the_P_and_L_route": "Same as (17). The preamble names line 29 by number.",
-   "feeders": [
-    {
-     "keys": [
-      "18_materials_purchased",
-      "19_inventory_purchased",
-      "20_gross_wages_and_salaries",
-      "21_rent",
-      "22_supplies",
-      "23_utilities_telephones",
-      "24_vehicle_costs",
-      "25_business_insurance",
-      "26_current_business_taxes",
-      "27_secured_debts_not_credit_cards",
-      "28_other_business_expenses"
-     ]
-    }
-   ]
-  },
-  {
-   "line": "Box C",
-   "caption": "Subtract line (29) from line (17) and enter the amount in Box C =",
-   "total_key": "box_c_net_business_income",
-   "floor": 0,
-   "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
-   "_printed_operand_list_verbatim": "\"Subtract line (29) from line (17) and enter the amount in Box C =\" at y 49.6, x 170.0..442.8.",
-   "_THE_ORDER_IN_PROSE_IS_THE_REVERSE_OF_THE_ARITHMETIC": "\"Subtract line (29) from line (17)\" means (17) MINUS (29). The caption names (29) FIRST. This is the only printed formula on the five pages read so far whose prose order is the reverse of its operand order, and an entry written in reading order would negate Box C on every filed form. The feeders below are (17) with sign +1 and (29) with sign -1, in that order, so the file reads as the arithmetic and not as the sentence.",
-   "_the_floor_is_what_makes_a_loss_printable": "A business whose expenses exceed its income has a negative net and the printed instruction says enter zero.",
-   "feeders": [
-    {
-     "keys": [
-      "17_total_business_income"
-     ]
-    },
-    {
-     "keys": [
-      "29_total_business_expenses"
-     ],
-     "sign": -1
-    }
-   ]
-  }
- ],
- "not_checkable": {
-  "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both lists is indistinguishable from one nobody looked at. Mirrors 433aoi.map.json._not_checkable, and takes the 433-F Section E footer precedent recorded in 433f.totals.json. STILL WRITTEN — not checkable is not the same as not filled.",
-  "entries": [
-   {
-    "map_key": "1c_bank_accounts_from_attachment",
-    "printed_caption": "Total of bank accounts from attachment",
-    "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable."
-   },
-   {
-    "map_key": "2d_investment_accounts_from_attachment",
-    "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here.",
-    "review_page_advisory": "Its caption states a formula the engine cannot verify. Surface the caption beside the value on the review page so the preparer sees the requirement: current market value minus loan balance(s), with NO quick-sale discount — the investment table applies none, and adding one here would understate the offer."
-   },
-   {
-    "map_key": "3b_retirement_accounts_from_attachment",
-    "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced.",
-    "review_page_advisory": "THE X .8 IS IN THE CAPTION. The quick-sale discount applies to attached retirement accounts exactly as it does to the printed row at (3a), and a preparer who omits it understates the offer by 20% of attached market value with nothing on this page able to catch it. Surface this caption verbatim beside the value. The engine cannot verify an attachment; it can put the requirement in front of the person who can."
-   },
-   {
-    "map_key": "4b_life_insurance_from_attachment",
-    "printed_caption": "Total cash value of life insurance policies from attachment",
-    "why_not_checkable": "Attachment-sourced."
-   },
-   {
-    "map_key": "4b_minus_loan_balances",
-    "printed_caption": "Minus loan balance(s)",
-    "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) — that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
-   },
-   {
-    "map_key": "5c_property_from_attachment",
-    "printed_caption": "Total value of property(s) from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (5), which IS checkable.",
-    "review_page_advisory": "THE X .8 IS IN THE CAPTION. Attached real property is quick-sale discounted exactly as the printed rows at (5a) and (5b) are, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, overstates or understates this figure with nothing on the page able to catch it."
-   },
-   {
-    "map_key": "6d_vehicle_2_less_allowance",
-    "printed_caption": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
-    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The phrase ‘joint offer’ is drawn exactly once on all eight pages of 433-A(OIC) - here - and no cell anywhere records the answer; it is declared on Form 656, which this engine does not hold. Unlike (6a)/(6c), no predicate over a printed cell could recover this one.",
-    "review_page_advisory": "ANSWER THIS FROM FORM 656, NOT FROM MARITAL STATUS. On a joint offer this cell is line (6c) minus $3,450, floored at zero. On a separate offer it is line (6c) unchanged - the $3,450 is NOT applied twice across two vehicles on a separate offer. A married taxpayer may file a separate offer, so the Section 1 marital status on page 1 does not answer this and must not be used to."
-   },
-   {
-    "map_key": "6e_vehicles_from_attachment",
-    "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced, and INPUT rather than computed despite the leaf name Enter_Allowance[0]. It is an operand of (6), which IS checkable.",
-    "review_page_advisory": "THIS CELL IS NOT AN ALLOWANCE, whatever its field name suggests - it is the vehicles-from-attachment total, and THE X .8 IS IN ITS CAPTION. Attached vehicles are quick-sale discounted exactly as the printed rows are, and a leased vehicle on the attachment contributes 0 here just as it would at (6a)/(6c). The $3,450 allowance is applied at (6b) and (6d) and must NOT be applied again here."
-   },
-   {
-    "map_key": "7c_valuable_items_from_attachment",
-    "printed_caption": "Total value of valuable items listed from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (7), which IS checkable.",
-    "review_page_advisory": "THE X .8 IS IN THE CAPTION, and this is the fourth attachment total on this form to say so - (3b), (5c), (6e) and now (7c). Attached valuable items are quick-sale discounted exactly as the printed row at (7a) is, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, misstates this figure with nothing on the page able to catch it."
-   },
-   {
-    "map_key": "8d_bank_accounts_from_attachment",
-    "printed_caption": "Total bank accounts from attachment",
-    "why_not_checkable": "Attachment-sourced, and unlike (7c) its caption states no arithmetic at all - it is a plain roll-up of rows printed somewhere else. It is an operand of (8), which IS checkable. Same shape as (1c) on the personal side."
-   },
-   {
-    "map_key": "s4_average_gross_monthly_payroll",
-    "printed_caption": "Average gross monthly payroll $",
-    "why_not_checkable": "NOT A TOTAL AT ALL. It is the one money-shaped cell in Section 4 and nothing on the page feeds it: no marker, no '=', no rows above it. Declared rather than left out, because a money cell that appears in neither list is indistinguishable from one nobody looked at - which is the condition defect D1 sat in."
-   },
-   {
-    "map_key": "9c_business_assets_from_attachment",
-    "printed_caption": "Total value of assets listed from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (9), which IS checkable.",
-    "review_page_advisory": "THE X .8 IS IN THE CAPTION, and this is the FIFTH attachment total on this form to say so — (3b), (5c), (6e), (7c) and now (9c). Attached business assets are quick-sale discounted exactly as the printed rows at (9a) and (9b) are, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, misstates this figure with nothing on the page able to catch it."
-   },
-   {
-    "map_key": "10_irs_allowed_deduction_books_and_tools",
-    "printed_caption": "IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –",
-    "why_not_checkable": "AN IRS-PUBLISHED ALLOWANCE THE FORM DOES NOT PRINT. Unlike the $1,000 on line (1) and the $3,450 on (6b)/(6d), which the page draws itself and which are therefore printed constants, this figure is published in a table this repo does not hold. This form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere, so it carries no `allowed` block and nothing is auto-filled here. The cell is ordinary input and no printed cell on this form feeds it.",
-    "review_page_advisory": "THIS IS A PUBLISHED IRS FIGURE, NOT A NUMBER TO ESTIMATE. It is the allowed deduction for professional books and tools of trade, it is capped, and it applies to individuals and sole-proprietors only. It is subtracted at line (11) and therefore reduces Box B dollar for dollar. Entering more than the published allowance overstates the deduction and understates the offer; entering nothing when it applies does the reverse."
-   },
-   {
-    "cell": {
-     "group": "9ab_business_assets",
-     "column": "quick_sale_equity"
-    },
-    "printed_caption": "Total value (if leased or used in the production of income, enter 0 as the total value)",
-    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM, and it is the (6d) class rather than the (6a)/(6c) class. Page 3's vehicle rows print the same shape and there the branch IS recoverable, because each row prints its own Lease/Own checkbox pair and slice 3 declared a feeder predicate over it. PAGE 5 PRINTS NO LEASE INDICATOR: the only four checkboxes on the page are CB5_01..CB5_04, the Notes Receivable and Accounts Receivable Yes/No pairs. And the second clause is worse — 'or used in the production of income' is a further condition, new on this form, with no cell anywhere even in principle. Both slots are declared, because both print the same caption.",
-    "review_page_advisory": "ANSWER THIS FROM THE ASSET, NOT FROM THE ARITHMETIC. If the asset is LEASED, or is USED IN THE PRODUCTION OF INCOME, the printed instruction says enter 0 as the total value — even though the quick-sale cell beside it holds a real figure and the subtraction would produce one. Both conditions zero the row. A preparer who enters (market value X .8) minus loan on a leased machine, or on equipment used to produce income, overstates Box B and therefore the offer, and nothing on this page can catch it."
-   }
+  "form": "433aoi",
+  "form_revision": "4-2026",
+  "catalog": "55896Q",
+  "_why": "Which printed cell on 433-A(OIC) is computed from which other printed cells. Read by run-form-gate.mjs step 11, which recomputes every entry FROM WHAT THE FILLED PDF PRINTS and compares it to the printed figure. No figure lives here except the ones the FORM ITSELF PRINTS as constants — the $1,000 on line (1), the $3,450 vehicle allowance on line (6b), and the .8 quick-sale multiplier that appears five times — and every one is quoted from the caption that prints it.",
+  "authored_from": "The printed page text of adapters/pdf/forms/f433aoi.pdf, extracted from the content streams and read alongside the widget rectangles by adapters/pdf/align-block.mjs. Captions below are quoted verbatim. NOT from field names: ELEVEN leaf names on this form are known to be actively wrong about what their cell means — including the page-3 pair Total_Value_Vehicles_Attached[0] and Enter_Allowance[0], which are printed lines (6d) and (6e) respectively and so hold each other's job. One of the eleven — RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] — is a feeder of entry (3a) QSV below, where the leaf says .7 and the page says .8.",
+  "_slice": "PRINTED PAGES 1, 2 AND 3. Page 1 prints no total. Page 2’s eleven computed cells and page 3’s nine are all here. Pages 4-8 are not in this file yet; a printed total absent from both `totals` and `not_checkable` has not been declined, it has simply not been read. SLICE 4 adds printed pages 4: lines (7a) QSV, (7a), (7b) QSV, (7b), (7), Box A, (8c) and (8). Box A is the first CROSS-PAGE total on this form. SLICE 5 ADDS PRINTED PAGE 5: (9a) QSV, (9b) QSV, (9), (11), Box B, (17), (29) and Box C — eight entries, of which THREE are Boxes or feed one. Box B is the SECOND cross-page total on this form. Box C is the first printed formula on five pages whose prose operand order is the reverse of its arithmetic.",
+  "_notes": [
+    "THIS FILE EXISTS BECAUSE THE SCHEMA CAN NOW CARRY THE FORM. It was deliberately not authored during slice 2: the feeder schema then added and subtracted and had no factor and no constant, so (3a)'s X .8 and (1)'s minus $1,000 — the two cells on page 2 that most need checking — would have been the two it could not express. Nine clean passes printed beside two silently-absent checks is worse than a SKIP that says nothing was checked.",
+    "A FACTOR AND A CONSTANT, NOT AN EXPRESSION LANGUAGE. `factor` and `constant` are two numbers per feeder, and a feeder contributes sign x (factor x sum-of-its-cells + constant). That is enough for every printed formula on pages 1-3 that is not a conditional, and it is deliberately not enough to invent arithmetic here: this file can still only say which printed cells feed a line and by how much.",
+    "`floor` IS THE FORM'S OWN PRINTED INSTRUCTION, not a tolerance. Six lines declare it and the page prints a floor over every one of them, in three different places and three different wordings: (1) on page 2 sits under 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".'; (6b) on page 3 carries the instruction inside its own caption, '(If line (6a) minus $3,450 is a negative number, enter \"0\")'; and (7), Box B and Box C sit under 'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' while (11) prints the shortest form of all, 'If less than zero enter zero.' THE OLD REASON HERE WAS WRONG AND IT IS WORTH SAYING WHY. It read 'only a line that subtracts a printed constant can go negative, so exactly two lines declare it' - true of the two lines that existed when it was written, and false as a rule: (7), (11), Box B and Box C subtract no constant and declare a floor because the PAGE PRINTS ONE OVER THEM. A floor is declared from the printed instruction, never from the shape of the arithmetic. When the floor actually fires the gate prints 'floored at 0.00' on that line, so a match that depended on it can never read as an unconditional match.",
+    "ROUNDING IS NOW MODELLED, PER PRINTED BLOCK, AND THIS NOTE RECORDS WHAT REPLACED THE OLD LIMIT. It used to read \"ROUNDING IS NOT MODELLED, AND THAT IS A KNOWN LIMIT — comparison here is exact to the cent\". It no longer is. `rounding.blocks` in 433aoi.map.json declares, per printed block, which sentence rounds it and where that sentence is drawn; adapters/pdf/rounding.mjs applies it at OUTPUT and this step applies it at COMPARISON, using the mode of the block THE TOTAL CELL ITSELF sits in. Round first, then floor — the order page 2 y 668.1 prints the two sentences in. STILL NO TOLERANCE ANYWHERE: both sides are brought to the same precision by a printed instruction, and a cell that cannot be is declared not checkable instead. The old note's own example is the case this catches — a market value that is not a multiple of 5 makes X .8 land on a fraction of a dollar, and the page prints the rounded figure while an unrounded recomputation would report a false failure of up to 50 cents per operand.",
+    "PER-ROW ENTRIES ARE NOT GROUP TOTALS. Nineteen entries below address a single printed ROW via `total_cell` with a row index, because their printed caption states a formula across the cells of that one row — 'Current market value X .8 = [cell] - [cell] = (3a)'. A group total sums a column; these do not. Both shapes are in this file and they are told apart by `total_cell` versus `total_key`.",
+    "(2c) IS DECLARED CHECKABLE ON THE ARGUABLE READING. The map records it as a one-operand equation — the page draws an '=' between the dollar-equivalent cell and the (2c) marker and draws no other operator — with the case against stated: a lone '=' could be decoration on a row the taxpayer carries across by hand, in which case (2c) is plain input. Included here because the arithmetic is identical under both readings, so this entry cannot be the thing that makes a wrong answer look right. Still reported as arguable rather than resolved.",
+    "WHAT THE ATTACHMENT CELLS DO AND DO NOT PROVE. (1c), (2d), (3b), (4b-source) and (4b-loans) are declared not_checkable below: what they sum is on an attachment this engine never sees. They are nevertheless OPERANDS of (1), (2), (3), (4) and (4b), which ARE checkable — the page prints those cells, and a recomputation reads what the page prints. The rule is about where a formula's operands are PRINTED, not where their figures came from.",
+    "NINE QUICK-SALE TRIPWIRES NOW, ACROSS FOUR PAGES: (3a) on page 2, (5a), (5b), (6a) and (6c) on page 3, (7a) and (7b) on page 4, and (9a) and (9b) on page 5. Every one of them is the same printed shape - a cell whose only identifying text is the ‘X .8 = $’ drawn immediately to its left, with nothing printed above it - and every one is checked against the market-value cell beside it rather than against any leaf name. Eight of the nine leaf names happen to say times_8 or Times_8; the ninth says Times_7 and carries the same printed X .8. That is why none of the nine is bound or checked by name. THE COUNT IN THIS NOTE IS NOW DERIVED: it said FIVE ACROSS TWO PAGES for two slices after the sixth, seventh, eighth and ninth had been authored, while adapters/pdf/maps/433aoi.name-lies.json said nine across four pages about the same cells. Two files in this repo describing one set of nine cells and disagreeing about how many there were is the whole argument for adapters/pdf/count-sweep.mjs, which now derives both from the same place.",
+    "THE VEHICLE QUICK-SALE CELLS ARE UNCONDITIONAL AND THE VEHICLE TOTALS ARE NOT. The ‘if the vehicle is leased, enter 0 as the total value’ instruction is printed against ‘Total value of vehicle’, which is the (6a)/(6c) cell, NOT against the X .8 cell. So both vehicle quick-sale entries below are checked on every row whatever the lease answer, while (6a)/(6c) itself is declared not checkable.",
+    "(6e) IS NOT AN ALLOWANCE, WHATEVER ITS LEAF NAME SAYS. Enter_Allowance[0] is printed line (6e), ‘Total value of vehicles listed from attachment’ - attachment-sourced input, declared not checkable. The allowance on page 3 is the $3,450 printed at (6b) and (6d), which is a constant the form draws itself and therefore checkable at (6b).",
+    "TWO PRINTED CONDITIONALS ARE DECLINED RATHER THAN APPROXIMATED, and they are declined for different reasons. (6a)/(6c) branches on the row's own Lease/Own box, which IS printed here - one declarative predicate would recover it, and that is reported to Principal rather than built, because the schema change authorised for this slice was a factor and a constant. (6d) branches on whether the offer is joint, which is NOT recorded anywhere on this form's eight pages - no predicate over a printed cell could recover it, now or later. Recording the difference matters: the first is a gap that can close and the second never can.",
+    "THE MIXED-SCOPE FINDING, RECORDED HERE BECAUSE IT IS AN ARITHMETIC FACT ABOUT BOX A. Box A is drawn under \"Round to the nearest whole dollar\" at page 4 y 567.5 and adds lines (1) through (7). THREE of its seven operands are drawn under no rounding instruction at all: (5) and (6) are on page 3, which prints none anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence — the sentence is drawn between (7) and Box A. Every operand is nevertheless a PRINTED cell that this step reads back, so the recomputation of Box A sums exactly what the page shows and the tripwire is sound whatever precision those cells carry. What the mixed scope changes is the maximum divergence between Box A and the sum of its operands ROUNDED: see 433aoi.map.json rounding._the_mixed_scope_finding."
   ],
-  "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. It is now checked on both printed branches by the four predicated lines '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared BOTH checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on exactly that (DOUBLE-DECLARED). The review-page advisory that told a preparer to check the lease box against this figure by hand went with it, because it said 'nothing in the automated checks looks at this cell' and that is no longer true."
- }
+  "totals": [
+    {
+      "line": "1",
+      "caption": "Add lines (1a) through (1c) minus ($1,000) =",
+      "total_key": "1_total_bank_and_cash",
+      "floor": 0,
+      "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+      "feeders": [
+        {
+          "group": "1ab_bank_accounts",
+          "column": "account_balance"
+        },
+        {
+          "keys": [
+            "1c_bank_accounts_from_attachment"
+          ]
+        },
+        {
+          "constant": -1000,
+          "constant_caption": "minus ($1,000)",
+          "constant_why": "The form prints the figure itself, on the same line, in its own caption. It is not an allowance looked up in a standards table this repo does not hold — it is a number drawn on the page, which is what makes it a printed constant rather than an input."
+        }
+      ]
+    },
+    {
+      "line": "2a",
+      "caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $",
+      "total_cell": {
+        "group": "2ab_investment_accounts",
+        "column": "equity",
+        "row": 0
+      },
+      "_no_multiplier": "NOTHING is drawn between the two cells on this row except '– $' at x 263.8..277.2. The investment table applies no quick-sale discount and the retirement table below it does. That difference is the whole reason retirement_account is a separate class.",
+      "feeders": [
+        {
+          "group": "2ab_investment_accounts",
+          "column": "current_value",
+          "row": 0
+        },
+        {
+          "group": "2ab_investment_accounts",
+          "column": "loan_balance",
+          "row": 0,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "2b",
+      "caption": "$ [Current market value] – $ [Minus loan balance] = (2b) $",
+      "total_cell": {
+        "group": "2ab_investment_accounts",
+        "column": "equity",
+        "row": 1
+      },
+      "feeders": [
+        {
+          "group": "2ab_investment_accounts",
+          "column": "current_value",
+          "row": 1
+        },
+        {
+          "group": "2ab_investment_accounts",
+          "column": "loan_balance",
+          "row": 1,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "2c",
+      "caption": "$ [US dollar equivalent of the digital asset as of today] = (2c) $",
+      "total_key": "2c_total_digital_assets",
+      "_arguable": "A one-operand equation — see _notes. Checked because both readings give the same figure.",
+      "feeders": [
+        {
+          "keys": [
+            "2c_us_dollar_equivalent_today"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "2",
+      "caption": "Add lines (2a) through (2d) =",
+      "total_key": "2_total_investment_accounts",
+      "feeders": [
+        {
+          "group": "2ab_investment_accounts",
+          "column": "equity"
+        },
+        {
+          "keys": [
+            "2c_total_digital_assets",
+            "2d_investment_accounts_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "3a QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "3a_retirement_accounts",
+        "column": "quick_sale_value",
+        "row": 0
+      },
+      "_the_tripwire": "The cell this entry checks is topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]. The leaf name says .7. The page says .8, drawn at x 154.7..184.7 immediately to the cell's left, and says it twice more on page 3. Binding by leaf name and multiplying by 0.7 would understate the quick sale value by 12.5% of market value AND still leave every printed total on the page reconciling, because (3a) and (3) would both be computed from the same wrong figure. This entry is the only thing on the form that reads the multiplier off the page.",
+      "feeders": [
+        {
+          "group": "3a_retirement_accounts",
+          "column": "current_value",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $",
+          "factor_why": "Printed on the row between the current-market-value cell and this one. The quick-sale discount the IRS applies to a retirement account it would have to liquidate."
+        }
+      ]
+    },
+    {
+      "line": "3a",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] = (3a) $",
+      "total_cell": {
+        "group": "3a_retirement_accounts",
+        "column": "quick_sale_equity",
+        "row": 0
+      },
+      "_not_fmv_minus_loan": "The subtrahend is taken off the QUICK SALE VALUE, not off current market value. That is why the column is named quick_sale_equity and not equity, and it is why this entry and the one above it are two separate checks: together they prove both halves of the row, and either alone would let a wrong multiplier through.",
+      "feeders": [
+        {
+          "group": "3a_retirement_accounts",
+          "column": "quick_sale_value",
+          "row": 0
+        },
+        {
+          "group": "3a_retirement_accounts",
+          "column": "loan_balance",
+          "row": 0,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "3",
+      "caption": "Add lines (3a) through (3b) =",
+      "total_key": "3_total_retirement_accounts",
+      "feeders": [
+        {
+          "group": "3a_retirement_accounts",
+          "column": "quick_sale_equity"
+        },
+        {
+          "keys": [
+            "3b_retirement_accounts_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "4a",
+      "caption": "$ [Current cash value] – $ [Minus loan balance] = (4a) $",
+      "total_cell": {
+        "group": "4a_life_insurance_policies",
+        "column": "equity",
+        "row": 0
+      },
+      "_no_multiplier": "A life policy's cash surrender value is not quick-sale discounted on this form. No multiplier is drawn on the row.",
+      "feeders": [
+        {
+          "group": "4a_life_insurance_policies",
+          "column": "current_cash_value"
+        },
+        {
+          "group": "4a_life_insurance_policies",
+          "column": "outstanding_loan_balance",
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "4b",
+      "caption": "$ [Total cash value of life insurance policies from attachment] – $ [Minus loan balance(s)] = (4b) $",
+      "total_key": "4b_total_life_insurance_from_attachment",
+      "_both_operands_are_attachment_sourced_and_it_is_still_checkable": "Both feeders are declared not_checkable below, and this subtraction is checkable anyway, because both of them are cells PRINTED ON THIS PAGE. Same shape as (1), which sums (1c).",
+      "feeders": [
+        {
+          "keys": [
+            "4b_life_insurance_from_attachment"
+          ]
+        },
+        {
+          "keys": [
+            "4b_minus_loan_balances"
+          ],
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "4",
+      "caption": "Add lines (4a) through (4b) =",
+      "total_key": "4_total_life_insurance",
+      "feeders": [
+        {
+          "group": "4a_life_insurance_policies",
+          "column": "equity"
+        },
+        {
+          "keys": [
+            "4b_total_life_insurance_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "5a QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "5ab_real_property",
+        "column": "quick_sale_value",
+        "row": 0
+      },
+      "_tripwire": "Quick-sale tripwire 2 of 5. Printed at y 563.9, x 118.7..148.8, immediately left of the cell it governs. Nothing is printed above that cell; this caption is the only text identifying it.",
+      "feeders": [
+        {
+          "group": "5ab_real_property",
+          "column": "current_fmv",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "5b QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "5ab_real_property",
+        "column": "quick_sale_value",
+        "row": 1
+      },
+      "_tripwire": "Quick-sale tripwire 3 of 5. Printed at y 430.7, x 118.7..148.8.",
+      "feeders": [
+        {
+          "group": "5ab_real_property",
+          "column": "current_fmv",
+          "row": 1,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "5a",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] (total value of real estate) = (5a) $",
+      "total_cell": {
+        "group": "5ab_real_property",
+        "column": "quick_sale_equity",
+        "row": 0
+      },
+      "_not_fmv_minus_loan": "The subtrahend comes off the QUICK SALE VALUE, not off current market value. No lease conditional is printed on a real-property row, so unlike the vehicle rows this cell is fully checkable.",
+      "feeders": [
+        {
+          "group": "5ab_real_property",
+          "column": "quick_sale_value",
+          "row": 0
+        },
+        {
+          "group": "5ab_real_property",
+          "column": "current_loan_balance",
+          "row": 0,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "5b",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] (total value of real estate) = (5b) $",
+      "total_cell": {
+        "group": "5ab_real_property",
+        "column": "quick_sale_equity",
+        "row": 1
+      },
+      "feeders": [
+        {
+          "group": "5ab_real_property",
+          "column": "quick_sale_value",
+          "row": 1
+        },
+        {
+          "group": "5ab_real_property",
+          "column": "current_loan_balance",
+          "row": 1,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "5",
+      "caption": "Add lines (5a) through (5c) =",
+      "total_key": "5_total_real_estate",
+      "feeders": [
+        {
+          "group": "5ab_real_property",
+          "column": "quick_sale_equity"
+        },
+        {
+          "keys": [
+            "5c_property_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "6a QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_value",
+        "row": 0
+      },
+      "_tripwire": "Quick-sale tripwire 4 of 5. Printed at y 279.5, x 115.1..145.2.",
+      "feeders": [
+        {
+          "group": "6ac_vehicles",
+          "column": "current_fmv",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "6c QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_value",
+        "row": 1
+      },
+      "_tripwire": "Quick-sale tripwire 5 of 5. Printed at y 160.7, x 115.1..145.2. CHECKED EVEN WHEN THE ROW IS LEASED: the acceptance fixture leases this vehicle, its (6c) total prints 0, and this cell still prints market value times .8 because the lease instruction governs the total and not this cell.",
+      "feeders": [
+        {
+          "group": "6ac_vehicles",
+          "column": "current_fmv",
+          "row": 1,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "6a own",
+      "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_equity",
+        "row": 0
+      },
+      "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 328.5 and 314.1. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
+      "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
+      "feeders": [
+        {
+          "group": "6ac_vehicles",
+          "column": "quick_sale_value",
+          "row": 0,
+          "when": {
+            "key": "6ac_vehicles[0].lease_or_own",
+            "equals": "own"
+          },
+          "_why": "The DISCOUNTED value, not market value. The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan], so the subtraction is taken off the cell the X .8 produced."
+        },
+        {
+          "group": "6ac_vehicles",
+          "column": "current_loan_balance",
+          "row": 0,
+          "sign": -1,
+          "when": {
+            "key": "6ac_vehicles[0].lease_or_own",
+            "equals": "own"
+          }
+        }
+      ]
+    },
+    {
+      "line": "6a leased",
+      "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_equity",
+        "row": 0
+      },
+      "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 328.5 and 314.1. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
+      "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
+      "feeders": [
+        {
+          "constant": 0,
+          "constant_caption": "if the vehicle is leased, enter 0 as the total value",
+          "when": {
+            "key": "6ac_vehicles[0].lease_or_own",
+            "equals": "lease"
+          },
+          "_why": "The zero is DRAWN ON THE PAGE in the caption, on the same footing as the -$1,000 at (1) and the -$3,450 at (6b). It is a printed constant, not an assumption that an unfilled cell means zero."
+        }
+      ]
+    },
+    {
+      "line": "6c own",
+      "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_equity",
+        "row": 1
+      },
+      "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 209.7 and 195.3. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
+      "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
+      "feeders": [
+        {
+          "group": "6ac_vehicles",
+          "column": "quick_sale_value",
+          "row": 1,
+          "when": {
+            "key": "6ac_vehicles[1].lease_or_own",
+            "equals": "own"
+          },
+          "_why": "The DISCOUNTED value, not market value. The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan], so the subtraction is taken off the cell the X .8 produced."
+        },
+        {
+          "group": "6ac_vehicles",
+          "column": "current_loan_balance",
+          "row": 1,
+          "sign": -1,
+          "when": {
+            "key": "6ac_vehicles[1].lease_or_own",
+            "equals": "own"
+          }
+        }
+      ]
+    },
+    {
+      "line": "6c leased",
+      "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
+      "total_cell": {
+        "group": "6ac_vehicles",
+        "column": "quick_sale_equity",
+        "row": 1
+      },
+      "_printed_conditional": "The caption prints TWO cells in one. \"Total value of vehicle\" is the unconditional part; \"(if the vehicle is leased, enter 0 as the total value)\" is a selector, and the selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0, y 209.7 and 195.3. So the page prints one cell with two defined values and names which one applies. Declared as TWO predicated lines rather than one, because a single line would have to choose a branch and be wrong on the other.",
+      "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean; declaring only the LEASE branch would leave the subtraction unverified on every owned row. Together they close the cell on both branches, and the skip count says out loud which branch this form is on.",
+      "feeders": [
+        {
+          "constant": 0,
+          "constant_caption": "if the vehicle is leased, enter 0 as the total value",
+          "when": {
+            "key": "6ac_vehicles[1].lease_or_own",
+            "equals": "lease"
+          },
+          "_why": "The zero is DRAWN ON THE PAGE in the caption, on the same footing as the -$1,000 at (1) and the -$3,450 at (6b). It is a printed constant, not an assumption that an unfilled cell means zero."
+        }
+      ]
+    },
+    {
+      "line": "6b",
+      "caption": "Subtract $3,450 from line (6a)   /   (If line (6a) minus $3,450 is a negative number, enter \"0\")",
+      "total_key": "6b_vehicle_1_less_allowance",
+      "floor": 0,
+      "floor_caption": "(If line (6a) minus $3,450 is a negative number, enter \"0\")",
+      "_this_is_the_vehicle_allowance": "The $3,450 is DRAWN ON THE PAGE in this caption, which is what makes it a printed constant on the same footing as the -$1,000 at line (1) and NOT a standards-table lookup. Its sibling (6d) applies the same figure and is not checkable, because (6d) applies it only on a joint offer and nothing on this form records whether the offer is joint.",
+      "feeders": [
+        {
+          "group": "6ac_vehicles",
+          "column": "quick_sale_equity",
+          "row": 0
+        },
+        {
+          "constant": -3450,
+          "constant_caption": "Subtract $3,450 from line (6a)"
+        }
+      ]
+    },
+    {
+      "line": "6",
+      "caption": "Total lines (6b), (6d), and (6e) =",
+      "total_key": "6_total_vehicles",
+      "_not_6a_and_6c": "It totals (6b), (6d) and (6e). The two per-vehicle totals reach this line only through the allowance lines that follow them, so a reader checking (6) against (6a)+(6c) would be checking the wrong three cells.",
+      "feeders": [
+        {
+          "keys": [
+            "6b_vehicle_1_less_allowance",
+            "6d_vehicle_2_less_allowance",
+            "6e_vehicles_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "7a QSV",
+      "caption": "X .8 = $",
+      "total_cell": {
+        "group": "7a_other_valuable_items",
+        "column": "quick_sale_value",
+        "row": 0
+      },
+      "_tripwire": "Quick-sale tripwire 6 of 7. Printed at y 686.3, x 154.7..184.8. Its leaf name is Times_8[0] and AGREES with the page - checked exactly as hard as the one on page 2 whose name says seven, because a name that happens to be right is not evidence. Control C02 in 433aoi.name-lies.json.",
+      "feeders": [
+        {
+          "group": "7a_other_valuable_items",
+          "column": "current_fmv",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "7a",
+      "caption": "Total value of other valuable items = (7a) $",
+      "total_cell": {
+        "group": "7a_other_valuable_items",
+        "column": "quick_sale_equity",
+        "row": 0
+      },
+      "_the_loan_comes_off_the_discounted_figure": "The printed row reads $ [market] X .8 = $ [quick sale] - $ [loan] = (7a) $. The subtraction is taken off the cell the X .8 produced, not off market value. Same shape as (3a) on page 2 and (5a)/(5b) on page 3. NO PREDICATE: this row prints no conditional - there is no lease/own selector on (7a) and nothing on the page makes this cell conditional on anything.",
+      "feeders": [
+        {
+          "group": "7a_other_valuable_items",
+          "column": "quick_sale_value",
+          "row": 0
+        },
+        {
+          "group": "7a_other_valuable_items",
+          "column": "current_loan_balance",
+          "row": 0,
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "7b QSV",
+      "caption": "X .8 = $",
+      "total_key": "7b_quick_sale_value",
+      "_tripwire": "Quick-sale tripwire 7 of 7 on this form so far. Printed at y 617.9, x 154.7..184.7. Addressed by total_key rather than total_cell because (7b) is bound as scalars, not as a row - see 433aoi.map.json._map_evidence_page4.",
+      "feeders": [
+        {
+          "keys": [
+            "7b_current_market_value"
+          ],
+          "factor": 0.8,
+          "factor_caption": "X .8 = $"
+        }
+      ]
+    },
+    {
+      "line": "7b",
+      "caption": "Total value of remaining furniture and personal effects = (7b) $",
+      "total_key": "7b_total_remaining_furniture",
+      "feeders": [
+        {
+          "keys": [
+            "7b_quick_sale_value"
+          ]
+        },
+        {
+          "keys": [
+            "7b_minus_loan_balance"
+          ],
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "7",
+      "caption": "Add lines (7a) through (7c) minus IRS deduction of $11,980 =",
+      "total_key": "7_total_other_valuable_items",
+      "floor": 0,
+      "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
+      "_the_floor_is_arguable_and_is_declared_anyway": "The floor sentence is drawn at y 557.1, x 141.3..435.6 - BELOW this line and above the Box A row - where page 2's equivalent is drawn at the top of its section. Declared as a floor here because the $11,980 deduction can drive this line negative exactly as the $1,000 can drive (1) negative, because the same words answer it, and because 'any line item' is what the sentence says. It does not fire on the slice-4 fixture, so the declaration is a claim about the page and not one the fixture proves. Reported as arguable P4-3.",
+      "_the_constant_is_printed": "The $11,980 is DRAWN ON THE PAGE in this caption, on the same footing as the -$1,000 at line (1) and the -$3,450 at (6b). It is a printed constant and NOT a standards-table lookup - which is the distinction that went wrong once already on this form, at (6e).",
+      "feeders": [
+        {
+          "total_cell_note": "the (7a) row total",
+          "group": "7a_other_valuable_items",
+          "column": "quick_sale_equity",
+          "row": 0
+        },
+        {
+          "keys": [
+            "7b_total_remaining_furniture",
+            "7c_valuable_items_from_attachment"
+          ]
+        },
+        {
+          "constant": -11980,
+          "constant_caption": "minus IRS deduction of $11,980"
+        }
+      ]
+    },
+    {
+      "line": "Box A",
+      "caption": "Add lines (1) through (7) and enter the amount in Box A =",
+      "total_key": "box_a_available_individual_equity_in_assets",
+      "_first_cross_page_total_on_this_form": "Four operands are on page 2, two on page 3 and one on page 4. Nothing in the totals schema needed to change for that: a feeder names map keys, and a map key names a field wherever it is drawn. Every tripwire before this one has been a within-page check, so this is also the first that would catch a page-3 figure that failed to reach a page-4 total.",
+      "_why_seven_operands_and_not_twenty": "The page prints 'Do not include amount on the lines with a letter beside the number.' at y 567.5, x 74.5..435.6. That sentence is the whole reason this entry lists (1) (2) (3) (4) (5) (6) (7) and not (1a) (1b) (1c) (2a) ... A recomputation that added the lettered lines would double-count every asset on three pages and produce a confident number that agreed with nothing.",
+      "_no_floor": "Declared with NO floor. Each of the seven operands is already floored where the page says so, so their sum cannot be negative, and a floor here would assert a rule the page does not print.",
+      "feeders": [
+        {
+          "keys": [
+            "1_total_bank_and_cash",
+            "2_total_investment_accounts",
+            "3_total_retirement_accounts",
+            "4_total_life_insurance",
+            "5_total_real_estate",
+            "6_total_vehicles",
+            "7_total_other_valuable_items"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "8c",
+      "caption": "= (8c) $",
+      "total_key": "8c_total_digital_assets",
+      "_arguable": "A one-operand equation, identical in shape to (2c) on page 2 and read the same way. The page draws an '=' at x 430.9..435.6 between the dollar-equivalent cell and the (8c) marker and draws no other operator on the row. Read one way it is an identity and this cell is a copy; read the other, the '=' is decoration and this is plain input. Declared computed on the identity reading, matching (2c) - reading two identically-drawn rows two different ways would be worse than reading them both wrong. Carried item C-03.",
+      "feeders": [
+        {
+          "keys": [
+            "8c_us_dollar_equivalent_today"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "8",
+      "caption": "Add lines (8a) through (8d) =",
+      "total_key": "8_total_business_bank_accounts",
+      "_no_1000_deduction_here_and_that_is_the_point": "Printed line (1) on page 2 is the same shape and reads 'Add lines (1a) through (1c) minus ($1,000) ='. This line prints no deduction at all. The $1,000 bank-account exemption is a personal-side allowance and Section 5 does not get it. An entry copied from (1) would understate this line by $1,000 with every other figure on the page still agreeing - which is exactly the class of error a tripwire exists to catch and the class it cannot catch if the tripwire itself carries the mistake.",
+      "_four_operands_and_one_is_not_a_bank_account": "(8c) is the DIGITAL ASSET total and it adds in here, which is why the leaf name Total_Value_Bank_Accounts[0] understates what this cell holds. Not entered in the name-lie registry: the page is loose here too, printing \"Total bank accounts from attachment\" at (8d) while (8) sums it with (8c). Reported as arguable P4-2.",
+      "feeders": [
+        {
+          "group": "8ab_business_bank_accounts",
+          "column": "account_balance"
+        },
+        {
+          "keys": [
+            "8c_total_digital_assets",
+            "8d_bank_accounts_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "9a QSV",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value]",
+      "total_cell": {
+        "group": "9ab_business_assets",
+        "column": "quick_sale_value",
+        "row": 0
+      },
+      "_the_conditional_is_NOT_on_this_cell": "The '(if leased or used in the production of income, enter 0 as the total value)' instruction is drawn at y 711.8..694.9, x 334.8..424.7 — in the TOTAL VALUE column. This cell is at x 158.4..234.0 under 'X .8 = $' at x 125.9..155.9. Same split as page 3's vehicles, where the quick-sale cells are unconditional and the row totals are not.",
+      "feeders": [
+        {
+          "group": "9ab_business_assets",
+          "column": "current_fmv",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $",
+          "factor_why": "The form prints the multiplier itself, on the row, at y 697.1 x 125.9..155.9. Sixth printed 'X .8' on this form and the second on a business-side table."
+        }
+      ]
+    },
+    {
+      "line": "9b QSV",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value]",
+      "total_cell": {
+        "group": "9ab_business_assets",
+        "column": "quick_sale_value",
+        "row": 1
+      },
+      "feeders": [
+        {
+          "group": "9ab_business_assets",
+          "column": "current_fmv",
+          "row": 1,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $",
+          "factor_why": "Printed at y 653.9, x 125.9..155.9. Same row shape as slot 0."
+        }
+      ]
+    },
+    {
+      "line": "9",
+      "caption": "Add lines (9a) through (9c) =",
+      "total_key": "9_total_business_assets",
+      "_the_operands_INCLUDE_the_lettered_lines": "The caption names (9a) through (9c) explicitly. That is the opposite of Box B's instruction four rows below, and the two are not in conflict: (9) is a sub-total OF the lettered lines, and Box B is a total of the unlettered ones.",
+      "feeders": [
+        {
+          "group": "9ab_business_assets",
+          "column": "quick_sale_equity"
+        },
+        {
+          "keys": [
+            "9c_business_assets_from_attachment"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "11",
+      "caption": "Enter the value of line (9) minus line (10). If less than zero enter zero. =",
+      "total_key": "11_business_assets_less_deduction",
+      "floor": 0,
+      "floor_caption": "If less than zero enter zero.",
+      "_the_floor_is_in_this_LINES_OWN_caption": "Not inherited from a block instruction. Same shape as (6b) on page 3, whose caption repeats its own floor. Page 5's block instruction at y 380.1 also carries a floor sentence, but it is drawn over Section 6 and this line is in Section 5.",
+      "feeders": [
+        {
+          "keys": [
+            "9_total_business_assets"
+          ]
+        },
+        {
+          "keys": [
+            "10_irs_allowed_deduction_books_and_tools"
+          ],
+          "sign": -1
+        }
+      ]
+    },
+    {
+      "line": "Box B",
+      "caption": "Add lines (8) and (11) and enter the amount in Box B =",
+      "total_key": "box_b_available_business_equity_in_assets",
+      "floor": 0,
+      "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
+      "_printed_operand_list_verbatim": "\"Add lines (8) and (11) and enter the amount in Box B =\" at y 460.0, x 211.0..442.8. TWO operands, named in the caption.",
+      "_the_do_not_include_instruction": "\"Do not include amounts from the lines with a letter beside the number [for example: (9c)].\" at y 488.6, x 128.0..442.8. Box A's version of this sentence names no example; Box B's does, and the example is the tell — (9c) is a lettered sub-line of (9), (9) feeds (11), and adding (9a)/(9b)/(9c) here would double-count every business asset on this page.",
+      "_second_cross_page_total": "(8) is printed on page 4 and (11) on page 5. Box A was the first.",
+      "feeders": [
+        {
+          "keys": [
+            "8_total_business_bank_accounts"
+          ]
+        },
+        {
+          "keys": [
+            "11_business_assets_less_deduction"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "17",
+      "caption": "Add lines (12) through (16) =",
+      "total_key": "17_total_business_income",
+      "_the_P_and_L_route": "The Section 6 preamble at y 429.3 authorises a filed form on which this cell is entered from a profit-and-loss statement and (12)-(16) are all blank. This entry is declared and left EXACT anyway: blank feeders contribute zero, so on such a record the check would FAIL against a legitimate filing. Carried as C-06 rather than weakened, because the only two fixes are a predicate over a cell this page does not print, and a tolerance.",
+      "feeders": [
+        {
+          "keys": [
+            "12_gross_receipts",
+            "13_gross_rental_income",
+            "14_interest_income",
+            "15_dividends",
+            "16_other_income"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "29",
+      "caption": "Add lines (18) through (28) =",
+      "total_key": "29_total_business_expenses",
+      "_eleven_operands_no_gap_no_letters": "The printed list runs (18) through (28) with no missing number and no lettered line anywhere in Section 6.",
+      "_the_P_and_L_route": "Same as (17). The preamble names line 29 by number.",
+      "feeders": [
+        {
+          "keys": [
+            "18_materials_purchased",
+            "19_inventory_purchased",
+            "20_gross_wages_and_salaries",
+            "21_rent",
+            "22_supplies",
+            "23_utilities_telephones",
+            "24_vehicle_costs",
+            "25_business_insurance",
+            "26_current_business_taxes",
+            "27_secured_debts_not_credit_cards",
+            "28_other_business_expenses"
+          ]
+        }
+      ]
+    },
+    {
+      "line": "Box C",
+      "caption": "Subtract line (29) from line (17) and enter the amount in Box C =",
+      "total_key": "box_c_net_business_income",
+      "floor": 0,
+      "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
+      "_printed_operand_list_verbatim": "\"Subtract line (29) from line (17) and enter the amount in Box C =\" at y 49.6, x 170.0..442.8.",
+      "_THE_ORDER_IN_PROSE_IS_THE_REVERSE_OF_THE_ARITHMETIC": "\"Subtract line (29) from line (17)\" means (17) MINUS (29). The caption names (29) FIRST. This is the only printed formula on the five pages read so far whose prose order is the reverse of its operand order, and an entry written in reading order would negate Box C on every filed form. The feeders below are (17) with sign +1 and (29) with sign -1, in that order, so the file reads as the arithmetic and not as the sentence.",
+      "_the_floor_is_what_makes_a_loss_printable": "A business whose expenses exceed its income has a negative net and the printed instruction says enter zero.",
+      "feeders": [
+        {
+          "keys": [
+            "17_total_business_income"
+          ]
+        },
+        {
+          "keys": [
+            "29_total_business_expenses"
+          ],
+          "sign": -1
+        }
+      ]
+    }
+  ],
+  "not_checkable": {
+    "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both lists is indistinguishable from one nobody looked at. Mirrors 433aoi.map.json._not_checkable, and takes the 433-F Section E footer precedent recorded in 433f.totals.json. STILL WRITTEN — not checkable is not the same as not filled.",
+    "entries": [
+      {
+        "map_key": "1c_bank_accounts_from_attachment",
+        "printed_caption": "Total of bank accounts from attachment",
+        "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable."
+      },
+      {
+        "map_key": "2d_investment_accounts_from_attachment",
+        "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here.",
+        "review_page_advisory": "Its caption states a formula the engine cannot verify. Surface the caption beside the value on the review page so the preparer sees the requirement: current market value minus loan balance(s), with NO quick-sale discount — the investment table applies none, and adding one here would understate the offer."
+      },
+      {
+        "map_key": "3b_retirement_accounts_from_attachment",
+        "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced.",
+        "review_page_advisory": "THE X .8 IS IN THE CAPTION. The quick-sale discount applies to attached retirement accounts exactly as it does to the printed row at (3a), and a preparer who omits it understates the offer by 20% of attached market value with nothing on this page able to catch it. Surface this caption verbatim beside the value. The engine cannot verify an attachment; it can put the requirement in front of the person who can."
+      },
+      {
+        "map_key": "4b_life_insurance_from_attachment",
+        "printed_caption": "Total cash value of life insurance policies from attachment",
+        "why_not_checkable": "Attachment-sourced."
+      },
+      {
+        "map_key": "4b_minus_loan_balances",
+        "printed_caption": "Minus loan balance(s)",
+        "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) — that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
+      },
+      {
+        "map_key": "5c_property_from_attachment",
+        "printed_caption": "Total value of property(s) from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (5), which IS checkable.",
+        "review_page_advisory": "THE X .8 IS IN THE CAPTION. Attached real property is quick-sale discounted exactly as the printed rows at (5a) and (5b) are, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, overstates or understates this figure with nothing on the page able to catch it."
+      },
+      {
+        "map_key": "6d_vehicle_2_less_allowance",
+        "printed_caption": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
+        "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The phrase ‘joint offer’ is drawn exactly once on all eight pages of 433-A(OIC) - here - and no cell anywhere records the answer; it is declared on Form 656, which this engine does not hold. Unlike (6a)/(6c), no predicate over a printed cell could recover this one.",
+        "review_page_advisory": "ANSWER THIS FROM FORM 656, NOT FROM MARITAL STATUS. On a joint offer this cell is line (6c) minus $3,450, floored at zero. On a separate offer it is line (6c) unchanged - the $3,450 is NOT applied twice across two vehicles on a separate offer. A married taxpayer may file a separate offer, so the Section 1 marital status on page 1 does not answer this and must not be used to."
+      },
+      {
+        "map_key": "6e_vehicles_from_attachment",
+        "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced, and INPUT rather than computed despite the leaf name Enter_Allowance[0]. It is an operand of (6), which IS checkable.",
+        "review_page_advisory": "THIS CELL IS NOT AN ALLOWANCE, whatever its field name suggests - it is the vehicles-from-attachment total, and THE X .8 IS IN ITS CAPTION. Attached vehicles are quick-sale discounted exactly as the printed rows are, and a leased vehicle on the attachment contributes 0 here just as it would at (6a)/(6c). The $3,450 allowance is applied at (6b) and (6d) and must NOT be applied again here."
+      },
+      {
+        "map_key": "7c_valuable_items_from_attachment",
+        "printed_caption": "Total value of valuable items listed from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (7), which IS checkable.",
+        "review_page_advisory": "THE X .8 IS IN THE CAPTION, and this is the fourth attachment total on this form to say so - (3b), (5c), (6e) and now (7c). Attached valuable items are quick-sale discounted exactly as the printed row at (7a) is, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, misstates this figure with nothing on the page able to catch it."
+      },
+      {
+        "map_key": "8d_bank_accounts_from_attachment",
+        "printed_caption": "Total bank accounts from attachment",
+        "why_not_checkable": "Attachment-sourced, and unlike (7c) its caption states no arithmetic at all - it is a plain roll-up of rows printed somewhere else. It is an operand of (8), which IS checkable. Same shape as (1c) on the personal side."
+      },
+      {
+        "map_key": "s4_average_gross_monthly_payroll",
+        "printed_caption": "Average gross monthly payroll $",
+        "why_not_checkable": "NOT A TOTAL AT ALL. It is the one money-shaped cell in Section 4 and nothing on the page feeds it: no marker, no '=', no rows above it. Declared rather than left out, because a money cell that appears in neither list is indistinguishable from one nobody looked at - which is the condition defect D1 sat in."
+      },
+      {
+        "map_key": "9c_business_assets_from_attachment",
+        "printed_caption": "Total value of assets listed from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (9), which IS checkable.",
+        "review_page_advisory": "THE X .8 IS IN THE CAPTION, and this is the FIFTH attachment total on this form to say so — (3b), (5c), (6e), (7c) and now (9c). Attached business assets are quick-sale discounted exactly as the printed rows at (9a) and (9b) are, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, misstates this figure with nothing on the page able to catch it."
+      },
+      {
+        "map_key": "10_irs_allowed_deduction_books_and_tools",
+        "printed_caption": "IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –",
+        "why_not_checkable": "AN IRS-PUBLISHED ALLOWANCE THE FORM DOES NOT PRINT. Unlike the $1,000 on line (1) and the $3,450 on (6b)/(6d), which the page draws itself and which are therefore printed constants, this figure is published in a table this repo does not hold. This form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere, so it carries no `allowed` block and nothing is auto-filled here. The cell is ordinary input and no printed cell on this form feeds it.",
+        "review_page_advisory": "THIS IS A PUBLISHED IRS FIGURE, NOT A NUMBER TO ESTIMATE. It is the allowed deduction for professional books and tools of trade, it is capped, and it applies to individuals and sole-proprietors only. It is subtracted at line (11) and therefore reduces Box B dollar for dollar. Entering more than the published allowance overstates the deduction and understates the offer; entering nothing when it applies does the reverse."
+      },
+      {
+        "cell": {
+          "group": "9ab_business_assets",
+          "column": "quick_sale_equity"
+        },
+        "printed_caption": "Total value (if leased or used in the production of income, enter 0 as the total value)",
+        "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM, and it is the (6d) class rather than the (6a)/(6c) class. Page 3's vehicle rows print the same shape and there the branch IS recoverable, because each row prints its own Lease/Own checkbox pair and slice 3 declared a feeder predicate over it. PAGE 5 PRINTS NO LEASE INDICATOR: the only four checkboxes on the page are CB5_01..CB5_04, the Notes Receivable and Accounts Receivable Yes/No pairs. And the second clause is worse — 'or used in the production of income' is a further condition, new on this form, with no cell anywhere even in principle. Both slots are declared, because both print the same caption.",
+        "review_page_advisory": "ANSWER THIS FROM THE ASSET, NOT FROM THE ARITHMETIC. If the asset is LEASED, or is USED IN THE PRODUCTION OF INCOME, the printed instruction says enter 0 as the total value — even though the quick-sale cell beside it holds a real figure and the subtraction would produce one. Both conditions zero the row. A preparer who enters (market value X .8) minus loan on a leased machine, or on equipment used to produce income, overstates Box B and therefore the offer, and nothing on this page can catch it."
+      }
+    ],
+    "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. It is now checked on both printed branches by the four predicated lines '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared BOTH checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on exactly that (DOUBLE-DECLARED). The review-page advisory that told a preparer to check the lease box against this figure by hand went with it, because it said 'nothing in the automated checks looks at this cell' and that is no longer true."
+  }
 }
