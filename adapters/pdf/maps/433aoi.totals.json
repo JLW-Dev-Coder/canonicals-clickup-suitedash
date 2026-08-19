@@ -4,7 +4,7 @@
  "catalog": "55896Q",
  "_why": "Which printed cell on 433-A(OIC) is computed from which other printed cells. Read by run-form-gate.mjs step 11, which recomputes every entry FROM WHAT THE FILLED PDF PRINTS and compares it to the printed figure. No figure lives here except the ones the FORM ITSELF PRINTS as constants — the $1,000 on line (1), the $3,450 vehicle allowance on line (6b), and the .8 quick-sale multiplier that appears five times — and every one is quoted from the caption that prints it.",
  "authored_from": "The printed page text of adapters/pdf/forms/f433aoi.pdf, extracted from the content streams and read alongside the widget rectangles by adapters/pdf/align-block.mjs. Captions below are quoted verbatim. NOT from field names: ELEVEN leaf names on this form are known to be actively wrong about what their cell means — including the page-3 pair Total_Value_Vehicles_Attached[0] and Enter_Allowance[0], which are printed lines (6d) and (6e) respectively and so hold each other's job. One of the eleven — RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] — is a feeder of entry (3a) QSV below, where the leaf says .7 and the page says .8.",
- "_slice": "PRINTED PAGES 1, 2 AND 3. Page 1 prints no total. Page 2’s eleven computed cells and page 3’s nine are all here. Pages 4-8 are not in this file yet; a printed total absent from both `totals` and `not_checkable` has not been declined, it has simply not been read. SLICE 4 adds printed pages 4: lines (7a) QSV, (7a), (7b) QSV, (7b), (7), Box A, (8c) and (8). Box A is the first CROSS-PAGE total on this form.",
+ "_slice": "PRINTED PAGES 1, 2 AND 3. Page 1 prints no total. Page 2’s eleven computed cells and page 3’s nine are all here. Pages 4-8 are not in this file yet; a printed total absent from both `totals` and `not_checkable` has not been declined, it has simply not been read. SLICE 4 adds printed pages 4: lines (7a) QSV, (7a), (7b) QSV, (7b), (7), Box A, (8c) and (8). Box A is the first CROSS-PAGE total on this form. SLICE 5 ADDS PRINTED PAGE 5: (9a) QSV, (9b) QSV, (9), (11), Box B, (17), (29) and Box C — eight entries, of which THREE are Boxes or feed one. Box B is the SECOND cross-page total on this form. Box C is the first printed formula on five pages whose prose operand order is the reverse of its arithmetic.",
  "_notes": [
   "THIS FILE EXISTS BECAUSE THE SCHEMA CAN NOW CARRY THE FORM. It was deliberately not authored during slice 2: the feeder schema then added and subtracted and had no factor and no constant, so (3a)'s X .8 and (1)'s minus $1,000 — the two cells on page 2 that most need checking — would have been the two it could not express. Nine clean passes printed beside two silently-absent checks is worse than a SKIP that says nothing was checked.",
   "A FACTOR AND A CONSTANT, NOT AN EXPRESSION LANGUAGE. `factor` and `constant` are two numbers per feeder, and a feeder contributes sign x (factor x sum-of-its-cells + constant). That is enough for every printed formula on pages 1-3 that is not a conditional, and it is deliberately not enough to invent arithmetic here: this file can still only say which printed cells feed a line and by how much.",
@@ -668,6 +668,169 @@
      ]
     }
    ]
+  },
+  {
+   "line": "9a QSV",
+   "caption": "$ [Current market value] X .8 = $ [quick sale value]",
+   "total_cell": {
+    "group": "9ab_business_assets",
+    "column": "quick_sale_value",
+    "row": 0
+   },
+   "_the_conditional_is_NOT_on_this_cell": "The '(if leased or used in the production of income, enter 0 as the total value)' instruction is drawn at y 711.8..694.9, x 334.8..424.7 — in the TOTAL VALUE column. This cell is at x 158.4..234.0 under 'X .8 = $' at x 125.9..155.9. Same split as page 3's vehicles, where the quick-sale cells are unconditional and the row totals are not.",
+   "feeders": [
+    {
+     "group": "9ab_business_assets",
+     "column": "current_fmv",
+     "row": 0,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "The form prints the multiplier itself, on the row, at y 697.1 x 125.9..155.9. Sixth printed 'X .8' on this form and the second on a business-side table."
+    }
+   ]
+  },
+  {
+   "line": "9b QSV",
+   "caption": "$ [Current market value] X .8 = $ [quick sale value]",
+   "total_cell": {
+    "group": "9ab_business_assets",
+    "column": "quick_sale_value",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "9ab_business_assets",
+     "column": "current_fmv",
+     "row": 1,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed at y 653.9, x 125.9..155.9. Same row shape as slot 0."
+    }
+   ]
+  },
+  {
+   "line": "9",
+   "caption": "Add lines (9a) through (9c) =",
+   "total_key": "9_total_business_assets",
+   "_the_operands_INCLUDE_the_lettered_lines": "The caption names (9a) through (9c) explicitly. That is the opposite of Box B's instruction four rows below, and the two are not in conflict: (9) is a sub-total OF the lettered lines, and Box B is a total of the unlettered ones.",
+   "feeders": [
+    {
+     "group": "9ab_business_assets",
+     "column": "quick_sale_equity"
+    },
+    {
+     "keys": [
+      "9c_business_assets_from_attachment"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "11",
+   "caption": "Enter the value of line (9) minus line (10). If less than zero enter zero. =",
+   "total_key": "11_business_assets_less_deduction",
+   "floor": 0,
+   "floor_caption": "If less than zero enter zero.",
+   "_the_floor_is_in_this_LINES_OWN_caption": "Not inherited from a block instruction. Same shape as (6b) on page 3, whose caption repeats its own floor. Page 5's block instruction at y 380.1 also carries a floor sentence, but it is drawn over Section 6 and this line is in Section 5.",
+   "feeders": [
+    {
+     "keys": [
+      "9_total_business_assets"
+     ]
+    },
+    {
+     "keys": [
+      "10_irs_allowed_deduction_books_and_tools"
+     ],
+     "sign": -1
+    }
+   ]
+  },
+  {
+   "line": "Box B",
+   "caption": "Add lines (8) and (11) and enter the amount in Box B =",
+   "total_key": "box_b_available_business_equity_in_assets",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
+   "_printed_operand_list_verbatim": "\"Add lines (8) and (11) and enter the amount in Box B =\" at y 460.0, x 211.0..442.8. TWO operands, named in the caption.",
+   "_the_do_not_include_instruction": "\"Do not include amounts from the lines with a letter beside the number [for example: (9c)].\" at y 488.6, x 128.0..442.8. Box A's version of this sentence names no example; Box B's does, and the example is the tell — (9c) is a lettered sub-line of (9), (9) feeds (11), and adding (9a)/(9b)/(9c) here would double-count every business asset on this page.",
+   "_second_cross_page_total": "(8) is printed on page 4 and (11) on page 5. Box A was the first.",
+   "feeders": [
+    {
+     "keys": [
+      "8_total_business_bank_accounts"
+     ]
+    },
+    {
+     "keys": [
+      "11_business_assets_less_deduction"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "17",
+   "caption": "Add lines (12) through (16) =",
+   "total_key": "17_total_business_income",
+   "_the_P_and_L_route": "The Section 6 preamble at y 429.3 authorises a filed form on which this cell is entered from a profit-and-loss statement and (12)-(16) are all blank. This entry is declared and left EXACT anyway: blank feeders contribute zero, so on such a record the check would FAIL against a legitimate filing. Carried as C-06 rather than weakened, because the only two fixes are a predicate over a cell this page does not print, and a tolerance.",
+   "feeders": [
+    {
+     "keys": [
+      "12_gross_receipts",
+      "13_gross_rental_income",
+      "14_interest_income",
+      "15_dividends",
+      "16_other_income"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "29",
+   "caption": "Add lines (18) through (28) =",
+   "total_key": "29_total_business_expenses",
+   "_eleven_operands_no_gap_no_letters": "The printed list runs (18) through (28) with no missing number and no lettered line anywhere in Section 6.",
+   "_the_P_and_L_route": "Same as (17). The preamble names line 29 by number.",
+   "feeders": [
+    {
+     "keys": [
+      "18_materials_purchased",
+      "19_inventory_purchased",
+      "20_gross_wages_and_salaries",
+      "21_rent",
+      "22_supplies",
+      "23_utilities_telephones",
+      "24_vehicle_costs",
+      "25_business_insurance",
+      "26_current_business_taxes",
+      "27_secured_debts_not_credit_cards",
+      "28_other_business_expenses"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "Box C",
+   "caption": "Subtract line (29) from line (17) and enter the amount in Box C =",
+   "total_key": "box_c_net_business_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.",
+   "_printed_operand_list_verbatim": "\"Subtract line (29) from line (17) and enter the amount in Box C =\" at y 49.6, x 170.0..442.8.",
+   "_THE_ORDER_IN_PROSE_IS_THE_REVERSE_OF_THE_ARITHMETIC": "\"Subtract line (29) from line (17)\" means (17) MINUS (29). The caption names (29) FIRST. This is the only printed formula on the five pages read so far whose prose order is the reverse of its operand order, and an entry written in reading order would negate Box C on every filed form. The feeders below are (17) with sign +1 and (29) with sign -1, in that order, so the file reads as the arithmetic and not as the sentence.",
+   "_the_floor_is_what_makes_a_loss_printable": "A business whose expenses exceed its income has a negative net and the printed instruction says enter zero.",
+   "feeders": [
+    {
+     "keys": [
+      "17_total_business_income"
+     ]
+    },
+    {
+     "keys": [
+      "29_total_business_expenses"
+     ],
+     "sign": -1
+    }
+   ]
   }
  ],
  "not_checkable": {
@@ -733,6 +896,27 @@
     "map_key": "s4_average_gross_monthly_payroll",
     "printed_caption": "Average gross monthly payroll $",
     "why_not_checkable": "NOT A TOTAL AT ALL. It is the one money-shaped cell in Section 4 and nothing on the page feeds it: no marker, no '=', no rows above it. Declared rather than left out, because a money cell that appears in neither list is indistinguishable from one nobody looked at - which is the condition defect D1 sat in."
+   },
+   {
+    "map_key": "9c_business_assets_from_attachment",
+    "printed_caption": "Total value of assets listed from attachment [current market value X .8 minus any loan balance(s)]",
+    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (9), which IS checkable.",
+    "review_page_advisory": "THE X .8 IS IN THE CAPTION, and this is the FIFTH attachment total on this form to say so — (3b), (5c), (6e), (7c) and now (9c). Attached business assets are quick-sale discounted exactly as the printed rows at (9a) and (9b) are, and the loan balance comes off AFTER the discount, not before. A preparer who nets the loan first, or who omits the discount, misstates this figure with nothing on the page able to catch it."
+   },
+   {
+    "map_key": "10_irs_allowed_deduction_books_and_tools",
+    "printed_caption": "IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –",
+    "why_not_checkable": "AN IRS-PUBLISHED ALLOWANCE THE FORM DOES NOT PRINT. Unlike the $1,000 on line (1) and the $3,450 on (6b)/(6d), which the page draws itself and which are therefore printed constants, this figure is published in a table this repo does not hold. This form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere, so it carries no `allowed` block and nothing is auto-filled here. The cell is ordinary input and no printed cell on this form feeds it.",
+    "review_page_advisory": "THIS IS A PUBLISHED IRS FIGURE, NOT A NUMBER TO ESTIMATE. It is the allowed deduction for professional books and tools of trade, it is capped, and it applies to individuals and sole-proprietors only. It is subtracted at line (11) and therefore reduces Box B dollar for dollar. Entering more than the published allowance overstates the deduction and understates the offer; entering nothing when it applies does the reverse."
+   },
+   {
+    "cell": {
+     "group": "9ab_business_assets",
+     "column": "quick_sale_equity"
+    },
+    "printed_caption": "Total value (if leased or used in the production of income, enter 0 as the total value)",
+    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM, and it is the (6d) class rather than the (6a)/(6c) class. Page 3's vehicle rows print the same shape and there the branch IS recoverable, because each row prints its own Lease/Own checkbox pair and slice 3 declared a feeder predicate over it. PAGE 5 PRINTS NO LEASE INDICATOR: the only four checkboxes on the page are CB5_01..CB5_04, the Notes Receivable and Accounts Receivable Yes/No pairs. And the second clause is worse — 'or used in the production of income' is a further condition, new on this form, with no cell anywhere even in principle. Both slots are declared, because both print the same caption.",
+    "review_page_advisory": "ANSWER THIS FROM THE ASSET, NOT FROM THE ARITHMETIC. If the asset is LEASED, or is USED IN THE PRODUCTION OF INCOME, the printed instruction says enter 0 as the total value — even though the quick-sale cell beside it holds a real figure and the subtraction would produce one. Both conditions zero the row. A preparer who enters (market value X .8) minus loan on a leased machine, or on equipment used to produce income, overstates Box B and therefore the offer, and nothing on this page can catch it."
    }
   ],
   "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. It is now checked on both printed branches by the four predicated lines '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared BOTH checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on exactly that (DOUBLE-DECLARED). The review-page advisory that told a preparer to check the lease box against this figure by hand went with it, because it said 'nothing in the automated checks looks at this cell' and that is no longer true."

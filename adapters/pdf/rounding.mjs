@@ -172,7 +172,14 @@ export const moneyCellsInTotals = (totalsDoc) => {
   for (const e of (totalsDoc?.totals || [])) take(e);
   // A DECLARED-not-checkable printed total is money too. It is written, it is a dollar figure on
   // the page, and the only thing "not checkable" says is that nothing printed here can verify it.
-  for (const e of (totalsDoc?.not_checkable?.entries || [])) if (e.map_key) keys.add(e.map_key);
+  // BOTH ADDRESSING FORMS ARE READ. A `not_checkable` entry may name a scalar `map_key` or a
+  // repeatable `cell` — the gate's own printer and its double-declared check both handle the two,
+  // and reading only the first would let a group column declared not checkable escape the money
+  // cross-check entirely, which is the silence this cross-check exists to end.
+  for (const e of (totalsDoc?.not_checkable?.entries || [])) {
+    if (e.map_key) keys.add(e.map_key);
+    if (e.cell?.group && e.cell?.column) cells.add(`${e.cell.group}.${e.cell.column}`);
+  }
   return { keys, cells };
 };
 

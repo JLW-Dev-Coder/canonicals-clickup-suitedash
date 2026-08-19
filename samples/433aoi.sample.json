@@ -27,7 +27,7 @@
   "OPTION VALUES AGAIN VARY IN CASE AND PADDING ('Money Market Account/CD', ' 401K ', 'Other') to exercise the trim + case-insensitive match, and the multi-word slash-bearing option is chosen deliberately: it is the only option on this page that could be mangled by a naive key comparison.",
   "EVERY ROW STATES ITS asset_class. All four page-2 groups declare row_class, and a row claiming a class its group does not print stops the run. On this form investments (2) carry no multiplier and retirement accounts (3) carry X .8, so a 401(k) filed into the investment table would understate nothing visibly and overstate the offer by 20% of market value. The class is what refuses it."
  ],
- "intake_id": "433aoi-slice4",
+ "intake_id": "433aoi-slice5",
  "s1_tp_last_name": "Sample-Taxpayer-LastName",
  "s1_tp_first_name": "SampleFirstName",
  "s1_tp_dob": "01/02/1975",
@@ -404,5 +404,60 @@
   "BOTH BUSINESS BANK ROWS EXERCISE A DIFFERENT ACCOUNT TYPE, and slot 1 uses Money Market/CD - an option page 2's second bank row does not offer, because (1b) prints five options and (8b) prints six. The value is written with surrounding spaces and mixed case (\" Money Market/CD \") to exercise the normalising fold, the same way the page-3 vehicle row writes \" lease \".",
   "OVERFLOW IS EXERCISED TWICE. A second valuable item at (7a), which prints one row, and a third business bank account at (8a)/(8b), which prints two. Both must be dropped and logged, never written over an earlier row.",
   "SECTION 4 IS ALL FREE TEXT AND HAS NO TOTAL. Its one money-shaped cell, average gross monthly payroll, is plain input and is declared not checkable. The three checkbox sets are all exercised, and the type-of-business set is answered \"Other\" so the write-in cell beside it is reached too."
- ]
+ ],
+ "business_assets": [
+  {
+   "asset_class": "business_property",
+   "description": "(9a) CNC milling machine and tooling, Testville workshop, owned outright and not used to produce income",
+   "current_fmv": "86750",
+   "quick_sale_value": "69400",
+   "current_loan_balance": "14380",
+   "quick_sale_equity": "55020"
+  },
+  {
+   "asset_class": "business_property",
+   "description": "(9b) Reference library, drafting instruments and two workbenches",
+   "current_fmv": "23125",
+   "quick_sale_value": "18500",
+   "current_loan_balance": "2265",
+   "quick_sale_equity": "16235"
+  },
+  {
+   "asset_class": "business_property",
+   "description": "OVERFLOW - a third business asset row, the form prints two, must be dropped and logged",
+   "current_fmv": "999999",
+   "quick_sale_value": "799999",
+   "current_loan_balance": "111111",
+   "quick_sale_equity": "688888"
+  }
+ ],
+ "9c_business_assets_from_attachment": "9315",
+ "9_total_business_assets": "80570",
+ "10_irs_allowed_deduction_books_and_tools": "7180",
+ "11_business_assets_less_deduction": "73390",
+ "box_b_available_business_equity_in_assets": "128890",
+ "s5_has_notes_receivable": "Yes",
+ "s5_has_accounts_receivable": "No",
+ "s6_period_provided_beginning": "01012026",
+ "s6_period_provided_through": "06302026",
+ "12_gross_receipts": "41260",
+ "13_gross_rental_income": "3815",
+ "14_interest_income": "628",
+ "15_dividends": "1174",
+ "16_other_income": "2093",
+ "17_total_business_income": "48970",
+ "18_materials_purchased": "7340",
+ "19_inventory_purchased": "5215",
+ "20_gross_wages_and_salaries": "11480",
+ "21_rent": "2650",
+ "22_supplies": "1395",
+ "23_utilities_telephones": "874",
+ "24_vehicle_costs": "1236",
+ "25_business_insurance": "742",
+ "26_current_business_taxes": "1583",
+ "27_secured_debts_not_credit_cards": "2417",
+ "28_other_business_expenses": "968",
+ "29_total_business_expenses": "35900",
+ "box_c_net_business_income": "13070",
+ "_coverage_notes_page_5": "Page 5, slice 5. Two printed business asset rows plus one overflow row that must be dropped and logged. Both receivable questions answered, and answered DIFFERENTLY so a single mis-targeted option cannot satisfy both. Every Section 6 line supplied so (17) and (29) are checked against real operands rather than against a page of blanks — the printed P&L route would leave them all empty and is carried as C-06, not exercised here. Box B is the second cross-page total on this form: 55,500 from page 4 line (8) plus 73,390 from page 5 line (11). Box C is 48,970 minus 35,900 and NOT the reverse; the two differ in sign, so the fixture distinguishes the printed order from the prose order."
 }
