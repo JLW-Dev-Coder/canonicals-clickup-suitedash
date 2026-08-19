@@ -21,15 +21,18 @@
 import { readFileSync } from 'node:fs';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
 
-const form = process.argv[2];
-if (!form) {
-  console.error('usage: node adapters/pdf/line-markers.mjs <form>');
-  process.exit(2);
+// EXPORTED SO THERE IS ONE PAIRING AND NOT TWO. guard-sweep.mjs [F-03..F-06] derives its
+// under-determination figures from THIS function. Re-implementing the filter there to check a
+// claim about the filter would be the parallel-list class committed by the sweep that exists
+// to enumerate it — the P-02 remedy, applied before the second copy was written rather than
+// after it drifted.
+export async function markerPairing(form) {
+  const src = `adapters/pdf/forms/f${form}.pdf`;
+  const bytes = readFileSync(src);
+  const text = await readPrintedText(bytes);
+  const { widgets, pageCount } = await readWidgetGeometry(bytes);
+  return { src, text, widgets, pageCount, rows: markersIn(text, pageCount), attach: attachIn(widgets) };
 }
-const src = `adapters/pdf/forms/f${form}.pdf`;
-const bytes = readFileSync(src);
-const text = await readPrintedText(bytes);
-const { widgets, pageCount } = await readWidgetGeometry(bytes);
 
 // "18a" / "18a." / "(39)" / "(39) $" — the trailing "$" is the currency glyph the IRS sets in
 // the same run as the marker on the OIC forms, so it is stripped rather than treated as text.
@@ -43,6 +46,7 @@ const LINE = /^\(?(\d{1,2}[a-z]?)\)?[.:]?\s*\$?$/i;
 const BOX = /^Box\s+([A-Z])\b/i;
 
 const r1 = (n) => Math.round(n * 10) / 10;
+const markersIn = (text, pageCount) => {
 const rows = [];
 for (let p = 0; p < pageCount; p++) {
   for (const t of text[p]?.items || []) {
@@ -60,6 +64,8 @@ for (let p = 0; p < pageCount; p++) {
     });
   }
 }
+return rows;
+};
 
 // The widget this marker belongs to: same page, vertically overlapping the marker's band, and
 // the nearest one to its RIGHT. Markers on these forms sit left of the cell they number — on
@@ -75,28 +81,77 @@ for (let p = 0; p < pageCount; p++) {
 // line (32) — an off-by-one that looks entirely plausible and is exactly what this tool exists
 // to prevent. Distance from the marker to each candidate's vertical centre separates them.
 const TOL_Y = 2;
-const attach = (m) => {
+// RETURNS THE WHOLE CANDIDATE LIST, not just the winner, because HOW MANY CANDIDATES SURVIVED
+// THE FILTER is the finding. The filter here is purely geometric and there is no property left
+// to filter on — so this tool does not carry the money-probe defect (it never ranks before it
+// filters), but it has the other exposure that shape can have: UNDER-DETERMINATION. When two
+// candidates both survive, the distance tie-break INVENTS the answer, and a reader who is not
+// told that cannot tell an answer the page determined from an answer this line chose.
+// See adapters/pdf/guard-sweep.mjs [N-05] and [F-03..F-06].
+const attachIn = (widgets) => (m) => {
   const mid = (w) => (w.rect[1] + w.rect[3]) / 2;
   const cands = widgets
     .filter((w) => w.page === m.page && w.rect
       && m.y >= w.rect[1] - TOL_Y && m.y <= w.rect[3] + TOL_Y
       && w.rect[0] >= m.x2 - TOL_Y)
     .sort((a, b) => Math.abs(mid(a) - m.y) - Math.abs(mid(b) - m.y) || a.rect[0] - b.rect[0]);
-  return cands[0] || null;
+  // The alternative ordering is carried alongside so the exposure can be MEASURED rather than
+  // asserted: leftmost-first is the other reading a person would reach for, and the number of
+  // markers where the two disagree is how load-bearing the tie-break actually is.
+  const byLeftmost = [...cands].sort((a, b) => a.rect[0] - b.rect[0]);
+  return { winner: cands[0] || null, cands, underDetermined: cands.length > 1,
+    tieBreakInvented: cands.length > 1 && cands[0].name !== byLeftmost[0].name };
 };
 
-console.log(`${src} — ${pageCount} pages, ${rows.length} printed marker(s)`);
-let attached = 0;
-for (let p = 1; p <= pageCount; p++) {
-  const onPage = rows.filter((r) => r.page === p).sort((a, b) => b.y - a.y || a.x1 - b.x1);
-  console.log(`\n--- page ${p}: ${onPage.length} marker(s) ---`);
-  for (const m of onPage) {
-    const w = attach(m);
-    if (w) attached++;
-    console.log(
-      `  ${String(m.marker).padStart(6)}  y=${String(m.y).padStart(6)}  x=${String(m.x1).padStart(6)}..${String(m.x2).padStart(6)}  ` +
-      `-> ${w ? w.name : '(no widget to its right on this row)'}`
-    );
+/** The three figures [N-05] states, derived rather than typed. */
+export async function underDetermination(form) {
+  const { rows, attach } = await markerPairing(form);
+  let paired = 0, under = 0, invented = 0, checkbox = 0;
+  for (const m of rows) {
+    const a = attach(m);
+    if (!a.winner) continue;
+    paired++;
+    if (a.underDetermined) under++;
+    if (a.tieBreakInvented) invented++;
+    if (/check/i.test(a.winner.type || '')) checkbox++;
   }
+  return { markers: rows.length, paired, under, invented, checkbox };
 }
-console.log(`\n${attached} of ${rows.length} marker(s) have a widget on the same row to their right.`);
+
+// CLI. Guarded so that importing this module for its pairing does not run the listing —
+// guard-sweep.mjs imports `underDetermination` and must not print 200 lines to do it.
+if (process.argv[1] && process.argv[1].endsWith('line-markers.mjs')) {
+  const form = process.argv[2];
+  if (!form) {
+    console.error('usage: node adapters/pdf/line-markers.mjs <form>');
+    process.exit(2);
+  }
+  const { src, pageCount, rows, attach } = await markerPairing(form);
+
+  console.log(`${src} — ${pageCount} pages, ${rows.length} printed marker(s)`);
+  let attached = 0, underDetermined = 0;
+  for (let p = 1; p <= pageCount; p++) {
+    const onPage = rows.filter((r) => r.page === p).sort((a, b) => b.y - a.y || a.x1 - b.x1);
+    console.log(`\n--- page ${p}: ${onPage.length} marker(s) ---`);
+    for (const m of onPage) {
+      const a = attach(m);
+      const w = a.winner;
+      if (w) attached++;
+      if (a.underDetermined) underDetermined++;
+      console.log(
+        `  ${String(m.marker).padStart(6)}  y=${String(m.y).padStart(6)}  x=${String(m.x1).padStart(6)}..${String(m.x2).padStart(6)}  ` +
+        `-> ${w ? w.name : '(no widget to its right on this row)'}`
+      );
+    }
+  }
+  console.log(`\n${attached} of ${rows.length} marker(s) have a widget on the same row to their right.`);
+  // SAY WHICH ANSWERS THE TIE-BREAK INVENTED. The pairing above is not WRONG where it is
+  // under-determined — it is UNDECIDED BY THE PAGE, and a reader taking a binding off this
+  // listing has to know which rows those are. This tool is an authoring instrument: it exports
+  // nothing into a map and no gate step reads its pairing, so printing the exposure is what
+  // stands in for a guard here. Stating the number was promised by [N-05] and, until this
+  // commit, was never implemented — the disposition described a remedy the code did not carry.
+  console.log(`${underDetermined} of ${attached} pairing(s) were UNDER-DETERMINED: more than one widget survived`);
+  console.log(`the geometric filter and the distance tie-break chose between them. Those pairings are this`);
+  console.log(`tool's choice and not the page's. Check them against the rectangles before binding one.`);
+}

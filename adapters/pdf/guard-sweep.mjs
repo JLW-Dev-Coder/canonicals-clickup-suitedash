@@ -73,6 +73,7 @@
 // the sweep stops. Re-reading the changed guard is then mandatory rather than optional.
 
 import { readFileSync, readdirSync } from 'node:fs';
+import { underDetermination, markerPairing } from './line-markers.mjs';
 
 const DIR = 'adapters/pdf';
 
@@ -269,7 +270,7 @@ export const SELECTIONS = [
 
   { id: 'N-02', file: 'correlate-labels.mjs', anchor: 'const s = [...arr].sort(byDist);', order: 'FIXED', family: true,
     property: 'the printed run is DESCRIPTIVE (a caption, not a marker or a currency glyph)',
-    why: 'THE SAME DEFECT ONE LEVEL UP, AND IT WAS LOAD-BEARING. `nearestDescriptive` and `markerFor` both filter before they rank and are correct in themselves — but the BUCKETS they read were truncated to the nearest 3 (nearest 5 for `nearest`) before any property filter ran, so a descriptive caption sitting behind three non-descriptive runs was cut from the bucket and never seen. On 433-A page 3, field p2_t32_16[0]’s `above` bucket holds five "$" runs at 31–161pt and the first descriptive run at 198.9pt: truncation dropped every candidate and the label fell through to a run 273.7pt away in another column. Measured across the three forms: 25 of 515 widgets on 433-A took a different label and 4 took a different marker; 433-F and 433-A(OIC) were unaffected. Each bucket now filters, then ranks, then truncates.' },
+    why: 'THE SAME DEFECT ONE LEVEL UP, AND IT WAS LOAD-BEARING. `nearestDescriptive` and `markerFor` both filter before they rank and are correct in themselves — but the BUCKETS they read were truncated to the nearest 3 (nearest 5 for `nearest`) before any property filter ran, so a descriptive caption sitting behind three non-descriptive runs was cut from the bucket and never seen. On 433-A page 3, field p2_t32_16[0]’s `above` bucket holds five "$" runs at 31–161pt and the first descriptive run at 198.9pt: truncation dropped every candidate and the label fell through to a run 273.7pt away in another column. Measured across the three forms: 26 of 515 widgets on 433-A took a different label and 4 took a different marker; 433-F and 433-A(OIC) were unaffected. THAT FIGURE WAS TYPED AS 25 AND IS 26 — see [F-01], which states how it was measured and why the sweep cannot re-derive it. Each bucket now filters, then ranks, then truncates.' },
 
   { id: 'N-03', file: 'correlate-labels.mjs', anchor: 'if (!isDescriptive(cand.text)) continue;', order: 'filter-then-rank',
     property: 'descriptive text',
@@ -281,7 +282,7 @@ export const SELECTIONS = [
 
   { id: 'N-05', file: 'line-markers.mjs', anchor: 'const cands = widgets', order: 'no-property',
     property: '(none available) — same page, band-containing, to the right',
-    why: 'IT DOES NOT CARRY THE money-probe DEFECT, AND THE HONEST ANSWER IS THAT IT CANNOT: there is no post-rank property test here at all, because there is no property to test. `cands[0]` is returned unconditionally after a filter that is purely geometric — same page, marker y inside the widget band, widget left edge at or right of the marker — and then ranked by distance from the marker to each candidate’s vertical centre. Every property in the filter is a property sought, so the ORDER is right. THE EXPOSURE IS UNDER-DETERMINATION: on 433-A(OIC) 42 of 89 markers leave more than one candidate standing after the filter and the distance tie-break decides between them; on 433-A it is 146 of 205. Swapping the tie-break from vertical-centre to leftmost changes the answer for 3 markers on 433-A(OIC) and 26 on 433-A, so the tie-break is load-bearing and nothing on the page justifies one over the other. A widget TYPE filter was tried and is vacuous on 433-A(OIC) — every candidate there is a PDFTextField — but on 433-A 16 markers pair to a PDFCheckBox, and this tool has no way to know whether a printed line is a checkbox line or a money line, so it cannot tell a correct checkbox pairing from a wrong one. THIS IS WHY THE 23 PAGE-6 MARKERS WERE CHECKED CELL BY CELL AGAINST THE RECTANGLES RATHER THAN TAKEN FROM THIS TOOL’S PAIRING, and why the two wrong page-5 pairings are recorded in the map at `_map_evidence_page5.the_two_line_markers_pairings_that_are_WRONG_on_this_page`. The tool now prints how many markers its filter left under-determined, so a reader is told which answers the tie-break invented. It is an authoring instrument, exports nothing, and no gate step reads it.' },
+    why: 'IT DOES NOT CARRY THE money-probe DEFECT, AND THE HONEST ANSWER IS THAT IT CANNOT: there is no post-rank property test here at all, because there is no property to test. `cands[0]` is returned unconditionally after a filter that is purely geometric — same page, marker y inside the widget band, widget left edge at or right of the marker — and then ranked by distance from the marker to each candidate’s vertical centre. Every property in the filter is a property sought, so the ORDER is right. THE EXPOSURE IS UNDER-DETERMINATION: on 433-A(OIC) 42 of 89 markers leave more than one candidate standing after the filter and the distance tie-break decides between them; on 433-A it is 146 of 205. Swapping the tie-break from vertical-centre to leftmost changes the answer for 3 markers on 433-A(OIC) and 26 on 433-A, so the tie-break is load-bearing and nothing on the page justifies one over the other. A widget TYPE filter was tried and is vacuous on 433-A(OIC) — every candidate there is a PDFTextField — but on 433-A 16 markers pair to a PDFCheckBox, and this tool has no way to know whether a printed line is a checkbox line or a money line, so it cannot tell a correct checkbox pairing from a wrong one. THIS IS WHY THE PAGE-6 MARKERS WERE CHECKED CELL BY CELL AGAINST THE RECTANGLES RATHER THAN TAKEN FROM THIS TOOL’S PAIRING (page 6 draws 25 markers — 22 numbered lines, all of which pair, and Boxes D, E and F, none of which do; this sentence said "the 23 page-6 markers" and 23 is not a figure this page produces, see [F-09]), and why the two wrong page-5 pairings are recorded in the map at `_map_evidence_page5.the_two_line_markers_pairings_that_are_WRONG_on_this_page`. The tool now prints how many markers its filter left under-determined, so a reader is told which answers the tie-break invented — AND UNTIL THIS SENTENCE WAS AUDITED IT DID NOT: line-markers.mjs had a zero-byte diff in the commit that first wrote this claim. The print exists now, and [F-03]..[F-09c] derive its figures from the same function rather than from a second copy of the filter. It is an authoring instrument, exports nothing, and no gate step reads it.' },
 
   { id: 'N-06', file: 'verify-headings.mjs', anchor: 'const items = (printed[h.page - 1]?.items || []).filter(t => t.str === h.text)', order: 'filter-then-rank',
     property: 'the printed run IS the declared heading text, verbatim',
@@ -367,6 +368,130 @@ export const buildGuardContext = (form) => {
 };
 
 const fileMatches = (spec, file) => (spec instanceof RegExp ? spec.test(file) : spec === file);
+
+// ---------------------------------------------------------------------------------------
+// (d) THE FIGURE REGISTER — THE SWEEP'S OWN QUANTITATIVE PROSE.
+//
+// FOUND BY VERIFYING THIS FILE RATHER THAN TRUSTING IT, AND IT IS THE SAME DEFECT ONE LEVEL
+// UP FOR THE FOURTH TIME. The anchor mechanism proves a disposition is ATTACHED to the code
+// it describes. It proves nothing about whether what the disposition SAYS is true. And the
+// two sweeps between them cover neither: count-sweep.mjs reads JSON artefacts only, and
+// guard-sweep.mjs reads source for SHAPES, never for claims. So the registers above were the
+// one place left in this engine where a number could be typed and nothing would ever read it
+// — which is exactly the state `_arguable_page{N}` was in, and exactly the state six slices
+// of crosswalk classification were in while they lived only in chat reports.
+//
+// Two claims in this file were wrong on the day it was committed:
+//
+//   [N-02] said 25 of 433-A's widget labels moved. The figure is 26. Off by one, in the one
+//          sentence whose whole purpose was to show that the defect had been load-bearing.
+//   [N-05] said "the tool now prints how many markers its filter left under-determined".
+//          IT DID NOT. line-markers.mjs had a ZERO-BYTE DIFF in the commit that wrote that
+//          sentence. A disposition described a remedy that did not exist and the sweep
+//          printed OK underneath it — a guard certifying its own blind spot, which is the
+//          sentence this entire file was written to retire.
+//
+// So every cardinality a register quotes is enumerated here, and each either DERIVES or
+// declares itself underivable WITH THE PROCEDURE THAT MEASURED IT. `stated` is compared
+// against `derive()` on every run; a figure with no `derive` must carry `measured_by`; a
+// figure with neither is a STOP, in the same way an undisposed guard site is.
+//
+// The derivations IMPORT from the tool they are about — `underDetermination` out of
+// line-markers.mjs — instead of re-implementing its filter here. That is not tidiness. A
+// second implementation of the pairing was in fact written while auditing this, disagreed
+// (40 and 71 against 3 and 26), and the disagreement was entirely in the second copy: it
+// re-sorted an unsorted array, so equal-x candidates fell back to document order instead of
+// centre order. A check that re-derives a claim from its own copy of the logic tests the
+// copy. That is class (c), committed by the file that enumerates class (c).
+export const FIGURES = [
+  { id: 'F-01', register: 'N-02', what: '433-A widget labels that moved when the truncation order was fixed', stated: 26,
+    measured_by: 'MUTATION, and it cannot be re-derived from the tree: revert `isFormatHint` out of `isDescriptive` in correlate-labels.mjs, run `node adapters/pdf/correlate-labels.mjs 433a`, and diff widget `label` against the pre-sweep file at 8c9f38e. Both inputs — a source mutation and a git revision — are outside anything a sweep over the working tree can reach. Declared underivable with the procedure named, in the same shape as the NEG-* floor fixtures.' },
+
+  { id: 'F-02', register: 'N-02', what: '433-A widget markers that moved', stated: 4,
+    measured_by: 'The same mutation procedure as [F-01], reading `marker` instead of `label`.' },
+
+  { id: 'F-03', register: 'N-05', what: '433-A(OIC) markers left under-determined by the geometric filter', stated: 42,
+    derive: async () => (await underDetermination('433aoi')).under },
+
+  { id: 'F-04', register: 'N-05', what: '433-A markers left under-determined by the geometric filter', stated: 146,
+    derive: async () => (await underDetermination('433a')).under },
+
+  { id: 'F-05', register: 'N-05', what: '433-A(OIC) pairings where the distance tie-break and a leftmost tie-break disagree', stated: 3,
+    derive: async () => (await underDetermination('433aoi')).invented },
+
+  { id: 'F-06', register: 'N-05', what: '433-A pairings where the distance tie-break and a leftmost tie-break disagree', stated: 26,
+    derive: async () => (await underDetermination('433a')).invented },
+
+  { id: 'F-07', register: 'N-05', what: '433-A markers whose pairing is a PDFCheckBox', stated: 16,
+    derive: async () => (await underDetermination('433a')).checkbox },
+
+  { id: 'F-08', register: 'N-05', what: '433-A(OIC) markers whose pairing is a PDFCheckBox — why a widget-TYPE filter is vacuous on this form', stated: 0,
+    derive: async () => (await underDetermination('433aoi')).checkbox },
+
+  // [F-09] IS WHY THIS REGISTER EARNS ITS KEEP. The disposition said "THE 23 PAGE-6 MARKERS",
+  // and 23 is not a figure this page produces under any reading: page 6 draws 25 markers, of
+  // which 22 are numbered line markers and 3 are box markers (D, E, F); all 22 line markers
+  // pair to a widget and none of the 3 boxes does. There is no 23. What slice 6 actually
+  // checked cannot now be recovered, because it was recorded in a chat report — the one
+  // artefact class no sweep reaches, which is the whole reason the crosswalk classification
+  // was moved into a file. The figure is replaced by the three that derive, and the
+  // irreconcilable 23 is recorded rather than quietly rounded to the nearest true number.
+  { id: 'F-09', register: 'N-05', what: '433-A(OIC) page-6 line markers, all of which pair to a widget', stated: 22,
+    derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6 && m.kind === 'line' && attach(m).winner).length; } },
+
+  { id: 'F-09b', register: 'N-05', what: '433-A(OIC) page-6 markers drawn in total', stated: 25,
+    derive: async () => { const { rows } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6).length; } },
+
+  { id: 'F-09c', register: 'N-05', what: '433-A(OIC) page-6 box markers, none of which pairs to a widget', stated: 3,
+    derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6 && m.kind === 'box' && !attach(m).winner).length; } },
+
+  { id: 'F-10', register: 'P-03', what: 'entries the totals copy of _not_checkable had grown to', stated: 18,
+    derive: async () => { const t = JSON.parse(readFileSync(`${DIR}/maps/433aoi.totals.json`, 'utf8')); return (t.not_checkable?.entries || []).length; } },
+
+  { id: 'F-11', register: 'P-03', what: 'entries the map copy sat at before the merge', stated: 15,
+    measured_by: 'Read at 8c9f38e, the commit before the merge. The map copy holds no entries[] today — that is what "merged" means — so the pre-merge length is a fact about a git revision, not about the tree. Re-derived on audit as 15, with 15 shared keys and 3 held only by the totals copy.' },
+
+  { id: 'F-12', register: 'P-03', what: 'fields that differed across the 15 shared entries', stated: 17,
+    measured_by: 'The same pre-merge revision as [F-11], comparing every field of every shared entry. Re-derived on audit as 17.' },
+];
+
+/** Run the figure register. Async: the marker figures are read out of the PDFs themselves. */
+export const runFigureSweep = async () => {
+  const problems = [], rows = [];
+  for (const f of FIGURES) {
+    if (!f.derive && !f.measured_by) {
+      problems.push(`UNDECLARED  [${f.id}]  ${f.what}\n      states ${f.stated} and neither derives it nor says how it was measured.\n      A figure in a disposition is a claim like any other. There is no third state.`);
+      rows.push({ id: f.id, verdict: 'UNDECLARED' });
+      continue;
+    }
+    if (!f.derive) { rows.push({ id: f.id, verdict: 'underivable' }); continue; }
+    let got;
+    try { got = await f.derive(); }
+    catch (e) {
+      problems.push(`UNREADABLE  [${f.id}]  ${f.what}\n      the derivation threw: ${e.message}\n      A figure whose derivation cannot read its input reports that it could not read it. Never a pass.`);
+      rows.push({ id: f.id, verdict: 'UNREADABLE' });
+      continue;
+    }
+    if (String(got) !== String(f.stated)) {
+      problems.push(`FIGURE      [${f.id}]  ${f.register} — ${f.what}\n      the disposition states ${f.stated}; derived: ${got}`);
+      rows.push({ id: f.id, verdict: 'MISMATCH' });
+    } else rows.push({ id: f.id, verdict: 'derived' });
+  }
+  return { rows, problems };
+};
+
+/** Print the figure register. Returns the number of problems (0 = every figure holds). */
+export const reportFigureSweep = (s) => {
+  const t = s.rows.reduce((a, r) => { a[r.verdict] = (a[r.verdict] || 0) + 1; return a; }, {});
+  console.log(`figure sweep: ${s.rows.length} figure(s) quoted by a disposition — ${Object.entries(t).map(([k, v]) => `${v} ${k}`).join(', ')}`);
+  if (!s.problems.length) {
+    console.log('OK — every figure a disposition states either derives and agrees, or names the measurement that produced it.');
+    return 0;
+  }
+  console.error(`FIGURE SWEEP — ${s.problems.length} problem(s):`);
+  s.problems.forEach(p => console.error(`  ${p}`));
+  return s.problems.length;
+};
 
 /**
  * RUN THE THIRD SWEEP.

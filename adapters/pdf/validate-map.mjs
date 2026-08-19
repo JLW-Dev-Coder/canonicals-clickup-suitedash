@@ -16,7 +16,7 @@ import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { auditRounding, reportRounding } from './rounding.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
-import { runGuardSweep, reportGuardSweep } from './guard-sweep.mjs';
+import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -223,6 +223,13 @@ if (reportCountSweep(sweep, { verbose: process.argv.includes('--sweep') }) > 0) 
 // failing one gate out of three would leave two green gates standing over it.
 const guards = runGuardSweep(form);
 if (reportGuardSweep(guards, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (d) THE FIGURE REGISTER. Every cardinality the sweep's own dispositions quote, derived from
+// the tool it is about or declared underivable with the procedure that measured it. It runs on
+// every form rather than once: the figures are about 433-A and 433-A(OIC) alike, and a wrong
+// figure that only failed one gate out of three would leave two green gates standing over it.
+const figures = await runFigureSweep();
+if (reportFigureSweep(figures) > 0) process.exit(2);
 
 // ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.

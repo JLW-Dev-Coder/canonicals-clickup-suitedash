@@ -74,8 +74,13 @@ function candidates(pageIdx, r) {
   // at 31.1, 52.7, 88.7, 124.7 and 160.7pt and its first descriptive run at 198.9pt: the
   // slice dropped every candidate the bucket had, `above` contributed nothing, and the label
   // fell through to a run 273.7pt away in a different column. Across the three forms the
-  // truncation moved 25 of 433-A's 515 widget labels and 4 of its markers; 433-F and
+  // truncation moved 26 of 433-A's 515 widget labels and 4 of its markers; 433-F and
   // 433-A(OIC) were unaffected, which is exactly why a scan of one form would have missed it.
+  //
+  // THAT FIGURE WAS TYPED AS 25 AND IS 26. It is measured by MUTATION, not by reading the
+  // tree: revert `isFormatHint` out of `isDescriptive`, regenerate, and diff the widget
+  // labels against the pre-sweep file. No sweep can re-derive it, so it is declared
+  // underivable with that procedure named, at adapters/pdf/guard-sweep.mjs [F-01].
   //
   // Each bucket is now kept twice: `*_desc` holds the descriptive candidates and `*_mark` the
   // markers, each ranked and truncated WITHIN its own kind, so truncating one can never hide
