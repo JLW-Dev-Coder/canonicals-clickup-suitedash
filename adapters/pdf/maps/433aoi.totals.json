@@ -4,11 +4,11 @@
  "catalog": "55896Q",
  "_why": "Which printed cell on 433-A(OIC) is computed from which other printed cells. Read by run-form-gate.mjs step 11, which recomputes every entry FROM WHAT THE FILLED PDF PRINTS and compares it to the printed figure. No figure lives here except the ones the FORM ITSELF PRINTS as constants — the $1,000 on line (1), the $3,450 vehicle allowance on line (6b), and the .8 quick-sale multiplier that appears five times — and every one is quoted from the caption that prints it.",
  "authored_from": "The printed page text of adapters/pdf/forms/f433aoi.pdf, extracted from the content streams and read alongside the widget rectangles by adapters/pdf/align-block.mjs. Captions below are quoted verbatim. NOT from field names: ELEVEN leaf names on this form are known to be actively wrong about what their cell means — including the page-3 pair Total_Value_Vehicles_Attached[0] and Enter_Allowance[0], which are printed lines (6d) and (6e) respectively and so hold each other's job. One of the eleven — RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] — is a feeder of entry (3a) QSV below, where the leaf says .7 and the page says .8.",
- "_slice": "PRINTED PAGES 1, 2, 3, 4, 5 AND 6.",
+ "_slice": "PRINTED PAGES 1 THROUGH 8. Every printed total on the form is either checked here or declared not checkable with a reason.",
  "_notes": [
   "THIS FILE EXISTS BECAUSE THE SCHEMA CAN NOW CARRY THE FORM. It was deliberately not authored during slice 2: the feeder schema then added and subtracted and had no factor and no constant, so (3a)'s X .8 and (1)'s minus $1,000 — the two cells on page 2 that most need checking — would have been the two it could not express. Nine clean passes printed beside two silently-absent checks is worse than a SKIP that says nothing was checked.",
   "A FACTOR AND A CONSTANT, NOT AN EXPRESSION LANGUAGE. `factor` and `constant` are two numbers per feeder, and a feeder contributes sign x (factor x sum-of-its-cells + constant). That is enough for every printed formula on pages 1-3 that is not a conditional, and it is deliberately not enough to invent arithmetic here: this file can still only say which printed cells feed a line and by how much.",
-  "`floor` IS THE FORM'S OWN PRINTED INSTRUCTION, not a tolerance. Nine lines declare it — 1, 6b, 7, 11, Box B, Box C, Box D, Box E, Box F — and the page prints a floor over every one of them, in four wordings. (1) on page 2 sits under 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".'; (6b) on page 3 carries the instruction inside its own caption, '(If line (6a) minus $3,450 is a negative number, enter \"0\")'; (11) on page 5 prints the shortest form of all, 'If less than zero enter zero.'; and (7), Box B, Box C, Box D, Box E and Box F all sit under 'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' THE OLD REASON HERE WAS WRONG AND IT IS WORTH SAYING WHY. It read 'only a line that subtracts a printed constant can go negative, so exactly two lines declare it' — true of the two lines that existed when it was written, and false as a rule: seven of the nine subtract no constant and declare a floor because the PAGE PRINTS ONE OVER THEM. A floor is declared from the printed instruction, never from the shape of the arithmetic. When the floor actually fires the gate prints 'floored at 0.00' on that line, so a match that depended on it can never read as an unconditional match. BOX F IS THE ONE MOST LIKELY TO FIRE ON A REAL RECORD: a household spending more than it earns has a genuinely negative remainder and the form instructs it to print zero.",
+  "`floor` IS THE FORM'S OWN PRINTED INSTRUCTION, not a tolerance. Eleven lines declare it — 1, 6b, 7, 11, Box B, Box C, Box D, Box E, Box F, Box G and Box H — and the page prints a floor over every one of them, in four wordings. (1) on page 2 sits under 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".'; (6b) on page 3 carries the instruction inside its own caption, '(If line (6a) minus $3,450 is a negative number, enter \"0\")'; (11) on page 5 prints the shortest form of all, 'If less than zero enter zero.'; (7), Box B, Box C, Box D, Box E and Box F all sit under 'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.'; and Box G and Box H on page 7 each end their own instruction paragraph with a fifth wording, 'Do not enter a number less than $0.' THE OLD REASON HERE WAS WRONG AND IT IS WORTH SAYING WHY. It read 'only a line that subtracts a printed constant can go negative, so exactly two lines declare it' — true of the two lines that existed when it was written, and false as a rule: seven of the first nine subtract no constant and declare a floor because the PAGE PRINTS ONE OVER THEM. A floor is declared from the printed instruction, never from the shape of the arithmetic. When the floor actually fires the gate prints 'floored at 0.00' on that line, so a match that depended on it can never read as an unconditional match. BOX F IS THE ONE MOST LIKELY TO FIRE ON A REAL RECORD: a household spending more than it earns has a genuinely negative remainder and the form instructs it to print zero. SIX OF THE ELEVEN ARE NOW EXERCISED AND THREE OF THEM CANNOT BE. samples/433aoi.negative.sample.json drives (1), (6b), (7), (11), Box C and Box F below zero and the gate prints 'floored at 0.00' on each. Box B, Box D and Box E cannot be driven negative by any record that obeys the printed instructions: every printed operand feeding them is a non-negative input cell or a line that is itself floored. Box G and Box H are Box F times a printed multiplier, and Box F is floored at 0, so they too take a non-negative operand — their floors restate Box F's rather than adding a reachable one, and they are declared because the page prints them, not because the arithmetic could reach them.",
   "ROUNDING IS NOW MODELLED, PER PRINTED BLOCK, AND THIS NOTE RECORDS WHAT REPLACED THE OLD LIMIT. It used to read \"ROUNDING IS NOT MODELLED, AND THAT IS A KNOWN LIMIT — comparison here is exact to the cent\". It no longer is. `rounding.blocks` in 433aoi.map.json declares, per printed block, which sentence rounds it and where that sentence is drawn; adapters/pdf/rounding.mjs applies it at OUTPUT and this step applies it at COMPARISON, using the mode of the block THE TOTAL CELL ITSELF sits in. Round first, then floor — the order page 2 y 668.1 prints the two sentences in. STILL NO TOLERANCE ANYWHERE: both sides are brought to the same precision by a printed instruction, and a cell that cannot be is declared not checkable instead. The old note's own example is the case this catches — a market value that is not a multiple of 5 makes X .8 land on a fraction of a dollar, and the page prints the rounded figure while an unrounded recomputation would report a false failure of up to 50 cents per operand.",
   "PER-ROW ENTRIES ARE NOT GROUP TOTALS. Nineteen entries below address a single printed ROW via `total_cell` with a row index, because their printed caption states a formula across the cells of that one row — 'Current market value X .8 = [cell] - [cell] = (3a)'. A group total sums a column; these do not. Both shapes are in this file and they are told apart by `total_cell` versus `total_key`.",
   "(2c) IS DECLARED CHECKABLE ON THE ARGUABLE READING. The map records it as a one-operand equation — the page draws an '=' between the dollar-equivalent cell and the (2c) marker and draws no other operator — with the case against stated: a lone '=' could be decoration on a row the taxpayer carries across by hand, in which case (2c) is plain input. Included here because the arithmetic is identical under both readings, so this entry cannot be the thing that makes a wrong answer look right. Still reported as arguable rather than resolved.",
@@ -1041,6 +1041,105 @@
    ],
    "_the_subtraction_order_is_the_reverse_of_the_reading_order": "'Subtract Box E from Box D' means Box D MINUS Box E and the caption names Box E FIRST. Box C on page 5 is the same shape and was the first place it appeared; this is the second, which makes it a printed habit on this form rather than a one-off. A totals entry written in the order the words appear would negate Box F on every filed form.",
    "_the_floor_is_load_bearing_here": "On (1) and (6b) the floor fires only when a printed constant is subtracted. Here it fires whenever a household spends more than it earns, which is common on this form and is the whole reason the form is being filed. Box F is the cell whose floor is most likely to be exercised on a real record."
+  },
+  {
+   "line": "Box F -> page 7 (12-month row)",
+   "caption": "Enter the total from Box F",
+   "total_key": "s8_box_f_for_12_month_multiplier",
+   "_printed_operand_list_verbatim": "\"Enter the total from Box F\" at y 647.7, x 39.6..150.1, directly above the cell at y 633.6..621.4, x 50.4..241.2 with its printed \"$\" at y 633.2, x 41.0..45.4. ONE operand, named in the caption: Box F, which this form prints on page 6 at y 69.9.",
+   "_why_this_is_a_tripwire_and_not_an_input": "The caption is an instruction to COPY a figure this form prints elsewhere. A carry-forward between two printed cells on the same form is exactly the shape a tripwire checks: both sides are on the page, so a mistyped copy is visible without leaving the document. It is the first cross-PAGE tripwire on this form.",
+   "feeders": [
+    {
+     "keys": [
+      "box_f_remaining_monthly_income"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "Box G",
+   "caption": "multiply \"Remaining Monthly Income\" (Box F) by 12 to get \"Future Remaining Income\" (Box G). Do not enter a number less than $0.",
+   "total_key": "box_g_future_remaining_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a number less than $0.",
+   "_printed_operand_list_verbatim": "The instruction at y 669.3, x 36.0..566.5 wrapping to y 659.7, x 36.0..226.9: \"If you will pay your offer in 5 or fewer payments within 5 months or less, multiply \\\"Remaining Monthly Income\\\" (Box F) by 12 to get \\\"Future Remaining Income\\\" (Box G). Do not enter a number less than $0.\" The row beneath it draws \"Enter the total from Box F\" [cell] \"X 12 =\" at y 631.7, x 294.2..326.1 [Box G cell]. ONE operand and ONE printed multiplier: the page 7 Box F copy, times 12.",
+   "_the_multiplier_is_printed": "The 12 is DRAWN ON THE PAGE twice - in the instruction and again as \"X 12 =\" between the two cells - on the same footing as the -$1,000 at (1), the -$3,450 at (6b) and the X .8 quick-sale multipliers. It is a printed constant, not a policy this repo holds.",
+   "_the_floor_is_in_this_lines_own_instruction": "Not inherited from a block instruction. \"Do not enter a number less than $0\" is the last sentence of Box G's own paragraph. Same shape as (6b) and (11), whose captions repeat their own floors.",
+   "feeders": [
+    {
+     "keys": [
+      "s8_box_f_for_12_month_multiplier"
+     ],
+     "factor": 12,
+     "factor_caption": "X 12 ="
+    }
+   ]
+  },
+  {
+   "line": "Box F -> page 7 (24-month row)",
+   "caption": "Enter the total from Box F",
+   "total_key": "s8_box_f_for_24_month_multiplier",
+   "_printed_operand_list_verbatim": "\"Enter the total from Box F\" at y 593.7, x 39.6..150.1, directly above the cell at y 579.6..567.4, x 50.4..241.2 with its printed \"$\" at y 579.2, x 41.0..45.4. ONE operand: Box F.",
+   "_the_form_prints_box_f_twice_and_this_is_the_second": "Two separate cells, one per payment-term branch, each with its own printed caption. They are bound as two map keys and checked as two tripwires rather than as one cell written twice, because the page draws two.",
+   "feeders": [
+    {
+     "keys": [
+      "box_f_remaining_monthly_income"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "Box H",
+   "caption": "multiply \"Remaining Monthly Income\" (Box F) by 24 to get \"Future Remaining Income\" (Box H). Do not enter a number less than $0.",
+   "total_key": "box_h_future_remaining_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a number less than $0.",
+   "_printed_operand_list_verbatim": "The instruction at y 615.3, x 36.0..570.2 wrapping to y 605.7, x 36.0..117.3: \"If you will pay your offer in 6 to 24 months, multiply \\\"Remaining Monthly Income\\\" (Box F) by 24 to get \\\"Future Remaining Income\\\" (Box H). Do not enter a number less than $0.\" The row beneath draws \"Enter the total from Box F\" [cell] \"X 24 =\" at y 577.7, x 294.2..326.1 [Box H cell]. ONE operand and ONE printed multiplier: the page 7 Box F copy, times 24.",
+   "feeders": [
+    {
+     "keys": [
+      "s8_box_f_for_24_month_multiplier"
+     ],
+     "factor": 24,
+     "factor_caption": "X 24 ="
+    }
+   ]
+  },
+  {
+   "line": "Box A + Box B",
+   "caption": "Enter the amount from Box A plus Box B (if applicable)",
+   "total_key": "s8_box_a_plus_box_b",
+   "_printed_operand_list_verbatim": "Two runs, one above the other, over one cell: \"Enter the amount from Box A\" at y 541.9, x 39.6..164.6 and \"plus Box B\" at y 531.1, x 39.6..86.6 followed by \"(if applicable)\" at y 531.1, x 89.1..147.2. TWO operands, named: Box A (page 4, y 567.5 band) and Box B (page 5). \"(if applicable)\" governs Box B, not Box A - it is drawn after \"plus Box B\" and before nothing else - and Box B is inapplicable when the taxpayer has no business, in which case the form prints 0 there and the sum is unchanged.",
+   "_why_no_floor": "The instruction states no floor and neither operand can be negative: Box A is a sum of seven floored or non-negative lines and Box B is itself declared with a floor of 0. Declaring a floor here would be inventing one.",
+   "feeders": [
+    {
+     "keys": [
+      "box_a_available_individual_equity_in_assets",
+      "box_b_available_business_equity_in_assets"
+     ]
+    }
+   ]
+  },
+  {
+   "line": "Offer Amount",
+   "caption": "Determine your minimum offer amount by adding the total available assets from Box A and Box B (if applicable) to the amount in either Box G or Box H.",
+   "total_key": "s8_offer_amount",
+   "_printed_operand_list_verbatim": "The instruction at y 560.1, x 36.0..571.7: \"Determine your minimum offer amount by adding the total available assets from Box A and Box B (if applicable) to the amount in either Box G or Box H.\" The row beneath draws it as an equation: [Box A plus Box B cell, x 50.4..176.4] \"+\" at y 506.7, x 195.1..200.9 [Box G or Box H cell, x 230.4..356.4] \"=\" at y 506.7, x 375.1..380.9 [Offer Amount cell, x 403.2..572.4]. TWO operands, both printed on this page, joined by a printed \"+\".",
+   "_this_is_the_offer": "THE FIGURE THIS ENTIRE FORM EXISTS TO PRODUCE. A wrong operand here is the amount the taxpayer offers the IRS. It is bound from the printed equation - the \"+\" and the \"=\" between the three cells - and from nothing else.",
+   "_why_no_floor_and_what_the_page_says_instead": "\"Your offer must be more than zero ($0). Do not leave blank. Use whole dollars only.\" at y 528.5 and y 518.9, x 403.2..565.4. That is a constraint on the value and not a floor: a floor clamps a negative sum UP to a value, and this sentence forbids the value zero outright, so declaring floor 0 would make the engine write the one figure the page says must not appear. Carried as a review-page advisory instead - see not_checkable.entries for s8_offer_amount_more_than_zero.",
+   "feeders": [
+    {
+     "keys": [
+      "s8_box_a_plus_box_b"
+     ]
+    },
+    {
+     "keys": [
+      "s8_box_g_or_box_h"
+     ]
+    }
+   ]
   }
  ],
  "not_checkable": {
@@ -1149,6 +1248,18 @@
     "map_key": "51_total_tax_owed",
     "printed_caption": ". Total tax owed",
     "why_not_checkable": "A BALANCE, NOT A PAYMENT. The (51) cell holds the MONTHLY delinquent state/local tax payment and enters Box E; this cell holds the total still owed. A balance divided by a payment gives a number of months, which is information the IRS wants and which no printed cell on this page states, so nothing here can verify either from the other."
+   },
+   {
+    "map_key": "s8_box_g_or_box_h",
+    "printed_caption": "Enter the amount from either Box G or Box H",
+    "why_not_checkable": "THE PAGE DOES NOT SAY WHICH. Box G is Box F x 12 and applies when the offer is paid in 5 or fewer payments within 5 months or less; Box H is Box F x 24 and applies when it is paid in 6 to 24 months. Which of the two governs is the PAYMENT TERM, and 433-A(OIC) prints no cell anywhere that records it - the term is chosen on Form 656, Section 4, which this form names three times and which this repo does not hold. So the cell equals one of two printed figures and nothing printed on this page decides which, and a tripwire that accepted either would pass on a form where the wrong one was copied. Declared not checkable rather than checked against a disjunction.",
+    "review_page_advisory": "This cell must equal Box G (y 633.6, the x 12 row) if the offer will be paid in 5 or fewer payments within 5 months or less, or Box H (y 579.6, the x 24 row) if it will be paid in 6 to 24 months. The form gives no cell for the payment term, so nothing here can check which one you copied - it is set on Form 656, Section 4, Payment Terms. Check it against the term you are actually offering before filing."
+   },
+   {
+    "map_key": "s8_offer_amount",
+    "printed_caption": "Offer Amount",
+    "why_not_checkable": "CHECKABLE AS ARITHMETIC AND NOT CHECKABLE AS A CONSTRAINT, and this entry is about the second. The sum is checked by the \"Offer Amount\" tripwire above. What no tripwire can check is the printed instruction \"Your offer must be more than zero ($0). Do not leave blank.\" - a value of exactly 0 satisfies the arithmetic whenever Box A, Box B and the Box G/H figure are all 0, and violates the page. It is not a floor and cannot be made one without writing the figure the page forbids.",
+    "review_page_advisory": "The printed instruction beside this cell reads \"Your offer must be more than zero ($0). Do not leave blank. Use whole dollars only.\" If this figure came out as 0, the arithmetic is right and the offer is not fileable as it stands: see the note printed below, which directs a taxpayer who cannot pay the calculated amount to place what they can pay on Form 656, Section 4, and explain the special circumstances on Form 656, Section 3."
    }
   ],
   "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. It is now checked on both printed branches by the four predicated lines '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared BOTH checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on exactly that (DOUBLE-DECLARED). The review-page advisory that told a preparer to check the lease box against this figure by hand went with it, because it said 'nothing in the automated checks looks at this cell' and that is no longer true."

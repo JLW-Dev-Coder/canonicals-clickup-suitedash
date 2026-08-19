@@ -5,7 +5,7 @@
  "_what_this_file_is": "Every AcroForm leaf name on Form 433-A(OIC) that is KNOWN TO DESCRIBE SOMETHING OTHER THAN THE CELL IT NAMES, with the printed evidence that settled each one. It is a registry, not a binding: nothing here is read by any fill engine and no map key is resolved through it. validate-map.mjs asserts it against the PDF and against 433aoi.map.json, so a lie declared here cannot quietly stop being true.",
  "_why_a_file_and_not_twelve_paragraphs": "Two reasons, and neither is tidiness. (1) 433-B(OIC) is drawn from the same template lineage as this form and will very likely inherit both the leaf names and the lies; a machine-checked list can be diffed against the next form's field enumeration, and prose spread across slice reports cannot. (2) A preparer or a later author reading 433aoi.map.json in a year will see a map key whose name disagrees with the field it points at, and the honest first assumption is that the MAP is wrong. This file is the standing answer: the map is right, the leaf name is wrong, and here is the printed page that says so.",
  "_the_standing_rule_this_file_exists_to_defend": "A binding on this form comes from the printed caption and the widget rectangle. A leaf name is never evidence - not when it disagrees with the page, and not when it agrees, because on this form a name that happens to be right is a coincidence. The controls at the bottom of this file are the proof: nine cells across four pages sit under an identical printed 'X .8 = $', eight are named Times_8 / times_8, and one is named Times_7. The eight that agree do not make the name a witness; they make the one that disagrees invisible to anyone who trusts names.",
- "_counting": "FOURTEEN ACTIVE LIES. The running count in 433aoi.map.json._notes reached 'eleven' by slice 3 and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. Through slice 3 the honest count is TEN. Slice 4 added two, both on page 4 and both the page-4 twins of page-2 lies already recorded, taking it to twelve; slice 5 added L13 and L14, taking it to fourteen. THIS SENTENCE ITSELF THEN DRIFTED, and that is the finding worth keeping: it read TWELVE for a whole slice after the list underneath it held fourteen, in the one file in this repo written specifically to explain why a retyped count cannot be trusted. It is now derived by adapters/pdf/count-sweep.mjs from entries[] by kind, in the same place _tally is, so the prose and the tally cannot disagree with the list or with each other. The verified-true entries are kept here as CONTROLS rather than deleted: a registry that lists only the failures cannot tell a reader whether a name family is unreliable or whether nobody checked it.",
+ "_counting": "TWENTY-TWO ACTIVE LIES. The running count in 433aoi.map.json._notes reached 'eleven' by slice 3 and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. Through slice 3 the honest count is TEN. Slice 4 added two, both on page 4 and both the page-4 twins of page-2 lies already recorded, taking it to twelve; slice 5 added L13 and L14, taking it to fourteen; slice 7 added eight in one go - L15 through L22 - taking it to twenty-two, of which six are the page-7 litigation block alone. THIS SENTENCE ITSELF THEN DRIFTED, and that is the finding worth keeping: it read TWELVE for a whole slice after the list underneath it held fourteen, in the one file in this repo written specifically to explain why a retyped count cannot be trusted. It is now derived by adapters/pdf/count-sweep.mjs from entries[] by kind, in the same place _tally is, so the prose and the tally cannot disagree with the list or with each other. The verified-true entries are kept here as CONTROLS rather than deleted: a registry that lists only the failures cannot tell a reader whether a name family is unreliable or whether nobody checked it.",
  "_what_is_machine_checked_and_what_is_not": "CHECKED by validate-map.mjs: every `path` exists verbatim in 433aoi.fields.json (or, for a `container` entry, at least one enumerated field is a descendant of it); every non-null `bound_to` resolves through 433aoi.map.json to exactly this `path`; every entry declares a `kind` the validator knows; and no two entries claim the same path. NOT CHECKED, and deliberately: `printed_line`, `printed_line_at`, `printed_marker_at` and `rect` are transcriptions of the drawn page. Asserting those in code would mean re-deriving from the PDF the very reading the entry records, which is circular. They are quoted verbatim so a human can re-measure them with adapters/pdf/align-block.mjs and adapters/pdf/line-markers.mjs, which is how each one was taken.",
  "_kinds": {
   "lie": "The leaf name describes something other than the cell. Counted in the active total.",
@@ -395,17 +395,18 @@
    "what_the_name_implies": "Gross receipts — business revenue, as at printed line (12) on page 5, which is the other cell carrying this leaf name.",
    "printed_line": "Amount of dispute",
    "printed_line_at": "y 347.7, x 36.0..100.5",
-   "printed_marker": "",
-   "printed_marker_at": "",
+   "printed_marker": "(none — page 7 draws no numbered marker anywhere)",
+   "printed_marker_at": "n/a. line-markers.mjs reports three markers on page 7, all of them \"Box\" labels in Section 8 at y 647.7, y 593.7 and y 531.1, and none of them pairs to a widget. So this binding rests on a SECOND WITNESS and on no marker pairing at all: the caption \"Amount of dispute\" drawn at y 347.7, x 36.0..100.5 directly above the cell at y 334.8..320.4, x 43.2..122.4, and the printed \"$\" at y 333.3, x 36.0..40.4 immediately left of it.",
    "witnesses": [
     "the cell sits in the LITIGATION block on page 7, under 'Are you a party to or involved in litigation (if yes, answer the following)' at y 390.9",
     "its row-mates are 'Possible completion date (mmddyyyy)' at x 129.6..258.9 and 'Subject of litigation' at x 273.6..340.7 — a disputed amount, a date and a subject, which is not an income table",
     "the caption 'Amount of dispute' is drawn directly above it at x 36.0..100.5 against the widget at x 43.2..122.4",
     "the only other cell on this form named Gross_Receipts[0] is topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Receipts[0], printed line (12) 'Gross receipts', where the name is accurate"
    ],
-   "bound_to": null,
-   "not_bound_because": "Page 7 is unauthored. The entry is recorded now for the reason C01 through C03 were: the author of that slice must not read this cell by name, and a cell named Gross_Receipts inside a litigation block is the single most inviting wrong binding on the remaining three pages.",
-   "_found_by": "The same leaf-name duplicate scan that found L13. Slice 5 binds page 5's Gross_Receipts[0]; the scan asked what else carries that name and returned this."
+   "bound_to": "s9_litigation_amount_of_dispute",
+   "_found_by": "The same leaf-name duplicate scan that found L13. Slice 5 binds page 5's Gross_Receipts[0]; the scan asked what else carries that name and returned this.",
+   "slice_bound": 7,
+   "closed_in_slice_7": "RAISED IN SLICE 5 AGAINST AN UNAUTHORED PAGE, CLOSED IN SLICE 7 BY BINDING IT. The entry existed for two slices to stop the author of page 7 reading this cell by its name, and that is what it did: bound to s9_litigation_amount_of_dispute from the printed caption, with the leaf name Gross_Receipts never consulted. The other cell on this form carrying that leaf name — page 5 Section 6 Gross_Receipts[0], printed line (12) — remains bound to 12_gross_receipts, where the name is accurate."
   },
   {
    "id": "C04",
@@ -440,19 +441,249 @@
    "bound_to": "box_c_net_business_income",
    "verified_true": "The name is the printed box name word for word. Recorded as a control because this is the cell line-markers.mjs gets WRONG — it pairs the Box C label with Total_Business_Expenses[0], which is printed line (29) — and the entry states plainly that the correct binding came from the rectangle and the caption, and that the leaf name agreeing is a coincidence this file has now checked rather than a method it endorses.",
    "_counting_note": "Counted as a control, not as a lie."
+  },
+  {
+   "id": "L15",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[0]",
+   "leaf": "Name_Creditor[0]",
+   "rect": "y 365.0..349.2, x 129.6..266.4",
+   "what_the_name_implies": "The name of a creditor — a lender, as at the vehicle and real-property lender cells on page 3, which are the rows this form actually asks a creditor's name for.",
+   "printed_line": "Location of filing",
+   "printed_line_at": "y 377.5, x 129.6..187.4",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption \"Location of filing\" is drawn directly above the cell and its x-range 129.6..187.4 opens at exactly the cell's left edge, x 129.6",
+    "the cell sits inside the LITIGATION block, under \"Are you a party to or involved in litigation (if yes, answer the following)\" at y 390.9, and 130.5 points below the nearest lender question on the form",
+    "no cell in this block asks for a creditor: its five row-mates are Represented by, Docket/Case number, Possible completion date, Subject of litigation and Amount of dispute"
+   ],
+   "bound_to": "s9_litigation_location_of_filing",
+   "cost_if_bound_by_name": "A creditor name would print as the court where the action was filed. The two are both free text with no /MaxLen, so nothing downstream would refuse it, and the filed page would state a lender as a venue."
+  },
+  {
+   "id": "L16",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[1]",
+   "leaf": "Name_Creditor[1]",
+   "rect": "y 365.0..349.2, x 273.6..478.8",
+   "what_the_name_implies": "A second creditor's name, by the same reading as L15 and by the index.",
+   "printed_line": "Represented by",
+   "printed_line_at": "y 377.5, x 273.6..330.1",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption \"Represented by\" is drawn directly above the cell and its x-range 273.6..330.1 opens at exactly the cell's left edge, x 273.6",
+    "the four Name_Creditor indices run in printed reading order across this block — [0] x 129.6 y 365.0, [1] x 273.6 y 365.0, [2] x 129.6 y 336.2, [3] x 273.6 y 336.2 — so the INDEX order is honest here and only the base name lies"
+   ],
+   "bound_to": "s9_litigation_represented_by",
+   "cost_if_bound_by_name": "The taxpayer's legal representative would print under a caption asking who represents them only by accident; a creditor written here states that the taxpayer is represented by their lender."
+  },
+  {
+   "id": "L17",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[2]",
+   "leaf": "Name_Creditor[2]",
+   "rect": "y 336.2..320.4, x 129.6..266.4",
+   "what_the_name_implies": "A third creditor name.",
+   "printed_line": "Possible completion date",
+   "printed_line_at": "y 348.7, x 129.6..218.5, with \"(mmddyyyy)\" at y 347.7, x 220.8..258.9",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption \"Possible completion date\" is drawn directly above the cell and opens at exactly its left edge, x 129.6",
+    "the format hint \"(mmddyyyy)\" is drawn immediately after the caption, so the cell is a DATE and cannot hold a name at all — the strongest disagreement between name and cell on this page"
+   ],
+   "bound_to": "s9_litigation_possible_completion_date",
+   "cost_if_bound_by_name": "A creditor name in a date cell. Nothing refuses it: the widget has no /MaxLen and no format action, so the page would print a company name where a court date belongs."
+  },
+  {
+   "id": "L18",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[3]",
+   "leaf": "Name_Creditor[3]",
+   "rect": "y 336.2..320.4, x 273.6..576.0",
+   "what_the_name_implies": "A fourth creditor name.",
+   "printed_line": "Subject of litigation",
+   "printed_line_at": "y 348.7, x 273.6..340.7",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption \"Subject of litigation\" is drawn directly above the cell and opens at exactly its left edge, x 273.6",
+    "the cell runs to x 576.0, the full width of the printed area — a description field, not a name field"
+   ],
+   "bound_to": "s9_litigation_subject",
+   "cost_if_bound_by_name": "What the lawsuit is about would be replaced by whoever the taxpayer owes money to."
+  },
+  {
+   "id": "L19",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].Date_Final_Payment[0]",
+   "leaf": "Date_Final_Payment[0]",
+   "rect": "y 365.0..349.2, x 486.0..576.0",
+   "what_the_name_implies": "The date of a final payment — as at the vehicle \"Date of final payment\" cells on page 3, which is where this leaf name is accurate on this form.",
+   "printed_line": "Docket/Case number",
+   "printed_line_at": "y 377.5, x 486.0..561.1",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption \"Docket/Case number\" is drawn directly above the cell and its x-range 486.0..561.1 opens at exactly the cell's left edge, x 486.0",
+    "the litigation block prints its own date cell one row below — \"Possible completion date (mmddyyyy)\" at y 348.7 — so the block's date is elsewhere and this is not it",
+    "a docket number is not a date and the cell carries no format hint of any kind"
+   ],
+   "bound_to": "s9_litigation_docket_case_number",
+   "cost_if_bound_by_name": "A payment date would print as the court docket number. Doubly misleading because the block DOES contain a date cell, so an author reading names would find a plausible home for a date here and leave the real date cell empty."
+  },
+  {
+   "id": "L20",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].Date_Lawsuit_Resolved[0]",
+   "leaf": "Date_Lawsuit_Resolved[0]",
+   "rect": "y 219.6..205.2, x 36.0..576.0",
+   "what_the_name_implies": "The date a lawsuit was resolved.",
+   "printed_line": "If yes and the litigation included tax debt, provide the types of tax and periods involved",
+   "printed_line_at": "y 233.5, x 36.0..341.1",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the caption is drawn directly above the cell and opens at exactly its left edge, x 36.0",
+    "the cell spans x 36.0..576.0 — the full printed width, 540 points — which is the shape this form uses for free-text answers and never for a date; every date cell on pages 7 and 8 is between 86 and 149 points wide",
+    "the block it belongs to is the IRS-litigation question at y 246.9, whose companion question asks for TYPES OF TAX AND PERIODS and asks for no date anywhere"
+   ],
+   "bound_to": "s9_irs_litigation_tax_types_and_periods",
+   "cost_if_bound_by_name": "A resolution date would print in place of the tax types and periods, and the tax types would have nowhere to go — the block has exactly one cell."
+  },
+  {
+   "id": "L21",
+   "kind": "lie",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t42_10[0]",
+   "leaf": "p1-t42_10[0]",
+   "rect": "y 68.4..54.0, x 500.4..576.0",
+   "what_the_name_implies": "The cell drawn BEFORE p1-t43_10[0] in printed reading order, by the convention every other numbered leaf family on this page follows: p1_t37_7 x 36.0, p1_t38_7[0] x 147.6, p1_t38_7[1] x 248.4, p1_t39_7 x 356.4, p1_t40_7 x 450.0 run left to right, and so do p1-t47_9 x 36.0, p1-t48_9 x 327.6, p1-t49_9 x 442.8.",
+   "printed_line": "Value (safe deposit box)",
+   "printed_line_at": "y 81.3, x 493.2..513.7, with a printed \"$\" at y 66.9, x 493.2..497.6",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "the safe-deposit row runs Location x 36.0..370.8, Contents x 378.0..486.0, Value x 500.4..576.0, and its three leaves are p1_t41_10, p1-t43_10, p1-t42_10 in that printed order — 41, 43, 42",
+    "the printed column header \"Value\" at x 493.2..513.7 sits over the cell at x 500.4..576.0 and over no other",
+    "money-probe.mjs flags this cell and neither of its row-mates: a printed \"$\" at 2.8pt to its left",
+    "this is the ONLY inverted family on either page — checked against all six numbered families on pages 7 and 8"
+   ],
+   "bound_to": "s9_safe_deposit_value",
+   "cost_if_bound_by_name": "An author binding by suffix order writes the box CONTENTS into the cell drawn against a \"$\" and the dollar value into the contents column. Both are text fields with no /MaxLen and nothing downstream refuses either."
+  },
+  {
+   "id": "L22",
+   "kind": "lie",
+   "page": 8,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_08[1]",
+   "leaf": "CB8_08[1]",
+   "rect": "y 195.8..185.8, x 44.0..54.0",
+   "what_the_name_implies": "The box immediately after CB8_08[0] in printed order, and before CB8_09[0] — the adjacency every other repeated index on this form has.",
+   "printed_line": "Completed and signed current Form 656.",
+   "printed_line_at": "y 196.1, x 61.2..207.0",
+   "printed_marker": "(none — this page draws no numbered marker)",
+   "printed_marker_at": "n/a. line-markers.mjs reports 3 markers on page 7, all Box labels in Section 8, none of which pairs to a widget, and 0 on page 8. Every binding on both pages rests on a named second witness, listed below.",
+   "witnesses": [
+    "CB8_08[0] is at y 246.2..236.2 against \"Documentation to support any special circumstances described in the “Explanation of Circumstances” on Form 656, if applicable.\" at y 246.5; CB8_09[0] is at y 231.8..221.8 against \"Attach a Form 2848,\" at y 232.1; CB8_08[1] is 50.4 points BELOW its own index-0 sibling with CB8_09[0] drawn between them",
+    "each checkbox is bound by the printed sentence whose first line shares its y band, and the three bands are 246.2..236.2, 231.8..221.8 and 195.8..185.8 against sentence y of 246.5, 232.1 and 196.1",
+    "the fourteen attachment boxes are all at x 44.0..54.0 and differ only in y, so y is the only discriminator the page offers"
+   ],
+   "bound_to": "s10_attached_form_656",
+   "cost_if_bound_by_name": "The Form 656 tick and the Form 2848 tick swap: a filing with no power of attorney would assert one was enclosed, and one with no offer form would assert the offer form was. Both assertions sit under the penalties-of-perjury declaration at y 597.3."
+  },
+  {
+   "id": "C06",
+   "kind": "control",
+   "page": 7,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].inmateNumber[0]",
+   "leaf": "inmateNumber[0]",
+   "rect": "y 421.2..406.8, x 403.2..572.4",
+   "what_the_name_implies": "The cell for an inmate number.",
+   "printed_line": "If yes, provide your inmate number",
+   "printed_line_at": "y 419.7, x 270.0..393.2",
+   "printed_marker": "(none)",
+   "printed_marker_at": "n/a — page 7 draws no numbered marker.",
+   "witnesses": [
+    "the caption \"If yes, provide your inmate number\" is the nearest run to the cell's left on the same row, ending 9.8pt from its left edge",
+    "the container subform is currentlyIncarcerated[0], whose two other children are the Yes and No boxes for \"Are you currently incarcerated\" at y 419.7"
+   ],
+   "bound_to": "s9_inmate_number",
+   "verified_true": "VERIFIED TRUE. Both the leaf and its container say what the page says. Recorded because the registry states what it checked and did not find, and because page 7 carries six lies in one block — an author who found six would be right to distrust the whole page, and this says which names on it were checked and hold."
+  },
+  {
+   "id": "C07",
+   "kind": "control",
+   "page": 8,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].Funds_Held_Trust[0]",
+   "leaf": "Funds_Held_Trust[0]",
+   "rect": "y 630.0..615.6, x 104.4..165.6",
+   "what_the_name_implies": "The amount of funds held in trust.",
+   "printed_line": "If yes, how much $",
+   "printed_line_at": "y 628.5, x 36.0..102.7",
+   "printed_marker": "(none)",
+   "printed_marker_at": "n/a — page 8 draws no marker of any kind.",
+   "witnesses": [
+    "the caption \"If yes, how much $\" ends 1.7pt from the cell's left edge and money-probe.mjs flags the cell on that \"$\"",
+    "the container subform any_funds[0] carries the Yes/No pair for \"Do you have any funds being held in trust by a third party\" at y 642.9"
+   ],
+   "bound_to": "s9_funds_held_in_trust_amount",
+   "verified_true": "VERIFIED TRUE, leaf and container both."
+  },
+  {
+   "id": "C08",
+   "kind": "control",
+   "page": 8,
+   "slice_found": 7,
+   "path": "topmostSubform[0].F433-A-OIC_Page8[0].Date_Signed_1[0]",
+   "leaf": "Date_Signed_1[0]",
+   "rect": "y 559.4..536.4, x 381.6..576.0",
+   "what_the_name_implies": "The date the form was signed, first of two.",
+   "printed_line": "Date (mm/dd/yyyy)",
+   "printed_line_at": "y 571.9, x 381.6..448.7, on the row captioned \"Signature of Taxpayer\" at y 572.1, x 36.0..130.5",
+   "printed_marker": "(none)",
+   "printed_marker_at": "n/a — page 8 draws no marker of any kind.",
+   "witnesses": [
+    "the caption \"Date\" opens at exactly the cell's left edge, x 381.6",
+    "the row label \"Signature of Taxpayer\" is drawn at x 36.0..130.5 over a ruled line, and page-geometry.mjs finds NO widget anywhere in x 36.0..370.8 at this row — so the only fillable cell on the signature row is this date"
+   ],
+   "bound_to": null,
+   "not_bound_because": "DECLARED NEVER AUTO-FILLED, not unresolved. A date written here states when the taxpayer signed a declaration made under penalty of perjury, and nothing in this engine knows that. See _never_autofill in 433aoi.map.json.",
+   "verified_true": "VERIFIED TRUE. Recorded as a control precisely because the name is accurate and the cell is still never written: an accurate name is not a reason to fill a cell, and the registry should not read as though every honest name were a green light."
   }
  ],
  "_tally": {
-  "active_lies": 14,
-  "of_which_leaf": 11,
+  "active_lies": 22,
+  "of_which_leaf": 19,
   "of_which_container": 3,
   "inherited_not_counted": 0,
-  "controls_verified_true": 5,
+  "controls_verified_true": 8,
   "page_imprecise_not_counted": 1,
-  "total_entries": 20,
-  "bound_today": 16,
-  "unbound_because_the_page_is_unauthored": 1,
+  "total_entries": 31,
+  "bound_today": 27,
   "_the_three_counts": "THE REGISTRY REPORTS THREE COUNTS AND NOT ONE. active_lies is names that disagree with the page. controls_verified_true is names that were checked and AGREE - kept so a reader can tell an unreliable name family from an unchecked one, and so the lie total cannot absorb one by accident. page_imprecise is names that understate a cell the page also understates - neither wrong nor verified right. A single number could not carry any of that, and a single number is how the count reached eleven when the honest figure was ten.",
-  "_how_this_is_derived": "COMPUTED FROM entries[] BY LENGTH, not retyped. The eleven-versus-twelve error entered because the total was a sentence someone re-typed each cycle while the list underneath it changed."
- }
+  "_how_this_is_derived": "COMPUTED FROM entries[] BY LENGTH, not retyped. The eleven-versus-twelve error entered because the total was a sentence someone re-typed each cycle while the list underneath it changed.",
+  "_slice_7": "Slice 7 added eight lies and three controls and closed L14 by binding it. THE PAGE-7 LITIGATION BLOCK IS THE WORST NAME FAMILY ON THIS FORM: six of its seven cells are named for something else — four Name_Creditor indices holding a venue, a representative, a date and a subject; a Date_Final_Payment holding a docket number; and a Gross_Receipts holding an amount in dispute. Not one of the six could be bound by name. Two of the eight new entries (L21, L22) are a new SHAPE of lie — an index implying a printed position the page does not give it — and whether the active-lie total should count that shape is carried open as C-19 and C-20.",
+  "unbound": 1,
+  "_what_unbound_means_now": "ENTRIES WHOSE `bound_to` IS NULL, AND NOTHING MORE. The key was `unbound_because_the_page_is_unauthored` through slice 6, when the only such entry was L14 — recorded against page 7 while page 7 was unauthored, so the name and the filter agreed by coincidence. Slice 7 bound L14 and added C08, a control on Date_Signed_1[0] that is unbound because the map declares it NEVER AUTO-FILLED, which is not an unauthored page. A key naming a reason its own filter does not test is the same defect as a count nobody derives, one level up, so the key was renamed rather than the entry excused. Each unbound entry states its own reason in `not_bound_because`."
+ },
+ "_slice": "PRINTED PAGES 1 THROUGH 8."
 }

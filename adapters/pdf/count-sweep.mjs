@@ -482,7 +482,14 @@ export const MANIFEST = [
         // These two were DECLARED and never derived. validate-map.mjs printed `bound_today`
         // straight out of the file — a retyped count, read back and reported as a result.
         bound_today: e.filter(x => x.bound_to !== null && x.bound_to !== undefined).length,
-        unbound_because_the_page_is_unauthored: e.filter(x => (x.bound_to === null || x.bound_to === undefined) && x.kind !== 'container').length,
+        // RENAMED IN SLICE 7, BECAUSE THE OLD KEY NAME STATED A REASON THE DERIVATION NEVER
+        // TESTED. It was `unbound_because_the_page_is_unauthored`, and it was true of the one
+        // entry that had ever been unbound — L14, recorded against page 7 while page 7 was
+        // unauthored. Slice 7 bound L14 and added C08, a control on Date_Signed_1[0] which is
+        // unbound because it is DECLARED NEVER AUTO-FILLED, and the count went on calling that
+        // an unauthored page. The filter tests `bound_to == null`; the key now says that and
+        // nothing more, and each entry carries its own reason in `not_bound_because`.
+        unbound: e.filter(x => (x.bound_to === null || x.bound_to === undefined) && x.kind !== 'container').length,
       };
       const rows = Object.entries(derived).map(([kk, v]) => ({ what: `_tally.${kk}`, claimed: t[kk], derived: v, from: 'entries[] by length' }));
       // Every declared _tally key must be one this engine derives. A key nobody derives is a
@@ -672,6 +679,92 @@ export const MANIFEST = [
     fallback: {
       kind: 'underivable',
       reason: 'THE CHANGE LOG. A `_notes` entry states what a slice found and decided AT THE TIME it was written, and its numbers are either (a) transcriptions of the printed page — how many rows a table draws, how many account types line (1a) offers, what x-ranges the column headers occupy — which line-markers.mjs, align-block.mjs and check-row-shape.mjs re-measure against the PDF, or (b) figures about a PAST state of this repo, which the present tree cannot reproduce by construction: "the honest count through slice 3 is TEN" is a statement about slice 3 and is not falsifiable from slice 6. Entries that state a count about the tree AS IT STANDS are derived above; one that states such a count and is not recognised is reported as unrecognised, not waved through.',
+    } }),
+
+  // ═══ a marker count printed beside its own marker list ═══════════════════════════════
+  //
+  // [S-26] IS THE FOURTH GENERATION OF THE COUNT DEFECT, AND IT WAS FOUND LIVE.
+  //
+  // [S-18] below declares the whole body of the map underivable, on the stated grounds that
+  // "numbers here are printed coordinates, printed line markers, printed constants ... not one
+  // of them counts a set this repo holds". That is true of almost everything in that region
+  // and it is FALSE of one shape, which the blanket reason swallowed: an evidence block that
+  // ENUMERATES the printed markers on a page and then says how many there are is a count of a
+  // list sitting in the same string. `authored_from_page6._printed_markers_first` enumerated
+  // twenty-two numbered markers and said "the 23 numbered markers" twice, and that 23 is the
+  // same wrong figure [F-09] was raised for. Fixing the figure register did not reach it,
+  // because the figure register sweeps figures quoted BY A DISPOSITION — figures inside
+  // guard-sweep.mjs's own registers — and this one lives in map prose that a blanket
+  // underivable had already excused.
+  //
+  // Each generation of this defect was fixed correctly and certified the next blind spot one
+  // level out: a retyped count, then a derivation whose guard was dead, then a sweep whose
+  // prose was unchecked, then a register that covers only its own file. So the shape the
+  // recovery of [F-09] turned on — a count printed beside the list it counts — stops being a
+  // thing a careful reader notices and becomes a thing the tree refuses.
+  //
+  // FIRES ONLY WHERE THERE IS A LIST TO COUNT. A string that names no marker in the
+  // "(nn) y 123.4" form is left to [S-18], because there is nothing beside the number to
+  // count and asserting one would be inventing a denominator. Where a list IS present and no
+  // phrasing is recognised, that is REPORTED as unrecognised and not waved through — the
+  // fallback names exactly which phrasings were looked for, so the next author extends the
+  // list rather than rediscovering the gap.
+  D({ id: 'S-26', file: /\.map\.json$/, at: /_printed_markers/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const str = String(v);
+      // The enumeration itself: "(30) y 628.5", "(6a) y 512.1". A marker followed by its y.
+      const numbered = [...str.matchAll(/\((\d{1,2}[a-z]?)\)\s*(?:[A-Za-z][^|,]*?)?y\s*[\d.]/g)].length;
+      const boxes    = [...str.matchAll(/Box\s+([A-H])\b[^|,]*?y\s*[\d.]/g)].length;
+
+      const rows = [];
+      const N = `(?:${WORD_NUM}|\\d+)`;
+      // WHETHER THIS STRING STATES A MARKER COUNT AT ALL, asked BEFORE the enumeration is
+      // consulted, because the two answers together are what decides between the three
+      // outcomes. States a count and carries a list: derive. States neither: not this entry's
+      // business, hand it to [S-18]. States a count and carries NO readable list: that is the
+      // one reading that must never be a silent hand-off, because it is precisely what a
+      // changed enumeration format would look like — the count stays, the list stops parsing,
+      // and the entry that exists to check the count steps quietly aside. It is a STOP.
+      const STATES = new RegExp(String.raw`(?:reports|draws)\s+${N}\b(?![^ ]*\))|${N}\s+numbered\s+markers?|in\s+all\s+${N}\s+cases|${N}\s+Box\s+markers?`, 'i');
+      // ZERO IS A DERIVABLE ANSWER AND AN EMPTY LIST IS NOT AN UNREADABLE ONE. Page 8 of
+      // 433-A(OIC) states "line-markers.mjs reports 0 on page 8" and lists nothing, because
+      // there is nothing to list; the enumeration correctly reads 0 and the claim agrees. So
+      // an empty enumeration is NOT short-circuited when a count is stated — it is compared,
+      // and a string claiming a non-zero count beside no readable list falls out as a
+      // MISMATCH naming both sides, which is a louder and more precise report than a STOP
+      // saying the input could not be read. The only string this entry steps away from is one
+      // that lists no marker AND states no count; that one belongs to [S-18] and to nothing
+      // here. (A first version returned a `fail` for the stated-count case and reported page
+      // 8's honest zero as unreadable — the guard was right about the risk and wrong about
+      // which reading carried it.)
+      if (!numbered && !boxes && !STATES.test(str)) return [{ skip: true }];
+      const num = (t) => word(t) ?? Number(t);
+      const all = (re, what, derived, from) => {
+        let hit = false;
+        for (const m of str.matchAll(new RegExp(re, 'gi'))) { hit = true; rows.push({ what, claimed: num(m[1]), derived, from }); }
+        return hit;
+      };
+      let recognised = false;
+      // "line-markers.mjs reports 25 on page 6" / "draws 25 markers"
+      recognised = all(String.raw`(?:reports|draws)\s+(${N})\b(?![^ ]*\))`, 'markers drawn on the page', numbered + boxes,
+        'the enumeration in this same string: numbered markers plus Box markers') || recognised;
+      // "All twenty-four numbered markers", "the 23 numbered markers"
+      recognised = all(String.raw`(${N})\s+numbered\s+markers?`, 'numbered markers', numbered,
+        'the enumeration in this same string: runs of the form "(nn) y ..."') || recognised;
+      // "the marker's y falls INSIDE that cell's rectangle in all 23 cases"
+      recognised = all(String.raw`in\s+all\s+(${N})\s+cases`, 'numbered markers said to be rectangle-contained', numbered,
+        'the enumeration in this same string: runs of the form "(nn) y ..."') || recognised;
+      // "The three Box markers are drawn at ..."
+      recognised = all(String.raw`(${N})\s+Box\s+markers?`, 'Box markers', boxes,
+        'the enumeration in this same string: runs of the form "Box X y ..."') || recognised;
+
+      if (!recognised) rows.push({ unrecognised: true });
+      return rows;
+    },
+    fallback: {
+      kind: 'underivable',
+      reason: 'A MARKER ENUMERATION THAT STATES A COUNT IN A PHRASING THIS ENTRY DOES NOT KNOW. Four are recognised: "reports|draws N" for the total drawn, "N numbered markers", "in all N cases" for the rectangle-containment claim, and "N Box markers". A block that says it another way is reported here rather than passed, because the whole point of [S-26] is that a blanket underivable over this region is what let a wrong 23 sit beside a list of 22 for three commits. Extend the recognisers; do not widen this reason.',
     } }),
 
   D({ id: 'S-18', file: /\.map\.json$/, at: /^(map\.|groups\.|checkboxes\.|check_here\.|exclusive\.|_never_autofill|_deferred|allowed\.|split\.|_computed\.|_not_checkable|_map_evidence|_nesting_note|_label_file_disagreements|_arguable_page\d|_carried\.(open|resolved)|rounding\.blocks\[|rounding\._(what|why_money|order|wording|the_mixed|_)|authored_from|_the_row_class)/,

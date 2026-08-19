@@ -117,7 +117,20 @@ if (!existsSync(liesPath)) {
       if (typeof t === 'string') return { target: t, how: `groups.${m[1]}.slots[${m[2]}].text.${m[3]}` };
       return { how: `groups.${m[1]}.slots[${m[2]}] has no column "${m[3]}"` };
     }
-    return { how: `"${b}" is neither a \`map\` key nor a "group[row].column" cell` };
+    // AND THE TWO CHECKBOX SPELLINGS, because slice 7 put a lie on a checkbox for the first
+    // time. CB8_08 appears twice on page 8 with CB8_09 drawn between its two instances, and
+    // until this the registry could describe that only by declaring the binding null — which
+    // would have said "recorded, not bound" about a box that IS bound, and would have made
+    // the one assertion that matters here unavailable: that the map still points the key at
+    // the field the registry names. Same two spellings the map itself uses.
+    const lone = mapDoc.check_here?.[b];
+    if (lone && typeof lone.target === 'string') return { target: lone.target, how: `check_here."${b}"` };
+    const cb = /^([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)$/.exec(b);
+    if (cb) {
+      const t = mapDoc.checkboxes?.[cb[1]]?.[cb[2]];
+      if (typeof t === 'string') return { target: t, how: `checkboxes."${cb[1]}"."${cb[2]}"` };
+    }
+    return { how: `"${b}" is neither a \`map\` key, a "group[row].column" cell, a \`check_here\` key nor a "checkboxSet.option"` };
   };
 
   const seen = new Map();

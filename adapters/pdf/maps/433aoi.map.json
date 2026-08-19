@@ -4,8 +4,8 @@
  "catalog": "55896Q",
  "pdf": "adapters/pdf/forms/f433aoi.pdf",
  "fields_source": "adapters/pdf/maps/433aoi.fields.json",
- "slice": "PRINTED PAGES 1, 2, 3, 4 AND 5. Pages 6-8 are not authored. The map declares no COMPLETE slice, so coverage is reported and not required.",
- "map_version": 3,
+ "slice": "PRINTED PAGES 1 THROUGH 8 — COMPLETE. Every field on this form is bound, declared never-auto-filled, or declared deferred, and `deferred` is 0.",
+ "map_version": 4,
  "authored_from_page2": "adapters/pdf/align-block.mjs 433aoi page 2, whole page (117 printed text items, 68 widgets), cross-read against 433aoi.line-markers.txt (15 printed markers on page 2, every one attached to the widget this map binds it to) and 433aoi.checkboxes.txt (21 checkboxes on page 2, all probing on=/1). Every binding was taken from the PRINTED marker, the printed caption and the widget rectangle. THE LABEL FILE WAS NOT USED AS EVIDENCE ANYWHERE ON THIS PAGE - see _label_file_disagreements, which names the eight widgets it reports wrongly and the five where it contradicts the rectangle outright.",
  "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
  "_notes": [
@@ -184,7 +184,46 @@
   "51_delinquent_state_local_tax_payment": "topmostSubform[0].F433-A-OIC_Page6[0].Delinquent_State_Local_Taxes[0]",
   "51_total_tax_owed": "topmostSubform[0].F433-A-OIC_Page6[0].total_tax_owed[0]",
   "box_e_total_household_expenses": "topmostSubform[0].F433-A-OIC_Page6[0].Total_Household_Expenses[0]",
-  "box_f_remaining_monthly_income": "topmostSubform[0].F433-A-OIC_Page6[0].Remaing_Monthly_Income[0]"
+  "box_f_remaining_monthly_income": "topmostSubform[0].F433-A-OIC_Page6[0].Remaing_Monthly_Income[0]",
+  "s8_box_f_for_12_month_multiplier": "topmostSubform[0].F433-A-OIC_Page7[0].BoxF1[0].Total_Box_F_1[0]",
+  "box_g_future_remaining_income": "topmostSubform[0].F433-A-OIC_Page7[0].Box_G_Future_Remaining_Income[0]",
+  "s8_box_f_for_24_month_multiplier": "topmostSubform[0].F433-A-OIC_Page7[0].BoxF2[0].Total_Box_F_2[0]",
+  "box_h_future_remaining_income": "topmostSubform[0].F433-A-OIC_Page7[0].Box_H_Future_Remaining_Income[0]",
+  "s8_box_a_plus_box_b": "topmostSubform[0].F433-A-OIC_Page7[0].BoxAB[0].Box_A_Plus_Box_B[0]",
+  "s8_box_g_or_box_h": "topmostSubform[0].F433-A-OIC_Page7[0].BoxGH[0].Box_G_or_Box_H[0]",
+  "s8_offer_amount": "topmostSubform[0].F433-A-OIC_Page7[0].Offer_Amount[0]",
+  "s9_inmate_number": "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].inmateNumber[0]",
+  "s9_litigation_location_of_filing": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[0]",
+  "s9_litigation_represented_by": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[1]",
+  "s9_litigation_docket_case_number": "topmostSubform[0].F433-A-OIC_Page7[0].Date_Final_Payment[0]",
+  "s9_litigation_possible_completion_date": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[2]",
+  "s9_litigation_subject": "topmostSubform[0].F433-A-OIC_Page7[0].Name_Creditor[3]",
+  "s9_litigation_amount_of_dispute": "topmostSubform[0].F433-A-OIC_Page7[0].tab_order[1].Gross_Receipts[0]",
+  "s9_bankruptcy_date_filed": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t37_7[0]",
+  "s9_bankruptcy_date_dismissed": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t38_7[0]",
+  "s9_bankruptcy_date_discharged": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t38_7[1]",
+  "s9_bankruptcy_petition_number": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t39_7[0]",
+  "s9_bankruptcy_location_filed": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t40_7[0]",
+  "s9_lived_abroad_from": "topmostSubform[0].F433-A-OIC_Page7[0].p2_t50_8[0]",
+  "s9_lived_abroad_to": "topmostSubform[0].F433-A-OIC_Page7[0].p2_t51_8[0]",
+  "s9_irs_litigation_tax_types_and_periods": "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].Date_Lawsuit_Resolved[0]",
+  "s9_beneficiary_place_where_recorded": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t44_9[0]",
+  "s9_beneficiary_ein": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t45_9[0]",
+  "s9_beneficiary_name_of_trust_estate_or_policy": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t47_9[0]",
+  "s9_beneficiary_anticipated_amount": "topmostSubform[0].F433-A-OIC_Page7[0].#subform[8].p1-t48_9[0]",
+  "s9_beneficiary_when_received": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t49_9[0]",
+  "s9_trustee_name_of_trust": "topmostSubform[0].F433-A-OIC_Page7[0].p2_t00_9b[0]",
+  "s9_trustee_ein": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t02_9b[0]",
+  "s9_safe_deposit_location": "topmostSubform[0].F433-A-OIC_Page7[0].p1_t41_10[0]",
+  "s9_safe_deposit_contents": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t43_10[0]",
+  "s9_safe_deposit_value": "topmostSubform[0].F433-A-OIC_Page7[0].p1-t42_10[0]",
+  "s9_transfer_list_assets": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].p3_t1_11[0]",
+  "s9_transfer_value_at_time": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].#subform[0].p3_t2_11[0]",
+  "s9_transfer_date": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].p3_t3_11[0]",
+  "s9_transfer_to_whom_or_where": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].p3_t4_11[0]",
+  "s9_assets_outside_us_description": "topmostSubform[0].F433-A-OIC_Page8[0].do_you[0].ifyes[0]",
+  "s9_funds_held_in_trust_amount": "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].Funds_Held_Trust[0]",
+  "s9_funds_held_in_trust_where": "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].Where_Funds_Held_Trust[0]"
  },
  "_map_evidence": {
   "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
@@ -826,6 +865,54 @@
    "_option_order_is_from_x_not_from_the_leaf_numbering": "CB5_03 sits at x 284.4..293.4, left of the printed 'Yes' at x 298.8..312.6. CB5_04 sits at x 327.4..336.4, left of the printed 'No' at x 341.8..352.0.",
    "yes": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_03[0]",
    "no": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_04[0]"
+  },
+  "s9_currently_incarcerated": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].currentlyIncarceratedYes[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].currentlyIncarceratedNo[0]"
+  },
+  "s9_party_to_litigation": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].C5_09[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].C5_10[0]"
+  },
+  "s9_litigation_role": {
+   "plaintiff": "topmostSubform[0].F433-A-OIC_Page7[0].tab_order[0].CB3_05[0]",
+   "defendant": "topmostSubform[0].F433-A-OIC_Page7[0].tab_order[0].CB3_06[0]"
+  },
+  "s9_filed_bankruptcy_past_7_years": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].c1_7_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].c1_7_[1]"
+  },
+  "s9_lived_outside_us_6_months_past_10_years": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].c1_8_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].c1_8_[1]"
+  },
+  "s9_party_to_irs_litigation": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].CB7_07[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].CB7_08[0]"
+  },
+  "s9_beneficiary_of_trust_estate_or_policy": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].c1_9a_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].c1_9a_[1]"
+  },
+  "s9_trustee_fiduciary_or_contributor": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].c1_9b_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].c1_9b_[1]"
+  },
+  "s9_safe_deposit_box": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page7[0].c1_10_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page7[0].c1_10_[1]"
+  },
+  "s9_transferred_asset_below_value_past_10_years": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].c1_11_[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].c1_11_[1]"
+  },
+  "s9_assets_or_real_property_outside_us": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page8[0].do_you[0].CB7_yes[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page8[0].do_you[0].CB7_no[0]"
+  },
+  "s9_funds_held_in_trust_by_third_party": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].CB7_13[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].CB7_14[0]"
   }
  },
  "check_here": {
@@ -846,6 +933,48 @@
    "_printed": "Digital asset",
    "_printed_at": "box y 141.3, x 36.0..45.0; the words 'Digital asset' at y 142.5, x 50.4..94.0, immediately right of it with the same 5.4-point gap every option box on this form uses.",
    "_why_check_here_and_not_checkboxes": "Identical to 2c_digital_asset_held on page 2 and bound the same way. It is the ROW LABEL of the digital asset block and it carries a box; the row labels around it in Section 5 carry none. There is no counterpart cell for 'no' to check, so modelling it as a yes/no option set would mean inventing a target that does not exist."
+  },
+  "s10_attached_pay_stubs": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_01[0]"
+  },
+  "s10_attached_investment_statements": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_02[0]"
+  },
+  "s10_attached_digital_asset_records": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].heldDigitalAssets[0]"
+  },
+  "s10_attached_other_income_statements": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_03[0]"
+  },
+  "s10_attached_bank_statements": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_04[0]"
+  },
+  "s10_attached_form_433b": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_CompleteForm433b[0]"
+  },
+  "s10_attached_lender_statements": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_05[0]"
+  },
+  "s10_attached_receivables_list": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_06[0]"
+  },
+  "s10_attached_delinquent_tax_verification": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_07[0]"
+  },
+  "s10_attached_court_orders": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CopiesOfCourt[0]"
+  },
+  "s10_attached_trust_documents": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CopiesOfTrust[0]"
+  },
+  "s10_attached_special_circumstances": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_08[0]"
+  },
+  "s10_attached_form_2848": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_09[0]"
+  },
+  "s10_attached_form_656": {
+   "target": "topmostSubform[0].F433-A-OIC_Page8[0].CB8_08[1]"
   }
  },
  "exclusive": {
@@ -952,7 +1081,56 @@
   "s5_has_accounts_receivable": [
    "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_03[0]",
    "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_04[0]"
-  ]
+  ],
+  "s9_currently_incarcerated": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].currentlyIncarceratedYes[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].currentlyIncarcerated[0].currentlyIncarceratedNo[0]"
+  ],
+  "s9_party_to_litigation": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].C5_09[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].C5_10[0]"
+  ],
+  "s9_litigation_role": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].tab_order[0].CB3_05[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].tab_order[0].CB3_06[0]"
+  ],
+  "s9_filed_bankruptcy_past_7_years": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_7_[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_7_[1]"
+  ],
+  "s9_lived_outside_us_6_months_past_10_years": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_8_[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_8_[1]"
+  ],
+  "s9_party_to_irs_litigation": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].CB7_07[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].#subform[7].CB7_08[0]"
+  ],
+  "s9_beneficiary_of_trust_estate_or_policy": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_9a_[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_9a_[1]"
+  ],
+  "s9_trustee_fiduciary_or_contributor": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_9b_[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_9b_[1]"
+  ],
+  "s9_safe_deposit_box": [
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_10_[0]",
+   "topmostSubform[0].F433-A-OIC_Page7[0].c1_10_[1]"
+  ],
+  "s9_transferred_asset_below_value_past_10_years": [
+   "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].c1_11_[0]",
+   "topmostSubform[0].F433-A-OIC_Page8[0].past_10_years[0].c1_11_[1]"
+  ],
+  "s9_assets_or_real_property_outside_us": [
+   "topmostSubform[0].F433-A-OIC_Page8[0].do_you[0].CB7_yes[0]",
+   "topmostSubform[0].F433-A-OIC_Page8[0].do_you[0].CB7_no[0]"
+  ],
+  "s9_funds_held_in_trust_by_third_party": [
+   "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].CB7_13[0]",
+   "topmostSubform[0].F433-A-OIC_Page8[0].any_funds[0].CB7_14[0]"
+  ],
+  "_note_page_7": "TWELVE new exclusive sets. Eleven are printed Yes/No pairs and are exclusive on the face of the page. The twelfth, s9_litigation_role, is NOT printed as a Yes/No pair: the form draws a Plaintiff box and a Defendant box with no instruction to check only one, and a taxpayer who is plaintiff in one action and defendant in another has no way to say so on this form. Declared exclusive because the block is captioned 'Are you a party to or involved in litigation (if yes, answer the following)' in the singular and every companion cell - one location of filing, one docket number, one subject - describes ONE action. The looseness is recorded as arguable P7-1 rather than resolved."
  },
  "groups": {
   "household_members": {
@@ -1475,22 +1653,31 @@
    {
     "target": "topmostSubform[0].F433-A-OIC_Page6[0].Button1[0]",
     "reason": "NOT A DATA FIELD, AND THE THIRD AND LAST PDFButton ON THIS FORM. Its rectangle (y 360.0..370.8, x 36.0..460.8) lies over the printed URL 'IRS.gov/Businesses/Small-Businesses-&-Self-Employed/Collection-Financial-Standards.' at y 372.5, x 36.0..414.1 — a link to the published Collection Financial Standards, with no value to write. The button is WIDER than the URL text it covers (460.8 against 414.1) because the sentence it ends runs to the margin; the rectangle is what identifies it, not the text width. Enumerated so it is in a declared state rather than counted as an unreferenced cell."
+   },
+   {
+    "target": "topmostSubform[0].F433-A-OIC_Page8[0].Date_Signed_1[0]",
+    "reason": "THE DATE BESIDE THE TAXPAYER'S SIGNATURE, AND NOTHING AUTO-FILLS A DATE A PERSON SIGNS FOR. The cell (y 559.4..536.4, x 381.6..576) sits under the printed 'Date (mm/dd/yyyy)' at y 571.9, x 381.6..448.7, on the row captioned 'Signature of Taxpayer' at y 572.1, x 36.0..130.5, immediately below 'Under penalties of perjury, I declare that I have examined this offer, including accompanying documents, and to the best of my knowledge it is true, correct, and complete.' at y 597.3. A date written here states WHEN the taxpayer signed. Filling it from a system clock states that on a day the taxpayer may not have signed, on a declaration made under penalty of perjury, and no downstream check on this form could contradict it - every total still reconciles and the accounting still closes. It is written by the person who signs, in ink or by their own hand in a signing flow, and by nothing in this engine."
+   },
+   {
+    "target": "topmostSubform[0].F433-A-OIC_Page8[0].Date_Signed_2[0]",
+    "reason": "THE DATE BESIDE THE SPOUSE'S SIGNATURE. Same reason as Date_Signed_1[0], on the row captioned 'Signature of Spouse' at y 536.1, x 36.0..123.5, with its own 'Date (mm/dd/yyyy)' at y 534.3. Recorded separately rather than folded into one entry because they are two fields and a person who signs one does not thereby sign the other - a joint offer where only the taxpayer has signed must show one date and not two."
    }
-  ]
+  ],
+  "_page_8_signature_note": "AND THERE IS NO SIGNATURE FIELD TO DECLARE. Page 8 prints 'Signature of Taxpayer' at y 572.1 and 'Signature of Spouse' at y 536.1 over ruled lines, and page-geometry.mjs finds NO widget of any kind in the x 36.0..370.8 band at those rows - the page carries 29 widgets and the two nearest to the signature rows are Date_Signed_1[0] and Date_Signed_2[0] at x 381.6..576.0. So the signature itself is not a cell this engine could fill even if it were told to, and the only thing it could have filled beside a signature is the date. Both dates are declared above. Stated here rather than left implicit, because 'we do not auto-fill the signature' and 'there is no signature field' are different facts and only one of them is a decision."
  },
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 425,
-  "in_this_slice": 346,
-  "bound_writable": 343,
-  "excluded_never_autofill": 3,
+  "in_this_slice": 425,
+  "bound_writable": 420,
+  "excluded_never_autofill": 5,
   "deferred": 0,
-  "unaccounted": 79,
-  "_check": "343 + 3 + 0 = 346, which is every field on pages 1, 2, 3, 4, 5, 6 (page-geometry.mjs reports 74 for p1, 68 for p2, 59 for p3, 66 for p4, 40 for p5, 39 for p6). 425 - 346 = 79 still unaccounted, all of them on pages 7 and 8. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03], against the field list, this map's own targets and the PDF's widget geometry.",
+  "unaccounted": 0,
+  "_check": "420 + 5 + 0 = 425, which is every field on pages 1 through 8 (page-geometry.mjs reports 74 for p1, 68 for p2, 59 for p3, 66 for p4, 40 for p5, 39 for p6, 50 for p7, 29 for p8). 425 - 425 = 0 unaccounted: THE MAP IS CLOSED. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03], against the field list, this map's own targets and the PDF's widget geometry.",
   "_bound_breakdown_page_1": "Section 1: 16 scalars + 2 marital + 3 housing + 1 check-here + 28 dependent-grid targets (4 rows x [3 text + 4 checkbox]) = 50. Section 2: 10 scalars + 4 taxpayer pay-period + 4 spouse pay-period + 2 taxpayer ownership + 2 spouse ownership = 22. 50 + 22 = 72.",
   "_bound_breakdown_page_2": "17 scalars: (1c), (1), seven 2c_ digital asset cells, (2d), (2), (3b), (3), the three (4b) cells and (4). 1 check_here: the digital asset row box. 17 in 1ab_bank_accounts: slot 0 is 3 text + 6 type boxes = 9, slot 1 is 3 text + 5 type boxes = 8. 18 in 2ab_investment_accounts: 2 slots x [6 text + 3 type boxes]. 10 in 3a_retirement_accounts: 7 text + 3 type boxes. 5 in 4a_life_insurance_policies, all text. 17 + 1 + 17 + 18 + 10 + 5 = 68, which is exactly the widget count align-block.mjs reports for page 2.",
   "_page_2_has_no_never_autofill_and_no_deferred": "Every one of page 2's 68 fields is a data cell the taxpayer fills. There is no IRS-use column, no link button and no cell this slice could not resolve. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
-  "_unaccounted_by_page": "p7 50, p8 29 = 79.",
+  "_unaccounted_by_page": "0. Every page is authored; no field on this form is outside the slice.",
   "_bound_breakdown_page_3": "9 scalars: the listing-price cell, (5c), (5), (6b), (6d), (6e), (6) - that is 7 - plus the 2 for-sale Yes/No boxes. 22 in 5ab_real_property: 2 slots x 11 text columns, no checkboxes. 28 in 6ac_vehicles: 2 slots x [12 text + 2 lease/own boxes]. 9 + 22 + 28 = 59, which is exactly the widget count align-block.mjs reports for page 3 (27 in the y 380..720 band and 33 in the y 40..400 band, less the one - Total_Value_Property[0] at y 403.2 - that both bands contain).",
   "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
   "_bound_breakdown_page_4": "66 fields, all bound, none never-autofill and none deferred. Section 3 continued: 5 in the 7a group (all text) + 5 scalars for the (7b) block + 2 scalars for (7c) and (7) + 1 for Box A = 13. Section 4: 17 text scalars + 2 sole-proprietorship boxes + 2 other-business-interest boxes + 4 type-of-business boxes = 25. Section 5: 18 in 8ab_business_bank_accounts (2 slots x [3 text + 6 type boxes]) + 1 check_here digital-asset box + 7 digital-asset text scalars + 2 scalars for (8d) and (8) = 28. 13 + 25 + 28 = 66.",
@@ -1498,7 +1685,11 @@
   "_bound_breakdown_page_5": "26 map scalars: (9c), (9), (10), (11), Box B, the two Section 6 period dates, the eighteen P&L lines (12)-(29), and Box C. 10 in 9ab_business_assets: 2 slots x [description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity]. 4 exclusive checkboxes: the Notes Receivable and Accounts Receivable Yes/No pairs, CB5_01..CB5_04, which are the ONLY four checkboxes on the page — which is why (9a)/(9c) carry no recoverable lease predicate. 26 + 10 + 4 = 40, which is exactly the widget count for page 5.",
   "_page_5_has_no_never_autofill_and_no_deferred": "Every one of page 5’s 40 fields is a data cell the taxpayer fills. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
   "_bound_breakdown_page_6": "39 fields on the page and 38 bound. Section 7 is the whole page: 8 income component cells (4 primary + 4 spouse) + 2 per-person totals (30) and (31) + 7 income lines (32) through (38) + Box D + 13 expense lines (39) through (51) + Box E + Box F = 33 money cells, plus 2 text cells (the (32) source list and the (50) debt list) and 3 marker-less money sub-cells (the rent payment, the policy amount and the total tax owed) = 38. The 39th is Button1[0], the link over the Collection Financial Standards URL, which is never auto-filled. 33 + 2 + 3 = 38.",
-  "_page_6_has_no_deferred_and_one_never_autofill": "Page 6's 39 fields are 38 data cells the taxpayer fills and one PDFButton. It carries the THIRD AND LAST never-autofill entry on this map — Button1[0], the link over the Collection Financial Standards URL — which closes the note every partition block since slice 2 has carried: the third PDFButton on this form is no longer undeclared. Nothing on this page is deferred."
+  "_page_6_has_no_deferred_and_one_never_autofill": "Page 6's 39 fields are 38 data cells the taxpayer fills and one PDFButton. It carries the THIRD AND LAST never-autofill entry on this map — Button1[0], the link over the Collection Financial Standards URL — which closes the note every partition block since slice 2 has carried: the third PDFButton on this form is no longer undeclared. Nothing on this page is deferred.",
+  "_bound_breakdown_page_7": "50 fields, all bound, none never-autofill and none deferred. Section 8: 7 money cells - the two Box F copies, Box G, Box H, the Box-A-plus-Box-B cell, the Box-G-or-Box-H cell and the Offer Amount. Section 9: 9 exclusive Yes/No pairs (incarcerated, litigation, bankruptcy, lived abroad, IRS litigation, beneficiary, trustee, safe deposit - eight pairs - plus the Plaintiff/Defendant pair) = 18 checkboxes, and 25 text scalars (inmate number; five litigation cells plus the amount of dispute; five bankruptcy cells; two lived-abroad dates; the IRS-litigation tax types; five beneficiary cells; two trustee cells; three safe deposit cells). 7 + 18 + 25 = 50.",
+  "_bound_breakdown_page_8": "29 fields: 27 bound and 2 never-autofill. Section 9 continued: 3 exclusive Yes/No pairs = 6 checkboxes, and 7 text scalars (four transfer cells, the assets-outside-the-US description, and the two funds-held-in-trust cells). Section 10: 14 attachment check_here boxes. 6 + 7 + 14 = 27 bound. The other 2 are Date_Signed_1[0] and Date_Signed_2[0], the dates beside the two signature lines, which are never auto-filled.",
+  "_page_7_has_no_never_autofill_and_no_deferred": "Every one of page 7's 50 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve.",
+  "_page_8_has_no_deferred_and_two_never_autofill": "Page 8's 29 fields are 27 data cells the taxpayer fills and 2 never-autofill text cells, and nothing on it is deferred. The three never-autofill entries before this slice were all PDFButtons - the two page-1 Form 433-B links and the page-6 Collection Financial Standards link - fields with no value to write. The two added here are ordinary PDFTextFields that could be written and are not, because they date a declaration made under penalty of perjury. That is a different kind of entry and the partition says so rather than letting the count absorb it."
  },
  "authored_from_page3": "adapters/pdf/align-block.mjs 433aoi 3, run over two bands (y 380..720 and y 40..400), which lays the printed text and the widget rectangles in one coordinate space. Corroborated by adapters/pdf/maps/433aoi.line-markers.txt (10 printed markers on page 3, each paired with the widget to its right) and by 433aoi.labels.txt. THE THREE AGREE ON EVERY CELL, INCLUDING THE TWO WHOSE LEAF NAMES ARE SWAPPED.",
  "_map_evidence_page3": {
@@ -1698,14 +1889,44 @@
     "why_still_open": "IT IS THE SAME QUESTION AS C-08 AND THE TWO WERE DECIDED OPPOSITE WAYS. Page 4 has a heading between the blocks and page 5 does not, so (7a)/(7b) are scalars and (9a)/(9b) are a group. Whether a drawn heading is the right discriminator is what neither slice could settle, and slice 6 supplies a third case that needed no heading at all: page 6’s two income rows are scalars on party labels, differing total captions and non-consecutive markers. If those grounds generalise, the heading was never the load-bearing test."
    },
    {
-    "id": "C-16",
-    "raised_in_slice": 4,
-    "raised_as": "_arguable_page4 P4-3",
-    "subject": "the floor on (7) is declared from a sentence drawn BELOW the line it floors, and no fixture exercises it",
-    "where": "433aoi.totals.json, the (7) entry’s floor and floor_caption",
-    "the_question": "(7)’s floor of 0 comes from “Do not enter a negative number. If any line item is a negative, enter “0” on that line.” at y 557.1, which is drawn BELOW (7) rather than above it. Every other floor on this form comes from a sentence above its line or from the line’s own caption.",
-    "what_was_done": "Declared 0 with the caption quoted verbatim, so the reading is visible.",
-    "why_still_open": "NO FIXTURE EXERCISES IT. (7) sums three non-negative cells on every fixture written so far, so the floor has never fired and the gate has never printed “floored at 0.00” against it. A floor that has never fired is a declaration nothing has tested. Closing it means a fixture whose (7) operands go negative, which requires a printed cell on this form that can be negative - and page 4 has none."
+    "id": "C-17",
+    "raised_in_slice": 7,
+    "raised_as": "_arguable_page7 P7-1",
+    "subject": "the Plaintiff/Defendant pair is declared exclusive on the strength of the SIBLING captions being singular, and no printed sentence instructs it",
+    "where": "433aoi.map.json, exclusive.s9_litigation_role",
+    "the_question": "Does a form that draws two independent checkboxes with no \"check one\" permit both?",
+    "what_was_done": "Declared exclusive, following the singular companion captions. Read back off the filled form by the gate.",
+    "why_still_open": "The decision rests on an inference about sibling cells, not on a sentence the form contains, and 433-B(OIC) draws the same block."
+   },
+   {
+    "id": "C-18",
+    "raised_in_slice": 7,
+    "raised_as": "_arguable_page7 P7-2",
+    "subject": "the fourteen attachment checkboxes assert an enclosure this engine cannot see",
+    "where": "433aoi.map.json, the fourteen check_here keys s10_attached_*",
+    "the_question": "Should a tick asserting \"this document is attached\" be driven from an intake record, when nothing on the form or in this engine can confirm the document was enclosed?",
+    "what_was_done": "Bound as ordinary check_here flags, the same construct the digital-asset flags use.",
+    "why_still_open": "The gap is between this engine and whatever assembles the filing and cannot be closed inside the map. The provisioning pass decides."
+   },
+   {
+    "id": "C-19",
+    "raised_in_slice": 7,
+    "raised_as": "_arguable_page7 P7-3",
+    "subject": "an inverted numeric suffix is recorded as a name lie, and the registry definition was written for names that say a word",
+    "where": "433aoi.name-lies.json, L21",
+    "the_question": "Does a leaf index that implies a printed position it does not have count as a lie?",
+    "what_was_done": "Recorded as a lie, because the implication is what an author acts on.",
+    "why_still_open": "It widens what the active-lie total counts, and the widening should be decided once, for every form, rather than per slice."
+   },
+   {
+    "id": "C-20",
+    "raised_in_slice": 7,
+    "raised_as": "_arguable_page7 P7-4",
+    "subject": "a repeated index whose two members are not adjacent on the page, recorded as a name lie",
+    "where": "433aoi.name-lies.json, L22",
+    "the_question": "Same question as C-19, on adjacency rather than order.",
+    "what_was_done": "Recorded as a lie, bound by the printed sentence sharing each box's y band.",
+    "why_still_open": "Decided together with C-19."
    }
   ],
   "resolved": [
@@ -1744,11 +1965,24 @@
     "subject": "the leaf name Total_Value_Bank_Accounts[0] understates line (8), and it is NOT declared a name lie",
     "the_question": "Printed line (8) is “Add lines (8a) through (8d) =” and (8c) is the digital-asset total, so the cell holds more than bank accounts. But printed line (8d) reads “Total bank accounts from attachment” while (8) sums it with (8c) - the PAGE is loose here too, so the name echoes the page rather than contradicting it.",
     "resolved_by": "SLICE 5, AS A THIRD REGISTRY STATUS. 433aoi.name-lies.json entry P01, kind `page_imprecise`: not a lie, because the name does not disagree with the page; not a control, because it is not verified true either. NOT counted in the active-lie total, so the lie total keeps meaning “the name disagrees with the page”, and recorded so 433-B(OIC) does not re-litigate the same fork from nothing."
+   },
+   {
+    "id": "C-16",
+    "raised_in_slice": 4,
+    "raised_as": "_arguable_page4 P4-3",
+    "subject": "the floor on (7) is declared from a sentence drawn BELOW the line it floors, and no fixture exercises it",
+    "where": "433aoi.totals.json, the (7) entry’s floor and floor_caption",
+    "the_question": "(7)’s floor of 0 comes from “Do not enter a negative number. If any line item is a negative, enter “0” on that line.” at y 557.1, which is drawn BELOW (7) rather than above it. Every other floor on this form comes from a sentence above its line or from the line’s own caption.",
+    "what_was_done": "Declared 0 with the caption quoted verbatim, so the reading is visible.",
+    "why_still_open": "NO FIXTURE EXERCISES IT. (7) sums three non-negative cells on every fixture written so far, so the floor has never fired and the gate has never printed “floored at 0.00” against it. A floor that has never fired is a declaration nothing has tested. Closing it means a fixture whose (7) operands go negative, which requires a printed cell on this form that can be negative - and page 4 has none.",
+    "resolved_in_slice": 7,
+    "how_resolved": "A FIXTURE NOW DRIVES IT. samples/433aoi.negative.sample.json sets (7a) quick-sale equity to 3,460, (7b) to 1,020 and (7c) to 0, so (7) sums 4,480 against a printed constant of -11,980 and clamps: the gate prints \"floored at 0.00\" against (7) and the declaration-coverage table moves the (7) floor from unexercised to exercised. What was open was never the READING of the caption at y 557.1 - that reading is unchanged and still recorded - but the fact that nothing had ever proved the floor fires. Something has now.",
+    "what_is_still_true_and_is_not_carried": "The floor sentence is still drawn BELOW the line it floors, alone among this form's floors. That is recorded in the (7) entry of the totals declaration and is not itself an open question: the reading was made, stated and is now exercised."
    }
   ],
   "_count": {
-   "open": 13,
-   "resolved": 4
+   "open": 16,
+   "resolved": 5
   },
   "_every_arguable_item_now_has_an_id_here": "ARGUABLE ITEMS AND CARRIED ITEMS ARE THE SAME LIST, and until slice 6 they were two. P5-1 through P5-4 were recorded in _arguable_page5 and only one of the four (P5-2, as C-06) ever reached this ledger; page 4 was worse, with one of its four linked. So seven open or closed questions existed in per-page arrays that nothing reports and nothing counts, which is precisely the disappearing act this ledger exists to prevent, committed by the file that prevents it. C-08 through C-16 are those items, each carrying a `raised_as` naming the array entry it came from. THE LINKAGE IS NOW ASSERTED, not described: adapters/pdf/count-sweep.mjs [S-07b] requires every id in every _arguable_page{N} array to be named by some entry in this ledger, and fails the gate when one is not. Unresolved is fine. Living in only one of two places is not."
  },
@@ -1852,8 +2086,8 @@
   "_order": "ROUND FIRST, THEN FLOOR. Page 2 y 668.1 prints the two sentences in that order — 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' — and the engine applies them in that order.",
   "_wording_variants_are_recorded_not_tested": "Page 2 prints 'Round to the nearest dollar'. Every later instance prints 'Round to the nearest whole dollar'. A string-exact check for the later wording reads page 2 as UNINSTRUCTED and leaves the entire personal-asset block unrounded. So the mode names the variant — nearest_dollar vs nearest_whole_dollar — and both do the same arithmetic.",
   "_the_mixed_scope_finding": "Box A adds lines (1) through (7) and is drawn under 'Round to the nearest whole dollar' at y 567.5. THREE of its seven operands are not: (5) and (6) are on page 3, which prints no instruction anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence, which is drawn between (7) and Box A. Whether that is a drafting gap or a deliberate scope cannot be told from the page. It is recorded here rather than resolved, and the blocks below declare what is printed, not what was probably meant.",
-  "_slice": "PRINTED PAGES 1, 2, 3, 4, 5 AND 6 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 7-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
-  "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, AND THE ARITHMETIC IS DERIVED RATHER THAN TRANSCRIBED. adapters/pdf/money-probe.mjs reports, for every mapped text target, the nearest printed run to its left that ENDS in a \"$\" within 14pt, and flags the cell when it finds one. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3, 18 on page 4, 32 on page 5 and 33 on page 6 — 134 in all. This declaration holds 140 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4, 32 on page 5 and 36 on page 6. Pages 2, 4, 5 agree with the probe exactly. Pages 3 and 6 declare MORE than the probe flags — 3 and 3 — and every one of those cells is named in its block's _money_without_a_printed_dollar_sign, so nothing is declared money that cannot be pointed at on the page. 27 - 24 = 3 and 36 - 33 = 3, and 3 + 3 = 6 cells enumerated. Nothing was declared money on its field name. THE PROBE'S RULE CHANGED IN SLICE 6 AND TWO CELLS LEFT THIS LIST BECAUSE OF IT: it used to take the single nearest printed run and ask whether that run ended in \"$\", so a Box title drawn 2.1pt to the left of the row above beat the row's own \"$\" at 3.6pt and hid it. (29) and Box C on page 5 were declared here on the strength of that, and both carry a printed \"$\" the old scan never looked at. See adapters/pdf/money-probe.mjs.",
+  "_slice": "PRINTED PAGES 1 THROUGH 8 — the whole form. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Every other page declares at least one block, and every money cell on the form is in exactly one of them — the totals cross-check in validate-map.mjs is what proves it, and there is no longer an unmapped page for a money cell to hide on.",
+  "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, AND THE ARITHMETIC IS DERIVED RATHER THAN TRANSCRIBED. adapters/pdf/money-probe.mjs reports, for every mapped text target, the nearest printed run to its left that ENDS in a \"$\" within 14pt, and flags the cell when it finds one. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3, 18 on page 4, 32 on page 5, 33 on page 6, 10 on page 7 and 2 on page 8 — 146 in all. This declaration holds 152 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4, 32 on page 5, 36 on page 6, 10 on page 7 and 2 on page 8. Pages 2, 4, 5, 7 and 8 agree with the probe exactly. Pages 3 and 6 declare MORE than the probe flags — 3 and 3 — and every one of those cells is named in its block's _money_without_a_printed_dollar_sign, so nothing is declared money that cannot be pointed at on the page. 27 - 24 = 3 and 36 - 33 = 3, and 3 + 3 = 6 cells enumerated. Nothing was declared money on its field name. THE PROBE'S RULE CHANGED IN SLICE 6 AND TWO CELLS LEFT THIS LIST BECAUSE OF IT: it used to take the single nearest printed run and ask whether that run ended in \"$\", so a Box title drawn 2.1pt to the left of the row above beat the row's own \"$\" at 3.6pt and hid it. (29) and Box C on page 5 were declared here on the strength of that, and both carry a printed \"$\" the old scan never looked at. See adapters/pdf/money-probe.mjs.",
   "blocks": [
    {
     "id": "P2_PERSONAL_ASSETS",
@@ -2282,6 +2516,58 @@
      "box_f_remaining_monthly_income"
     ],
     "_its_two_operands_are_boxes": "Box F = Box D minus Box E, and both operands sit in blocks of their own (P6_BOX_D and P6_BOX_E) under the same mode. Three blocks, one instruction each, no boundary crossed. This is the first cell on the form whose operands are entirely other Boxes."
+   },
+   {
+    "id": "P7_SECTION_8",
+    "page": 7,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar.",
+    "printed_at": {
+     "page": 7,
+     "y": 682.5,
+     "x": [
+      444.9,
+      576
+     ]
+    },
+    "_band": "Section 8, the offer calculation. Opens at y 682.5 - below the Section 8 banner at y 755.9 and its two Notes ending at y 699.3, above the Box G instruction at y 669.3 - and closes at the Section 9 banner at y 435.5. Holds all seven money cells Section 8 draws: the two Box F copies, Box G, Box H, the Box A-plus-Box-B cell, the Box-G-or-Box-H cell and the Offer Amount.",
+    "_this_is_the_twelfth_and_last_printed_rounding_sentence_on_the_form": "page-geometry.mjs finds twelve runs matching /round to the nearest/i across the eight pages: p2 y 668.1; p4 y 567.5, y 236.1; p5 y 479.0, y 380.1, y 70.2; p6 y 664.9, y 452.5, y 362.5, y 105.8, y 69.8; and this one at p7 y 682.5. There is no thirteenth.",
+    "_a_second_money_instruction_over_one_of_these_cells": "'not leave blank. Use whole dollars only.' is drawn at y 518.9, x 403.2..554.4, beside the Offer Amount cell (y 507.6..489.6, x 403.2..572.4), continuing 'Your offer must be more than zero ($0). Do' at y 528.5. It instructs the SAME arithmetic as the block sentence above it, over a cell already inside this band. It is recorded here rather than given a block of its own, because a second block would make the rounding audit report a boundary CROSSING between the Offer Amount and its two operands where the page draws no boundary at all - the two readings produce identical figures and only one of them produces a spurious advisory.",
+    "_more_than_zero_is_not_a_floor": "'Your offer must be more than zero ($0). Do not leave blank.' is not a floor and is deliberately not declared as one. A floor CLAMPS a negative sum up to a value; this sentence FORBIDS the value zero outright. Declaring floor 0 here would make the engine write the one figure the page says must not appear. It is carried as a review-page advisory on the Offer Amount instead - see 433aoi.totals.json not_checkable - so a preparer is told rather than a cell being quietly rewritten.",
+    "keys": [
+     "s8_box_f_for_12_month_multiplier",
+     "box_g_future_remaining_income",
+     "s8_box_f_for_24_month_multiplier",
+     "box_h_future_remaining_income",
+     "s8_box_a_plus_box_b",
+     "s8_box_g_or_box_h",
+     "s8_offer_amount"
+    ]
+   },
+   {
+    "id": "P7_SECTION_9",
+    "page": 7,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Looked for and not found. page-geometry.mjs returns no run matching /round to the nearest/i or /whole dollar/i anywhere on page 7 below the Section 9 banner at y 435.5 - the page's only two money instructions are at y 682.5 and y 518.9, both inside Section 8, both above the banner. The three money cells here are drawn against a printed '$' (money-probe.mjs flags all three) and against no rounding instruction at all.",
+    "_band": "Section 9 on page 7. Opens at the banner y 435.5 and runs to the foot of the page. Holds the litigation amount of dispute, the anticipated amount to be received by a beneficiary, and the safe deposit box value.",
+    "keys": [
+     "s9_litigation_amount_of_dispute",
+     "s9_beneficiary_anticipated_amount",
+     "s9_safe_deposit_value"
+    ]
+   },
+   {
+    "id": "P8_SECTION_9_CONTINUED",
+    "page": 8,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Looked for and not found. page-geometry.mjs returns no run matching /round to the nearest/i or /whole dollar/i anywhere on page 8. The page carries 77 printed runs and none of them instructs rounding; the nearest thing to a money instruction is the printed '$10,000' inside the transfer question, which is a threshold and not an instruction.",
+    "_band": "Section 9 continued, page 8, from the banner at y 755.9 to the Section 10 banner at y 615.5. Two money cells: the value at time of transfer, and the amount held in trust by a third party.",
+    "keys": [
+     "s9_transfer_value_at_time",
+     "s9_funds_held_in_trust_amount"
+    ]
    }
   ],
   "_the_mixed_scope_finding_measured": "MEASURED, not estimated, and RE-DERIVED BY THE GATE each run rather than retyped here. Of the 40 declared totals on pages 1-5, exactly TWO cross a rounding boundary. Box A: total in nearest_whole_dollar while operands (5), (6) and (7) are in none_printed blocks. Box B: total in nearest_whole_dollar, operand (8) under the same rule, operand (11) in the none_printed P5_SECTION_5_CONTINUED — the first crosser with only ONE operand on the far side. Every other total shares its operands’ rule. Worst-case divergence for Box A was brute-forced over all 1,000,000 cent-combinations of its three fractional operands: |round(sum of operands) - sum of rounded operands| reaches 1 and never 2, first at cents (0.00, 0.01, 0.49). Box B has one fractional operand and is bounded by the same 1. So the two PREPARATION METHODS — round the sum, or round each line and add — can differ by at most one dollar on this form. THE ENGINE AND THE PAGE CANNOT: step 11 recomputes each Box from its PRINTED operand cells and rounds by that Box’s own block, so both reconcile exactly and neither needs a tolerance or a not_checkable declaration. Step 11 prints the crossing list every run, so this count cannot silently go stale the way the count in this very sentence did when page 5 landed.",
@@ -2391,12 +2677,13 @@
   }
  ],
  "authored_from_page6": {
-  "_printed_markers_first": "EVERY PRINTED MARKER ON THIS PAGE, WITH ITS y, BEFORE ANY BINDING. line-markers.mjs reports 25 on page 6: (30) y 628.5, (31) y 588.9, (32) y 562.5, (33) y 549.3, (34) y 534.9, (35) y 520.5, (36) y 502.5, (37) y 484.5, (38) y 470.1, Box D y 455.1, (39) y 342.9, (40) y 310.5, (41) y 297.3, (42) y 274.5, (43) y 252.9, (44) y 239.7, (45) y 216.9, (46) y 203.7, (47) y 189.3, (48) y 174.9, (49) y 160.5, (50) y 135.1, (51) y 120.9, Box E y 105.9, Box F y 69.9. Every one of the 23 numbered markers is drawn at x 447.1..468, immediately left of a money cell at x 471.6..576, and the marker's y falls INSIDE that cell's rectangle in all 23 cases — checked cell by cell, not asserted from the tool's own pairing. The three Box markers are drawn at x 446.4..469.5 with no widget on their row, exactly as Box A and Box B are; each is bound by the printed instruction below it and the '$' drawn at x 444.2..448.6 immediately left of its cell.",
+  "_printed_markers_first": "EVERY PRINTED MARKER ON THIS PAGE, WITH ITS y, BEFORE ANY BINDING. line-markers.mjs reports 25 on page 6: (30) y 628.5, (31) y 588.9, (32) y 562.5, (33) y 549.3, (34) y 534.9, (35) y 520.5, (36) y 502.5, (37) y 484.5, (38) y 470.1, Box D y 455.1, (39) y 342.9, (40) y 310.5, (41) y 297.3, (42) y 274.5, (43) y 252.9, (44) y 239.7, (45) y 216.9, (46) y 203.7, (47) y 189.3, (48) y 174.9, (49) y 160.5, (50) y 135.1, (51) y 120.9, Box E y 105.9, Box F y 69.9. Every one of the 22 numbered markers is drawn at x 447.1..468, immediately left of a money cell at x 471.6..576, and the marker's y falls INSIDE that cell's rectangle in all 22 cases — checked cell by cell, not asserted from the tool's own pairing. The three Box markers are drawn at x 446.4..469.5 with no widget on their row, exactly as Box A and Box B are; each is bound by the printed instruction below it and the '$' drawn at x 444.2..448.6 immediately left of its cell.",
   "_printed_section_heading": "'Section 7' at y 755.9, x 36.0..80.5, and 'Monthly Household Income and Expense Information' at y 755.9, x 144.0..396.8, drawn as two separate runs — the same shape every section banner on this form takes. Two sub-headings below it: 'Monthly Household Income' at y 687.5, x 36.0..166.6, and 'Monthly Household Expenses' at y 419.1, x 36.0..178.3.",
   "_what_this_slice_covers": "The whole of printed page 6, which is the whole of Section 7. 39 fields: 38 text cells and one PDFButton. No checkbox of any kind is drawn on this page — the only page of the eight besides page 7 for which that is true — so nothing here is declared `exclusive` or `check_here`, and that is a checked absence rather than an omission.",
   "_why_scalars_and_not_a_two_slot_group": "THE PRIMARY-TAXPAYER AND SPOUSE ROWS ARE FOUR-CELL ROWS OF IDENTICAL SHAPE AND THEY ARE BOUND AS SCALARS, and the reason is stronger than the one that decided (7a)/(7b) on page 4. The page-4 test was a printed heading drawn between two blocks. Here there are three independent reasons and no need to reach for that one: (i) each row carries a printed PARTY LABEL — 'Primary taxpayer' at y 653.7 and 'Spouse' at y 614.1 — so the rows are not interchangeable, and a group's slots are by definition filled in order from a repeatable list; (ii) the two totals carry DIFFERENT printed captions, 'Total primary taxpayer income' at y 633.8/625.8 and 'Total spouse income' at y 593.5/585.5, and a group column has one caption across its slots; (iii) the two totals carry DIFFERENT printed line markers, (30) and (31), and every repeatable table on this form gives its slots the SAME marker letter with a different suffix — (1a)/(1b), (5a)/(5b), (9a)/(9b) — never two consecutive whole numbers. Section 1 on page 1 binds the taxpayer and spouse as scalars for the same reason and this follows it.",
   "_the_three_sub_cells_that_carry_no_marker": "FOUR CELLS ON THIS PAGE SIT INSIDE A NUMBERED ROW AND CARRY NO MARKER OF THEIR OWN, and three of the four are MONEY. They are (40)'s 'monthly rent payment' at y 301.7..313.2 x 129.6..219.6, (48)'s 'Life insurance policy amount' at y 164.2..176.4 x 313.2..435.6, (51)'s 'Total tax owed' at y 110.2..122.4 x 374.1..435.6, and (50)'s 'List debt(s)/expense(s)' at y 124.6..136.8 x 291.6..435.6, which is text. NONE of the three money cells is an operand of Box E: Box E's printed instruction names lines (39) through (51) and none of these three carries a line number. A tripwire that summed 'every money cell drawn in the expense band' would fold all three in and Box E would fail on a correctly filled form. Each is declared under _not_checkable with its printed caption, following the page-4 precedent for s4_average_gross_monthly_payroll: a money cell in neither list is indistinguishable from one nobody looked at.",
-  "_the_caption_that_sits_to_the_right": "(40)'s rent cell is the first cell on this form whose identifying caption is drawn to its RIGHT. 'monthly rent payment' is at y 312.4, x 221.8..298.7 and the cell ends at x 219.6 — a 2.2pt gap on the right. The nearest printed run to its LEFT is 'telephone, and cell phone)' at 11.1pt, the tail of (40)'s own parenthetical. Bound on the rectangle: the cell is drawn inside the (40) row band (y 298.8..331.2 for the (40) money cell) and the only printed phrase it abuts is the rent one. The label file agrees; nothing disagreed here."
+  "_the_caption_that_sits_to_the_right": "(40)'s rent cell is the first cell on this form whose identifying caption is drawn to its RIGHT. 'monthly rent payment' is at y 312.4, x 221.8..298.7 and the cell ends at x 219.6 — a 2.2pt gap on the right. The nearest printed run to its LEFT is 'telephone, and cell phone)' at 11.1pt, the tail of (40)'s own parenthetical. Bound on the rectangle: the cell is drawn inside the (40) row band (y 298.8..331.2 for the (40) money cell) and the only printed phrase it abuts is the rent one. The label file agrees; nothing disagreed here.",
+  "_the_count_in_the_line_above_was_23_and_is_22": "SUPERSEDED, KEPT VERBATIM. This block read — twice in one sentence — \"Every one of the 23 numbered markers is drawn at x 447.1..468\" and \"the marker's y falls INSIDE that cell's rectangle in all 23 cases\". WHAT IT GOT RIGHT: the enumeration printed immediately above it, which is complete and correct, and the geometric claim itself, which holds — every numbered marker on page 6 is drawn at x 447.1..468 and its y falls strictly inside the rect of the money cell to its right. WHAT IT GOT WRONG: the count. Count the list beside it: (30) through (38) is nine, (39) through (51) is thirteen, twenty-two numbered markers; plus Box D, Box E and Box F, which pair with nothing. Twenty-five drawn, twenty-two numbered. There is no 23 on this page under any reading. THIS IS THE THIRD PLACE THE SAME WRONG FIGURE LIVED and the last one found: guard-sweep.mjs [N-05] carried it in a disposition, [F-09] was raised to derive it, and neither reached this string, because the figure register sweeps figures quoted by a DISPOSITION and this one sits in map prose that count-sweep [S-18] had declared underivable in bulk. It is now derived on every gate run by count-sweep [S-26], from the enumeration in this same string."
  },
  "_map_evidence_page6": {
   "30_total_primary_taxpayer_income": {
@@ -2555,7 +2842,7 @@
     "W5_the_marker_suffix_pattern": "A shared number with letter suffixes - (7a)/(7b), (9a)/(9b) - is how the IRS spells PARTS OF ONE LINE. Consecutive whole numbers - (30)/(31) - is how it spells separate lines. Real but weak, and it is in tier 3 because it is a NOTATIONAL convention the drafter applies to the printed page after deciding what the page asks, not a statement about repeatability. It is the witness that contradicts the standing (7a)/(7b) answer, and being outranked twice over is why that answer survives."
    },
    "tier_4_recorded_and_never_load_bearing": {
-    "W6_the_leaf_name_pair_pattern": "Account1/Account2, Property1/Property2, Vehicle1/Vehicle2, OtherAsset1/OtherAsset2. NOT EVIDENCE ABOUT THE PRINTED PAGE. Fourteen leaf names on this form are actively wrong, two pairs are swapped outright, and the whole of 433aoi.name-lies.json exists because these names describe what an XFA author intended and not what the page asks. Recorded when it is noticed, never counted.",
+    "W6_the_leaf_name_pair_pattern": "Account1/Account2, Property1/Property2, Vehicle1/Vehicle2, OtherAsset1/OtherAsset2. NOT EVIDENCE ABOUT THE PRINTED PAGE. Twenty-two leaf names on this form are actively wrong, two pairs are swapped outright, and the whole of 433aoi.name-lies.json exists because these names describe what an XFA author intended and not what the page asks. Recorded when it is noticed, never counted.",
     "W7_geometric_symmetry": "Identical cell layout, same x columns, same printed operators. This is what MAKES THE QUESTION ARISE and therefore cannot settle it - if the blocks were not structurally identical nobody would ask. Recorded, never counted."
    }
   },
@@ -2604,5 +2891,125 @@
   "_what_this_procedure_does_not_settle": "The three cases above all resolve, and all three agree with what is bound. That is not a claim that the procedure decides everything. A case where W1 and W2 conflict - one attachment line covering two blocks that name different parties - would be UNDECIDABLE under this rule and must be recorded as such, with both witnesses named, exactly as the page-3 rounding omission was recorded rather than guessed. No such case exists on 433-A(OIC).",
   "_what_433B_OIC_inherits": "This block, and the reading that a decision is carried by its HIGHEST-TIER speaking witness and not by whichever test the slice happened to reach for. The two standing answers are unchanged, so nothing bound on 433-A(OIC) moves; what 433-B(OIC) inherits is the order, not three precedents that contradict each other.",
   "_this_block_is_swept": "adapters/pdf/count-sweep.mjs [S-24] disposes of every claim site in it, and adapters/pdf/guard-sweep.mjs sweeps the engine that reads it."
- }
+ },
+ "authored_from_page7": {
+  "_printed_markers_first": "EVERY PRINTED MARKER ON THIS PAGE, WITH ITS y, BEFORE ANY BINDING - AND THERE ARE ALMOST NONE. line-markers.mjs reports 3 on page 7, all of them Box markers and none of them a numbered line: Box G y 647.7 x 370.8..510.3 (drawn as the one run 'Box G Future Remaining Income'), Box H y 593.7 x 370.8..509.8 ('Box H Future Remaining Income'), and Box G y 531.1 x 219.6..286.1, which is the PROSE 'Box G or Box H' beneath the offer row and numbers nothing. None of the three pairs to a widget: the filter finds 0 candidates for each, because each marker run extends to x 510.3 / 509.8 / 286.1 and the cell it belongs to starts at x 381.6 / 381.6 / 230.4 - to its LEFT. Page 7 draws no marker of the form '(nn)' at all.",
+  "_so_ruling_2_binds_almost_everything_here_on_a_SECOND_witness": "There are three markers on this page, none determinate in the sense that matters - none pairs to any widget - and therefore NO binding on page 7 rests on a marker pairing. Every one of the 50 fields is bound on a named second witness instead, and the witness is stated per binding in _map_evidence_page7: a printed caption directly above or beside the cell, containment of the cell's rectangle in a printed column x-range, or the section band the cell is drawn in. Where a caption alone was not decisive the column x-range is quoted as well.",
+  "_the_twelfth_and_last_printed_rounding_sentence": "'Round to the nearest whole dollar.' at y 682.5, x 444.9..576. It is the TWELFTH such sentence on this form and the last: page-geometry.mjs finds twelve runs matching /round to the nearest/i across the eight pages - p2 y 668.1, p4 y 567.5 and y 236.1, p5 y 479.0, y 380.1 and y 70.2, p6 y 664.9, y 452.5, y 362.5, y 105.8 and y 69.8, and this one. Declared as block P7_SECTION_8 in `rounding`. There is a THIRTEENTH money instruction on this page which is not a rounding sentence in that pattern - 'not leave blank. Use whole dollars only.' at y 518.9, x 403.2..554.4, drawn beside the Offer Amount cell - and it is recorded on the block rather than given a block of its own, because it instructs the same arithmetic over a cell already inside the y 682.5 band and a second block would report a rounding boundary where the page draws none.",
+  "_no_group_on_this_page": "Page 7 prints no repeatable table. Every one of its 50 fields is a scalar or a checkbox, so no `groups` entry is added and check-row-shape.mjs has nothing new to check here."
+ },
+ "authored_from_page8": {
+  "_printed_markers_first": "EVERY PRINTED MARKER ON THIS PAGE, WITH ITS y, BEFORE ANY BINDING. line-markers.mjs reports 0 on page 8. Not 'none that pair' - none drawn. The page prints no '(nn)' marker and no 'Box X' label anywhere, so there is no marker evidence of any kind here and every binding rests on a second witness by construction.",
+  "_so_ruling_2_binds_everything_here_on_a_SECOND_witness": "All 29 fields on page 8 are bound on a printed caption directly above or beside the cell, on containment of the cell's rectangle in a printed column x-range, or - for the fourteen attachment checkboxes - on the single printed attachment sentence whose first line shares the checkbox's y band. The witness is stated per binding in _map_evidence_page8.",
+  "_no_group_on_this_page": "Page 8 prints no repeatable table. The asset-transfer row at y 703.4 looks like one and is not: the form draws exactly one row of four cells with no second slot beneath it, so it is bound as four scalars. See _table_or_scalars, which is the procedure that decides this.",
+  "_no_rounding_sentence_on_this_page": "Page 8 prints no run matching /round to the nearest/i. Its two money cells are declared in block P8_SECTION_9_CONTINUED as `none_printed`, with the absence recorded, not defaulted."
+ },
+ "_arguable_page7": [
+  {
+   "id": "P7-1",
+   "carried": "C-17",
+   "subject": "the Plaintiff and Defendant boxes are declared exclusive and the page never says they are",
+   "the_cell": "checkboxes.s9_litigation_role -> tab_order[0].CB3_05[0] (Plaintiff, y 375.3..366.3, x 36.0..45.0) and tab_order[0].CB3_06[0] (Defendant, y 360.9..351.9, x 36.0..45.0)",
+   "reading_A": "ONE ACTION, ONE ROLE. The block is captioned \"Are you a party to or involved in litigation (if yes, answer the following)\" at y 390.9 in the SINGULAR, and every companion cell describes one action: one \"Location of filing\", one \"Represented by\", one \"Docket/Case number\", one \"Possible completion date\", one \"Subject of litigation\", one \"Amount of dispute\". A taxpayer is plaintiff or defendant in that action, not both.",
+   "reading_B": "TWO BOXES, NO INSTRUCTION. The form draws two independent checkboxes with no \"check one\" beside them and no radio grouping in the AcroForm - probe-checkboxes.mjs shows two separate PDFCheckBox widgets, not one field with two export values. A taxpayer who is plaintiff in one action and defendant in another has two true answers and one printed row, and on this reading checking both is the honest filing.",
+   "what_differs_on_a_filed_page": "A record claiming both roles. Under reading A the exclusive set is violated and the gate stops; under reading B two boxes are ticked and the single companion row describes only one of the two actions, which is a more misleading page than the one the stop prevents.",
+   "what_was_done": "Declared exclusive, following reading A, because the companion cells are singular and there is exactly one of each. The exclusive set is read back off the filled form by the gate, so a record claiming both stops the run with the conflict named rather than printing a row that describes one action under two roles.",
+   "why_still_arguable": "Nothing printed on the page instructs exclusivity. The decision rests on the singular captions of the SIBLING cells, which is an inference about the form's intent and not a sentence the form contains. It inherits directly to 433-B(OIC), whose litigation block is drawn the same way."
+  },
+  {
+   "id": "P7-2",
+   "carried": "C-18",
+   "subject": "the fourteen attachment checkboxes assert that a document is attached, and nothing in this engine can see the attachment",
+   "the_cell": "the fourteen check_here keys s10_attached_* -> CB8_01[0] .. CB8_08[1] on page 8, y 476.6 down to y 195.8, all at x 44.0..54.0",
+   "reading_A": "AN INTAKE FACT LIKE ANY OTHER. The intake system knows which documents were uploaded. Ticking the box that corresponds to an uploaded document is reporting a fact the record holds, exactly as every other cell on this form does.",
+   "reading_B": "AN ASSERTION ABOUT THE ENVELOPE, NOT ABOUT THE TAXPAYER. Every other cell on this form states something about the taxpayer's finances. These fourteen state something about the SUBMISSION - \"this document is included\" - and the submission is assembled after the form is filled. A tick written here is true only if the assembly step later does what the record predicted, and nothing on the form or in this engine closes that loop.",
+   "what_differs_on_a_filed_page": "A ticked box beside a document that was not sent. The printed sentence above the list reads \"Remember to include all applicable attachments listed below.\" at y 497.8, and the whole page is under the penalties-of-perjury declaration at y 597.3.",
+   "what_was_done": "Bound as ordinary check_here flags, truthy checks and falsy leaves blank, following reading A - the same construct the digital-asset flags on pages 2 and 4 use. A review-page advisory is NOT declared for them, because check_here targets are checkboxes and the advisory mechanism addresses text cells.",
+   "why_still_arguable": "Reading B is not answered by binding them. The gap is between this engine and whatever assembles the filing, and it cannot be closed from inside the map: no cell on this form records what was actually enclosed. Carried so the provisioning pass decides whether these fourteen are driven by the intake record or left for a person to tick."
+  },
+  {
+   "id": "P7-3",
+   "carried": "C-19",
+   "subject": "the leaf suffixes in the safe-deposit-box row run 41, 43, 42 against the printed columns, and every other family on this page runs in printed order",
+   "the_cell": "p1_t41_10[0] (Location, x 36.0..370.8), p1-t43_10[0] (Contents, x 378.0..486.0), p1-t42_10[0] (Value, x 500.4..576.0), all at y 69.8..54.0",
+   "reading_A": "AN ORDERING LIE, RECORDED AS ONE. Every other numbered family on page 7 runs left to right in printed order: p1_t37_7 at x 36.0 then p1_t38_7[0] at x 147.6 then p1_t38_7[1] at x 248.4 then p1_t39_7 at x 356.4 then p1_t40_7 at x 450.0; p1-t47_9 at x 36.0 then p1-t48_9 at x 327.6 then p1-t49_9 at x 442.8. This one row inverts its last two. An author binding by suffix order puts the safe deposit box CONTENTS in the VALUE cell.",
+   "reading_B": "MEANINGLESS SUFFIXES CARRY NO CLAIM. p1-t42 and p1-t43 assert nothing about position; they are generator artefacts, and a reader who infers order from them was already reading the wrong thing.",
+   "what_differs_on_a_filed_page": "Under a suffix-order binding, a free-text description of the box contents is written into a cell drawn against a printed \"$\" at x 493.2..497.6, and a dollar figure into the contents column. Both cells are text fields with no /MaxLen, so nothing downstream refuses it.",
+   "what_was_done": "Bound by the printed column x-ranges - \"Location\" header x 36.0..66.2 over the cell at x 36.0..370.8, \"Contents\" x 378.0..410.0 over x 378.0..486.0, \"Value\" x 493.2..513.7 over x 500.4..576.0 - and the inversion recorded in the name-lie registry as L21.",
+   "why_still_arguable": "Whether an inverted numeric suffix is a NAME LIE or merely an absence of information is a judgement, and the registry's own definition (\"the leaf name describes something other than the cell\") was written for names that say a word, not names that imply a position. Recorded as a lie because the implication is exactly what an author would act on, and flagged here because it widens what the registry counts."
+  },
+  {
+   "id": "P7-4",
+   "carried": "C-20",
+   "subject": "CB8_08 appears twice on page 8 with CB8_09 drawn between its two instances",
+   "the_cell": "CB8_08[0] at y 246.2..236.2 (Documentation to support any special circumstances) and CB8_08[1] at y 195.8..185.8 (Completed and signed current Form 656), with CB8_09[0] at y 231.8..221.8 (Attach a Form 2848) drawn BETWEEN them",
+   "reading_A": "AN INDEX FAMILY THAT IS NOT CONTIGUOUS ON THE PAGE. Every other repeated-index family on this form is drawn as consecutive rows. Here the two members of CB8_08 are 50.4 points apart with a differently-named box, of a HIGHER suffix, in between. An author who read the checklist by name would place the Form 656 tick at y 231.8 and the Form 2848 tick at y 195.8 - one row apart, both wrong.",
+   "reading_B": "THE INDEX IS A TAB-ORDER ARTEFACT AND NOTHING MORE, no different from tab_order[0] and tab_order[1] on page 7 carrying unrelated cells.",
+   "what_differs_on_a_filed_page": "Two attachment assertions swapped: \"I have attached Form 2848\" against a filing with no power of attorney, and \"I have attached Form 656\" against one with no offer form - on a page under the penalties-of-perjury declaration.",
+   "what_was_done": "Bound by the printed sentence sharing each checkbox's y band: CB8_08[0] y 246.2..236.2 against \"Documentation to support any special circumstances...\" at y 246.5; CB8_09[0] y 231.8..221.8 against \"Attach a Form 2848,\" at y 232.1; CB8_08[1] y 195.8..185.8 against \"Completed and signed current Form 656.\" at y 196.1. Recorded as L22.",
+   "why_still_arguable": "Same judgement as P7-3: this is an index implying an adjacency the page does not have, rather than a name saying a wrong word. Carried alongside P7-3 so the two are decided together."
+  }
+ ],
+ "_map_evidence_page7": {
+  "_rule_2": "EVERY ENTRY BELOW STATES ITS MARKER PAIRING FIRST AND THEN ITS SECOND WITNESS. On this page the first answer is the same for all of them and is stated once here rather than fifty times: NO BINDING ON THIS PAGE RESTS ON A MARKER PAIRING, DETERMINATE OR OTHERWISE. line-markers.mjs draws three markers on page 7 and none on page 8, all three are 'Box' labels in Section 8, and none of the three pairs to any widget at all - the geometric filter leaves 0 candidates for each, because each marker run extends past the left edge of the cell it names. So the question 'was the pairing determinate' has no pairing to be determinate about, and every binding names a second witness of one of four kinds: PRINTED CAPTION (a run drawn directly above or immediately left of the cell), COLUMN X-RANGE (the printed column header's x-range opening at the cell's own left edge), SECTION BAND (the printed question whose Yes/No pair or companion cells the cell belongs to), or PRINTED SYMBOL (a '$' or an arithmetic operator drawn between two cells). Where a caption alone was not decisive the x-range is quoted with it.",
+  "_the_three_markers_and_why_none_of_them_binds_anything": "Box G at y 647.7, x 370.8..510.3 is the single drawn run 'Box G Future Remaining Income'; the cell it names starts at x 381.6, INSIDE the marker's own x-range, so the 'widget to the right of the marker' filter finds nothing. Box H at y 593.7, x 370.8..509.8 is the same shape. The third, at y 531.1, x 219.6..286.1, is the prose 'Box G or Box H' and names no cell of its own. Each of the two real Box labels is nevertheless UNAMBIGUOUS as a caption: it is drawn on the row above its cell, at the cell's own x, and there is exactly one money cell on that row to its right. That is a caption witness, not a marker pairing, and it is recorded as one.",
+  "s8_box_f_for_12_month_multiplier": "PRINTED CAPTION + PRINTED SYMBOL. Caption 'Enter the total from Box F' at y 647.7, x 39.6..150.1, drawn on the row above the cell (y 633.6..621.4, x 50.4..241.2). Printed '$' at y 633.2, x 41.0..45.4, 5.0pt left of the cell - money-probe.mjs flags it. Distinguished from the SECOND copy of the same caption at y 593.7 by 54.0 points of y and by the multiplier printed beside each: 'X 12 =' at y 631.7 against 'X 24 =' at y 577.7.",
+  "box_g_future_remaining_income": "PRINTED CAPTION + PRINTED SYMBOL. The Box G label at y 647.7, x 370.8..510.3 is drawn on the row above the cell (y 633.6..621.4, x 381.6..572.4) and starts 10.8 points left of it; '$' at y 633.2, x 372.1..376.6. The operator 'X 12 =' at y 631.7, x 294.2..326.1 sits between this cell and the Box F copy to its left, which is what makes the row an equation rather than two independent cells.",
+  "s8_box_f_for_24_month_multiplier": "PRINTED CAPTION + PRINTED SYMBOL. Caption 'Enter the total from Box F' at y 593.7, x 39.6..150.1 over the cell at y 579.6..567.4, x 50.4..241.2; '$' at y 579.2, x 41.0..45.4; operator 'X 24 =' at y 577.7, x 294.2..326.1.",
+  "box_h_future_remaining_income": "PRINTED CAPTION + PRINTED SYMBOL. Box H label at y 593.7, x 370.8..509.8 over the cell at y 579.6..567.4, x 381.6..572.4; '$' at y 579.2, x 372.1..376.6.",
+  "s8_box_a_plus_box_b": "PRINTED CAPTION, TWO LINES. 'Enter the amount from Box A' at y 541.9, x 39.6..164.6 and 'plus Box B' at y 531.1, x 39.6..86.6 with '(if applicable)' at x 89.1..147.2, both drawn above the cell at y 507.6..491.8, x 50.4..176.4. '$' at y 505.4, x 41.0..45.4. COLUMN X-RANGE separates it from the cell to its right: the second caption pair opens at x 219.6 and this one at x 39.6.",
+  "s8_box_g_or_box_h": "PRINTED CAPTION, TWO LINES. 'Enter the amount from either' at y 541.9, x 219.6..343.1 and 'Box G or Box H' at y 531.1, x 219.6..286.1, over the cell at y 507.6..491.8, x 230.4..356.4. '$' at y 505.4, x 221.0..225.4. The printed '+' at y 506.7, x 195.1..200.9 is drawn between this cell and s8_box_a_plus_box_b and is the witness that the two are operands of one sum.",
+  "s8_offer_amount": "PRINTED CAPTION + PRINTED SYMBOL. 'Offer Amount' at y 542.3, x 403.2..474.1 over the cell at y 507.6..489.6, x 403.2..572.4 - the caption's x-range opens at exactly the cell's left edge. '$' at y 505.0, x 399.6..404.6. The printed '=' at y 506.7, x 375.1..380.9 sits immediately left of the cell and is what makes it the RESULT of the row rather than a third operand.",
+  "s9_currently_incarcerated": "SECTION BAND + PRINTED CAPTION. The question 'Are you currently incarcerated' at y 419.7, x 36.0..142.7. The Yes box (y 418.5..409.5, x 183.6..192.6) is 5.4 points left of the printed 'Yes' at x 198.0..211.8 and the No box (x 226.8..235.8) is 5.4 points left of 'No' at x 241.2..251.4 - the same box-then-word spacing every option pair on this form uses, so the option words are read left to right and the boxes with them. Both boxes are children of the subform currentlyIncarcerated[0], which is the only container on this page whose name matches its printed question.",
+  "s9_inmate_number": "PRINTED CAPTION. 'If yes, provide your inmate number' at y 419.7, x 270.0..393.2, ending 9.8 points left of the cell at y 421.2..406.8, x 403.2..572.4, on the same row as the question it qualifies.",
+  "s9_party_to_litigation": "SECTION BAND + PRINTED CAPTION. 'Are you a party to or involved in litigation' at y 390.9, x 36.0..180.1 with '(if yes, answer the following)' at y 389.9, x 182.3..270.6. Boxes C5_09[0] at x 489.6..498.6 and C5_10[0] at x 532.8..541.8, y 389.7..380.7, against printed 'Yes' at x 504.0..517.8 and 'No' at x 547.2..557.4 - the right-margin Yes/No column this form uses for every Section 9 question after the first.",
+  "s9_litigation_role": "PRINTED CAPTION. 'Plaintiff' at y 376.5, x 50.4..76.6 against the box at y 375.3..366.3, x 36.0..45.0; 'Defendant' at y 362.1, x 50.4..87.3 against the box at y 360.9..351.9, x 36.0..45.0. Each word is 5.4 points right of its box, the standard spacing. The two rows are 14.4 points apart, so no other reading of which word belongs to which box is available. See arguable P7-1 for whether the pair is exclusive.",
+  "s9_litigation_location_of_filing": "PRINTED CAPTION + COLUMN X-RANGE. 'Location of filing' at y 377.5, x 129.6..187.4 directly above the cell at y 365.0..349.2, x 129.6..266.4 - the caption's x opens at exactly the cell's left edge. THE LEAF NAME IS Name_Creditor[0] AND IS WRONG (registry L15); the name was not consulted.",
+  "s9_litigation_represented_by": "PRINTED CAPTION + COLUMN X-RANGE. 'Represented by' at y 377.5, x 273.6..330.1 above the cell at y 365.0..349.2, x 273.6..478.8; caption x opens at the cell's left edge. Leaf name Name_Creditor[1], wrong (L16).",
+  "s9_litigation_docket_case_number": "PRINTED CAPTION + COLUMN X-RANGE. 'Docket/Case number' at y 377.5, x 486.0..561.1 above the cell at y 365.0..349.2, x 486.0..576.0; caption x opens at the cell's left edge. Leaf name Date_Final_Payment[0], wrong (L19) - and wrong in a way that would look right, because the block DOES contain a date cell one row below.",
+  "s9_litigation_possible_completion_date": "PRINTED CAPTION + COLUMN X-RANGE. 'Possible completion date' at y 348.7, x 129.6..218.5 with the format hint '(mmddyyyy)' at y 347.7, x 220.8..258.9, above the cell at y 336.2..320.4, x 129.6..266.4; caption x opens at the cell's left edge. Leaf name Name_Creditor[2], wrong (L17).",
+  "s9_litigation_subject": "PRINTED CAPTION + COLUMN X-RANGE. 'Subject of litigation' at y 348.7, x 273.6..340.7 above the cell at y 336.2..320.4, x 273.6..576.0; caption x opens at the cell's left edge. Leaf name Name_Creditor[3], wrong (L18).",
+  "s9_litigation_amount_of_dispute": "PRINTED CAPTION + PRINTED SYMBOL. 'Amount of dispute' at y 347.7, x 36.0..100.5 above the cell at y 334.8..320.4, x 43.2..122.4, with '$' at y 333.3, x 36.0..40.4 - money-probe.mjs flags it at 2.8pt. Leaf name Gross_Receipts[0], wrong (L14, raised in slice 5 against this page while it was unauthored, and closed here by binding it from the caption).",
+  "s9_filed_bankruptcy_past_7_years": "SECTION BAND. 'Have you filed bankruptcy in the past 7 years' at y 318.9, x 36.0..195.6 with '(if yes, answer the following)' at y 317.9. Boxes c1_7_[0] and c1_7_[1] at y 317.7..308.7, x 489.6 and x 532.8, in the right-margin Yes/No column.",
+  "s9_bankruptcy_date_filed": "COLUMN X-RANGE. The row prints five headers at y 304.1: 'Date filed (mmddyyyy)' x 36.0..115.6, 'Date dismissed (mmddyyyy)' x 147.6..236.0, 'Date discharged (mmddyyyy)' x 248.4..339.9, 'Petition no.' x 356.4..396.4, 'Location filed' x 450.0..497.1. The five cells at y 293.0..277.2 open at x 36.0, 147.6, 248.4, 356.4 and 450.0 - each cell's left edge is its header's left edge to the decimal. This cell is the first: x 36.0..140.4.",
+  "s9_bankruptcy_date_dismissed": "COLUMN X-RANGE. Second column, header at x 147.6, cell x 147.6..241.2. See s9_bankruptcy_date_filed for the full row.",
+  "s9_bankruptcy_date_discharged": "COLUMN X-RANGE. Third column, header at x 248.4, cell x 248.4..349.2. NOTE the leaf indices: p1_t38_7[0] is the second column and p1_t38_7[1] the third, so this family runs in printed order - checked, because the safe-deposit family 200 points below does not (L21).",
+  "s9_bankruptcy_petition_number": "COLUMN X-RANGE. Fourth column, header 'Petition no.' at x 356.4, cell x 356.4..442.8.",
+  "s9_bankruptcy_location_filed": "COLUMN X-RANGE. Fifth column, header 'Location filed' at x 450.0, cell x 450.0..576.0.",
+  "s9_lived_outside_us_6_months_past_10_years": "SECTION BAND. 'In the past 10 years, have you lived outside of the U.S. for 6 months or longer' at y 275.7, x 36.0..310.4. Boxes c1_8_[0]/[1] at y 274.5..265.5 in the right-margin Yes/No column.",
+  "s9_lived_abroad_from": "PRINTED CAPTION. 'Dates lived abroad: From' at y 261.3, x 36.0..125.8 with '(mmddyyyy)' at x 128.0..171.6, ending 18.9 points left of the cell at y 262.8..248.4, x 190.5..313.2. The 'To' caption for the other cell opens at x 320.4, 130 points further right, so the two cannot be confused.",
+  "s9_lived_abroad_to": "PRINTED CAPTION. 'To' at y 261.3, x 320.4..329.7 with '(mmddyyyy)' at x 332.0..375.5, ending 16.9 points left of the cell at y 262.8..248.4, x 392.4..576.0.",
+  "s9_party_to_irs_litigation": "SECTION BAND. 'Are you or have you ever been party to any litigation involving the IRS/United States' at y 246.9, x 36.0..333.5 with '(including any tax litigation)' at y 245.9. Boxes CB7_07[0]/CB7_08[0] at y 245.7..236.7 in the right-margin Yes/No column; note the printed 'Yes' here is at x 507.6 rather than x 504.0, which is the only Yes on this page drawn at that x and is why the boxes, not the words, were measured.",
+  "s9_irs_litigation_tax_types_and_periods": "PRINTED CAPTION. 'If yes and the litigation included tax debt, provide the types of tax and periods involved' at y 233.5, x 36.0..341.1, directly above the cell at y 219.6..205.2, x 36.0..576.0; caption x opens at the cell's left edge. Leaf name Date_Lawsuit_Resolved[0], wrong (L20) - and the cell is 540 points wide, which is this form's free-text shape and never its date shape.",
+  "s9_beneficiary_of_trust_estate_or_policy": "SECTION BAND. 'Are you the beneficiary of a trust, estate, or life insurance policy, including those located in foreign countries or jurisdictions' at y 202.6, x 36.0..470.0 with '(if yes, answer the following)' at y 192.8. Boxes c1_9a_[0]/[1] at y 202.5..193.5.",
+  "s9_beneficiary_place_where_recorded": "PRINTED CAPTION. 'Place where recorded' at y 178.5, x 36.0..113.8, ending 15.8 points left of the cell at y 180.0..165.6, x 129.6..435.6, on the same row.",
+  "s9_beneficiary_ein": "PRINTED CAPTION. 'EIN' at y 178.5, x 442.8..456.1, ending 8.3 points left of the cell at y 180.0..165.6, x 464.4..576.0. Distinguished from the OTHER 'EIN' on this page - y 120.9, same x - by 57.6 points of y and by the block each sits in: this one is the beneficiary block under y 202.6, that one the trustee block under y 135.3.",
+  "s9_beneficiary_name_of_trust_estate_or_policy": "PRINTED CAPTION + COLUMN X-RANGE. 'Name of the trust, estate, or policy' at y 163.7, x 36.0..157.8 above the cell at y 152.6..136.8, x 36.0..313.2; caption x opens at the cell's left edge.",
+  "s9_beneficiary_anticipated_amount": "PRINTED CAPTION + PRINTED SYMBOL. 'Anticipated amount to be received' at y 164.1, x 320.4..429.3 above the cell at y 151.2..136.8, x 327.6..435.6, with '$' at y 149.7, x 320.4..324.8 - money-probe.mjs flags it at 2.8pt. The cell is a sibling of #subform[8] and not of the two cells beside it, which is why the nesting note records this row.",
+  "s9_beneficiary_when_received": "PRINTED CAPTION + COLUMN X-RANGE. 'When will the amount be received' at y 163.7, x 442.8..562.8 above the cell at y 152.6..136.8, x 442.8..576.0; caption x opens at the cell's left edge.",
+  "s9_trustee_fiduciary_or_contributor": "SECTION BAND. 'Are you a trustee, fiduciary, or contributor of a trust' at y 135.3, x 36.0..216.1. Boxes c1_9b_[0]/[1] at y 134.1..125.1.",
+  "s9_trustee_name_of_trust": "PRINTED CAPTION. 'Name of the trust' at y 120.9, x 36.0..97.4, ending 13.6 points left of the cell at y 122.4..108.0, x 111.0..435.6. Distinguished from 'Name of the trust, estate, or policy' at y 163.7 by the trailing words and by 42.8 points of y.",
+  "s9_trustee_ein": "PRINTED CAPTION. 'EIN' at y 120.9, x 442.8..456.1, ending 8.3 points left of the cell at y 122.4..108.0, x 464.4..576.0.",
+  "s9_safe_deposit_box": "SECTION BAND. 'Do you have a safe deposit box' at y 105.4, x 36.0..148.1, continuing '(business or personal)' at y 104.4 and 'including those located in foreign countries or jurisdictions' at y 105.4, x 221.8..426.3. Boxes c1_10_[0]/[1] at y 105.3..96.3.",
+  "s9_safe_deposit_location": "COLUMN X-RANGE. Three headers: 'Location' y 80.9 x 36.0..66.2 with '(name, address and box number(s))' y 79.9 x 68.5..180.1; 'Contents' y 80.9 x 378.0..410.0; 'Value' y 81.3 x 493.2..513.7. This cell is y 69.8..54.0, x 36.0..370.8 - its left edge is the Location header's left edge.",
+  "s9_safe_deposit_contents": "COLUMN X-RANGE. Cell y 69.8..54.0, x 378.0..486.0; the 'Contents' header at x 378.0..410.0 opens at exactly its left edge. LEAF SUFFIX ORDER IS INVERTED HERE (L21): this is p1-t43_10[0] and the cell to its RIGHT is p1-t42_10[0]. Bound by the header, not by the suffix.",
+  "s9_safe_deposit_value": "COLUMN X-RANGE + PRINTED SYMBOL. Cell y 68.4..54.0, x 500.4..576.0, under the 'Value' header at x 493.2..513.7, with '$' at y 66.9, x 493.2..497.6 - money-probe.mjs flags it at 2.8pt and flags neither of its row-mates. Leaf p1-t42_10[0], out of suffix order (L21)."
+ },
+ "_nesting_note_page7": "THREE NESTING DEPTHS ON ONE PAGE, AND THE PATH IS QUOTED IN FULL EVERYWHERE. Page 7's fifty fields sit at three depths under F433-A-OIC_Page7[0]: most are direct children (Name_Creditor[0], p1_t37_7[0], Offer_Amount[0]); some sit under a named subform that echoes its printed question (BoxF1[0].Total_Box_F_1[0], BoxAB[0].Box_A_Plus_Box_B[0], currentlyIncarcerated[0].inmateNumber[0]); and four sit under an ANONYMOUS subform - #subform[7] holds the two IRS-litigation boxes and the tax-types cell, #subform[8] holds ONLY the anticipated-amount cell while its two row-mates at y 152.6 are direct children of the page. That last one is the shape the registry has hit twice before: a cell between two others, nested one level deeper than both, so a path prefix taken from the cell on its left resolves to nothing and a path prefix taken from the page resolves to a different field. There is also tab_order[0], holding the Plaintiff and Defendant boxes, and tab_order[1], holding the amount-of-dispute cell - two containers with the same base name, 40 points apart, carrying unrelated cells.",
+ "_map_evidence_page8": {
+  "_rule_2": "SAME RULE, AND ON THIS PAGE IT IS ABSOLUTE. line-markers.mjs reports ZERO markers on page 8 - not zero that pair, zero drawn. Every one of the 29 fields is bound on a printed caption, a column x-range, a section band, or (for the fourteen attachment boxes) the printed attachment sentence whose first line shares the box's y band. No marker evidence exists on this page and none is claimed.",
+  "s9_transferred_asset_below_value_past_10_years": "SECTION BAND. 'In the past 10 years, have you transferred any asset with a fair market value of more than $10,000 including real property, for less than their full value' at y 739.5 wrapping to y 729.9, with '(if yes, answer the following)' at y 729.9, x 121.8..222.7. Boxes c1_11_[0]/[1] at y 738.9..729.9, x 489.6 and x 532.8, against printed 'Yes' x 504.0 and 'No' x 547.2.",
+  "s9_transfer_list_assets": "COLUMN X-RANGE. Four headers on the row: 'List asset(s)' y 714.5 x 36.0..79.1; 'Value at time of transfer' y 714.9 x 219.6..304.5; 'Date transferred (mmddyyyy)' y 714.5 x 320.4..413.6; 'To whom or where was it transferred' y 714.5 x 428.4..558.2. This cell is y 703.4..687.6, x 36.0..212.4 - left edge on the first header's left edge.",
+  "s9_transfer_value_at_time": "COLUMN X-RANGE + PRINTED SYMBOL. Cell y 702.0..687.6, x 226.8..313.2, under the 'Value at time of transfer' header at x 219.6..304.5, with '$' at y 700.5, x 219.6..224.0 - money-probe.mjs flags it at 2.8pt and flags no other cell on the row. It is the one cell of the four nested a level deeper, under #subform[0].",
+  "s9_transfer_date": "COLUMN X-RANGE. Cell y 703.4..687.6, x 320.4..421.2; the 'Date transferred' header at x 320.4 opens at exactly its left edge.",
+  "s9_transfer_to_whom_or_where": "COLUMN X-RANGE. Cell y 703.4..687.6, x 428.4..576.0; the 'To whom or where was it transferred' header at x 428.4 opens at exactly its left edge.",
+  "s9_assets_or_real_property_outside_us": "SECTION BAND. 'Do you have any assets or own any real property outside the U.S.' at y 686.1, x 36.0..269.0. Boxes CB7_yes[0]/CB7_no[0] at y 684.9..675.9, in the right-margin column; the printed 'Yes' here is at x 507.6, the second of the two Yes positions this form uses.",
+  "s9_assets_outside_us_description": "PRINTED CAPTION. 'If yes, provide description, location, and value' at y 672.7, x 36.0..197.9, directly above the cell at y 660.2..644.4, x 36.0..576.0; caption x opens at the cell's left edge. One 540-point cell for three facts, which is what the caption asks for.",
+  "s9_funds_held_in_trust_by_third_party": "SECTION BAND. 'Do you have any funds being held in trust by a third party' at y 642.9, x 36.0..238.3. Boxes CB7_13[0]/CB7_14[0] at y 641.7..632.7.",
+  "s9_funds_held_in_trust_amount": "PRINTED CAPTION + PRINTED SYMBOL. 'If yes, how much $' at y 628.5, x 36.0..102.7, ending 1.7 points left of the cell at y 630.0..615.6, x 104.4..165.6 - the '$' is the last character of the caption run itself, which is why money-probe.mjs reports the whole phrase rather than a bare '$'.",
+  "s9_funds_held_in_trust_where": "PRINTED CAPTION. 'Where' at y 628.5, x 169.2..192.8, ending 8.8 points left of the cell at y 630.0..615.6, x 201.6..576.0.",
+  "_the_signature_block": "NOTHING IS BOUND HERE AND THE TWO CELLS THAT EXIST ARE DECLARED NEVER AUTO-FILLED. 'Signature of Taxpayer' at y 572.1, x 36.0..130.5 and 'Signature of Spouse' at y 536.1, x 36.0..123.5 are printed over ruled lines with NO widget in x 36.0..370.8 at either row - checked against page-geometry.mjs's full 29-widget list for the page, whose two nearest entries to those rows are Date_Signed_1[0] and Date_Signed_2[0] at x 381.6..576.0. Those two are the dates under 'Date (mm/dd/yyyy)' at y 571.9 and y 534.3, and both are in _never_autofill with the reason on each.",
+  "_the_fourteen_attachment_boxes": "ONE PRINTED SENTENCE PER BOX, MATCHED BY y BAND. All fourteen are at x 44.0..54.0 and differ only in y, so y is the only discriminator the page offers and each box is bound to the sentence whose FIRST line falls in its band: CB8_01 y 476.6..466.6 <- 'Copies of the most recent pay stub, earnings statement, etc., from each employer.' y 476.9; CB8_02 y 462.2..452.2 <- 'Copies of the most recent statement for each investment and retirement account.' y 462.5; heldDigitalAssets y 447.8..437.8 <- 'Copies of all documents and records showing currently held digital assets.' y 448.1; CB8_03 y 433.4..423.4 <- 'Copies of the most recent statement, etc., from all other sources of income...' y 433.7, a six-line sentence ending at y 395.3; CB8_04 y 379.4..369.4 <- 'Copies of individual complete bank statements for the three most recent months...' y 379.7; CB8_CompleteForm433b y 354.2..344.2 <- 'Completed Form 433-B (Collection Information Statement for Businesses)...' y 354.5; CB8_05 y 329.0..319.0 <- 'Copies of the most recent statement from lender(s) on loans...' y 329.3; CB8_06 y 303.8..293.8 <- 'List of Accounts Receivable or Notes Receivable, if applicable.' y 304.1; CB8_07 y 289.4..279.4 <- 'Verification of delinquent State/Local Tax Liability...' y 289.7; CopiesOfCourt y 275.0..265.0 <- 'Copies of court orders for child support/alimony payments claimed in monthly expense section.' y 275.3; CopiesOfTrust y 260.6..250.6 <- 'Copies of Trust documents if applicable per Section 9.' y 260.9; CB8_08[0] y 246.2..236.2 <- 'Documentation to support any special circumstances...' y 246.5; CB8_09 y 231.8..221.8 <- 'Attach a Form 2848,' y 232.1; CB8_08[1] y 195.8..185.8 <- 'Completed and signed current Form 656.' y 196.1. THE INDEX FAMILY IS NOT CONTIGUOUS: CB8_08's two members are 50.4 points apart with CB8_09 drawn between them - see L22 and arguable P7-4. Four of the fourteen carry descriptive leaf names (heldDigitalAssets, CB8_CompleteForm433b, CopiesOfCourt, CopiesOfTrust) and all four agree with the sentence their y band selects, which is a check on the y-band rule and not a use of the names."
+ },
+ "_nesting_note_page8": "FOUR NAMED CONTAINERS AND ONE ANONYMOUS ONE. past_10_years[0] holds the asset-transfer question's Yes/No pair and three of its four cells; do_you[0] holds the outside-the-US pair and its one cell; any_funds[0] holds the held-in-trust pair and its two cells. Those three names are accurate for their own blocks - though 'past 10 years' also describes the page 7 question about living outside the U.S., whose boxes carry NO container at all, so the name is unique on page 8 and not on the form. The fourth cell of the transfer row, p3_t2_11[0], sits one level deeper under past_10_years[0].#subform[0] while its three row-mates are direct children of past_10_years[0] - the same between-two-siblings shape page 7 draws at #subform[8], and the reason the full topmostSubform[0] path is quoted for every binding rather than a prefix plus a leaf. The two Date_Signed cells and all fourteen attachment boxes are direct children of the page."
 }

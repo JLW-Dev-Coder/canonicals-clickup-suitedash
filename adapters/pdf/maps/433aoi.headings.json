@@ -5,7 +5,7 @@
  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A(OIC). Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
  "_why": "This form's internal names are semantic rather than positional, which removes 433-A's off-by-one trap and installs a worse one: a name that describes the wrong thing reads as correct. Five such names are already measured (see 433aoi.map.json `_notes`). Nothing in a name can be trusted to say which printed section a row is in, so geometry says it.",
  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle. Headings are declared densely enough to bound every group - INCLUDING headings no group claims, because an undeclared heading between two declared ones silently widens the band above it. On page 1 that means declaring the spouse sub-heading and both section rules, not only the one banner household_members sits under.",
- "_slice": "PRINTED PAGES 1, 2, 3, 4, 5 AND 6.",
+ "_slice": "PRINTED PAGES 1 THROUGH 8.",
  "headings": [
   {
    "id": "SECTION_1_PERSONAL",
@@ -138,6 +138,30 @@
    "page": 6,
    "text": "Monthly Household Expenses",
    "_at": "y 419.1, x 36.0..178.3. Closes the MONTHLY_HOUSEHOLD_INCOME band at the bottom of the Box D cell (widget y 421.2) — 1.9pt of clearance, the tightest heading-to-widget boundary on this form, and the reason this heading has to be declared rather than assumed. Its own band runs to the page foot and holds 20 fields: (39) through (51), the three marker-less money sub-cells, the (50) debt-list cell, Box E, Box F and Button1[0]."
+  },
+  {
+   "id": "SECTION_8_MINIMUM_OFFER",
+   "page": 7,
+   "text": "Calculate Your Minimum Offer Amount",
+   "_at": "y 755.9, x 144.0..327.9. The words 'Section 8' are drawn as a separate text item at x 36.0..80.5, so the banner is declared by the part that names the subject - the same rule every other banner on this form is declared by."
+  },
+  {
+   "id": "SECTION_9_OTHER_INFORMATION",
+   "page": 7,
+   "text": "Other Information",
+   "_at": "y 435.5, x 144.0..228.5. 'Section 9' is a separate run at x 36.0..80.5."
+  },
+  {
+   "id": "SECTION_9_OTHER_INFORMATION_CONTINUED",
+   "page": 8,
+   "text": "Other Information",
+   "_at": "y 755.9, x 144.0..228.5. THE SAME TEXT AS THE PAGE 7 BANNER, on a different page, with '(Continued)' drawn as a separate run at y 754.9, x 83.2..133.7. Declared as its own heading rather than treated as a continuation of the page 7 one, because verify-headings.mjs bands are per page and a heading that spanned two pages would have no closing y on either."
+  },
+  {
+   "id": "SECTION_10_SIGNATURES",
+   "page": 8,
+   "text": "Signatures",
+   "_at": "y 615.5, x 144.0..195.7. 'Section 10' is a separate run at x 36.0..86.0."
   }
  ],
  "_page_2_row_labels_are_NOT_declared_as_headings": "Three phrases on page 2 print at the same left margin as the two sub-banners and could each look like a heading: 'Investment account' (y 524.1 and again at y 452.1), 'Retirement account' (y 272.1) and 'Description of digital asset' (y 365.3). None is declared, for two measured reasons. First, 'Investment account' is drawn TWICE - once per printed row - so it cannot be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. Second, the (2a) row's write-in widget sits at y 525.6, one and a half points ABOVE the 'Investment account' text at y 524.1, so a band opened at that text would exclude a widget of the very group it was meant to bound. They are row labels on the option row, not banners. THE COST OF THIS IS STATED RATHER THAN HIDDEN: with only CASH_AND_INVESTMENTS declared, the heading check cannot tell a bank row bound into an investment slot from a correct one - all three groups are in the same band. What catches that is row_class, which 1ab_bank_accounts, 2ab_investment_accounts and 3a_retirement_accounts each declare, and which refuses a row whose stated asset_class the group does not print. The two mechanisms are complementary here, and on this page the second is the one doing the work.",
@@ -184,5 +208,6 @@
   }
  },
  "_page_3_row_labels_are_NOT_declared_as_headings": "Four phrases on page 3 print at or near the same left margin as the two declared sub-headings and could each look like a banner: 'Property description' (y 683.5 and again at y 550.3), 'Current market value' (y 578.6, 445.4, 300.9 and 182.1), 'Vehicle make & model' (y 359.5 and again at 240.7) and 'Location' (y 625.9 and 492.7). NONE is declared, and the reason is the one already recorded for page 2: every one of them is drawn MORE THAN ONCE — once per printed row — so none can be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. They are column headers on a repeating row, not banners. THE COST IS STATED RATHER THAN HIDDEN: within REAL_PROPERTY the band cannot tell slot 0 from slot 1, and within VEHICLES it cannot tell a vehicle row from the (6b) cell that sits between the two rows. What catches a misfiled row is row_class, which both new groups declare, plus the printed-marker evidence recorded per slot in the map.",
- "_page_6_has_no_row_labels_that_could_be_mistaken_for_headings": "TWO PHRASES ON PAGE 6 PRINT AT THE LEFT MARGIN AND ARE NOT DECLARED, and the reason is different from page 2's and page 3's. 'Primary taxpayer' at y 653.7 x 36.0..100.9 and 'Spouse' at y 614.1 x 36.0..64.9 are ROW LABELS naming a person, drawn in the same left column a banner would use. They are not declared as headings because declaring them would split the MONTHLY_HOUSEHOLD_INCOME band into three and put (30)'s four component cells in a band of their own — which would be true of the geometry and false about the page, since the two rows are two rows of one income block under one heading. They are nevertheless the evidence that those two rows are SCALARS and not a group: see authored_from_page6._why_scalars_and_not_a_two_slot_group. A row label can decide a binding without being a heading."
+ "_page_6_has_no_row_labels_that_could_be_mistaken_for_headings": "TWO PHRASES ON PAGE 6 PRINT AT THE LEFT MARGIN AND ARE NOT DECLARED, and the reason is different from page 2's and page 3's. 'Primary taxpayer' at y 653.7 x 36.0..100.9 and 'Spouse' at y 614.1 x 36.0..64.9 are ROW LABELS naming a person, drawn in the same left column a banner would use. They are not declared as headings because declaring them would split the MONTHLY_HOUSEHOLD_INCOME band into three and put (30)'s four component cells in a band of their own — which would be true of the geometry and false about the page, since the two rows are two rows of one income block under one heading. They are nevertheless the evidence that those two rows are SCALARS and not a group: see authored_from_page6._why_scalars_and_not_a_two_slot_group. A row label can decide a binding without being a heading.",
+ "_pages_7_and_8_declare_no_group": "Neither page prints a repeatable table, so `groups` gains no entry for slice 7 and verify-headings.mjs has no new row to place. The four banners above are declared for the reason SPOUSE_INFORMATION was: an undeclared banner silently widens the band of the one above it, and on page 7 that would put the Section 9 litigation block under 'Calculate Your Minimum Offer Amount'."
 }
