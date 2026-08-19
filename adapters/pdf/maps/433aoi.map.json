@@ -146,7 +146,45 @@
     "27_secured_debts_not_credit_cards": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Secured_Debts[0]",
     "28_other_business_expenses": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Business_Expenses[0]",
     "29_total_business_expenses": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Expenses[0]",
-    "box_c_net_business_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Net_Business_Income[0]"
+    "box_c_net_business_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Net_Business_Income[0]",
+    "30_primary_taxpayer_gross_wages": "topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Wages[0].Primary_Taxpayer_Wages[0]",
+    "30_primary_taxpayer_social_security": "topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Social[0].Primary_Taxpayer_Social_Security[0]",
+    "30_primary_taxpayer_pensions": "topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Pensions[0].Primary_Taxpayer_Pensions[0]",
+    "30_primary_taxpayer_other_income": "topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Other[0].Primary_Taxpayer_Other_Income[0]",
+    "30_total_primary_taxpayer_income": "topmostSubform[0].F433-A-OIC_Page6[0].Primary[0].Total_Primary_Taxpayer_Income[0]",
+    "31_spouse_gross_wages": "topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Wages[0].Spouse_Other_Wages[0]",
+    "31_spouse_social_security": "topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Social[0].Spouse_Other_Social_Security[0]",
+    "31_spouse_pensions": "topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Pensions[0].Spouse_Other_Pensions[0]",
+    "31_spouse_other_income": "topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Other[0].Spouse_Other_Other_Income[0]",
+    "31_total_spouse_income": "topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Total_Spouse_Other_Income[0]",
+    "32_additional_sources_of_income": "topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0]",
+    "32_list_sources": "topmostSubform[0].F433-A-OIC_Page6[0].tab_order[1].Interest_Dividends[0]",
+    "33_interest_dividends_and_royalties": "topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]",
+    "34_distributions": "topmostSubform[0].F433-A-OIC_Page6[0].Distributions[0]",
+    "35_net_rental_income": "topmostSubform[0].F433-A-OIC_Page6[0].Net_Rental_Income[0]",
+    "36_net_business_income_from_box_c": "topmostSubform[0].F433-A-OIC_Page6[0].Net_Business_Income_BoxC[0]",
+    "37_child_support_received": "topmostSubform[0].F433-A-OIC_Page6[0].Child_Support_Received[0]",
+    "38_alimony_received": "topmostSubform[0].F433-A-OIC_Page6[0].Alimony_Received[0]",
+    "box_d_total_household_income": "topmostSubform[0].F433-A-OIC_Page6[0].Total_Household_Income[0]",
+    "39_food_clothing_and_miscellaneous": "topmostSubform[0].F433-A-OIC_Page6[0].Food_Clothing_Misc[0]",
+    "40_housing_and_utilities": "topmostSubform[0].F433-A-OIC_Page6[0].Housing_Utilities[0]",
+    "40_monthly_rent_payment": "topmostSubform[0].F433-A-OIC_Page6[0].tab_order[0].MonthlyRentPayment[0]",
+    "41_vehicle_loan_or_lease_payments": "topmostSubform[0].F433-A-OIC_Page6[0].Vehicle_Loan_Lease_Payments[0]",
+    "42_vehicle_operating_costs": "topmostSubform[0].F433-A-OIC_Page6[0].Vehicle_Operating_Costs[0]",
+    "43_public_transportation_costs": "topmostSubform[0].F433-A-OIC_Page6[0].Public_Transportation_Costs[0]",
+    "44_health_insurance_premiums": "topmostSubform[0].F433-A-OIC_Page6[0].Health_Insurance_Premiums[0]",
+    "45_out_of_pocket_health_care_costs": "topmostSubform[0].F433-A-OIC_Page6[0].Out_Of_Pocket_Health_Care_Costs[0]",
+    "46_court_ordered_payments": "topmostSubform[0].F433-A-OIC_Page6[0].Court_Ordered_Payments[0]",
+    "47_child_dependent_care_payments": "topmostSubform[0].F433-A-OIC_Page6[0].Child_Dependent_Care_Expenses[0]",
+    "48_life_insurance_premiums": "topmostSubform[0].F433-A-OIC_Page6[0].Life_Insurance_Premiums[0]",
+    "48_life_insurance_policy_amount": "topmostSubform[0].F433-A-OIC_Page6[0].LifeIns[0].Line_Insureance_Policy[0]",
+    "49_current_monthly_taxes": "topmostSubform[0].F433-A-OIC_Page6[0].Current_Taxes[0]",
+    "50_secured_debts_other": "topmostSubform[0].F433-A-OIC_Page6[0].Other_Secured_Debts[0]",
+    "50_list_debts_expenses": "topmostSubform[0].F433-A-OIC_Page6[0].tab_order[2].Interest_Dividends[0]",
+    "51_delinquent_state_local_tax_payment": "topmostSubform[0].F433-A-OIC_Page6[0].Delinquent_State_Local_Taxes[0]",
+    "51_total_tax_owed": "topmostSubform[0].F433-A-OIC_Page6[0].total_tax_owed[0]",
+    "box_e_total_household_expenses": "topmostSubform[0].F433-A-OIC_Page6[0].Total_Household_Expenses[0]",
+    "box_f_remaining_monthly_income": "topmostSubform[0].F433-A-OIC_Page6[0].Remaing_Monthly_Income[0]"
   },
   "_map_evidence": {
     "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
@@ -675,6 +713,36 @@
         "formula": "8ab_business_bank_accounts[0].account_balance + 8ab_business_bank_accounts[1].account_balance + 8c_total_digital_assets + 8d_bank_accounts_from_attachment",
         "note": "NO $1,000 DEDUCTION AND NO FLOOR. Printed line (1) on page 2 is the same shape and reads 'Add lines (1a) through (1c) minus ($1,000)'; this one prints no deduction at all. The $1,000 bank-account exemption is a personal-side allowance. A totals entry copied from (1) would understate this line by $1,000 with every other figure on the page still agreeing.",
         "also_note": "Its four operands are not four bank accounts. (8c) is the DIGITAL ASSET total, and it adds in here rather than into any separate line — which is why the leaf name Total_Value_Bank_Accounts[0] understates what the cell holds. See _arguable_page4."
+      },
+      {
+        "key": "30_total_primary_taxpayer_income",
+        "printed_caption": "Total primary taxpayer income",
+        "formula": "30_primary_taxpayer_gross_wages + 30_primary_taxpayer_social_security + 30_primary_taxpayer_pensions + 30_primary_taxpayer_other_income",
+        "note": "THE OPERANDS ARE NAMED BY THE PRINTED CHAIN, NOT BY THE CAPTION. The caption states no formula at all — the page states it with drawn symbols instead: '$ [ ] + $ [ ] + $ [ ] + $ [ ] =' at y 633.3, then the (30) cell. Four operands because four '$' runs are drawn, and the four column captions above them at y 642.9 name what each holds."
+      },
+      {
+        "key": "31_total_spouse_income",
+        "printed_caption": "Total spouse income",
+        "formula": "31_spouse_gross_wages + 31_spouse_social_security + 31_spouse_pensions + 31_spouse_other_income",
+        "note": "Identical shape to (30), one printed row down, at y 593.7. See _arguable_page6 P6-1 for the SpouseOther naming question, which changes nothing in this arithmetic."
+      },
+      {
+        "key": "box_d_total_household_income",
+        "printed_caption": "Add lines (30) through (38) and enter the amount in Box D =",
+        "formula": "30_total_primary_taxpayer_income + 31_total_spouse_income + 32_additional_sources_of_income + 33_interest_dividends_and_royalties + 34_distributions + 35_net_rental_income + 36_net_business_income_from_box_c + 37_child_support_received + 38_alimony_received",
+        "note": "NINE OPERANDS, ALL ON THIS PAGE. Box D is the first Box on 433-A(OIC) whose every operand is printed on its own page — Box A spans pages 2, 3 and 4 and Box B spans 4 and 5. Floored at 0 by the printed instruction at y 442.9."
+      },
+      {
+        "key": "box_e_total_household_expenses",
+        "printed_caption": "Add lines (39) through (51) and enter the amount in Box E =",
+        "formula": "39_food_clothing_and_miscellaneous + 40_housing_and_utilities + 41_vehicle_loan_or_lease_payments + 42_vehicle_operating_costs + 43_public_transportation_costs + 44_health_insurance_premiums + 45_out_of_pocket_health_care_costs + 46_court_ordered_payments + 47_child_dependent_care_payments + 48_life_insurance_premiums + 49_current_monthly_taxes + 50_secured_debts_other + 51_delinquent_state_local_tax_payment",
+        "note": "THIRTEEN OPERANDS, AND THE THREE MARKER-LESS MONEY CELLS ARE NOT AMONG THEM. 40_monthly_rent_payment, 48_life_insurance_policy_amount and 51_total_tax_owed are money, are drawn inside rows (40), (48) and (51), and carry no line number — and the printed instruction adds LINES. Folding them in would double-count rent inside housing, add a policy face amount to a monthly expense list, and add a tax BALANCE to a list of tax PAYMENTS. Box E would then fail on a correctly filed form."
+      },
+      {
+        "key": "box_f_remaining_monthly_income",
+        "printed_caption": "Subtract Box E from Box D and enter the amount in Box F =",
+        "formula": "box_d_total_household_income - box_e_total_household_expenses",
+        "note": "THE SUBTRACTION ORDER IS PRINTED AND IS THE REVERSE OF THE READING ORDER, exactly as Box C's is on page 5: 'Subtract Box E from Box D' means Box D MINUS Box E, and the caption names Box E first. Box C was the first place this shape appeared on the form and it is now the standing reading. Floored at 0 by the printed instruction at y 60.2 — a household spending more than it earns has a genuinely negative remainder and the page instructs it to print zero."
       }
     ]
   },
@@ -738,6 +806,27 @@
         "map_key": "s4_average_gross_monthly_payroll",
         "printed_caption": "Average gross monthly payroll $",
         "why_not_checkable": "NOT A TOTAL AT ALL, and declared here only because it is the one money-shaped cell in Section 4 and a reader scanning for money cells will find it. Nothing on the page feeds it: no marker, no '=', no rows above it. It is plain input. Declared rather than left out, because a money cell in neither list is indistinguishable from one nobody looked at."
+      },
+      {
+        "map_key": "36_net_business_income_from_box_c",
+        "printed_caption": "Net business income from Box C [Deductions for non-cash expenses on Schedule C (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes and must be added back in to the net income figure]",
+        "why_not_checkable": "THE CAPTION NAMES A PRINTED CELL AND THEN INSTRUCTS THE PREPARER TO MAKE IT DIFFER. 'from Box C' reads as an equality and Box C is printed on page 5 of this same form, so a one-operand tripwire would be exact and would need no new schema. The bracketed sentence beside it is why one is not declared: a Schedule-C net income that included depreciation or depletion must have those added back HERE, so (36) legitimately exceeds Box C by the amount of the non-cash deductions. A tripwire would pass on every form where the add-back is zero and fail exactly the forms that did the harder thing correctly. See _arguable_page6 P6-2. It is nevertheless an operand of Box D, which IS checkable.",
+        "review_page_advisory": "ADD BACK NON-CASH DEDUCTIONS BEFORE ENTERING THIS FIGURE. Box C on page 5 is the starting point, not the answer. If the business net income was computed from a Schedule C that deducted depreciation, depletion or any other non-cash expense, those amounts are NOT allowed for offer purposes and must be added back in. Entering Box C unchanged when an add-back applies understates household income, understates Box F, and understates the offer."
+      },
+      {
+        "map_key": "40_monthly_rent_payment",
+        "printed_caption": "monthly rent payment",
+        "why_not_checkable": "NOT A TOTAL AND NOT AN OPERAND — a component disclosure inside the (40) housing row. The page draws no '=' and no '+' between it and (40), and (40)'s own caption already covers rent ('e.g., rent or mortgage payment and average monthly cost of property taxes, home insurance, ...'). Nothing printed on the page relates the two arithmetically, so nothing can verify it. Declared rather than left out, following s4_average_gross_monthly_payroll on page 4: a money cell in neither list is indistinguishable from one nobody looked at. Its caption is drawn to the cell's RIGHT, at 2.2pt, which is true of no other cell on this form."
+      },
+      {
+        "map_key": "48_life_insurance_policy_amount",
+        "printed_caption": "Life insurance policy amount",
+        "why_not_checkable": "A FACE AMOUNT, NOT AN EXPENSE. The (48) cell beside it holds the monthly PREMIUM and enters Box E; this cell holds the policy amount the premium buys and enters nothing. Two money cells on one printed row holding two quantities that differ by three orders of magnitude on a typical policy. No printed relation between them, so no check."
+      },
+      {
+        "map_key": "51_total_tax_owed",
+        "printed_caption": ". Total tax owed",
+        "why_not_checkable": "A BALANCE, NOT A PAYMENT. The (51) cell holds the MONTHLY delinquent state/local tax payment and enters Box E; this cell holds the total still owed. A balance divided by a payment gives a number of months, which is information the IRS wants and which no printed cell on this page states, so nothing here can verify either from the other."
       }
     ],
     "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. The feeder schema gained a single-equality predicate, so the cell is now checked on BOTH printed branches by four predicated lines in 433aoi.totals.json - '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared both checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none. run-form-gate.mjs now FAILS on exactly that condition (DOUBLE-DECLARED), so this removal is asserted rather than remembered."
@@ -1460,29 +1549,35 @@
       },
       {
         "target": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].form_433b[0]",
-        "reason": "NOT A DATA FIELD. The second of the pair, over the identical printed caption in the spouse's employment block (button y 84.2..97.2, x 151.2..190.8; caption y 92.9, x 66.4..189.3). The third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is NOT declared here: it is on page 6, which belongs to a slice nobody has read yet, and declaring it now would claim coverage of a page this map has not looked at."
+        "reason": "NOT A DATA FIELD. The second of the pair, over the identical printed caption in the spouse's employment block (button y 84.2..97.2, x 151.2..190.8; caption y 92.9, x 66.4..189.3). The third and last PDFButton on this form is declared below, in slice 6."
+      },
+      {
+        "target": "topmostSubform[0].F433-A-OIC_Page6[0].Button1[0]",
+        "reason": "NOT A DATA FIELD, AND THE THIRD AND LAST PDFButton ON THIS FORM. Its rectangle (y 360.0..370.8, x 36.0..460.8) lies over the printed URL 'IRS.gov/Businesses/Small-Businesses-&-Self-Employed/Collection-Financial-Standards.' at y 372.5, x 36.0..414.1 — a link to the published Collection Financial Standards, with no value to write. The button is WIDER than the URL text it covers (460.8 against 414.1) because the sentence it ends runs to the margin; the rectangle is what identifies it, not the text width. Enumerated so it is in a declared state rather than counted as an unreferenced cell."
       }
     ]
   },
   "_partition": {
     "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
     "form_fields_total": 425,
-    "in_this_slice": 307,
-    "bound_writable": 305,
-    "excluded_never_autofill": 2,
+    "in_this_slice": 346,
+    "bound_writable": 343,
+    "excluded_never_autofill": 3,
     "deferred": 0,
-    "unaccounted": 118,
-    "_check": "305 + 2 + 0 = 307, which is every field on pages 1, 2, 3, 4 and 5 (433aoi.labels.txt lists 74 for p1, 68 for p2 and 59 for p3; page-geometry.mjs reports 66 widgets on p4 and 40 on p5). 425 - 307 = 118 still unaccounted, all of them on pages 6-8. Every figure here is now re-derived and checked in validate-map.mjs against the map’s own unique target count — this block was stale for two slices before that guard existed.",
+    "unaccounted": 79,
+    "_check": "343 + 3 + 0 = 346, which is every field on pages 1, 2, 3, 4, 5, 6 (page-geometry.mjs reports 74 for p1, 68 for p2, 59 for p3, 66 for p4, 40 for p5, 39 for p6). 425 - 346 = 79 still unaccounted, all of them on pages 7 and 8. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03], against the field list, this map's own targets and the PDF's widget geometry.",
     "_bound_breakdown_page_1": "Section 1: 16 scalars + 2 marital + 3 housing + 1 check-here + 28 dependent-grid targets (4 rows x [3 text + 4 checkbox]) = 50. Section 2: 10 scalars + 4 taxpayer pay-period + 4 spouse pay-period + 2 taxpayer ownership + 2 spouse ownership = 22. 50 + 22 = 72.",
     "_bound_breakdown_page_2": "17 scalars: (1c), (1), seven 2c_ digital asset cells, (2d), (2), (3b), (3), the three (4b) cells and (4). 1 check_here: the digital asset row box. 17 in 1ab_bank_accounts: slot 0 is 3 text + 6 type boxes = 9, slot 1 is 3 text + 5 type boxes = 8. 18 in 2ab_investment_accounts: 2 slots x [6 text + 3 type boxes]. 10 in 3a_retirement_accounts: 7 text + 3 type boxes. 5 in 4a_life_insurance_policies, all text. 17 + 1 + 17 + 18 + 10 + 5 = 68, which is exactly the widget count align-block.mjs reports for page 2.",
-    "_page_2_has_no_never_autofill_and_no_deferred": "Every one of page 2's 68 fields is a data cell the taxpayer fills. There is no IRS-use column, no link button and no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; the third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is STILL undeclared because page 6 is still a page nobody has read.",
-    "_unaccounted_by_page": "p6 39, p7 50, p8 29 = 118.",
+    "_page_2_has_no_never_autofill_and_no_deferred": "Every one of page 2's 68 fields is a data cell the taxpayer fills. There is no IRS-use column, no link button and no cell this slice could not resolve. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
+    "_unaccounted_by_page": "p7 50, p8 29 = 79.",
     "_bound_breakdown_page_3": "9 scalars: the listing-price cell, (5c), (5), (6b), (6d), (6e), (6) - that is 7 - plus the 2 for-sale Yes/No boxes. 22 in 5ab_real_property: 2 slots x 11 text columns, no checkboxes. 28 in 6ac_vehicles: 2 slots x [12 text + 2 lease/own boxes]. 9 + 22 + 28 = 59, which is exactly the widget count align-block.mjs reports for page 3 (27 in the y 380..720 band and 33 in the y 40..400 band, less the one - Total_Value_Property[0] at y 403.2 - that both bands contain).",
-    "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; topmostSubform[0].F433-A-OIC_Page6[0].Button1[0] is STILL undeclared because page 6 is still a page nobody has read.",
+    "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
     "_bound_breakdown_page_4": "66 fields, all bound, none never-autofill and none deferred. Section 3 continued: 5 in the 7a group (all text) + 5 scalars for the (7b) block + 2 scalars for (7c) and (7) + 1 for Box A = 13. Section 4: 17 text scalars + 2 sole-proprietorship boxes + 2 other-business-interest boxes + 4 type-of-business boxes = 25. Section 5: 18 in 8ab_business_bank_accounts (2 slots x [3 text + 6 type boxes]) + 1 check_here digital-asset box + 7 digital-asset text scalars + 2 scalars for (8d) and (8) = 28. 13 + 25 + 28 = 66.",
-    "_page_4_has_no_never_autofill_and_no_deferred": "Every one of page 4's 66 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; the third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is STILL undeclared because page 6 is still a page nobody has read.",
+    "_page_4_has_no_never_autofill_and_no_deferred": "Every one of page 4's 66 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
     "_bound_breakdown_page_5": "26 map scalars: (9c), (9), (10), (11), Box B, the two Section 6 period dates, the eighteen P&L lines (12)-(29), and Box C. 10 in 9ab_business_assets: 2 slots x [description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity]. 4 exclusive checkboxes: the Notes Receivable and Accounts Receivable Yes/No pairs, CB5_01..CB5_04, which are the ONLY four checkboxes on the page — which is why (9a)/(9c) carry no recoverable lease predicate. 26 + 10 + 4 = 40, which is exactly the widget count for page 5.",
-    "_page_5_has_no_never_autofill_and_no_deferred": "Every one of page 5’s 40 fields is a data cell the taxpayer fills. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons."
+    "_page_5_has_no_never_autofill_and_no_deferred": "Every one of page 5’s 40 fields is a data cell the taxpayer fills. The never-autofill entries on this map are the two page-1 Form 433-B link buttons and, since slice 6, the page-6 Collection Financial Standards link.",
+    "_bound_breakdown_page_6": "39 fields on the page and 38 bound. Section 7 is the whole page: 8 income component cells (4 primary + 4 spouse) + 2 per-person totals (30) and (31) + 7 income lines (32) through (38) + Box D + 13 expense lines (39) through (51) + Box E + Box F = 33 money cells, plus 2 text cells (the (32) source list and the (50) debt list) and 3 marker-less money sub-cells (the rent payment, the policy amount and the total tax owed) = 38. The 39th is Button1[0], the link over the Collection Financial Standards URL, which is never auto-filled. 33 + 2 + 3 = 38.",
+    "_page_6_has_no_deferred_and_one_never_autofill": "Page 6's 39 fields are 38 data cells the taxpayer fills and one PDFButton. It carries the THIRD AND LAST never-autofill entry on this map — Button1[0], the link over the Collection Financial Standards URL — which closes the note every partition block since slice 2 has carried: the third PDFButton on this form is no longer undeclared. Nothing on this page is deferred."
   },
   "authored_from_page3": "adapters/pdf/align-block.mjs 433aoi 3, run over two bands (y 380..720 and y 40..400), which lays the printed text and the widget rectangles in one coordinate space. Corroborated by adapters/pdf/maps/433aoi.line-markers.txt (10 printed markers on page 3, each paired with the widget to its right) and by 433aoi.labels.txt. THE THREE AGREE ON EVERY CELL, INCLUDING THE TWO WHOSE LEAF NAMES ARE SWAPPED.",
   "_map_evidence_page3": {
@@ -1625,6 +1720,71 @@
         "the_question": "Section 3 opens on page 2 under a rounding instruction and continues onto pages 3 and 4 with none reprinted. Section 5 opens on page 4 under one and continues onto page 5 with none reprinted. Twice is a habit, not an accident - but the page still does not say whether the instruction scopes to the SECTION or to the BLOCK it is drawn over, and the two readings differ by up to a dollar on every total that crosses the boundary.",
         "what_was_done": "All three continuation blocks declared none_printed, with the absence recorded as a thing that was looked for. none_printed asserts only what is drawn.",
         "why_still_open": "Deciding it means either reading it out of the IRS instructions booklet, which this repo does not hold, or asserting a scope the printed page does not draw. Neither is a call a form slice gets to make. It now affects TWO Boxes: Box A has three uninstructed operands of seven, Box B has one of two."
+      },
+      {
+        "id": "C-08",
+        "raised_in_slice": 5,
+        "subject": "(9a) and (9b) are bound as a TWO-SLOT GROUP and (7a)/(7b) on page 4 were not, and the same test decided both",
+        "where": "433aoi.map.json.groups.9ab_business_assets and the two 7a/7b scalar sets; the reasoning is in _map_evidence_page5[\"9ab_business_assets\"] and _notes[21]",
+        "the_question": "The page-4 decision turned on a printed heading drawn BETWEEN (7a) and (7b) — \"Value of remaining furniture and personal effects\" at y 671.7 — which no repeatable table on this form has. Nothing is drawn between (9a) and (9b), so they were bound as one two-slot group. The counter-argument is that the two (9) description cells are geometrically asymmetric, 540.0pt against 327.6pt, and their captions differ by a colon, which is weak evidence for two separately-drafted blocks.",
+        "what_was_done": "Bound as a two-slot group, with the test and the counter-argument both recorded, and reported as arguable rather than presented as settled. Raised to Principal as P5-1.",
+        "why_still_open": "NOTHING FILED DIFFERS EITHER WAY — the same four money cells print in the same four places under both readings — so no filed page can settle it and no tripwire can. What it decides is which shape 433-B(OIC) inherits, and that is a call for the form that inherits it. Slice 6 adds one data point and does not close it: page 6 has two structurally identical four-cell rows and they are bound as SCALARS, on three grounds that need no heading at all (party labels, differing total captions, non-consecutive markers). If those grounds generalise, the heading test is not the discriminator either decision should have rested on."
+      },
+      {
+        "id": "C-09",
+        "raised_in_slice": 5,
+        "subject": "line (10) is an IRS-published allowance and this repo holds no table for it",
+        "where": "433aoi.map.json.map[\"10_irs_allowed_deduction_books_and_tools\"], declared not checkable in 433aoi.totals.json",
+        "the_question": "The printed caption is 'IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –' and the form prints NO figure, unlike the $1,000 at (1) and the $3,450 at (6b)/(6d) which the page draws itself. This form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere, so it carries no `allowed` block.",
+        "what_was_done": "(10) is bound as ordinary input, nothing is auto-filled, and it is declared not checkable with a review-page advisory carrying the caption verbatim. Raised to Principal as P5-3.",
+        "why_still_open": "Whether the review page should surface the published figure beside it is a provisioning-pass question, not a map-slice one, and answering it means holding a published IRS table this repo does not hold. 433-A holds irs-standards-2026.json for the two lines it auto-fills; there is no equivalent for books and tools of trade."
+      },
+      {
+        "id": "C-11",
+        "raised_in_slice": 6,
+        "subject": "the subform SpouseOther[0] echoes the page preamble and the printed ROW LABEL says only \"Spouse\"",
+        "where": "433aoi.map.json._arguable_page6 P6-1; the five keys 31_*",
+        "the_question": "The printed row label at y 614.1 is the single word \"Spouse\" and the printed total caption is \"Total spouse income\", but the page preamble at y 702.8 says to include \"your spouse, and anyone else who contributes to your household’s income\" and only two income rows are drawn. Is SpouseOther a lie about a spouse-only row, or an accurate name for a row the printed label understates?",
+        "what_was_done": "Bound with SPOUSE keys, which is the reading the printed label and the printed total caption both support. NO registry entry was made in either direction, because entering one would settle it.",
+        "why_still_open": "It decides where a third contributor’s income goes on a real record. The strongest evidence is (32)’s own caption — \"Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may contribute\" — which gives exactly those people a printed line of their own, so the other reading would create two homes for one fact. Strong, and not decisive, because the preamble was written by the same drafter."
+      },
+      {
+        "id": "C-12",
+        "raised_in_slice": 6,
+        "subject": "whether (36) is declarable EQUAL to Box C on page 5",
+        "where": "433aoi.map.json._arguable_page6 P6-2; 433aoi.totals.json not_checkable entry for 36_net_business_income_from_box_c",
+        "the_question": "The caption \"Net business income from Box C\" names a printed cell on this form and reads as an equality; the bracketed sentence beside it instructs the preparer to add back non-cash Schedule C deductions, which makes the two legitimately differ.",
+        "what_was_done": "Declared not checkable with the bracketed caption as the reason and a review-page advisory carrying the add-back instruction. It remains an operand of Box D, which IS checked.",
+        "why_still_open": "Closing it means capturing the add-back as a figure of its own so that (36) = Box C + add-back becomes checkable. That is a schema question for the provisioning pass. Until then the strongest available check is the advisory in front of the person who can do the arithmetic."
+      },
+      {
+        "id": "C-13",
+        "raised_in_slice": 6,
+        "subject": "the page prints no \"Other expenses\" line and 433-A prints one",
+        "where": "433aoi.map.json._arguable_page6 P6-3; the crosswalk entry for 433-A 49_exp_other_expenses",
+        "the_question": "Is (50) \"Secured debts/Other\" the catch-all for a household expense that fits no other line, or does \"Other\" qualify \"Secured debts\"? Its parenthetical gives four examples and every one is a debt; its companion cell is captioned \"List debt(s)/expense(s)\", which says expenses.",
+        "what_was_done": "Both cells bound to their printed captions verbatim, with the map taking no position on what may be written into them.",
+        "why_still_open": "The two readings move the offer in a direction that matters: an expense with no home lowers Box E, which raises Box F, which raises the offer. Only the word \"expense(s)\" in one printed caption separates them, and one word is not enough to rule on."
+      },
+      {
+        "id": "C-14",
+        "raised_in_slice": 4,
+        "raised_as": "_arguable_page4 P4-1",
+        "subject": "(7b) is bound as scalars rather than as a second slot of the (7a) group",
+        "where": "433aoi.map.json._map_evidence_page4[\"7b_is_bound_as_scalars_and_is_NOT_a_second_slot_of_7a\"]",
+        "the_question": "Two structurally identical five-cell blocks with a printed heading drawn BETWEEN them - “Value of remaining furniture and personal effects” at y 671.7 - which no repeatable table on this form has. Decided against the two-slot reading on that heading, with two further witnesses agreeing: the column headers differ by a plural, and (7a) has an attachment line where (7b) has none.",
+        "what_was_done": "Bound as scalars. Nothing filed differs either way.",
+        "why_still_open": "IT IS THE SAME QUESTION AS C-08 AND THE TWO WERE DECIDED OPPOSITE WAYS. Page 4 has a heading between the blocks and page 5 does not, so (7a)/(7b) are scalars and (9a)/(9b) are a group. Whether a drawn heading is the right discriminator is what neither slice could settle, and slice 6 supplies a third case that needed no heading at all: page 6’s two income rows are scalars on party labels, differing total captions and non-consecutive markers. If those grounds generalise, the heading was never the load-bearing test."
+      },
+      {
+        "id": "C-16",
+        "raised_in_slice": 4,
+        "raised_as": "_arguable_page4 P4-3",
+        "subject": "the floor on (7) is declared from a sentence drawn BELOW the line it floors, and no fixture exercises it",
+        "where": "433aoi.totals.json, the (7) entry’s floor and floor_caption",
+        "the_question": "(7)’s floor of 0 comes from “Do not enter a negative number. If any line item is a negative, enter “0” on that line.” at y 557.1, which is drawn BELOW (7) rather than above it. Every other floor on this form comes from a sentence above its line or from the line’s own caption.",
+        "what_was_done": "Declared 0 with the caption quoted verbatim, so the reading is visible.",
+        "why_still_open": "NO FIXTURE EXERCISES IT. (7) sums three non-negative cells on every fixture written so far, so the floor has never fired and the gate has never printed “floored at 0.00” against it. A floor that has never fired is a declaration nothing has tested. Closing it means a fixture whose (7) operands go negative, which requires a printed cell on this form that can be negative - and page 4 has none."
       }
     ],
     "resolved": [
@@ -1645,13 +1805,31 @@
         "why_still_open": "Closing it means row_class gaining a second discriminating column - something like {column: \"is_business_account\", equals: true} beside the class test. That is an engine change, it is the same shape as the feeder predicate authorised this slice, and it is NOT built unasked. Reported to Principal.",
         "also_affects": "The same gap exists between (7a) other valuable items and any future page-5 business-property row, both of which are personal_property / business_property shaped. It is a general limit, not a bank-account one.",
         "resolved_in_slice": 5,
-        "resolved_by": "row_class gained ONE optional discriminating key, {column, equals}, single-equality, same grammar as the totals feeder predicate and no composition. 1ab_bank_accounts declares is_business_account = false and 8ab_business_bank_accounts declares is_business_account = true, from the backbone flag named in P4-4. THE ASSERTION IS THE REAL FIX: check-row-shape.mjs refuses any map where two groups accept the same class and either lacks a discriminator, asked before a single row is read. It also refuses same-class groups discriminating on different columns, or on the same value. Both crossing directions were proved refused on a Checking account, which both printed tables offer and which the per-slot option list therefore cannot catch. AND THE ASSERTION IMMEDIATELY FOUND THE SAME COLLISION ON 433-A, which C-05 was never filed against; that form is closed too, on the printed evidence PERSONAL BANK ACCOUNTS at page 2 y 464.1 and BUSINESS BANK ACCOUNTS at page 7 y 405.4."
+        "resolved_by": "row_class gained ONE optional discriminating key, {column, equals}, single-equality, same grammar as the totals feeder predicate and no composition. 1ab_bank_accounts declares is_business_account = false and 8ab_business_bank_accounts declares is_business_account = true, from the backbone flag named in P4-4. THE ASSERTION IS THE REAL FIX: check-row-shape.mjs refuses any map where two groups accept the same class and either lacks a discriminator, asked before a single row is read. It also refuses same-class groups discriminating on different columns, or on the same value. Both crossing directions were proved refused on a Checking account, which both printed tables offer and which the per-slot option list therefore cannot catch. AND THE ASSERTION IMMEDIATELY FOUND THE SAME COLLISION ON 433-A, which C-05 was never filed against; that form is closed too, on the printed evidence PERSONAL BANK ACCOUNTS at page 2 y 464.1 and BUSINESS BANK ACCOUNTS at page 7 y 405.4.",
+        "raised_as": "_arguable_page4 P4-4"
+      },
+      {
+        "id": "C-10",
+        "raised_in_slice": 5,
+        "subject": "the leaf name Other_Secured_Debts[0] is used for TWO different printed lines on two pages",
+        "where": "433aoi.name-lies.json L13; 433aoi.map.json.map[\"27_secured_debts_not_credit_cards\"] and [\"50_secured_debts_other\"]",
+        "the_question": "Page 5 printed line (27) is \"Secured debts (not credit cards)\" in the business P&L and page 6 printed line (50) is \"Secured debts/Other\" in household expenses. Both cells carry the leaf name Other_Secured_Debts[0], under different subform parents. It was found by a leaf-name scan across the whole form rather than by reading either page, and at slice 5 the page-6 twin was unbound — so the name was recorded as dangerous with nothing yet depending on it. Raised to Principal as P5-4.",
+        "resolved_by": "SLICE 6, BY BINDING THE TWIN FROM THE PRINTED PAGE. 50_secured_debts_other is bound to the page-6 cell on its printed caption and its rectangle, with the (50) marker at y 135.1 falling inside the widget rectangle y 122.4..147.6. The full topmostSubform paths differ in their page subform and keep the two apart in every tool; L13 is updated to name the bound key. The risk P5-4 recorded — that an author would reach the page-6 cell by its leaf name and reuse the page-5 binding — no longer exists, because the page-6 cell now has a binding of its own that came from the page."
+      },
+      {
+        "id": "C-15",
+        "raised_in_slice": 4,
+        "raised_as": "_arguable_page4 P4-2",
+        "subject": "the leaf name Total_Value_Bank_Accounts[0] understates line (8), and it is NOT declared a name lie",
+        "the_question": "Printed line (8) is “Add lines (8a) through (8d) =” and (8c) is the digital-asset total, so the cell holds more than bank accounts. But printed line (8d) reads “Total bank accounts from attachment” while (8) sums it with (8c) - the PAGE is loose here too, so the name echoes the page rather than contradicting it.",
+        "resolved_by": "SLICE 5, AS A THIRD REGISTRY STATUS. 433aoi.name-lies.json entry P01, kind `page_imprecise`: not a lie, because the name does not disagree with the page; not a control, because it is not verified true either. NOT counted in the active-lie total, so the lie total keeps meaning “the name disagrees with the page”, and recorded so 433-B(OIC) does not re-litigate the same fork from nothing."
       }
     ],
     "_count": {
-      "open": 6,
-      "resolved": 2
-    }
+      "open": 13,
+      "resolved": 4
+    },
+    "_every_arguable_item_now_has_an_id_here": "ARGUABLE ITEMS AND CARRIED ITEMS ARE THE SAME LIST, and until slice 6 they were two. P5-1 through P5-4 were recorded in _arguable_page5 and only one of the four (P5-2, as C-06) ever reached this ledger; page 4 was worse, with one of its four linked. So seven open or closed questions existed in per-page arrays that nothing reports and nothing counts, which is precisely the disappearing act this ledger exists to prevent, committed by the file that prevents it. C-08 through C-16 are those items, each carrying a `raised_as` naming the array entry it came from. THE LINKAGE IS NOW ASSERTED, not described: adapters/pdf/count-sweep.mjs [S-07b] requires every id in every _arguable_page{N} array to be named by some entry in this ledger, and fails the gate when one is not. Unresolved is fine. Living in only one of two places is not."
   },
   "authored_from_page4": "adapters/pdf/page-geometry.mjs read directly, dumping every printed run and every widget rectangle on page 4 into one coordinate space sorted y-descending. Corroborated by adapters/pdf/line-markers.mjs (10 printed markers on page 4: 7a, 7b, 7c, 7, Box A, 8a, 8b, 8c, 8d, 8 — each paired with the widget to its right except Box A, see below) and by adapters/pdf/maps/433aoi.labels.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
   "_map_evidence_page4": {
@@ -1753,8 +1931,8 @@
     "_order": "ROUND FIRST, THEN FLOOR. Page 2 y 668.1 prints the two sentences in that order — 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' — and the engine applies them in that order.",
     "_wording_variants_are_recorded_not_tested": "Page 2 prints 'Round to the nearest dollar'. Every later instance prints 'Round to the nearest whole dollar'. A string-exact check for the later wording reads page 2 as UNINSTRUCTED and leaves the entire personal-asset block unrounded. So the mode names the variant — nearest_dollar vs nearest_whole_dollar — and both do the same arithmetic.",
     "_the_mixed_scope_finding": "Box A adds lines (1) through (7) and is drawn under 'Round to the nearest whole dollar' at y 567.5. THREE of its seven operands are not: (5) and (6) are on page 3, which prints no instruction anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence, which is drawn between (7) and Box A. Whether that is a drafting gap or a deliberate scope cannot be told from the page. It is recorded here rather than resolved, and the blocks below declare what is printed, not what was probably meant.",
-    "_slice": "PRINTED PAGES 1, 2, 3, 4 AND 5 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 6-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
-    "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, and the arithmetic closes. adapters/pdf/money-probe.mjs reports, for every mapped text target, the printed text drawn immediately to its left in the same vertical band, and flags the cell when that text ends in a “$” within 14pt. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3, 18 on page 4 and 30 on page 5 — 99 in all. This declaration holds 104 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4 and 32 on page 5. Pages 2 and 4 agree with the probe exactly. Pages 3 and 5 declare MORE than the probe flags — three more and two more — and all five are named in their block’s _money_without_a_printed_dollar_sign, so nothing is declared money that cannot be pointed at on the page. 27 - 24 = 3 and 32 - 30 = 2, and 3 + 2 = 5 cells enumerated. Nothing was declared money on its field name.",
+    "_slice": "PRINTED PAGES 1, 2, 3, 4, 5 AND 6 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 7-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
+    "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, AND THE ARITHMETIC IS DERIVED RATHER THAN TRANSCRIBED. adapters/pdf/money-probe.mjs reports, for every mapped text target, the nearest printed run to its left that ENDS in a \"$\" within 14pt, and flags the cell when it finds one. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3, 18 on page 4, 32 on page 5 and 33 on page 6 — 134 in all. This declaration holds 140 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4, 32 on page 5 and 36 on page 6. Pages 2, 4, 5 agree with the probe exactly. Pages 3 and 6 declare MORE than the probe flags — 3 and 3 — and every one of those cells is named in its block's _money_without_a_printed_dollar_sign, so nothing is declared money that cannot be pointed at on the page. 27 - 24 = 3 and 36 - 33 = 3, and 3 + 3 = 6 cells enumerated. Nothing was declared money on its field name. THE PROBE'S RULE CHANGED IN SLICE 6 AND TWO CELLS LEFT THIS LIST BECAUSE OF IT: it used to take the single nearest printed run and ask whether that run ended in \"$\", so a Box title drawn 2.1pt to the left of the row above beat the row's own \"$\" at 3.6pt and hid it. (29) and Box C on page 5 were declared here on the strength of that, and both carry a printed \"$\" the old scan never looked at. See adapters/pdf/money-probe.mjs.",
     "blocks": [
       {
         "id": "P2_PERSONAL_ASSETS",
@@ -2033,7 +2211,7 @@
         ],
         "_keys_deliberately_absent": "s6_period_provided_beginning and s6_period_provided_through are DATES, not money. No '$' is drawn against either — the probe finds none within 14pt — and their printed captions name a period, not an amount.",
         "cells": [],
-        "_money_without_a_printed_dollar_sign": "29_total_business_expenses (widget y 86.4, x 478.8) is money on its printed caption — \"(29) Total Business Expenses\", the sum of lines (18) through (28), every one of which the probe DOES flag. The probe does not flag it because the nearest printed text to its left within 14pt is \"Box C\" at 2.1pt: the Box C title block is drawn beside this row rather than below it, so the scan finds a neighbouring box’s name where the currency symbol would be. Same class as page 3’s three — declared money on the caption, with the reason the probe misses it recorded."
+        "_the_probe_used_to_miss_this_block": "29_total_business_expenses (widget y 86.4, x 478.8) is money on its printed caption — \"(29) Total Business Expenses\", the sum of lines (18) through (28), every one of which the probe DOES flag. The probe does not flag it because the nearest printed text to its left within 14pt is \"Box C\" at 2.1pt: the Box C title block is drawn beside this row rather than below it, so the scan finds a neighbouring box’s name where the currency symbol would be. Same class as page 3’s three — declared money on the caption, with the reason the probe misses it recorded. — SUPERSEDED IN SLICE 6. Both cells DO carry a printed \"$\": (29) has one at 3.6pt and Box C has one at 5.0pt. What the old probe did was take the single nearest run, which was the \"Box C\" title at 2.1pt and the footer word \"Form\" at 3.5pt, and never look further. The reading above was right that the probe was blind here and wrong about why, and it is kept verbatim because a superseded finding that is deleted cannot teach anything. The probe now takes the nearest run that ENDS in \"$\" within the gap and flags both."
       },
       {
         "id": "P5_BOX_C",
@@ -2055,7 +2233,134 @@
           "box_c_net_business_income"
         ],
         "cells": [],
-        "_money_without_a_printed_dollar_sign": "box_c_net_business_income (widget y 50.4, x 460.8) is money on its printed caption — \"Subtract line (29) from line (17) and enter the amount in Box C =\". The probe reads \"Form\" 3.5pt to its left, which is the page footer run, not a currency symbol. Both of page 5’s two unflagged money cells sit in or beside the Box C title block at the foot of the page, and both are declared on their captions."
+        "_the_probe_used_to_miss_this_block": "box_c_net_business_income (widget y 50.4, x 460.8) is money on its printed caption — \"Subtract line (29) from line (17) and enter the amount in Box C =\". The probe reads \"Form\" 3.5pt to its left, which is the page footer run, not a currency symbol. Both of page 5’s two unflagged money cells sit in or beside the Box C title block at the foot of the page, and both are declared on their captions. — SUPERSEDED IN SLICE 6. Both cells DO carry a printed \"$\": (29) has one at 3.6pt and Box C has one at 5.0pt. What the old probe did was take the single nearest run, which was the \"Box C\" title at 2.1pt and the footer word \"Form\" at 3.5pt, and never look further. The reading above was right that the probe was blind here and wrong about why, and it is kept verbatim because a superseded finding that is deleted cannot teach anything. The probe now takes the nearest run that ENDS in \"$\" within the gap and flags both."
+      },
+      {
+        "id": "P6_HOUSEHOLD_INCOME",
+        "page": 6,
+        "mode": "nearest_whole_dollar",
+        "printed": "Round to the nearest whole dollar.",
+        "printed_at": {
+          "page": 6,
+          "y": 664.9,
+          "x": [
+            444.9,
+            576
+          ]
+        },
+        "_band": "Opens at y 664.9, below the 'Monthly Household Income' sub-heading at y 687.5 and its Note at y 674.9, and above the 'Primary taxpayer' row label at y 653.7. Closes at Box D's own instruction at y 452.5. Every money cell of the income half is inside it: the eight component cells, (30), (31), and (32) through (38).",
+        "keys": [
+          "30_primary_taxpayer_gross_wages",
+          "30_primary_taxpayer_social_security",
+          "30_primary_taxpayer_pensions",
+          "30_primary_taxpayer_other_income",
+          "30_total_primary_taxpayer_income",
+          "31_spouse_gross_wages",
+          "31_spouse_social_security",
+          "31_spouse_pensions",
+          "31_spouse_other_income",
+          "31_total_spouse_income",
+          "32_additional_sources_of_income",
+          "33_interest_dividends_and_royalties",
+          "34_distributions",
+          "35_net_rental_income",
+          "36_net_business_income_from_box_c",
+          "37_child_support_received",
+          "38_alimony_received"
+        ],
+        "_keys_deliberately_absent": "32_list_sources is TEXT — it lists who the additional income at (32) comes from. It is drawn inside this band and is in no rounding block, which is the correct state for a cell that is not money."
+      },
+      {
+        "id": "P6_BOX_D",
+        "page": 6,
+        "mode": "nearest_whole_dollar",
+        "printed": "Round to the nearest whole dollar.",
+        "printed_at": {
+          "page": 6,
+          "y": 452.5,
+          "x": [
+            313.7,
+            435.6
+          ]
+        },
+        "_band": "The Box D block: one instruction, one cell. Drawn between (38) (widget y 457.2..471.6) and the Box D cell (widget y 421.2..432.0), in the same shape Box B and Box C take on page 5. Declared as its own block rather than folded into the income block above because that is what the page draws — a second instruction, at a second place, over one cell.",
+        "keys": [
+          "box_d_total_household_income"
+        ],
+        "_every_operand_is_in_the_block_above": "Box D crosses NO rounding boundary. Its nine operands are all in P6_HOUSEHOLD_INCOME, which rounds under the same mode. Unlike Box A and Box B, whose operands straddle a boundary, Box D and the sum of its rounded operands can differ by nothing."
+      },
+      {
+        "id": "P6_HOUSEHOLD_EXPENSES",
+        "page": 6,
+        "mode": "nearest_whole_dollar",
+        "printed": "Round to the nearest whole dollar.",
+        "printed_at": {
+          "page": 6,
+          "y": 362.5,
+          "x": [
+            444.9,
+            576
+          ]
+        },
+        "_band": "Opens at y 362.5, below the 'Monthly Household Expenses' sub-heading at y 419.1 and its three-line Note ending at y 372.5, and above (39) at y 352.5. Closes at Box E's own instruction at y 105.8. Holds (39) through (51) and the three marker-less money cells drawn inside those rows.",
+        "keys": [
+          "39_food_clothing_and_miscellaneous",
+          "40_housing_and_utilities",
+          "40_monthly_rent_payment",
+          "41_vehicle_loan_or_lease_payments",
+          "42_vehicle_operating_costs",
+          "43_public_transportation_costs",
+          "44_health_insurance_premiums",
+          "45_out_of_pocket_health_care_costs",
+          "46_court_ordered_payments",
+          "47_child_dependent_care_payments",
+          "48_life_insurance_premiums",
+          "48_life_insurance_policy_amount",
+          "49_current_monthly_taxes",
+          "50_secured_debts_other",
+          "51_delinquent_state_local_tax_payment",
+          "51_total_tax_owed"
+        ],
+        "_money_without_a_printed_dollar_sign": "THREE CELLS, all of them marker-less sub-cells inside a numbered row, and none of them an operand of Box E. 40_monthly_rent_payment (widget y 301.7..313.2, x 129.6..219.6) is captioned 'monthly rent payment' at y 312.4 x 221.8..298.7, drawn to the cell's RIGHT — the only cell on this form whose caption is. 48_life_insurance_policy_amount (widget y 164.2..176.4, x 313.2..435.6) is captioned 'Life insurance policy amount' at y 174.8 x 205.2..306.6. 51_total_tax_owed (widget y 110.2..122.4, x 374.1..435.6) is captioned '. Total tax owed' at y 120.8 x 313.2..369.7. Each is declared money on its caption: a rent payment, a policy face amount and a tax balance are all dollar figures. None carries a printed '$' and the form draws one against every marked cell in this band, so the absence is consistent — the form gives a '$' to the lines it numbers and to nothing else.",
+        "_keys_deliberately_absent": "50_list_debts_expenses is TEXT. Its leaf name is Interest_Dividends[0] under tab_order[2] (registry L03), which is wrong twice over, and a numeric-shape rule reading that name would have no reason to think so."
+      },
+      {
+        "id": "P6_BOX_E",
+        "page": 6,
+        "mode": "nearest_whole_dollar",
+        "printed": "Round to the nearest whole dollar.",
+        "printed_at": {
+          "page": 6,
+          "y": 105.8,
+          "x": [
+            313.7,
+            435.6
+          ]
+        },
+        "_band": "The Box E block: one instruction, one cell, drawn between (51) (widget y 108.0..122.4) and the Box E cell (widget y 72.0..84.2).",
+        "keys": [
+          "box_e_total_household_expenses"
+        ],
+        "_every_operand_is_in_the_block_above": "Box E crosses no rounding boundary either. Its thirteen operands are all in P6_HOUSEHOLD_EXPENSES under the same mode."
+      },
+      {
+        "id": "P6_BOX_F",
+        "page": 6,
+        "mode": "nearest_whole_dollar",
+        "printed": "Round to the nearest whole dollar.",
+        "printed_at": {
+          "page": 6,
+          "y": 69.8,
+          "x": [
+            313.7,
+            435.6
+          ]
+        },
+        "_band": "The Box F block: one instruction, one cell, drawn below Box E at the foot of the page.",
+        "keys": [
+          "box_f_remaining_monthly_income"
+        ],
+        "_its_two_operands_are_boxes": "Box F = Box D minus Box E, and both operands sit in blocks of their own (P6_BOX_D and P6_BOX_E) under the same mode. Three blocks, one instruction each, no boundary crossed. This is the first cell on the form whose operands are entirely other Boxes."
       }
     ],
     "_the_mixed_scope_finding_measured": "MEASURED, not estimated, and RE-DERIVED BY THE GATE each run rather than retyped here. Of the 40 declared totals on pages 1-5, exactly TWO cross a rounding boundary. Box A: total in nearest_whole_dollar while operands (5), (6) and (7) are in none_printed blocks. Box B: total in nearest_whole_dollar, operand (8) under the same rule, operand (11) in the none_printed P5_SECTION_5_CONTINUED — the first crosser with only ONE operand on the far side. Every other total shares its operands’ rule. Worst-case divergence for Box A was brute-forced over all 1,000,000 cent-combinations of its three fractional operands: |round(sum of operands) - sum of rounded operands| reaches 1 and never 2, first at cents (0.00, 0.01, 0.49). Box B has one fractional operand and is bounded by the same 1. So the two PREPARATION METHODS — round the sum, or round each line and add — can differ by at most one dollar on this form. THE ENGINE AND THE PAGE CANNOT: step 11 recomputes each Box from its PRINTED operand cells and rounds by that Box’s own block, so both reconcile exactly and neither needs a tolerance or a not_checkable declaration. Step 11 prints the crossing list every run, so this count cannot silently go stale the way the count in this very sentence did when page 5 landed.",
@@ -2162,6 +2467,154 @@
       "id": "P5-4",
       "subject": "the leaf name Other_Secured_Debts[0] is used for TWO different printed lines on two pages",
       "reported": "Declared in 433aoi.name-lies.json as L13 (page 5) with the page-6 cell named as its twin. Raised here because the duplicate was found by a leaf-name scan across the whole form rather than by reading page 5, and because the same scan found L14 on page 7 - a cell named Gross_Receipts[0] whose printed caption is 'Amount of dispute' in the litigation block. Neither was looked for by any earlier slice."
+    }
+  ],
+  "authored_from_page6": {
+    "_printed_markers_first": "EVERY PRINTED MARKER ON THIS PAGE, WITH ITS y, BEFORE ANY BINDING. line-markers.mjs reports 25 on page 6: (30) y 628.5, (31) y 588.9, (32) y 562.5, (33) y 549.3, (34) y 534.9, (35) y 520.5, (36) y 502.5, (37) y 484.5, (38) y 470.1, Box D y 455.1, (39) y 342.9, (40) y 310.5, (41) y 297.3, (42) y 274.5, (43) y 252.9, (44) y 239.7, (45) y 216.9, (46) y 203.7, (47) y 189.3, (48) y 174.9, (49) y 160.5, (50) y 135.1, (51) y 120.9, Box E y 105.9, Box F y 69.9. Every one of the 23 numbered markers is drawn at x 447.1..468, immediately left of a money cell at x 471.6..576, and the marker's y falls INSIDE that cell's rectangle in all 23 cases — checked cell by cell, not asserted from the tool's own pairing. The three Box markers are drawn at x 446.4..469.5 with no widget on their row, exactly as Box A and Box B are; each is bound by the printed instruction below it and the '$' drawn at x 444.2..448.6 immediately left of its cell.",
+    "_printed_section_heading": "'Section 7' at y 755.9, x 36.0..80.5, and 'Monthly Household Income and Expense Information' at y 755.9, x 144.0..396.8, drawn as two separate runs — the same shape every section banner on this form takes. Two sub-headings below it: 'Monthly Household Income' at y 687.5, x 36.0..166.6, and 'Monthly Household Expenses' at y 419.1, x 36.0..178.3.",
+    "_what_this_slice_covers": "The whole of printed page 6, which is the whole of Section 7. 39 fields: 38 text cells and one PDFButton. No checkbox of any kind is drawn on this page — the only page of the eight besides page 7 for which that is true — so nothing here is declared `exclusive` or `check_here`, and that is a checked absence rather than an omission.",
+    "_why_scalars_and_not_a_two_slot_group": "THE PRIMARY-TAXPAYER AND SPOUSE ROWS ARE FOUR-CELL ROWS OF IDENTICAL SHAPE AND THEY ARE BOUND AS SCALARS, and the reason is stronger than the one that decided (7a)/(7b) on page 4. The page-4 test was a printed heading drawn between two blocks. Here there are three independent reasons and no need to reach for that one: (i) each row carries a printed PARTY LABEL — 'Primary taxpayer' at y 653.7 and 'Spouse' at y 614.1 — so the rows are not interchangeable, and a group's slots are by definition filled in order from a repeatable list; (ii) the two totals carry DIFFERENT printed captions, 'Total primary taxpayer income' at y 633.8/625.8 and 'Total spouse income' at y 593.5/585.5, and a group column has one caption across its slots; (iii) the two totals carry DIFFERENT printed line markers, (30) and (31), and every repeatable table on this form gives its slots the SAME marker letter with a different suffix — (1a)/(1b), (5a)/(5b), (9a)/(9b) — never two consecutive whole numbers. Section 1 on page 1 binds the taxpayer and spouse as scalars for the same reason and this follows it.",
+    "_the_three_sub_cells_that_carry_no_marker": "FOUR CELLS ON THIS PAGE SIT INSIDE A NUMBERED ROW AND CARRY NO MARKER OF THEIR OWN, and three of the four are MONEY. They are (40)'s 'monthly rent payment' at y 301.7..313.2 x 129.6..219.6, (48)'s 'Life insurance policy amount' at y 164.2..176.4 x 313.2..435.6, (51)'s 'Total tax owed' at y 110.2..122.4 x 374.1..435.6, and (50)'s 'List debt(s)/expense(s)' at y 124.6..136.8 x 291.6..435.6, which is text. NONE of the three money cells is an operand of Box E: Box E's printed instruction names lines (39) through (51) and none of these three carries a line number. A tripwire that summed 'every money cell drawn in the expense band' would fold all three in and Box E would fail on a correctly filled form. Each is declared under _not_checkable with its printed caption, following the page-4 precedent for s4_average_gross_monthly_payroll: a money cell in neither list is indistinguishable from one nobody looked at.",
+    "_the_caption_that_sits_to_the_right": "(40)'s rent cell is the first cell on this form whose identifying caption is drawn to its RIGHT. 'monthly rent payment' is at y 312.4, x 221.8..298.7 and the cell ends at x 219.6 — a 2.2pt gap on the right. The nearest printed run to its LEFT is 'telephone, and cell phone)' at 11.1pt, the tail of (40)'s own parenthetical. Bound on the rectangle: the cell is drawn inside the (40) row band (y 298.8..331.2 for the (40) money cell) and the only printed phrase it abuts is the rent one. The label file agrees; nothing disagreed here."
+  },
+  "_map_evidence_page6": {
+    "30_total_primary_taxpayer_income": {
+      "printed_marker": "(30)",
+      "marker_at": "y 628.5, x 447.1..468.0",
+      "widget": "leaf Primary[0].Total_Primary_Taxpayer_Income[0], y 615.6..630.0, x 471.6..576.0",
+      "printed_caption": "Total primary taxpayer income (drawn on two lines: 'Total primary' y 633.8 x 381.7..428.4, 'taxpayer income' y 625.8 x 369.7..428.4), with '=' at y 625.3, x 431.5..436.1",
+      "the_printed_operand_chain": "'$' y 633.3 x 36.0..41.6 [Gross wages cell x 43.2..108.0] '+ $' y 633.3 x 112.1..129.1 [Social Security cell x 133.2..194.4] '+ $' y 633.3 x 198.5..215.5 [Pension(s) cell x 219.6..280.8] '+ $' y 633.3 x 284.9..301.9 [Other income cell x 306.0..363.6] '=' y 625.3 [(30) cell x 471.6..576.0]. The column captions are drawn above at y 642.9: 'Gross wages' x 36.0..82.7, 'Social Security' x 126.0..178.9, 'Pension(s)' x 212.4..250.6, 'Other income' x 298.8..346.8 with '(e.g. unemployment)' at y 641.9 x 348.8..413.0."
+    },
+    "31_total_spouse_income": {
+      "printed_marker": "(31)",
+      "marker_at": "y 588.9, x 447.1..468.0",
+      "widget": "leaf SpouseOther[0].Total_Spouse_Other_Income[0], y 576.0..590.4, x 471.6..576.0",
+      "printed_caption": "Total spouse income ('Total spouse' y 593.5 x 382.6..428.4, 'income' y 585.5 x 402.6..428.4), with '=' at y 585.7",
+      "the_printed_operand_chain": "Identical to (30)'s, one row down: '$' y 593.7 x 36.0..41.6, '+ $' x 112.1..129.1, '+ $' x 198.5..215.5, '+ $' x 284.9..301.9, with column captions repeated at y 603.3.",
+      "the_leaf_says_SpouseOther_and_the_page_says_Spouse": "See _arguable_page6 P6-1. The printed row label is 'Spouse' at y 614.1 and the printed total caption is 'Total spouse income'; the subform is named SpouseOther[0] and its children Spouse_Other_*. The page's own preamble at y 702.8 says 'Include the below information for yourself, your spouse, and anyone else who contributes to your household's income', so the name echoes the preamble and the printed row label does not. REPORTED AND NOT RESOLVED; it is not entered in the name-lie registry either way, because it is not settled which of the two the cell is for."
+    },
+    "32_additional_sources_of_income": {
+      "printed_marker": "(32)",
+      "marker_at": "y 562.5, x 447.1..468.0",
+      "widget": "leaf Interest_Dividends[0], y 550.8..576.0, x 471.6..576.0",
+      "printed_caption": "Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may contribute to the household income, etc. (y 573.9, x 36.0..424.2, continuing 'contribute to the household income, etc.' at y 564.3, x 36.0..177.9)",
+      "THE_LEAF_NAME_IS_A_LIE": "Interest_Dividends[0] is NOT the interest-and-dividends cell. The interest-and-dividends cell is Interest_Dividends[1], one row BELOW it, at printed line (33). Registered as L01 since slice 1 with bound_to null and the note 'recorded before it is mapped precisely so the author of that slice does not bind it by name'. It is now bound, to the cell the PAGE puts it on: the marker (32) at y 562.5 falls inside this widget's rectangle (550.8..576.0) and marker (33) at y 549.3 falls inside Interest_Dividends[1]'s (536.4..550.8). Measured, not inferred from the tool's pairing."
+    },
+    "32_list_sources": {
+      "printed_marker": "none — the cell sits inside the (32) row",
+      "widget": "leaf tab_order[1].Interest_Dividends[0], y 553.0..565.2, x 234.0..435.6",
+      "printed_caption": "List source(s) — y 563.6, x 180.0..228.0, drawn 6.0pt to the cell's left",
+      "THE_LEAF_NAME_IS_A_LIE": "Registered as L02. A second Interest_Dividends leaf, on a TEXT cell that lists who the additional income comes from. It is not money and it is in no rounding block."
+    },
+    "33_interest_dividends_and_royalties": {
+      "printed_marker": "(33)",
+      "marker_at": "y 549.3, x 447.1..468.0",
+      "widget": "leaf Interest_Dividends[1], y 536.4..550.8, x 471.6..576.0",
+      "printed_caption": "Interest, dividends, and royalties — y 549.3, x 36.0..150.7",
+      "THIS_ONE_IS_THE_CONTROL": "Registered as C01, kind `control`: the leaf name Interest_Dividends[1] is VERIFIED TRUE against the printed page. It is the fourth of four cells on this form carrying an Interest_Dividends leaf and the ONLY one that is what it says. The other three are L01 (this page, line 32), L02 (this page, the source list) and L03 (this page, the debt list) — all three on page 6, all three now bound to something else. The control is why the registry keeps verified-true entries: a reader who saw only the three lies would conclude the family is worthless, and a reader who saw only this one would conclude the family is trustworthy. Both readings are wrong.",
+      "ROYALTIES_ARE_NEW": "The printed caption names ROYALTIES, which 433-A line 23 (\"Interest and dividends\") does not. The OIC cell is a superset of the 433-A one. Recorded in the crosswalk rather than treated as an exact match."
+    },
+    "36_net_business_income_from_box_c": {
+      "printed_marker": "(36)",
+      "marker_at": "y 502.5, x 447.1..468.0",
+      "widget": "leaf Net_Business_Income_BoxC[0], y 486.0..507.6, x 471.6..576.0",
+      "printed_caption": "Net business income from Box C (y 506.8, x 36.0..152.5) followed by '[Deductions for non-cash expenses on Schedule C (e.g., depreciation, depletion, etc.) are' at y 505.8, x 154.7..432.1 and 'not permitted as an expense for offer purposes and must be added back in to the net income figure]' at y 497.0, x 36.0..344.2",
+      "NOT_DECLARED_EQUAL_TO_BOX_C": "See _arguable_page6 P6-2. The caption says 'from Box C', which reads as an equality and would make an exact tripwire; the bracketed sentence beside it describes an ADD-BACK that makes the two legitimately differ. Declared not checkable with the caption as the reason and a review-page advisory, rather than declared as an equality that would fail a correctly filed form. It is nevertheless an operand of Box D, which IS checkable."
+    },
+    "40_monthly_rent_payment": {
+      "printed_marker": "none — the cell sits inside the (40) row",
+      "widget": "leaf tab_order[0].MonthlyRentPayment[0], y 301.7..313.2, x 129.6..219.6",
+      "printed_caption": "monthly rent payment — y 312.4, x 221.8..298.7, drawn 2.2pt to the cell's RIGHT. See authored_from_page6._the_caption_that_sits_to_the_right.",
+      "not_an_operand": "It is a COMPONENT DISCLOSURE inside (40), not an operand of it. The page draws no '=' and no '+' between the two, and (40)'s own caption already includes rent ('e.g., rent or mortgage payment and average monthly cost of property taxes, home insurance, ...'). Declared not checkable."
+    },
+    "48_life_insurance_policy_amount": {
+      "printed_marker": "none — the cell sits inside the (48) row",
+      "widget": "leaf LifeIns[0].Line_Insureance_Policy[0], y 164.2..176.4, x 313.2..435.6",
+      "printed_caption": "Life insurance policy amount — y 174.8, x 205.2..306.6, drawn 6.6pt to the cell’s left",
+      "what_it_holds": "The FACE AMOUNT of the policy, not the premium. The premium is the (48) cell at x 471.6..576.0. Two money cells on one printed row holding two different quantities, told apart by their captions and by which one the (48) marker sits beside. The leaf name is misspelled Line_Insureance_Policy[0]; a misspelling is not a lie and it is not registered as one."
+    },
+    "50_secured_debts_other": {
+      "printed_marker": "(50)",
+      "marker_at": "y 135.1, x 447.1..468.0",
+      "widget": "leaf Other_Secured_Debts[0], y 122.4..147.6, x 471.6..576.0",
+      "printed_caption": "Secured debts/Other (y 145.0, x 36.0..109.8) with ‘(e.g., any loan where you pledged an asset as collateral not previously listed, government guaranteed’ at y 144.0 and ‘student loan, employer required retirement or dues)’ at y 135.2, x 36.0..195.5",
+      "THE_TWIN_RAISED_AS_P5_4": "This is the page-6 cell named in registry entry L13. The leaf name Other_Secured_Debts[0] is used for TWO different printed lines on two pages: printed line (27) on page 5, 'Secured debts (not credit cards)', in the business P&L, and printed line (50) here, 'Secured debts/Other', in household expenses. Different subform parents keep the full paths apart, and NOTHING but the printed caption tells the two cells apart. L13's page-6 twin now has a home; the entry is updated to name this key."
+    },
+    "50_list_debts_expenses": {
+      "printed_marker": "none — the cell sits inside the (50) row",
+      "widget": "leaf tab_order[2].Interest_Dividends[0], y 124.6..136.8, x 291.6..435.6",
+      "printed_caption": "List debt(s)/expense(s) — y 135.2, x 205.2..286.6, drawn 5.0pt to the cell’s left",
+      "THE_LEAF_NAME_IS_A_LIE": "Registered as L03, and it is the worst of the three: a leaf named Interest_Dividends on a TEXT cell in the EXPENSE half of the page, listing debts. L03's own note says it implies 'a third interest-and-dividends cell, on the INCOME half of the page' — the name is wrong about what the cell holds AND about which half of the page it is on."
+    },
+    "51_total_tax_owed": {
+      "printed_marker": "none — the cell sits inside the (51) row",
+      "widget": "leaf total_tax_owed[0], y 110.2..122.4, x 374.1..435.6",
+      "printed_caption": ". Total tax owed — y 120.8, x 313.2..369.7, drawn 4.4pt to the cell’s left. The leading full stop belongs to the sentence before it: the row reads ‘Enter the amount of your monthly delinquent state and/or local tax payment(s)’ (y 120.9, x 36.0..311.7), then this caption, then this cell.",
+      "what_it_holds": "The total BALANCE of delinquent state and local tax owed. The (51) cell beside it holds the MONTHLY PAYMENT against that balance. A balance is not an expense and it is not an operand of Box E; only the monthly payment is. Declared not checkable."
+    },
+    "BOX_D": {
+      "printed_marker": "Box D",
+      "marker_at": "y 455.1, x 446.4..469.5 — no widget on its row, exactly as Box A (page 4) and Box B (page 5)",
+      "widget": "leaf Total_Household_Income[0], y 421.2..432.0, x 453.6..576.0",
+      "printed_title": "Total Household Income — y 445.5, x 446.4..533.1",
+      "THE_PRINTED_OPERAND_LIST_VERBATIM": "Add lines (30) through (38) and enter the amount in Box D =",
+      "operand_list_at": "y 433.5, x 180.8..435.6, with the ‘$’ that identifies the cell drawn at y 432.3, x 444.2..448.6 — 5.0pt left of the widget",
+      "printed_floor": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line. (y 442.9, x 141.3..435.6)",
+      "printed_rounding": "Round to the nearest whole dollar. (y 452.5, x 313.7..435.6)",
+      "nine_operands": "(30), (31), (32), (33), (34), (35), (36), (37), (38) — nine consecutive printed markers, every one of them a printed cell on this same page. Box D is the first Box on this form all of whose operands are on its own page: Box A spans three pages and Box B spans two."
+    },
+    "BOX_E": {
+      "printed_marker": "Box E",
+      "marker_at": "y 105.9, x 446.4..469.1 — no widget on its row",
+      "widget": "leaf Total_Household_Expenses[0], y 72.0..84.2, x 453.6..576.0",
+      "printed_title": "Total Household Expenses — y 96.3, x 446.4..542.0",
+      "THE_PRINTED_OPERAND_LIST_VERBATIM": "Add lines (39) through (51) and enter the amount in Box E =",
+      "operand_list_at": "y 86.8, x 181.3..435.6, with the ‘$’ at y 83.8, x 444.2..448.6",
+      "printed_floor": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line. (y 96.2, x 141.3..435.6)",
+      "printed_rounding": "Round to the nearest whole dollar. (y 105.8, x 313.7..435.6)",
+      "thirteen_operands": "(39) through (51), thirteen consecutive printed markers. The three marker-less money cells drawn inside those rows — the rent payment, the policy amount and the total tax owed — are NOT among them, because the printed instruction names LINES and none of the three is a line."
+    },
+    "BOX_F": {
+      "printed_marker": "Box F",
+      "marker_at": "y 69.9, x 446.4..468.6 — no widget on its row",
+      "widget": "leaf Remaing_Monthly_Income[0], y 36.0..48.2, x 453.6..576.0",
+      "printed_title": "Remaining Monthly Income — y 60.3, x 446.4..543.3",
+      "THE_PRINTED_OPERAND_LIST_VERBATIM": "Subtract Box E from Box D and enter the amount in Box F =",
+      "operand_list_at": "y 50.8, x 180.3..435.6, with the ‘$’ at y 47.8, x 444.2..448.6",
+      "printed_floor": "Do not enter a negative number. If any line item is a negative, enter \"0\" on that line. (y 60.2, x 141.3..435.6)",
+      "printed_rounding": "Round to the nearest whole dollar. (y 69.8, x 313.7..435.6)",
+      "THE_FIRST_SUBTRACTING_BOX": "Box A, Box B, Box D and Box E all ADD. Box C on page 5 subtracts one line from another; Box F is the first Box whose operands are two other BOXES, and the only cell on this form fed entirely by Boxes. The floor matters here as it does nowhere else on the page: a household whose expenses exceed its income has a genuinely negative remainder and the form instructs it to print 0.",
+      "leaf_name_misspelling": "Remaing_Monthly_Income[0] — missing the \"in\". A misspelling is not a lie: it names the right cell. Not registered."
+    }
+  },
+  "_nesting_note_page6": "PAGE 6 HAS THE FLATTEST STRUCTURE ON THE FORM AND ONE ODDITY. Twenty-three of its 38 text cells are direct children of F433-A-OIC_Page6[0] with no intervening subform at all — (32) through (38), (39) through (51), and the three Box cells. The two income rows nest two deep (Primary[0].Wages[0].Primary_Taxpayer_Wages[0]) and the life-insurance policy cell nests one (LifeIns[0].Line_Insureance_Policy[0]). THE ODDITY IS tab_order[0..2]: three subforms named for the TAB ORDER rather than for anything printed, each holding exactly one cell, and the three cells they hold are in three different printed rows on two different halves of the page — tab_order[0] is (40)'s rent cell in the expenses, tab_order[1] is (32)'s source list in the income, tab_order[2] is (50)'s debt list in the expenses. The index is not a position, not a row and not a section; it is the order the cursor visits them. Nothing about a tab_order[n] path may be read as a claim about the page. This is the same lesson as _nesting_note_page2 in a new shape: on this form the tree says nothing the page has not already said.",
+  "_arguable_page6": [
+    {
+      "id": "P6-1",
+      "subject": "the subform SpouseOther[0] echoes the page preamble and the printed ROW LABEL says only \"Spouse\"",
+      "the_cell": "the subform leaf SpouseOther[0] and its five children, bound as 31_spouse_gross_wages, 31_spouse_social_security, 31_spouse_pensions, 31_spouse_other_income and 31_total_spouse_income",
+      "reading_A": "THE ROW IS THE SPOUSE’S. The printed row label at y 614.1, x 36.0..64.9 is the single word \"Spouse\". The printed total caption is \"Total spouse income\" (y 593.5 and y 585.5). The printed marker caption for (31) names the spouse and nobody else. On this reading the \"Other\" in SpouseOther is spurious and the leaf family Spouse_Other_* overstates the cell — which would make it a lie of the same class as L01.",
+      "reading_B": "THE ROW IS THE SPOUSE AND ANYONE ELSE. The page preamble at y 702.8 reads \"Include the below information for yourself, your spouse, and anyone else who contributes to your household’s income.\" Only two income rows are drawn. If \"anyone else\" has nowhere else to go, this row is where they go, and SpouseOther is then an accurate name for a row the printed LABEL understates. On this reading the name is page_imprecise, not a lie.",
+      "what_differs_on_a_filed_page": "NOTHING IN THE ARITHMETIC. Under both readings the same five cells are written, (31) sums the same four operands, and Box D adds the same (31). What differs is WHERE A THIRD CONTRIBUTOR’S INCOME GOES on a real record: under reading A it must go to (32), \"Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may contribute to the household income\"; under reading B it may go here. AND (32)’S OWN CAPTION IS THE STRONGEST EVIDENCE FOR READING A: the form prints a dedicated line for exactly the people reading B would put in this row, so reading B would have two printed homes for one fact.",
+      "what_is_bound_today": "The five cells are bound with SPOUSE keys, which is reading A. The registry records NEITHER a lie nor a page_imprecise entry for SpouseOther[0], because entering one would settle a question this slice is reporting rather than resolving. Raised for Principal."
+    },
+    {
+      "id": "P6-2",
+      "subject": "whether (36) is declarable EQUAL to Box C on page 5",
+      "the_cell": "36_net_business_income_from_box_c — topmostSubform[0].F433-A-OIC_Page6[0].Net_Business_Income_BoxC[0]",
+      "reading_A": "IT IS AN EQUALITY AND A TRIPWIRE. The printed caption is \"Net business income from Box C\". Box C is a printed cell on this same form, page 5, and \"from\" names it. A one-operand tripwire (36) = Box C would be exact, would need no new schema, and would catch the commonest transcription error on the form — a figure carried across two pages by hand.",
+      "reading_B": "IT IS NOT AN EQUALITY, AND THE PAGE SAYS SO IN THE SAME BREATH. The caption continues, in brackets, \"[Deductions for non-cash expenses on Schedule C (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes and must be added back in to the net income figure]\". That is an instruction to make (36) DIFFER from a Schedule-C-derived net income by the amount of the non-cash deductions. Box C is computed on page 5 from lines (17) and (29), and P5-2 already records that the Section 6 preamble authorises a filed form where the P&L is on an attachment and (17)/(29) are transcribed. If the attached P&L carried depreciation, Box C carries it too and (36) must not.",
+      "what_differs_on_a_filed_page": "A DECLARED TRIPWIRE WOULD FAIL A CORRECTLY FILED FORM whenever the add-back is non-zero, and would pass on every form where it is zero — which is most of them. That is the worst shape a check can have: right almost always, and wrong exactly on the records that did the harder thing correctly.",
+      "what_is_bound_today": "(36) is bound as ordinary input and declared under _not_checkable with the bracketed caption as the reason and a review-page advisory carrying the add-back instruction verbatim. It remains an operand of Box D, which IS checked. NOT RESOLVED: whether the repo should hold the add-back as a separate captured figure, so that (36) = Box C + add-back becomes checkable, is a schema question for the provisioning pass."
+    },
+    {
+      "id": "P6-3",
+      "subject": "the page prints no \"Other expenses\" line and 433-A prints one",
+      "the_cells": "433-A binds 49_exp_other_expenses; 433-A(OIC) page 6 has no cell for it. The OIC expense list runs (39) food/clothing/misc, (40) housing and utilities, (41) vehicle loan/lease, (42) vehicle operating, (43) public transportation, (44) health insurance, (45) out-of-pocket health care, (46) court-ordered, (47) child/dependent care, (48) life insurance, (49) current monthly taxes, (50) secured debts/Other, (51) delinquent state/local tax — thirteen lines and no catch-all.",
+      "reading_A": "THE CATCH-ALL IS (50). Its printed caption is \"Secured debts/Other\", and the word \"Other\" is drawn there and nowhere else in the expense list. A household expense that fits no other line goes there, and the \"List debt(s)/expense(s)\" cell beside it — which says EXPENSE(S), not only DEBT(S) — is what names it.",
+      "reading_B": "THERE IS NO CATCH-ALL AND THE OMISSION IS DELIBERATE. (50)’s parenthetical is entirely about secured borrowing: \"any loan where you pledged an asset as collateral not previously listed, government guaranteed student loan, employer required retirement or dues\". Every example is a debt. On this reading \"Other\" qualifies \"Secured debts\" — secured debts other than those already listed — which is exactly what registry entry L13 says the LEAF name Other_Secured_Debts means, and an unsecured household expense has no home on this form at all.",
+      "what_differs_on_a_filed_page": "A real expense with no line. Under reading A it is written into (50) and enters Box E; under reading B it is omitted and Box E is lower, which RAISES Box F and therefore raises the offer amount. The two readings move the offer in a direction that matters, and the \"List debt(s)/expense(s)\" caption is the only printed thing that separates them.",
+      "what_is_bound_today": "(50) is bound to the printed caption \"Secured debts/Other\" and 50_list_debts_expenses to \"List debt(s)/expense(s)\", both verbatim, and the map takes no position on what may be written into them. The crosswalk maps 50_secured_debts_other to 433-A 47_exp_secured_debts on the arithmetic and records that 433-A’s 49_exp_other_expenses has NO counterpart here. Reported for Principal, not resolved."
     }
   ]
 }

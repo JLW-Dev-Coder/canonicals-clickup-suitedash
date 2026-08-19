@@ -32,9 +32,10 @@
         "line-markers.mjs pairs marker (32) at y 562.5 with the money widget to its right at x 471.6..576.0",
         "433aoi.labels.txt correlates this widget to \"Round to the nearest whole dollar.\" - the nearest drawn run, which names no income type and so contradicts the leaf without corroborating anything else"
       ],
-      "bound_to": null,
-      "not_bound_because": "Page 6 belongs to a slice nobody has authored. Recorded before it is mapped precisely so the author of that slice does not bind it by name.",
-      "cost_if_bound_by_name": "Interest and dividend income would print on line (32) and household support income on line (33). Both are income lines that feed the same totals, so every printed total below would still reconcile and the filed page would misstate two sources."
+      "bound_to": "32_additional_sources_of_income",
+      "cost_if_bound_by_name": "Interest and dividend income would print on line (32) and household support income on line (33). Both are income lines that feed the same totals, so every printed total below would still reconcile and the filed page would misstate two sources.",
+      "bound_in_slice": 6,
+      "bound_note": "Bound in slice 6 to the cell the PAGE puts it on. The marker (32) at y 562.5 falls inside this widget's rectangle (y 550.8..576.0) and the marker (33) at y 549.3 falls inside Interest_Dividends[1]'s (y 536.4..550.8) — measured cell by cell rather than taken from line-markers.mjs's own pairing. The entry was recorded in slice 1 with bound_to null and the note 'recorded before it is mapped precisely so the author of that slice does not bind it by name'. That is what it was for and this is the slice it was for."
     },
     {
       "id": "L02",
@@ -53,9 +54,10 @@
         "align-block.mjs: the caption ends at x 228.0 and the cell begins at x 234.0, a 6-point gap on one row",
         "433aoi.labels.txt correlates it to \"Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may\" - the (32) caption, agreeing with the rectangle and against the name"
       ],
-      "bound_to": null,
-      "not_bound_because": "Page 6 is unauthored.",
-      "cost_if_bound_by_name": "A free-text source list would be written into a money cell, or a dollar figure into a free-text cell. The first is silently wrong; the second prints a number where the examiner expects a name."
+      "bound_to": "32_list_sources",
+      "cost_if_bound_by_name": "A free-text source list would be written into a money cell, or a dollar figure into a free-text cell. The first is silently wrong; the second prints a number where the examiner expects a name.",
+      "bound_in_slice": 6,
+      "bound_note": "Bound in slice 6. A TEXT cell listing who the (32) income comes from, under the printed caption ‘List source(s)’ at y 563.6, x 180.0..228.0, drawn 6.0pt to its left. It is in no rounding block, because it is not money."
     },
     {
       "id": "L03",
@@ -75,9 +77,10 @@
         "the printed row label \"Secured debts/Other\" at y 145.0, x 36.0..109.8, seventeen printed lines below any income line",
         "433aoi.labels.txt correlates it to \"(e.g., any loan where you pledged an asset as collateral not previously listed, government guaranteed\" - the (50) caption"
       ],
-      "bound_to": null,
-      "not_bound_because": "Page 6 is unauthored.",
-      "cost_if_bound_by_name": "THE WORST OF THE FOUR. This cell is on the EXPENSE half of the page. Binding it by name would move a figure across the income/expense boundary, and the two halves are subtracted from one another to produce the offer amount - so the error would change the offer twice over, once by removing income and once by adding expense."
+      "bound_to": "50_list_debts_expenses",
+      "cost_if_bound_by_name": "THE WORST OF THE FOUR. This cell is on the EXPENSE half of the page. Binding it by name would move a figure across the income/expense boundary, and the two halves are subtracted from one another to produce the offer amount - so the error would change the offer twice over, once by removing income and once by adding expense.",
+      "bound_in_slice": 6,
+      "bound_note": "Bound in slice 6, and it is the worst of the three: a leaf named Interest_Dividends, under tab_order[2], on a TEXT cell in the EXPENSE half of the page, listing debts. The entry’s own what_the_name_implies says ‘a third interest-and-dividends cell, on the INCOME half of the page’ — wrong about what the cell holds AND about which half of the page it is on."
     },
     {
       "id": "L04",
@@ -290,10 +293,11 @@
         "line-markers.mjs pairs marker (33) at y 549.3 with this widget",
         "it is the only one of the four Interest_Dividends cells whose printed line names interest and dividends"
       ],
-      "bound_to": null,
-      "not_bound_because": "Page 6 is unauthored. The control is recorded now for the same reason its three lying siblings are: the author of that slice must not read any of the four by name, including this one.",
+      "bound_to": "33_interest_dividends_and_royalties",
       "verified_true": "The name agrees with the page. It is STILL not evidence - it was verified against the printed caption like every other cell, and it is recorded so the twelve-count cannot absorb it.",
-      "_counting_note": "This is the entry the running count in 433aoi.map.json._notes double-counted to reach \"eleven\". See _counting."
+      "_counting_note": "This is the entry the running count in 433aoi.map.json._notes double-counted to reach \"eleven\". See _counting.",
+      "bound_in_slice": 6,
+      "bound_note": "Bound in slice 6. THIS IS THE CONTROL: the one of the four Interest_Dividends leaves on this form whose name is TRUE. Its three siblings L01, L02 and L03 are all on this same page and all three are now bound to something else. The control is why the registry keeps verified-true entries — a reader seeing only the three lies would write the family off, and a reader seeing only this one would trust it."
     },
     {
       "id": "C02",
@@ -377,7 +381,8 @@
       "bound_to": "27_secured_debts_not_credit_cards",
       "why_the_map_key_is_named_from_the_page": "The key spells the printed caption, including the parenthetical that the name drops. A key named after the leaf would have carried the lie into the crosswalk and into every HubSpot property derived from it.",
       "the_danger_is_the_DUPLICATE_not_the_word": "Two cells on two pages holding two different printed lines share one leaf name, and they are told apart only by their containers — Section6[0] on page 5 versus nothing at all on page 6, where the cell hangs directly off F433-A-OIC_Page6[0]. Anyone binding by leaf name gets a coin flip between a business expense and a personal one. This is why every path in this repo is quoted whole from topmostSubform[0].",
-      "_found_by": "A leaf-name duplicate scan across all 425 fields, run while authoring slice 5. It was not found by reading page 5, and no earlier slice looked for it."
+      "_found_by": "A leaf-name duplicate scan across all 425 fields, run while authoring slice 5. It was not found by reading page 5, and no earlier slice looked for it.",
+      "the_page_6_twin_is_now_bound": "SLICE 6. The page-6 cell this entry names as the twin is bound as map key 50_secured_debts_other, on the printed caption ‘Secured debts/Other’ at y 145.0 and the (50) marker at y 135.1 falling inside its rectangle y 122.4..147.6. The two cells are told apart by their subform parents (F433-A-OIC_Page5[0].Section6[0] against F433-A-OIC_Page6[0]) and by nothing else in the name. Carried item C-10, resolved."
     },
     {
       "id": "L14",
@@ -445,8 +450,8 @@
     "controls_verified_true": 5,
     "page_imprecise_not_counted": 1,
     "total_entries": 20,
-    "bound_today": 12,
-    "unbound_because_the_page_is_unauthored": 5,
+    "bound_today": 16,
+    "unbound_because_the_page_is_unauthored": 1,
     "_the_three_counts": "THE REGISTRY REPORTS THREE COUNTS AND NOT ONE. active_lies is names that disagree with the page. controls_verified_true is names that were checked and AGREE - kept so a reader can tell an unreliable name family from an unchecked one, and so the lie total cannot absorb one by accident. page_imprecise is names that understate a cell the page also understates - neither wrong nor verified right. A single number could not carry any of that, and a single number is how the count reached eleven when the honest figure was ten.",
     "_how_this_is_derived": "COMPUTED FROM entries[] BY LENGTH, not retyped. The eleven-versus-twelve error entered because the total was a sentence someone re-typed each cycle while the list underneath it changed."
   }

@@ -306,18 +306,57 @@ export const MANIFEST = [
       return [{ what: `_bound_breakdown_page_${page}: its own stated total`, claimed: n(last), derived: bound, from: `widgets on page ${page} less never-autofill and deferred there` }];
     } }),
 
-  D({ id: 'S-05', file: /\.map\.json$/, at: /^_partition\._page_\d_has_no_never_autofill_and_no_deferred$/,
+  D({ id: 'S-05', file: /\.map\.json$/, at: /^_partition\._page_\d_has_no_/,
     kind: 'derived',
     derive: (ctx, v, at) => {
+      // The key NAMES its own claim: "_page_5_has_no_never_autofill_and_no_deferred" asserts
+      // zero of each on that page, "_page_6_has_no_deferred_and_one_never_autofill" asserts
+      // zero deferred and one never-autofill. Read the claim out of the KEY, not out of the
+      // prose — the key is the part a later author is least likely to leave stale, and a key
+      // that says one thing while its prose says another now fails here.
       const page = Number(/_page_(\d)_/.exec(at)[1]);
-      const r = pull(v, /page \d(?:'s|’s)? (\d+) fields/, 1, `_page_${page}_has_no_never_autofill field count`);
-      if (r.fail) return [{ what: `_page_${page}_has_no_...`, fail: r.fail }];
-      const onPage = (s) => [...s].filter(t => ctx.pageOf.get(t) === page).length;
-      return [
-        { what: `page ${page}: field count`, claimed: n(r.ms[0]), derived: ctx.widgetsByPage.get(page) ?? 0, from: 'widget geometry' },
-        { what: `page ${page}: never-autofill (claim is "no")`, claimed: 0, derived: onPage(ctx.never), from: 'classifyMapTargets, restricted to this page' },
-        { what: `page ${page}: deferred (claim is "no")`, claimed: 0, derived: onPage(ctx.deferred), from: 'classifyMapTargets, restricted to this page' },
-      ];
+      const onPage = (set) => [...set].filter(t => ctx.pageOf.get(t) === page).length;
+      const claimIn = (what) => {
+        const m = new RegExp(String.raw`(no|${WORD_NUM})_${what}`, 'i').exec(at);
+        return m ? (m[1].toLowerCase() === 'no' ? 0 : (word(m[1]) ?? Number(m[1]))) : null;
+      };
+      const rows = [];
+      const nev = claimIn('never_autofill'), def = claimIn('deferred');
+      if (nev === null && def === null) return [{ what: at, fail: `the key names neither a never_autofill nor a deferred claim, so there is nothing to derive from it — rename it so the claim is in the key` }];
+      if (nev !== null) rows.push({ what: `page ${page}: never-autofill`, claimed: nev, derived: onPage(ctx.never), from: 'classifyMapTargets, restricted to this page' });
+      if (def !== null) rows.push({ what: `page ${page}: deferred`, claimed: def, derived: onPage(ctx.deferred), from: 'classifyMapTargets, restricted to this page' });
+      const r = pull(v, new RegExp(String.raw`page \d(?:'s|\u2019s)? (\d+) fields`, 'i'), 1, `_page_${page} field count`);
+      if (r.fail) rows.push({ what: `page ${page} field count`, fail: r.fail });
+      else rows.push({ what: `page ${page}: field count`, claimed: n(r.ms[0]), derived: ctx.widgetsByPage.get(page) ?? 0, from: 'widget geometry' });
+      return rows;
+    } }),
+
+  D({ id: 'S-07b', file: /\.map\.json$/, at: /^_carried\._every_arguable_item_now_has_an_id_here$/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      // THE LINKAGE, ASSERTED. An arguable item recorded only in a per-page array is an open
+      // question nothing counts and nothing reports — which is the disappearing act _carried
+      // exists to prevent, committed by the file that prevents it. Every _arguable_page{N}
+      // item must be NAMED by some entry in the ledger.
+      const rows = [];
+      const ents = [...(ctx.mapDoc._carried?.open || []), ...(ctx.mapDoc._carried?.resolved || [])];
+      const blob = JSON.stringify(ents);
+      let seen = 0;
+      for (const [k, arr] of Object.entries(ctx.mapDoc)) {
+        if (!/^_arguable_page\d+$/.test(k) || !Array.isArray(arr)) continue;
+        for (const item of arr) {
+          seen++;
+          rows.push({ what: `${k}: ${item.id} is named by a _carried entry`, claimed: true, derived: blob.includes(item.id), from: '_carried.open[] and _carried.resolved[]' });
+        }
+      }
+      const r = pull(v, new RegExp(String.raw`P5-1 through P5-4[\s\S]*?only (${WORD_NUM}|\d+) of the (${WORD_NUM}|\d+)`), 1, 'the P5 linkage figures');
+      if (r.fail) rows.push({ what: 'the P5 figures', fail: r.fail });
+      else {
+        const p5 = (ctx.mapDoc._arguable_page5 || []).length;
+        rows.push({ what: 'arguable items raised on page 5', claimed: word(r.ms[0][2]) ?? Number(r.ms[0][2]), derived: p5, from: '_arguable_page5[]' });
+      }
+      rows.push({ what: 'arguable items in total, across every page', claimed: seen, derived: Object.entries(ctx.mapDoc).filter(([k, a]) => /^_arguable_page\d+$/.test(k) && Array.isArray(a)).reduce((a, [, arr]) => a + arr.length, 0), from: 'every _arguable_page{N} array' });
+      return rows;
     } }),
 
   D({ id: 'S-06', file: /\.map\.json$/, at: /^_partition\._why$/,

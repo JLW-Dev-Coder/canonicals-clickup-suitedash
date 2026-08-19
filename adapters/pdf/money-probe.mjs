@@ -27,14 +27,24 @@
 //
 // WHAT IT PROVES AND WHAT IT DOES NOT
 // -----------------------------------
-// A MONEY$ flag is strong evidence: the form drew a currency symbol against that cell and
-// against no other. The absence of a flag is NOT evidence of the reverse — 433-A(OIC) prints
+// A MONEY$ flag is strong evidence: the form drew a currency symbol against that cell within
+// 14pt to its left. The absence of a flag is NOT evidence of the reverse — 433-A(OIC) prints
 // money cells with no "$" at all, and each is identified by its printed CAPTION instead and
 // named in its block's `_money_without_a_printed_dollar_sign`. So the tool narrows the
-// reading; it does not make it. That asymmetry is why the derived check asserts declared >=
-// probed PER PAGE and enumerates the difference, rather than asserting equality: a page that
-// declared FEWER money cells than the form draws a "$" against would be hiding one, and that
-// direction is a STOP.
+// reading; it does not make it.
+//
+// AND THE ABSENCE OF A FLAG WAS ONCE WORSE EVIDENCE THAN THAT. The scan took the SINGLE
+// nearest printed run and asked whether it ended in "$"; the "$" is often 3.6pt away and a
+// Box label from the row above is often 2.1pt away, so on four cells of this form the label
+// won the race and a real currency symbol was never looked at. Two of the four were written
+// into the map as cells the form draws no "$" against. The scan now takes the nearest run
+// that ENDS in "$" within the gap, which is what it always meant.
+//
+// THE ASYMMETRY IS WHY THE DERIVED CHECK IS AN INEQUALITY. A map may declare MORE money cells
+// than the probe flags — each named in its block's `_money_without_a_printed_dollar_sign` —
+// and count-sweep.mjs [S-08] asserts declared >= probed PER PAGE rather than equality. The
+// other direction is a STOP: a page that declared FEWER money cells than the form draws a "$"
+// against would be leaving one unrounded and ungoverned.
 //
 // The 14pt threshold is the widest gap any true "$" on 433-A(OIC) sits at (the Section 4 payroll
 // cell, 5.8pt) with room to spare, and the narrowest FALSE neighbour is 11pt of unrelated
@@ -88,10 +98,25 @@ export const probeMoneyCells = async (form, pages = []) => {
     const left = (text[w.page - 1]?.items || [])
       .filter(t => t.y2 > y1 - 4 && t.y1 < y2 + 4 && t.x2 <= x1 + 2)
       .sort((a, b) => (x1 - a.x2) - (x1 - b.x2));
-    const near = left[0];
-    const gap  = near ? r1(x1 - near.x2) : null;
-    const money = !!near && /\$\s*$/.test(near.str) && gap <= MAX_GAP;
-    rows.push({ key: e.key, target: e.target, page: w.page, x: r1(x1), y: r1(y2), gap, left: near ? near.str : null, money });
+    // THE NEAREST RUN ENDING IN "$" WITHIN MAX_GAP — not "the nearest run, does it end in $".
+    //
+    // The original rule took left[0] and asked whether IT ended in a dollar sign, and that
+    // lost four money cells on this form to a race it should never have been in. The Box
+    // labels ("Box C", "Box D", "Box E") and the footer word "Form" are drawn 2.1..3.5pt to
+    // the left of a cell in the row ABOVE them, which is nearer than that cell's own
+    // "(38) $" marker at 3.6pt — so the marker never got looked at. (29), Box C, (38) and
+    // (51) all carry a printed "$" and all four were reported as carrying none, and the
+    // map's P5 block declared two of them under _money_without_a_printed_dollar_sign on
+    // the strength of it.
+    //
+    // The two tests are unchanged and still independent: the run must END in "$" and must be
+    // within MAX_GAP. What changed is that a nearer run which is NOT a currency symbol no
+    // longer hides one that is.
+    const near   = left.find(t => /\$\s*$/.test(t.str) && x1 - t.x2 <= MAX_GAP) || null;
+    const gap    = near ? r1(x1 - near.x2) : null;
+    const money  = !!near;
+    const blocked = !!near && left[0] && left[0] !== near ? left[0].str : null;
+    rows.push({ key: e.key, target: e.target, page: w.page, x: r1(x1), y: r1(y2), gap, left: near ? near.str : (left[0] ? left[0].str : null), money, blocked });
     if (!byPage.has(w.page)) byPage.set(w.page, { seen: 0, money: 0 });
     const c = byPage.get(w.page); c.seen++; if (money) c.money++;
   }
