@@ -1,0 +1,283 @@
+{
+ "form": "433aoi",
+ "form_revision": "4-2026",
+ "catalog": "55896Q",
+ "_what_this_file_is": "Every AcroForm leaf name on Form 433-A(OIC) that is KNOWN TO DESCRIBE SOMETHING OTHER THAN THE CELL IT NAMES, with the printed evidence that settled each one. It is a registry, not a binding: nothing here is read by any fill engine and no map key is resolved through it. validate-map.mjs asserts it against the PDF and against 433aoi.map.json, so a lie declared here cannot quietly stop being true.",
+ "_why_a_file_and_not_twelve_paragraphs": "Two reasons, and neither is tidiness. (1) 433-B(OIC) is drawn from the same template lineage as this form and will very likely inherit both the leaf names and the lies; a machine-checked list can be diffed against the next form's field enumeration, and prose spread across slice reports cannot. (2) A preparer or a later author reading 433aoi.map.json in a year will see a map key whose name disagrees with the field it points at, and the honest first assumption is that the MAP is wrong. This file is the standing answer: the map is right, the leaf name is wrong, and here is the printed page that says so.",
+ "_the_standing_rule_this_file_exists_to_defend": "A binding on this form comes from the printed caption and the widget rectangle. A leaf name is never evidence - not when it disagrees with the page, and not when it agrees, because on this form a name that happens to be right is a coincidence. The controls at the bottom of this file are the proof: nine cells across four pages sit under an identical printed 'X .8 = $', eight are named Times_8 / times_8, and one is named Times_7. The eight that agree do not make the name a witness; they make the one that disagrees invisible to anyone who trusts names.",
+ "_counting": "TEN ACTIVE LIES THROUGH SLICE 3, not eleven. The running count in 433aoi.map.json._notes reached 'eleven' and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. It is kept here as control C01. The verified-true entries are kept rather than deleted: a registry that lists only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest.",
+ "_what_is_machine_checked_and_what_is_not": "CHECKED by validate-map.mjs: every `path` exists verbatim in 433aoi.fields.json (or, for a `container` entry, at least one enumerated field is a descendant of it); every non-null `bound_to` resolves through 433aoi.map.json to exactly this `path`; every entry declares a `kind` the validator knows; and no two entries claim the same path. NOT CHECKED, and deliberately: `printed_line`, `printed_line_at`, `printed_marker_at` and `rect` are transcriptions of the drawn page. Asserting those in code would mean re-deriving from the PDF the very reading the entry records, which is circular. They are quoted verbatim so a human can re-measure them with adapters/pdf/align-block.mjs and adapters/pdf/line-markers.mjs, which is how each one was taken.",
+ "_kinds": {
+  "lie": "The leaf name describes something other than the cell. Counted in the active total.",
+  "container": "A SUBFORM, not a field. The lie is the subform name; its children are told apart only by it. Counted in the active total. `path` is a prefix, not an enumerated field.",
+  "inherited": "The leaf name is defensible on its own and misleads only because of the container it sits in. NOT counted in the active total; recorded so the count cannot be inflated by re-listing a container lie once per child.",
+  "control": "VERIFIED TRUE against the printed page. Not a lie. Recorded so the registry states what it checked and did not find, and so the running count cannot absorb one by accident."
+ },
+ "entries": [
+  {
+   "id": "L01",
+   "kind": "lie",
+   "page": 6,
+   "slice_found": 1,
+   "path": "topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0]",
+   "leaf": "Interest_Dividends[0]",
+   "rect": "y 576.0..550.8, x 471.6..576.0",
+   "what_the_name_implies": "The money cell for interest and dividend income.",
+   "printed_line": "Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may contribute to the household income, etc.",
+   "printed_line_at": "y 573.9, x 36.0..424.2, wrapping to y 564.3, x 36.0..177.9",
+   "printed_marker": "(32)",
+   "printed_marker_at": "y 562.5, x 447.1..468.0",
+   "witnesses": [
+    "line-markers.mjs pairs marker (32) at y 562.5 with the money widget to its right at x 471.6..576.0",
+    "433aoi.labels.txt correlates this widget to \"Round to the nearest whole dollar.\" - the nearest drawn run, which names no income type and so contradicts the leaf without corroborating anything else"
+   ],
+   "bound_to": null,
+   "not_bound_because": "Page 6 belongs to a slice nobody has authored. Recorded before it is mapped precisely so the author of that slice does not bind it by name.",
+   "cost_if_bound_by_name": "Interest and dividend income would print on line (32) and household support income on line (33). Both are income lines that feed the same totals, so every printed total below would still reconcile and the filed page would misstate two sources."
+  },
+  {
+   "id": "L02",
+   "kind": "lie",
+   "page": 6,
+   "slice_found": 1,
+   "path": "topmostSubform[0].F433-A-OIC_Page6[0].tab_order[1].Interest_Dividends[0]",
+   "leaf": "Interest_Dividends[0] (under tab_order[1])",
+   "rect": "y 565.2..553.0, x 234.0..435.6",
+   "what_the_name_implies": "A second interest-and-dividends money cell.",
+   "printed_line": "List source(s)",
+   "printed_line_at": "y 563.6, x 180.0..228.0 - immediately LEFT of the cell, on the same drawn row",
+   "printed_marker": "(32)",
+   "printed_marker_at": "y 562.5, x 447.1..468.0 - the same line (32) as L01; this is that line's free-text half",
+   "witnesses": [
+    "align-block.mjs: the caption ends at x 228.0 and the cell begins at x 234.0, a 6-point gap on one row",
+    "433aoi.labels.txt correlates it to \"Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may\" - the (32) caption, agreeing with the rectangle and against the name"
+   ],
+   "bound_to": null,
+   "not_bound_because": "Page 6 is unauthored.",
+   "cost_if_bound_by_name": "A free-text source list would be written into a money cell, or a dollar figure into a free-text cell. The first is silently wrong; the second prints a number where the examiner expects a name."
+  },
+  {
+   "id": "L03",
+   "kind": "lie",
+   "page": 6,
+   "slice_found": 1,
+   "path": "topmostSubform[0].F433-A-OIC_Page6[0].tab_order[2].Interest_Dividends[0]",
+   "leaf": "Interest_Dividends[0] (under tab_order[2])",
+   "rect": "y 136.8..124.6, x 291.6..435.6",
+   "what_the_name_implies": "A third interest-and-dividends cell, on the INCOME half of the page.",
+   "printed_line": "List debt(s)/expense(s)",
+   "printed_line_at": "y 135.2, x 205.2..286.6 - immediately LEFT of the cell",
+   "printed_marker": "(50)",
+   "printed_marker_at": "y 135.1, x 447.1..468.0",
+   "witnesses": [
+    "line-markers.mjs: marker (50) at y 135.1 on the same drawn row",
+    "the printed row label \"Secured debts/Other\" at y 145.0, x 36.0..109.8, seventeen printed lines below any income line",
+    "433aoi.labels.txt correlates it to \"(e.g., any loan where you pledged an asset as collateral not previously listed, government guaranteed\" - the (50) caption"
+   ],
+   "bound_to": null,
+   "not_bound_because": "Page 6 is unauthored.",
+   "cost_if_bound_by_name": "THE WORST OF THE FOUR. This cell is on the EXPENSE half of the page. Binding it by name would move a figure across the income/expense boundary, and the two halves are subtracted from one another to produce the offer amount - so the error would change the offer twice over, once by removing income and once by adding expense."
+  },
+  {
+   "id": "L04",
+   "kind": "lie",
+   "page": 2,
+   "slice_found": 1,
+   "path": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]",
+   "leaf": "Times_7[0]",
+   "rect": "y 219.6, x 187.2..295.2",
+   "what_the_name_implies": "A quick-sale cell carrying a 0.7 multiplier.",
+   "printed_line": "X .8 = $",
+   "printed_line_at": "y 214.7, x 154.7..184.7 - immediately LEFT of the cell; the cell it multiplies, Current_Market_Value[0], ends at x 151.2, three points further left",
+   "printed_marker": "(3a)",
+   "printed_marker_at": "the (3a) money row, marker x 444.9..468.0",
+   "witnesses": [
+    "the drawn text \"X .8 = $\" between the market-value cell and this one",
+    "the printed (3b) caption on the same page: \"[current market value X .8 minus loan balance(s)]\"",
+    "the printed Note at y 172.0: \"Your reduction from current market value may be greater than 20% due to potential tax consequences/withdrawal penalties\" - a 20% reduction IS a 0.8 multiplier",
+    "EIGHT SIBLINGS. This form enumerates nine cells under an identical printed \"X .8 = $\": Page2 RetirementAcct2 Times_7, Page3 Property1 and Property2 times_8, Page3 Vehicle1 and Vehicle2 Times_8, Page4 OtherAsset1 and OtherAsset2 Times_8, Page5 Asset1 and Asset2 Times_8. Eight are named eight. One is named seven. The page says .8 on all nine."
+   ],
+   "bound_to": "3a_retirement_accounts[0].quick_sale_value",
+   "cost_if_bound_by_name": "A 0.7 multiplier printed on a statement signed under penalty of perjury, understating the retirement asset by 10% of its market value. PROVED SILENT IN SLICE 3: with the name-derived figure in place, line (3a) QSV fails and both (3a) and (3) still reconcile - every printed total on the page agrees and only the tripwire disagrees."
+  },
+  {
+   "id": "L05",
+   "kind": "container",
+   "page": 2,
+   "slice_found": 2,
+   "path": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0]",
+   "leaf": "RetirementAcct1[0]",
+   "rect": "a subform; its eight enumerated children span y 380.1 down to y 337.9",
+   "what_the_name_implies": "The first of two retirement-account rows.",
+   "printed_line": "Digital asset",
+   "printed_line_at": "row label at y 380.1, x 50.4..94.0, with its own checkbox at y 378.9, x 36.0..45.0",
+   "printed_marker": "(2c)",
+   "printed_marker_at": "the block totals to printed line (2c), which adds into (2) INVESTMENT accounts - not into (3) retirement accounts",
+   "witnesses": [
+    "every one of its eight children is named for a digital asset: virtualCurrency, descriptionDigitalAsset, numberOfUnits, locationDigitalAsset, assetsAccountNumber, dollarEquivalentToday",
+    "the printed row label directly above the block reads \"Digital asset\"",
+    "its total is printed line (2c) and (2c) is an operand of (2), the investment total"
+   ],
+   "bound_to": null,
+   "not_bound_because": "A subform is not a field. Its children are bound individually under map keys 2c_*; the container is recorded because those children are told apart from RetirementAcct2[0]'s by nothing but this name.",
+   "cost_if_bound_by_name": "Every digital asset would be filed as a retirement holding, and the X .8 quick-sale multiplier would be applied to the wrong block - the digital asset row prints NO multiplier and the retirement row does."
+  },
+  {
+   "id": "L06",
+   "kind": "container",
+   "page": 2,
+   "slice_found": 2,
+   "path": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0]",
+   "leaf": "RetirementAcct2[0]",
+   "rect": "a subform; its ten enumerated children span the (3a) block",
+   "what_the_name_implies": "The SECOND retirement-account row, implying a first one exists.",
+   "printed_line": "Retirement account",
+   "printed_line_at": "row label at y 272.1, x 36.0..105.4, with NO box of its own",
+   "printed_marker": "(3a)",
+   "printed_marker_at": "marker x 444.9..468.0 on the block's money row",
+   "witnesses": [
+    "the page prints exactly ONE retirement row and this is it - 3a_retirement_accounts declares max 1",
+    "the block the name implies is the \"first\" retirement row is L05, which is the digital asset block"
+   ],
+   "bound_to": null,
+   "not_bound_because": "A subform is not a field.",
+   "cost_if_bound_by_name": "A LIE OF INDEX, NOT OF NOUN - the noun is right and that is what makes it dangerous. An author looking for the first retirement row finds RetirementAcct1[0], which is the digital asset block, and files a 401(k) into the digital-asset cells."
+  },
+  {
+   "id": "L07",
+   "kind": "lie",
+   "page": 2,
+   "slice_found": 2,
+   "path": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].name_of_individual[0]",
+   "leaf": "name_of_individual[0]",
+   "rect": "the (2c) block row beneath the caption at y 337.9, x 36.0..211.6",
+   "what_the_name_implies": "A person's name.",
+   "printed_line": "Digital asset address for self-hosted digital assets",
+   "printed_line_at": "y 337.9, x 36.0..211.6 - directly ABOVE the cell",
+   "printed_marker": null,
+   "printed_marker_at": null,
+   "witnesses": [
+    "the caption drawn directly above the cell",
+    "433aoi.labels.txt returns the same caption for this widget - here the LABEL FILE is right and the leaf name is wrong, which is why the standing rule is \"rectangle wins\", not \"label file loses\""
+   ],
+   "bound_to": "2c_self_hosted_asset_address",
+   "cost_if_bound_by_name": "Nothing on this page asks for an individual's name. A record that supplied one would print a person where a wallet address belongs, and the cell that should carry the wallet address would be blank."
+  },
+  {
+   "id": "L08",
+   "kind": "lie",
+   "page": 2,
+   "slice_found": 2,
+   "path": "topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Investment_Account_Attached[0]",
+   "leaf": "Total_Investment_Account_Attached[0]",
+   "rect": "the (3b) money cell, x 471.6..576.0",
+   "what_the_name_implies": "The INVESTMENT accounts attachment total.",
+   "printed_line": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
+   "printed_line_at": "the printed (3b) row",
+   "printed_marker": "(3b)",
+   "printed_marker_at": "x 447.1..468.0 on the (3b) row",
+   "witnesses": [
+    "its parent subform is TotalRetirementAccts[0]",
+    "the investment attachment total is a DIFFERENT cell on a DIFFERENT subform - TotalInvestmentAccts[0].Total_Investment_Acct_Attached[0], printed line (2d), fifteen printed lines higher",
+    "the two printed captions differ by the multiplier: (2d) says \"[current market value minus loan balance(s)]\" and (3b) says \"[current market value X .8 minus loan balance(s)]\""
+   ],
+   "bound_to": "3b_retirement_accounts_from_attachment",
+   "cost_if_bound_by_name": "THE TWO LEAF NAMES DIFFER BY FOUR CHARACTERS (Total_Investment_Account_Attached vs Total_Investment_Acct_Attached) AND THE TWO CELLS DIFFER BY THE WHOLE X .8. Swapping them applies the quick-sale discount to the investment attachment total, which must not have it, and omits it from the retirement attachment total, which must."
+  },
+  {
+   "id": "L09",
+   "kind": "lie",
+   "page": 3,
+   "slice_found": 3,
+   "path": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
+   "leaf": "Total_Value_Vehicles_Attached[0]",
+   "rect": "y 147.6 row, money column x 471.6..576.0",
+   "what_the_name_implies": "The vehicles-from-attachment total.",
+   "printed_line": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
+   "printed_line_at": "the printed (6d) row",
+   "printed_marker": "(6d)",
+   "printed_marker_at": "y 147.6, marker to the left of the cell",
+   "witnesses": [
+    "line-markers.mjs pairs marker (6d) at y 147.6 with this widget",
+    "433aoi.labels.txt, computed independently as a nearest-drawn-text correlation, returns \"(6d) $\" for this widget",
+    "ORDERING FORCES IT: the money column on page 3 holds exactly six widgets at y 280.8, 266.4, 162.0, 147.6, 111.6 and 90.0 against exactly six printed markers (6a) (6b) (6c) (6d) (6e) (6) in top-down order"
+   ],
+   "bound_to": "6d_vehicle_2_less_allowance",
+   "cost_if_bound_by_name": "SWAPPED WITH L10. Binding by name files the vehicles-from-attachment total on the joint-offer allowance line and the joint-offer line on the attachment line. Line (6) totals both, so (6) still reconciles and the two figures are simply on each other's lines."
+  },
+  {
+   "id": "L10",
+   "kind": "lie",
+   "page": 3,
+   "slice_found": 3,
+   "path": "topmostSubform[0].F433-A-OIC_Page3[0].Enter_Allowance[0]",
+   "leaf": "Enter_Allowance[0]",
+   "rect": "y 111.6 row, money column x 471.6..576.0",
+   "what_the_name_implies": "An allowance - a figure the form or a standards table supplies.",
+   "printed_line": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+   "printed_line_at": "the printed (6e) row",
+   "printed_marker": "(6e)",
+   "printed_marker_at": "y 111.6, marker to the left of the cell",
+   "witnesses": [
+    "line-markers.mjs pairs marker (6e) at y 111.6 with this widget",
+    "433aoi.labels.txt returns \"(6e) $\" for this widget",
+    "ordering forces it, exactly as for L09",
+    "the caption is the exact counterpart of (5c) for real property and (3b) for retirement accounts - attachment-sourced INPUT, with the X .8 stated in the caption"
+   ],
+   "bound_to": "6e_vehicles_from_attachment",
+   "cost_if_bound_by_name": "SWAPPED WITH L09, and worse than a swap on its own: the name sends a reader looking for a standards-table lookup that does not exist. The allowance on this page is the $3,450 printed at (6b) and (6d). This cell is an attachment total, and applying an allowance to it would deduct $3,450 twice.",
+   "_principal_note": "Prompt 30 asserted in prose that this cell was \"the vehicle allowance\" and offered two branches for what kind of allowance it was. Both were wrong, and wrong by taking the leaf name at its word. The printed caption is what settled it. Recorded here because the rule was broken by the person who wrote it, which is the strongest available argument for the rule."
+  },
+  {
+   "id": "C01",
+   "kind": "control",
+   "page": 6,
+   "slice_found": 1,
+   "path": "topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]",
+   "leaf": "Interest_Dividends[1]",
+   "rect": "y 550.8..536.4, x 471.6..576.0",
+   "what_the_name_implies": "Interest and dividend income.",
+   "printed_line": "Interest, dividends, and royalties",
+   "printed_line_at": "y 549.3, x 36.0..150.7",
+   "printed_marker": "(33)",
+   "printed_marker_at": "y 549.3, x 447.1..468.0",
+   "witnesses": [
+    "line-markers.mjs pairs marker (33) at y 549.3 with this widget",
+    "it is the only one of the four Interest_Dividends cells whose printed line names interest and dividends"
+   ],
+   "bound_to": null,
+   "not_bound_because": "Page 6 is unauthored. The control is recorded now for the same reason its three lying siblings are: the author of that slice must not read any of the four by name, including this one.",
+   "verified_true": "The name agrees with the page. It is STILL not evidence - it was verified against the printed caption like every other cell, and it is recorded so the twelve-count cannot absorb it.",
+   "_counting_note": "This is the entry the running count in 433aoi.map.json._notes double-counted to reach \"eleven\". See _counting."
+  },
+  {
+   "id": "C03",
+   "kind": "control",
+   "page": 3,
+   "slice_found": 3,
+   "path": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].current_market_value[0].times_8[0]",
+   "leaf": "times_8[0]",
+   "rect": "the (5a) quick-sale cell",
+   "what_the_name_implies": "A quick-sale cell carrying a 0.8 multiplier.",
+   "printed_line": "X .8 = $",
+   "printed_line_at": "immediately LEFT of the cell on the (5a) money row",
+   "printed_marker": "(5a)",
+   "printed_marker_at": "on the (5a) money row",
+   "witnesses": [
+    "the drawn text \"X .8 = $\""
+   ],
+   "bound_to": "5ab_real_property[0].quick_sale_value",
+   "verified_true": "Agrees with the page. Recorded to keep the family complete: with C02 and L04 it makes three identically-captioned cells on three pages, two named right and one named wrong."
+  }
+ ],
+ "_tally": {
+  "active_lies": 10,
+  "of_which_leaf": 8,
+  "of_which_container": 2,
+  "inherited_not_counted": 0,
+  "controls_verified_true": 2,
+  "total_entries": 12,
+  "bound_today": 6,
+  "unbound_because_the_page_is_unauthored": 6
+ }
+}

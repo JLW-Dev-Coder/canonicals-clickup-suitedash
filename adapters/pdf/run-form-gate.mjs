@@ -66,7 +66,7 @@
 
 import { spawnSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
-import { PDFDocument, PDFTextField } from 'pdf-lib';
+import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
 
@@ -252,6 +252,107 @@ const steps = [
     };
 
     const resolveKey = (key) => mapDoc.map?.[key];
+
+    // --- FEEDER PREDICATES -----------------------------------------------------------
+    // A feeder may carry ONE optional `when`, and `when` is ONE equality test against ONE
+    // bound key: { "key": "...", "equals": "..." }. There is no negation, no AND/OR, no
+    // nesting, no comparison operator and no expression, and there is not meant to be:
+    // the moment a totals file can express a condition it cannot express in one line, it
+    // has become a second place where the form's arithmetic is invented rather than
+    // recorded. The one printed shape that needs this is 433-A(OIC)'s "(if the vehicle is
+    // leased, enter 0 as the total value)", where the selector is a printed box on the
+    // same row and every operand is printed beside it.
+    //
+    // THREE RULES THE PREDICATE IS HELD TO, and each closes a way it could hide coverage:
+    //   1. The key must itself be BOUND in the map. An unbound key is a STOP, never a
+    //      skip — a predicate nobody can evaluate that quietly suppresses a line is worse
+    //      than the gap it was added to close.
+    //   2. `equals` must NAME AN OPTION THE SET ACTUALLY HAS. A predicate spelled against
+    //      an option that does not exist can never be true, so it would silently disable
+    //      its line forever and read as a clean run. Also a STOP.
+    //   3. A false predicate SKIPS the line and PRINTS the reason with the key and the
+    //      value it actually found. Skips are counted separately from passes everywhere
+    //      this step reports, so a form that skips most of its totals cannot read as a
+    //      form that checked them.
+    //
+    // The key is spelled exactly the way this map's own `exclusive` guard spells it, so
+    // no new addressing is introduced: a scalar `map` key, a top-level `checkboxes` set, a
+    // lone `check_here` box, or a per-row group set written "group[row].set".
+    const predicateStops = [];
+    const norm = (v) => String(v).trim().toLowerCase();
+    const isChecked = (target) => {
+      let f; try { f = live.getField(target); } catch { return null; }
+      if (!(f instanceof PDFCheckBox)) return null;
+      return f.isChecked();
+    };
+    const optionsOf = (obj) => Object.entries(obj || {}).filter(([k, v]) => !k.startsWith('_') && typeof v === 'string');
+
+    // Returns one of:
+    //   { stop }        the predicate is not evaluable and the STEP must fail
+    //   { undecidable } the form is in a state where the predicate has no answer
+    //   { holds, describe }
+    const evalWhen = (when, where) => {
+      if (!when || typeof when !== 'object') return { stop: `${where}: \`when\` is not an object` };
+      const { key, equals } = when;
+      if (typeof key !== 'string' || !key.trim()) return { stop: `${where}: \`when.key\` is missing` };
+      if (equals === undefined || equals === null) return { stop: `${where}: \`when.equals\` is missing` };
+      for (const extra of Object.keys(when)) {
+        // Anything beyond the two fields would be a second condition arriving by the back
+        // door. Refused here rather than ignored: an ignored field reads as an honoured one.
+        if (extra !== 'key' && extra !== 'equals' && !extra.startsWith('_'))
+          return { stop: `${where}: \`when\` carries "${extra}" — the clause is exactly {key, equals} and nothing else` };
+      }
+
+      // (a) scalar text cell
+      const scalar = resolveKey(key);
+      if (typeof scalar === 'string') {
+        const p = printed(scalar);
+        if (p.missing) return { undecidable: `predicate key "${key}" is not a text field on the filled PDF` };
+        const actual = String(p.text ?? '').trim();
+        return { holds: norm(actual) === norm(equals),
+                 describe: `"${key}" prints ${actual === '' ? '(blank)' : JSON.stringify(actual)}, predicate wanted ${JSON.stringify(String(equals))}` };
+      }
+
+      // (b) an option set: top-level, or a group row written "group[row].set"
+      let set = null;
+      const m = /^([A-Za-z0-9_]+)\[(\d+)\]\.(.+)$/.exec(key);
+      if (m) {
+        const slot = mapDoc.groups?.[m[1]]?.slots?.[Number(m[2])];
+        set = slot?.checkboxes?.[m[3]] ?? null;
+      } else {
+        set = mapDoc.checkboxes?.[key] ?? null;
+      }
+      if (set && typeof set === 'object') {
+        const opts = optionsOf(set);
+        if (!opts.length) return { stop: `${where}: predicate key "${key}" names a set with no options` };
+        if (!opts.some(([o]) => norm(o) === norm(equals)))
+          return { stop: `${where}: \`when.equals\` is ${JSON.stringify(String(equals))}, which is not an option of "${key}" (options: ${opts.map(([o]) => o).join(', ')}). A predicate that can never be true would disable its line forever and still read as a pass.` };
+        const on = [];
+        for (const [opt, target] of opts) {
+          const st = isChecked(target);
+          if (st === null) return { undecidable: `predicate key "${key}" option "${opt}" is not a checkbox on the filled PDF` };
+          if (st) on.push(opt);
+        }
+        if (on.length > 1) return { undecidable: `predicate key "${key}" has ${on.length} boxes checked (${on.join(', ')}) — the printed conditional has no defined answer` };
+        const actual = on[0] ?? '(none checked)';
+        return { holds: on.length === 1 && norm(actual) === norm(equals),
+                 describe: `"${key}" is ${actual}, predicate wanted ${JSON.stringify(String(equals))}` };
+      }
+
+      // (c) a lone check_here box — present or absent, with no counterpart cell
+      const lone = mapDoc.check_here?.[key];
+      if (lone && typeof lone.target === 'string') {
+        const st = isChecked(lone.target);
+        if (st === null) return { undecidable: `predicate key "${key}" is not a checkbox on the filled PDF` };
+        if (!['yes', 'no', 'true', 'false', 'checked', 'unchecked'].includes(norm(equals)))
+          return { stop: `${where}: "${key}" is a lone check-here box, so \`when.equals\` must be yes/no (got ${JSON.stringify(String(equals))})` };
+        const want = ['yes', 'true', 'checked'].includes(norm(equals));
+        return { holds: st === want, describe: `"${key}" is ${st ? 'checked' : 'not checked'}, predicate wanted ${want ? 'checked' : 'not checked'}` };
+      }
+
+      return { stop: `${where}: predicate key "${key}" is not bound anywhere in ${mapPath} — not a \`map\` key, not a \`checkboxes\` set, not a \`check_here\` box and not a "group[row].set" group set. A predicate over an unbound key is a STOP, not a skip.` };
+    };
+
     // `row` is 0-based and OPTIONAL. Without it a group feeder is the whole column, which is
     // what a group total sums. With it the feeder is ONE printed row, which is what a per-row
     // printed formula — "current market value X .8 = quick sale value" — is written over.
@@ -284,6 +385,10 @@ const steps = [
     const rows = [];
     for (const entry of decl.totals) {
       const r = { line: entry.line, caption: entry.caption, checkable: true, why: null, printed: null, sum: 0, feeders: [],
+                  skipped: false, skipWhy: null,
+                  addr: entry.total_key ? `key:${entry.total_key}`
+                      : (entry.total_cell?.group && entry.total_cell?.column) ? `cell:${entry.total_cell.group}.${entry.total_cell.column}`
+                      : null,
                   floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false };
 
       const { target: totalTarget, how: totalHow } = resolveTotal(entry);
@@ -295,6 +400,16 @@ const steps = [
       r.printed = tv.n;
 
       for (const fd of entry.feeders) {
+        // The predicate is asked BEFORE the cells are read, because a false predicate means
+        // this line is not the line the form is printing here and its operands say nothing
+        // about it. Reading them first and discarding the answer would put a number in the
+        // transcript that the page never asked for.
+        if (fd.when !== undefined) {
+          const w = evalWhen(fd.when, `line ${entry.line}`);
+          if (w.stop)        { predicateStops.push(w.stop); r.checkable = false; r.why = w.stop; break; }
+          if (w.undecidable) { r.checkable = false; r.why = w.undecidable; break; }
+          if (!w.holds)      { r.skipped = true; r.skipWhy = w.describe; break; }
+        }
         const sign   = fd.sign === -1 ? -1 : 1;
         // A FACTOR and a CONSTANT, and nothing more. Two printed shapes on 433-A(OIC) need
         // them and neither is expressible by adding cells: "X .8 = $" states a factor over
@@ -337,15 +452,18 @@ const steps = [
         // Report each cell at the value it actually contributes, factor and sign applied, so
         // the failure print-out adds up on the page rather than needing the reader to redo it.
         cells.forEach(c => r.feeders.push({ target: c.target, sign, n: c.n, factor, contributes: sign * factor * c.n }));
-        if (konst !== 0) r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
+        // A DECLARED constant is reported even when it is zero. "(if the vehicle is leased,
+        // enter 0 as the total value)" is a printed zero, not an absent operand, and a line
+        // that showed no feeder at all would look like a line nothing feeds.
+        if (typeof fd.constant === 'number') r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
         r.sum += sign * (factor * cellSum + konst);
       }
       // The floor is the form's own printed instruction — 433-A(OIC) page 2 y 668.1: "Do not
       // enter a negative number. If any line item is a negative number, enter '0'." Applied
       // AFTER the feeders, because that is where the page applies it, and recorded when it
       // bites so a match that depended on it can never read as an unconditional match.
-      if (r.checkable && r.floor !== null && r.sum < r.floor) { r.sum = r.floor; r.floored = true; }
-      r.match = r.checkable && cents(r.printed) === cents(r.sum);
+      if (r.checkable && !r.skipped && r.floor !== null && r.sum < r.floor) { r.sum = r.floor; r.floored = true; }
+      r.match = r.checkable && !r.skipped && cents(r.printed) === cents(r.sum);
       rows.push(r);
     }
 
@@ -353,6 +471,10 @@ const steps = [
     console.log(`  ${'line'.padEnd(w)} | ${'printed total'.padStart(15)} | ${'sum of printed rows'.padStart(19)} | match`);
     console.log(`  ${'-'.repeat(w)}-+-${'-'.repeat(15)}-+-${'-'.repeat(19)}-+------`);
     for (const r of rows) {
+      if (r.skipped) {
+        console.log(`  ${r.line.padEnd(w)} | ${'—'.padStart(15)} | ${'—'.padStart(19)} | SKIPPED`);
+        continue;
+      }
       if (!r.checkable) {
         console.log(`  ${r.line.padEnd(w)} | ${'—'.padStart(15)} | ${'—'.padStart(19)} | NOT CHECKABLE`);
         continue;
@@ -370,6 +492,7 @@ const steps = [
     }
 
     const unchecked = rows.filter(r => !r.checkable);
+    const skippedRows = rows.filter(r => r.checkable && r.skipped);
     if (unchecked.length) {
       console.log('');
       console.log(`  ${unchecked.length} of ${rows.length} line(s) NOT CHECKABLE — a feeder is not on the form, or a cell could not be read:`);
@@ -377,6 +500,17 @@ const steps = [
     } else {
       console.log('');
       console.log(`  0 of ${rows.length} line(s) not checkable — every feeder resolved to a printed cell on this form.`);
+    }
+
+    // A SKIP IS NEVER SILENT. A line whose feeder predicate was false is not a line that
+    // passed and is not a line that failed: the printed conditional it was written for is
+    // not the branch this form is on. It is named here with the key and the value that
+    // decided it, so a reader can tell a form that skipped fifteen of twenty checks from a
+    // form that checked them — which is the whole condition the predicate was granted on.
+    if (skippedRows.length) {
+      console.log('');
+      console.log(`  ${skippedRows.length} of ${rows.length} line(s) SKIPPED — a feeder predicate was false, so the form is not on this line's printed branch:`);
+      skippedRows.forEach(r => console.log(`    ${r.line}: ${r.skipWhy}`));
     }
 
     // Totals the DECLARATION says it deliberately does not check. Printed here so the
@@ -397,8 +531,39 @@ const steps = [
       }
     }
 
-    const bad = rows.filter(r => r.checkable && !r.match);
-    if (!bad.length) return ok(`${rows.length - unchecked.length} of ${rows.length} total(s) checked, all agree with the rows printed above them${declined.length ? `; ${declined.length} more declared not checkable, with reasons` : ''}`);
+    const bad     = rows.filter(r => r.checkable && !r.skipped && !r.match);
+    const checked = rows.filter(r => r.checkable && !r.skipped);
+    // Never collapsed to a pass count. Checked, skipped and failed are three different
+    // things and a single number cannot say which one a line was in.
+    const tally = `${checked.length} checked, ${skippedRows.length} skipped, ${bad.length} failed`
+                + (unchecked.length ? `, ${unchecked.length} not checkable` : '')
+                + ` (of ${rows.length} declared line${rows.length === 1 ? '' : 's'})`;
+    console.log('');
+    console.log(`  TRIPWIRES: ${tally}${declined.length ? `; ${declined.length} printed total-shaped cell(s) declared not checkable` : ''}`);
+
+    // A cell cannot be both checked and declared not checkable. Before the predicate that
+    // could not happen; now it can, because a predicated line makes a cell checkable that
+    // an earlier slice declared it was not. Two declared states for one cell is the "no
+    // declared state" defect wearing the opposite coat — the transcript would say both
+    // "checked" and "deliberately not verified" about the same figure.
+    const checkedAddr = new Set(checked.map(r => r.addr).filter(Boolean));
+    const doubled = declined
+      .map(e => e.map_key ? `key:${e.map_key}` : (e.cell?.group && e.cell?.column) ? `cell:${e.cell.group}.${e.cell.column}` : null)
+      .filter(a => a && checkedAddr.has(a));
+    if (doubled.length) {
+      console.error('');
+      console.error(`DOUBLE-DECLARED — ${doubled.length} cell(s) are BOTH checked by a tripwire and declared not checkable:`);
+      doubled.forEach(a => console.error(`    ${a}`));
+      return fail(`${doubled.length} cell(s) carry two contradictory declared states — remove the not_checkable entry that a tripwire now covers`);
+    }
+
+    if (predicateStops.length) {
+      console.error('');
+      console.error(`PREDICATE STOP — ${predicateStops.length} feeder \`when\` clause(s) could not be evaluated:`);
+      predicateStops.forEach(m => console.error(`    ${m}`));
+      return fail(`${predicateStops.length} feeder predicate(s) are unevaluable. An unevaluable predicate is a STOP, never a skip — a clause nobody can answer that quietly suppresses its line is worse than the gap the predicate was added to close`);
+    }
+    if (!bad.length) return ok(`${tally}${declined.length ? `; ${declined.length} more declared not checkable, with reasons` : ''}`);
     console.error('');
     console.error(`ARITHMETIC TRIPWIRE — ${bad.length} printed total(s) disagree with the printed rows that feed them.`);
     for (const r of bad) {

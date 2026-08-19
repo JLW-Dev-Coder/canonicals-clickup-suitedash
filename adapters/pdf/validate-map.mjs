@@ -12,7 +12,7 @@
 //
 // Exits 2 on any missing target or on a revision-pin mismatch.
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 
 const form      = process.argv[2] || '433f';
@@ -62,4 +62,85 @@ if (mapDoc.form_revision) {
     process.exit(2);
   }
   console.log('OK — loaded PDF matches the pinned revision.');
+}
+
+// ---------------------------------------------------------------------------------------
+// THE NAME-LIE REGISTRY.
+//
+// `<form>.name-lies.json` records every AcroForm leaf name on this form that is known to
+// describe something other than the cell it names. It binds nothing and is read by no fill
+// engine. It is asserted HERE, and the assertion is the whole reason it is a file rather
+// than prose in a slice report: prose cannot notice when it stops being true.
+//
+// Two things are checked, and only two, because only two are checkable without re-deriving
+// the reading the entry records:
+//   1. the declared `path` EXISTS — verbatim in the field list for a leaf, or as the prefix
+//      of at least one enumerated field for a `container` (a subform is not a field);
+//   2. a declared `bound_to` RESOLVES THROUGH THE MAP TO EXACTLY THAT PATH. This is the
+//      assertion that matters. A lie entry says "map key K points at field F, and F's name
+//      lies about F". If someone later 'fixes' the map by repointing K at the field the
+//      NAME suggests, the entry silently becomes a description of nothing — and the repoint
+//      is exactly the defect the registry exists to prevent. Checked, so it cannot.
+// The printed captions and coordinates are NOT asserted. Re-reading them out of the PDF to
+// compare against a transcription of the same read is circular; they are quoted verbatim so
+// a person can re-measure them with align-block.mjs and line-markers.mjs.
+const liesPath = `adapters/pdf/maps/${form}.name-lies.json`;
+if (!existsSync(liesPath)) {
+  console.log(`name-lie registry: no ${liesPath} — this form declares none. (Not a failure: only forms whose leaf names have been read AND found wrong carry one.)`);
+} else {
+  const lies = JSON.parse(readFileSync(liesPath, 'utf8'));
+  const KINDS = new Set(['lie', 'container', 'inherited', 'control']);
+  const problems = [];
+
+  // Resolve a `bound_to` the way the map itself addresses cells: a scalar `map` key, or a
+  // group cell written "group[row].column" — the same spelling `exclusive` and the totals
+  // predicate use. One spelling across the repo, so a path cannot be right here and wrong
+  // three files away.
+  const resolveBinding = (b) => {
+    if (typeof b !== 'string') return { how: 'not a string' };
+    const scalar = mapDoc.map?.[b];
+    if (typeof scalar === 'string') return { target: scalar, how: `map."${b}"` };
+    const m = /^([A-Za-z0-9_]+)\[(\d+)\]\.(.+)$/.exec(b);
+    if (m) {
+      const slot = mapDoc.groups?.[m[1]]?.slots?.[Number(m[2])];
+      const t = slot?.text?.[m[3]] ?? slot?.[m[3]];
+      if (typeof t === 'string') return { target: t, how: `groups.${m[1]}.slots[${m[2]}].text.${m[3]}` };
+      return { how: `groups.${m[1]}.slots[${m[2]}] has no column "${m[3]}"` };
+    }
+    return { how: `"${b}" is neither a \`map\` key nor a "group[row].column" cell` };
+  };
+
+  const seen = new Map();
+  for (const e of lies.entries || []) {
+    const id = e.id || '(no id)';
+    if (!KINDS.has(e.kind)) problems.push(`${id}: kind "${e.kind}" is not one of ${[...KINDS].join(', ')}`);
+    if (typeof e.path !== 'string' || !e.path.startsWith(TARGET_PREFIX)) { problems.push(`${id}: \`path\` is missing or is not rooted at ${TARGET_PREFIX}`); continue; }
+    if (seen.has(e.path)) problems.push(`${id}: declares the same \`path\` as ${seen.get(e.path)} — one cell, one entry`);
+    else seen.set(e.path, id);
+
+    if (e.kind === 'container') {
+      const kids = [...names].filter(n => n.startsWith(e.path + '.')).length;
+      if (!kids) problems.push(`${id}: container path has NO enumerated descendants — ${e.path}`);
+    } else if (!names.has(e.path)) {
+      problems.push(`${id}: path not found verbatim in the PDF field list — ${e.path}`);
+    }
+
+    if (e.bound_to !== null && e.bound_to !== undefined) {
+      const r = resolveBinding(e.bound_to);
+      if (!r.target) problems.push(`${id}: \`bound_to\` does not resolve — ${r.how}`);
+      else if (r.target !== e.path)
+        problems.push(`${id}: \`bound_to\` "${e.bound_to}" resolves through ${r.how} to a DIFFERENT field.\n      registry says: ${e.path}\n      map points at: ${r.target}\n      One of the two is wrong. If the map was 'corrected' toward what the leaf name suggests, this is that correction being caught.`);
+    } else if (e.kind !== 'container' && !e.not_bound_because) {
+      problems.push(`${id}: \`bound_to\` is null and no \`not_bound_because\` says why`);
+    }
+  }
+
+  const t = lies._tally || {};
+  console.log(`name-lie registry: ${liesPath} — ${(lies.entries || []).length} entries (${t.active_lies ?? '?'} active lies, ${t.controls_verified_true ?? '?'} verified-true controls, ${t.bound_today ?? '?'} bound today)`);
+  if (problems.length) {
+    console.error(`NAME-LIE REGISTRY — ${problems.length} problem(s):`);
+    problems.forEach(m => console.error(`  ${m}`));
+    process.exit(2);
+  }
+  console.log('OK — every declared path exists, no path is declared twice, and every declared binding resolves through the map to exactly the field the registry names.');
 }
