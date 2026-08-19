@@ -4,8 +4,8 @@
   "catalog": "55896Q",
   "pdf": "adapters/pdf/forms/f433aoi.pdf",
   "fields_source": "adapters/pdf/maps/433aoi.fields.json",
-  "slice": "PARTIAL - printed pages 1 and 2. Page 1 is the whole of Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners). Page 2 is the first part of Section 3 (Personal Asset Information (Domestic and Foreign)), printed lines (1a) through (4): bank and cash accounts, investment accounts, digital assets, retirement accounts and the cash value of life insurance policies. Section 3 CONTINUES onto pages 3 and 4 and is NOT finished here. Pages 3-8 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
-  "map_version": 2,
+  "slice": "PARTIAL - printed pages 1, 2 and 3. Page 1 is the whole of Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners). Pages 2 and 3 are Section 3 (Personal Asset Information (Domestic and Foreign)), printed lines (1a) through (6): page 2 carries bank and cash accounts, investment accounts, digital assets, retirement accounts and the cash value of life insurance policies; page 3 carries real property at (5a)-(5) and vehicles at (6a)-(6). Section 3 CONTINUES onto page 4 and is NOT finished here. Pages 4-8 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
+  "map_version": 3,
   "authored_from_page2": "adapters/pdf/align-block.mjs 433aoi page 2, whole page (117 printed text items, 68 widgets), cross-read against 433aoi.line-markers.txt (15 printed markers on page 2, every one attached to the widget this map binds it to) and 433aoi.checkboxes.txt (21 checkboxes on page 2, all probing on=/1). Every binding was taken from the PRINTED marker, the printed caption and the widget rectangle. THE LABEL FILE WAS NOT USED AS EVIDENCE ANYWHERE ON THIS PAGE - see _label_file_disagreements, which names the eight widgets it reports wrongly and the five where it contradicts the rectangle outright.",
   "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
   "_notes": [
@@ -70,7 +70,14 @@
     "4b_life_insurance_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].TotalLifeIns[0].Total_Life_Ins_Attached[0]",
     "4b_minus_loan_balances": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].LessLoanbal2[0].Less_Loan_Balance[0]",
     "4b_total_life_insurance_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].Total_Life_Insurance[0]",
-    "4_total_life_insurance": "topmostSubform[0].F433-A-OIC_Page2[0].TotalCashLife[0].Total_Insurance[0]"
+    "4_total_life_insurance": "topmostSubform[0].F433-A-OIC_Page2[0].TotalCashLife[0].Total_Insurance[0]",
+    "5_real_property_listing_price": "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].listing_price[0]",
+    "5c_property_from_attachment": "topmostSubform[0].F433-A-OIC_Page3[0].TotalValueProperty[0].Total_Value_Property_Attached[0]",
+    "5_total_real_estate": "topmostSubform[0].F433-A-OIC_Page3[0].TotalValueProperty[0].Total_Value_Property[0]",
+    "6b_vehicle_1_less_allowance": "topmostSubform[0].F433-A-OIC_Page3[0].line6b[0]",
+    "6d_vehicle_2_less_allowance": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
+    "6e_vehicles_from_attachment": "topmostSubform[0].F433-A-OIC_Page3[0].Enter_Allowance[0]",
+    "6_total_vehicles": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Amount[0]"
   },
   "_map_evidence": {
     "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
@@ -408,7 +415,34 @@
     ],
     "where_the_label_file_is_right_and_the_NAME_is_wrong": [
       "RetirementAcct1[0].name_of_individual[0] -> 'Digital asset address for self-hosted digital assets'. Correct, and it is the leaf name that lies. Recorded to keep the standing rule honest: the rule is that the RECTANGLE wins, not that the label file always loses."
-    ]
+    ],
+    "page_3": {
+      "_summary": "PAGE 3 IS THE CLEANEST PAGE SO FAR. 433aoi.labels.txt correlates all 59 page-3 widgets, and it AGREES with the rectangle on 58 of them - including on both pairs of swapped leaf names, where it independently returns \"(6d) $\" and \"(6e) $\" and so CORROBORATES the rectangle against the name. One widget is truncated rather than contradicted. That is worth recording as loudly as a disagreement: the label file is a witness, not a subordinate, and on this page it is the leaf NAMES that are the unreliable source.",
+      "truncated": [
+        {
+          "widget": "the cell topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].lender_lessor_landlord[0]  and  the cell topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].lender_lessor_landlord[0]",
+          "label_file_says": "state, ZIP code)",
+          "the_rectangle_says": "The printed caption wraps across three drawn items - \"Lender/Contract holder name, address\" (y 625.9, x 248.4..385.4), \"(street, city,\" (y 624.9, x 387.6..423.8), \"state, ZIP code)\" (y 615.3, x 248.4..297.8) and \"and phone\" (y 616.3, x 300.0..337.8) - and the cell at y 606.2, x 248.4..435.6 sits beneath all four. The label file returns the nearest single item, which is the third fragment. NOT a contradiction: the fragment is part of the right caption. The full caption is what the crosswalk is written against, and it is why lender_phone is folded into this one cell.",
+          "decided": "RECTANGLE, and the label file was not wrong - only partial."
+        }
+      ],
+      "corroborated_against_the_leaf_name": [
+        {
+          "widget": "the cell topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
+          "leaf_name_implies": "the vehicles-from-attachment total",
+          "label_file_says": "(6d) $",
+          "the_rectangle_says": "(6d). Widget y 147.6 in the money column; printed marker \"(6d) $\" at y 135.3, x 447.1..468.0 immediately to its left; the caption on the row is the joint-offer $3,450 subtraction.",
+          "decided": "RECTANGLE AND LABEL FILE TOGETHER, against the leaf name."
+        },
+        {
+          "widget": "the cell topmostSubform[0].F433-A-OIC_Page3[0].Enter_Allowance[0]",
+          "leaf_name_implies": "an allowance looked up from a standards table",
+          "label_file_says": "(6e) $",
+          "the_rectangle_says": "(6e). Widget y 111.6 in the money column; printed marker \"(6e) $\" at y 106.5, x 447.1..468.0; the caption on the row is \"Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]\".",
+          "decided": "RECTANGLE AND LABEL FILE TOGETHER, against the leaf name."
+        }
+      ]
+    }
   },
   "_computed": {
     "_why": "Cells whose printed caption states a formula ENTIRELY in terms of other cells printed on this page. They are ordinary writable map keys today - fill-433aoi.mjs computes nothing, and the record supplies them - and they are declared here so that (a) a read-back can recompute them from what the filled PDF prints, and (b) a future engine construct or totals declaration has the formulas already taken off the page rather than re-derived. Formulas are written over MAP KEYS and GROUP COLUMNS, never over targets, so verify-form-coverage.mjs's schema-agnostic walk does not count this block as a second binding.",
@@ -478,6 +512,44 @@
         "key": "4_total_life_insurance",
         "printed_caption": "Add lines (4a) through (4b) =",
         "formula": "4a_life_insurance_policies[0].equity + 4b_total_life_insurance_from_attachment"
+      },
+      {
+        "key": "5ab_real_property[n].quick_sale_value",
+        "printed_caption": "X .8 = $",
+        "formula": "current_fmv * 0.8",
+        "caption_at": "y 563.9, x 118.7..148.8 (slot 0); y 430.7, x 118.7..148.8 (slot 1), each drawn immediately LEFT of the cell it governs",
+        "note": "On real property the leaf name AGREES with the page for once - the leaf is times_8[0] and the page says X .8. It is bound on the rectangle anyway, because on this form a leaf name that happens to be right is a coincidence and not evidence: the identical cell on page 2 is named Times_7[0] and carries the same printed X .8."
+      },
+      {
+        "key": "5ab_real_property[n].quick_sale_equity",
+        "printed_caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] (total value of real estate) = (5a) $",
+        "formula": "quick_sale_value - current_loan_balance",
+        "note": "NOT current_fmv - current_loan_balance. That is why the column is named quick_sale_equity and not equity. No lease conditional is printed on the real-property rows, so unlike the vehicle rows below this cell is fully checkable."
+      },
+      {
+        "key": "5_total_real_estate",
+        "printed_caption": "Add lines (5a) through (5c) =",
+        "formula": "5ab_real_property[0].quick_sale_equity + 5ab_real_property[1].quick_sale_equity + 5c_property_from_attachment",
+        "note": "The caption names its addends outright, which is the test 433f.totals.json records for a caption being the form’s own statement of the arithmetic rather than this engine’s assertion."
+      },
+      {
+        "key": "6ac_vehicles[n].quick_sale_value",
+        "printed_caption": "X .8 = $",
+        "formula": "current_fmv * 0.8",
+        "caption_at": "y 279.5, x 115.1..145.2 (slot 0); y 160.7, x 115.1..145.2 (slot 1)",
+        "UNCONDITIONAL": "The \"if the vehicle is leased, enter 0\" instruction is printed against \"Total value of vehicle\", which is the (6a)/(6c) cell - NOT against this one. A leased vehicle still prints its market value and still prints that value times .8. This cell is therefore checkable on every row regardless of the lease answer, which is what keeps four of the page’s five quick-sale tripwires live even when a row is leased."
+      },
+      {
+        "key": "6b_vehicle_1_less_allowance",
+        "printed_caption": "Subtract $3,450 from line (6a)   /   (If line (6a) minus $3,450 is a negative number, enter \"0\")",
+        "formula": "max(0, 6ac_vehicles[0].quick_sale_equity - 3450)",
+        "note": "UNCONDITIONAL, unlike (6d). The $3,450 is printed on the page, so it is a printed constant on the same footing as the $1,000 on line (1). Floor and constant are both expressible in the totals schema as of this slice, so this cell is checked by the gate."
+      },
+      {
+        "key": "6_total_vehicles",
+        "printed_caption": "Total lines (6b), (6d), and (6e) =",
+        "formula": "6b_vehicle_1_less_allowance + 6d_vehicle_2_less_allowance + 6e_vehicles_from_attachment",
+        "note": "CHECKABLE even though (6d) and (6e) are each declared not checkable below: both are cells PRINTED ON THIS PAGE, and the recomputation reads what the page prints. Same shape as (1) summing (1c) and (4b) summing two attachment cells. The rule is about where a formula’s operands are printed, not where their figures came from."
       }
     ]
   },
@@ -508,6 +580,33 @@
         "map_key": "4b_minus_loan_balances",
         "printed_caption": "Minus loan balance(s)",
         "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) - that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
+      },
+      {
+        "map_key": "5c_property_from_attachment",
+        "printed_caption": "Total value of property(s) from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (5), which IS checkable.",
+        "review_page_advisory_summary": "Its bracketed caption carries the X .8. Surfaced on the review page - see 433aoi.totals.json not_checkable."
+      },
+      {
+        "cell": {
+          "group": "6ac_vehicles",
+          "column": "quick_sale_equity"
+        },
+        "printed_caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (6a) $ / (6c) $",
+        "why_not_checkable": "A PRINTED CONDITIONAL, and the only one on this page whose selector IS on the page. The cell is quick_sale_value minus current_loan_balance when the row’s Own box is ticked, and 0 when its Lease box is ticked. The totals schema adds and subtracts printed MONEY cells with a factor and a constant; it has no predicate over a checkbox, so it cannot express \"0 when leased\". Declared not checkable rather than checked-and-wrong: a tripwire that fired on every correctly-filled leased vehicle is a tripwire people would turn off.",
+        "what_this_gives_up_and_what_would_recover_it": "This is the one place slice 3 declines coverage the schema could plausibly reach. On an OWNED vehicle the subtraction is fully verifiable and is not verified. A single declarative predicate on a total - \"when 6ac_vehicles[n].lease_or_own is own\" - would recover it without becoming an expression language, and would let the gate SKIP the line with a printed reason on a leased row instead of ignoring it. REPORTED TO PRINCIPAL, NOT BUILT: the schema change authorised this slice was a factor and a constant, and a predicate is a different thing. What is NOT given up is the quick-sale multiplier itself - 6ac_vehicles[n].quick_sale_value is unconditional and is checked on both rows."
+      },
+      {
+        "map_key": "6d_vehicle_2_less_allowance",
+        "printed_caption": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
+        "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The cell is max(0, (6c) - 3450) on a joint offer and (6c) unchanged otherwise. The phrase \"joint offer\" is drawn EXACTLY ONCE on all eight pages of 433-A(OIC) - here, in this caption - and no cell anywhere on the form records the answer; whether the offer is joint is declared on Form 656, which this engine does not hold. So the branch cannot be read off the page even in principle, and unlike (6a)/(6c) above no predicate over a printed cell would recover it. Marital status on page 1 is NOT the same question and must not be substituted for it: a married taxpayer may file a separate offer.",
+        "checked_by_hand_before_declaring": "The single occurrence was confirmed by searching every drawn text candidate on every widget of all eight pages, not by reading page 3 alone."
+      },
+      {
+        "map_key": "6e_vehicles_from_attachment",
+        "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced, and INPUT rather than computed despite its leaf name Enter_Allowance[0]. Everything it sums is on an attachment this engine never sees. It is an operand of (6), which IS checkable.",
+        "review_page_advisory_summary": "Its bracketed caption carries the X .8, exactly as (3b) and (5c) do. Surfaced on the review page - see 433aoi.totals.json not_checkable."
       }
     ]
   },
@@ -548,6 +647,11 @@
       "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_27[0]",
       "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_28[0]",
       "_printed": "Question 'Does your spouse have an ownership interest in this business' y 107.5, x 36.0..255.2. 'Yes' y 93.9, x 50.4..64.2 with its box at y 92.7, x 36.0..45.0, followed by '(also complete and submit Form 433-B)' y 92.9, x 66.4..189.3; 'No' y 93.9, x 212.4..222.6 with its box at y 92.7, x 198.0..207.0."
+    },
+    "5_real_property_for_sale": {
+      "yes": "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_15[0]",
+      "no": "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_16[0]",
+      "_printed": "Question 'Is your real property currently for sale or do you anticipate selling your real property to fund the offer amount' at y 711.3, x 36.0..417.5 - quoted verbatim, and NO question mark is drawn on the page. 'Yes' y 696.9, x 50.4..64.2 with its box at y 695.7, x 36.0..45.0; 'No' y 696.9, x 208.8..219.0 with its box at y 695.7, x 194.4..203.4. Each box is drawn to the LEFT of the word it labels, the convention everywhere on this form. THE LEAF NAMES ARE CB2_15 AND CB2_16 ON PAGE 3, which are also the leaf names of the 401K and IRA boxes inside RetirementAcct2[0] on page 2 - the counter restarts per subform and says nothing about meaning. Bound on rectangle; the label file agrees."
     }
   },
   "check_here": {
@@ -632,7 +736,20 @@
       "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_15[0]",
       "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_16[0]",
       "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_17[0]"
-    ]
+    ],
+    "5_real_property_for_sale": [
+      "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_15[0]",
+      "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_16[0]"
+    ],
+    "6ac_vehicles[0].lease_or_own": [
+      "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_05[0]",
+      "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_06[0]"
+    ],
+    "6ac_vehicles[1].lease_or_own": [
+      "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_05[0]",
+      "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_06[0]"
+    ],
+    "_note_page_3": "BOTH PAGE-3 SETS ARE EXCLUSIVE, AND THE REASON IS RECORDED ON EACH. (a) 5_real_property_for_sale is a Yes/No pair on one printed question - a property either is or is not for sale, and a form answering both has answered neither. (b) 6ac_vehicles[n].lease_or_own is exclusive because a vehicle is leased or owned and cannot be both, and because THE FORM'S OWN ARITHMETIC DEPENDS ON THE ANSWER: the (6a)/(6c) caption reads 'Total value of vehicle (if the vehicle is leased, enter 0 as the total value)', so a row with both boxes ticked is a row whose printed total has no defined correct value. That is a stronger reason than any page-2 set has, and it is why these two are declared where the bank-type and investment-type lists are not."
   },
   "groups": {
     "household_members": {
@@ -891,6 +1008,120 @@
           }
         }
       ]
+    },
+    "5ab_real_property": {
+      "source": "real_property",
+      "max": 2,
+      "overflow": "log",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "real_property"
+        ]
+      },
+      "_printed_heading": "Real property – Enter information about any house, condo, co-op, time share, etc. that you own (or have interest in through a life estate), or",
+      "_heading_at": "y 735.9, x 36.0..565.0, continuing 'that your spouse owns if you live in a community property state.' at y 726.3, x 36.0..281.0. Declared by its first printed line, the way HOUSEHOLD_MEMBERS on page 1 is declared by its sentence rather than by an invented banner.",
+      "_printed_markers": "Slot 0 totals to printed (5a) at y 563.7; slot 1 to printed (5b) at y 430.5.",
+      "_row_order": "Slot 0 spans y 671.0 (description/purchase date) down to 565.2 (the money row); slot 1 spans 537.8 down to 432.0. Slot 0 is the higher, which is printed order. The (5c) attachment cell at y 417.6 and the (5) total at y 403.2 are bound as scalars, not as a third slot: the attachment block prints no description, no location and no lender, so it is not a row of this table.",
+      "_columns_by_x": "THE MONEY ROW IS FOUR CELLS WIDE, NOT THREE, exactly as the retirement row on page 2 is. Printed '$' x 37.0..41.5, current market value cell x 43.2..115.2, printed 'X .8 = $' x 118.7..148.8, QUICK SALE cell x 151.2..223.2, printed '– $' x 224.2..237.6, loan balance cell x 244.8..316.8, printed '(total value of real estate) =' x 338.5..435.6, marker (5a) x 447.1..468.0, total cell x 471.6..576.0. The printed 'Current market value' header (x 36.0..110.7) heads only the FIRST cell and 'Minus loan balance' (x 223.2..292.2) heads only the THIRD; NOTHING is printed above the quick sale cell, and the only text identifying it is the 'X .8 = $' drawn immediately to its left. Above the money row: 'Property description' x 36.0..107.2 over a cell x 36.0..298.8; 'Purchase date' x 306.0..357.6 over a cell x 306.0..435.6; 'Amount of mortgage payment' x 36.0..141.4 over a cell x 36.0..169.2; 'Date of final payment' x 176.4..252.0 over a cell x 176.4..298.8; 'How title is held' x 306.0..362.0 over a cell x 306.0..435.6; 'Location' x 36.0..66.3 over a cell x 36.0..241.2; 'Lender/Contract holder name, address' x 248.4..385.4 over a cell x 248.4..435.6.",
+      "_crosswalk": "description, location, purchase_date, monthly_payment, final_payment_date, title_holders, lender_name_address, current_fmv and current_loan_balance reuse EXACT column names from the real_property class in adapters/hubspot/asset-row-shapes.json. TWO COLUMNS ARE NEW ON THIS CLASS: quick_sale_value and quick_sale_equity. Both already exist on this repo’s retirement_account rows (slice 2), and 433aoi.crosswalk-read.md section 3 already flagged quick_sale_value as a new canonical column belonging to real_property; NEITHER is on the backbone real_property row today. THE BACKBONE’S `equity` COLUMN IS DELIBERATELY NOT REUSED for the (5a) cell: backbone equity is FMV minus loan, and (5a) is QUICK SALE VALUE minus loan. Reusing the name would file a figure 20% of FMV smaller under a column every other form reads as FMV-minus-loan. Same reasoning that kept (3a) off `equity` in slice 2. lender_phone is NOT bound: this form prints ONE cell for ‘Lender/Contract holder name, address (street, city, state, ZIP code) and phone’, where 433-A prints name/address and phone separately - a composite at map level, and the narrower direction, so nothing is lost by storing them apart.",
+      "_monthly_payment_is_named_amount_of_mortgage_here": "The printed caption is 'Amount of mortgage payment' and the leaf is amount_of_mortgage[0]. Bound to the backbone's monthly_payment, which is what 433-A's 'Amount of Monthly Payment' cell on the same class binds to. The word 'monthly' is not printed on THIS form's caption; the cell is the mortgage instalment either way, and the 433-A/433-F reconciliation already settled the name.",
+      "slots": [
+        {
+          "text": {
+            "description": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].property_description[0]",
+            "purchase_date": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].purchased_lease_date[0]",
+            "monthly_payment": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].amount_of_mortgage[0]",
+            "final_payment_date": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].date_of_final[0]",
+            "title_holders": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].how_title_held[0]",
+            "location": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].location[0]",
+            "lender_name_address": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].lender_lessor_landlord[0]",
+            "current_fmv": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].current_market_value[0].current_market_value[1]",
+            "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].current_market_value[0].times_8[0]",
+            "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].minus_loan_balance[0].minus_loan_balance[1]",
+            "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page3[0].Property1[0].total_real_estate[0]"
+          }
+        },
+        {
+          "text": {
+            "description": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].property_description[0]",
+            "purchase_date": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].purchased_lease_date[0]",
+            "monthly_payment": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].amount_of_mortgage[0]",
+            "final_payment_date": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].date_of_final[0]",
+            "title_holders": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].how_title_held[0]",
+            "location": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].location[0]",
+            "lender_name_address": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].lender_lessor_landlord[0]",
+            "current_fmv": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].current_market_value[0].current_market_value[1]",
+            "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].current_market_value[0].times_8[0]",
+            "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].minus_loan_balance[0].minus_loan_balance[1]",
+            "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page3[0].Property2[0].total_real_estate[0]"
+          }
+        }
+      ]
+    },
+    "6ac_vehicles": {
+      "source": "vehicles",
+      "max": 2,
+      "overflow": "log",
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "vehicle"
+        ]
+      },
+      "_printed_heading": "Vehicles",
+      "_heading_at": "y 383.1, x 36.0..68.5, followed on the same line by '(enter information about any cars, boats, motorcycles, etc. that you own or lease).' x 70.7..343.4 and a second line 'Include those located in foreign countries or jurisdictions. If additional space is needed, list on an attachment.' at y 373.5. Declared by the one word that names the subject, the same treatment SECTION_1_PERSONAL and SECTION_3_ASSETS get.",
+      "_printed_markers": "Slot 0 totals to printed (6a) at y 279.3; slot 1 to printed (6c) at y 160.5. THE TWO SLOTS ARE NOT ADJACENT: printed (6b) at y 259.5 sits BETWEEN them and belongs to slot 0. See _computed.",
+      "_row_order": "Slot 0 spans y 347.0 (make/model row) down to 280.8 (the (6a) total); slot 1 spans 228.2 down to 162.0. Slot 0 is the higher, which is printed order. The (6d), (6e) and (6) cells at y 147.6, 111.6 and 90.0 are bound as scalars, not as a third slot.",
+      "_columns_by_x": "THE MONEY ROW IS FOUR CELLS WIDE. Printed '$' x 37.0..41.5, current market value cell x 43.2..111.6, printed 'X .8 = $' x 115.1..145.2, QUICK SALE cell x 147.6..219.6, printed '– $' x 220.6..234.0, loan balance cell x 241.2..313.2, printed 'Total value of vehicle' x 317.0..392.2 with '(if the vehicle is leased, enter 0 as the total value)' wrapping beneath it, printed '=' x 431.0..435.6, marker (6a) x 447.1..468.0, total cell x 471.6..576.0. 'Current market value' (x 36.0..110.7) heads only the first cell; 'Minus loan balance' (x 219.6..288.6) heads only the third; NOTHING is printed above the quick sale cell. Above the money row: 'Vehicle make & model' x 36.0..115.6 over a cell x 36.0..183.6; 'Year' x 190.8..207.7 over a cell x 190.8..226.8; 'Date purchased' x 234.0..290.5 over a cell x 234.0..298.8; 'Mileage' x 306.0..334.0 over a cell x 306.0..352.8; 'License/Tag number' x 360.0..432.9 over a cell x 360.0..435.6; 'Name of creditor' x 90.0..149.2 over a cell x 90.0..226.8; 'Date of final payment' x 234.0..309.6 over a cell x 234.0..320.4; 'Monthly lease/loan amount' x 327.6..423.2 over a cell x 334.8..435.6 (preceded by a printed '$' at x 329.0..333.5). The Lease and Own boxes are in a COLUMN OF TWO at x 36.0..45.0, y 328.5 and 314.1, with the words 'Lease' (x 50.4..72.2, y 329.7) and 'Own' (x 50.4..66.9, y 315.3) to their right.",
+      "_crosswalk": "make_model, model_year, mileage, license_tag, purchase_date, final_payment_date, monthly_payment, lender_name_address, current_fmv and current_loan_balance reuse EXACT column names from the vehicle class in adapters/hubspot/asset-row-shapes.json. THREE COLUMNS ARE NEW ON THIS CLASS: quick_sale_value, quick_sale_equity and lease_or_own. THE `Year[0]` LEAF IS BOUND TO model_year, NOT to year_purchased, and this is the collision asset-row-shapes.json arguable A1-1 calls the most dangerous key in the set: 433-F's `year` on the same asset class means YEAR PURCHASED. What decides it here is the printed page, not the leaf - the 'Year' header sits in the make-and-model row at x 190.8..207.7, immediately right of 'Vehicle make & model', and 'Date purchased' is a SEPARATE printed header at x 234.0..290.5 with its own cell. Two headers, two cells, two facts. lender_name_address is bound to the cell headed 'Name of creditor', which is NARROWER than the backbone column (a name, no address) - the narrowing is lossless in this direction and the backbone name is kept so the row reconciles with 433-A's. lender_phone and vin are NOT bound: this form prints no cell for either.",
+      "_lease_or_own_is_new_and_the_backbone_has_no_column_for_it": "433-A's vehicle table is headed 'PERSONAL VEHICLES LEASED AND PURCHASED' and prints NO per-row lease/own indicator - 433a.map.json's `vehicles` group declares thirteen text columns and no checkboxes at all. 433-F's Section C prints none either. So this is the first printed cell in the series that asks the question, and it is not decoration: the (6a)/(6c) caption makes the printed total CONDITIONAL on the answer ('if the vehicle is leased, enter 0 as the total value'). Reported to Principal as a new column on the vehicle class.",
+      "slots": [
+        {
+          "text": {
+            "make_model": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Vehicle_Make_Model[0]",
+            "model_year": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Year[0]",
+            "purchase_date": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Date_Purchased[0]",
+            "mileage": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Mileage[0]",
+            "license_tag": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LicenseTagNumber[0]",
+            "lender_name_address": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Name_Creditor[0]",
+            "final_payment_date": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Date_Final_Payment[0]",
+            "monthly_payment": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Monthly_Lease_Amount[0]",
+            "current_fmv": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].CurrentMarket[0].Current_Market_Value[0]",
+            "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].CurrentMarket[0].Times_8[0]",
+            "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LessLoan[0].Less_Loan_Balance[0]",
+            "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].Total_Value_Vehicle[0]"
+          },
+          "checkboxes": {
+            "lease_or_own": {
+              "lease": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_05[0]",
+              "own": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_06[0]"
+            }
+          }
+        },
+        {
+          "text": {
+            "make_model": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Vehicle_Make_Model[0]",
+            "model_year": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Year[0]",
+            "purchase_date": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Date_Purchased[0]",
+            "mileage": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Mileage[0]",
+            "license_tag": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LicenseTagNumber[0]",
+            "lender_name_address": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Name_Creditor[0]",
+            "final_payment_date": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Date_Final_Payment[0]",
+            "monthly_payment": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Monthly_Lease_Amount[0]",
+            "current_fmv": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].CurrentMarket[0].Current_Market_Value[0]",
+            "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].CurrentMarket[0].Times_8[0]",
+            "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LessLoan[0].Less_Loan_Balance[0]",
+            "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].Total_Value_Vehicle[0]"
+          },
+          "checkboxes": {
+            "lease_or_own": {
+              "lease": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_05[0]",
+              "own": "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_06[0]"
+            }
+          }
+        }
+      ]
     }
   },
   "_never_autofill": {
@@ -909,15 +1140,89 @@
   "_partition": {
     "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
     "form_fields_total": 425,
-    "in_this_slice": 142,
-    "bound_writable": 140,
+    "in_this_slice": 201,
+    "bound_writable": 199,
     "excluded_never_autofill": 2,
     "deferred": 0,
-    "unaccounted": 283,
-    "_check": "140 + 2 + 0 = 142, which is every field on pages 1 and 2 (433aoi.labels.txt lists 74 for p1 and 68 for p2). 425 - 142 = 283 still unaccounted, all of them on pages 3-8.",
+    "unaccounted": 224,
+    "_check": "199 + 2 + 0 = 201, which is every field on pages 1, 2 and 3 (433aoi.labels.txt lists 74 for p1, 68 for p2 and 59 for p3). 425 - 201 = 224 still unaccounted, all of them on pages 4-8.",
     "_bound_breakdown_page_1": "Section 1: 16 scalars + 2 marital + 3 housing + 1 check-here + 28 dependent-grid targets (4 rows x [3 text + 4 checkbox]) = 50. Section 2: 10 scalars + 4 taxpayer pay-period + 4 spouse pay-period + 2 taxpayer ownership + 2 spouse ownership = 22. 50 + 22 = 72.",
     "_bound_breakdown_page_2": "17 scalars: (1c), (1), seven 2c_ digital asset cells, (2d), (2), (3b), (3), the three (4b) cells and (4). 1 check_here: the digital asset row box. 17 in 1ab_bank_accounts: slot 0 is 3 text + 6 type boxes = 9, slot 1 is 3 text + 5 type boxes = 8. 18 in 2ab_investment_accounts: 2 slots x [6 text + 3 type boxes]. 10 in 3a_retirement_accounts: 7 text + 3 type boxes. 5 in 4a_life_insurance_policies, all text. 17 + 1 + 17 + 18 + 10 + 5 = 68, which is exactly the widget count align-block.mjs reports for page 2.",
     "_page_2_has_no_never_autofill_and_no_deferred": "Every one of page 2's 68 fields is a data cell the taxpayer fills. There is no IRS-use column, no link button and no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; the third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is STILL undeclared because page 6 is still a page nobody has read.",
-    "_unaccounted_by_page": "p3 59, p4 66, p5 40, p6 39, p7 50, p8 29 = 283."
-  }
+    "_unaccounted_by_page": "p4 66, p5 40, p6 39, p7 50, p8 29 = 224.",
+    "_bound_breakdown_page_3": "9 scalars: the listing-price cell, (5c), (5), (6b), (6d), (6e), (6) - that is 7 - plus the 2 for-sale Yes/No boxes. 22 in 5ab_real_property: 2 slots x 11 text columns, no checkboxes. 28 in 6ac_vehicles: 2 slots x [12 text + 2 lease/own boxes]. 9 + 22 + 28 = 59, which is exactly the widget count align-block.mjs reports for page 3 (27 in the y 380..720 band and 33 in the y 40..400 band, less the one - Total_Value_Property[0] at y 403.2 - that both bands contain).",
+    "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; topmostSubform[0].F433-A-OIC_Page6[0].Button1[0] is STILL undeclared because page 6 is still a page nobody has read."
+  },
+  "authored_from_page3": "adapters/pdf/align-block.mjs 433aoi 3, run over two bands (y 380..720 and y 40..400), which lays the printed text and the widget rectangles in one coordinate space. Corroborated by adapters/pdf/maps/433aoi.line-markers.txt (10 printed markers on page 3, each paired with the widget to its right) and by 433aoi.labels.txt. THE THREE AGREE ON EVERY CELL, INCLUDING THE TWO WHOSE LEAF NAMES ARE SWAPPED.",
+  "_map_evidence_page3": {
+    "_why": "The printed line MARKER, the printed caption and the widget rectangle that justify each page-3 SCALAR binding. Page 3 prints a marker beside every money cell - 10 of them, listed in 433aoi.line-markers.txt - so the primary evidence here is the marker and the caption and rectangle confirm it. Group columns are evidenced under groups._columns_by_x, not here. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page.",
+    "_two_of_these_leaf_names_are_swapped": "Total_Value_Vehicles_Attached[0] is NOT the vehicles-from-attachment cell and Enter_Allowance[0] is NOT an allowance. They are (6d) and (6e) respectively, which is the exact opposite of what the two names say. THREE INDEPENDENT WITNESSES AGREE and none of them is the name: (i) line-markers.mjs pairs each printed marker with the widget to its right on the same row, giving (6d) -> Total_Value_Vehicles_Attached[0] at y 147.6 and (6e) -> Enter_Allowance[0] at y 111.6; (ii) 433aoi.labels.txt, a nearest-drawn-text correlation computed independently, returns \"(6d) $\" and \"(6e) $\" for the same two widgets; (iii) the money column on this page holds exactly six widgets at y 280.8, 266.4, 162.0, 147.6, 111.6 and 90.0 against exactly six printed markers (6a),(6b),(6c),(6d),(6e),(6) in top-down order, so the pairing is forced by ordering alone. That takes this form to ELEVEN leaf names known to be actively wrong.",
+    "5_real_property_listing_price": {
+      "page": 3,
+      "marker": null,
+      "caption": "(listing price)",
+      "caption_at": "y 695.9, x 80.2..119.9",
+      "widget_at": "y 698.4, x 122.4..187.2",
+      "note": "No line marker. The cell sits immediately RIGHT of its caption, on the Yes branch of the for-sale question above it."
+    },
+    "5c_property_from_attachment": {
+      "page": 3,
+      "marker": "(5c)",
+      "marker_at": "y 416.1, x 447.6..468.0",
+      "caption": "Total value of property(s) from attachment [current market value X .8 minus any loan balance(s)]",
+      "caption_at": "y 416.1, x 92.8..435.6",
+      "widget_at": "y 417.6, x 471.6..576.0"
+    },
+    "5_total_real_estate": {
+      "page": 3,
+      "marker": "(5)",
+      "marker_at": "y 400.6, x 449.5..468.0",
+      "caption": "Add lines (5a) through (5c) =",
+      "caption_at": "y 400.6, x 310.9..432.7",
+      "widget_at": "y 403.2, x 471.6..576.0"
+    },
+    "6b_vehicle_1_less_allowance": {
+      "page": 3,
+      "marker": "(6b)",
+      "marker_at": "y 259.5, x 447.1..468.0",
+      "caption": "Subtract $3,450 from line (6a)",
+      "caption_at": "y 264.3, x 329.8..435.6",
+      "caption_second_line": "(If line (6a) minus $3,450 is a negative number, enter \"0\")",
+      "caption_second_line_at": "y 254.7, x 232.9..435.6",
+      "widget_at": "y 266.4, x 471.6..576.0",
+      "note": "THIS IS THE VEHICLE ALLOWANCE ON THIS FORM, not (6e). The figure $3,450 is DRAWN ON THE PAGE, in this caption, so it is a printed constant and this cell is computed under the standing rule. It is not looked up in a standards table this repo does not hold."
+    },
+    "6d_vehicle_2_less_allowance": {
+      "page": 3,
+      "marker": "(6d)",
+      "marker_at": "y 135.3, x 447.1..468.0",
+      "caption": "If you are filing a joint offer, subtract $3,450 from line (6c)",
+      "caption_at": "y 144.9, x 233.3..435.6",
+      "caption_second_line": "(If line (6c) minus $3,450 is a negative number, enter \"0\")",
+      "caption_second_line_at": "y 135.3, x 233.4..435.6",
+      "caption_third_line": "If you are not filing a joint offer, enter the amount from line (6c)",
+      "caption_third_line_at": "y 125.6, x 217.4..435.6",
+      "widget_at": "y 147.6, x 471.6..576.0",
+      "LEAF_NAME_IS_WRONG": "The leaf is Total_Value_Vehicles_Attached[0]. This cell has nothing to do with an attachment - it is the second vehicle’s $3,450 allowance line, conditional on whether the offer is joint. Binding by name would file the vehicles-from-attachment total here and the joint-offer line at (6e)."
+    },
+    "6e_vehicles_from_attachment": {
+      "page": 3,
+      "marker": "(6e)",
+      "marker_at": "y 106.5, x 447.1..468.0",
+      "caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+      "caption_at": "y 106.5, x 83.9..435.6",
+      "widget_at": "y 111.6, x 471.6..576.0",
+      "LEAF_NAME_IS_WRONG": "The leaf is Enter_Allowance[0]. THIS CELL IS NOT AN ALLOWANCE. Its printed caption is the vehicles-from-attachment total, the exact counterpart of (5c) for real property and of (3b) for retirement accounts, and like both of those it is attachment-sourced INPUT rather than anything computed. The allowance on this page is the $3,450 at (6b) and (6d). A reader who trusted this leaf name would look for a standards-table lookup and find an attachment total."
+    },
+    "6_total_vehicles": {
+      "page": 3,
+      "marker": "(6)",
+      "marker_at": "y 85.6, x 449.5..468.0",
+      "caption": "Total lines (6b), (6d), and (6e) =",
+      "caption_at": "y 85.6, x 300.4..432.7",
+      "widget_at": "y 90.0, x 471.6..576.0",
+      "note": "It totals (6b), (6d) and (6e) - NOT (6a) and (6c). The two per-vehicle totals reach this line only through the allowance lines that follow them."
+    }
+  },
+  "_nesting_note_page3": "AcroForm nesting depth is not uniform on page 3 either. Property1[0] and Property2[0] wrap their market-value and quick-sale cells in a current_market_value[0] subform whose SECOND child repeats the parent name (current_market_value[0].current_market_value[1]), and wrap the loan cell the same way (minus_loan_balance[0].minus_loan_balance[1]) - but hang the ROW TOTAL total_real_estate[0] directly off themselves, and hang all seven upper text cells directly off themselves too. Vehicle1[0] and Vehicle2[0] use DIFFERENT wrapper names for the same three cells: CurrentMarket[0] for the value pair and LessLoan[0] for the loan cell, with no repeated-name child. The two vehicle subforms also reuse identical leaf names for their lease/own boxes (CB3_05, CB3_06) and are told apart only by the subform. FOUR CELLS ARE LOOSE SCALARS at the page level with no section subform at all - line6b[0], Total_Value_Vehicles_Attached[0], Enter_Allowance[0] and Total_Value_Vehicles_Amount[0] - while their sibling TotalValueProperty[0] cells DO sit under a subform. A prefix taken from any one of these blocks generalises to none of the others, which is the standing note recorded for pages 1 and 2 and is now true on three pages out of three."
 }
