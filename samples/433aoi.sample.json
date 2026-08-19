@@ -27,7 +27,7 @@
   "OPTION VALUES AGAIN VARY IN CASE AND PADDING ('Money Market Account/CD', ' 401K ', 'Other') to exercise the trim + case-insensitive match, and the multi-word slash-bearing option is chosen deliberately: it is the only option on this page that could be mangled by a naive key comparison.",
   "EVERY ROW STATES ITS asset_class. All four page-2 groups declare row_class, and a row claiming a class its group does not print stops the run. On this form investments (2) carry no multiplier and retirement accounts (3) carry X .8, so a 401(k) filed into the investment table would understate nothing visibly and overstate the offer by 20% of market value. The class is what refuses it."
  ],
- "intake_id": "433aoi-slice3",
+ "intake_id": "433aoi-slice4",
  "s1_tp_last_name": "Sample-Taxpayer-LastName",
  "s1_tp_first_name": "SampleFirstName",
  "s1_tp_dob": "01/02/1975",
@@ -307,5 +307,96 @@
   "THE THIRD PROPERTY AND THE THIRD VEHICLE ARE OVERFLOW. The form prints two of each; the extra records exist to prove overflow is LOGGED AND DROPPED rather than thrown or written over an earlier row, matching the third bank row and second retirement row on page 2. Their figures are NOT in (5c) or (6e): those cells are declared not checkable precisely because what they sum is on an attachment this engine never sees.",
   "OPTION VALUES AGAIN VARY IN CASE AND PADDING. The for-sale answer is ‘Yes’, vehicle 1 is ‘Own’ and vehicle 2 is ‘ lease ’ - padded and lower-case - to exercise the trim plus case-insensitive match on a set where getting it wrong would tick the box that zeroes a printed total.",
   "BOTH PAGE-3 GROUPS STATE THEIR asset_class ON EVERY ROW. 5ab_real_property accepts only real_property and 6ac_vehicles only vehicle. Page 3 is where that matters most on this form: the two tables print the same four-cell money row at the same x columns 200 points apart, and a vehicle filed into a property slot would print inside the rules and reconcile every total on the page."
+ ],
+ "other_valuable_items": [
+  {
+   "asset_class": "personal_property",
+   "description": "(7a) Sample estate jewellery and two catalogued artworks, held in a safe deposit box",
+   "current_fmv": "61500",
+   "quick_sale_value": "49200",
+   "current_loan_balance": "7325",
+   "quick_sale_equity": "41875"
+  },
+  {
+   "asset_class": "personal_property",
+   "description": "OVERFLOW - a second valuable item, the form prints one row at (7a), must be dropped and logged",
+   "current_fmv": "888888",
+   "quick_sale_value": "711110.4",
+   "current_loan_balance": "0",
+   "quick_sale_equity": "711110.4"
+  }
+ ],
+ "7b_description_of_asset": "(7b) Remaining household furniture and personal effects not itemised above",
+ "7b_current_market_value": "18750",
+ "7b_quick_sale_value": "15000",
+ "7b_minus_loan_balance": "2140",
+ "7b_total_remaining_furniture": "12860",
+ "7c_valuable_items_from_attachment": "9245",
+ "7_total_other_valuable_items": "52000",
+ "box_a_available_individual_equity_in_assets": "444752",
+ "s4_business_is_sole_proprietorship": "Yes",
+ "s4_business_name": "(S4) Testville Bindery and Letterpress",
+ "s4_business_address": "(S4) 4402 Sample Mill Road, Suite 12, Testville, OR 97000",
+ "s4_business_telephone": "5415550188",
+ "s4_business_ein": "84-7710093",
+ "s4_business_website": "www.example-testville-bindery.invalid",
+ "s4_trade_name_or_dba": "(S4) Ridge Bindery",
+ "s4_description_of_business": "(S4) Hand bookbinding",
+ "s4_total_number_of_employees": "6",
+ "s4_frequency_of_tax_deposits": "Semi-weekly",
+ "s4_average_gross_monthly_payroll": "14380",
+ "s4_other_business_interests": "Yes",
+ "s4_other_business_percentage_ownership": "35",
+ "s4_other_business_title": "(S4) Managing member",
+ "s4_other_business_name": "(S4-other) Sampleton Paper Supply LLC",
+ "s4_other_business_address": "(S4-other) 9 Testfield Avenue, Sampleton, OR 97001",
+ "s4_other_business_telephone": "5415550244",
+ "s4_other_business_ein": "84-7710506",
+ "s4_other_business_type": "Other",
+ "s4_other_business_type_other": "(S4-other) member-managed LLC taxed as a partnership",
+ "business_bank_accounts": [
+  {
+   "asset_class": "bank_account",
+   "type_of_account": "Cash",
+   "institution_name_and_address": "(8a) Cash float held on the business premises, United States",
+   "account_number": "(8a) none - cash on hand",
+   "account_balance": "3410"
+  },
+  {
+   "asset_class": "bank_account",
+   "type_of_account": " Money Market/CD ",
+   "institution_name_and_address": "(8b) Testville Merchants Bank, business money market, United States",
+   "account_number": "8B-0000-2211",
+   "account_balance": "27655"
+  },
+  {
+   "asset_class": "bank_account",
+   "type_of_account": "Checking",
+   "institution_name_and_address": "OVERFLOW - a third business bank account, the form prints two, must be dropped and logged",
+   "account_number": "OVERFLOW",
+   "account_balance": "999999"
+  }
+ ],
+ "8c_digital_asset_held": true,
+ "8c_description_of_digital_asset": "(8c) Testcoin",
+ "8c_number_of_units": "14.5",
+ "8c_location_of_digital_asset": "(8c) Sampleco Exchange, custodial business account",
+ "8c_custodian_account_number": "8C-CUST-3390",
+ "8c_self_hosted_asset_address": "(8c) tb1qsamplewalletaddressfortestingonly000",
+ "8c_us_dollar_equivalent_today": "18420",
+ "8c_total_digital_assets": "18420",
+ "8d_bank_accounts_from_attachment": "6015",
+ "8_total_business_bank_accounts": "55500",
+ "_coverage_notes_page_4": [
+  "SCOPE. 66 of this form's 425 fields are on page 4 and all 66 are bound - page 4 has no IRS-use column, no link button and no cell this slice could not resolve, so it carries no never-autofill and no deferred entries. This fixture reaches all 66. Together with pages 1, 2 and 3 that is 267 of 425; the other 158 are on pages 5-8 and are deliberately untouched.",
+  "SYNTHETIC. Every name, address, EIN, phone number, account number and wallet address on this page is invented. The EINs are not issued, the website resolves nowhere (.invalid), and the wallet address is not a valid address on any chain.",
+  "DISTINCT BY ROW AND BY COLUMN. No two money cells on page 4 share a value, and no money cell shares a value with any cell on pages 2 or 3, so a cell written into its neighbour cannot produce a total that still reconciles. (7a) market value 61,500 / QSV 49,200 / loan 7,325 / total 41,875. (7b) 18,750 / 15,000 / 2,140 / 12,860. (7c) 9,245. (7) 52,000. Box A 444,752. (8a) 3,410. (8b) 27,655. (8c) 18,420. (8d) 6,015. (8) 55,500.",
+  "THE TWO QUICK-SALE MULTIPLIERS ARE EXACT AND NOT ROUND. 61,500 x .8 = 49,200 and 18,750 x .8 = 15,000. Both were chosen so the product is a whole number: rounding is NOT implemented in this slice, so a fixture whose X .8 produced cents would be testing the tripwire against a question this engine has not been given an answer to yet. The cents evidence for that decision is in the slice-4 report, not in this fixture.",
+  "THE $11,980 DEDUCTION IS EXERCISED AND THE FLOOR IS NOT. (7) is 41,875 + 12,860 + 9,245 - 11,980 = 52,000, comfortably positive. The floor declared on (7) does not fire on this fixture, which is stated here rather than left to be inferred: the floor is a claim about the printed page and this fixture does not prove it.",
+  "BOX A CROSSES THREE PAGES. 37,912 (p2) + 81,525 (p2) + 77,750 (p2) + 35,850 (p2) + 138,650 (p3) + 21,065 (p3) + 52,000 (p4) = 444,752. It is the only total on this form so far whose operands are not all on one sheet, so it is the only one that would catch a page-3 figure failing to reach a page-4 line.",
+  "LINE (8) HAS NO $1,000 DEDUCTION. 3,410 + 27,655 + 18,420 + 6,015 = 55,500 exactly. The personal line (1) on page 2 subtracts $1,000 and this one does not, so the two are deliberately different arithmetic on deliberately different numbers.",
+  "BOTH BUSINESS BANK ROWS EXERCISE A DIFFERENT ACCOUNT TYPE, and slot 1 uses Money Market/CD - an option page 2's second bank row does not offer, because (1b) prints five options and (8b) prints six. The value is written with surrounding spaces and mixed case (\" Money Market/CD \") to exercise the normalising fold, the same way the page-3 vehicle row writes \" lease \".",
+  "OVERFLOW IS EXERCISED TWICE. A second valuable item at (7a), which prints one row, and a third business bank account at (8a)/(8b), which prints two. Both must be dropped and logged, never written over an earlier row.",
+  "SECTION 4 IS ALL FREE TEXT AND HAS NO TOTAL. Its one money-shaped cell, average gross monthly payroll, is plain input and is declared not checkable. The three checkbox sets are all exercised, and the type-of-business set is answered \"Other\" so the write-in cell beside it is reached too."
  ]
 }
