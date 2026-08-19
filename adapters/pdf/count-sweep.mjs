@@ -677,6 +677,51 @@ export const MANIFEST = [
     kind: 'underivable',
     reason: 'THE BODY OF THE MAP AND ITS EVIDENCE. Numbers here are printed coordinates, printed line markers, printed constants the form draws ($1,000, $3,450, X .8), field-name indices, and maxLength limits. Not one of them counts a set this repo holds. Each is checked by the instrument that can check it: align-block.mjs and line-markers.mjs re-measure coordinates and markers out of the PDF; check-row-shape.mjs re-derives every row shape; validate-map.mjs proves every target exists verbatim; gate step 11 recomputes every printed constant into its total. Counting them would assert agreement between a transcription and itself.' }),
 
+  // ═══ the table-or-scalars procedure ══════════════════════════════════════════════════
+  // A DECISION PROCEDURE THAT STATES FACTS ABOUT THE TREE IS CHECKED AGAINST THE TREE. Its
+  // whole purpose is to be reread by a later slice and by 433-B(OIC), and a procedure whose
+  // worked examples have gone stale teaches the wrong answer with full confidence. Every
+  // figure it states about a shape THIS REPO HOLDS is derived here; the rest is reasoning
+  // about the printed page and about past slices, and is declared underivable below.
+  D({ id: 'S-24', file: /\.map\.json$/, at: /^_table_or_scalars\./,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const rows = [];
+      let recognised = false, m;
+      const G = ctx.mapDoc.groups || {}, MAP = ctx.mapDoc.map || {};
+      const keysLike = (re) => Object.keys(MAP).filter(k => re.test(k)).length;
+
+      if ((m = new RegExp(String.raw`household_members is a (${WORD_NUM}|\d+)-slot group`, 'i').exec(v))) {
+        recognised = true;
+        rows.push({ what: 'W1: household_members slots', claimed: word(m[1]) ?? Number(m[1]), derived: G.household_members?.slots?.length, from: 'groups.household_members.slots' });
+      }
+      if ((m = new RegExp(String.raw`(${WORD_NUM}|\d+) leaf names on this form are actively wrong`, 'i').exec(v))) {
+        recognised = true;
+        const active = (ctx.liesDoc?.entries || []).filter(e => e.kind === 'lie' || e.kind === 'container').length;
+        rows.push({ what: 'W6: active name lies', claimed: word(m[1]) ?? Number(m[1]), derived: active, from: 'name-lies.json entries of kind lie or container' });
+      }
+      if ((m = new RegExp(String.raw`groups\.9ab_business_assets, slots (\d+), max (\d+)`, 'i').exec(v))) {
+        recognised = true;
+        rows.push({ what: 'C-08: 9ab_business_assets slots', claimed: Number(m[1]), derived: G['9ab_business_assets']?.slots?.length, from: 'groups.9ab_business_assets.slots' });
+        rows.push({ what: 'C-08: 9ab_business_assets max', claimed: Number(m[2]), derived: G['9ab_business_assets']?.max, from: 'groups.9ab_business_assets.max' });
+      }
+      if ((m = new RegExp(String.raw`(${WORD_NUM}|\d+) .map. keys, 30_\* and 31_\*`, 'i').exec(v))) {
+        recognised = true;
+        rows.push({ what: 'page 6: the (30)/(31) scalar keys', claimed: word(m[1]) ?? Number(m[1]), derived: keysLike(/^(30|31)_/), from: 'map keys matching /^(30|31)_/' });
+      }
+      if ((m = new RegExp(String.raw`7b_\* are (${WORD_NUM}|\d+) .map. keys; 7a_other_valuable_items is a (${WORD_NUM}|\d+)-slot group`, 'i').exec(v))) {
+        recognised = true;
+        rows.push({ what: 'C-14: the 7b scalar keys', claimed: word(m[1]) ?? Number(m[1]), derived: keysLike(/^7b_/), from: 'map keys matching /^7b_/' });
+        rows.push({ what: 'C-14: 7a_other_valuable_items slots', claimed: word(m[2]) ?? Number(m[2]), derived: G['7a_other_valuable_items']?.slots?.length, from: 'groups.7a_other_valuable_items.slots' });
+      }
+      if (!recognised) rows.push({ unrecognised: true });
+      return rows;
+    },
+    fallback: {
+      kind: 'underivable',
+      reason: 'THE PROCEDURE’S REASONING. Its numbers are printed coordinates re-measurable with align-block.mjs (the heading at y 671.7, the column headers at y 726.7 and y 658.3, the repeated captions at y 642.9 and y 603.3, the 540.0pt/327.6pt asymmetry, the 39.6pt row pitch), printed line markers re-measurable with line-markers.mjs, or statements about PAST SLICES which the present tree cannot reproduce by construction — "the same question landed three different ways in three slices" is a fact about slices 4, 5 and 6 and is not falsifiable from the tree as it stands. Every figure the block states about a shape this repo HOLDS — the slot counts, the maxes, the scalar key counts, the active-lie total — is derived above, and one that is stated and not recognised is reported as unrecognised rather than waved through.',
+    } }),
+
   D({ id: 'S-19', file: /\.map\.json$/, at: /^(form|form_revision|catalog|pdf|fields_source|slice|map_version)$/,
     kind: 'underivable',
     reason: 'The map header. `form_revision` and `catalog` are the printed revision pin, re-read out of the PDF page content by read-form-revision.mjs and failed on mismatch in validate-map.mjs; the rest are identifiers, not counts.' }),

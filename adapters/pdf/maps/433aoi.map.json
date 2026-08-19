@@ -2537,5 +2537,72 @@
    "what_differs_on_a_filed_page": "A real expense with no line. Under reading A it is written into (50) and enters Box E; under reading B it is omitted and Box E is lower, which RAISES Box F and therefore raises the offer amount. The two readings move the offer in a direction that matters, and the \"List debt(s)/expense(s)\" caption is the only printed thing that separates them.",
    "what_is_bound_today": "(50) is bound to the printed caption \"Secured debts/Other\" and 50_list_debts_expenses to \"List debt(s)/expense(s)\", both verbatim, and the map takes no position on what may be written into them. The crosswalk maps 50_secured_debts_other to 433-A 47_exp_secured_debts on the arithmetic and records that 433-A’s 49_exp_other_expenses has NO counterpart here. Reported for Principal, not resolved."
   }
- ]
+ ],
+ "_table_or_scalars": {
+  "_what_this_decides": "Whether two or more structurally identical printed blocks are ONE REPEATABLE TABLE (a `groups` entry with N slots) or N SEPARATELY-DRAFTED SCALAR BLOCKS (N sets of `map` keys). Nothing filed differs either way on any case decided so far - the same cells print in the same places under both readings - so no filed page and no tripwire can settle it. What it decides is how a cell is ADDRESSED, whether verify-headings.mjs bands the blocks together, whether check-row-shape.mjs applies a row_class to them, whether the block carries a `max` and an overflow rule, and - the reason this is written down rather than re-argued - WHICH SHAPE 433-B(OIC) INHERITS.",
+  "_why_a_stated_procedure": "The same question landed three different ways in three slices. Page 4 decided (7a)/(7b) as scalars ON A PRINTED HEADING drawn between them. Page 5 decided (9a)/(9b) as a two-slot group because NO heading was drawn between them - the same test, run the other way. Page 6 decided its two income rows as scalars on three grounds THAT NEEDED NO HEADING AT ALL. So the heading test was decisive, then absent, then unnecessary; and the marker-suffix pattern agrees with the page-5 answer and contradicts the page-4 one, which no single-test framing survives. C-08 and C-14 each say in their own words that the heading may never have been the load-bearing test. They were right, and the procedure below says what was.",
+  "_the_witnesses_in_order": {
+   "_the_rule": "TIERS, NOT A CHECKLIST. A witness in a higher tier BEATS a conflicting witness in every lower tier, and the lower one is recorded as overruled rather than dropped. Two witnesses in the SAME tier that conflict make the case UNDECIDABLE - recorded as such, with both named, and not decided on a tie-break. The ordering is not aesthetic: tier 1 is evidence about whether THE FORM ITSELF MODELS THE BLOCKS AS REPEATS OF ONE THING, tier 2 about how the page is divided, tier 3 about how the IRS numbered it, and tier 4 is not evidence at all.",
+   "tier_1_does_the_form_model_this_as_repeatable": {
+    "W1_the_attachment_line_and_what_its_caption_names": "DIRECTIONAL, NOT A BICONDITIONAL, and this is the witness the two open questions were missing. A repeatable block that can run out of printed rows carries an overflow line, and THE CAPTION OF THAT LINE NAMES THE SUBJECT IT OVERFLOWS. Read which printed blocks that subject covers. One attachment line whose subject covers both blocks => ONE TABLE. An attachment line whose subject covers only one of two adjacent blocks => NOT one table. NO attachment line anywhere near the blocks => THIS WITNESS IS SILENT, and silence falls through to tier 1's second witness and then to tier 2. It must be read as silent and not as a vote for scalars: household_members is a four-slot group on page 1 with no attachment line anywhere on this form.",
+    "W2_a_distinct_party_or_role_per_block": "A block whose printed caption names a DIFFERENT PARTY or role than the block beside it is a separate question about a separate subject, not a second occurrence of the same subject. 'Total primary taxpayer income' and 'Total spouse income' are two subjects; 'Property 1' and 'Property 2' are one subject twice. Where this witness speaks it is dispositive for SCALARS, because a repeatable table repeats one subject by definition."
+   },
+   "tier_2_how_the_page_is_divided": {
+    "W3_a_heading_drawn_between_the_blocks": "A repeatable table has ONE heading over all its rows - every group on this form does. A heading drawn BETWEEN two blocks means verify-headings.mjs bands them separately, which is a mechanical consequence and not a matter of taste. Speaks for SCALARS when present. ABSENCE IS NOT EVIDENCE FOR A TABLE, which is the error the page-5 decision made: most things on a form have no heading between them.",
+    "W4_column_header_identity": "Two slots of one table share their column headers VERBATIM, because they are one drawn table head. Headers that differ - even by a plural or a trailing colon - were drafted separately. Speaks for SCALARS on any difference; speaks for a table only when the headers are drawn ONCE above both blocks rather than repeated."
+   },
+   "tier_3_how_the_IRS_numbered_it": {
+    "W5_the_marker_suffix_pattern": "A shared number with letter suffixes - (7a)/(7b), (9a)/(9b) - is how the IRS spells PARTS OF ONE LINE. Consecutive whole numbers - (30)/(31) - is how it spells separate lines. Real but weak, and it is in tier 3 because it is a NOTATIONAL convention the drafter applies to the printed page after deciding what the page asks, not a statement about repeatability. It is the witness that contradicts the standing (7a)/(7b) answer, and being outranked twice over is why that answer survives."
+   },
+   "tier_4_recorded_and_never_load_bearing": {
+    "W6_the_leaf_name_pair_pattern": "Account1/Account2, Property1/Property2, Vehicle1/Vehicle2, OtherAsset1/OtherAsset2. NOT EVIDENCE ABOUT THE PRINTED PAGE. Fourteen leaf names on this form are actively wrong, two pairs are swapped outright, and the whole of 433aoi.name-lies.json exists because these names describe what an XFA author intended and not what the page asks. Recorded when it is noticed, never counted.",
+    "W7_geometric_symmetry": "Identical cell layout, same x columns, same printed operators. This is what MAKES THE QUESTION ARISE and therefore cannot settle it - if the blocks were not structurally identical nobody would ask. Recorded, never counted."
+   }
+  },
+  "_applied_retrospectively": {
+   "_the_instruction": "Every past decision re-run under the procedure, and the verdict reported whether or not it agrees with what is bound. A disagreement is a finding, not an embarrassment.",
+   "C-14_7a_7b_page_4": {
+    "bound_today": "SCALARS - 7b_* are five `map` keys; 7a_other_valuable_items is a one-slot group.",
+    "W1": "SPEAKS, AND IS DECISIVE. (7c)'s caption is 'Total value of VALUABLE ITEMS listed from attachment'. (7a) sits under 'Other valuable items (artwork, collections, jewelry, ...)'; (7b) sits under 'Value of remaining furniture and personal effects (not listed above)'. The attachment line's subject is (7a)'s and not (7b)'s, so the overflow belongs to (7a) alone => THE TWO ARE NOT ONE TABLE => SCALARS.",
+    "W2": "silent - both blocks concern the same taxpayer's own property.",
+    "W3": "SCALARS. A heading is drawn between them at y 671.7.",
+    "W4": "SCALARS. 'Description of asset(s)' at y 726.7 against 'Description of asset' at y 658.3.",
+    "W5": "TABLE, and OVERRULED. (7a)/(7b) share a number with letter suffixes.",
+    "W6": "TABLE, and not counted. OtherAsset1[0]/OtherAsset2[0].",
+    "W7": "TABLE, and not counted. Same five columns, same 'X .8 = $' at x 154.7..184.7.",
+    "verdict": "SCALARS.",
+    "agrees_with_what_is_bound": true,
+    "what_changed": "THE GROUND, NOT THE ANSWER. This was decided on W3, a tier-2 witness whose absence was then read as evidence on page 5. It is now carried by W1, which is tier 1 and which the slice-4 evidence block already contained without weighing it: 'THE COLUMN HEADERS DIFFER BY A PLURAL. (7a) is itemisable and overflows to (7c) ... (7b) has NO attachment counterpart anywhere on the page.' That sentence is the decisive witness and it was written down as the second of three supporting reasons."
+   },
+   "C-08_9a_9b_page_5": {
+    "bound_today": "A TWO-SLOT GROUP - groups.9ab_business_assets, slots 2, max 2.",
+    "W1": "SPEAKS, AND IS DECISIVE. (9c)'s caption is 'Total value of ASSETS listed from attachment' - the generic subject of the whole block, covering (9a) and (9b) alike, exactly as (1c) covers (1a)/(1b) and (5c) covers (5a)/(5b). ONE attachment line over both blocks => ONE TABLE.",
+    "W2": "silent - both rows concern the same business's assets.",
+    "W3": "silent. Nothing is drawn between them, and under this procedure that is silence and not a vote.",
+    "W4": "SCALARS, weakly - the two description captions differ by a colon.",
+    "W5": "TABLE. (9a)/(9b) share a number with letter suffixes.",
+    "W6": "TABLE, not counted.",
+    "W7": "SCALARS, not counted - the two description cells are geometrically asymmetric, 540.0pt against 327.6pt.",
+    "verdict": "A TWO-SLOT GROUP.",
+    "agrees_with_what_is_bound": true,
+    "what_changed": "THE GROUND, AND THE COUNTER-ARGUMENT IS NOW PLACED. This was decided on the ABSENCE of W3, which the procedure now rules is not evidence. It is carried instead by W1 and seconded by W5. The counter-argument C-08 records - the asymmetric description cells and the colon - is W7 and W4: W7 is tier 4 and not counted at all, and W4 is tier 2 and is overruled by W1. So the counter-argument was real, was correctly recorded as weak, and is now weak for a stated reason rather than by impression."
+   },
+   "page_6_income_rows_30_31": {
+    "bound_today": "SCALARS - ten `map` keys, 30_* and 31_*.",
+    "W1": "silent. Neither row has an attachment line; page 6 has none anywhere.",
+    "W2": "SPEAKS, AND IS DECISIVE. 'Total primary taxpayer income' at (30) against 'Total spouse income' at (31): two parties, two subjects. A repeatable table repeats ONE subject.",
+    "W3": "silent. No heading is drawn between the rows.",
+    "W4": "TABLE. The four column captions are drawn TWICE, once per row - 'Gross wages / Social Security / Pension(s) / Other income' at y 642.9 and repeated at y 603.3 - and repeated headers are the shape of two drawn table heads, not one.",
+    "W5": "SCALARS. (30) and (31) are consecutive whole numbers.",
+    "W6": "TABLE, not counted. SpouseOther[0] mirrors Primary[0].",
+    "W7": "TABLE, not counted. The two rows are structurally identical, one 39.6pt below the other.",
+    "verdict": "SCALARS.",
+    "agrees_with_what_is_bound": true,
+    "what_changed": "NOTHING, AND THAT IS THE POINT. This slice decided on party labels, differing total captions and non-consecutive markers - W2 and W5 - without reaching for a heading. The procedure ratifies exactly that reasoning and explains why it was sufficient: W2 is tier 1. It also records that W4 here speaks FOR a table (the headers are repeated per row) and is overruled, which the slice-6 report did not notice."
+   }
+  },
+  "_what_this_procedure_does_not_settle": "The three cases above all resolve, and all three agree with what is bound. That is not a claim that the procedure decides everything. A case where W1 and W2 conflict - one attachment line covering two blocks that name different parties - would be UNDECIDABLE under this rule and must be recorded as such, with both witnesses named, exactly as the page-3 rounding omission was recorded rather than guessed. No such case exists on 433-A(OIC).",
+  "_what_433B_OIC_inherits": "This block, and the reading that a decision is carried by its HIGHEST-TIER speaking witness and not by whichever test the slice happened to reach for. The two standing answers are unchanged, so nothing bound on 433-A(OIC) moves; what 433-B(OIC) inherits is the order, not three precedents that contradict each other.",
+  "_this_block_is_swept": "adapters/pdf/count-sweep.mjs [S-24] disposes of every claim site in it, and adapters/pdf/guard-sweep.mjs sweeps the engine that reads it."
+ }
 }

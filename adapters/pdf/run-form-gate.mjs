@@ -108,7 +108,7 @@ const { deferred, never, writable } = classifyMapTargets(mapDoc);
 //
 // STABLE KEY ORDER, one `key: value` per line, no blank lines inside the block, delimited
 // top and bottom. Values never contain a newline.
-const SUMMARY = { tripwires: null };
+const SUMMARY = { tripwires: null, declarations: null };
 
 // Run a sibling tool as its own process, with its output inline. process.execPath, never a
 // shell: a .cmd shim cannot be spawned on this box, and a shell would need the paths quoted.
@@ -411,7 +411,15 @@ const steps = [
                   addr: entry.total_key ? `key:${entry.total_key}`
                       : (entry.total_cell?.group && entry.total_cell?.column) ? `cell:${entry.total_cell.group}.${entry.total_cell.column}`
                       : null,
-                  floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false };
+                  floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false,
+                  // DECLARATION COVERAGE. What this line DECLARES, and what actually FIRED on
+                  // this fixture. A declared behaviour no fixture exercises is a rule nothing
+                  // has ever proved — Box F's floor was one, and C-16 records the same gap on
+                  // (7). Unexercised is a named gap and not a failure; SILENT is the only
+                  // unacceptable state, which is why this is derived here rather than asserted
+                  // in prose. Collected on the same pass that does the arithmetic, so coverage
+                  // and the recomputation can never disagree about what ran.
+                  cov: { factors: [], constants: [], signs: [], predicates: [] } };
 
       const { target: totalTarget, how: totalHow } = resolveTotal(entry);
       if (!totalTarget) { r.checkable = false; r.why = `${totalHow} does not resolve to a target in the map`; rows.push(r); continue; }
@@ -428,6 +436,11 @@ const steps = [
         // transcript that the page never asked for.
         if (fd.when !== undefined) {
           const w = evalWhen(fd.when, `line ${entry.line}`);
+          // Which BRANCH this predicate took, recorded before any early exit below can skip
+          // past it. A two-branch printed conditional is only fully exercised when a fixture
+          // has been seen taking each branch, and one fixture can only ever take one.
+          r.cov.predicates.push({ key: fd.when?.key ?? '(unnamed)', equals: fd.when?.equals,
+            branch: w.stop ? 'STOP' : w.undecidable ? 'undecidable' : w.holds ? 'held' : 'not-held' });
           if (w.stop)        { predicateStops.push(w.stop); r.checkable = false; r.why = w.stop; break; }
           if (w.undecidable) { r.checkable = false; r.why = w.undecidable; break; }
           if (!w.holds)      { r.skipped = true; r.skipWhy = w.describe; break; }
@@ -478,6 +491,16 @@ const steps = [
         // enter 0 as the total value)" is a printed zero, not an absent operand, and a line
         // that showed no feeder at all would look like a line nothing feeds.
         if (typeof fd.constant === 'number') r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
+        // WHAT THIS FEEDER'S DECLARATIONS ACTUALLY DID. `fired` is the discriminator: a factor
+        // declared over cells that are all zero multiplies nothing, and a `.8` that has never
+        // been applied to a non-zero figure has never been proved to be .8 rather than .7 —
+        // which is exactly the shape of the 0.7 quick-sale cell in the name-lie registry.
+        if (typeof fd.factor === 'number' && fd.factor !== 1)
+          r.cov.factors.push({ factor: fd.factor, caption: fd.factor_caption ?? null, fired: cellSum !== 0 });
+        if (typeof fd.constant === 'number')
+          r.cov.constants.push({ constant: fd.constant, caption: fd.constant_caption ?? null, fired: konst !== 0 });
+        if (fd.sign === -1)
+          r.cov.signs.push({ on: fd.keys ? fd.keys.join(', ') : `${fd.group}.${fd.column}`, fired: cellSum !== 0 });
         r.sum += sign * (factor * cellSum + konst);
       }
       // ROUND FIRST, THEN FLOOR — the order 433-A(OIC) page 2 y 668.1 prints the two sentences
@@ -611,6 +634,89 @@ const steps = [
     // skipped because the form is not on its printed branch, or failed.
     SUMMARY.tripwires = { checked: checked.length, skipped: skippedRows.length, failed: bad.length,
       not_checkable: unchecked.length, declared_lines: rows.length, declared_not_checkable: declined.length };
+
+    // ─── DECLARATION COVERAGE ────────────────────────────────────────────────────────────
+    //
+    // EVERY DECLARED BEHAVIOUR, AND THE FIXTURE FACT THAT EXERCISED IT OR THE STATEMENT THAT
+    // NONE DID. Box F's floor is declared and no fixture has ever driven Box F negative, so
+    // nothing has ever proved the floor fires there rather than merely being written down;
+    // C-16 records the same gap on (7). Unexercised is a NAMED GAP and not a failure — some
+    // of these can only fire on a taxpayer whose figures this repo has no business inventing.
+    // What is forbidden is silence, because "no fixture exercises this" and "this works" are
+    // indistinguishable from the outside, and that indistinguishability is the whole subject
+    // of this engine.
+    //
+    // Derived on the pass that did the arithmetic. A second pass could disagree with the
+    // first about what ran, and then coverage would be a claim rather than a record.
+    const covers = [];
+    for (const r of rows) {
+      const ctx0 = (kind, what, fired, why) => covers.push({ line: r.line, kind, what, fired, why });
+      if (r.floor !== null)
+        ctx0('floor', `floor ${r.floor}`, !!r.floored,
+          r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : `the sum was ${money(r.sum)}, at or above the floor, so it never clamped`);
+      for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'every cell it multiplies was blank or zero');
+      for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
+      for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
+      for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`);
+    }
+    // Overflow drops: a group whose printed slots ran out. Read from the map's declared max
+    // against the rows the record actually carried, not from the fill engine's log — the
+    // engine drops silently by design and this is the declaration, not the drop.
+    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
+      const capDeclared = d.max ?? (d.slots || []).length;
+      const src = sample?.[d.array || d.source || g];
+      const fed = Array.isArray(src) ? src.length : null;
+      covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
+        why: fed === null ? 'the record carries no rows for this group' : `the record fed ${fed} row(s) into ${capDeclared} printed slot(s), so nothing overflowed` });
+    }
+    // Exclusive sets and not-checkable advisories are declared in the map and the totals file
+    // and are exercised by verify-form-coverage (step 10) and render-review respectively;
+    // counted here so the coverage table names every declaration KIND, not only the arithmetic ones.
+    for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
+      if (!Array.isArray(targets)) continue;
+      const on = targets.filter(t => isChecked(t) === true);
+      covers.push({ line: set, kind: 'exclusive', what: `${targets.length} option(s)`, fired: on.length === 1,
+        why: on.length === 0 ? 'no option is checked on this fixture, so the set never had to be exclusive' : `${on.length} options are checked` });
+    }
+    // A NOT-CHECKABLE ENTRY THAT DECLARES NO ADVISORY IS NOT AN UNEXERCISED DECLARATION —
+    // it is an ABSENT one, and counting the two together would report a gap where there is
+    // no rule. Most of these entries need none: (1c) is an attachment roll-up whose caption
+    // says everything a preparer needs. Only entries that DO declare an advisory are in
+    // class, and such an advisory is exercised when the cell it advises about was actually
+    // written on this fixture — an advisory beside an empty cell is one no preparer sees.
+    let noAdvisory = 0;
+    for (const e of declined) {
+      const adv = e.review_page_advisory || e.review_page_advisory_summary || null;
+      if (!adv) { noAdvisory++; continue; }
+      // BOTH ADDRESSING FORMS, the same two the rest of this file reads: a scalar `map_key`,
+      // or a `cell: {group, column}` naming a column of a repeatable row — which addresses
+      // EVERY slot of that group, so the advisory is exercised when any one of them is
+      // written. Reading only `map_key` reported the one group-cell entry on this form as an
+      // advisory whose cell "is not a text field", which is a fact about the measurement and
+      // not about the form.
+      const key = e.map_key || (e.cell ? `${e.cell.group}.${e.cell.column}` : null);
+      const tgts = e.map_key ? [resolveKey(e.map_key)].filter(Boolean)
+                 : e.cell ? (groupTargets(e.cell.group, e.cell.column) || []) : [];
+      const vals = tgts.map(t => printed(t)).filter(p => !p.missing);
+      const written = vals.some(p => p.text !== undefined && p.text !== null && String(p.text).trim() !== '');
+      covers.push({ line: key || '(unaddressed)', kind: 'advisory', what: `review-page advisory${tgts.length > 1 ? ` (${tgts.length} slots)` : ''}`, fired: written,
+        why: !tgts.length ? 'the entry names neither a map_key nor a cell{group,column}, so nothing could be resolved to check'
+           : !vals.length ? 'no slot it advises about is a text field on the filled PDF'
+           : 'every cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
+    }
+
+    const unex = covers.filter(d => !d.fired);
+    const byKind = covers.reduce((a, d) => { (a[d.kind] ||= { n: 0, un: 0 }); a[d.kind].n++; if (!d.fired) a[d.kind].un++; return a; }, {});
+    console.log('');
+    console.log(`  DECLARATION COVERAGE — ${covers.length} declared behaviour(s); ${covers.length - unex.length} exercised by this fixture, ${unex.length} not.`);
+    console.log(`    (${noAdvisory} not-checkable entr${noAdvisory === 1 ? 'y declares' : 'ies declare'} no review-page advisory at all — an absent rule, not an unexercised one, and not counted above.)`);
+    console.log(`    ${Object.entries(byKind).map(([k, v]) => `${k}: ${v.n - v.un}/${v.n}`).join('   ')}`);
+    if (unex.length) {
+      console.log('    NOT EXERCISED BY THIS FIXTURE — each is a declared rule no fixture has proved. Named, not failed:');
+      for (const d of unex) console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}\n                  ${d.why}`);
+    }
+    SUMMARY.declarations = { total: covers.length, exercised: covers.length - unex.length, unexercised: unex.length,
+      unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none' };
     // Never collapsed to a pass count. Checked, skipped and failed are three different
     // things and a single number cannot say which one a line was in.
     const tally = `${checked.length} checked, ${skippedRows.length} skipped, ${bad.length} failed`
@@ -737,6 +843,16 @@ if (skipped.length) {
   L.push(`tripwires_failed: ${t ? t.failed : 'n/a'}`);
   L.push(`tripwires_declared_lines: ${t ? t.declared_lines : 'n/a'}`);
   L.push(`tripwires_declared_not_checkable: ${t ? t.declared_not_checkable : 'n/a'}`);
+  // DECLARATION COVERAGE in the copy-pasteable block, for the same reason the tripwire figures
+  // are: a number a person reads off the screen and retypes into a report is a number that
+  // drifts. `unexercised_kinds` is spelled out rather than collapsed to a total, because
+  // "9 floors none of which has ever fired" and "9 advisories nobody has seen" are different
+  // gaps and a single figure cannot say which one a run is in.
+  const dc = SUMMARY.declarations;
+  L.push(`declarations_total: ${dc ? dc.total : 'n/a'}`);
+  L.push(`declarations_exercised: ${dc ? dc.exercised : 'n/a'}`);
+  L.push(`declarations_unexercised: ${dc ? dc.unexercised : 'n/a'}`);
+  L.push(`declarations_unexercised_kinds: ${dc ? dc.unexercised_kinds : 'n/a'}`);
   L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : 'none declared'}`);
   L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : 'none declared'}`);
   L.push(`registry_page_imprecise: ${lies ? kindCount('page_imprecise') : 'none declared'}`);
