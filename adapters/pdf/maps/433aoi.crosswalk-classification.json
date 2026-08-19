@@ -1,0 +1,429 @@
+{
+ "form": "433aoi",
+ "against": "433a",
+ "covers_slices": "1-6, pages 1-6. Pages 7-8 are slice 7 and are absent from this file by construction, not by omission.",
+ "_what_this_is": "THE CROSSWALK CLASSIFICATION, AS DATA. For each correspondence between a 433-A(OIC) binding and its nearest 433-A counterpart, WHICH KIND of correspondence it is. Six slices of this classification existed only inside chat reports, which are the one artefact no sweep can reach - and a classification that lives in a report is re-derived from six reports by whoever does the provisioning pass, which is the retyped-count defect with more steps and worse inputs.",
+ "_this_binds_NOTHING": "NO CROSSWALK BINDINGS. No HubSpot property is named, no canonical column is claimed, no map key is repointed. Every entry is a statement about how two PRINTED FORMS relate, and the provisioning pass reads it as INPUT to a decision rather than as the decision. That separation is the standing plan and this file does not move it. `oic` names a key in 433aoi.map.json and `a433` a key in 433a.map.json, both so a reader can go and look; naming a key is not binding it to anything.",
+ "_the_categories": {
+  "exact": "The same fact, computed the same way, in the same shape. A 433-A record's value for `a433` is the value 433-A(OIC) wants at `oic`, with no transformation. This is the only category a provisioning pass may reuse a property for without a decision.",
+  "superset": "The OIC line asks for MORE than the 433-A line. A 433-A value is a correct partial answer and an incomplete one, so reusing it silently understates the OIC figure. Direction matters and is always OIC-broader here; the reverse is `asymmetric-the-other-way`.",
+  "different-arithmetic-same-name": "The captions correspond and the ARITHMETIC does not. This is the most dangerous category on the form, because the names invite reuse and the resulting figure is wrong on a statement signed under penalty of perjury while every printed total still reconciles.",
+  "different-shape": "The same facts, laid out differently - a different number of printed rows, a different grouping, a different overflow rule. The facts transfer; the container does not.",
+  "same-fact-different-decomposition": "One quantity split into different parts by the two forms. Neither side is wrong and no line-to-line mapping exists: the crosswalk is per FACT, not per line, and going either way needs arithmetic the taxpayer signs for.",
+  "new": "433-A(OIC) prints it and 433-A prints nothing like it. Nothing to crosswalk; either intake or computation, and which one is a decision.",
+  "asymmetric-the-other-way": "433-A prints it and 433-A(OIC) does not. Recorded because a crosswalk read in one direction hides these entirely, and a 433-A fact with nowhere to go on the OIC form is a fact the OIC filing drops."
+ },
+ "_why_the_offset_is_not_a_category": "The expectation this crosswalk was opened to test - that 433-A(OIC) reuses the 433-A map with a +3 expense-line offset - HOLDS FOR THIRTEEN CONSECUTIVE EXPENSE LINES AND FOR NOTHING ELSE. It is recorded per entry below rather than as a rule, because two of the thirteen are not `exact` and the fourteenth 433-A line has no OIC line at all. An offset that is right thirteen times and wrong three ways is an authoring aid, not a function.",
+ "entries": [
+  {
+   "id": "X-01",
+   "slice": 1,
+   "page": 1,
+   "category": "exact",
+   "oic": "s1_tp_last_name, s1_tp_first_name, s1_tp_dob, s1_tp_ssn_itin, s1_sp_last_name, s1_sp_first_name, s1_sp_dob, s1_sp_ssn",
+   "a433": "433-A Section 1 taxpayer and spouse identity cells",
+   "why": "Name, date of birth and SSN/ITIN for taxpayer and spouse. The same eight facts asked the same way on both forms."
+  },
+  {
+   "id": "X-02",
+   "slice": 1,
+   "page": 1,
+   "category": "exact",
+   "oic": "s1_home_physical_address, s1_home_mailing_address, s1_county_of_residence, s1_primary_phone, s1_secondary_phone, s1_fax_number",
+   "a433": "433-A Section 1 address and contact cells",
+   "why": "Physical address, mailing address, county, and three contact numbers."
+  },
+  {
+   "id": "X-03",
+   "slice": 1,
+   "page": 1,
+   "category": "different-shape",
+   "oic": "groups.household_members (4 slots)",
+   "a433": "groups.household_members (5 slots)",
+   "why": "The same per-dependent facts - name, age, relationship, claimed on 1040, contributes to household income - in FOUR printed rows against 433-A's FIVE. A household of five transfers to this form with one member dropped to an attachment, and the OIC form prints no attachment line for household members. The facts crosswalk one for one; the container holds one fewer."
+  },
+  {
+   "id": "X-04",
+   "slice": 1,
+   "page": 1,
+   "category": "exact",
+   "oic": "s2_tp_employer_name, s2_tp_employer_address, s2_tp_occupation, s2_tp_tenure_years, s2_tp_tenure_months, and the five spouse counterparts",
+   "a433": "433-A Section 2, Employment Information for Wage Earners",
+   "why": "Employer, address, occupation and tenure, for taxpayer and spouse. Section 2 on both forms and the same ten facts."
+  },
+  {
+   "id": "X-05",
+   "slice": 2,
+   "page": 2,
+   "category": "different-shape",
+   "oic": "groups.1ab_bank_accounts (2 slots) + 1c_bank_accounts_from_attachment",
+   "a433": "groups.bank_accounts (4 slots)",
+   "why": "TWO printed rows against 433-A's four, with an attachment line the OIC form prints and 433-A does not. A record with three bank accounts fills both printed rows and rolls the third into (1c), which is a real transformation and not a copy."
+  },
+  {
+   "id": "X-06",
+   "slice": 2,
+   "page": 2,
+   "category": "different-shape",
+   "oic": "groups.2ab_investment_accounts (2 slots) + 2d_investment_accounts_from_attachment",
+   "a433": "groups.investments (4 slots)",
+   "why": "Same shape of difference as X-05: two printed rows against four, plus an attachment roll-up."
+  },
+  {
+   "id": "X-07",
+   "slice": 2,
+   "page": 2,
+   "category": "different-arithmetic-same-name",
+   "oic": "groups.3a_retirement_accounts + 3b_retirement_accounts_from_attachment + 3_total_retirement_accounts",
+   "a433": "433-A retirement account rows",
+   "why": "THE QUICK-SALE DISCOUNT. 433-A(OIC) prints 'X .8' against the retirement market value and 433-A prints no column of that kind anywhere on the form. A 433-A market value copied into (3a) overstates the OIC figure by 25% of what the OIC form actually wants, and every printed total on the page still reconciles. The attachment line (3b) carries the discount in its own caption too, where nothing can enforce it."
+  },
+  {
+   "id": "X-08",
+   "slice": 2,
+   "page": 2,
+   "category": "different-shape",
+   "oic": "groups.4a_life_insurance_policies (1 slot) + 4b_life_insurance_from_attachment + 4b_minus_loan_balances",
+   "a433": "groups.life_insurance_policies (3 slots)",
+   "why": "ONE printed row against 433-A's three, and the OIC attachment block splits into two cells - a total and a separate loan-balance figure - where the printed row carries its own 'Minus loan balance'. A taxpayer with two policies has one printed row and an attachment on this form."
+  },
+  {
+   "id": "X-09",
+   "slice": 2,
+   "page": 2,
+   "category": "exact",
+   "oic": "2c_description_of_digital_asset, 2c_number_of_units, 2c_location_of_digital_asset, 2c_custodian_account_number, 2c_self_hosted_asset_address, 2c_us_dollar_equivalent_today",
+   "a433": "groups.digital_assets columns",
+   "why": "Both forms ask the same six digital-asset facts, including the self-hosted wallet address. 433-A prints four rows and the OIC form prints one block, but the FACTS are identical and none is discounted - the digital-asset cells carry no 'X .8'."
+  },
+  {
+   "id": "X-10",
+   "slice": 3,
+   "page": 3,
+   "category": "different-arithmetic-same-name",
+   "oic": "groups.5ab_real_property (2 slots) + 5c_property_from_attachment + 5_total_real_estate",
+   "a433": "groups.real_property (3 slots)",
+   "why": "The quick-sale discount again, on real property, plus two printed rows against three. A 433-A current market value is not the OIC figure - X-07's reasoning, on the largest numbers on the form."
+  },
+  {
+   "id": "X-11",
+   "slice": 3,
+   "page": 3,
+   "category": "different-arithmetic-same-name",
+   "oic": "groups.6ac_vehicles (2 slots) + 6_total_vehicles",
+   "a433": "groups.vehicles (3 slots)",
+   "why": "Quick-sale discount, two rows against three, AND a printed lease/own conditional that zeroes the row - 'if the vehicle is leased, enter 0 as the total value'. 433-A asks for lease and ownership facts but never zeroes an equity figure on them."
+  },
+  {
+   "id": "X-12",
+   "slice": 3,
+   "page": 3,
+   "category": "new",
+   "oic": "6b_vehicle_1_less_allowance, 6d_vehicle_2_less_allowance",
+   "a433": null,
+   "why": "THE VEHICLE EQUITY ALLOWANCE. The OIC form subtracts a printed $3,450 per vehicle on a joint offer and 433-A grants no such allowance anywhere. Nothing to crosswalk. The selector - whether the offer is joint - is on Form 656 and on no cell of this form, which is why (6d) is declared not checkable."
+  },
+  {
+   "id": "X-13",
+   "slice": 3,
+   "page": 3,
+   "category": "new",
+   "oic": "5_real_property_listing_price, checkboxes.5_real_property_for_sale",
+   "a433": null,
+   "why": "The OIC form asks whether the real property is for sale and at what listing price. 433-A asks neither. It is one question about the taxpayer's property as a whole rather than about either printed row, which is why it is bound as scalars and not as a group column."
+  },
+  {
+   "id": "X-14",
+   "slice": 4,
+   "page": 4,
+   "category": "different-shape",
+   "oic": "groups.7a_other_valuable_items (1 slot) + 7c_valuable_items_from_attachment, and separately 7b_* as five scalars",
+   "a433": "433-A's other-valuable-items rows",
+   "why": "The OIC form prints TWO structurally identical five-cell blocks that are two different questions - itemised valuable items at (7a), which overflows to (7c), and a residual 'value of remaining furniture and personal effects' at (7b), which overflows to nothing. See map._table_or_scalars C-14 for why they are not one table. The quick-sale discount applies to both."
+  },
+  {
+   "id": "X-15",
+   "slice": 4,
+   "page": 4,
+   "category": "new",
+   "oic": "box_a_available_individual_equity_in_assets",
+   "a433": null,
+   "why": "BOX A. The sum of the taxpayer's discounted personal-asset equity, and the first of the six boxes that make up the offer calculation. 433-A prints no box of any kind: it collects assets and stops. Computation, not intake."
+  },
+  {
+   "id": "X-16",
+   "slice": 4,
+   "page": 4,
+   "category": "exact",
+   "oic": "s4_business_name, s4_business_address, s4_business_telephone, s4_business_ein, s4_trade_name_or_dba, s4_description_of_business, s4_total_number_of_employees, s4_frequency_of_tax_deposits",
+   "a433": "433-A Section 5, Business Information for Self-Employed",
+   "why": "Business identity and payroll-cadence facts, asked the same way on both forms. Section 4 here against 433-A's Section 5 - the section NUMBERS differ across the two forms from here on, and the facts do not."
+  },
+  {
+   "id": "X-17",
+   "slice": 4,
+   "page": 4,
+   "category": "new",
+   "oic": "s4_business_website",
+   "a433": null,
+   "why": "The OIC form asks for a business website and 433-A does not."
+  },
+  {
+   "id": "X-18",
+   "slice": 4,
+   "page": 4,
+   "category": "different-shape",
+   "oic": "groups.8ab_business_bank_accounts (2 slots) + 8d_bank_accounts_from_attachment + 8c_* digital-asset block",
+   "a433": "groups.business_bank_accounts (2 slots)",
+   "why": "Two printed rows on both forms, but the OIC form adds an attachment roll-up and a full business DIGITAL-ASSET block - the same six facts as the personal block at (2c), asked again for the business. 433-A asks for business digital assets nowhere."
+  },
+  {
+   "id": "X-19",
+   "slice": 5,
+   "page": 5,
+   "category": "different-arithmetic-same-name",
+   "oic": "groups.9ab_business_assets (2 slots) + 9c_business_assets_from_attachment + 9_total_business_assets",
+   "a433": "groups.business_property (2 slots)",
+   "why": "Two printed rows on both, and the OIC rows carry the quick-sale discount that 433-A's do not. They also carry a printed conditional with NO selector on this form - 'if leased or used in the production of income, enter 0 as the total value' - where the page-3 vehicle rows at least print their own lease/own boxes. See map._table_or_scalars C-08 for why these two are one group and (7a)/(7b) are not."
+  },
+  {
+   "id": "X-20",
+   "slice": 5,
+   "page": 5,
+   "category": "new",
+   "oic": "10_irs_allowed_deduction_books_and_tools, 11_business_assets_less_deduction",
+   "a433": null,
+   "why": "The IRS-allowed deduction for professional books and tools of trade, subtracted from business assets. 433-A grants no such deduction. It is a PUBLISHED IRS FIGURE this repo does not hold, so nothing auto-fills it and the review page carries an advisory saying so."
+  },
+  {
+   "id": "X-21",
+   "slice": 5,
+   "page": 5,
+   "category": "new",
+   "oic": "box_b_available_business_equity_in_assets",
+   "a433": null,
+   "why": "BOX B, the business half of X-15. Computation."
+  },
+  {
+   "id": "X-22",
+   "slice": 5,
+   "page": 5,
+   "category": "exact",
+   "oic": "12_gross_receipts, 13_gross_rental_income, 14_interest_income, 15_dividends, 16_other_income, 17_total_business_income",
+   "a433": "433-A Section 6 business income lines",
+   "why": "Five business income sources and their total, asked identically on both forms."
+  },
+  {
+   "id": "X-23",
+   "slice": 5,
+   "page": 5,
+   "category": "exact",
+   "oic": "18_materials_purchased through 28_other_business_expenses, and 29_total_business_expenses",
+   "a433": "433-A Section 6 business expense lines",
+   "why": "Eleven business expense lines and their total. The line NUMBERS differ and the captions and the arithmetic do not."
+  },
+  {
+   "id": "X-24",
+   "slice": 5,
+   "page": 5,
+   "category": "new",
+   "oic": "box_c_net_business_income",
+   "a433": null,
+   "why": "BOX C, business income minus business expenses. 433-A computes a net business income figure on its income side (line 24) but prints no box here; the OIC form computes it in Section 6 and CARRIES IT ACROSS to page 6. See X-30 for what happens to it there."
+  },
+  {
+   "id": "X-25",
+   "slice": 5,
+   "page": 5,
+   "category": "different-shape",
+   "oic": "checkboxes.s5_has_notes_receivable, checkboxes.s5_has_accounts_receivable",
+   "a433": "groups.accounts_notes_receivable (5 slots)",
+   "why": "THE OIC FORM ASKS ONLY WHETHER THEY EXIST. Two yes/no pairs against 433-A's five-row itemised table of notes and accounts receivable. A 433-A record carrying five receivable rows collapses to two booleans here, and the detail has nowhere to go on this form."
+  },
+  {
+   "id": "X-26",
+   "slice": 6,
+   "page": 6,
+   "category": "same-fact-different-decomposition",
+   "oic": "30_primary_taxpayer_gross_wages, 30_primary_taxpayer_social_security, 30_primary_taxpayer_pensions, 30_primary_taxpayer_other_income, 30_total_primary_taxpayer_income and the five 31_spouse_* counterparts",
+   "a433": "21_income_wages_taxpayer, 22_income_wages_spouse, 27_income_pension_taxpayer, 28_income_pension_spouse, 29_income_social_security_taxpayer, 30_income_social_security_spouse, 33_income_other_amount, 34_income_other2_amount",
+   "why": "THE SAME FACTS, TRANSPOSED. 433-A splits taxpayer and spouse into separate LINES and groups by income TYPE; the OIC form splits them into separate ROWS of a four-across grid and groups by PERSON, then asks for a per-person total 433-A never computes. Every individual fact crosswalks; no LINE does. And the two forms disagree on how many 'other income' facts exist per person: 433-A prints two description/amount pairs shared across the household, the OIC grid prints one 'Other income' cell per person."
+  },
+  {
+   "id": "X-27",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "33_interest_dividends_and_royalties",
+   "a433": "23_income_interest_dividends",
+   "why": "Interest and dividends on both. The OIC caption adds 'and royalties', which is a broadening in wording that the 433-A line's own instructions already cover; recorded as exact and flagged here rather than as a superset. THE LEAF NAME IS THE TRAP, NOT THE CROSSWALK: three widgets on this page are named Interest_Dividends and only this one is interest and dividends."
+  },
+  {
+   "id": "X-28",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "34_distributions",
+   "a433": "26_income_distributions",
+   "why": "Distributions from K-1, IRA and similar. The same fact on both forms."
+  },
+  {
+   "id": "X-29",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "35_net_rental_income",
+   "a433": "25_income_net_rental_income",
+   "why": "Net rental income, same fact both forms."
+  },
+  {
+   "id": "X-30",
+   "slice": 6,
+   "page": 6,
+   "category": "different-arithmetic-same-name",
+   "oic": "36_net_business_income_from_box_c",
+   "a433": "24_income_net_business_income",
+   "why": "THE CAPTION NAMES A PRINTED CELL AND THEN INSTRUCTS THE PREPARER TO MAKE IT DIFFER. The OIC line reads 'Net business income from Box C' followed by '[Deductions for non-cash expenses on Schedule C (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes and must be added back in]'. A 433-A net business income computed from a Schedule C that deducted depreciation is NOT this figure and is smaller than it, so copying it understates household income, understates Box F and understates the offer. It is the clearest same-name-different-arithmetic pair on the form and the one most likely to be reused without thinking, because both captions say net business income."
+  },
+  {
+   "id": "X-31",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "37_child_support_received",
+   "a433": "31_income_child_support",
+   "why": "Child support received. Same fact."
+  },
+  {
+   "id": "X-32",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "38_alimony_received",
+   "a433": "32_income_alimony",
+   "why": "Alimony received. Same fact."
+  },
+  {
+   "id": "X-33",
+   "slice": 6,
+   "page": 6,
+   "category": "new",
+   "oic": "32_additional_sources_of_income, 32_list_sources",
+   "a433": null,
+   "why": "'Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may contribute', with its own list cell. THIRD-PARTY CONTRIBUTIONS, which is a different question from the taxpayer's own other income - that lives in the (30)/(31) grid's 'Other income' columns, see X-26. 433-A asks about household contributors nowhere on its income side."
+  },
+  {
+   "id": "X-34",
+   "slice": 6,
+   "page": 6,
+   "category": "new",
+   "oic": "box_d_total_household_income",
+   "a433": "35_total_income",
+   "why": "Recorded as NEW and not as exact, deliberately. 433-A's line 35 totals the taxpayer's income lines; Box D totals a household income that INCLUDES third-party contributions at (32) which 433-A never collects, and a net business income at (36) that differs from 433-A's by the non-cash add-back at X-30. Two totals with the same English name over two different sets of operands. Reusing 433-A's total here is the single largest reuse error available on this form."
+  },
+  {
+   "id": "X-35",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "39_food_clothing_and_miscellaneous, 40_housing_and_utilities, 42_vehicle_operating_costs, 43_public_transportation_costs, 44_health_insurance_premiums, 45_out_of_pocket_health_care_costs, 46_court_ordered_payments, 47_child_dependent_care_payments, 48_life_insurance_premiums",
+   "a433": "36_exp_food_clothing_misc, 37_exp_housing_and_utilities, 39_exp_vehicle_operating_costs, 40_exp_public_transportation, 41_exp_health_insurance, 42_exp_out_of_pocket_health_care, 43_exp_court_ordered_payments, 44_exp_child_dependent_care, 45_exp_life_insurance",
+   "why": "THE +3 OFFSET, WHERE IT ACTUALLY HOLDS. Nine of the thirteen offset lines are exact: same question, same monthly figure, printed line number three higher. The other four are X-36, X-37, X-38 and X-39."
+  },
+  {
+   "id": "X-36",
+   "slice": 6,
+   "page": 6,
+   "category": "different-arithmetic-same-name",
+   "oic": "41_vehicle_loan_or_lease_payments",
+   "a433": "38_exp_vehicle_ownership_costs",
+   "why": "Inside the offset band and NOT exact. 433-A asks for 'Vehicle Ownership Costs'; the OIC line asks specifically for 'Vehicle loan and/or lease payment(s)'. The OIC caption is NARROWER - a 433-A ownership figure that included anything beyond the loan or lease payment overstates this line."
+  },
+  {
+   "id": "X-37",
+   "slice": 6,
+   "page": 6,
+   "category": "superset",
+   "oic": "49_current_monthly_taxes",
+   "a433": "46_exp_current_year_taxes",
+   "why": "Inside the offset band and NOT exact, in the opposite direction to X-36. 433-A asks for 'Current year taxes (Income/FICA)'; the OIC line asks for 'Current monthly taxes (e.g., monthly cost of federal, state, and local tax, personal property tax, etc.)'. The OIC line is BROADER, so a 433-A value is a correct partial answer and an incomplete one."
+  },
+  {
+   "id": "X-38",
+   "slice": 6,
+   "page": 6,
+   "category": "same-fact-different-decomposition",
+   "oic": "50_secured_debts_other, 50_list_debts_expenses",
+   "a433": "47_exp_secured_debts, 49_exp_other_expenses",
+   "why": "WHERE THE OFFSET STOPS BEING A FUNCTION. Two 433-A lines land on one OIC line: 47 'Secured Debts (Attach list)' and 49 'Other Expenses (Attach list)' both feed (50) 'Secured debts/Other', whose own caption enumerates 'any loan where you pledged an asset as collateral not previously listed, government guaranteed student loan, employer required retirement or dues'. Adding the two 433-A figures is arithmetic the taxpayer signs for, and the free-text list cell has to be composed from two 433-A attachments."
+  },
+  {
+   "id": "X-39",
+   "slice": 6,
+   "page": 6,
+   "category": "exact",
+   "oic": "51_delinquent_state_local_tax_payment",
+   "a433": "48_exp_delinquent_state_local_taxes",
+   "why": "The last line of the offset band, and exact. The OIC caption pluralises to 'payment(s)' and asks the same monthly question."
+  },
+  {
+   "id": "X-40",
+   "slice": 6,
+   "page": 6,
+   "category": "new",
+   "oic": "40_monthly_rent_payment, 48_life_insurance_policy_amount, 51_total_tax_owed",
+   "a433": null,
+   "why": "THREE COMPONENT DISCLOSURES THE OIC FORM ASKS FOR BESIDE A LINE AND 433-A DOES NOT ASK AT ALL. The monthly rent inside the (40) housing figure; the FACE AMOUNT of the life insurance policy whose PREMIUM is at (48), two quantities on one printed row differing by three orders of magnitude; and the total state or local tax OWED beside the monthly payment at (51). None is a total, none is an operand of any box, and each is a cell a reader scanning for money cells will find - which is why all three are declared not-checkable rather than left out."
+  },
+  {
+   "id": "X-41",
+   "slice": 6,
+   "page": 6,
+   "category": "different-arithmetic-same-name",
+   "oic": "box_e_total_household_expenses",
+   "a433": "50_total_living_expenses",
+   "why": "Both total the expense lines above them, and the operand SETS differ: 433-A's line 50 adds lines 36-49, fourteen lines including 'Other Expenses'; Box E adds (39)-(51), thirteen lines with no separate other-expenses line and with the two X-38 lines merged. The two totals are over different partitions of the same expenses, so they can legitimately agree and legitimately differ, and neither fact tells you the other is right."
+  },
+  {
+   "id": "X-42",
+   "slice": 6,
+   "page": 6,
+   "category": "new",
+   "oic": "box_f_remaining_monthly_income",
+   "a433": null,
+   "why": "BOX F, Box D minus Box E. 433-A computes no remaining-income figure: it collects income and expenses and stops, and the examiner does the subtraction. On the OIC form the taxpayer does it, and Box F is then multiplied by 12 or 24 on page 7 to produce the future remaining income the offer is built on. Its declared floor is the one no fixture has ever exercised."
+  },
+  {
+   "id": "X-43",
+   "slice": 6,
+   "page": 6,
+   "category": "asymmetric-the-other-way",
+   "oic": null,
+   "a433": "433-A's 'Allowable Expenses' column - 26 cells declared _never_autofill, plus allowed.national_standards_total and allowed.out_of_pocket_health",
+   "why": "433-A PRINTS AN IRS-ALLOWED COLUMN BESIDE EVERY EXPENSE LINE AND 433-A(OIC) PRINTS NONE. On 433-A the taxpayer's actual figure and the IRS allowance sit side by side and two of the allowances auto-fill from irs-standards-2026.json. The OIC form has no such column anywhere; instead its printed instruction folds the allowance INTO the taxpayer's own figure on exactly two lines - 'For expenses claimed in boxes (39) and (45) only, you should list the full amount of the allowable standard even if the actual amount you pay is less'. So a 433-A record carries an allowance fact per line that this form has nowhere to put, and on two lines the OIC figure is NOT the taxpayer's actual expense at all. The +3 offset conceals this completely, which is why it is recorded as its own entry."
+  },
+  {
+   "id": "X-44",
+   "slice": 6,
+   "page": 6,
+   "category": "asymmetric-the-other-way",
+   "oic": null,
+   "a433": "groups.available_credit (4 slots), groups.payment_processors (2 slots), groups.credit_cards_accepted (3 slots), groups.property_line_20 (2 slots)",
+   "why": "FOUR 433-A TABLES WITH NO OIC COUNTERPART ANYWHERE ON PAGES 1-6. Available credit lines, payment processors, credit cards accepted, and the line-20 property table. A 433-A record carrying these has facts the OIC filing simply does not ask for. Recorded so the provisioning pass does not read their absence from this file as an oversight; pages 7-8 are slice 7 and could in principle hold a counterpart, which is why this entry is scoped to pages 1-6 and must be re-read when the map closes."
+  }
+ ],
+ "_tally": {
+  "_why": "Derived from entries[] by adapters/pdf/count-sweep.mjs [S-25], never retyped. A hand-kept tally beside a list is how 'eleven' survived three slices when the honest figure was ten.",
+  "entries": 44,
+  "exact": 14,
+  "superset": 1,
+  "different-arithmetic-same-name": 7,
+  "different-shape": 7,
+  "same-fact-different-decomposition": 2,
+  "new": 11,
+  "asymmetric-the-other-way": 2,
+  "_the_typed_tally_was_wrong_on_three_categories": "AUTHORED BY HAND AS 16 exact / 8 different-shape / 8 new, DERIVED AS 14 / 7 / 11. Corrected to the derived figures before this file was ever committed. Left recorded because it is the fourth time in this repo a hand-kept count beside its own list has drifted, and the first time the drift was caught in the same minute it was written - by [S-25], which existed before the file did."
+ },
+ "_what_this_file_does_not_say": "IT DOES NOT SAY WHICH HUBSPOT PROPERTY FEEDS ANYTHING. An `exact` classification means a 433-A value needs no transformation to become the OIC value; it does NOT mean a property already exists, that it is the right property, or that reuse is approved. The provisioning pass reads these categories to know WHICH DECISIONS IT HAS TO MAKE - every entry that is not `exact` is a decision - and makes them there.",
+ "_the_reading_that_matters": "SEVEN OF THE FORTY-FOUR ENTRIES ARE different-arithmetic-same-name, AND THOSE ARE THE FILE'S REASON TO EXIST. Each is a pair the captions invite you to reuse and the arithmetic forbids: the quick-sale discount on four asset classes, the non-cash add-back at (36), the narrowed vehicle line at (41), and the two household totals at Box E. Every one of them produces a filed statement whose printed totals all reconcile and whose offer is wrong."
+}

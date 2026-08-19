@@ -58,6 +58,7 @@ export const sweptFiles = (form) => [
   'adapters/pdf/maps/irs-standards-2026.json',
   'adapters/hubspot/asset-row-shapes.json',
   'adapters/hubspot/crosswalk.433f.json',
+  `adapters/pdf/maps/${form}.crosswalk-classification.json`,
 ].filter(existsSync);
 
 // ---------------------------------------------------------------------------------------
@@ -676,6 +677,42 @@ export const MANIFEST = [
   D({ id: 'S-18', file: /\.map\.json$/, at: /^(map\.|groups\.|checkboxes\.|check_here\.|exclusive\.|_never_autofill|_deferred|allowed\.|split\.|_computed\.|_not_checkable|_map_evidence|_nesting_note|_label_file_disagreements|_arguable_page\d|_carried\.(open|resolved)|rounding\.blocks\[|rounding\._(what|why_money|order|wording|the_mixed|_)|authored_from|_the_row_class)/,
     kind: 'underivable',
     reason: 'THE BODY OF THE MAP AND ITS EVIDENCE. Numbers here are printed coordinates, printed line markers, printed constants the form draws ($1,000, $3,450, X .8), field-name indices, and maxLength limits. Not one of them counts a set this repo holds. Each is checked by the instrument that can check it: align-block.mjs and line-markers.mjs re-measure coordinates and markers out of the PDF; check-row-shape.mjs re-derives every row shape; validate-map.mjs proves every target exists verbatim; gate step 11 recomputes every printed constant into its total. Counting them would assert agreement between a transcription and itself.' }),
+
+  // ═══ the crosswalk classification ════════════════════════════════════════════════════
+  // A CLASSIFICATION IS A LIST WITH A TALLY BESIDE IT, WHICH IS THE SHAPE THAT DRIFTS.
+  // Derived on the run that wrote it: the hand-authored tally said 16 exact, 8 different-shape
+  // and 8 new against a derived 14, 7 and 11, and was corrected before the file was committed.
+  D({ id: 'S-25', file: /\.crosswalk-classification\.json$/, at: /^_tally\./,
+    kind: 'derived',
+    derive: (ctx, v, at, doc) => {
+      const key = at.replace(/^_tally\./, '');
+      if (key.startsWith('_')) return [{ unrecognised: false, skip: true }];
+      const by = {};
+      for (const e of (doc.entries || [])) by[e.category] = (by[e.category] || 0) + 1;
+      if (key === 'entries') return [{ what: '_tally.entries', claimed: v, derived: (doc.entries || []).length, from: 'entries[] by length' }];
+      return [{ what: `_tally.${key}`, claimed: v, derived: by[key] || 0, from: `entries[] with category "${key}"` }];
+    } }),
+
+  // EVERY CATEGORY AN ENTRY USES MUST BE ONE THE FILE DECLARES, and every declared category
+  // must be tallied. A category invented in an entry and never declared is a classification
+  // nobody defined; a declared category with no tally line is one nobody counted. Both are
+  // the no-declared-state defect, in a file whose whole content is declarations.
+  D({ id: 'S-25b', file: /\.crosswalk-classification\.json$/, at: /^entries\[\d+\]\.(id|category)$/,
+    kind: 'derived',
+    derive: (ctx, v, at, doc) => {
+      if (/\.id$/.test(at)) {
+        const ids = (doc.entries || []).map(e => e.id);
+        return [{ what: `${at}: unique`, claimed: 1, derived: ids.filter(x => x === v).length, from: 'entries[] ids' }];
+      }
+      return [
+        { what: `${at}: "${v}" is a declared category`, claimed: true, derived: Object.prototype.hasOwnProperty.call(doc._the_categories || {}, String(v)), from: '_the_categories keys' },
+        { what: `${at}: "${v}" is tallied`, claimed: true, derived: Object.prototype.hasOwnProperty.call(doc._tally || {}, String(v)), from: '_tally keys' },
+      ];
+    } }),
+
+  D({ id: 'S-25c', file: /\.crosswalk-classification\.json$/, at: /./,
+    kind: 'underivable',
+    reason: 'THE CLASSIFICATION’S PROSE. Its numbers are printed line markers on two forms ("lines 36-49", "(39)-(51)", "line 24", "$3,450"), printed slot counts re-derivable from either map and already asserted there by count-sweep [S-01] and check-row-shape.mjs, and statements about the two printed pages that align-block.mjs and line-markers.mjs re-measure. It BINDS NOTHING — no HubSpot property, no canonical column, no map key — so there is no binding here for validate-map.mjs to resolve. What IS a count of a list this file holds is the tally, and that is derived by [S-25]; that every entry uses a declared and tallied category is asserted by [S-25b].' }),
 
   // ═══ the table-or-scalars procedure ══════════════════════════════════════════════════
   // A DECISION PROCEDURE THAT STATES FACTS ABOUT THE TREE IS CHECKED AGAINST THE TREE. Its
