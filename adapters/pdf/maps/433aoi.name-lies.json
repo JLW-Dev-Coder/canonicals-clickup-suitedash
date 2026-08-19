@@ -5,7 +5,7 @@
  "_what_this_file_is": "Every AcroForm leaf name on Form 433-A(OIC) that is KNOWN TO DESCRIBE SOMETHING OTHER THAN THE CELL IT NAMES, with the printed evidence that settled each one. It is a registry, not a binding: nothing here is read by any fill engine and no map key is resolved through it. validate-map.mjs asserts it against the PDF and against 433aoi.map.json, so a lie declared here cannot quietly stop being true.",
  "_why_a_file_and_not_twelve_paragraphs": "Two reasons, and neither is tidiness. (1) 433-B(OIC) is drawn from the same template lineage as this form and will very likely inherit both the leaf names and the lies; a machine-checked list can be diffed against the next form's field enumeration, and prose spread across slice reports cannot. (2) A preparer or a later author reading 433aoi.map.json in a year will see a map key whose name disagrees with the field it points at, and the honest first assumption is that the MAP is wrong. This file is the standing answer: the map is right, the leaf name is wrong, and here is the printed page that says so.",
  "_the_standing_rule_this_file_exists_to_defend": "A binding on this form comes from the printed caption and the widget rectangle. A leaf name is never evidence - not when it disagrees with the page, and not when it agrees, because on this form a name that happens to be right is a coincidence. The controls at the bottom of this file are the proof: nine cells across four pages sit under an identical printed 'X .8 = $', eight are named Times_8 / times_8, and one is named Times_7. The eight that agree do not make the name a witness; they make the one that disagrees invisible to anyone who trusts names.",
- "_counting": "TEN ACTIVE LIES THROUGH SLICE 3, not eleven. The running count in 433aoi.map.json._notes reached 'eleven' and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. It is kept here as control C01. The verified-true entries are kept rather than deleted: a registry that lists only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest.",
+ "_counting": "TWELVE ACTIVE LIES, not eleven. The running count in 433aoi.map.json._notes reached 'eleven' by slice 3 and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. Through slice 3 the honest count is TEN. Slice 4 adds two more, both on page 4 and both the page-4 twins of page-2 lies already recorded, taking it to twelve. The three verified-true entries are kept here as CONTROLS rather than deleted: a registry that lists only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest.",
  "_what_is_machine_checked_and_what_is_not": "CHECKED by validate-map.mjs: every `path` exists verbatim in 433aoi.fields.json (or, for a `container` entry, at least one enumerated field is a descendant of it); every non-null `bound_to` resolves through 433aoi.map.json to exactly this `path`; every entry declares a `kind` the validator knows; and no two entries claim the same path. NOT CHECKED, and deliberately: `printed_line`, `printed_line_at`, `printed_marker_at` and `rect` are transcriptions of the drawn page. Asserting those in code would mean re-deriving from the PDF the very reading the entry records, which is circular. They are quoted verbatim so a human can re-measure them with adapters/pdf/align-block.mjs and adapters/pdf/line-markers.mjs, which is how each one was taken.",
  "_kinds": {
   "lie": "The leaf name describes something other than the cell. Counted in the active total.",
@@ -229,6 +229,50 @@
    "_principal_note": "Prompt 30 asserted in prose that this cell was \"the vehicle allowance\" and offered two branches for what kind of allowance it was. Both were wrong, and wrong by taking the leaf name at its word. The printed caption is what settled it. Recorded here because the rule was broken by the person who wrote it, which is the strongest available argument for the rule."
   },
   {
+   "id": "L11",
+   "kind": "container",
+   "page": 4,
+   "slice_found": 4,
+   "path": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0]",
+   "leaf": "RetirementAcct1[0]",
+   "rect": "a subform; its eight enumerated children span y 141.3 down to y 64.8",
+   "what_the_name_implies": "A retirement-account row inside Section 5.",
+   "printed_line": "Digital asset",
+   "printed_line_at": "row label at y 142.5, x 50.4..94.0, with its own checkbox at y 141.3, x 36.0..45.0",
+   "printed_marker": "(8c)",
+   "printed_marker_at": "y 77.7, x 445.3..468.0",
+   "witnesses": [
+    "the printed row label directly above the block reads \"Digital asset\"",
+    "every child is named for a digital asset: virtualCurrency, descriptionDigitalAsset, numberOfUnits, locationDigitalAsset, assetsAccountNumber, dollarEquivalentToday",
+    "SECTION 5 HAS NO RETIREMENT LINE AT ALL. Its printed instruction lists \"bank accounts, digital assets (such as cryptocurrency), tools, books, machinery, equipment, business vehicles and real property\" (y 257.1 and y 247.5) and names no retirement account anywhere.",
+    "the page-2 twin, L05, is the same subform name over the same block on the personal side"
+   ],
+   "bound_to": null,
+   "not_bound_because": "A subform is not a field. Its children are bound individually under map keys 8c_*.",
+   "cost_if_bound_by_name": "A business digital asset would be filed as a retirement holding on a section that has no retirement line, and the figure would land nowhere the printed (8) total reaches."
+  },
+  {
+   "id": "L12",
+   "kind": "lie",
+   "page": 4,
+   "slice_found": 4,
+   "path": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].name_of_individual[0]",
+   "leaf": "name_of_individual[0]",
+   "rect": "y 82.8..64.8, x 36.0..216.0",
+   "what_the_name_implies": "A person's name.",
+   "printed_line": "Digital asset address for self-hosted digital assets",
+   "printed_line_at": "y 100.3, x 36.0..211.6 - directly ABOVE the cell, and the cell's x range sits inside the caption's",
+   "printed_marker": null,
+   "printed_marker_at": null,
+   "witnesses": [
+    "the caption drawn directly above the cell",
+    "the page-2 twin, L07, is the identical leaf name over the identical caption",
+    "Section 5 asks for no individual's name anywhere: its person-shaped cells are 'Bank name and country location' (y 208.3) and 'Account number for assets held by a custodian or broker' (y 143.5), and neither is this cell"
+   ],
+   "bound_to": "8c_self_hosted_asset_address",
+   "cost_if_bound_by_name": "Same as L07 on the personal side: a name printed where a wallet address belongs, and the wallet address left blank."
+  },
+  {
    "id": "C01",
    "kind": "control",
    "page": 6,
@@ -251,6 +295,26 @@
    "_counting_note": "This is the entry the running count in 433aoi.map.json._notes double-counted to reach \"eleven\". See _counting."
   },
   {
+   "id": "C02",
+   "kind": "control",
+   "page": 4,
+   "slice_found": 4,
+   "path": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].CurrentMarketValue[0].Times_8[0]",
+   "leaf": "Times_8[0]",
+   "rect": "y 691.2..674.6, x 187.2..295.2",
+   "what_the_name_implies": "A quick-sale cell carrying a 0.8 multiplier.",
+   "printed_line": "X .8 = $",
+   "printed_line_at": "y 686.3, x 154.7..184.8 - immediately LEFT of the cell",
+   "printed_marker": "(7a)",
+   "printed_marker_at": "y 686.1, x 447.1..468.0",
+   "witnesses": [
+    "the drawn text \"X .8 = $\" immediately left of the cell",
+    "the market-value cell it multiplies ends at x 151.2, three points further left - the identical geometry as L04"
+   ],
+   "bound_to": "7a_other_valuable_items[0].quick_sale_value",
+   "verified_true": "IDENTICAL PRINTED CAPTION AND IDENTICAL GEOMETRY TO L04, AND THE OPPOSITE NAME. Bound on the rectangle regardless, because the pair is the whole argument: a rule that read names would take this cell right and L04 wrong, and could not tell which it had done."
+  },
+  {
    "id": "C03",
    "kind": "control",
    "page": 3,
@@ -271,13 +335,13 @@
   }
  ],
  "_tally": {
-  "active_lies": 10,
-  "of_which_leaf": 8,
-  "of_which_container": 2,
+  "active_lies": 12,
+  "of_which_leaf": 9,
+  "of_which_container": 3,
   "inherited_not_counted": 0,
-  "controls_verified_true": 2,
-  "total_entries": 12,
-  "bound_today": 6,
-  "unbound_because_the_page_is_unauthored": 6
+  "controls_verified_true": 3,
+  "total_entries": 15,
+  "bound_today": 8,
+  "unbound_because_the_page_is_unauthored": 7
  }
 }

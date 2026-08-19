@@ -1,103 +1,141 @@
 {
-  "form": "433aoi",
-  "form_revision": "4-2026",
-  "catalog": "55896Q",
-  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A(OIC). Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
-  "_why": "This form's internal names are semantic rather than positional, which removes 433-A's off-by-one trap and installs a worse one: a name that describes the wrong thing reads as correct. Five such names are already measured (see 433aoi.map.json `_notes`). Nothing in a name can be trusted to say which printed section a row is in, so geometry says it.",
-  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle. Headings are declared densely enough to bound every group - INCLUDING headings no group claims, because an undeclared heading between two declared ones silently widens the band above it. On page 1 that means declaring the spouse sub-heading and both section rules, not only the one banner household_members sits under.",
-  "_slice": "Pages 1, 2 and 3. Sections 3-10 beyond printed line (6) are not mapped yet, so no heading on pages 4-8 is declared: a declaration for a page nobody has read would be an unchecked claim, and verify-headings.mjs requires the map and this file to agree group-for-group.",
-  "headings": [
-    {
-      "id": "SECTION_1_PERSONAL",
-      "page": 1,
-      "text": "Personal and Household Information",
-      "_at": "y 577.7, x 144.0..319.0. The words 'Section 1' are drawn as a separate text item at x 36.0..80.5, so the banner is declared by the part that names the subject."
-    },
-    {
-      "id": "SPOUSE_INFORMATION",
-      "page": 1,
-      "text": "Provide information about your spouse.",
-      "_at": "y 401.7, x 36.0..187.6. Claimed by no group - declared so it does not silently widen SECTION_1_PERSONAL's band down over the household grid."
-    },
-    {
-      "id": "HOUSEHOLD_MEMBERS",
-      "page": 1,
-      "text": "Provide information for all other persons in the household or claimed as a dependent.",
-      "_at": "y 358.1, x 36.0..362.3. A sentence rather than an all-caps banner; the declaration takes the printed text as it is rather than inventing a tidier one, the same way 433-A's household_members heading does."
-    },
-    {
-      "id": "SECTION_2_EMPLOYMENT",
-      "page": 1,
-      "text": "Employment Information for Wage Earners",
-      "_at": "y 264.5, x 144.0..347.4. Closes the HOUSEHOLD_MEMBERS band at the bottom of the dependent grid (last row y 280.8), which is what makes that band a bound and not an open-ended tail."
-    },
-    {
-      "id": "SECTION_3_ASSETS",
-      "page": 2,
-      "text": "Personal Asset Information",
-      "_at": "y 754.1, x 144.0..274.0. The words 'Section 3' are drawn separately at x 36.0..80.5 and '(Domestic and Foreign)' separately again at x 276.8..388.5, so the banner is declared by the part that names the subject - the same treatment SECTION_1_PERSONAL gets. Claimed by no group: the band it opens (754.1 down to 656.2) holds the instruction paragraph and no widget at all. Declared so it does not leave page 2 with an unbounded top."
-    },
-    {
-      "id": "CASH_AND_INVESTMENTS",
-      "page": 2,
-      "text": "Cash and Investments (domestic and foreign)",
-      "_at": "y 656.2, x 36.0..231.0. Owns the band 656.2 down to 156.9, which holds printed lines (1a) through (3) - all three asset groups on this page except life insurance."
-    },
-    {
-      "id": "CASH_VALUE_LIFE_INSURANCE",
-      "page": 2,
-      "text": "Cash value of Life Insurance Policies",
-      "_at": "y 156.9, x 36.0..167.2. Owns the band 156.9 to the foot of the page, which holds printed lines (4a), (4b) and (4)."
-    },
-    {
-      "id": "SECTION_3_ASSETS_CONTINUED",
-      "page": 3,
-      "text": "Personal Asset Information",
-      "_at": "y 754.1, x 144.0..274.0 — the SAME printed words as SECTION_3_ASSETS on page 2, told apart by page and by nothing else. The words 'Section 3' (x 36.0..80.5), '(Continued)' (x 83.2..133.7) and '(Domestic and Foreign)' (x 276.8..388.5) are drawn as separate text items, so the banner is declared by the part that names the subject, exactly as on page 2. Claimed by no group: the band it opens (754.1 down to 735.9) holds the real-property instruction sentence and no widget at all. Declared so page 3 does not have an unbounded top."
-    },
-    {
-      "id": "REAL_PROPERTY",
-      "page": 3,
-      "text": "Real property – Enter information about any house, condo, co-op, time share, etc. that you own (or have interest in through a life estate), or",
-      "_at": "y 735.9, x 36.0..565.0, continuing onto a second drawn line 'that your spouse owns if you live in a community property state.' at y 726.3, x 36.0..281.0. Declared by its FIRST drawn line, because verify-headings.mjs locates a heading by finding its text verbatim on the page and the two lines are separate text items. A sentence rather than an all-caps banner, the same treatment HOUSEHOLD_MEMBERS gets on page 1. Owns the band 735.9 down to 383.1, which holds the for-sale question at y 711.3, both property rows, and the (5c) and (5) cells."
-    },
-    {
-      "id": "VEHICLES",
-      "page": 3,
-      "text": "Vehicles",
-      "_at": "y 383.1, x 36.0..68.5. The rest of the line — '(enter information about any cars, boats, motorcycles, etc. that you own or lease).' at x 70.7..343.4 — and the sentence beneath it at y 373.5 are separate drawn items and are not part of the declared text. Owns the band 383.1 to the foot of the page, which holds both vehicle rows and the (6b), (6d), (6e) and (6) cells. It CLOSES the REAL_PROPERTY band at the bottom of the (5) total row (widget y 403.2), which is what makes that band a bound and not an open-ended tail."
-    }
-  ],
-  "_page_2_row_labels_are_NOT_declared_as_headings": "Three phrases on page 2 print at the same left margin as the two sub-banners and could each look like a heading: 'Investment account' (y 524.1 and again at y 452.1), 'Retirement account' (y 272.1) and 'Description of digital asset' (y 365.3). None is declared, for two measured reasons. First, 'Investment account' is drawn TWICE - once per printed row - so it cannot be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. Second, the (2a) row's write-in widget sits at y 525.6, one and a half points ABOVE the 'Investment account' text at y 524.1, so a band opened at that text would exclude a widget of the very group it was meant to bound. They are row labels on the option row, not banners. THE COST OF THIS IS STATED RATHER THAN HIDDEN: with only CASH_AND_INVESTMENTS declared, the heading check cannot tell a bank row bound into an investment slot from a correct one - all three groups are in the same band. What catches that is row_class, which 1ab_bank_accounts, 2ab_investment_accounts and 3a_retirement_accounts each declare, and which refuses a row whose stated asset_class the group does not print. The two mechanisms are complementary here, and on this page the second is the one doing the work.",
-  "groups": {
-    "household_members": {
-      "heading": "HOUSEHOLD_MEMBERS",
-      "_why": "The four dependent rows print at y 324.0, 309.6, 295.2 and 280.8, between the HOUSEHOLD_MEMBERS sentence at y 358.1 and the Section 2 rule at y 264.5. The spouse block above (y 375.8) is under SPOUSE_INFORMATION and is bound as four scalars, not as rows of this group - which is the distinction this file exists to hold: a spouse is not a row of the household table on this form, and slot order must never be able to put one there."
-    },
-    "1ab_bank_accounts": {
-      "heading": "CASH_AND_INVESTMENTS",
-      "_why": "Both rows print between the 'Cash and Investments' banner at y 656.2 and the life insurance banner at y 156.9: slot 0 spans y 638.1 down to 612.0 and slot 1 spans 594.9 down to 568.8. Slot 0 is the higher, which is printed order, and printed order here is not interchangeable - slot 0 totals to (1a) and slot 1 to (1b), and only slot 0 prints a Cash option."
-    },
-    "2ab_investment_accounts": {
-      "heading": "CASH_AND_INVESTMENTS",
-      "_why": "Slot 0 spans y 525.6 down to 468.0 and slot 1 spans 453.6 down to 396.0, both inside the 656.2..156.9 band. Slot 0 totals to (2a) and slot 1 to (2b)."
-    },
-    "3a_retirement_accounts": {
-      "heading": "CASH_AND_INVESTMENTS",
-      "_why": "The single slot spans y 273.6 down to 216.0, still inside the 656.2..156.9 band - the printed Note at y 172.0 is a sentence, not a banner, and is not declared, so it does not close this band early. This group is in the SAME band as the investment group above it and that is deliberate: the page prints one banner over both. What keeps a retirement account out of an investment slot is row_class, not the band."
-    },
-    "4a_life_insurance_policies": {
-      "heading": "CASH_VALUE_LIFE_INSURANCE",
-      "_why": "The single slot spans y 131.0 down to 100.8, below the 'Cash value of Life Insurance Policies' banner at y 156.9 and above the foot of the page. The (4b) attachment cells at y 72.0 and 68.4 are in the same band but are bound as scalars, not as a second slot - the attachment block prints no company name and no policy number, so it is not a row of this table."
-    },
-    "5ab_real_property": {
-      "heading": "REAL_PROPERTY",
-      "_why": "Slot 0 spans y 671.0 down to 565.2 and slot 1 spans 537.8 down to 432.0, both inside the 735.9..383.1 band. Slot 0 is the higher, which is printed order, and printed order here is not interchangeable: slot 0 totals to (5a) and slot 1 to (5b). The for-sale question at y 695.7..698.4 is in the same band and is bound as scalars, not as a row of this table — it asks one question about the taxpayer’s real property as a whole, not about either printed property row."
-    },
-    "6ac_vehicles": {
-      "heading": "VEHICLES",
-      "_why": "Slot 0 spans y 347.0 down to 280.8 and slot 1 spans 228.2 down to 162.0, both inside the 383.1..foot band. THE TWO SLOTS ARE NOT ADJACENT: the (6b) allowance cell at y 266.4 sits between them and is bound as a scalar. That is the one thing on this page a band check cannot see — both slots and the cell between them are in one band — and what keeps a vehicle out of a property slot is row_class, not the band."
-    }
+ "form": "433aoi",
+ "form_revision": "4-2026",
+ "catalog": "55896Q",
+ "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A(OIC). Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
+ "_why": "This form's internal names are semantic rather than positional, which removes 433-A's off-by-one trap and installs a worse one: a name that describes the wrong thing reads as correct. Five such names are already measured (see 433aoi.map.json `_notes`). Nothing in a name can be trusted to say which printed section a row is in, so geometry says it.",
+ "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle. Headings are declared densely enough to bound every group - INCLUDING headings no group claims, because an undeclared heading between two declared ones silently widens the band above it. On page 1 that means declaring the spouse sub-heading and both section rules, not only the one banner household_members sits under.",
+ "_slice": "Pages 1, 2, 3 and 4. Sections 5-10 beyond printed line (8) are not mapped yet, so no heading on pages 5-8 is declared: a declaration for a page nobody has read would be an unchecked claim, and verify-headings.mjs requires the map and this file to agree group-for-group.",
+ "headings": [
+  {
+   "id": "SECTION_1_PERSONAL",
+   "page": 1,
+   "text": "Personal and Household Information",
+   "_at": "y 577.7, x 144.0..319.0. The words 'Section 1' are drawn as a separate text item at x 36.0..80.5, so the banner is declared by the part that names the subject."
   },
-  "_page_3_row_labels_are_NOT_declared_as_headings": "Four phrases on page 3 print at or near the same left margin as the two declared sub-headings and could each look like a banner: 'Property description' (y 683.5 and again at y 550.3), 'Current market value' (y 578.6, 445.4, 300.9 and 182.1), 'Vehicle make & model' (y 359.5 and again at 240.7) and 'Location' (y 625.9 and 492.7). NONE is declared, and the reason is the one already recorded for page 2: every one of them is drawn MORE THAN ONCE — once per printed row — so none can be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. They are column headers on a repeating row, not banners. THE COST IS STATED RATHER THAN HIDDEN: within REAL_PROPERTY the band cannot tell slot 0 from slot 1, and within VEHICLES it cannot tell a vehicle row from the (6b) cell that sits between the two rows. What catches a misfiled row is row_class, which both new groups declare, plus the printed-marker evidence recorded per slot in the map."
+  {
+   "id": "SPOUSE_INFORMATION",
+   "page": 1,
+   "text": "Provide information about your spouse.",
+   "_at": "y 401.7, x 36.0..187.6. Claimed by no group - declared so it does not silently widen SECTION_1_PERSONAL's band down over the household grid."
+  },
+  {
+   "id": "HOUSEHOLD_MEMBERS",
+   "page": 1,
+   "text": "Provide information for all other persons in the household or claimed as a dependent.",
+   "_at": "y 358.1, x 36.0..362.3. A sentence rather than an all-caps banner; the declaration takes the printed text as it is rather than inventing a tidier one, the same way 433-A's household_members heading does."
+  },
+  {
+   "id": "SECTION_2_EMPLOYMENT",
+   "page": 1,
+   "text": "Employment Information for Wage Earners",
+   "_at": "y 264.5, x 144.0..347.4. Closes the HOUSEHOLD_MEMBERS band at the bottom of the dependent grid (last row y 280.8), which is what makes that band a bound and not an open-ended tail."
+  },
+  {
+   "id": "SECTION_3_ASSETS",
+   "page": 2,
+   "text": "Personal Asset Information",
+   "_at": "y 754.1, x 144.0..274.0. The words 'Section 3' are drawn separately at x 36.0..80.5 and '(Domestic and Foreign)' separately again at x 276.8..388.5, so the banner is declared by the part that names the subject - the same treatment SECTION_1_PERSONAL gets. Claimed by no group: the band it opens (754.1 down to 656.2) holds the instruction paragraph and no widget at all. Declared so it does not leave page 2 with an unbounded top."
+  },
+  {
+   "id": "CASH_AND_INVESTMENTS",
+   "page": 2,
+   "text": "Cash and Investments (domestic and foreign)",
+   "_at": "y 656.2, x 36.0..231.0. Owns the band 656.2 down to 156.9, which holds printed lines (1a) through (3) - all three asset groups on this page except life insurance."
+  },
+  {
+   "id": "CASH_VALUE_LIFE_INSURANCE",
+   "page": 2,
+   "text": "Cash value of Life Insurance Policies",
+   "_at": "y 156.9, x 36.0..167.2. Owns the band 156.9 to the foot of the page, which holds printed lines (4a), (4b) and (4)."
+  },
+  {
+   "id": "SECTION_3_ASSETS_CONTINUED",
+   "page": 3,
+   "text": "Personal Asset Information",
+   "_at": "y 754.1, x 144.0..274.0 — the SAME printed words as SECTION_3_ASSETS on page 2, told apart by page and by nothing else. The words 'Section 3' (x 36.0..80.5), '(Continued)' (x 83.2..133.7) and '(Domestic and Foreign)' (x 276.8..388.5) are drawn as separate text items, so the banner is declared by the part that names the subject, exactly as on page 2. Claimed by no group: the band it opens (754.1 down to 735.9) holds the real-property instruction sentence and no widget at all. Declared so page 3 does not have an unbounded top."
+  },
+  {
+   "id": "REAL_PROPERTY",
+   "page": 3,
+   "text": "Real property – Enter information about any house, condo, co-op, time share, etc. that you own (or have interest in through a life estate), or",
+   "_at": "y 735.9, x 36.0..565.0, continuing onto a second drawn line 'that your spouse owns if you live in a community property state.' at y 726.3, x 36.0..281.0. Declared by its FIRST drawn line, because verify-headings.mjs locates a heading by finding its text verbatim on the page and the two lines are separate text items. A sentence rather than an all-caps banner, the same treatment HOUSEHOLD_MEMBERS gets on page 1. Owns the band 735.9 down to 383.1, which holds the for-sale question at y 711.3, both property rows, and the (5c) and (5) cells."
+  },
+  {
+   "id": "VEHICLES",
+   "page": 3,
+   "text": "Vehicles",
+   "_at": "y 383.1, x 36.0..68.5. The rest of the line — '(enter information about any cars, boats, motorcycles, etc. that you own or lease).' at x 70.7..343.4 — and the sentence beneath it at y 373.5 are separate drawn items and are not part of the declared text. Owns the band 383.1 to the foot of the page, which holds both vehicle rows and the (6b), (6d), (6e) and (6) cells. It CLOSES the REAL_PROPERTY band at the bottom of the (5) total row (widget y 403.2), which is what makes that band a bound and not an open-ended tail."
+  },
+  {
+   "id": "SECTION_3_ASSETS_CONTINUED_P4",
+   "page": 4,
+   "text": "Personal Asset Information",
+   "_at": "y 755.9, x 144.0..274.0 - the SAME printed words as SECTION_3_ASSETS on page 2 and SECTION_3_ASSETS_CONTINUED on page 3, told apart by page and by nothing else. 'Section 3' (x 36.0..80.5), '(Continued)' (y 754.9, x 83.2..133.7) and '(Domestic and Foreign)' (x 276.8..388.5) are separate drawn items, so the banner is declared by the part that names the subject. Claimed by no group: the band it opens (755.9 down to 740.1) holds nothing but the next heading. Declared so page 4 does not have an unbounded top."
+  },
+  {
+   "id": "OTHER_VALUABLE_ITEMS",
+   "page": 4,
+   "text": "Other valuable items",
+   "_at": "y 740.1, x 36.0..109.4. The rest of the line - '(artwork, collections, jewelry, items of value in safe deposit boxes, interest in a company or business that is not publicly traded, etc.)' at y 739.1, x 111.6..518.9 - is a separate drawn item and is not part of the declared text, the same treatment VEHICLES gets on page 3. Owns the band 740.1 down to 671.7, which holds the whole of the (7a) block: the description cell at y 716.4..702.0, the three money cells at y 691.2..674.6 and the (7a) total at y 687.6..673.2."
+  },
+  {
+   "id": "REMAINING_FURNITURE_AND_PERSONAL_EFFECTS",
+   "page": 4,
+   "text": "Value of remaining furniture and personal effects",
+   "_at": "y 671.7, x 36.0..208.5, followed by '(not listed above)' at x 210.8..272.1 as a separate drawn item. THIS HEADING IS THE REASON (7b) IS NOT A SECOND SLOT OF THE (7a) GROUP: it is drawn BETWEEN the two blocks, and no real repeatable table on this form has a heading between its rows. Owns the band 671.7 down to 518.3, which holds the (7b) block, the (7c) and (7) cells and the Box A cell - all bound as scalars, so this band constrains no group. Declared anyway, because an undeclared heading between two declared ones silently widens the band above it, which is the standing _band_rule."
+  },
+  {
+   "id": "SECTION_4_SELF_EMPLOYED",
+   "page": 4,
+   "text": "Self-Employed Information",
+   "_at": "y 518.3, x 144.0..271.2. 'Section 4' is drawn separately at x 36.0..80.5. Claimed by no group - Section 4 holds twenty-five fields and not one repeatable row. Declared so it CLOSES the REMAINING_FURNITURE_AND_PERSONAL_EFFECTS band at the bottom of the Box A cell (widget y 535.0), which is what makes that band a bound and not an open-ended tail."
+  },
+  {
+   "id": "SECTION_5_BUSINESS_ASSETS",
+   "page": 4,
+   "text": "Business Asset Information",
+   "_at": "y 273.5, x 144.0..276.3. 'Section 5' (x 36.0..80.5) and '(for Self-Employed) (Domestic and Foreign)' (x 279.0..485.7) are separate drawn items. Owns the band 273.5 to the foot of the page, which holds both business bank rows, the whole digital-asset block and the (8d) and (8) cells. It also closes the SECTION_4_SELF_EMPLOYED band at the bottom of the type-of-business row (widget y 275.8)."
+  }
+ ],
+ "_page_2_row_labels_are_NOT_declared_as_headings": "Three phrases on page 2 print at the same left margin as the two sub-banners and could each look like a heading: 'Investment account' (y 524.1 and again at y 452.1), 'Retirement account' (y 272.1) and 'Description of digital asset' (y 365.3). None is declared, for two measured reasons. First, 'Investment account' is drawn TWICE - once per printed row - so it cannot be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. Second, the (2a) row's write-in widget sits at y 525.6, one and a half points ABOVE the 'Investment account' text at y 524.1, so a band opened at that text would exclude a widget of the very group it was meant to bound. They are row labels on the option row, not banners. THE COST OF THIS IS STATED RATHER THAN HIDDEN: with only CASH_AND_INVESTMENTS declared, the heading check cannot tell a bank row bound into an investment slot from a correct one - all three groups are in the same band. What catches that is row_class, which 1ab_bank_accounts, 2ab_investment_accounts and 3a_retirement_accounts each declare, and which refuses a row whose stated asset_class the group does not print. The two mechanisms are complementary here, and on this page the second is the one doing the work.",
+ "groups": {
+  "household_members": {
+   "heading": "HOUSEHOLD_MEMBERS",
+   "_why": "The four dependent rows print at y 324.0, 309.6, 295.2 and 280.8, between the HOUSEHOLD_MEMBERS sentence at y 358.1 and the Section 2 rule at y 264.5. The spouse block above (y 375.8) is under SPOUSE_INFORMATION and is bound as four scalars, not as rows of this group - which is the distinction this file exists to hold: a spouse is not a row of the household table on this form, and slot order must never be able to put one there."
+  },
+  "1ab_bank_accounts": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "Both rows print between the 'Cash and Investments' banner at y 656.2 and the life insurance banner at y 156.9: slot 0 spans y 638.1 down to 612.0 and slot 1 spans 594.9 down to 568.8. Slot 0 is the higher, which is printed order, and printed order here is not interchangeable - slot 0 totals to (1a) and slot 1 to (1b), and only slot 0 prints a Cash option."
+  },
+  "2ab_investment_accounts": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "Slot 0 spans y 525.6 down to 468.0 and slot 1 spans 453.6 down to 396.0, both inside the 656.2..156.9 band. Slot 0 totals to (2a) and slot 1 to (2b)."
+  },
+  "3a_retirement_accounts": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "The single slot spans y 273.6 down to 216.0, still inside the 656.2..156.9 band - the printed Note at y 172.0 is a sentence, not a banner, and is not declared, so it does not close this band early. This group is in the SAME band as the investment group above it and that is deliberate: the page prints one banner over both. What keeps a retirement account out of an investment slot is row_class, not the band."
+  },
+  "4a_life_insurance_policies": {
+   "heading": "CASH_VALUE_LIFE_INSURANCE",
+   "_why": "The single slot spans y 131.0 down to 100.8, below the 'Cash value of Life Insurance Policies' banner at y 156.9 and above the foot of the page. The (4b) attachment cells at y 72.0 and 68.4 are in the same band but are bound as scalars, not as a second slot - the attachment block prints no company name and no policy number, so it is not a row of this table."
+  },
+  "5ab_real_property": {
+   "heading": "REAL_PROPERTY",
+   "_why": "Slot 0 spans y 671.0 down to 565.2 and slot 1 spans 537.8 down to 432.0, both inside the 735.9..383.1 band. Slot 0 is the higher, which is printed order, and printed order here is not interchangeable: slot 0 totals to (5a) and slot 1 to (5b). The for-sale question at y 695.7..698.4 is in the same band and is bound as scalars, not as a row of this table — it asks one question about the taxpayer’s real property as a whole, not about either printed property row."
+  },
+  "6ac_vehicles": {
+   "heading": "VEHICLES",
+   "_why": "Slot 0 spans y 347.0 down to 280.8 and slot 1 spans 228.2 down to 162.0, both inside the 383.1..foot band. THE TWO SLOTS ARE NOT ADJACENT: the (6b) allowance cell at y 266.4 sits between them and is bound as a scalar. That is the one thing on this page a band check cannot see — both slots and the cell between them are in one band — and what keeps a vehicle out of a property slot is row_class, not the band."
+  },
+  "7a_other_valuable_items": {
+   "heading": "OTHER_VALUABLE_ITEMS",
+   "_why": "The single slot spans y 716.4 down to 673.2, inside the 740.1..671.7 band. THE GROUP HAS ONE SLOT AND NOT TWO, AND THIS FILE IS PART OF WHY: OtherAsset2[0] spans y 648.0..604.8, which is in the NEXT band down, under 'Value of remaining furniture and personal effects'. A two-slot group would put one row under each of two printed headings, and verify-headings.mjs would refuse it. That refusal is not the reason for the decision - the printed headings are - but it is the reason the decision cannot be quietly undone later."
+  },
+  "8ab_business_bank_accounts": {
+   "heading": "SECTION_5_BUSINESS_ASSETS",
+   "_why": "Slot 0 spans y 220.5 down to 183.6 and slot 1 spans 180.9 down to 144.0, both inside the 273.5..foot band. Slot 0 is the higher, which is printed order, and printed order is not interchangeable: slot 0 totals to (8a) and slot 1 to (8b). The digital-asset block below them (y 141.3 down to 64.8) is in the same band and is bound as scalars, not as a third slot - it prints a description of a digital asset, a number of units and a wallet address, and none of those is a column of a bank row."
+  }
+ },
+ "_page_3_row_labels_are_NOT_declared_as_headings": "Four phrases on page 3 print at or near the same left margin as the two declared sub-headings and could each look like a banner: 'Property description' (y 683.5 and again at y 550.3), 'Current market value' (y 578.6, 445.4, 300.9 and 182.1), 'Vehicle make & model' (y 359.5 and again at 240.7) and 'Location' (y 625.9 and 492.7). NONE is declared, and the reason is the one already recorded for page 2: every one of them is drawn MORE THAN ONCE — once per printed row — so none can be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. They are column headers on a repeating row, not banners. THE COST IS STATED RATHER THAN HIDDEN: within REAL_PROPERTY the band cannot tell slot 0 from slot 1, and within VEHICLES it cannot tell a vehicle row from the (6b) cell that sits between the two rows. What catches a misfiled row is row_class, which both new groups declare, plus the printed-marker evidence recorded per slot in the map."
 }

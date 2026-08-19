@@ -4,7 +4,7 @@
  "catalog": "55896Q",
  "pdf": "adapters/pdf/forms/f433aoi.pdf",
  "fields_source": "adapters/pdf/maps/433aoi.fields.json",
- "slice": "PARTIAL - printed pages 1, 2 and 3. Page 1 is the whole of Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners). Pages 2 and 3 are Section 3 (Personal Asset Information (Domestic and Foreign)), printed lines (1a) through (6): page 2 carries bank and cash accounts, investment accounts, digital assets, retirement accounts and the cash value of life insurance policies; page 3 carries real property at (5a)-(5) and vehicles at (6a)-(6). Section 3 CONTINUES onto page 4 and is NOT finished here. Pages 4-8 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
+ "slice": "PARTIAL - printed pages 1, 2, 3 and 4. Page 1 is the whole of Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners). Pages 2 and 3 are Section 3 (Personal Asset Information (Domestic and Foreign)), printed lines (1a) through (6): page 2 carries bank and cash accounts, investment accounts, digital assets, retirement accounts and the cash value of life insurance policies; page 3 carries real property at (5a)-(5) and vehicles at (6a)-(6). Page 4 finishes Section 3 at printed lines (7a) through (7) and Box A, then carries the whole of Section 4 (Self-Employed Information) and the whole of Section 5 (Business Asset Information (for Self-Employed) (Domestic and Foreign)) through printed lines (8a) to (8). Section 5 CONTINUES onto page 5 and is NOT finished here. Pages 5-8 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
  "map_version": 3,
  "authored_from_page2": "adapters/pdf/align-block.mjs 433aoi page 2, whole page (117 printed text items, 68 widgets), cross-read against 433aoi.line-markers.txt (15 printed markers on page 2, every one attached to the widget this map binds it to) and 433aoi.checkboxes.txt (21 checkboxes on page 2, all probing on=/1). Every binding was taken from the PRINTED marker, the printed caption and the widget rectangle. THE LABEL FILE WAS NOT USED AS EVIDENCE ANYWHERE ON THIS PAGE - see _label_file_disagreements, which names the eight widgets it reports wrongly and the five where it contradicts the rectangle outright.",
  "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
@@ -29,7 +29,12 @@
   "SLICE 4, COMMIT 1 - THE FEEDER PREDICATE, AND THE CONDITION IT WAS GRANTED ON. A totals feeder may now carry ONE optional `when`, and `when` is ONE equality test against ONE bound key: {\"key\": \"...\", \"equals\": \"...\"}. No negation, no AND/OR, no nesting, no comparison operators, no expressions - run-form-gate.mjs REFUSES a clause carrying any third field, so a second condition cannot arrive by the back door. The key is spelled the way this map already spells cells in its `exclusive` guard (\"6ac_vehicles[0].lease_or_own\"), so no new addressing was invented. THREE THINGS MAKE IT SAFE RATHER THAN CONVENIENT: (i) a predicate over an unbound key is a STOP, not a skip; (ii) an `equals` naming an option the set does not have is a STOP, because such a predicate could never be true and would disable its line forever while reading as a clean pass; (iii) a false predicate SKIPS the line and PRINTS the key and the value it actually found, and the step reports checked/skipped/failed as three separate numbers - a form that skips fifteen of twenty totals must read as such at a glance. All four of those failure paths were run deliberately in slice 4 and each one fired.",
   "SLICE 4, COMMIT 1 - (6a)/(6c) IS NOW CHECKED ON BOTH PRINTED BRANCHES, AND THE not_checkable ENTRY IS GONE. The printed caption \"Total value of vehicle (if the vehicle is leased, enter 0 as the total value)\" is one cell with two defined values and a printed selector. It is declared as FOUR predicated total lines - 6a own, 6a leased, 6c own, 6c leased - rather than two, because declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean, and declaring only the LEASE branch would leave the subtraction unverified on every owned row. Exactly one of each pair can hold on a filled form, so exactly one is checked and exactly one is skipped with its reason printed. The slice-3 _not_checkable entry for 6ac_vehicles.quick_sale_equity was REMOVED in the same commit: a cell declared both checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on that condition (DOUBLE-DECLARED) rather than trusting anyone to remember.",
   "SLICE 4, COMMIT 1 - THE LEAF-NAME LIES ARE NOW A MACHINE-CHECKED FILE, adapters/pdf/maps/433aoi.name-lies.json, and the running count in _notes[2] was WRONG BY ONE. That note says FIVE names are wrong and lists five, but its own item (3) describes topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1] as \"the only true one of the four\" - so it counted a verified-TRUE cell as a lie, and every running total after it inherited the error. The honest count through slice 3 is TEN active lies, not eleven. The registry keeps the true one as a CONTROL rather than deleting it, because a list of only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest. validate-map.mjs asserts every declared path exists and that every declared binding resolves through this map to exactly the field the registry names - so a later \"fix\" that repoints a map key toward what its leaf name suggests is caught, which is the one defect the registry exists to prevent.",
-  "SLICE 4, COMMIT 1 - CARRIED ITEMS HAVE A HOME. _carried holds the questions one slice raised and no slice has answered, with the slice that raised each. They were previously recorded inside the group note where they arose, which meant each was visible only to someone already reading that group. Four are open (the country question on institution_name_and_address, the life-insurance cell width, the lone \"=\" at (2c), and the undeclared exclusivity of the bank and investment option lists) and one is resolved (the (6a)/(6c) predicate). Every slice from here reports the count. An item leaves the list by being resolved or by being withdrawn with a reason, never by being forgotten."
+  "SLICE 4, COMMIT 1 - CARRIED ITEMS HAVE A HOME. _carried holds the questions one slice raised and no slice has answered, with the slice that raised each. They were previously recorded inside the group note where they arose, which meant each was visible only to someone already reading that group. Four are open (the country question on institution_name_and_address, the life-insurance cell width, the lone \"=\" at (2c), and the undeclared exclusivity of the bank and investment option lists) and one is resolved (the (6a)/(6c) predicate). Every slice from here reports the count. An item leaves the list by being resolved or by being withdrawn with a reason, never by being forgotten.",
+  "SLICE 4 - THE FINDING THAT DECIDED THE PAGE: (7a) AND (7b) ARE TWO PRINTED QUESTIONS, NOT TWO ROWS OF ONE TABLE. Their leaf names are OtherAsset1[0] and OtherAsset2[0], which is exactly how this form names the two slots of a real table (Account1/Account2, Property1/Property2, Vehicle1/Vehicle2), and their five money cells are laid out identically. What settles it is a printed heading drawn BETWEEN them - \"Value of remaining furniture and personal effects\" at y 671.7 - which no repeatable table on this form has. Two more witnesses agree: the column headers differ by a plural, \"Description of asset(s)\" at y 726.7 over (7a) and \"Description of asset\" at y 658.3 over (7b); and (7a) overflows to an attachment line at (7c) while (7b) has no attachment counterpart anywhere on the page, because a residual has nothing for a second one to be. So (7a) is a one-slot group of class personal_property and (7b) is bound as scalars, on the same precedent that binds the (4b) attachment cells and the page-3 for-sale question as scalars. REPORTED AS ARGUABLE P4-1: a reader could model them as a two-slot group and would not be obviously wrong, and nothing filed differs either way.",
+  "SLICE 4 - BOX A IS THE FIRST CROSS-PAGE TOTAL ON THIS FORM, and the first marker whose pairing rule does not reach it. Box A sums printed lines (1) through (7), four of which are on page 2, two on page 3 and one on page 4. Nothing in the totals schema needed to change: a feeder names map keys and a map key names a field wherever it is drawn. Its marker is also drawn ABOVE its cell rather than to the left of it - line-markers.mjs reports \"(no widget to its right on this row)\" for Box A, which is a true report of the geometry and not a missing cell. Three other drawn runs bind it: the caption \"Available Individual Equity in Assets\" at y 560.5 in the same x column, the instruction \"Add lines (1) through (7) and enter the amount in Box A =\" at y 547.3 which names it, and a printed $ at y 549.1, x 444.2..448.7 immediately left of the cell edge. Recorded before pages 5-8 are read, because Boxes A through H carry the whole offer calculation and seven more of them are coming.",
+  "SLICE 4 - THE PAGE PRINTS \"(select one)\" ONCE, AND ONLY ONCE. Section 4's type-of-business list draws \"(select one)\" at y 298.1, x 98.7..135.3 and is declared exclusive on those words. No other option list on this form prints such an instruction - not the bank types at (1a)/(1b) or (8a)/(8b), not the investment types at (2a)/(2b), not the retirement types at (3a) - and none of those is declared exclusive. The contrast is now on ONE PAGE: Section 4 prints it and Section 5, eight printed lines below, does not. That answers the METHOD half of carried item C-04 - the map may declare exclusivity when the page states it and declines to when the page does not - and leaves the substantive half exactly where it was.",
+  "SLICE 4 - THE $1,000 BANK EXEMPTION IS NOT REPEATED ON THE BUSINESS SIDE. Printed line (1) reads \"Add lines (1a) through (1c) minus ($1,000) =\". Printed line (8), the same shape on the business side, reads \"Add lines (8a) through (8d) =\" and prints no deduction at all. A totals entry copied from (1) to (8) would understate the business bank total by $1,000 with every other figure on the page still agreeing - a tripwire carrying the error it exists to catch. Recorded as loudly as a name lie, because copying the nearer-looking entry is exactly what a tired author does.",
+  "SLICE 4 - TWO NEW LEAF-NAME LIES, BOTH PAGE-4 TWINS OF PAGE-2 LIES. topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0] is the BUSINESS DIGITAL ASSET block, and Section 5 has no retirement line at all - its printed instruction at y 257.1 lists eight kinds of business asset and names no retirement account. Its child name_of_individual[0] is the wallet-address cell, under the printed caption \"Digital asset address for self-hosted digital assets\" at y 100.3. Both are recorded in adapters/pdf/maps/433aoi.name-lies.json as L11 and L12, taking the machine-checked count to twelve active lies. Page 4 also supplies the best available CONTROL for the whole family: Section3[0].OtherAsset1[0].CurrentMarketValue[0].Times_8[0] sits under a printed \"X .8 = $\" with the identical geometry as page 2's Times_7[0] and carries the opposite name. Both are bound on the rectangle, and the pair is the argument."
  ],
  "map": {
   "s1_tp_last_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].lastName[0]",
@@ -81,7 +86,41 @@
   "6b_vehicle_1_less_allowance": "topmostSubform[0].F433-A-OIC_Page3[0].line6b[0]",
   "6d_vehicle_2_less_allowance": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
   "6e_vehicles_from_attachment": "topmostSubform[0].F433-A-OIC_Page3[0].Enter_Allowance[0]",
-  "6_total_vehicles": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Amount[0]"
+  "6_total_vehicles": "topmostSubform[0].F433-A-OIC_Page3[0].Total_Value_Vehicles_Amount[0]",
+  "7b_description_of_asset": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].Description[0]",
+  "7b_current_market_value": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].CurrentMarketValue[0].Current_Market_Value[0]",
+  "7b_quick_sale_value": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].CurrentMarketValue[0].Times_8[0]",
+  "7b_minus_loan_balance": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].LessLoanBal[0].Less_Loan_Balance[0]",
+  "7b_total_remaining_furniture": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset2[0].Total_Other_Asset[0]",
+  "7c_valuable_items_from_attachment": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].TotalOther[0].Total_Value_Attached[0]",
+  "7_total_other_valuable_items": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].TotalOther[0].Total_Value_Other_Valuable_Items[0]",
+  "box_a_available_individual_equity_in_assets": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].Available_Individual_Equity_Assets[0]",
+  "s4_business_name": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business[0].Name_Business[0]",
+  "s4_business_address": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Address_Business[0]",
+  "s4_business_telephone": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].BusinessTelephone[0]",
+  "s4_business_ein": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].EIN[0]",
+  "s4_business_website": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business_Website[0]",
+  "s4_trade_name_or_dba": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Trade_Name[0]",
+  "s4_description_of_business": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Description_Business[0]",
+  "s4_total_number_of_employees": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Total_Employees[0]",
+  "s4_frequency_of_tax_deposits": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Frequency_Tax_Deposits[0]",
+  "s4_average_gross_monthly_payroll": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].AvgGross[0].Average_Gross_Monthly_Payroll[0]",
+  "s4_other_business_percentage_ownership": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].Percentage_Ownership[0]",
+  "s4_other_business_title": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].Title[0]",
+  "s4_other_business_name": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Other_Business_Name[0]",
+  "s4_other_business_address": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Other_Business_Address[0]",
+  "s4_other_business_telephone": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherTelephone[0]",
+  "s4_other_business_ein": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Other_Business_EIN[0]",
+  "s4_other_business_type_other": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Other_Type_Of_Business[0]",
+  "8c_description_of_digital_asset": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].virtualCurrency[0].descriptionDigitalAsset[0]",
+  "8c_number_of_units": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].numberOfUnits[0]",
+  "8c_location_of_digital_asset": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].locationDigitalAsset[0]",
+  "8c_custodian_account_number": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].assetsAccountNumber[0]",
+  "8c_self_hosted_asset_address": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].name_of_individual[0]",
+  "8c_us_dollar_equivalent_today": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0]",
+  "8c_total_digital_assets": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].TotalCurrentMarketValue[0]",
+  "8d_bank_accounts_from_attachment": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Accounts_Attached[0]",
+  "8_total_business_bank_accounts": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]"
  },
  "_map_evidence": {
   "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
@@ -554,6 +593,56 @@
     "printed_caption": "Total lines (6b), (6d), and (6e) =",
     "formula": "6b_vehicle_1_less_allowance + 6d_vehicle_2_less_allowance + 6e_vehicles_from_attachment",
     "note": "CHECKABLE even though (6d) and (6e) are each declared not checkable below: both are cells PRINTED ON THIS PAGE, and the recomputation reads what the page prints. Same shape as (1) summing (1c) and (4b) summing two attachment cells. The rule is about where a formula’s operands are printed, not where their figures came from."
+   },
+   {
+    "key": "7a_other_valuable_items[0].quick_sale_value",
+    "printed_caption": "X .8 = $",
+    "formula": "7a_other_valuable_items[0].current_fmv * 0.8",
+    "note": "The fourth quick-sale multiplier cell on this form after (3a), (5a)/(5b) and (6a)/(6c). Its leaf name is Times_8[0] and it AGREES with the page — bound on the rectangle anyway, and recorded as control C02 in 433aoi.name-lies.json beside the Times_7[0] cell on page 2 that carries the identical printed caption and the opposite name."
+   },
+   {
+    "key": "7a_other_valuable_items[0].quick_sale_equity",
+    "printed_caption": "Total value of other valuable items = (7a) $",
+    "formula": "7a_other_valuable_items[0].quick_sale_value - 7a_other_valuable_items[0].current_loan_balance",
+    "note": "The loan comes off the DISCOUNTED figure, not off market value. Same shape as (3a), (5a)/(5b) and the owned branch of (6a)/(6c). NO printed conditional on this row: (7a) prints no lease/own selector and nothing on the page makes this cell conditional on anything."
+   },
+   {
+    "key": "7b_quick_sale_value",
+    "printed_caption": "X .8 = $",
+    "formula": "7b_current_market_value * 0.8",
+    "note": "The (7b) residual block carries the identical four-cell money row as (7a), including the X .8. Bound as a scalar because (7b) is not a row of (7a) — see _map_evidence_page4."
+   },
+   {
+    "key": "7b_total_remaining_furniture",
+    "printed_caption": "Total value of remaining furniture and personal effects = (7b) $",
+    "formula": "7b_quick_sale_value - 7b_minus_loan_balance"
+   },
+   {
+    "key": "7_total_other_valuable_items",
+    "printed_caption": "Add lines (7a) through (7c) minus IRS deduction of $11,980 =",
+    "formula": "7a_other_valuable_items[0].quick_sale_equity + 7b_total_remaining_furniture + 7c_valuable_items_from_attachment - 11980",
+    "floor": "Declared 0. The page prints 'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' at y 557.1, x 141.3..435.6. ARGUABLE AND REPORTED: on page 2 the equivalent instruction is drawn at the TOP of the section (y 668.1) and unambiguously governs the lines beneath it, including (1) and its -$1,000. Here the sentence is drawn BELOW (7) and above the Box A row, so a reader could scope it to Box A alone. It is declared as a floor on (7) because the $11,980 deduction can drive this line negative exactly as the $1,000 can drive (1) negative, the same words answer it, and 'any line item' is what the sentence says. Nothing in the slice-4 fixture turns on it - (7) is positive there - so the declaration is a claim about the page and not a claim the fixture can prove.",
+    "needs": "a printed CONSTANT feeder (-11980) and a floor, both of which the totals schema already has"
+   },
+   {
+    "key": "box_a_available_individual_equity_in_assets",
+    "printed_caption": "Add lines (1) through (7) and enter the amount in Box A =",
+    "formula": "1_total_bank_and_cash + 2_total_investment_accounts + 3_total_retirement_accounts + 4_total_life_insurance + 5_total_real_estate + 6_total_vehicles + 7_total_other_valuable_items",
+    "note": "THE FIRST CROSS-PAGE TOTAL ON THIS FORM. Four of its seven operands are on page 2, two on page 3 and one on page 4. The page also prints 'Do not include amount on the lines with a letter beside the number' at y 567.5, which is the instruction that keeps this a seven-operand sum rather than a twenty-operand one - adding the lettered lines would double-count every asset on three pages.",
+    "no_floor": "Declared with NO floor. Each of its seven operands is already floored at zero where the page says so, so their sum cannot be negative and a floor here would be a rule the page does not need and does not print."
+   },
+   {
+    "key": "8c_total_digital_assets",
+    "printed_caption": "= (8c) $",
+    "formula": "8c_us_dollar_equivalent_today",
+    "_arguable": "The same one-operand equation as (2c) on page 2, and the same two readings. The page draws an '=' at x 430.9..435.6 between the dollar-equivalent cell and the (8c) marker and draws no other operator on the row. Read one way it is an identity and (8c) is a copy; read the other, the '=' is decoration and (8c) is plain input. Declared computed on the identity reading, matching (2c), because the two blocks are drawn identically and reading them two different ways would be worse than reading them both wrong. Carried item C-03."
+   },
+   {
+    "key": "8_total_business_bank_accounts",
+    "printed_caption": "Add lines (8a) through (8d) =",
+    "formula": "8ab_business_bank_accounts[0].account_balance + 8ab_business_bank_accounts[1].account_balance + 8c_total_digital_assets + 8d_bank_accounts_from_attachment",
+    "note": "NO $1,000 DEDUCTION AND NO FLOOR. Printed line (1) on page 2 is the same shape and reads 'Add lines (1a) through (1c) minus ($1,000)'; this one prints no deduction at all. The $1,000 bank-account exemption is a personal-side allowance. A totals entry copied from (1) would understate this line by $1,000 with every other figure on the page still agreeing.",
+    "also_note": "Its four operands are not four bank accounts. (8c) is the DIGITAL ASSET total, and it adds in here rather than into any separate line — which is why the leaf name Total_Value_Bank_Accounts[0] understates what the cell holds. See _arguable_page4."
    }
   ]
  },
@@ -602,6 +691,21 @@
     "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
     "why_not_checkable": "Attachment-sourced, and INPUT rather than computed despite its leaf name Enter_Allowance[0]. Everything it sums is on an attachment this engine never sees. It is an operand of (6), which IS checkable.",
     "review_page_advisory_summary": "Its bracketed caption carries the X .8, exactly as (3b) and (5c) do. Surfaced on the review page - see 433aoi.totals.json not_checkable."
+   },
+   {
+    "map_key": "7c_valuable_items_from_attachment",
+    "printed_caption": "Total value of valuable items listed from attachment [current market value X .8 minus any loan balance(s)]",
+    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (7), which IS checkable. THE X .8 IS IN ITS CAPTION, exactly as at (3b), (5c) and (6e) - this is the fourth attachment total on this form to state the quick-sale discount in its own printed caption and the fourth the engine cannot enforce it on."
+   },
+   {
+    "map_key": "8d_bank_accounts_from_attachment",
+    "printed_caption": "Total bank accounts from attachment",
+    "why_not_checkable": "Attachment-sourced, and unlike (7c) its caption states no arithmetic at all — it is a plain roll-up of rows printed somewhere else. It is an operand of (8), which IS checkable. Same shape as (1c) on the personal side."
+   },
+   {
+    "map_key": "s4_average_gross_monthly_payroll",
+    "printed_caption": "Average gross monthly payroll $",
+    "why_not_checkable": "NOT A TOTAL AT ALL, and declared here only because it is the one money-shaped cell in Section 4 and a reader scanning for money cells will find it. Nothing on the page feeds it: no marker, no '=', no rows above it. It is plain input. Declared rather than left out, because a money cell in neither list is indistinguishable from one nobody looked at."
    }
   ],
   "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. The feeder schema gained a single-equality predicate, so the cell is now checked on BOTH printed branches by four predicated lines in 433aoi.totals.json - '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared both checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none. run-form-gate.mjs now FAILS on exactly that condition (DOUBLE-DECLARED), so this removal is asserted rather than remembered."
@@ -648,6 +752,26 @@
    "yes": "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_15[0]",
    "no": "topmostSubform[0].F433-A-OIC_Page3[0].ForSale[0].CB2_16[0]",
    "_printed": "Question 'Is your real property currently for sale or do you anticipate selling your real property to fund the offer amount' at y 711.3, x 36.0..417.5 - quoted verbatim, and NO question mark is drawn on the page. 'Yes' y 696.9, x 50.4..64.2 with its box at y 695.7, x 36.0..45.0; 'No' y 696.9, x 208.8..219.0 with its box at y 695.7, x 194.4..203.4. Each box is drawn to the LEFT of the word it labels, the convention everywhere on this form. THE LEAF NAMES ARE CB2_15 AND CB2_16 ON PAGE 3, which are also the leaf names of the 401K and IRA boxes inside RetirementAcct2[0] on page 2 - the counter restarts per subform and says nothing about meaning. Bound on rectangle; the label file agrees."
+  },
+  "s4_business_is_sole_proprietorship": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business[0].CB4_01[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business[0].CB4_02[0]",
+   "_printed": "Question 'Is your business a sole proprietorship' at y 488.1, x 36.0..168.5 — quoted verbatim, and NO question mark is drawn on the page, exactly as with 5_real_property_for_sale on page 3. 'Yes' y 473.7, x 50.4..64.2 with its box at y 472.5, x 36.0..45.0; 'No' y 473.7, x 115.2..125.5 with its box at y 472.5, x 100.8..109.8. Each box is drawn to the LEFT of the word it labels, the convention everywhere on this form.",
+   "_nesting": "BOTH BOXES AND THE BUSINESS NAME CELL SIT UNDER Business[0]. The subform is named for the yes/no question and also wraps Name_Business[0] at y 447.8..432.0 — a text cell that answers a different printed caption ('Name of business', y 460.3, x 36.0..100.0). A prefix taken from the question does not generalise to the cell; both are quoted whole."
+  },
+  "s4_other_business_interests": {
+   "yes": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].CB4_03[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].CB4_04[0]",
+   "_printed": "Question 'Do you or your spouse have any other business interests? Include any interest in an LLC, LLP, corporation, partnership, etc.' drawn over two lines at y 377.5, x 36.0..285.5 and y 367.9, x 36.0..223.7. THIS ONE DOES DRAW ITS QUESTION MARK, and the sole-proprietorship question above it does not — recorded because a transcription that tidied either one would be inventing printed text. 'Yes' y 354.9, x 50.4..64.2 with its box at y 353.7, x 36.0..45.0; 'No' y 340.5, x 50.4..60.7 with its box at y 339.3, x 36.0..45.0. A COLUMN OF TWO at the same x, not a row — the same shape as the Lease/Own pair on page 3."
+  },
+  "s4_other_business_type": {
+   "partnership": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_05[0]",
+   "llc": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_06[0]",
+   "corporation": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_07[0]",
+   "other": "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_08[0]",
+   "_printed": "Caption 'Type of business' y 299.1, x 36.0..96.5 followed by '(select one)' y 298.1, x 98.7..135.3. 'Partnership' y 286.5, x 50.4..91.3 (box y 285.3, x 36.0..45.0); 'LLC' x 122.4..137.1 (box x 108.0..117.0); 'Corporation' x 165.8..207.6 (box x 151.4..160.4); 'Other' x 237.8..257.8 (box x 223.4..232.4). The write-in cell Other_Type_Of_Business[0] is at x 262.8..388.8 on the same printed row.",
+   "_the_page_prints_select_one": "THIS IS THE FIRST OPTION LIST ON 433-A(OIC) THAT PRINTS ITS OWN EXCLUSIVITY. '(select one)' is drawn on the page at y 298.1, x 98.7..135.3. Every other option list on this form — the bank account types at (1a)/(1b) and now (8a)/(8b), the investment types at (2a)/(2b), the retirement types at (3a) — prints no such instruction, which is why _notes[12] declines to declare those exclusive. This one is declared exclusive on the page's own words rather than on a judgement about the world. It is also the answer to half of carried item C-04: the question was never whether those lists ARE exclusive in fact, it was whether the map may say so when the page does not. Here the page does.",
+   "_nesting": "CB4_05 through CB4_08 hang DIRECTLY off Section4[0], with no subform of their own — unlike CB4_01/CB4_02 (under Business[0]) and CB4_03/CB4_04 (under OtherBusinessInterests[0]). Three checkbox sets on one section, three different nesting depths."
   }
  },
  "check_here": {
@@ -662,6 +786,12 @@
    "_printed": "Digital asset",
    "_printed_at": "box y 378.9, x 36.0..45.0; the words 'Digital asset' at y 380.1, x 50.4..94.0, immediately right of it with the same 5.4-point gap every option box on this form uses.",
    "_why_check_here_and_not_checkboxes": "It is the ROW LABEL of the digital asset block, and it is the only row label on page 2 that carries a box. 'Investment account' (y 524.1, x 36.0..105.4) and 'Retirement account' (y 272.1, x 36.0..105.4) sit at the same left margin with NO box; the bank row's leftmost box at x 36.0 belongs to the option word 'Cash', not to a row label. So this box has no counterpart cell and no sibling option - the negative answer is the box left blank - which is exactly the construct check_here exists for. Inventing a 'no' target would be fabrication; folding it into a two-option set would need a second cell the page does not print."
+  },
+  "8c_digital_asset_held": {
+   "target": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].virtualCurrency[0].virtualCurrency[0]",
+   "_printed": "Digital asset",
+   "_printed_at": "box y 141.3, x 36.0..45.0; the words 'Digital asset' at y 142.5, x 50.4..94.0, immediately right of it with the same 5.4-point gap every option box on this form uses.",
+   "_why_check_here_and_not_checkboxes": "Identical to 2c_digital_asset_held on page 2 and bound the same way. It is the ROW LABEL of the digital asset block and it carries a box; the row labels around it in Section 5 carry none. There is no counterpart cell for 'no' to check, so modelling it as a yes/no option set would mean inventing a target that does not exist."
   }
  },
  "exclusive": {
@@ -745,7 +875,22 @@
    "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_05[0]",
    "topmostSubform[0].F433-A-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_06[0]"
   ],
-  "_note_page_3": "BOTH PAGE-3 SETS ARE EXCLUSIVE, AND THE REASON IS RECORDED ON EACH. (a) 5_real_property_for_sale is a Yes/No pair on one printed question - a property either is or is not for sale, and a form answering both has answered neither. (b) 6ac_vehicles[n].lease_or_own is exclusive because a vehicle is leased or owned and cannot be both, and because THE FORM'S OWN ARITHMETIC DEPENDS ON THE ANSWER: the (6a)/(6c) caption reads 'Total value of vehicle (if the vehicle is leased, enter 0 as the total value)', so a row with both boxes ticked is a row whose printed total has no defined correct value. That is a stronger reason than any page-2 set has, and it is why these two are declared where the bank-type and investment-type lists are not."
+  "_note_page_3": "BOTH PAGE-3 SETS ARE EXCLUSIVE, AND THE REASON IS RECORDED ON EACH. (a) 5_real_property_for_sale is a Yes/No pair on one printed question - a property either is or is not for sale, and a form answering both has answered neither. (b) 6ac_vehicles[n].lease_or_own is exclusive because a vehicle is leased or owned and cannot be both, and because THE FORM'S OWN ARITHMETIC DEPENDS ON THE ANSWER: the (6a)/(6c) caption reads 'Total value of vehicle (if the vehicle is leased, enter 0 as the total value)', so a row with both boxes ticked is a row whose printed total has no defined correct value. That is a stronger reason than any page-2 set has, and it is why these two are declared where the bank-type and investment-type lists are not.",
+  "s4_business_is_sole_proprietorship": [
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business[0].CB4_01[0]",
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].Business[0].CB4_02[0]"
+  ],
+  "s4_other_business_interests": [
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].CB4_03[0]",
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].CB4_04[0]"
+  ],
+  "s4_other_business_type": [
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_05[0]",
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_06[0]",
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_07[0]",
+   "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_08[0]"
+  ],
+  "_note_page_4": "PAGE 4 DECLARES THREE EXCLUSIVE SETS AND ONE NON-EXCLUSIVE LIST, AND FOR THE FIRST TIME ON THIS FORM ONE OF THEM IS DECLARED ON THE PAGE'S OWN WORDS. (a) s4_business_is_sole_proprietorship and s4_other_business_interests are Yes/No pairs on one printed question each — a form answering both has answered neither. (b) s4_other_business_type is exclusive because the page PRINTS '(select one)' at y 298.1, x 98.7..135.3. That is the only such instruction anywhere on 433-A(OIC), and it is the difference between declaring a constraint the page states and declaring one the map believes. (c) The (8a)/(8b) account-type list is NOT declared exclusive, for the identical reason the (1a)/(1b) list is not: no 'check one' is printed over it, and an account can truthfully be both a Checking account and an Online Account. The contrast with (b) on the SAME PAGE is the whole argument — the IRS knows how to print 'select one' and did not print it there."
  },
  "groups": {
   "household_members": {
@@ -1118,6 +1263,89 @@
      }
     }
    ]
+  },
+  "7a_other_valuable_items": {
+   "source": "other_valuable_items",
+   "max": 1,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "personal_property"
+    ]
+   },
+   "_printed_heading": "Other valuable items",
+   "_heading_at": "y 740.1, x 36.0..109.4, followed on the next drawn line by '(artwork, collections, jewelry, items of value in safe deposit boxes, interest in a company or business that is not publicly traded, etc.)' at y 739.1, x 111.6..518.9. Declared by the words that name the subject, the same treatment VEHICLES gets on page 3.",
+   "_printed_markers": "The single slot totals to printed (7a) at y 686.1, x 447.1..468.0.",
+   "_row_order": "Slot 0 spans y 716.4 (the description cell) down to 673.2 (the (7a) total). There is no second slot — see _map_evidence_page4.",
+   "_columns_by_x": "THE MONEY ROW IS FOUR CELLS WIDE, the same shape as (3a) on page 2 and (5a)/(6a) on page 3: printed '$' x 37.0..41.5, current market value cell x 43.2..151.2, printed 'X .8 = $' x 154.7..184.8, QUICK SALE cell x 187.2..295.2, printed '– $' x 299.9..313.2, loan balance cell x 316.8..424.8, printed '=' x 431.0..435.6, marker (7a) x 447.1..468.0, total cell x 471.6..576.0. The printed headers 'Current market value' (x 36.0..110.7) and 'Minus loan balance' (x 295.2..364.2) at y 700.9 head only the FIRST and THIRD money cells; NOTHING is printed above the quick sale cell, and the only text identifying it is the 'X .8 = $' drawn immediately to its left. Above the money row: 'Description of asset(s)' x 36.0..115.6 at y 726.7 over a cell x 36.0..435.6.",
+   "_crosswalk": "CLASS personal_property, reused EXACT from adapters/hubspot/asset-row-shapes.json, and reused because THE ARITHMETIC AGREES, not because the label does. That class's own description reads 'Furniture, personal effects, artwork, jewelry, collections, antiques, or intangibles such as licenses, domain names, patents, copyrights, mining claims' — it already covers what this printed caption lists. description, current_fmv and current_loan_balance are EXACT column names. TWO COLUMNS ARE NEW ON THIS CLASS, and they are the same two the vehicle class gained in slice 3: quick_sale_value and quick_sale_equity. 433-A's line 20 PERSONAL ASSETS prints NO quick-sale column and 433-F's Section C prints none, so the X .8 arrives on this class for the first time here. The backbone's location, purchase_date, monthly_payment, final_payment_date, lender_name_address and lender_phone have no printed cell on this line: (7a) prints a description and three money cells and nothing else.",
+   "_why_equity_is_not_the_backbone_equity": "The backbone column is `equity`, described as 'FMV minus loan'. THIS CELL IS NOT THAT. The printed row is market value X .8 = quick sale value, minus loan balance — so the subtraction is taken off the DISCOUNTED figure, and a row storing FMV-minus-loan in it would overstate the cell by 20% of market value. Bound to quick_sale_equity, the same name slice 3 gave the identical cell on real property and vehicles, and `equity` is deliberately left unbound on this group.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].Description[0]",
+      "current_fmv": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].CurrentMarketValue[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].CurrentMarketValue[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].LessLoanBal[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page4[0].Section3[0].OtherAsset1[0].Total_Other_Asset[0]"
+     }
+    }
+   ]
+  },
+  "8ab_business_bank_accounts": {
+   "source": "business_bank_accounts",
+   "max": 2,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "bank_account"
+    ]
+   },
+   "_printed_heading": "Business Asset Information",
+   "_heading_at": "y 273.5, x 144.0..276.3. 'Section 5' is drawn separately at x 36.0..80.5 and '(for Self-Employed) (Domestic and Foreign)' separately again at x 279.0..485.7, so the banner is declared by the part that names the subject — the same treatment every Section banner on this form gets.",
+   "_printed_markers": "Slot 0 totals to printed (8a) at y 196.5, x 444.9..468.0; slot 1 to printed (8b) at y 156.9, x 444.9..468.0.",
+   "_row_order": "Slot 0 spans y 220.5 (its option boxes) down to 183.6 (the (8a) total); slot 1 spans 180.9 down to 144.0. Slot 0 is the higher, which is printed order, and printed order is not interchangeable: slot 0 totals to (8a) and slot 1 to (8b).",
+   "_columns_by_x": "Type boxes run left to right across the row, each box 9 points wide with its printed word starting 5.4 points right of it. IDENTICAL ON BOTH SLOTS: Cash box x 36.0..45.0 (word x 49.8..68.5), Checking box x 79.2..88.2 (word x 93.6..126.9), Savings box x 136.8..145.8 (word x 151.2..179.7), Money Market/CD box x 190.8..199.8 (word x 205.2..269.7), Online Account box x 277.2..286.2 (word x 291.6..345.8), Stored Value Card box x 352.8..361.8 (word x 367.2..433.0). Text columns identical on both rows: 'Bank name and country location' header x 36.0..150.3 over a cell x 36.0..302.4; 'Account number' header x 309.6..367.8 over a cell x 309.6..435.6; the amount cell x 471.6..576.0 with its printed marker to its left.",
+   "_both_slots_have_six_options_and_page_2s_did_not": "THE PRINTED WORD 'Money Market/CD' IS ALSO SHORTER HERE than page 2's 'Money Market Account/CD', and both slots print all six options. On page 2, printed line (1a) offers a Cash box and (1b) does NOT — five options on the second row — which is why 1ab_bank_accounts declares six columns on slot 0 and five on slot 1. Section 5 prints six on both, so this group declares six on both. Recorded because the two groups look interchangeable and are not: a record whose second business bank row says 'Cash' is legal here and hard-stops on UNKNOWN CHECKBOX OPTION on page 2.",
+   "_crosswalk": "CLASS bank_account, reused EXACT: type_of_account, institution_name_and_address, account_number and account_balance are all EXACT column names from adapters/hubspot/asset-row-shapes.json. NO NEW COLUMNS. The class's fifth column, is_business_account, is the backbone's own discriminator for exactly this split — 433-A routes a business account to line 65 and a personal one to line 13, and this form routes it to (8a)/(8b) rather than (1a)/(1b). It is NOT bound as a cell here because this form prints no per-row flag; the printed table IS the flag. See _carried C-05 for what that costs.",
+   "slots": [
+    {
+     "text": {
+      "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].Bank_Name[0]",
+      "account_number": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].Account_Number[0]",
+      "account_balance": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].Total_Account[0]"
+     },
+     "checkboxes": {
+      "type_of_account": {
+       "cash": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_07[0]",
+       "checking": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_08[0]",
+       "savings": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_09[0]",
+       "money market/cd": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_10[0]",
+       "online account": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_11[0]",
+       "stored value card": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account1[0].C2_12[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].Bank_Name[0]",
+      "account_number": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].Account_Number[0]",
+      "account_balance": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].Total_Account[0]"
+     },
+     "checkboxes": {
+      "type_of_account": {
+       "cash": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_07[0]",
+       "checking": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_08[0]",
+       "savings": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_09[0]",
+       "money market/cd": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_10[0]",
+       "online account": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_11[0]",
+       "stored value card": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].Account2[0].C2_12[0]"
+      }
+     }
+    }
+   ]
   }
  },
  "_never_autofill": {
@@ -1136,18 +1364,20 @@
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 425,
-  "in_this_slice": 201,
-  "bound_writable": 199,
+  "in_this_slice": 267,
+  "bound_writable": 265,
   "excluded_never_autofill": 2,
   "deferred": 0,
-  "unaccounted": 224,
-  "_check": "199 + 2 + 0 = 201, which is every field on pages 1, 2 and 3 (433aoi.labels.txt lists 74 for p1, 68 for p2 and 59 for p3). 425 - 201 = 224 still unaccounted, all of them on pages 4-8.",
+  "unaccounted": 158,
+  "_check": "265 + 2 + 0 = 267, which is every field on pages 1, 2, 3 and 4 (433aoi.labels.txt lists 74 for p1, 68 for p2 and 59 for p3; page-geometry.mjs reports 66 widgets on p4). 425 - 267 = 158 still unaccounted, all of them on pages 5-8.",
   "_bound_breakdown_page_1": "Section 1: 16 scalars + 2 marital + 3 housing + 1 check-here + 28 dependent-grid targets (4 rows x [3 text + 4 checkbox]) = 50. Section 2: 10 scalars + 4 taxpayer pay-period + 4 spouse pay-period + 2 taxpayer ownership + 2 spouse ownership = 22. 50 + 22 = 72.",
   "_bound_breakdown_page_2": "17 scalars: (1c), (1), seven 2c_ digital asset cells, (2d), (2), (3b), (3), the three (4b) cells and (4). 1 check_here: the digital asset row box. 17 in 1ab_bank_accounts: slot 0 is 3 text + 6 type boxes = 9, slot 1 is 3 text + 5 type boxes = 8. 18 in 2ab_investment_accounts: 2 slots x [6 text + 3 type boxes]. 10 in 3a_retirement_accounts: 7 text + 3 type boxes. 5 in 4a_life_insurance_policies, all text. 17 + 1 + 17 + 18 + 10 + 5 = 68, which is exactly the widget count align-block.mjs reports for page 2.",
   "_page_2_has_no_never_autofill_and_no_deferred": "Every one of page 2's 68 fields is a data cell the taxpayer fills. There is no IRS-use column, no link button and no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; the third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is STILL undeclared because page 6 is still a page nobody has read.",
   "_unaccounted_by_page": "p4 66, p5 40, p6 39, p7 50, p8 29 = 224.",
   "_bound_breakdown_page_3": "9 scalars: the listing-price cell, (5c), (5), (6b), (6d), (6e), (6) - that is 7 - plus the 2 for-sale Yes/No boxes. 22 in 5ab_real_property: 2 slots x 11 text columns, no checkboxes. 28 in 6ac_vehicles: 2 slots x [12 text + 2 lease/own boxes]. 9 + 22 + 28 = 59, which is exactly the widget count align-block.mjs reports for page 3 (27 in the y 380..720 band and 33 in the y 40..400 band, less the one - Total_Value_Property[0] at y 403.2 - that both bands contain).",
-  "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; topmostSubform[0].F433-A-OIC_Page6[0].Button1[0] is STILL undeclared because page 6 is still a page nobody has read."
+  "_page_3_has_no_never_autofill_and_no_deferred": "Every one of page 3’s 59 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; topmostSubform[0].F433-A-OIC_Page6[0].Button1[0] is STILL undeclared because page 6 is still a page nobody has read.",
+  "_bound_breakdown_page_4": "66 fields, all bound, none never-autofill and none deferred. Section 3 continued: 5 in the 7a group (all text) + 5 scalars for the (7b) block + 2 scalars for (7c) and (7) + 1 for Box A = 13. Section 4: 17 text scalars + 2 sole-proprietorship boxes + 2 other-business-interest boxes + 4 type-of-business boxes = 25. Section 5: 18 in 8ab_business_bank_accounts (2 slots x [3 text + 6 type boxes]) + 1 check_here digital-asset box + 7 digital-asset text scalars + 2 scalars for (8d) and (8) = 28. 13 + 25 + 28 = 66.",
+  "_page_4_has_no_never_autofill_and_no_deferred": "Every one of page 4's 66 fields is a data cell the taxpayer fills. No IRS-use column, no link button, no cell this slice could not resolve. The two never-autofill entries on this map remain the two page-1 Form 433-B link buttons; the third and last PDFButton on this form, topmostSubform[0].F433-A-OIC_Page6[0].Button1[0], is STILL undeclared because page 6 is still a page nobody has read."
  },
  "authored_from_page3": "adapters/pdf/align-block.mjs 433aoi 3, run over two bands (y 380..720 and y 40..400), which lays the printed text and the widget rectangles in one coordinate space. Corroborated by adapters/pdf/maps/433aoi.line-markers.txt (10 printed markers on page 3, each paired with the widget to its right) and by 433aoi.labels.txt. THE THREE AGREE ON EVERY CELL, INCLUDING THE TWO WHOSE LEAF NAMES ARE SWAPPED.",
  "_map_evidence_page3": {
@@ -1229,10 +1459,14 @@
     "id": "C-01",
     "raised_in_slice": 2,
     "subject": "institution_name_and_address vs the printed \"and country location\"",
-    "where": "groups.1ab_bank_accounts (printed lines 1a/1b), groups.2ab_investment_accounts (2a/2b) and groups.3a_retirement_accounts (3a)",
+    "where": "groups.1ab_bank_accounts (printed lines 1a/1b), groups.2ab_investment_accounts (2a/2b), groups.3a_retirement_accounts (3a) and now groups.8ab_business_bank_accounts (8a/8b) on page 4",
     "the_question": "The printed header asks for \"Bank name and country location\" (1a/1b) or \"Name of Financial Institution and country location\" (2a/2b, 3a). The backbone column is institution_name_and_address. A complete US address implies the country; a stored value that omits it cannot answer the question as printed, and nothing in the engine can tell the two apart.",
     "what_was_done": "Bound exact to institution_name_and_address on all three groups. The narrowing is not lossless in this direction and that is the whole point of carrying it.",
-    "why_still_open": "Answering it means either adding a country column to the backbone asset classes - which changes adapters/hubspot/asset-row-shapes.json and every form that reads it - or deciding that the address string is required to carry a country, which is a data-entry rule and not a mapping decision. Neither is a call a form slice gets to make."
+    "why_still_open": "Answering it means either adding a country column to the backbone asset classes - which changes adapters/hubspot/asset-row-shapes.json and every form that reads it - or deciding that the address string is required to carry a country, which is a data-entry rule and not a mapping decision. Neither is a call a form slice gets to make.",
+    "re_raised_in_slice": [
+     4
+    ],
+    "re_raise_note": "Slice 4 makes it four printed groups on two pages, and Section 5 is the BUSINESS side, so the same string now has to answer for a business bank account as well. Recorded as a re-raise rather than as a new item: it is the same question, and counting it twice would make this list look like it is growing when it is not."
    },
    {
     "id": "C-02",
@@ -1247,10 +1481,14 @@
     "id": "C-03",
     "raised_in_slice": 2,
     "subject": "the (2c) \"=\" with a single operand — computed identity, or plain input",
-    "where": "_computed.entries[3], printed line (2c) on page 2",
+    "where": "_computed entries for printed line (2c) on page 2 and printed line (8c) on page 4",
     "the_question": "The page draws an \"=\" between the dollar-equivalent cell and the (2c) marker and draws no other operator on the row. Read one way the printed formula is an identity and (2c) is a copy; read the other, an \"=\" with a single operand is decoration on a row where the taxpayer carries the figure across by hand, and (2c) is plain input.",
     "what_was_done": "Declared computed on the identity reading, and a tripwire checks it. The arithmetic is the same under both readings, so nothing filed differs.",
-    "why_still_open": "Nothing on the page distinguishes the two readings, and the arithmetic is the same either way, so nothing filed turns on it. It is carried because the next printed line of this shape - and the next form in the series - will have to be read the same way, and \"we decided it once\" is only true if the decision is written down."
+    "why_still_open": "Nothing on the page distinguishes the two readings, and the arithmetic is the same either way, so nothing filed turns on it. It is carried because the next printed line of this shape - and the next form in the series - will have to be read the same way, and \"we decided it once\" is only true if the decision is written down.",
+    "re_raised_in_slice": [
+     4
+    ],
+    "re_raise_note": "Page 4 prints the identical shape at (8c) - the same lone '=' at x 430.9..435.6 with a single operand to its left. Both are declared computed on the identity reading, and they are declared the same way deliberately: reading two identically-drawn rows two different ways would be worse than reading them both wrong."
    },
    {
     "id": "C-04",
@@ -1259,7 +1497,21 @@
     "where": "exclusive._note_page_2 - the (1a)/(1b) account-type list and the (2a)/(2b) investment-type list",
     "the_question": "Page 2 prints three option lists and prints no \"check one\" over any of them. One brokerage account can truthfully hold both stocks and bonds, so declaring that list exclusive would assert a constraint the page does not print. But a bank account being simultaneously Cash and Money Market/CD is not a thing, and the map declines to say so because the page does.",
     "what_was_done": "Not declared exclusive. Little is lost — a group slot takes ONE input value and checks ONE box, so the read-back still shows one box per row — except the guard against a box already set in the source PDF, which step 2 of the gate now covers form-wide.",
-    "why_still_open": "It is a question about what the map is allowed to assert beyond what the page prints, and that is a standing rule, not a per-slice call."
+    "why_still_open": "It is a question about what the map is allowed to assert beyond what the page prints, and that is a standing rule, not a per-slice call.",
+    "re_raised_in_slice": [
+     4
+    ],
+    "partially_answered_in_slice_4": "HALF OF IT IS ANSWERED, AND BY THE PAGE. Section 4's 'Type of business' list prints '(select one)' at y 298.1, x 98.7..135.3 - the only such instruction anywhere on 433-A(OIC) - and is declared exclusive on those words. That settles the METHOD question this item was really about: the map may declare exclusivity when the page states it, and declines to when the page does not. What remains open is unchanged and is now narrower: the (1a)/(1b), (2a)/(2b), (3a) and (8a)/(8b) option lists print no such instruction and are still not declared exclusive, even though a bank account being simultaneously Cash and Money Market/CD is not a thing. The contrast is now on ONE PAGE - Section 4 prints 'select one' and Section 5, eight printed lines below it, does not."
+   },
+   {
+    "id": "C-05",
+    "raised_in_slice": 4,
+    "subject": "row_class discriminates by class only, and two printed tables on this form share a class",
+    "where": "groups.1ab_bank_accounts and groups.8ab_business_bank_accounts, both declaring row_class accepts ['bank_account']",
+    "the_question": "Section 3 prints personal bank accounts at (1a)/(1b) and Section 5 prints business bank accounts at (8a)/(8b). They are the same backbone class - the class carries an is_business_account row flag precisely for this split, and 433-A uses it to route a row to line 65 or line 13. This form prints no per-row flag; the printed TABLE is the flag. row_class reads one column and compares it to a list of accepted classes, so both groups accept both rows and nothing stops a business account printing on the personal line or the reverse.",
+    "what_was_done": "Both groups declare accepts ['bank_account'], which is true. The gap is reported rather than papered over by inventing two classes: splitting bank_account into personal and business would break reconciliation with 433-A, which files both through one shape, and would be a backbone change made to work around an engine limit.",
+    "why_still_open": "Closing it means row_class gaining a second discriminating column - something like {column: \"is_business_account\", equals: true} beside the class test. That is an engine change, it is the same shape as the feeder predicate authorised this slice, and it is NOT built unasked. Reported to Principal.",
+    "also_affects": "The same gap exists between (7a) other valuable items and any future page-5 business-property row, both of which are personal_property / business_property shaped. It is a general limit, not a bank-account one."
    }
   ],
   "resolved": [
@@ -1272,8 +1524,101 @@
    }
   ],
   "_count": {
-   "open": 4,
+   "open": 5,
    "resolved": 1
   }
- }
+ },
+ "authored_from_page4": "adapters/pdf/page-geometry.mjs read directly, dumping every printed run and every widget rectangle on page 4 into one coordinate space sorted y-descending. Corroborated by adapters/pdf/line-markers.mjs (10 printed markers on page 4: 7a, 7b, 7c, 7, Box A, 8a, 8b, 8c, 8d, 8 — each paired with the widget to its right except Box A, see below) and by adapters/pdf/maps/433aoi.labels.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
+ "_map_evidence_page4": {
+  "_printed_markers_in_printed_order": "TEN MARKERS, top to bottom, each with its y and the widget it pairs with. This list is the page before any binding is proposed. (7a) y 686.1 x 447.1..468.0 -> Section3[0].OtherAsset1[0].Total_Other_Asset[0]. (7b) y 617.7 -> Section3[0].OtherAsset2[0].Total_Other_Asset[0]. (7c) y 603.3 -> Section3[0].TotalOther[0].Total_Value_Attached[0]. (7) y 589.6 -> Section3[0].TotalOther[0].Total_Value_Other_Valuable_Items[0]. Box A y 570.1 x 448.6..471.7 -> NO WIDGET ON ITS ROW. (8a) y 196.5 -> Section5[0].Account1[0].Total_Account[0]. (8b) y 156.9 -> Section5[0].Account2[0].Total_Account[0]. (8c) y 77.7 -> Section5[0].RetirementAcct1[0].TotalCurrentMarketValue[0]. (8d) y 63.3 -> Section5[0].TotalAccounts[0].Total_Accounts_Attached[0]. (8) y 49.6 -> Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0].",
+  "_printed_section_headings": "Four banners and two block headings, top to bottom. 'Section 3' x 36.0..80.5 / 'Personal Asset Information' x 144.0..274.0 / '(Domestic and Foreign)' x 276.8..388.5, all at y 755.9, with '(Continued)' at y 754.9, x 83.2..133.7 — four separate drawn runs on one visual line. 'Other valuable items' y 740.1, x 36.0..109.4. 'Value of remaining furniture and personal effects' y 671.7, x 36.0..208.5. 'Section 4' x 36.0..80.5 / 'Self-Employed Information' x 144.0..271.2 at y 518.3. 'Section 5' x 36.0..80.5 / 'Business Asset Information' x 144.0..276.3 / '(for Self-Employed) (Domestic and Foreign)' x 279.0..485.7 at y 273.5.",
+  "box_a_is_a_marker_shape_this_form_has_not_printed_before": {
+   "marker": "Box A",
+   "marker_at": "y 570.1, x 448.6..471.7",
+   "widget_at": "y 550.8..535.0, x 453.6..576.0",
+   "why_the_marker_pairs_with_nothing": "EVERY OTHER MARKER ON THIS FORM IS DRAWN TO THE LEFT OF ITS CELL ON THE SAME ROW, so line-markers.mjs pairs them by scanning right. Box A is drawn nineteen points ABOVE its cell and reports '(no widget to its right on this row)'. That is a true report of the geometry and NOT a failure to find the cell: three more drawn runs bind it. The caption 'Available Individual Equity in Assets' at y 560.5, x 448.6..576.2 sits between the marker and the cell in the same x column; the instruction 'Add lines (1) through (7) and enter the amount in Box A =' at y 547.3, x 190.9..435.7 names the cell by name; and a printed '$' at y 549.1, x 444.2..448.7 sits immediately left of the cell's x 453.6 edge, which is the same currency-glyph convention every money cell on this form uses.",
+   "why_it_matters": "Boxes A through H carry the offer calculation on pages 4 through 8. This is the first of them, and the pairing rule that has worked on 89 markers so far does not reach it. Recorded before pages 5-8 are read, so the author of those slices does not read a null pairing as a missing cell.",
+   "the_map_key": "box_a_available_individual_equity_in_assets — named by KEY, not by target. Every other block in this file that points at a cell does the same, because verify-form-coverage.mjs and the duplicate-write check walk this document schema-agnostically and would count a second occurrence of the target string as a second binding."
+  },
+  "7a_other_valuable_items": {
+   "printed_caption": "Other valuable items (artwork, collections, jewelry, items of value in safe deposit boxes, interest in a company or business that is not publicly traded, etc.)",
+   "printed_at": "y 740.1, x 36.0..109.4 continuing at y 739.1, x 111.6..518.9",
+   "decided": "RECTANGLE AND MARKER TOGETHER. OtherAsset1[0] lies between this heading at y 740.1 and the next at y 671.7, and its total pairs with printed marker (7a) at y 686.1."
+  },
+  "7b_is_bound_as_scalars_and_is_NOT_a_second_slot_of_7a": {
+   "printed_caption_7a_column_header": "Description of asset(s)",
+   "printed_caption_7b_column_header": "Description of asset",
+   "the_finding": "THE TWO PRINTED BLOCKS ARE DIFFERENT QUESTIONS THAT SHARE A CELL LAYOUT. (7a) sits under 'Other valuable items (artwork, collections, jewelry, items of value in safe deposit boxes, interest in a company or business that is not publicly traded, etc.)' at y 740.1. (7b) sits under a heading of its own — 'Value of remaining furniture and personal effects' at y 671.7, x 36.0..208.5, followed by '(not listed above)' at x 210.8..272.1. They are not two rows of one table; they are two printed lines with two printed headings, and OtherAsset1[0]/OtherAsset2[0] are named as though they were a pair.",
+   "three_things_settle_it": [
+    "TWO HEADINGS, ONE EACH. A repeatable table has one heading over all its rows — every other group on this form does. Here a heading is drawn between the two blocks, so verify-headings.mjs would place the two 'rows' in different bands.",
+    "THE COLUMN HEADERS DIFFER BY A PLURAL. (7a) is headed 'Description of asset(s)' at y 726.7 and (7b) is headed 'Description of asset' at y 658.3. (7a) is itemisable and overflows to (7c), 'Total value of valuable items listed from attachment'. (7b) has NO attachment counterpart anywhere on the page: it is a residual, one figure for everything not listed above, and there is nothing for a second one to be.",
+    "THE PRECEDENT IS ALREADY IN THIS MAP. The (4b) life-insurance attachment cells are bound as scalars 'not as a second slot - the attachment block prints no company name and no policy number, so it is not a row of this table', and the page-3 for-sale question is bound as scalars because 'it asks one question about the taxpayer's real property as a whole, not about either printed property row'. (7b) is the same shape of thing: one question about everything not itemised."
+   ],
+   "arguable": "REPORTED, NOT RESOLVED. The five cells of (7b) are laid out identically to (7a)'s — same x columns, same 'X .8 = $' at x 154.7..184.7, same '– $' at x 299.8..313.2 — and the leaf names are OtherAsset1/OtherAsset2, which is exactly how this form names the two slots of a real table (Account1/Account2, Property1/Property2, Vehicle1/Vehicle2). A reader could model them as a 2-slot group and would not be obviously wrong. What decided it against that reading is the heading drawn BETWEEN them, which no real table on this form has. If it is wrong, the cost is that a furniture valuation and an itemised asset are carried under different map shapes; nothing filed differs, because the cells and the arithmetic are the same either way."
+  },
+  "7_total_other_valuable_items": {
+   "printed_caption": "Add lines (7a) through (7c) minus IRS deduction of $11,980 =",
+   "printed_at": "y 589.2, x 172.9..432.7, with the marker (7) at y 589.6, x 449.5..468.0",
+   "note": "A PRINTED CONSTANT, the second on this form. Line (1) on page 2 prints 'Add lines (1a) through (1c) minus ($1,000) =' and this prints minus $11,980. Both are drawn on the page and held by no cell, which is what the totals schema's `constant` feeder was added for in slice 3."
+  },
+  "box_a": {
+   "printed_caption": "Add lines (1) through (7) and enter the amount in Box A =",
+   "printed_at": "y 547.3, x 190.9..435.7",
+   "printed_instructions_on_the_same_block": [
+    "'Do not include amount on the lines with a letter beside the number. Round to the nearest whole dollar.' at y 567.5, x 74.5..435.6",
+    "'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' at y 557.1, x 141.3..435.6"
+   ],
+   "why_the_first_instruction_matters": "'Do not include amount on the lines with a letter beside the number' is the page telling the reader that Box A sums (1) (2) (3) (4) (5) (6) (7) and NOT (1a) (1b) (1c) (2a)... A recomputation that added the lettered lines would double-count every asset on three pages and still produce a confident number. The tripwire is written over the seven unlettered lines exactly as this sentence instructs.",
+   "THIS_IS_THE_FIRST_CROSS_PAGE_TOTAL_ON_THIS_FORM": "Its seven operands are on THREE different printed pages — (1), (2), (3) and (4) on page 2, (5) and (6) on page 3, (7) on page 4. Every tripwire before it has been a within-page check. Nothing in the totals schema needed to change for this: a feeder names map keys, and a map key names a field wherever it is drawn."
+  },
+  "section_4_self_employed": {
+   "_what_it_is": "A page-and-a-bit of free text about the taxpayer's business and any other business interest. It holds no money total and no marker at all — the ten page-4 markers are all in Sections 3 and 5.",
+   "_the_only_money_cell_printed": "'Average gross monthly' at y 402.7, x 410.4..492.3 wrapping to 'payroll $' at y 393.1, x 410.4..440.7. The cell is at y 392.4..378.0, x 446.4..493.2 — immediately RIGHT of the printed '$', not beneath the caption. It is an input, not a total: no marker, no '=', nothing on the page feeds it.",
+   "_caption_positions_are_not_uniform": "MOST captions on this section sit ABOVE their cell; TWO do not. 'Title' is drawn at y 354.9, x 187.2..202.4 with its cell at x 208.8..298.8 on the SAME row, to its right. '(percentage of ownership:' is drawn at y 354.2, x 77.5..158.5 with its cell at x 162.0..180.0 and the closing ')' at x 182.5..184.8 — the cell sits INSIDE the printed parenthesis. Bound on the rectangle in both cases.",
+   "_two_tall_cells": "Three cells are taller than one printed row. Trade_Name[0] spans y 419.0..378.0 - two printed rows tall - under a single-line header 'Trade name or DBA' at y 431.5, x 500.4..571.6. Address_Business[0] spans y 476.6..432.0 and Other_Business_Address[0] spans y 365.0..327.6, both under one-line headers. A tall cell is an address box, not two cells merged: each has exactly one printed header above it and nothing is drawn inside it. Full paths for all three are in `map`; they are named by leaf here only because the shared Section4[0] prefix is what makes the three comparable.",
+   "_the_only_money_key": "s4_average_gross_monthly_payroll — named by KEY, for the same reason."
+  },
+  "section_5_business_assets": {
+   "printed_instruction": "List business assets including bank accounts, digital assets (such as cryptocurrency), tools, books, machinery, equipment, business vehicles and real property that is owned/leased/rented. If additional space is needed, attach a list of items. Do not include personal assets listed in Section 3.",
+   "printed_instruction_at": "y 257.1, x 36.0..564.2 wrapping to y 247.5, x 36.0..527.4",
+   "what_is_on_page_4_and_what_is_not": "The instruction lists eight kinds of business asset. PAGE 4 PRINTS CELLS FOR EXACTLY TWO OF THEM — bank accounts at (8a)/(8b) and digital assets at (8c). Tools, books, machinery, equipment, business vehicles and real property have no cell on this page; they are on page 5, which this slice has not read. The instruction is quoted here so the author of slice 5 knows the section was not finished, and so nobody reads (8) as the whole of Section 5.",
+   "the_1000_exemption_is_NOT_repeated_here": "Printed line (1) on page 2 reads 'Add lines (1a) through (1c) minus ($1,000)'. Printed line (8) reads 'Add lines (8a) through (8d) =' and prints NO deduction. The $1,000 bank-account exemption is a personal-side allowance and the business side does not get it. Recorded because the two lines are otherwise the same shape, and a totals entry copied from (1) to (8) would understate the business bank total by $1,000 with every other figure on the page agreeing."
+  },
+  "8c_digital_asset_block": {
+   "printed_captions_in_printed_order": [
+    "'Digital asset' row label y 142.5, x 50.4..94.0 with its box at y 141.3, x 36.0..45.0",
+    "'Description of digital asset' y 127.7, x 36.0..129.4",
+    "'Number of units' y 143.5, x 140.4..168.9 wrapping to y 133.9, x 140.4..166.2",
+    "'Location of digital asset (exchange account, self-hosted wallet)' y 143.5, x 176.4..299.6 wrapping to y 133.9, x 176.4..273.3",
+    "'Account number for assets held by a custodian or broker' y 143.5, x 309.6..432.8 wrapping to y 133.9, x 309.6..384.7",
+    "'Digital asset address for self-hosted digital assets' y 100.3, x 36.0..211.6",
+    "'US dollar equivalent of the digital asset as of today' y 100.4, x 223.2..402.9, with a printed '$' at y 78.6, x 224.2..228.7"
+   ],
+   "decided": "RECTANGLE. Every cell sits directly beneath its caption except the dollar-equivalent cell, which sits right of the printed $. Bound cell by cell, exactly as the identical block on page 2 was.",
+   "the_container_lies": "This whole block hangs off Section5[0].RetirementAcct1[0] and there is no retirement line in Section 5 at all. See 433aoi.name-lies.json L11 and L12."
+  }
+ },
+ "_nesting_note_page4": "AcroForm nesting depth is not uniform on page 4 either, and page 4 is the worst of the four so far because THREE checkbox sets on one section sit at three different depths. Section4[0]: CB4_01/CB4_02 hang under Business[0], which ALSO wraps the text cell Name_Business[0]; CB4_03/CB4_04 hang under OtherBusinessInterests[0], which ALSO wraps Percentage_Ownership[0] and Title[0]; CB4_05 through CB4_08 hang DIRECTLY off Section4[0] with no subform at all, while the write-in cell they govern, Other_Type_Of_Business[0], also hangs directly off Section4[0]. Section3[0]: OtherAsset1[0] and OtherAsset2[0] each wrap their value pair in CurrentMarketValue[0] and their loan cell in LessLoanBal[0] — note 'Bal', not 'Balance' as on page 2's Institution1[0] — but hang the ROW TOTAL Total_Other_Asset[0] directly off themselves; the (7c) and (7) cells sit under TotalOther[0]; and Available_Individual_Equity_Assets[0], which is Box A, hangs directly off Section3[0] with no total subform. Section5[0]: Account1[0] and Account2[0] hold their six option boxes and three text cells flat with no wrapper, RetirementAcct1[0] puts its box and its description under virtualCurrency[0] and its dollar figure under dollarEquivalentToday[0] but hangs numberOfUnits[0], locationDigitalAsset[0], assetsAccountNumber[0], name_of_individual[0] and TotalCurrentMarketValue[0] directly off itself, and the (8d)/(8) pair sits under TotalAccounts[0]. Account1[0] and Account2[0] reuse the SAME six leaf names (C2_07 through C2_12) and are told apart only by the subform, exactly as page 2's Institution1/Institution2 and page 3's Vehicle1/Vehicle2 are. Every path in this file is therefore quoted whole from topmostSubform[0], and no prefix generalises. That is now true on four pages out of four.",
+ "_arguable_page4": [
+  {
+   "id": "P4-1",
+   "subject": "(7b) is bound as scalars rather than as a second slot of the (7a) group",
+   "reported": "See _map_evidence_page4[\"7b_is_bound_as_scalars_and_is_NOT_a_second_slot_of_7a\"]. Two printed headings with a heading drawn BETWEEN the two blocks, a plural/singular difference in the two column headers, and an attachment line for (7a) with no counterpart for (7b). Decided against the two-slot reading on the heading. Nothing filed differs either way."
+  },
+  {
+   "id": "P4-2",
+   "subject": "the leaf name Total_Value_Bank_Accounts[0] understates line (8), and it is NOT declared a name lie",
+   "reported": "Printed line (8) is 'Add lines (8a) through (8d) =' and (8c) is the digital-asset total, so the cell holds more than bank accounts. It is deliberately NOT entered in 433aoi.name-lies.json, because THE PAGE ITSELF IS LOOSE HERE: printed line (8d) reads 'Total bank accounts from attachment' while (8) sums it with (8c). The leaf name echoes the page's own wording rather than contradicting it, and a registry that admitted entries where the page is imprecise would stop meaning 'the name disagrees with the page'. Reported here instead so the decision is visible and reversible."
+  },
+  {
+   "id": "P4-3",
+   "subject": "the floor on (7)",
+   "reported": "Declared 0 on the printed sentence 'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' at y 557.1, which is drawn BELOW (7) rather than above it. See _computed. The slice-4 fixture does not exercise it."
+  },
+  {
+   "id": "P4-4",
+   "subject": "nothing prevents a business bank account being filed into the personal (1a)/(1b) table, or the reverse",
+   "reported": "Both groups declare row_class accepts ['bank_account'], because it IS the same class - the backbone's own discriminator for the split is the is_business_account row flag, and this form prints no per-row flag for row_class to read. Carried item C-05."
+  }
+ ]
 }
