@@ -25,3 +25,7 @@ scripts/klaritie-digits-batches/
 # Dry-run report: derived from the transaction CSV and prints individual rows
 # (dates, amounts, check numbers, counterparties, a client street address).
 reports/
+
+# PDF engine scratch — negative-test harnesses, before/after regression baselines, ad-hoc
+# probes. Reproducible from the committed tools; never a source of truth.
+adapters/pdf/tmp/

@@ -2,6 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
+import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
 
 // --saturated is an assertion about the INPUT, not about the form — the same one the gate
 // makes at step 9. Here it decides whether a group row that carries no key for a column its
@@ -28,8 +29,18 @@ let filled = 0; const skipped = [];
 // truncating would print a crypto holding the taxpayer never gave. So an over-long value
 // stops the run and NAMES the cell, so an operator shortens it deliberately.
 const capacityErrors = [];
+// PER-BLOCK DECLARED ROUNDING. 433-F prints no rounding instruction and its map declares no
+// `rounding`, so every value below passes through untouched. See adapters/pdf/rounding.mjs and
+// the same note in fill-433a.mjs for why it is wired in on a form that does not use it.
+const rounding = loadRounding(mapDoc);
+const rounded = [], moneyNotNumeric = [];
+
 const setText = (name, val, key) => {
   if (val === undefined || val === null || val === '') return;
+  const rd = roundForOutput(rounding, key ?? name, val);
+  if (rd.notNumeric) moneyNotNumeric.push({ key: key ?? name, block: rd.block.id, value: String(val) });
+  if (rd.rounded) rounded.push({ key: key ?? name, block: rd.block.id, mode: rd.block.mode, from: String(val).trim(), to: rd.value });
+  val = rd.value;
   let field;
   try { field = form.getTextField(name); } catch { skipped.push(name); return; }
   const s = String(val), max = field.getMaxLength();

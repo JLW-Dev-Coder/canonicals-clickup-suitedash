@@ -35,6 +35,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
+import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
 
 // The published Collection Financial Standards. Form-agnostic — every form in the 433
 // series reads this one table, so it is not named after any of them. The map's
@@ -78,8 +79,20 @@ const allowedErrors = [];
 
 const absent = (v) => v === undefined || v === null || String(v).trim() === '';
 
+// PER-BLOCK DECLARED ROUNDING. 433-A prints no rounding instruction anywhere and its map
+// declares no `rounding`, so `rounding.declared` is false, every lookup is empty and every
+// value below passes through untouched. Wired in HERE rather than only on 433-A(OIC) because
+// the mechanism belongs to the series: if a later revision of this form starts printing one,
+// the declaration is the only thing that has to be authored. See adapters/pdf/rounding.mjs.
+const rounding = loadRounding(mapDoc);
+const rounded = [], moneyNotNumeric = [];
+
 const setText = (name, val, key) => {
   if (absent(val)) return;
+  const rd = roundForOutput(rounding, key ?? name, val);
+  if (rd.notNumeric) moneyNotNumeric.push({ key: key ?? name, block: rd.block.id, value: String(val) });
+  if (rd.rounded) rounded.push({ key: key ?? name, block: rd.block.id, mode: rd.block.mode, from: String(val).trim(), to: rd.value });
+  val = rd.value;
   let field;
   try { field = form.getTextField(name); } catch { skipped.push(name); return; }
   const s = String(val), max = field.getMaxLength();

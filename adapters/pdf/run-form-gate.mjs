@@ -69,6 +69,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
+import { parseMoney, loadRounding, blockFor, applyRounding, modeRounds } from './rounding.mjs';
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -113,19 +114,9 @@ const list = (label, items, cap = 12) => {
 };
 
 // --- money -----------------------------------------------------------------------------
-// A printed cell is text. "$1,200.00", "1200", "(50)" and "" all have to become numbers the
-// same way, and a cell that is text but not a number has to be distinguishable from a cell
-// that is empty — the first disables a tripwire, the second contributes zero.
-const parseMoney = (raw) => {
-  if (raw === undefined || raw === null) return { blank: true, n: 0 };
-  const s = String(raw).trim();
-  if (s === '') return { blank: true, n: 0 };
-  const neg = /^\(.*\)$/.test(s) || s.startsWith('-');
-  const digits = s.replace(/[()]/g, '').replace(/^-/, '').replace(/[$\s,]/g, '');
-  if (!/^\d*\.?\d+$/.test(digits)) return { blank: false, n: null, raw: s };
-  const n = Number(digits);
-  return { blank: false, n: neg ? -n : n };
-};
+// `parseMoney` is imported from rounding.mjs rather than defined here, because rounding a cell
+// at OUTPUT and recomputing it at COMPARISON must read the same string as the same number. Two
+// copies of a money parser that drift by one character is a defect nothing on the page shows.
 const cents = (n) => Math.round(n * 100);
 const money = (n) => (n < 0 ? '-' : '') + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -382,10 +373,26 @@ const steps = [
       return { target: t ? t[0] : undefined, how: `total_cell ${c.group}[${c.row}].${c.column}` };
     };
 
+    // The map's per-block rounding declaration. A form that declares none — 433-A and 433-F —
+    // yields every lookup empty, `roundingMode` null, and this whole mechanism inert.
+    const rounding = loadRounding(mapDoc);
+    // The spelling a total addresses its own cell by, so the rounding block can be looked up the
+    // same way every other cell in this repo is looked up.
+    const totalSpelling = (entry) => entry.total_key
+      ? entry.total_key
+      : (entry.total_cell?.group ? `${entry.total_cell.group}[${entry.total_cell.row ?? 0}].${entry.total_cell.column}` : null);
+
     const rows = [];
     for (const entry of decl.totals) {
+      const spelling = totalSpelling(entry);
+      const rBlock = spelling ? blockFor(rounding, spelling) : null;
       const r = { line: entry.line, caption: entry.caption, checkable: true, why: null, printed: null, sum: 0, feeders: [],
                   skipped: false, skipWhy: null,
+                  roundingBlock: rBlock?.id ?? null,
+                  roundingMode: rBlock?.mode ?? null,
+                  wasRounded: false,
+                  feederModes: new Set(),
+                  crossesRoundingBoundary: false,
                   addr: entry.total_key ? `key:${entry.total_key}`
                       : (entry.total_cell?.group && entry.total_cell?.column) ? `cell:${entry.total_cell.group}.${entry.total_cell.column}`
                       : null,
@@ -458,10 +465,34 @@ const steps = [
         if (typeof fd.constant === 'number') r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
         r.sum += sign * (factor * cellSum + konst);
       }
+      // ROUND FIRST, THEN FLOOR — the order 433-A(OIC) page 2 y 668.1 prints the two sentences
+      // in. The mode comes from the rounding block THE TOTAL CELL ITSELF sits in, never from
+      // the feeders': a total drawn under an instruction is rounded whatever its operands were
+      // drawn under, and Box A is exactly that case. Most of the time this moves nothing —
+      // rounded cells read back as whole dollars and their sum is a whole dollar already. It
+      // bites where a FACTOR is applied: a market value of 12,346 times the printed .8 is
+      // 9,876.80, and the page prints 9,877.
+      if (r.checkable && !r.skipped) {
+        const before = r.sum;
+        r.sum = applyRounding(r.sum, r.roundingMode);
+        r.wasRounded = cents(r.sum) !== cents(before);
+      }
+      // Does this line's arithmetic reach across a rounding boundary? Collected from the
+      // blocks its OPERANDS sit in, printed constants excluded — a constant the form draws
+      // itself has no block and is exact by construction.
+      if (rounding.declared) {
+        for (const fd of (entry.feeders || [])) {
+          for (const k of (fd.keys || [])) r.feederModes.add(blockFor(rounding, k)?.mode ?? '(no block)');
+          if (fd.group) r.feederModes.add(blockFor(rounding, `${fd.group}[0].${fd.column}`)?.mode ?? '(no block)');
+        }
+        r.crossesRoundingBoundary = r.feederModes.size > 0
+          && (r.feederModes.size > 1 || !r.feederModes.has(r.roundingMode));
+      }
       // The floor is the form's own printed instruction — 433-A(OIC) page 2 y 668.1: "Do not
       // enter a negative number. If any line item is a negative number, enter '0'." Applied
-      // AFTER the feeders, because that is where the page applies it, and recorded when it
-      // bites so a match that depended on it can never read as an unconditional match.
+      // AFTER the feeders and AFTER the rounding, because that is the order the page prints
+      // them in, and recorded when it bites so a match that depended on it can never read as
+      // an unconditional match.
       if (r.checkable && !r.skipped && r.floor !== null && r.sum < r.floor) { r.sum = r.floor; r.floored = true; }
       r.match = r.checkable && !r.skipped && cents(r.printed) === cents(r.sum);
       rows.push(r);
@@ -485,6 +516,7 @@ const steps = [
       const applied = [
         ...new Set(r.feeders.filter(f => f.factor !== 1).map(f => `x ${f.factor}`)),
         ...r.feeders.filter(f => String(f.target).startsWith('(printed constant')).map(f => `${f.contributes < 0 ? '-' : '+'} ${money(Math.abs(f.contributes))}`),
+        ...(r.wasRounded ? [`rounded, ${r.roundingMode}`] : []),
         ...(r.floored ? [`floored at ${money(r.floor)}`] : []),
       ];
       const cellCount = r.feeders.filter(f => !String(f.target).startsWith('(printed constant')).length;
@@ -531,6 +563,32 @@ const steps = [
       }
     }
 
+    // WHICH ROUNDING RULE EACH COMPARISON RAN UNDER. Printed whether or not it moved a figure:
+    // a rounded comparison and an exact one can produce the same table and mean different
+    // things, and "no tolerance in any comparison" is only checkable if the reader can see that
+    // the two sides were brought to the same precision by a printed instruction and not by slack.
+    if (rounding.declared) {
+      const byMode = rows.reduce((a, r) => { const k = r.roundingMode || '(no block)'; (a[k] ||= []).push(r.line); return a; }, {});
+      console.log('');
+      console.log('  rounding at comparison — the mode of the block each TOTAL CELL is drawn in:');
+      for (const [mode, lines] of Object.entries(byMode))
+        console.log(`    ${String(mode).padEnd(21)} ${lines.length} line(s): ${lines.join(', ')}`);
+      const moved = rows.filter(r => r.wasRounded);
+      console.log(`    ${moved.length ? `${moved.length} recomputation(s) actually moved: ${moved.map(r => r.line).join(', ')}` : 'no recomputation was moved by rounding on this fixture — every sum was already a whole dollar'}`);
+      // A total whose OPERANDS are drawn under a different rounding rule than the total itself.
+      // Named because it is the one shape where the page can be internally inconsistent while
+      // every cell on it is correct: the total instructs a rounding its operands were never
+      // held to. It is REPORTED, never failed — the recomputation reads the printed operands
+      // and rounds by the total's own block, so the tripwire still holds exactly.
+      const crossers = rows.filter(r => r.crossesRoundingBoundary);
+      if (crossers.length) {
+        console.log(`    ${crossers.length} total(s) CROSS a rounding boundary — operands drawn under a different rule than the total:`);
+        crossers.forEach(r => console.log(`      ${r.line}: total in ${r.roundingMode} (${r.roundingBlock}); operands in ${[...r.feederModes].join(', ')}`));
+      } else {
+        console.log('    no declared total crosses a rounding boundary — every total shares its operands\' rule.');
+      }
+    }
+
     const bad     = rows.filter(r => r.checkable && !r.skipped && !r.match);
     const checked = rows.filter(r => r.checkable && !r.skipped);
     // Never collapsed to a pass count. Checked, skipped and failed are three different
@@ -569,7 +627,7 @@ const steps = [
     for (const r of bad) {
       console.error(`  line ${r.line} — ${r.caption}`);
       console.error(`    printed total:       ${money(r.printed)}`);
-      console.error(`    sum of printed rows: ${money(r.sum)}${r.floored ? `  (floored at ${money(r.floor)})` : ''}`);
+      console.error(`    sum of printed rows: ${money(r.sum)}${r.wasRounded ? `  (rounded, ${r.roundingMode}, per block ${r.roundingBlock})` : ''}${r.floored ? `  (floored at ${money(r.floor)})` : ''}`);
       console.error(`    difference:          ${money(r.printed - r.sum)}`);
       r.feeders.forEach(f => console.error(`      ${f.contributes < 0 ? '-' : '+'} ${money(Math.abs(f.contributes)).padStart(14)}  ${f.target}${f.factor !== 1 ? `   [${money(f.n)} x ${f.factor}]` : ''}`));
     }

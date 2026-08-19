@@ -1620,5 +1620,212 @@
    "subject": "nothing prevents a business bank account being filed into the personal (1a)/(1b) table, or the reverse",
    "reported": "Both groups declare row_class accepts ['bank_account'], because it IS the same class - the backbone's own discriminator for the split is the is_business_account row flag, and this form prints no per-row flag for row_class to read. Carried item C-05."
   }
- ]
+ ],
+ "rounding": {
+  "_what": "Which printed BLOCK of 433-A(OIC) each money cell sits in, what rounding instruction (if any) is drawn over that block, and where that instruction is drawn. Read by adapters/pdf/rounding.mjs and applied in two places: the value written into a money cell, and the recomputation step 11 compares it against.",
+  "_why_per_block_and_not_per_form": "This form does not print one rounding instruction. It prints SIX across pages 2, 4, 5, 6 and 7, in two wordings, over less than the whole form — and page 3, which is entirely money, prints none at all. A per-form declaration would have to pick one of those six and assert a scope the page does not draw. A per-block declaration says exactly what is printed and where, and makes the absence on page 3 a recorded finding instead of an inherited assumption.",
+  "_why_money_is_declared_and_never_inferred": "2c_number_of_units and 8c_number_of_units hold the QUANTITY of a digital asset — 1.2345 units — and are numeric, adjacent to money, and inside a block that rounds. A numeric-shape rule would round them to 1 and print a false statement about the taxpayer's property on a form signed under penalty of perjury, with every total on the page still reconciling because the units cell feeds no total. They are not in any block's money list, and that is the whole point of the list.",
+  "_order": "ROUND FIRST, THEN FLOOR. Page 2 y 668.1 prints the two sentences in that order — 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' — and the engine applies them in that order.",
+  "_wording_variants_are_recorded_not_tested": "Page 2 prints 'Round to the nearest dollar'. Every later instance prints 'Round to the nearest whole dollar'. A string-exact check for the later wording reads page 2 as UNINSTRUCTED and leaves the entire personal-asset block unrounded. So the mode names the variant — nearest_dollar vs nearest_whole_dollar — and both do the same arithmetic.",
+  "_the_mixed_scope_finding": "Box A adds lines (1) through (7) and is drawn under 'Round to the nearest whole dollar' at y 567.5. THREE of its seven operands are not: (5) and (6) are on page 3, which prints no instruction anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence, which is drawn between (7) and Box A. Whether that is a drafting gap or a deliberate scope cannot be told from the page. It is recorded here rather than resolved, and the blocks below declare what is printed, not what was probably meant.",
+  "_slice": "PRINTED PAGES 1, 2, 3 AND 4 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 5-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
+  "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, and the arithmetic closes. adapters/pdf/money-probe.mjs reports, for every mapped text target, the printed text drawn immediately to its left in the same vertical band, and flags the cell when that text ends in a “$” within 14pt. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3 and 18 on page 4. This declaration holds 72 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4. Pages 2 and 4 agree with the probe exactly. Page 3 declares THREE MORE than the probe flags, and those three are named in that block’s _money_without_a_printed_dollar_sign — the real-property listing price and the two mortgage payment cells, which the form draws no “$” against and which are money on their printed caption. 27 - 24 = 3, and the three are enumerated, so nothing is declared money that cannot be pointed at on the page. Nothing was declared money on its field name.",
+  "blocks": [
+   {
+    "id": "P2_PERSONAL_ASSETS",
+    "page": 2,
+    "mode": "nearest_dollar",
+    "printed": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+    "printed_at": {
+     "page": 2,
+     "y": 668.1,
+     "x": [
+      100.6,
+      511.4
+     ]
+    },
+    "_band": "Opens at y 668.1, below the Section 3 preamble (which ends y 682.1) and ABOVE the 'Cash and Investments (domestic and foreign)' heading at y 656.2. Closes at the foot of page 2. Every money cell on the page is below it.",
+    "_wording": "The ONLY instance on this form that says 'nearest dollar' rather than 'nearest whole dollar'. Recorded as its own mode for that reason.",
+    "keys": [
+     "1c_bank_accounts_from_attachment",
+     "1_total_bank_and_cash",
+     "2c_us_dollar_equivalent_today",
+     "2c_total_digital_assets",
+     "2d_investment_accounts_from_attachment",
+     "2_total_investment_accounts",
+     "3b_retirement_accounts_from_attachment",
+     "3_total_retirement_accounts",
+     "4b_life_insurance_from_attachment",
+     "4b_minus_loan_balances",
+     "4b_total_life_insurance_from_attachment",
+     "4_total_life_insurance"
+    ],
+    "_keys_deliberately_absent": "2c_number_of_units is a QUANTITY of digital-asset units, not a dollar figure — the '$' on that row is drawn at x 228.6 against 2c_us_dollar_equivalent_today, not against the units cell at x 140.4. 2c_description_of_digital_asset, 2c_location_of_digital_asset, 2c_custodian_account_number and 2c_self_hosted_asset_address are text.",
+    "cells": [
+     {
+      "group": "1ab_bank_accounts",
+      "columns": [
+       "account_balance"
+      ]
+     },
+     {
+      "group": "2ab_investment_accounts",
+      "columns": [
+       "current_value",
+       "loan_balance",
+       "equity"
+      ]
+     },
+     {
+      "group": "3a_retirement_accounts",
+      "columns": [
+       "current_value",
+       "quick_sale_value",
+       "loan_balance",
+       "quick_sale_equity"
+      ]
+     },
+     {
+      "group": "4a_life_insurance_policies",
+      "columns": [
+       "current_cash_value",
+       "outstanding_loan_balance",
+       "equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P3_REAL_PROPERTY_AND_VEHICLES",
+    "page": 3,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Every printed text item on all eight pages was matched against /round|nearest|dollar/i. Page 3 returned NOTHING — not the sentence, not a fragment of it, not a shortened form. The page re-prints the 'Section 3 (Continued) Personal Asset Information (Domestic and Foreign)' banner at y 754.1 and goes straight into the real-property table at y 735.9 with no instruction between them. This is the whole page: nineteen money cells, all of them quick-sale arithmetic, feeding totals (5) and (6), which are two of Box A's seven operands.",
+    "_why_not_inherited_from_page_2": "The form's own habit is to print the instruction once under a SECTION banner: page 2 prints it under Section 3, page 4 prints it again under Section 5, page 5 under Section 7. Section 3 continues onto pages 3 and 4 and the instruction is NOT reprinted there. That is consistent with two readings — the page-2 instruction scoping to all of Section 3, or scoping to the page-2 block only — and the page does not choose between them. Declaring none_printed asserts only what is drawn.",
+    "keys": [
+     "5_real_property_listing_price",
+     "5c_property_from_attachment",
+     "5_total_real_estate",
+     "6b_vehicle_1_less_allowance",
+     "6d_vehicle_2_less_allowance",
+     "6e_vehicles_from_attachment",
+     "6_total_vehicles"
+    ],
+    "_money_without_a_printed_dollar_sign": "5_real_property_listing_price (widget y 698.4, x 122.4..187.2) is captioned '(listing price)' and the form draws NO '$' beside it — the only money cell on this page that does not get one. It is declared money on the caption: a listing price is a dollar figure. Same for 5ab_real_property[*].monthly_payment, captioned 'Amount of mortgage payment' at y 654.7 x 36.0..141.4 with no '$' drawn. The vehicle equivalent DOES get one (widget y 316.8, '$' drawn immediately left at 1.4pt), which is what makes the omission on the property rows a drafting inconsistency rather than a signal.",
+    "cells": [
+     {
+      "group": "5ab_real_property",
+      "columns": [
+       "monthly_payment",
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "quick_sale_equity"
+      ]
+     },
+     {
+      "group": "6ac_vehicles",
+      "columns": [
+       "monthly_payment",
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "quick_sale_equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P4_OTHER_VALUABLE_ITEMS",
+    "page": 4,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Page 4 prints exactly two rounding sentences — y 567.5 and y 236.1 — and BOTH are below this block. This block runs from the 'Other valuable items' heading at y 740.1 down to line (7) at y 589.2 (widget y 590.4). The nearest instruction, at y 567.5, is drawn 21.7pt BELOW line (7) and beside the 'Box A' label at y 570.1; it opens the Box A block, not this one. Nothing is drawn above y 740.1 on this page except the Section 3 (Continued) banner at y 755.9.",
+    "keys": [
+     "7b_current_market_value",
+     "7b_quick_sale_value",
+     "7b_minus_loan_balance",
+     "7b_total_remaining_furniture",
+     "7c_valuable_items_from_attachment",
+     "7_total_other_valuable_items"
+    ],
+    "cells": [
+     {
+      "group": "7a_other_valuable_items",
+      "columns": [
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "quick_sale_equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P4_BOX_A",
+    "page": 4,
+    "mode": "nearest_whole_dollar",
+    "printed": "Do not include amount on the lines with a letter beside the number. Round to the nearest whole dollar.",
+    "printed_at": {
+     "page": 4,
+     "y": 567.5,
+     "x": [
+      74.5,
+      435.6
+     ]
+    },
+    "_band": "One cell. The sentence at y 567.5 is drawn between line (7) (caption y 589.2) and the Box A caption 'Add lines (1) through (7) and enter the amount in Box A =' at y 547.3, alongside the 'Box A' label at y 570.1 x 448.6..471.7 and above 'Available Individual Equity in Assets' at y 560.5. Its first clause — 'Do not include amount on the lines with a letter beside the number' — is about the Box A summation and nothing else on the page, which is what fixes its scope.",
+    "_the_operands_are_not_all_in_this_block": "Box A adds (1) through (7). (1)-(4) are in P2_PERSONAL_ASSETS, which rounds. (5) and (6) are in P3_REAL_PROPERTY_AND_VEHICLES and (7) is in P4_OTHER_VALUABLE_ITEMS, both of which are none_printed. See _the_mixed_scope_finding above and 433aoi.totals.json.",
+    "keys": [
+     "box_a_available_individual_equity_in_assets"
+    ],
+    "cells": []
+   },
+   {
+    "id": "P4_SECTION_4_SELF_EMPLOYED",
+    "page": 4,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "The Section 4 banner is at y 518.3 and the next printed rounding sentence on the page is at y 236.1, which is drawn UNDER the Section 5 banner at y 273.5 and under Section 5's own two-line preamble (y 257.1 and y 247.5). Nothing rounding-shaped is drawn between y 518.3 and y 273.5. This block holds exactly one money cell.",
+    "keys": [
+     "s4_average_gross_monthly_payroll"
+    ],
+    "_the_one_cell": "'Average gross monthly payroll $' — the '$' is drawn immediately left of the widget at x 446.4, 5.8pt away. It is money and it is the only money in Section 4. It is also declared not checkable in 433aoi.totals.json: nothing on the page feeds it.",
+    "cells": []
+   },
+   {
+    "id": "P4_SECTION_5_BUSINESS_ASSETS",
+    "page": 4,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+    "printed_at": {
+     "page": 4,
+     "y": 236.1,
+     "x": [
+      140.4,
+      576.1
+     ]
+    },
+    "_band": "Opens at y 236.1, directly below Section 5's two-line preamble (y 257.1, y 247.5) and above the (8a) row (widget y 198.0). Closes at the foot of page 4. Same shape as the page-2 instruction: drawn under the section preamble, above the first table.",
+    "_wording": "Word-for-word the page-2 sentence with 'whole' inserted. That one word is why the mode is declared rather than the sentence matched.",
+    "keys": [
+     "8c_us_dollar_equivalent_today",
+     "8c_total_digital_assets",
+     "8d_bank_accounts_from_attachment",
+     "8_total_business_bank_accounts"
+    ],
+    "_keys_deliberately_absent": "8c_number_of_units is the business-side digital-asset QUANTITY, the same shape as 2c_number_of_units on page 2, and is not money for the same reason.",
+    "cells": [
+     {
+      "group": "8ab_business_bank_accounts",
+      "columns": [
+       "account_balance"
+      ]
+     }
+    ]
+   }
+  ],
+  "_the_mixed_scope_finding_measured": "MEASURED, not estimated. Of the 32 declared totals on pages 1-4, EXACTLY ONE crosses a rounding boundary — Box A, whose total cell is in nearest_whole_dollar while operands (5), (6) and (7) are in none_printed blocks. Every other total shares its operands’ rule. Worst-case divergence was brute-forced over all 1,000,000 cent-combinations of the three fractional operands: |round(sum of operands) - sum of rounded operands| reaches 1 and never 2, first at cents (0.00, 0.01, 0.49). So the two PREPARATION METHODS - round the sum, or round each line and add - can differ by at most one dollar on this form. THE ENGINE AND THE PAGE CANNOT: step 11 recomputes Box A from the seven PRINTED operand cells and rounds by Box A’s own block, so it reconciles exactly and needs neither a tolerance nor a not_checkable declaration.",
+  "_can_the_page_3_omission_be_read": "NOT DECIDABLE FROM THE PAGE, and that is the answer rather than a missing one. FOR a drafting gap: the sentence appears six times on this form and is absent from exactly the one page that is entirely money; page 3’s totals feed Box A, which is drawn under it; and the page-4 Section 5 instance is word-for-word the page-2 one with “whole” inserted, which reads like a copy that was not propagated backwards. FOR a deliberate scope: every printed instance sits directly under a SECTION banner and its preamble, page 3 carries only a “(Continued)” banner and no preamble, and the IRS knows how to print it on a continuation page and did not. Nothing on the page separates the two. Declared none_printed either way, because none_printed asserts only what is drawn."
+ }
 }

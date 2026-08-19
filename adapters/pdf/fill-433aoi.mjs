@@ -59,6 +59,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
+import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
 
 const argv      = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -79,8 +80,19 @@ const capacityErrors = [];   // a value the field itself refuses (/MaxLen)
 
 const absent = (v) => v === undefined || v === null || String(v).trim() === '';
 
+// PER-BLOCK DECLARED ROUNDING, applied at the moment of writing. See adapters/pdf/rounding.mjs.
+// The declaration is audited BEFORE anything is written and a bad one exits without saving:
+// a form filled under a rounding rule that does not hold is worse than no form at all.
+const rounding = loadRounding(mapDoc);
+const rounded = [];           // cells this run rounded, named in the report
+const moneyNotNumeric = [];   // a money cell holding text that is not a number
+
 const setText = (name, val, key) => {
   if (absent(val)) return;
+  const rd = roundForOutput(rounding, key ?? name, val);
+  if (rd.notNumeric) moneyNotNumeric.push({ key: key ?? name, block: rd.block.id, value: String(val) });
+  if (rd.rounded) rounded.push({ key: key ?? name, block: rd.block.id, mode: rd.block.mode, from: String(val).trim(), to: rd.value });
+  val = rd.value;
   let field;
   try { field = form.getTextField(name); } catch { skipped.push(name); return; }
   const s = String(val), max = field.getMaxLength();
@@ -121,6 +133,23 @@ const applyOption = (key, options, raw) => {
   }
   checkBox(target);
 };
+
+// THE ROUNDING DECLARATION IS AUDITED BEFORE THE FIRST WRITE. Every other error class in this
+// file is collected and reported at the end, because a bad VALUE is worth reporting in full.
+// A bad rounding DECLARATION is different: it governs what every money cell below is about to
+// become, so nothing is written under it until it holds.
+{
+  const totalsPath = 'adapters/pdf/maps/433aoi.totals.json';
+  let totalsDoc = null;
+  try { totalsDoc = JSON.parse(readFileSync(totalsPath, 'utf8')); } catch { /* reported below */ }
+  if (rounding.declared && !totalsDoc)
+    console.log(`rounding: NOTE — ${totalsPath} could not be read, so the money-cell cross-check did not run.`);
+  if (reportRounding(auditRounding(mapDoc, totalsDoc), 'adapters/pdf/maps/433aoi.map.json') > 0) {
+    console.error('  No PDF written. A money cell whose block is undeclared or mis-declared would print a figure');
+    console.error('  the page did not ask for, on a statement signed under penalty of perjury.');
+    process.exit(2);
+  }
+}
 
 // scalar 1:1
 for (const [key, name] of Object.entries(mapDoc.map || {})) setText(name, data[key], key);
@@ -274,5 +303,19 @@ if (reportAppearances(await verifyAppearances(outPath)) !== 0) process.exit(2);
 console.log(`filled ${filled} text fields + ${cbFilled} checkboxes -> ${outPath}`);
 console.log(`map slice: ${mapDoc.slice}`);
 if (skipped.length) console.log(`skipped ${skipped.length}: ${skipped.slice(0, 4).join(', ')}${skipped.length > 4 ? ' ...' : ''}`);
+// EVERY ROUNDED CELL IS NAMED. A run that silently changed a figure the record supplied would
+// be indistinguishable from one that did not, and the whole point of declaring rounding per
+// block is that a reader can see which block moved which cell and by how much.
+if (rounding.declared) {
+  if (!rounded.length) console.log('rounding: no money cell needed rounding — every value the record supplied was already a whole dollar.');
+  else {
+    console.log(`rounding: ${rounded.length} money cell(s) rounded to the printed instruction:`);
+    rounded.forEach(r => console.log(`  ${r.block} [${r.mode}]  ${r.key}: ${r.from} -> ${r.to}`));
+  }
+  if (moneyNotNumeric.length) {
+    console.log(`rounding: ${moneyNotNumeric.length} money cell(s) hold text that is not a number — written VERBATIM, not rounded and not guessed at:`);
+    moneyNotNumeric.forEach(m => console.log(`  ${m.block}  ${m.key}: ${JSON.stringify(m.value)}`));
+  }
+}
 if (overflow.length) console.log(`OVERFLOW (dropped, form has no slot): ${overflow.join(', ')}`);
 if (filled === 0) { console.error('0 fields filled — STOP.'); process.exit(2); }

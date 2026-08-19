@@ -14,6 +14,7 @@
 
 import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
+import { auditRounding, reportRounding } from './rounding.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -144,3 +145,20 @@ if (!existsSync(liesPath)) {
   }
   console.log('OK — every declared path exists, no path is declared twice, and every declared binding resolves through the map to exactly the field the registry names.');
 }
+
+// ---------------------------------------------------------------------------------------
+// THE ROUNDING DECLARATION.
+//
+// Asserted here rather than as a twelfth gate step, because it is a statement the map makes
+// about itself and this is the step that checks those. See adapters/pdf/rounding.mjs for what
+// each block must carry and why `none_printed` has to be said out loud.
+//
+// The totals declaration is loaded ONLY for the cross-check — every money cell it references
+// must sit in exactly one rounding block. That is the assertion that makes "a money cell added
+// later with no rounding declaration is a STOP" true rather than aspirational: a new total
+// cannot be authored without either declaring its block or tripping this.
+const totalsPath = `adapters/pdf/maps/${form}.totals.json`;
+const totalsDoc  = existsSync(totalsPath) ? JSON.parse(readFileSync(totalsPath, 'utf8')) : null;
+if (mapDoc.rounding && !totalsDoc)
+  console.log(`rounding: NOTE — ${totalsPath} does not exist, so the money-cell cross-check cannot run. Reported, not passed.`);
+if (reportRounding(auditRounding(mapDoc, totalsDoc), mapPath) > 0) process.exit(2);
