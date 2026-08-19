@@ -1,5 +1,5 @@
 {
-  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433aoi.map.json map_version 1 - printed Sections 1 and 2, which are the whole of page 1 - and nothing else. Sections 3-10 are not mapped yet and this fixture carries no keys for them.",
+  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433aoi.map.json map_version 2 - printed page 1 (Sections 1 and 2) and printed page 2 (Section 3 lines (1a) through (4)) - and nothing else. Pages 3-8 are not mapped yet and this fixture carries no keys for them.",
 
   "_coverage_notes": [
     "SCOPE. 74 of this form's 425 fields are on page 1; 72 of those are bound and 2 are the never-autofill push buttons. This fixture reaches all 72. The other 351 fields are on pages 2-8 and are deliberately untouched - the read-back is a statement about the slice, not about the form.",
@@ -29,7 +29,29 @@
     "NO SPLIT VALUES. 433-A splits every phone across two abutting /MaxLen-limited cells; this form prints primary phone, secondary phone and FAX as single cells (x 198.0..316.8, no /MaxLen), so the phone numbers here are written whole. If a future revision splits them, this fixture will fail loudly rather than truncate."
   ],
 
-  "intake_id": "433aoi-slice1",
+  "_coverage_notes_page_2": [
+    "SCOPE. 68 of this form's 425 fields are on page 2 and all 68 are bound - page 2 has no IRS-use column, no link button and no cell this slice could not resolve, so it carries no never-autofill and no deferred entries. This fixture reaches all 68. Together with page 1 that is 142 of 425; the other 283 are on pages 3-8 and are deliberately untouched.",
+
+    "EVERY MONEY VALUE ON PAGE 2 IS DISTINCT, AND THAT IS THE POINT. Twenty-six money cells, twenty-six different figures, none of them a round multiple of another except the one pair that is SUPPOSED to be. Page 2 prints six blocks of the shape 'value cell, operator, value cell, = , total cell', all at the same x columns, and none of them declares a /MaxLen. A row swapped with the row below it, or a figure copied from the block above, would print inside the rules and every total would still add up. Only distinct figures make it visible.",
+
+    "THE QUICK SALE TRIPWIRE IS THE REASON 88000 WAS CHOSEN. 3a_retirement_accounts[0].current_value is 88000; the printed 'X .8 = $' cell must therefore read 70400, and 3a is 70400 - 5400 = 65000. If the map had bound that cell by its leaf name Times_7 and multiplied by 0.7, it would read 61600 and 3a would be 56200. Those are 8800 and 8800 apart from the right answers - large, obvious, and NOT reachable by any rounding. A rounder figure like 100000 would give 80000 and 70000, which look equally plausible side by side.",
+
+    "EVERY PRINTED FORMULA ON PAGE 2 IS SATISFIED BY THESE FIGURES, so the read-back is a real check and not a tautology. (1) = 12345 + 23456 + 3111 - 1000 = 37912. (2a) = 50000 - 8000 = 42000. (2b) = 31500 - 6250 = 25250. (2c) = 9875. (2) = 42000 + 25250 + 9875 + 4400 = 81525. (3a) = (88000 x .8) - 5400 = 65000. (3) = 65000 + 12750 = 77750. (4a) = 27300 - 4150 = 23150. (4b) = 15600 - 2900 = 12700. (4) = 23150 + 12700 = 35850.",
+
+    "THE FIRST BANK ROW IS 'Cash', WHICH ONLY SLOT 0 CAN BE. Printed line (1a) offers six account types and printed line (1b) offers five - the same list without Cash. Putting Cash on the first row exercises the option that exists on one slot only, which is the whole of the asymmetry the map declares. Its institution and account-number cells say what they are rather than naming a bank, because a Cash row has neither and a saturated fixture still has to reach both cells.",
+
+    "THE THIRD BANK ROW AND THE SECOND RETIREMENT ROW ARE OVERFLOW. The form prints two bank rows and one retirement row; the extra records exist to prove overflow is LOGGED AND DROPPED rather than thrown or written over an earlier row, and to make the point the printed page makes - a dropped row is exactly what (1c) 'Total of bank accounts from attachment' and (3b) 'Total of retirement accounts from attachment' are for. Their figures are NOT in 1c or 3b: those cells are declared not checkable precisely because what they sum is on an attachment this engine never sees.",
+
+    "BOTH INVESTMENT ROWS FILL THE UNLABELLED WRITE-IN, AND THEY DO IT DIFFERENTLY ON PURPOSE. That cell carries no printed caption of its own and the map binds it on x as the 'Other' specify blank, flagged arguable. Slot 0 is typed 'other' so the write-in is coherent under that reading. Slot 1 is typed 'bonds' and its write-in reads as a detail line, which is coherent under the OTHER reading. Filling both ways means this fixture does not assert which reading is right - which is what an arguable binding is entitled to.",
+
+    "TYPE OPTIONS ARE NOT ALL EXERCISED AND THAT IS ACCOUNTED FOR. Page 2 declares 21 checkboxes across three option lists and this record checks six of them - one type per row plus the lone digital asset box. The other fifteen are reported by verify-form-coverage.mjs as 'checkboxes unchecked (independent)', a declared state and not a gap, because no page-2 set is declared exclusive. See the map's exclusive._note_page_2.",
+
+    "OPTION VALUES AGAIN VARY IN CASE AND PADDING ('Money Market Account/CD', ' 401K ', 'Other') to exercise the trim + case-insensitive match, and the multi-word slash-bearing option is chosen deliberately: it is the only option on this page that could be mangled by a naive key comparison.",
+
+    "EVERY ROW STATES ITS asset_class. All four page-2 groups declare row_class, and a row claiming a class its group does not print stops the run. On this form investments (2) carry no multiplier and retirement accounts (3) carry X .8, so a 401(k) filed into the investment table would understate nothing visibly and overstate the offer by 20% of market value. The class is what refuses it."
+  ],
+
+  "intake_id": "433aoi-slice2",
 
   "s1_tp_last_name": "Sample-Taxpayer-LastName",
   "s1_tp_first_name": "SampleFirstName",
@@ -73,5 +95,78 @@
   "s2_sp_business_ownership_interest": "No",
   "s2_sp_occupation": "Spouse Occupation Title",
   "s2_sp_tenure_years": "3",
-  "s2_sp_tenure_months": "11"
+  "s2_sp_tenure_months": "11",
+
+  "bank_accounts": [
+    { "asset_class": "bank_account", "type_of_account": "Cash",
+      "institution_name_and_address": "(1a) Cash on hand - no institution, United States",
+      "account_number": "(1a) none - cash on hand",
+      "account_balance": "12345" },
+    { "asset_class": "bank_account", "type_of_account": "Money Market Account/CD",
+      "institution_name_and_address": "(1b) Second Testbank of Sampleton, Canada",
+      "account_number": "1B-0000-2222",
+      "account_balance": "23456" },
+    { "asset_class": "bank_account", "type_of_account": "Savings",
+      "institution_name_and_address": "OVERFLOW - third bank row, form prints two, must be dropped and logged",
+      "account_number": "1X-0000-9999",
+      "account_balance": "999999" }
+  ],
+
+  "1c_bank_accounts_from_attachment": "3111",
+  "1_total_bank_and_cash": "37912",
+
+  "investment_accounts": [
+    { "asset_class": "investment", "type_of_investment": "Other",
+      "type_of_investment_other": "(2a) closely held LLC membership interest",
+      "institution_name_and_address": "(2a) Testbroker Securities LLC, United States",
+      "account_number": "2A-0000-3333",
+      "current_value": "50000", "loan_balance": "8000", "equity": "42000" },
+    { "asset_class": "investment", "type_of_investment": "bonds",
+      "type_of_investment_other": "(2b) municipal bonds, Testville water authority series",
+      "institution_name_and_address": "(2b) Sampleton Investment Trust, Ireland",
+      "account_number": "2B-0000-4444",
+      "current_value": "31500", "loan_balance": "6250", "equity": "25250" }
+  ],
+
+  "2c_digital_asset_held": true,
+  "2c_description_of_digital_asset": "(2c) Testcoin held for investment",
+  "2c_number_of_units": "1.2345",
+  "2c_location_of_digital_asset": "(2c) Testchain Exchange plus self-hosted hardware wallet",
+  "2c_custodian_account_number": "2C-CUSTODIAN-5555",
+  "2c_self_hosted_asset_address": "2c000000000000000000notarealaddress0000000",
+  "2c_us_dollar_equivalent_today": "9875",
+  "2c_total_digital_assets": "9875",
+
+  "2d_investment_accounts_from_attachment": "4400",
+  "2_total_investment_accounts": "81525",
+
+  "retirement_accounts": [
+    { "asset_class": "retirement_account", "type_of_retirement_account": " 401K ",
+      "type_of_retirement_account_other": "(3a) not an Other type - this is the Other specify cell, reached for coverage",
+      "institution_name_and_address": "(3a) Testcorp Retirement Services, United States",
+      "account_number": "3A-0000-6666",
+      "current_value": "88000", "quick_sale_value": "70400",
+      "loan_balance": "5400", "quick_sale_equity": "65000" },
+    { "asset_class": "retirement_account", "type_of_retirement_account": "IRA",
+      "type_of_retirement_account_other": "OVERFLOW",
+      "institution_name_and_address": "OVERFLOW - second retirement row, form prints one, must be dropped and logged",
+      "account_number": "3X-0000-9999",
+      "current_value": "888888", "quick_sale_value": "711110",
+      "loan_balance": "0", "quick_sale_equity": "711110" }
+  ],
+
+  "3b_retirement_accounts_from_attachment": "12750",
+  "3_total_retirement_accounts": "77750",
+
+  "life_insurance_policies": [
+    { "asset_class": "life_insurance_policy",
+      "company_name_and_address": "(4a) Testmutual Life Assurance",
+      "policy_number": "4A-POLICY-7777",
+      "current_cash_value": "27300", "outstanding_loan_balance": "4150", "equity": "23150" }
+  ],
+
+  "4b_life_insurance_from_attachment": "15600",
+  "4b_minus_loan_balances": "2900",
+  "4b_total_life_insurance_from_attachment": "12700",
+  "4_total_life_insurance": "35850"
 }

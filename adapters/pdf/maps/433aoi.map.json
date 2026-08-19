@@ -158,34 +158,35 @@
   },
 
   "_label_file_disagreements": {
+    "_why_each_path_is_preceded_by_the_words_the_cell": "Every path below is quoted WHOLE from topmostSubform[0], per the standing rule that a reader must never reconstruct a prefix from a fragment. Each is preceded by the words THE CELL for one mechanical reason: validate-map.mjs and verify-form-coverage.mjs walk this file schema-agnostically and treat ANY string that STARTS with topmostSubform[0]. as a binding, so a bare evidence path is counted as a second key writing that target and fails the duplicate-write step - which is exactly what it did on the first run of this slice. Prefixing is the convention _notes already uses. It is preferred over adding an evidence exemption to the walk: an exemption would be the hiding place the schema-agnostic walk exists to prevent.",
     "_why": "433aoi.labels.txt is a nearest-drawn-text correlation. On page 1 it was already measured wrong in two regions. On page 2 it is wrong or truncated on eight widgets and CONTRADICTS the rectangle on five. Recorded here so a later reader who opens the label file and finds it disagreeing with this map knows the disagreement was seen and which way it was decided. WHERE THE LABEL FILE AND THE RECTANGLE DISAGREE, THE RECTANGLE WINS.",
     "contradicted": [
       {
-        "target": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]",
+        "widget": "the cell topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]",
         "label_file_says": "Minus loan balance",
         "the_rectangle_says": "The quick-sale cell. It occupies x 187.2..295.2; the printed 'Minus loan balance' header occupies x 295.2..364.1 and STARTS exactly where this cell ENDS, over the NEXT cell (Less_Loan_Balance[0], x 316.8..424.8) - which the label file gives the same caption to. The label file assigns one printed header to two different cells and is wrong on the first. The evidence for this cell is the 'X .8 = $' drawn at x 154.7..184.7, immediately to its left.",
         "why_it_matters": "This is the tripwire. Following the label file here binds the multiplier cell as a second loan balance - a different error from following the leaf name, and just as destructive."
       },
       {
-        "target": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Other[0]",
+        "widget": "the cell topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Other[0]",
         "label_file_says": "Add lines (1a) through (1c) minus ($1,000) =",
         "the_rectangle_says": "The write-in beside the 'Other' investment-type box. The caption the label file picked is at y 539.2 and belongs to printed line (1), thirteen points above this widget at y 525.6. On this widget's own printed row (y 524.1) the drawn text runs 'Investment account / Stocks / Bonds / Other', with 'Other' ending at x 254.0 and this cell starting at x 259.2.",
         "why_it_matters": "The identically-shaped widget one row down, Institution2[0].Other[0], the label file correlates CORRECTLY to 'Other'. The same cell, two different answers, which by itself shows the correlation cannot be relied on in this block."
       },
       {
-        "target": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Other_Retirement_Acct[0]",
+        "widget": "the cell topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Other_Retirement_Acct[0]",
         "label_file_says": "Add lines (2a) through (2d) =",
         "the_rectangle_says": "The write-in beside the 'Other' retirement-type box. The caption picked is at y 285.4 and belongs to printed line (2), twelve points above this widget at y 273.6. Its own printed row (y 272.1) runs 'Retirement account / 401K / IRA / Other', with 'Other' ending at x 243.2 and this cell starting at x 252.0.",
         "why_it_matters": "Same failure as the investment write-in above: a total caption from the line above captured by a write-in that has no caption of its own."
       },
       {
-        "target": "topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Amount_3[0]",
+        "widget": "the cell topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Amount_3[0]",
         "label_file_says": "(1c) $",
         "the_rectangle_says": "This is printed line (1), not (1c). line-markers.mjs attaches marker '1' to it from the '(1) $' drawn at y 539.2, x 449.2..470.2; the label file reached one printed row further up and took (1c)'s marker at y 552.9. Its own caption is 'Add lines (1a) through (1c) minus ($1,000) ='.",
         "why_it_matters": "The label file gives (1c) and (1) the SAME label, so a map author reading it alone has no way to tell the attachment sub-total from the section total that subtracts $1,000 from it."
       },
       {
-        "target": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Account_Number_1[0]",
+        "widget": "the cell topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Account_Number_1[0]",
         "label_file_says": "Money Market Account/CD",
         "the_rectangle_says": "The account-number cell of bank row (1a). The printed 'Account number' header sits at y 625.9, x 262.8..321.0, directly above this widget at y 613.4, x 262.8..435.6 - identical left edge. The label file reached up to an option word on the type row instead.",
         "why_it_matters": "The identical cell on row (1b) correlates CORRECTLY to 'Account number'. Again the same cell, two answers."
