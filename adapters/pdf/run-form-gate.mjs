@@ -73,6 +73,14 @@ import { parseMoney, loadRounding, blockFor, applyRounding, modeRounds } from '.
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
+// THE IN-CLASS DECLARATION LIST IS 4KB ON ONE LINE AND ONLY ONE READER NEEDS IT.
+// declaration-coverage.mjs unions coverage across a form's fixtures and cannot do that from
+// tallies, so it needs every declaration NAMED. A person reading a gate transcript does not,
+// and printing a hundred identities into the middle of the block that exists to be quoted
+// makes the block harder to quote - which is the one thing it is for. So the key is emitted
+// only when asked for, and declaration-coverage.mjs asks. Its absence is a STOP there, naming
+// this flag, rather than a silently empty union.
+const emitDeclarationIds = argv.includes('--declaration-ids');
 const [form, samplePath] = argv.filter(a => !a.startsWith('--'));
 if (!form || !samplePath) {
   console.error('usage: node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]');
@@ -715,6 +723,23 @@ const steps = [
            : 'every cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
     }
 
+    // CONSTRAINT ADVISORIES: declared on a CHECKED total rather than on a not_checkable
+    // entry, because the cell they advise about is one the gate verifies. Counted here for the
+    // same reason the not-checkable ones are - an advisory nobody is ever shown is a declared
+    // rule no fixture has proved - and exercised on the same test: the cell it advises about
+    // was actually written on this fixture, since an advisory beside an empty cell reaches no
+    // preparer.
+    for (const e of (decl.totals || [])) {
+      if (!e.review_page_advisory || !e.total_key) continue;
+      const t = resolveKey(e.total_key);
+      const v = t ? printed(t) : null;
+      covers.push({ line: e.total_key, kind: 'advisory', what: 'review-page advisory (on a checked total)', id: 'review-page advisory (constraint)',
+        fired: !!v && !v.missing && v.text !== undefined && v.text !== null && String(v.text).trim() !== '',
+        why: !t ? 'the total_key does not resolve to a target through the map'
+           : (!v || v.missing) ? 'the cell it advises about is not a text field on the filled PDF'
+           : 'the cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
+    }
+
     const unex = covers.filter(d => !d.fired);
     const byKind = covers.reduce((a, d) => { (a[d.kind] ||= { n: 0, un: 0 }); a[d.kind].n++; if (!d.fired) a[d.kind].un++; return a; }, {});
     console.log('');
@@ -881,7 +906,7 @@ if (skipped.length) {
   L.push(`declarations_exercised: ${dc ? dc.exercised : 'n/a'}`);
   L.push(`declarations_unexercised: ${dc ? dc.unexercised : 'n/a'}`);
   L.push(`declarations_unexercised_kinds: ${dc ? dc.unexercised_kinds : 'n/a'}`);
-  L.push(`declarations_in_class_ids: ${dc ? dc.in_class_ids : 'n/a'}`);
+  if (emitDeclarationIds) L.push(`declarations_in_class_ids: ${dc ? dc.in_class_ids : 'n/a'}`);
   L.push(`declarations_unexercised_ids: ${dc ? dc.unexercised_ids : 'n/a'}`);
   L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : 'none declared'}`);
   L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : 'none declared'}`);

@@ -121,11 +121,25 @@ const lineOf = (key, target) => {
 const totalsPath = `adapters/pdf/maps/${form}.totals.json`;
 const advisoryFor = { byKey: new Map(), byCell: new Map() };
 if (existsSync(totalsPath)) {
-  for (const e of (JSON.parse(readFileSync(totalsPath, 'utf8')).not_checkable?.entries || [])) {
+  const totalsDoc = JSON.parse(readFileSync(totalsPath, 'utf8'));
+  for (const e of (totalsDoc.not_checkable?.entries || [])) {
     if (!e.review_page_advisory) continue;
-    const adv = { caption: e.printed_caption, text: e.review_page_advisory };
+    const adv = { caption: e.printed_caption, text: e.review_page_advisory, kind: 'not_checkable' };
     if (e.map_key) advisoryFor.byKey.set(e.map_key, adv);
     if (e.cell?.group && e.cell?.column) advisoryFor.byCell.set(`${e.cell.group}.${e.cell.column}`, adv);
+  }
+  // AND A SECOND KIND, ADDED IN SLICE 7: an advisory on a cell the gate DOES check.
+  // Every advisory before this one hung off a not_checkable entry, because every one of them
+  // was about a cell nothing could verify. 433-A(OIC)'s Offer Amount is not that: its
+  // arithmetic is recomputed by step 11 and holds, and the instruction printed beside it -
+  // "Your offer must be more than zero ($0)" - is a constraint arithmetic cannot express. A
+  // checked cell cannot carry a not_checkable entry (step 11 hard-stops on the contradiction),
+  // so the advisory is declared on the TOTAL and read here. The two kinds are labelled
+  // differently on the page, because "we did not check this" and "we checked the sum and the
+  // page asks something else as well" are different things to tell a preparer.
+  for (const e of (totalsDoc.totals || [])) {
+    if (!e.review_page_advisory || !e.total_key) continue;
+    advisoryFor.byKey.set(e.total_key, { caption: e.caption, text: e.review_page_advisory, kind: 'constraint' });
   }
 }
 
@@ -335,7 +349,7 @@ const rowHtml = (r) => `
         <td>${esc(r.label ?? r.keys[0] ?? '')}<div class="target" title="${esc(r.target)}">${esc(seg(r.target).slice(-2).join(' › '))}</div></td>
         <td class="prop">${r.keys.length ? r.keys.map(k => esc(hsNameFor(k) ?? `(no property) ${k}`)).join('<br>') : '<span class="muted">— derived, no property</span>'}</td>
         <td class="val">${blank(r.hsValue) ? '<span class="muted">—</span>' : esc(r.hsValue)}</td>
-        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}${r.advisory ? `<div class="advisory"><strong>Not checkable — the printed caption states a formula:</strong> &ldquo;${esc(r.advisory.caption)}&rdquo;<br>${esc(r.advisory.text)}</div>` : ''}</td>
+        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}${r.advisory ? `<div class="advisory"><strong>${r.advisory.kind === 'constraint' ? 'Checked, and the printed caption asks something arithmetic cannot:' : 'Not checkable — the printed caption states a formula:'}</strong> &ldquo;${esc(r.advisory.caption)}&rdquo;<br>${esc(r.advisory.text)}</div>` : ''}</td>
         <td>${badge(r.verdict)}</td>
       </tr>`;
 

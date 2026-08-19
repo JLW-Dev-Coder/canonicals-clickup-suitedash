@@ -1139,7 +1139,9 @@
       "s8_box_g_or_box_h"
      ]
     }
-   ]
+   ],
+   "review_page_advisory": "THE ARITHMETIC IS CHECKED AND THE CONSTRAINT IS NOT. Gate step 11 recomputes this cell from the two printed cells to its left and fails on any disagreement. What no tripwire can check is the instruction printed beside it: \"Your offer must be more than zero ($0). Do not leave blank. Use whole dollars only.\" A value of exactly 0 satisfies the arithmetic whenever Box A, Box B and the Box G or Box H figure are all 0, and violates the page. It is not a floor and cannot be made one - a floor clamps a negative sum UP to a value, and this sentence forbids the value outright, so declaring one would make the engine write the figure the page forbids. If this figure came out as 0, the form is arithmetically right and not fileable as it stands: the note printed below it directs a taxpayer who cannot pay the calculated amount to place what they CAN pay on Form 656, Section 4, and to explain the special circumstances on Form 656, Section 3.",
+   "_why_the_advisory_is_declared_here_and_not_in_not_checkable": "A CELL CANNOT BE BOTH CHECKED AND DECLARED NOT CHECKABLE, and gate step 11 hard-stops on any cell that is - two declared states for one figure is the no-declared-state defect wearing the opposite coat. This cell IS checked, so its entry belongs on the total and not in not_checkable, and the advisory channel had to be widened to reach it. Before this slice every review-page advisory hung off a not_checkable entry, because every advisory raised so far was about a cell nothing could verify. This one is different in kind: the cell is verified and the printed instruction beside it says something arithmetic cannot express."
   }
  ],
  "not_checkable": {
@@ -1254,12 +1256,6 @@
     "printed_caption": "Enter the amount from either Box G or Box H",
     "why_not_checkable": "THE PAGE DOES NOT SAY WHICH. Box G is Box F x 12 and applies when the offer is paid in 5 or fewer payments within 5 months or less; Box H is Box F x 24 and applies when it is paid in 6 to 24 months. Which of the two governs is the PAYMENT TERM, and 433-A(OIC) prints no cell anywhere that records it - the term is chosen on Form 656, Section 4, which this form names three times and which this repo does not hold. So the cell equals one of two printed figures and nothing printed on this page decides which, and a tripwire that accepted either would pass on a form where the wrong one was copied. Declared not checkable rather than checked against a disjunction.",
     "review_page_advisory": "This cell must equal Box G (y 633.6, the x 12 row) if the offer will be paid in 5 or fewer payments within 5 months or less, or Box H (y 579.6, the x 24 row) if it will be paid in 6 to 24 months. The form gives no cell for the payment term, so nothing here can check which one you copied - it is set on Form 656, Section 4, Payment Terms. Check it against the term you are actually offering before filing."
-   },
-   {
-    "map_key": "s8_offer_amount",
-    "printed_caption": "Offer Amount",
-    "why_not_checkable": "CHECKABLE AS ARITHMETIC AND NOT CHECKABLE AS A CONSTRAINT, and this entry is about the second. The sum is checked by the \"Offer Amount\" tripwire above. What no tripwire can check is the printed instruction \"Your offer must be more than zero ($0). Do not leave blank.\" - a value of exactly 0 satisfies the arithmetic whenever Box A, Box B and the Box G/H figure are all 0, and violates the page. It is not a floor and cannot be made one without writing the figure the page forbids.",
-    "review_page_advisory": "The printed instruction beside this cell reads \"Your offer must be more than zero ($0). Do not leave blank. Use whole dollars only.\" If this figure came out as 0, the arithmetic is right and the offer is not fileable as it stands: see the note printed below, which directs a taxpayer who cannot pay the calculated amount to place what they can pay on Form 656, Section 4, and explain the special circumstances on Form 656, Section 3."
    }
   ],
   "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. It is now checked on both printed branches by the four predicated lines '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared BOTH checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none, and run-form-gate.mjs now fails on exactly that (DOUBLE-DECLARED). The review-page advisory that told a preparer to check the lease box against this figure by hand went with it, because it said 'nothing in the automated checks looks at this cell' and that is no longer true."

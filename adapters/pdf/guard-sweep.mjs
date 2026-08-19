@@ -520,8 +520,8 @@ export const FIGURES = [
   { id: 'F-09c', register: 'N-05', what: '433-A(OIC) page-6 box markers, none of which pairs to a widget', stated: 3,
     derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6 && m.kind === 'box' && !attach(m).winner).length; } },
 
-  { id: 'F-10', register: 'P-03', what: 'entries the totals copy of _not_checkable had grown to', stated: 20,
-    _was: 'Stated 18 through slice 6. Slice 7 added two entries — s8_box_g_or_box_h, whose value the page cannot decide between Box G and Box H, and s8_offer_amount, whose ARITHMETIC is checked by a tripwire and whose printed constraint "must be more than zero" is not a floor and cannot be one. The figure moves with the list because it derives from the list.',
+  { id: 'F-10', register: 'P-03', what: 'entries the totals copy of _not_checkable had grown to', stated: 19,
+    _was: 'Stated 18 through slice 6. Slice 7 added ONE: s8_box_g_or_box_h, whose value the page cannot decide between Box G and Box H. It briefly added a second, s8_offer_amount, and gate step 11 refused it — a cell cannot be both checked by a tripwire and declared not checkable, and that cell IS checked. Its printed constraint "your offer must be more than zero" moved to a review_page_advisory on the TOTAL, which is a channel this slice had to open. The figure moves with the list because it derives from the list.',
     derive: async () => { const t = JSON.parse(readFileSync(`${DIR}/maps/433aoi.totals.json`, 'utf8')); return (t.not_checkable?.entries || []).length; } },
 
   { id: 'F-11', register: 'P-03', what: 'entries the map copy sat at before the merge', stated: 15,

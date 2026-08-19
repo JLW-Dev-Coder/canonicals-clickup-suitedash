@@ -52,7 +52,7 @@ for (const f of fixtures) if (!existsSync(f)) { console.error(`STOP — ${f} doe
 
 const runs = [];
 for (const fx of fixtures) {
-  const r = spawnSync(process.execPath, ['adapters/pdf/run-form-gate.mjs', form, fx, '--saturated'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync(process.execPath, ['adapters/pdf/run-form-gate.mjs', form, fx, '--saturated', '--declaration-ids'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   const out = `${r.stdout || ''}${r.stderr || ''}`;
   if (r.status !== 0) {
     console.error(`STOP — the gate FAILED for ${form} on ${fx} (exit ${r.status}). Coverage across a form whose gate does not pass would be a number about a form that cannot be filed.`);
@@ -69,6 +69,7 @@ for (const fx of fixtures) {
   for (const need of ['declarations_total', 'declarations_exercised', 'declarations_unexercised', 'declarations_in_class_ids', 'declarations_unexercised_ids']) {
     if (kv[need] === undefined || kv[need] === 'n/a') {
       console.error(`STOP — the summary block for ${fx} carries no usable ${need}. Step 11 either did not run or reported nothing, so this fixture's contribution to the union is unknown, which is not the same as nothing.`);
+      if (need === 'declarations_in_class_ids') console.error('      (this key is emitted only when the gate is run with --declaration-ids, which this tool passes. If it is absent, the gate did not receive the flag.)');
       process.exit(2);
     }
   }

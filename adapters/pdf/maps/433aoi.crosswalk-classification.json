@@ -1,7 +1,7 @@
 {
  "form": "433aoi",
  "against": "433a",
- "covers_slices": "1-6, pages 1-6. Pages 7-8 are slice 7 and are absent from this file by construction, not by omission.",
+ "covers_slices": "1-7, pages 1-8. THE CLASSIFICATION IS COMPLETE for 433-A(OIC): every bound key on the form is covered by an entry.",
  "_what_this_is": "THE CROSSWALK CLASSIFICATION, AS DATA. For each correspondence between a 433-A(OIC) binding and its nearest 433-A counterpart, WHICH KIND of correspondence it is. Six slices of this classification existed only inside chat reports, which are the one artefact no sweep can reach - and a classification that lives in a report is re-derived from six reports by whoever does the provisioning pass, which is the retyped-count defect with more steps and worse inputs.",
  "_this_binds_NOTHING": "NO CROSSWALK BINDINGS. No HubSpot property is named, no canonical column is claimed, no map key is repointed. Every entry is a statement about how two PRINTED FORMS relate, and the provisioning pass reads it as INPUT to a decision rather than as the decision. That separation is the standing plan and this file does not move it. `oic` names a key in 433aoi.map.json and `a433` a key in 433a.map.json, both so a reader can go and look; naming a key is not binding it to anything.",
  "_the_categories": {
@@ -410,19 +410,155 @@
    "oic": null,
    "a433": "groups.available_credit (4 slots), groups.payment_processors (2 slots), groups.credit_cards_accepted (3 slots), groups.property_line_20 (2 slots)",
    "why": "FOUR 433-A TABLES WITH NO OIC COUNTERPART ANYWHERE ON PAGES 1-6. Available credit lines, payment processors, credit cards accepted, and the line-20 property table. A 433-A record carrying these has facts the OIC filing simply does not ask for. Recorded so the provisioning pass does not read their absence from this file as an oversight; pages 7-8 are slice 7 and could in principle hold a counterpart, which is why this entry is scoped to pages 1-6 and must be re-read when the map closes."
+  },
+  {
+   "id": "X-45",
+   "slice": 7,
+   "page": 7,
+   "category": "new",
+   "oic": "s8_box_f_for_12_month_multiplier, box_g_future_remaining_income, s8_box_f_for_24_month_multiplier, box_h_future_remaining_income, s8_box_a_plus_box_b, s8_box_g_or_box_h, s8_offer_amount",
+   "a433": "(nothing)",
+   "why": "THE WHOLE OF SECTION 8. 433-A collects a financial statement and computes no offer; the minimum-offer calculation - Box F times 12 or 24, plus Box A and Box B - exists only on the OIC form. There is nothing to crosswalk and nothing a 433-A record could supply. Every one of the seven is either computed from cells already on this form or, for the Box-G-or-Box-H cell, chosen from the payment term on Form 656 Section 4. Whether the provisioning pass computes them or stores them is a decision."
+  },
+  {
+   "id": "X-46",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_bankruptcy_date_filed, s9_bankruptcy_date_dismissed, s9_bankruptcy_date_discharged, s9_bankruptcy_petition_number, s9_bankruptcy_location_filed, s9_filed_bankruptcy_past_7_years",
+   "a433": "433-A page 1: p1_t37_7[0] Date Filed, p1_t38_7[0] Date Dismissed, p1_t38_7[1] Date Discharged, p1_t39_7[0] Petition No., p1_t40_7[0] Location Filed, c1_7_[0]/[1] the Yes/No pair",
+   "why": "THE SAME FIVE FACTS UNDER THE SAME FIVE LEAF NAMES, INDEX FOR INDEX. Both forms ask \"have you filed bankruptcy in the past 7 years\" and both draw the same five cells in the same printed order, and the AcroForm leaves are identical down to p1_t38_7[0] being the dismissal date and [1] the discharge date on both. The one difference is a length limit: 433-A declares /MaxLen 8 on the three dates and 433-A(OIC) declares none. A value that fits the OIC cell can be refused by the 433-A one, never the reverse."
+  },
+  {
+   "id": "X-47",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_party_to_litigation, s9_litigation_role, s9_litigation_location_of_filing, s9_litigation_represented_by, s9_litigation_docket_case_number, s9_litigation_possible_completion_date, s9_litigation_subject, s9_litigation_amount_of_dispute",
+   "a433": "433-A page 1: c1_6a_[2] Plaintiff, c1_6a_[3] Defendant, p1_t30_6[0] Location of Filing, p1_t31_6[0] Represented by, p1_t32_6[0] Docket/Case No., p1_t35_6[0] Possible Completion Date, p1_t36_6[0] Subject of Suit, amountSuit[0].p1_t34_6[0] Amount of Suit",
+   "why": "THE SAME EIGHT FACTS, AND THE ONLY FORM WHOSE LEAF NAMES DO NOT MATCH IS THE OIC ONE. 433-A names each cell after what it holds - Location of Filing is p1_t30_6, Amount of Suit is p1_t34_6. 433-A(OIC) names four of them Name_Creditor[0..3], one Date_Final_Payment and one Gross_Receipts, all six of which are wrong (registry L15-L19 and L14). So a crosswalk written from LEAF NAMES on the two forms would pair 433-A’s Location of Filing with nothing and 433-A(OIC)’s Name_Creditor[0] with a lender cell on page 3. The facts are exact; the names are the trap."
+  },
+  {
+   "id": "X-48",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_currently_incarcerated, s9_inmate_number",
+   "a433": "433-A page 2: c1_9a_[0]/[1] the Yes/No pair, and the inmate-number cell in the same block",
+   "why": "Both forms ask \"Are you currently incarcerated\" and both provide one cell for the inmate number. The OIC form additionally names its subform currentlyIncarcerated[0], which 433-A does not - the only place on either form where the container name states the question. CAUTION ON THE LEAF p2_t50_8: on 433-A that leaf is \"Do you have dual citizenship\" at [0] and \"Are you currently incarcerated\" at [1]; on 433-A(OIC) the same leaf holds \"Dates lived abroad: From\". One leaf name, three different questions across two forms."
+  },
+  {
+   "id": "X-49",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_beneficiary_of_trust_estate_or_policy, s9_beneficiary_place_where_recorded, s9_beneficiary_ein, s9_beneficiary_name_of_trust_estate_or_policy, s9_beneficiary_anticipated_amount, s9_beneficiary_when_received",
+   "a433": "433-A page 2: c1_9b_[0]/[1], p1_t44_9[0], p1-t45_9[0], p1-t47_9[0], #subform[3].p1-t48_9[0], p1-t49_9[0]",
+   "why": "IDENTICAL LEAF NAMES AND IDENTICAL FACTS. Even the anonymous-subform nesting is the same shape: the anticipated-amount cell is one level deeper than its row-mates on BOTH forms - #subform[3] on 433-A, #subform[8] on 433-A(OIC). 433-A declares /MaxLen 2 on the EIN cell and /MaxLen 12 on the amount; 433-A(OIC) declares neither."
+  },
+  {
+   "id": "X-50",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_trustee_fiduciary_or_contributor, s9_trustee_name_of_trust, s9_trustee_ein",
+   "a433": "433-A page 2: the trustee Yes/No pair, p2_t00_9b[0] and p1-t02_9b[0]",
+   "why": "Identical leaf names and identical facts. NOTE that on both forms the leaf p2_t00_9b holds the NAME OF THE TRUST and not the question, which the 433-A label file misreports as the question text - a correlation artefact on both forms rather than a difference between them."
+  },
+  {
+   "id": "X-51",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_safe_deposit_box, s9_safe_deposit_location, s9_safe_deposit_contents, s9_safe_deposit_value",
+   "a433": "433-A page 2: c1_10_[0]/[1], p1_t41_10[0] Location, p1-t43_10[0] Contents, value[0].p1-t42_10[0] Value",
+   "why": "IDENTICAL, INCLUDING THE DEFECT. The 41 / 43 / 42 suffix inversion recorded as [L21] on 433-A(OIC) is present on 433-A TOO, in the same three columns and the same order - Location is 41, Contents is 43, Value is 42 on both. So the inversion is not an OIC quirk: it is inherited from the shared source, and 433-B and 433-B(OIC) should be read for it before their safe-deposit rows are bound. 433-A wraps its Value cell in a subform named value[0] and 433-A(OIC) does not, which means an author reading 433-A would be warned by that subform name and an author reading the OIC form would not."
+  },
+  {
+   "id": "X-52",
+   "slice": 7,
+   "page": 8,
+   "category": "exact",
+   "oic": "s9_transferred_asset_below_value_past_10_years, s9_transfer_list_assets, s9_transfer_value_at_time, s9_transfer_date, s9_transfer_to_whom_or_where",
+   "a433": "433-A page 2: #subform[0].c1_11_[0]/[1], p3_t1_11[0], #subform[0].#subform[1].p3_t2_11[0], p3_t3_11[0], p3_t4_11[0]",
+   "why": "IDENTICAL LEAF NAMES, IDENTICAL FACTS, AND THE SAME NESTING ANOMALY: the value-at-time-of-transfer cell is nested one level deeper than its three row-mates on BOTH forms. 433-A declares /MaxLen 12 on the value and 8 on the date; the OIC form declares neither."
+  },
+  {
+   "id": "X-53",
+   "slice": 7,
+   "page": 7,
+   "category": "exact",
+   "oic": "s9_lived_outside_us_6_months_past_10_years, s9_lived_abroad_from, s9_lived_abroad_to",
+   "a433": "433-A page 2: c1_8_[0]/[1] and the two date cells p2_t50_8b[0] / p2_t51_8b[0]",
+   "why": "The same question and the same two dates. The leaf names differ by one character - 433-A appends \"b\" (p2_t50_8b) where the OIC form does not (p2_t50_8) - and that single character is the difference between the right cell and the dual-citizenship cell on 433-A. A crosswalk matching leaves by prefix would collide here."
+  },
+  {
+   "id": "X-54",
+   "slice": 7,
+   "page": 7,
+   "category": "new",
+   "oic": "s9_party_to_irs_litigation, s9_irs_litigation_tax_types_and_periods",
+   "a433": "(nothing)",
+   "why": "THE IRS-LITIGATION QUESTION IS NEW. 433-A asks about litigation generally and asks nothing about litigation involving the IRS or the United States. There is no 433-A cell for it and no 433-A value that partly answers it - a \"yes\" to the general litigation question says nothing about who the other party was."
+  },
+  {
+   "id": "X-55",
+   "slice": 7,
+   "page": 8,
+   "category": "new",
+   "oic": "s9_assets_or_real_property_outside_us, s9_assets_outside_us_description",
+   "a433": "(nothing)",
+   "why": "NEW. 433-A carries the words \"foreign countries or jurisdictions\" inside three of its own questions - the beneficiary, trustee and safe-deposit ones - but asks no separate question about assets or real property held outside the U.S. and provides no cell for a description of them. Do not source this from 433-A line 19 real property: that line asks for property wherever it is and its answers are already bound at (5a)/(5b) here."
+  },
+  {
+   "id": "X-56",
+   "slice": 7,
+   "page": 8,
+   "category": "new",
+   "oic": "s9_funds_held_in_trust_by_third_party, s9_funds_held_in_trust_amount, s9_funds_held_in_trust_where",
+   "a433": "(nothing)",
+   "why": "NEW. 433-A asks whether the taxpayer is a beneficiary of a trust and whether they are a trustee of one, and never asks whether a third party is holding funds for them. A record built from 433-A has no value for this and no near-miss to be tempted by."
+  },
+  {
+   "id": "X-57",
+   "slice": 7,
+   "page": 8,
+   "category": "new",
+   "oic": "s10_attached_pay_stubs, s10_attached_investment_statements, s10_attached_digital_asset_records, s10_attached_other_income_statements, s10_attached_bank_statements, s10_attached_form_433b, s10_attached_lender_statements, s10_attached_receivables_list, s10_attached_delinquent_tax_verification, s10_attached_court_orders, s10_attached_trust_documents, s10_attached_special_circumstances, s10_attached_form_2848, s10_attached_form_656",
+   "a433": "(nothing)",
+   "why": "THE ATTACHMENT CHECKLIST IS NEW, AND IT IS NOT A FACT ABOUT THE TAXPAYER. Fourteen boxes asserting that a document is enclosed with THIS submission. 433-A prints no checklist. Nothing in a 433-A record could populate them and nothing in this engine can confirm one; whether they are driven from the intake at all is carried open as C-18."
+  },
+  {
+   "id": "X-58",
+   "slice": 7,
+   "page": 8,
+   "category": "new",
+   "oic": "(the two signature-date cells Date_Signed_1[0] and Date_Signed_2[0], which are declared NEVER AUTO-FILLED and bound to no key)",
+   "a433": "(nothing — 433-A carries no field whose name matches /sign/i at all, on any page)",
+   "why": "RECORDED SO THE PROVISIONING PASS DOES NOT CREATE A PROPERTY FOR IT. These two cells are new relative to 433-A, and they are also the two cells on this form that must never be written from a record. A crosswalk that listed them as unmapped facts would invite exactly the property this map exists to prevent."
+  },
+  {
+   "id": "X-59",
+   "slice": 7,
+   "page": 7,
+   "category": "asymmetric-the-other-way",
+   "oic": "(nothing)",
+   "a433": "433-A page 2: p2_t50_8[0], \"Do you have dual citizenship\", with its own Yes/No pair",
+   "why": "RECORDED BECAUSE A ONE-DIRECTIONAL CROSSWALK HIDES IT. 433-A asks about dual citizenship and 433-A(OIC) does not, so a taxpayer moving from a 433-A filing to an OIC filing drops that fact. It is listed here for the same reason the two earlier asymmetric entries are: a fact with nowhere to go is a fact the OIC filing loses, and the loss should be a decision rather than an omission. The leaf p2_t50_8 is ALSO the trap named in X-48 - on the OIC form it holds a date."
   }
  ],
  "_tally": {
   "_why": "Derived from entries[] by adapters/pdf/count-sweep.mjs [S-25], never retyped. A hand-kept tally beside a list is how 'eleven' survived three slices when the honest figure was ten.",
-  "entries": 44,
-  "exact": 14,
+  "entries": 59,
+  "exact": 22,
   "superset": 1,
   "different-arithmetic-same-name": 7,
   "different-shape": 7,
   "same-fact-different-decomposition": 2,
-  "new": 11,
-  "asymmetric-the-other-way": 2,
-  "_the_typed_tally_was_wrong_on_three_categories": "AUTHORED BY HAND AS 16 exact / 8 different-shape / 8 new, DERIVED AS 14 / 7 / 11. Corrected to the derived figures before this file was ever committed. Left recorded because it is the fourth time in this repo a hand-kept count beside its own list has drifted, and the first time the drift was caught in the same minute it was written - by [S-25], which existed before the file did."
+  "new": 17,
+  "asymmetric-the-other-way": 3,
+  "_the_typed_tally_was_wrong_on_three_categories": "AUTHORED BY HAND AS 16 exact / 8 different-shape / 8 new, DERIVED AS 14 / 7 / 11. Corrected to the derived figures before this file was ever committed. Left recorded because it is the fourth time in this repo a hand-kept count beside its own list has drifted, and the first time the drift was caught in the same minute it was written - by [S-25], which existed before the file did.",
+  "_slice_7": "Slice 7 added fifteen entries covering pages 7 and 8. NINE ARE `exact` AND THAT IS THE FINDING: 433-A(OIC) Section 9 and 433-A’s \"Other Information\" block are the same questions in the same order under the same AcroForm leaf names, index for index, including two nesting anomalies and one suffix inversion that are present on BOTH forms. 62 of the 334 distinct leaf names on 433-A(OIC) also appear on 433-A, and this block is where most of them are. The shared lineage is real and it is also where the sharpest traps live: p2_t50_8 names three different questions across the two forms, p2_t50_8b differs from p2_t50_8 by one character and by one question, and the six litigation cells are named correctly on 433-A and wrongly on 433-A(OIC)."
  },
  "_what_this_file_does_not_say": "IT DOES NOT SAY WHICH HUBSPOT PROPERTY FEEDS ANYTHING. An `exact` classification means a 433-A value needs no transformation to become the OIC value; it does NOT mean a property already exists, that it is the right property, or that reuse is approved. The provisioning pass reads these categories to know WHICH DECISIONS IT HAS TO MAKE - every entry that is not `exact` is a decision - and makes them there.",
  "_the_reading_that_matters": "SEVEN OF THE FORTY-FOUR ENTRIES ARE different-arithmetic-same-name, AND THOSE ARE THE FILE'S REASON TO EXIST. Each is a pair the captions invite you to reuse and the arithmetic forbids: the quick-sale discount on four asset classes, the non-cash add-back at (36), the narrowed vehicle line at (41), and the two household totals at Box E. Every one of them produces a filed statement whose printed totals all reconcile and whose offer is wrong."
