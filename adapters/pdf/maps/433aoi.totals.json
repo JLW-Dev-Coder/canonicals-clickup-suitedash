@@ -1049,7 +1049,7 @@
    {
     "map_key": "1c_bank_accounts_from_attachment",
     "printed_caption": "Total of bank accounts from attachment",
-    "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable."
+    "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable - the page prints this cell, and (1)'s recomputation reads what the page prints."
    },
    {
     "map_key": "2d_investment_accounts_from_attachment",
@@ -1082,8 +1082,9 @@
    {
     "map_key": "6d_vehicle_2_less_allowance",
     "printed_caption": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
-    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The phrase ‘joint offer’ is drawn exactly once on all eight pages of 433-A(OIC) - here - and no cell anywhere records the answer; it is declared on Form 656, which this engine does not hold. Unlike (6a)/(6c), no predicate over a printed cell could recover this one.",
-    "review_page_advisory": "ANSWER THIS FROM FORM 656, NOT FROM MARITAL STATUS. On a joint offer this cell is line (6c) minus $3,450, floored at zero. On a separate offer it is line (6c) unchanged - the $3,450 is NOT applied twice across two vehicles on a separate offer. A married taxpayer may file a separate offer, so the Section 1 marital status on page 1 does not answer this and must not be used to."
+    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The phrase ‘joint offer’ is drawn exactly once on all eight pages of 433-A(OIC) - here - and no cell anywhere records the answer; it is declared on Form 656, which this engine does not hold. Unlike (6a)/(6c), no predicate over a printed cell could recover this one. The cell is max(0, (6c) - 3450) on a joint offer and (6c) unchanged otherwise.",
+    "review_page_advisory": "ANSWER THIS FROM FORM 656, NOT FROM MARITAL STATUS. On a joint offer this cell is line (6c) minus $3,450, floored at zero. On a separate offer it is line (6c) unchanged - the $3,450 is NOT applied twice across two vehicles on a separate offer. A married taxpayer may file a separate offer, so the Section 1 marital status on page 1 does not answer this and must not be used to.",
+    "checked_by_hand_before_declaring": "The single occurrence of the phrase \"joint offer\" was confirmed by searching every drawn text candidate on every widget of all eight pages, not by reading page 3 alone."
    },
    {
     "map_key": "6e_vehicles_from_attachment",

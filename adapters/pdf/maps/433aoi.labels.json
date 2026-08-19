@@ -23731,11 +23731,11 @@
         ]
       },
       "marker": "",
-      "label": "Round to the nearest whole dollar.",
+      "label": "income",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Round to the nearest whole dollar."
+      "labelFrom": "left",
+      "best": "income"
     },
     {
       "name": "topmostSubform[0].F433-A-OIC_Page6[0].Distributions[0]",

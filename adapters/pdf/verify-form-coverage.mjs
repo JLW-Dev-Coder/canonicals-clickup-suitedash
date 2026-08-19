@@ -227,6 +227,16 @@ export async function verifyFormCoverage(form, filledPath, { saturated = false }
 
   // --- exclusive sets: exactly one checked, or exactly zero when the set is deferred ---
   const setFindings = exclusiveSets.map(({ set, targets }) => {
+    // AN EMPTY SET IS A STOP, AND IT HAS TO BE SAID FIRST. `[].every(…)` is true, so a set
+    // declaring zero targets was `allDeferred`, expected zero checked, found zero checked,
+    // and reported as a SATISFIED exclusive set — a checkbox group nobody had bound, passing
+    // as one correctly bound. No map holds an empty exclusive array today, which is precisely
+    // the state the dead `_unaccounted_by_page` regex was in on the day it shipped. Stated
+    // before the `.every()`, in the shape run-form-gate.mjs uses for its option sets.
+    // See adapters/pdf/guard-sweep.mjs [G-26].
+    if (!targets.length)
+      return { set, targets, allDeferred: false, checked: [], expect: 1, ok: false,
+        empty: `exclusive set "${set}" declares no targets. An exclusive set with nothing in it cannot be exclusive, and every check over it is vacuously satisfied.` };
     const allDeferred = targets.every(t => deferred.has(t));
     const checked = targets.filter(t => { const f = byName.get(t); return f instanceof PDFCheckBox && f.isChecked(); });
     const expect = allDeferred ? 0 : 1;
@@ -321,6 +331,7 @@ export function reportFormCoverage(r) {
     console.error('');
     console.error(`EXCLUSIVE SET NOT SETTLED — ${badSets.length} set(s) do not have exactly the required number checked.`);
     for (const s of badSets) {
+      if (s.empty) { console.error(`  ${s.empty}`); continue; }
       console.error(`  set "${s.set}": ${s.checked.length} checked, expected exactly ${s.expect}${s.allDeferred ? ' (every target is under _deferred)' : ''}`);
       s.targets.forEach(t => console.error(`    ${s.checked.includes(t) ? '[x]' : '[ ]'} ${t}`));
     }

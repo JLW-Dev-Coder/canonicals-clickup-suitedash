@@ -277,9 +277,17 @@ const badDiscriminator = (group, d) => {
 export const checkRowClasses = (mapDoc, rowsByGroup) => {
   const wrong = [], unstated = [], misdirected = [], undiscriminated = [];
   const shape = [];
+  // WHAT THIS RUN ACTUALLY LOOKED AT. Two `continue`s below skip a group silently — one when
+  // it declares no `row_class`, one when the record carries no rows for it — so a run in
+  // which EVERY group was skipped produced an empty `wrong` and an empty `misdirected` and
+  // printed "every slotted row that states an asset class states one its group prints" over
+  // nothing at all. Derived and reported, so zero examined can never again read as an
+  // all-clear. See adapters/pdf/guard-sweep.mjs [G-30].
+  let declared = 0, examined = 0;
   for (const [group, def] of Object.entries(mapDoc.groups || {})) {
     const rc = def.row_class;
     if (!rc || !Array.isArray(rc.accepts)) continue;
+    declared++;
     const bad = badDiscriminator(group, rc.discriminator);
     if (bad) { shape.push(bad); continue; }
     const entry = rowsByGroup[group];
@@ -287,6 +295,7 @@ export const checkRowClasses = (mapDoc, rowsByGroup) => {
     const cap = Math.min(def.max ?? def.slots.length, def.slots.length);
     (entry.rows || []).forEach((row, i) => {
       if (i >= cap) return;
+      examined++;
       const stated = row && typeof row === 'object' ? row[rc.column] : undefined;
       const v = stated === undefined || stated === null ? '' : String(stated).trim();
       if (!v) { unstated.push({ group, index: i, accepts: rc.accepts }); return; }
@@ -300,7 +309,7 @@ export const checkRowClasses = (mapDoc, rowsByGroup) => {
         misdirected.push({ group, index: i, column: d.column, got: String(got), wanted: String(d.equals), cls: v });
     });
   }
-  return { wrong, unstated, misdirected, undiscriminated, shape };
+  return { wrong, unstated, misdirected, undiscriminated, shape, declared, examined };
 };
 
 /** Print the collision STOP. Returns the number of problems (0 = the map is safe to fill from). */
@@ -319,7 +328,7 @@ export const reportRowClassCollisions = (problems, mapPath) => {
 
 /** Print the finding. Returns the number of rows that must STOP the run. */
 export const reportRowClasses = (result) => {
-  const { wrong, unstated, misdirected, undiscriminated, shape } = result;
+  const { wrong, unstated, misdirected, undiscriminated, shape, declared = 0, examined = 0 } = result;
   if (shape.length) {
     console.error(`ROW CLASS — ${shape.length} malformed discriminator declaration(s). No PDF written.`);
     shape.forEach((s) => console.error(`  ${s}`));
@@ -338,7 +347,13 @@ export const reportRowClasses = (result) => {
     for (const u of undiscriminated) console.log(`  ${u.group}[${u.index}]: no "${u.column}" (this group prints rows where ${u.column} = ${JSON.stringify(String(u.wanted))})`);
   }
   if (!wrong.length && !misdirected.length) {
-    console.log('ROW CLASS: every slotted row that states an asset class states one its group prints, and every row that states its discriminator states the one its group prints.');
+    // THE SCOPE IS PART OF THE CLAIM. "Every row is correct" over zero rows is a sentence
+    // about nothing, and it read identically to the same sentence over 40 rows. [G-30].
+    if (!examined) {
+      console.log(`ROW CLASS: ${declared} group(s) declare a row_class and NO ROW WAS EXAMINED — the record fed none of them. Nothing was checked here, and nothing is claimed.`);
+      return 0;
+    }
+    console.log(`ROW CLASS: ${examined} slotted row(s) across ${declared} declaring group(s) — every row that states an asset class states one its group prints, and every row that states its discriminator states the one its group prints.`);
     return 0;
   }
   if (wrong.length) {

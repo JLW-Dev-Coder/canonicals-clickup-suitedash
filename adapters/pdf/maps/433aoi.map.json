@@ -747,88 +747,9 @@
   ]
  },
  "_not_checkable": {
-  "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both _computed and this block is indistinguishable from one nobody looked at. Follows 433f.totals.json not_checkable, and rule 3 of this slice - attachment-total cells take the 433-F Section E footer precedent. STILL WRITTEN: not checkable is not the same as not filled.",
-  "entries": [
-   {
-    "map_key": "1c_bank_accounts_from_attachment",
-    "printed_caption": "Total of bank accounts from attachment",
-    "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable - the page prints this cell, and (1)'s recomputation reads what the page prints."
-   },
-   {
-    "map_key": "2d_investment_accounts_from_attachment",
-    "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here."
-   },
-   {
-    "map_key": "3b_retirement_accounts_from_attachment",
-    "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Note that its caption carries the X .8 - so the quick-sale discount applies to attached retirement accounts too, and a preparer who omits it here understates the offer by 20% of the attached market value with nothing on the page to catch it. Not checkable, and worth an operator note."
-   },
-   {
-    "map_key": "4b_life_insurance_from_attachment",
-    "printed_caption": "Total cash value of life insurance policies from attachment",
-    "why_not_checkable": "Attachment-sourced."
-   },
-   {
-    "map_key": "4b_minus_loan_balances",
-    "printed_caption": "Minus loan balance(s)",
-    "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) - that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
-   },
-   {
-    "map_key": "5c_property_from_attachment",
-    "printed_caption": "Total value of property(s) from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (5), which IS checkable.",
-    "review_page_advisory_summary": "Its bracketed caption carries the X .8. Surfaced on the review page - see 433aoi.totals.json not_checkable."
-   },
-   {
-    "map_key": "6d_vehicle_2_less_allowance",
-    "printed_caption": "If you are filing a joint offer, subtract $3,450 from line (6c) / (If line (6c) minus $3,450 is a negative number, enter \"0\") / If you are not filing a joint offer, enter the amount from line (6c)",
-    "why_not_checkable": "A PRINTED CONDITIONAL WHOSE SELECTOR IS NOT ON THIS FORM AT ALL. The cell is max(0, (6c) - 3450) on a joint offer and (6c) unchanged otherwise. The phrase \"joint offer\" is drawn EXACTLY ONCE on all eight pages of 433-A(OIC) - here, in this caption - and no cell anywhere on the form records the answer; whether the offer is joint is declared on Form 656, which this engine does not hold. So the branch cannot be read off the page even in principle, and unlike (6a)/(6c) above no predicate over a printed cell would recover it. Marital status on page 1 is NOT the same question and must not be substituted for it: a married taxpayer may file a separate offer.",
-    "checked_by_hand_before_declaring": "The single occurrence was confirmed by searching every drawn text candidate on every widget of all eight pages, not by reading page 3 alone."
-   },
-   {
-    "map_key": "6e_vehicles_from_attachment",
-    "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced, and INPUT rather than computed despite its leaf name Enter_Allowance[0]. Everything it sums is on an attachment this engine never sees. It is an operand of (6), which IS checkable.",
-    "review_page_advisory_summary": "Its bracketed caption carries the X .8, exactly as (3b) and (5c) do. Surfaced on the review page - see 433aoi.totals.json not_checkable."
-   },
-   {
-    "map_key": "7c_valuable_items_from_attachment",
-    "printed_caption": "Total value of valuable items listed from attachment [current market value X .8 minus any loan balance(s)]",
-    "why_not_checkable": "Attachment-sourced. Everything it sums is on an attachment this engine never sees. It is nevertheless an operand of (7), which IS checkable. THE X .8 IS IN ITS CAPTION, exactly as at (3b), (5c) and (6e) - this is the fourth attachment total on this form to state the quick-sale discount in its own printed caption and the fourth the engine cannot enforce it on."
-   },
-   {
-    "map_key": "8d_bank_accounts_from_attachment",
-    "printed_caption": "Total bank accounts from attachment",
-    "why_not_checkable": "Attachment-sourced, and unlike (7c) its caption states no arithmetic at all — it is a plain roll-up of rows printed somewhere else. It is an operand of (8), which IS checkable. Same shape as (1c) on the personal side."
-   },
-   {
-    "map_key": "s4_average_gross_monthly_payroll",
-    "printed_caption": "Average gross monthly payroll $",
-    "why_not_checkable": "NOT A TOTAL AT ALL, and declared here only because it is the one money-shaped cell in Section 4 and a reader scanning for money cells will find it. Nothing on the page feeds it: no marker, no '=', no rows above it. It is plain input. Declared rather than left out, because a money cell in neither list is indistinguishable from one nobody looked at."
-   },
-   {
-    "map_key": "36_net_business_income_from_box_c",
-    "printed_caption": "Net business income from Box C [Deductions for non-cash expenses on Schedule C (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes and must be added back in to the net income figure]",
-    "why_not_checkable": "THE CAPTION NAMES A PRINTED CELL AND THEN INSTRUCTS THE PREPARER TO MAKE IT DIFFER. 'from Box C' reads as an equality and Box C is printed on page 5 of this same form, so a one-operand tripwire would be exact and would need no new schema. The bracketed sentence beside it is why one is not declared: a Schedule-C net income that included depreciation or depletion must have those added back HERE, so (36) legitimately exceeds Box C by the amount of the non-cash deductions. A tripwire would pass on every form where the add-back is zero and fail exactly the forms that did the harder thing correctly. See _arguable_page6 P6-2. It is nevertheless an operand of Box D, which IS checkable.",
-    "review_page_advisory": "ADD BACK NON-CASH DEDUCTIONS BEFORE ENTERING THIS FIGURE. Box C on page 5 is the starting point, not the answer. If the business net income was computed from a Schedule C that deducted depreciation, depletion or any other non-cash expense, those amounts are NOT allowed for offer purposes and must be added back in. Entering Box C unchanged when an add-back applies understates household income, understates Box F, and understates the offer."
-   },
-   {
-    "map_key": "40_monthly_rent_payment",
-    "printed_caption": "monthly rent payment",
-    "why_not_checkable": "NOT A TOTAL AND NOT AN OPERAND — a component disclosure inside the (40) housing row. The page draws no '=' and no '+' between it and (40), and (40)'s own caption already covers rent ('e.g., rent or mortgage payment and average monthly cost of property taxes, home insurance, ...'). Nothing printed on the page relates the two arithmetically, so nothing can verify it. Declared rather than left out, following s4_average_gross_monthly_payroll on page 4: a money cell in neither list is indistinguishable from one nobody looked at. Its caption is drawn to the cell's RIGHT, at 2.2pt, which is true of no other cell on this form."
-   },
-   {
-    "map_key": "48_life_insurance_policy_amount",
-    "printed_caption": "Life insurance policy amount",
-    "why_not_checkable": "A FACE AMOUNT, NOT AN EXPENSE. The (48) cell beside it holds the monthly PREMIUM and enters Box E; this cell holds the policy amount the premium buys and enters nothing. Two money cells on one printed row holding two quantities that differ by three orders of magnitude on a typical policy. No printed relation between them, so no check."
-   },
-   {
-    "map_key": "51_total_tax_owed",
-    "printed_caption": ". Total tax owed",
-    "why_not_checkable": "A BALANCE, NOT A PAYMENT. The (51) cell holds the MONTHLY delinquent state/local tax payment and enters Box E; this cell holds the total still owed. A balance divided by a payment gives a number of months, which is information the IRS wants and which no printed cell on this page states, so nothing here can verify either from the other."
-   }
-  ],
+  "_why": "ONE LIST, AND IT IS NOT THIS ONE. Printed money cells this map writes and deliberately does not verify are declared in adapters/pdf/maps/433aoi.totals.json under not_checkable.entries[], each with the printed caption that makes it unverifiable and, where one is warranted, the review-page advisory. STILL WRITTEN - not checkable is not the same as not filled.",
+  "_this_block_used_to_hold_a_second_copy": "It held 15 entries while the totals file held 18, and the two had drifted in BOTH directions. This copy never learned 9c_business_assets_from_attachment, 10_irs_allowed_deduction_books_and_tools or the 9ab_business_assets.quick_sale_equity group cell, and 17 FIELDS differed across the 15 entries the two shared - including on (3b), (6e) and (7c), where the X .8 warning had been rewritten into a review_page_advisory in the totals copy and left in why_not_checkable here. Each copy’s _why claimed to mirror the other and nothing checked either claim. The asymmetry settled which was the fossil: the totals list is read by render-review.mjs, by rounding.mjs and by run-form-gate.mjs, and THIS block was read by no code at all - fill-433aoi.mjs says so in its own header. The gate’s \"18 declared not checkable\" was counting the live list while these 15 were the list nothing counts, which is _arguable/_carried in a different key. The two facts this copy held alone - the mechanism clause on (1c) and checked_by_hand_before_declaring on (6d) - were moved into the totals entries before it was retired; the rest was prose the totals copy had already evolved past.",
+  "_asserted": "adapters/pdf/guard-sweep.mjs [P-03] fails when this block regrows an entries[] list. Merged, not merely tidied.",
   "_removed_in_slice_4": "6ac_vehicles.quick_sale_equity WAS declared here in slice 3 and is NOT any more. The feeder schema gained a single-equality predicate, so the cell is now checked on BOTH printed branches by four predicated lines in 433aoi.totals.json - '6a own', '6a leased', '6c own' and '6c leased'. Removed rather than left beside them: a cell declared both checked and deliberately-not-verified carries two contradictory states, which is the same defect as carrying none. run-form-gate.mjs now FAILS on exactly that condition (DOUBLE-DECLARED), so this removal is asserted rather than remembered."
  },
  "_nesting_note_page2": "AcroForm nesting depth is not uniform on page 2 either, and the money cells are where it varies. Institution1[0], Institution2[0] and RetirementAcct2[0] each wrap their value cell in a CurrentMarketValue[0] subform and their loan cell in a LessLoanBal[0] subform, but hang the ROW TOTAL (Total_Current_Market_Value[0]) directly off themselves. CurrentCash[0] uses CurrentCashValue[0] and LessLoanBal1[0] - note the '1'. TotalLife[0] uses TotalLifeIns[0] and LessLoanbal2[0] - note the '2' AND the lower-case 'b'. RetirementAcct1[0] puts its lone checkbox and its description under virtualCurrency[0] but numberOfUnits[0], locationDigitalAsset[0] and assetsAccountNumber[0] directly under itself. Institution1[0] and Institution2[0] reuse the SAME leaf names (CB2_12, CB2_13, CB2_14, Other, Name_Financial_Institution, Account_Number_3) and are told apart only by the subform. Every path in this file is therefore quoted whole from topmostSubform[0], and no prefix generalises.",

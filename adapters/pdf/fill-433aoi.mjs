@@ -150,9 +150,23 @@ const applyOption = (key, options, raw) => {
 {
   const totalsPath = 'adapters/pdf/maps/433aoi.totals.json';
   let totalsDoc = null;
-  try { totalsDoc = JSON.parse(readFileSync(totalsPath, 'utf8')); } catch { /* reported below */ }
-  if (rounding.declared && !totalsDoc)
-    console.log(`rounding: NOTE — ${totalsPath} could not be read, so the money-cell cross-check did not run.`);
+  let totalsWhy = null;
+  try { totalsDoc = JSON.parse(readFileSync(totalsPath, 'utf8')); } catch (e) { totalsWhy = e.message; }
+  // AN UNREADABLE INPUT IS A STOP, NOT A NOTE. This printed
+  //   `rounding: NOTE — … could not be read, so the money-cell cross-check did not run`
+  // and then WROTE THE PDF. A note beside a filed form is a pass: the money-cell cross-check
+  // is what proves every cell this engine is about to round is a cell the map declares as
+  // money, and an unreadable totals file means that was never checked — which is exactly as
+  // unchecked as a form nobody wrote the check for. See the third-sweep register,
+  // adapters/pdf/guard-sweep.mjs [G-25].
+  if (rounding.declared && !totalsDoc) {
+    console.error(`ROUNDING CROSS-CHECK COULD NOT READ ITS INPUT — ${totalsPath}`);
+    console.error(`  ${totalsWhy}`);
+    console.error('  The map declares rounding blocks, so every money cell must be cross-checked against the');
+    console.error('  totals declaration before anything is written. That check did not run, so no PDF is written.');
+    console.error('  A check that could not read its input reports that it could not read its input. Never a pass.');
+    process.exit(2);
+  }
   if (reportRounding(auditRounding(mapDoc, totalsDoc), 'adapters/pdf/maps/433aoi.map.json') > 0) {
     console.error('  No PDF written. A money cell whose block is undeclared or mis-declared would print a figure');
     console.error('  the page did not ask for, on a statement signed under penalty of perjury.');

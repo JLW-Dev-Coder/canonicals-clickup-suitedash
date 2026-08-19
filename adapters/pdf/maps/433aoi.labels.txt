@@ -315,7 +315,7 @@ p6 | MaxLen - | Social Security | topmostSubform[0].F433-A-OIC_Page6[0].SpouseOt
 p6 | MaxLen - | Pension(s) | topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Pensions[0].Spouse_Other_Pensions[0]
 p6 | MaxLen - | Other Income | topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Other[0].Spouse_Other_Other_Income[0]
 p6 | MaxLen - | Total spouse | topmostSubform[0].F433-A-OIC_Page6[0].SpouseOther[0].Total_Spouse_Other_Income[0]
-p6 | MaxLen - | Round to the nearest whole dollar. | topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0]
+p6 | MaxLen - | income | topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0]
 p6 | MaxLen - | Additional sources of income used to support the household, e.g., non-liable spouse, or anyone else who may | topmostSubform[0].F433-A-OIC_Page6[0].tab_order[1].Interest_Dividends[0]
 p6 | MaxLen - | Round to the nearest whole dollar. | topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]
 p6 | MaxLen - | Round to the nearest whole dollar. | topmostSubform[0].F433-A-OIC_Page6[0].Distributions[0]

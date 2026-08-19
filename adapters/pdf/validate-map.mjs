@@ -16,6 +16,7 @@ import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { auditRounding, reportRounding } from './rounding.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
+import { runGuardSweep, reportGuardSweep } from './guard-sweep.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -207,6 +208,21 @@ if (!existsSync(liesPath)) {
 // the reason. A claim site in neither state is a STOP.
 const sweep = await runCountSweep(form);
 if (reportCountSweep(sweep, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// ---------------------------------------------------------------------------------------
+// THE THIRD SWEEP. Three more defect classes that were each found once, guarded once, and
+// never enumerated: vacuous guards, nearest-neighbour selections that rank before they
+// filter, and parallel lists describing overlapping facts with nothing asserted between
+// them. Runs here rather than as its own gate step for the same reason the count sweep and
+// the rounding audit do — these are claims the ENGINE makes about itself, and this is the
+// step that checks those. See adapters/pdf/guard-sweep.mjs.
+//
+// It sweeps SOURCE, not artefacts, so it is form-independent and would be identical on all
+// three runs. It runs on every form anyway, deliberately, and for the reason count-sweep
+// gives for the shared sidecars: a vacuous guard is a defect for all three forms, and
+// failing one gate out of three would leave two green gates standing over it.
+const guards = runGuardSweep(form);
+if (reportGuardSweep(guards, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.

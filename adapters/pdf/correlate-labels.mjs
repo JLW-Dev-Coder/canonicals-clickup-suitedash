@@ -62,15 +62,41 @@ function candidates(pageIdx, r) {
   }
 
   const byDist = (a, b) => a.distance - b.distance;
+  // FILTER, THEN RANK, THEN TRUNCATE — in that order, and the order is the whole point.
+  //
+  // These buckets used to be `sort(byDist).slice(0, 3)`, and the property filter
+  // (`isDescriptive`, `isMarker`) ran downstream on whatever survived. That is the
+  // money-probe defect one level up: distance chose the candidates before anything asked
+  // whether they were the KIND of thing being looked for, so a caption sitting behind three
+  // markers or currency glyphs was cut from the bucket and never seen.
+  //
+  // It was load-bearing. On 433-A page 3, p2_t32_16[0]'s `above` bucket holds five "$" runs
+  // at 31.1, 52.7, 88.7, 124.7 and 160.7pt and its first descriptive run at 198.9pt: the
+  // slice dropped every candidate the bucket had, `above` contributed nothing, and the label
+  // fell through to a run 273.7pt away in a different column. Across the three forms the
+  // truncation moved 25 of 433-A's 515 widget labels and 4 of its markers; 433-F and
+  // 433-A(OIC) were unaffected, which is exactly why a scan of one form would have missed it.
+  //
+  // Each bucket is now kept twice: `*_desc` holds the descriptive candidates and `*_mark` the
+  // markers, each ranked and truncated WITHIN its own kind, so truncating one can never hide
+  // the other. The raw distance-ranked bucket is kept as well, for the report only — a person
+  // reading the correlation needs to see what was actually nearest, including the runs the
+  // property filter dropped. See adapters/pdf/guard-sweep.mjs [N-02].
+  const KEEP = 3;
+  const split = (arr, keep = KEEP) => {
+    const s = [...arr].sort(byDist);
+    return { all: s.slice(0, keep), desc: s.filter(c => isDescriptive(c.text)).slice(0, keep), mark: s.filter(c => isMarker(c.text)).slice(0, keep) };
+  };
+  const L = split(left), R = split(right), A = split(above), I = split(inside), N = split(near, 5);
   return {
-    left: left.sort(byDist).slice(0, 3),
-    right: right.sort(byDist).slice(0, 3),
-    above: above.sort(byDist).slice(0, 3),
-    inside: inside.slice(0, 3),
-    nearest: near.sort(byDist).slice(0, 5),
+    left: L.all, right: R.all, above: A.all, inside: I.all, nearest: N.all,
+    _desc: { left: L.desc, right: R.desc, above: A.desc, inside: I.desc, nearest: N.desc },
+    _mark: { left: L.mark, right: R.mark, above: A.mark, inside: I.mark, nearest: N.mark },
   };
 }
-const EMPTY = { left: [], right: [], above: [], inside: [], nearest: [] };
+const EMPTY = { left: [], right: [], above: [], inside: [], nearest: [],
+  _desc: { left: [], right: [], above: [], inside: [], nearest: [] },
+  _mark: { left: [], right: [], above: [], inside: [], nearest: [] } };
 
 // Choosing the label.
 //
@@ -86,24 +112,51 @@ const EMPTY = { left: [], right: [], above: [], inside: [], nearest: [] };
 // separately from the SAME direction bucket at a comparable distance, so the marker
 // always belongs to the row that supplied the label.
 const isMarker = (s) => /^\(?\d{1,2}[a-z]?\)?[.:]?$/i.test(s);
-const isDescriptive = (s) => s.length >= 2 && /[A-Za-z]/.test(s) && !isMarker(s);
+// A FORMAT PLACEHOLDER IS NOT A CAPTION. "mmddyyyy" tells the taxpayer how to SHAPE what
+// goes in the box; it does not say what the box is for, and two cells in different columns
+// of the same row can both have one printed beside them.
+//
+// This is not decoration and it was not here before. Fixing the truncation order in split()
+// exposed it: with the buckets no longer cut before the property filter ran, the nearest
+// DESCRIPTIVE run to five of 433-A's life-insurance column-3 cells turned out to be the
+// "mmddyyyy" hint printed in the date column at 198.9pt, which beat "Policy Number(s)" and
+// "Owner of Policy" in another column at 273.7pt and further. The old order had been hiding
+// that behind the five "$" runs it truncated away — so the ranking was right and the
+// PROPERTY was wrong, and correcting only the order would have traded one wrong answer for
+// another. See adapters/pdf/guard-sweep.mjs [N-02].
+const isFormatHint = (s) => /^[\s(]*(?:mm|dd|yy(?:yy)?|xx+|nnn+|[\/\-.,()])+[\s)]*$/i.test(s);
+const isDescriptive = (s) => s.length >= 2 && /[A-Za-z]/.test(s) && !isMarker(s) && !isFormatHint(s);
 
-/** Nearest descriptive candidate across the given buckets, in order. */
+/**
+ * Nearest descriptive candidate across the given buckets, in order.
+ *
+ * Reads `_desc`, which was filtered to descriptive runs BEFORE it was ranked and truncated.
+ * The `isDescriptive` test is kept here as well and is now redundant by construction — left
+ * in deliberately, so that a future caller passing a raw bucket still gets the right answer
+ * rather than silently ranking markers. See the split() note above and guard-sweep [N-02].
+ */
 function nearestDescriptive(c, dirs) {
   let winner = null;
   for (const dir of dirs) {
-    for (const cand of c[dir] || []) {
+    for (const cand of (c._desc?.[dir] ?? c[dir]) || []) {
       if (!isDescriptive(cand.text)) continue;
-      if (!winner || cand.distance < winner.distance) winner = { ...cand, dir, pool: c[dir] };
+      if (!winner || cand.distance < winner.distance) winner = { ...cand, dir, pool: c._mark?.[dir] ?? c[dir] };
     }
   }
   return winner;
 }
 
-/** Marker from the same bucket that supplied the label, at a comparable distance. */
+/**
+ * Marker from the same bucket that supplied the label, at a comparable distance.
+ *
+ * `winner.pool` is now the `_mark` bucket for the direction the label came from — markers
+ * filtered first, then ranked. Previously it was the raw top-3, so a marker sitting behind
+ * three captions was invisible here for the same reason a caption behind three markers was
+ * invisible above.
+ */
 function markerFor(winner) {
   if (!winner) return '';
-  const m = winner.pool
+  const m = (winner.pool || [])
     .filter(x => isMarker(x.text))
     .sort((a, b) => Math.abs(a.distance - winner.distance) - Math.abs(b.distance - winner.distance))[0];
   return m && Math.abs(m.distance - winner.distance) <= 2 ? m.text : '';
@@ -161,7 +214,12 @@ for (const g of geometry) {
     // on overflow rather than truncating a filed form, so a map authored without it can be
     // correct about WHICH cell a value goes in and still refuse the value.
     maxLen: g.maxLen ?? null,
-    candidates: c,
+    // The DISTANCE-RANKED buckets only. `_desc` and `_mark` are the property-filtered working
+    // copies split() builds so that truncating one kind cannot hide the other; they are
+    // internal to the selection and are not published. Emitting them would triple this file
+    // for no reader — what a person checking a correlation needs to see is what was actually
+    // nearest, including the runs the property filter dropped, and that is these four lists.
+    candidates: { left: c.left, right: c.right, above: c.above, inside: c.inside, nearest: c.nearest },
     marker: p.marker,       // printed line marker, from the bucket that supplied the label
     label: p.label,         // printed caption, verbatim
     option: p.option,       // checkboxes only: this box's own option, printed to its right

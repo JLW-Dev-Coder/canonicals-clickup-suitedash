@@ -7343,11 +7343,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Represented by",
       "option": "",
       "context": "",
-      "labelFrom": "left",
-      "best": "(mmddyyyy)"
+      "labelFrom": "above",
+      "best": "Represented by"
     },
     {
       "name": "topmostSubform[0].Page1[0].p1_t32_6[0]",
@@ -10570,11 +10570,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[0].Line12B[0]",
@@ -10869,11 +10869,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[1].Line12B[0]",
@@ -11168,11 +11168,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].Line12B[0]",
@@ -11238,12 +11238,12 @@
           }
         ]
       },
-      "marker": "13e",
-      "label": "Total Cash",
+      "marker": "",
+      "label": "Type of Account",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "13e Total Cash"
+      "labelFrom": "above",
+      "best": "Type of Account"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line13[0].Line12b[2].p2-t5_12[0]",
@@ -11451,11 +11451,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].p2-t8_12c[0]",
@@ -11525,11 +11525,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].HeaderRow[0].LoanBal[0].p2-t9_13[0]",
@@ -12015,11 +12015,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].Row13a[0].p2_t11_13a[0]",
@@ -12496,11 +12496,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]",
@@ -12977,11 +12977,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[1].p2_t15_13b[0]",
@@ -13130,11 +13130,11 @@
         ]
       },
       "marker": "",
-      "label": "Phone",
+      "label": "or Financial Interest",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Phone"
+      "labelFrom": "above",
+      "best": "or Financial Interest"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].#subform[0].p2-t62_13b[0]",
@@ -13454,11 +13454,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].page2[0].Table_Line14[0].Row13b[2].p2_t15_13b[0]",
@@ -14862,11 +14862,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Lines14a[0].p2_t25_14a[0]",
@@ -14936,11 +14936,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].Line14b[0].p2-t73_14b[0]",
@@ -15260,11 +15260,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[0].p2_t28_14b[0]",
@@ -15334,11 +15334,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].Line14b[0].p2-t73_14b[0]",
@@ -15658,11 +15658,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[1].p2_t28_14b[0]",
@@ -15732,11 +15732,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].Line14b[0].p2-t73_14b[0]",
@@ -16052,11 +16052,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line15[0].Line14b[2].p2_t28_14b[0]",
@@ -16126,11 +16126,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].p2_t29_14c[0]",
@@ -17175,11 +17175,11 @@
         ]
       },
       "marker": "",
-      "label": "Name and Address of Insurance",
+      "label": "As of",
       "option": "",
       "context": "",
-      "labelFrom": "left",
-      "best": "Name and Address of Insurance"
+      "labelFrom": "above",
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t35_16c[0]",
@@ -17245,11 +17245,11 @@
         ]
       },
       "marker": "",
-      "label": "Policy Number(s)",
+      "label": "As of",
       "option": "",
       "context": "",
-      "labelFrom": "left",
-      "best": "Policy Number(s)"
+      "labelFrom": "above",
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t38_16d[0]",
@@ -17315,11 +17315,11 @@
         ]
       },
       "marker": "",
-      "label": "Owner of Policy",
+      "label": "As of",
       "option": "",
       "context": "",
-      "labelFrom": "left",
-      "best": "Owner of Policy"
+      "labelFrom": "above",
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t41_16e[0]",
@@ -17389,11 +17389,11 @@
         ]
       },
       "marker": "",
-      "label": "(Subtract amounts on line 17e from line 17d and include amounts from any attachments)",
+      "label": "As of",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "(Subtract amounts on line 17e from line 17d and include amounts from any attachments)"
+      "labelFrom": "above",
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t44_16f[0]",
@@ -17463,11 +17463,11 @@
         ]
       },
       "marker": "",
-      "label": "(Subtract amounts on line 17e from line 17d and include amounts from any attachments)",
+      "label": "As of",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "(Subtract amounts on line 17e from line 17d and include amounts from any attachments)"
+      "labelFrom": "above",
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page2[0].p2_t45_15g[0]",
@@ -18864,12 +18864,12 @@
           }
         ]
       },
-      "marker": "15e",
-      "label": "Total Equity",
+      "marker": "",
+      "label": "Type of Digital Asset",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "15e Total Equity"
+      "labelFrom": "above",
+      "best": "Type of Digital Asset"
     },
     {
       "name": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].#field[1]",
@@ -23157,11 +23157,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Monthly Payment",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Monthly Payment"
     },
     {
       "name": "topmostSubform[0].Page3[0].Equity[0].p3_t28_18a[0]",
@@ -24349,11 +24349,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Purchase Date",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Purchase Date"
     },
     {
       "name": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t6_17a[0]",
@@ -24677,11 +24677,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Monthly Payment",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Monthly Payment"
     },
     {
       "name": "topmostSubform[0].Page3[0].Table_Line17a[0].Line17a[0].p3_t10_17a[0]",
@@ -24912,11 +24912,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Lease Date",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Lease Date"
     },
     {
       "name": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t42_19a[0]",
@@ -25252,11 +25252,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Monthly Payment",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Monthly Payment"
     },
     {
       "name": "topmostSubform[0].#subform[4].Table_Line19a[0].Row1[0].p3_t46_19a[0]",
@@ -26630,11 +26630,11 @@
         ]
       },
       "marker": "",
-      "label": "Vehicle Ownership Costs",
+      "label": "Gross Monthly",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Vehicle Ownership Costs"
+      "labelFrom": "above",
+      "best": "Gross Monthly"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t63_23[0]",
@@ -26717,11 +26717,11 @@
         ]
       },
       "marker": "",
-      "label": "Vehicle Operating Costs",
+      "label": "Gross Monthly",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Vehicle Operating Costs"
+      "labelFrom": "above",
+      "best": "Gross Monthly"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t65_24[0]",
@@ -26804,11 +26804,11 @@
         ]
       },
       "marker": "",
-      "label": "Public Transportation",
+      "label": "Gross Monthly",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Public Transportation"
+      "labelFrom": "above",
+      "best": "Gross Monthly"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t67_25[0]",
@@ -26891,11 +26891,11 @@
         ]
       },
       "marker": "",
-      "label": "Health Insurance",
+      "label": "Distributions (K-1, IRA, etc.)",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Health Insurance"
+      "labelFrom": "left",
+      "best": "Distributions (K-1, IRA, etc.)"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t69_26[0]",
@@ -26978,11 +26978,11 @@
         ]
       },
       "marker": "",
-      "label": "Pension (Taxpayer)",
+      "label": "Gross Monthly",
       "option": "",
       "context": "",
-      "labelFrom": "left",
-      "best": "Pension (Taxpayer)"
+      "labelFrom": "above",
+      "best": "Gross Monthly"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].p3_t71_27[0]",
@@ -27583,11 +27583,11 @@
         ]
       },
       "marker": "",
-      "label": "Total Living Expenses (add lines 36-49)",
+      "label": "Gross Monthly",
       "option": "",
       "context": "",
-      "labelFrom": "right",
-      "best": "Total Living Expenses (add lines 36-49)"
+      "labelFrom": "above",
+      "best": "Gross Monthly"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalIncome[0].Blank33[0]",
@@ -28338,11 +28338,11 @@
         ]
       },
       "marker": "",
-      "label": "Actual Monthly",
+      "label": "Out of Pocket Health Care Costs",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Actual Monthly"
+      "labelFrom": "left",
+      "best": "Out of Pocket Health Care Costs"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t70_41[0]",
@@ -28421,11 +28421,11 @@
         ]
       },
       "marker": "",
-      "label": "Actual Monthly",
+      "label": "Out of Pocket Health Care Costs",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Actual Monthly"
+      "labelFrom": "left",
+      "best": "Out of Pocket Health Care Costs"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t72_42[0]",
@@ -28670,11 +28670,11 @@
         ]
       },
       "marker": "",
-      "label": "Actual Monthly",
+      "label": "Current year taxes (Income/FICA)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Actual Monthly"
+      "labelFrom": "left",
+      "best": "Current year taxes (Income/FICA)"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t78_45[0]",
@@ -28753,11 +28753,11 @@
         ]
       },
       "marker": "",
-      "label": "Actual Monthly",
+      "label": "Current year taxes (Income/FICA)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Actual Monthly"
+      "labelFrom": "left",
+      "best": "Current year taxes (Income/FICA)"
     },
     {
       "name": "topmostSubform[0].Page4[0].TotalLivingExpenses[0].p3_t80_46[0]",
@@ -29978,11 +29978,11 @@
         ]
       },
       "marker": "",
-      "label": "Allowable Expenses",
+      "label": "Current year taxes (Income/FICA)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Allowable Expenses"
+      "labelFrom": "left",
+      "best": "Current year taxes (Income/FICA)"
     },
     {
       "name": "topmostSubform[0].Page4[0].IRS46[0]",
@@ -30052,11 +30052,11 @@
         ]
       },
       "marker": "",
-      "label": "Allowable Expenses",
+      "label": "Delinquent State or Local Taxes",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Allowable Expenses"
+      "labelFrom": "left",
+      "best": "Delinquent State or Local Taxes"
     },
     {
       "name": "topmostSubform[0].Page4[0].IRS47[0]",
@@ -30126,11 +30126,11 @@
         ]
       },
       "marker": "",
-      "label": "Allowable Expenses",
+      "label": "Delinquent State or Local Taxes",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Allowable Expenses"
+      "labelFrom": "left",
+      "best": "Delinquent State or Local Taxes"
     },
     {
       "name": "topmostSubform[0].Page4[0].IRS48[0]",
@@ -30200,11 +30200,11 @@
         ]
       },
       "marker": "",
-      "label": "Allowable Expenses",
+      "label": "Total Living Expenses (add lines 36-49)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Allowable Expenses"
+      "labelFrom": "left",
+      "best": "Total Living Expenses (add lines 36-49)"
     },
     {
       "name": "topmostSubform[0].Page4[0].IRS49[0]",
@@ -30274,11 +30274,11 @@
         ]
       },
       "marker": "",
-      "label": "Allowable Expenses",
+      "label": "Total Living Expenses (add lines 36-49)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Allowable Expenses"
+      "labelFrom": "left",
+      "best": "Total Living Expenses (add lines 36-49)"
     },
     {
       "name": "topmostSubform[0].Page4[0].IRS50[0]",
@@ -32794,11 +32794,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[0].#subform[3].p5_t27_64b[0]",
@@ -33077,11 +33077,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page5[0].p5_t31_64c[0]",
@@ -33151,11 +33151,11 @@
         ]
       },
       "marker": "",
-      "label": "mmddyyyy",
+      "label": "As of",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "mmddyyyy"
+      "best": "As of"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t32_65a[0]",
@@ -33364,11 +33364,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Date Due",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Date Due"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65a[0].p5_t35_65a[0]",
@@ -33718,11 +33718,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Date Due",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Date Due"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65b[0].p5_t40_65b[0]",
@@ -34072,11 +34072,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Date Due",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Date Due"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65c[0].p5_t45_65c[0]",
@@ -34283,12 +34283,12 @@
           }
         ]
       },
-      "marker": "66b",
-      "label": "Total Outstanding Balance",
+      "marker": "",
+      "label": "(Street, City, State, ZIP code, and Country)",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "66b Total Outstanding Balance"
+      "labelFrom": "above",
+      "best": "(Street, City, State, ZIP code, and Country)"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t48_65d[0]",
@@ -34426,11 +34426,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Date Due",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Date Due"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65d[0].p5_t50_65d[0]",
@@ -34637,12 +34637,12 @@
           }
         ]
       },
-      "marker": "66f",
-      "label": "Total Outstanding Balance",
+      "marker": "",
+      "label": "(Street, City, State, ZIP code, and Country)",
       "option": "",
       "context": "",
-      "labelFrom": "nearest",
-      "best": "66f Total Outstanding Balance"
+      "labelFrom": "above",
+      "best": "(Street, City, State, ZIP code, and Country)"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[1]",
@@ -34780,11 +34780,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Date Due",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Date Due"
     },
     {
       "name": "topmostSubform[0].Page5[0].Table64[1].Line65d[1].#field[3]",
@@ -35148,11 +35148,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Lease Date",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Lease Date"
     },
     {
       "name": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t3_66a[0]",
@@ -35472,11 +35472,11 @@
         ]
       },
       "marker": "",
-      "label": "(mmddyyyy)",
+      "label": "Monthly Payment",
       "option": "",
       "context": "",
       "labelFrom": "above",
-      "best": "(mmddyyyy)"
+      "best": "Monthly Payment"
     },
     {
       "name": "topmostSubform[0].Page6[0].Table_Line66a[0].Line66a[0].p6_t7_66a[0]",
@@ -39072,11 +39072,11 @@
         ]
       },
       "marker": "",
-      "label": "Actual Monthly",
+      "label": "Total Expenses (Add lines 78 through 88)",
       "option": "",
       "context": "",
-      "labelFrom": "above",
-      "best": "Actual Monthly"
+      "labelFrom": "left",
+      "best": "Total Expenses (Add lines 78 through 88)"
     },
     {
       "name": "topmostSubform[0].Page6[0].TotalMonthlyExpenses[0].p6_t45_S6t[0]",

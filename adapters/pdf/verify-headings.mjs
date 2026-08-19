@@ -428,6 +428,18 @@ if (errors.length) {
 
 if (!errors.length && !bad.length) {
   const nRows = report.reduce((n, r) => n + r.rows.length, 0);
+  // THE atLeast CONTRACT, ON A GATE STEP. This printed the two figures — so a zero WAS
+  // visible to a reader — and then exited 0 regardless. A gate step that examined nothing
+  // and exits 0 is the shape the third sweep exists to end: "I had nothing to look at" and
+  // "everything I looked at was correct" are indistinguishable from the outside, and that
+  // indistinguishability is the defect. Printing the number is not the same as requiring one.
+  // See adapters/pdf/guard-sweep.mjs [G-28].
+  if (!nRows) {
+    console.error(`NOTHING TO ASSERT — ${form} declares ${report.length} group(s) and not one printed a row, so the heading assertion examined nothing.`);
+    console.error('  Zero rows checked is not zero rows wrong. Either the record feeds no group rows (run --saturated),');
+    console.error('  or the map\'s groups no longer resolve to slots — and both of those are findings, not passes.');
+    process.exit(2);
+  }
   console.log(`OK — ${nRows} group row(s) across ${report.length} group(s) print under the heading declared for them, and every group's slots run in printed order down the page.`);
   process.exit(0);
 }
