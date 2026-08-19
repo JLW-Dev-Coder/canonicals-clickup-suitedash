@@ -7,7 +7,7 @@
 // written ahead of the map would have to guess at constructs the form has not been read for
 // yet, and a guess in this layer prints onto a signed collection statement.
 //
-// Constructs in use as of map_version 1 (Sections 1-2, printed page 1):
+// Constructs in use as of map_version 2 (printed pages 1-2):
 //   map          — scalar 1:1. Absent or empty input is skipped, never written as the string
 //                  "undefined".
 //   checkboxes   — input_key -> { option: target }. The input NAMES its option, so a value
@@ -16,14 +16,35 @@
 //                  form prints and 433-A never does (the community-property declaration in
 //                  Section 1). Truthy checks it, falsy leaves it blank, anything else stops
 //                  the run. See the map's own `check_here._why`.
-//   groups       — repeatable rows: household_members, 4 slots, text + per-row yes/no pairs.
+//   groups       — repeatable rows. household_members (4 slots, text + per-row yes/no pairs)
+//                  on page 1; on page 2, 1ab_bank_accounts (2 slots), 2ab_investment_accounts
+//                  (2 slots), 3a_retirement_accounts (1) and 4a_life_insurance_policies (1).
 //                  Rows past the last slot are logged and dropped, never thrown and never
 //                  written over an earlier row.
+//                  SLOTS NEED NOT BE UNIFORM. 1ab_bank_accounts declares SIX account-type
+//                  options on slot 0 and FIVE on slot 1, because printed line (1a) offers a
+//                  Cash box and printed line (1b) does not. check-row-shape.mjs reads the
+//                  declared columns per slot, so this is expressible; a record whose second
+//                  bank row says 'Cash' hard-stops on UNKNOWN CHECKBOX OPTION.
+//   row_class    — NOW IN USE, and page 2 is what it was wired in for. Each of the four asset
+//                  groups declares the asset_class it prints, and a row claiming another one
+//                  stops the run. On this form investments (2) and retirement accounts (3) are
+//                  two printed tables with DIFFERENT arithmetic - (3) applies a X .8 quick-sale
+//                  multiplier and (2) does not - so a 401(k) filed into the investment table
+//                  overstates the offer by 20% of its market value with every total still
+//                  reconciling. row_class is the check that refuses it.
 //   exclusive    — at most one target per set, read back off the form after filling.
 //   _never_autofill — validated for existence, guarded against ever being written. On this
 //                  form it sits at the TOP LEVEL, not under `allowed`, because 433-A(OIC)
 //                  prints no IRS-allowable column and therefore has no `allowed` block.
 //   _deferred    — documentation + existence-validation only. Never filled. Empty today.
+//   _computed / _not_checkable — DOCUMENTATION ONLY, and neither is read by this file. They
+//                  record, per printed caption, which page-2 money cells state a formula over
+//                  other printed cells and which source their figure from an attachment. THIS
+//                  ENGINE COMPUTES NOTHING: every one of those cells is an ordinary writable
+//                  map key the record supplies, and the formulas are verified by read-back.
+//                  Formulas are written over map keys, never over targets, so verify-form-
+//                  coverage.mjs does not count either block as a second binding.
 //
 // NOT PRESENT, AND NOT AN OVERSIGHT:
 //   allowed      — this form prints no "IRS USE ONLY / Allowable Expenses" column anywhere.
