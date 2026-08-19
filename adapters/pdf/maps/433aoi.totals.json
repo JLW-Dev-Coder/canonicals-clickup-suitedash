@@ -1,0 +1,166 @@
+{
+  "form": "433aoi",
+  "form_revision": "4-2026",
+  "catalog": "55896Q",
+  "_why": "Which printed cell on 433-A(OIC) is computed from which other printed cells. Read by run-form-gate.mjs step 11, which recomputes every entry FROM WHAT THE FILLED PDF PRINTS and compares it to the printed figure. No figure lives here except the two the FORM ITSELF PRINTS as constants — the $1,000 on line (1) and the .8 quick-sale multiplier — and both are quoted from the caption that prints them.",
+  "authored_from": "The printed page text of adapters/pdf/forms/f433aoi.pdf, extracted from the content streams and read alongside the widget rectangles by adapters/pdf/align-block.mjs. Captions below are quoted verbatim. NOT from field names: NINE leaf names on this form are known to be actively wrong about what their cell means, and one of them — RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] — is a feeder of entry (3a) QSV below, where the leaf says .7 and the page says .8.",
+  "_slice": "PRINTED PAGES 1 AND 2 ONLY. Page 1 prints no total. Page 2's eleven computed cells are all here. Pages 3-8 are not in this file yet; a printed total absent from both `totals` and `not_checkable` has not been declined, it has simply not been read.",
+  "_notes": [
+    "THIS FILE EXISTS BECAUSE THE SCHEMA CAN NOW CARRY THE FORM. It was deliberately not authored during slice 2: the feeder schema then added and subtracted and had no factor and no constant, so (3a)'s X .8 and (1)'s minus $1,000 — the two cells on page 2 that most need checking — would have been the two it could not express. Nine clean passes printed beside two silently-absent checks is worse than a SKIP that says nothing was checked.",
+    "A FACTOR AND A CONSTANT, NOT AN EXPRESSION LANGUAGE. `factor` and `constant` are two numbers per feeder, and a feeder contributes sign x (factor x sum-of-its-cells + constant). That is enough for every printed formula on pages 1-2 and it is deliberately not enough to invent arithmetic here: this file can still only say which printed cells feed a line and by how much.",
+    "`floor` IS THE FORM'S OWN PRINTED INSTRUCTION, not a tolerance. Page 2 y 668.1 prints: 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' Only line (1) can go negative on this page, because only (1) subtracts a constant, so only (1) declares it. When the floor actually fires the gate prints 'floored at 0.00' on that line, so a match that depended on it can never read as an unconditional match.",
+    "ROUNDING IS NOT MODELLED, AND THAT IS A KNOWN LIMIT. The same printed instruction says 'Round to the nearest dollar'. Comparison here is exact to the cent. A market value that is not a multiple of 5 makes X .8 land on a fraction of a dollar, and a correctly-rounded form would then disagree with this recomputation by up to 50 cents. The acceptance fixture uses multiples of 5 so this cannot mask a real defect, and the limit is recorded for Principal rather than papered over with a tolerance — a tripwire with slack in it is a tripwire that stops catching the small errors.",
+    "PER-ROW ENTRIES ARE NOT GROUP TOTALS. Six entries below address a single printed ROW via `total_cell` with a row index, because their printed caption states a formula across the cells of that one row — 'Current market value X .8 = [cell] - [cell] = (3a)'. A group total sums a column; these do not. Both shapes are in this file and they are told apart by `total_cell` versus `total_key`.",
+    "(2c) IS DECLARED CHECKABLE ON THE ARGUABLE READING. The map records it as a one-operand equation — the page draws an '=' between the dollar-equivalent cell and the (2c) marker and draws no other operator — with the case against stated: a lone '=' could be decoration on a row the taxpayer carries across by hand, in which case (2c) is plain input. Included here because the arithmetic is identical under both readings, so this entry cannot be the thing that makes a wrong answer look right. Still reported as arguable rather than resolved.",
+    "WHAT THE ATTACHMENT CELLS DO AND DO NOT PROVE. (1c), (2d), (3b), (4b-source) and (4b-loans) are declared not_checkable below: what they sum is on an attachment this engine never sees. They are nevertheless OPERANDS of (1), (2), (3), (4) and (4b), which ARE checkable — the page prints those cells, and a recomputation reads what the page prints. The rule is about where a formula's operands are PRINTED, not where their figures came from."
+  ],
+  "totals": [
+    {
+      "line": "1",
+      "caption": "Add lines (1a) through (1c) minus ($1,000) =",
+      "total_key": "1_total_bank_and_cash",
+      "floor": 0,
+      "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+      "feeders": [
+        { "group": "1ab_bank_accounts", "column": "account_balance" },
+        { "keys": ["1c_bank_accounts_from_attachment"] },
+        {
+          "constant": -1000,
+          "constant_caption": "minus ($1,000)",
+          "constant_why": "The form prints the figure itself, on the same line, in its own caption. It is not an allowance looked up in a standards table this repo does not hold — it is a number drawn on the page, which is what makes it a printed constant rather than an input."
+        }
+      ]
+    },
+    {
+      "line": "2a",
+      "caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $",
+      "total_cell": { "group": "2ab_investment_accounts", "column": "equity", "row": 0 },
+      "_no_multiplier": "NOTHING is drawn between the two cells on this row except '– $' at x 263.8..277.2. The investment table applies no quick-sale discount and the retirement table below it does. That difference is the whole reason retirement_account is a separate class.",
+      "feeders": [
+        { "group": "2ab_investment_accounts", "column": "current_value", "row": 0 },
+        { "group": "2ab_investment_accounts", "column": "loan_balance", "row": 0, "sign": -1 }
+      ]
+    },
+    {
+      "line": "2b",
+      "caption": "$ [Current market value] – $ [Minus loan balance] = (2b) $",
+      "total_cell": { "group": "2ab_investment_accounts", "column": "equity", "row": 1 },
+      "feeders": [
+        { "group": "2ab_investment_accounts", "column": "current_value", "row": 1 },
+        { "group": "2ab_investment_accounts", "column": "loan_balance", "row": 1, "sign": -1 }
+      ]
+    },
+    {
+      "line": "2c",
+      "caption": "$ [US dollar equivalent of the digital asset as of today] = (2c) $",
+      "total_key": "2c_total_digital_assets",
+      "_arguable": "A one-operand equation — see _notes. Checked because both readings give the same figure.",
+      "feeders": [{ "keys": ["2c_us_dollar_equivalent_today"] }]
+    },
+    {
+      "line": "2",
+      "caption": "Add lines (2a) through (2d) =",
+      "total_key": "2_total_investment_accounts",
+      "feeders": [
+        { "group": "2ab_investment_accounts", "column": "equity" },
+        { "keys": ["2c_total_digital_assets", "2d_investment_accounts_from_attachment"] }
+      ]
+    },
+    {
+      "line": "3a QSV",
+      "caption": "X .8 = $",
+      "total_cell": { "group": "3a_retirement_accounts", "column": "quick_sale_value", "row": 0 },
+      "_the_tripwire": "The cell this entry checks is topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]. The leaf name says .7. The page says .8, drawn at x 154.7..184.7 immediately to the cell's left, and says it twice more on page 3. Binding by leaf name and multiplying by 0.7 would understate the quick sale value by 12.5% of market value AND still leave every printed total on the page reconciling, because (3a) and (3) would both be computed from the same wrong figure. This entry is the only thing on the form that reads the multiplier off the page.",
+      "feeders": [
+        {
+          "group": "3a_retirement_accounts",
+          "column": "current_value",
+          "row": 0,
+          "factor": 0.8,
+          "factor_caption": "X .8 = $",
+          "factor_why": "Printed on the row between the current-market-value cell and this one. The quick-sale discount the IRS applies to a retirement account it would have to liquidate."
+        }
+      ]
+    },
+    {
+      "line": "3a",
+      "caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] = (3a) $",
+      "total_cell": { "group": "3a_retirement_accounts", "column": "quick_sale_equity", "row": 0 },
+      "_not_fmv_minus_loan": "The subtrahend is taken off the QUICK SALE VALUE, not off current market value. That is why the column is named quick_sale_equity and not equity, and it is why this entry and the one above it are two separate checks: together they prove both halves of the row, and either alone would let a wrong multiplier through.",
+      "feeders": [
+        { "group": "3a_retirement_accounts", "column": "quick_sale_value", "row": 0 },
+        { "group": "3a_retirement_accounts", "column": "loan_balance", "row": 0, "sign": -1 }
+      ]
+    },
+    {
+      "line": "3",
+      "caption": "Add lines (3a) through (3b) =",
+      "total_key": "3_total_retirement_accounts",
+      "feeders": [
+        { "group": "3a_retirement_accounts", "column": "quick_sale_equity" },
+        { "keys": ["3b_retirement_accounts_from_attachment"] }
+      ]
+    },
+    {
+      "line": "4a",
+      "caption": "$ [Current cash value] – $ [Minus loan balance] = (4a) $",
+      "total_cell": { "group": "4a_life_insurance_policies", "column": "equity", "row": 0 },
+      "_no_multiplier": "A life policy's cash surrender value is not quick-sale discounted on this form. No multiplier is drawn on the row.",
+      "feeders": [
+        { "group": "4a_life_insurance_policies", "column": "current_cash_value" },
+        { "group": "4a_life_insurance_policies", "column": "outstanding_loan_balance", "sign": -1 }
+      ]
+    },
+    {
+      "line": "4b",
+      "caption": "$ [Total cash value of life insurance policies from attachment] – $ [Minus loan balance(s)] = (4b) $",
+      "total_key": "4b_total_life_insurance_from_attachment",
+      "_both_operands_are_attachment_sourced_and_it_is_still_checkable": "Both feeders are declared not_checkable below, and this subtraction is checkable anyway, because both of them are cells PRINTED ON THIS PAGE. Same shape as (1), which sums (1c).",
+      "feeders": [
+        { "keys": ["4b_life_insurance_from_attachment"] },
+        { "keys": ["4b_minus_loan_balances"], "sign": -1 }
+      ]
+    },
+    {
+      "line": "4",
+      "caption": "Add lines (4a) through (4b) =",
+      "total_key": "4_total_life_insurance",
+      "feeders": [
+        { "group": "4a_life_insurance_policies", "column": "equity" },
+        { "keys": ["4b_total_life_insurance_from_attachment"] }
+      ]
+    }
+  ],
+  "not_checkable": {
+    "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both lists is indistinguishable from one nobody looked at. Mirrors 433aoi.map.json._not_checkable, and takes the 433-F Section E footer precedent recorded in 433f.totals.json. STILL WRITTEN — not checkable is not the same as not filled.",
+    "entries": [
+      {
+        "map_key": "1c_bank_accounts_from_attachment",
+        "printed_caption": "Total of bank accounts from attachment",
+        "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable."
+      },
+      {
+        "map_key": "2d_investment_accounts_from_attachment",
+        "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here.",
+        "review_page_advisory": "Its caption states a formula the engine cannot verify. Surface the caption beside the value on the review page so the preparer sees the requirement: current market value minus loan balance(s), with NO quick-sale discount — the investment table applies none, and adding one here would understate the offer."
+      },
+      {
+        "map_key": "3b_retirement_accounts_from_attachment",
+        "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced.",
+        "review_page_advisory": "THE X .8 IS IN THE CAPTION. The quick-sale discount applies to attached retirement accounts exactly as it does to the printed row at (3a), and a preparer who omits it understates the offer by 20% of attached market value with nothing on this page able to catch it. Surface this caption verbatim beside the value. The engine cannot verify an attachment; it can put the requirement in front of the person who can."
+      },
+      {
+        "map_key": "4b_life_insurance_from_attachment",
+        "printed_caption": "Total cash value of life insurance policies from attachment",
+        "why_not_checkable": "Attachment-sourced."
+      },
+      {
+        "map_key": "4b_minus_loan_balances",
+        "printed_caption": "Minus loan balance(s)",
+        "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) — that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
+      }
+    ]
+  }
+}

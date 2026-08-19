@@ -1,4 +1,4 @@
-// The release gate for one form in the 433 series. Ten steps, in order, stopping at the
+// The release gate for one form in the 433 series. Eleven steps, in order, stopping at the
 // first failure.
 //
 // CLI:  node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]
@@ -6,15 +6,22 @@
 // Exit: 0 = every step passed or was skipped with a reason, 2 = a step failed (it is named).
 //
 //   1  revision pin           the PDF is the revision the map was authored against
-//   2  validate-map           every target exists verbatim in the enumerated field list
-//   3  duplicate-write        no target is written by more than one key
-//   4  coverage               every enumerated field is referenced by the map
-//   5  partition              writable + never-autofill + deferred = the field count, disjoint
-//   6  fill                   produce the PDF
-//   7  verify-appearances     every written value is actually drawn on the page
-//   8  printed-heading        every group row sits beneath the heading it is declared to belong to
-//   9  verify-form-coverage   the whole-form accounting closes
-//  10  arithmetic tripwires   every printed total agrees with the rows it prints above it
+//   2  no pre-set boxes       no checkbox is already checked on the BLANK source form
+//   3  validate-map           every target exists verbatim in the enumerated field list
+//   4  duplicate-write        no target is written by more than one key
+//   5  coverage               every enumerated field is referenced by the map
+//   6  partition              writable + never-autofill + deferred = the field count, disjoint
+//   7  fill                   produce the PDF
+//   8  verify-appearances     every written value is actually drawn on the page
+//   9  printed-heading        every group row sits beneath the heading it is declared to belong to
+//  10  verify-form-coverage   the whole-form accounting closes
+//  11  arithmetic tripwires   every printed total agrees with the rows it prints above it
+//
+// STEP 2 IS THE ONLY STEP THAT ASKS ABOUT THE BLANK FORM. Every other step judges what this
+// run produced. A box already ticked in the source PDF is not something this run produced, is
+// never written by the fill engine, appears in no diff of what the engine did, and prints on
+// the filed page as an answer the taxpayer did not give — while the accounting closes and
+// every total reconciles. It is asked here because nothing downstream is looking for it.
 //
 // WHY A GATE AND NOT A CHECKLIST
 // ------------------------------
@@ -28,7 +35,7 @@
 // field list, the filled PDF, and a per-form totals declaration. Pointing it at 433-B
 // requires authoring 433b.map.json and 433b.totals.json — not editing this file.
 //
-// STEPS 4 AND 5 FOLLOW THE MAP'S OWN DECLARED SCOPE. A map that declares itself COMPLETE
+// STEPS 5 AND 6 FOLLOW THE MAP'S OWN DECLARED SCOPE. A map that declares itself COMPLETE
 // is held to full coverage and a closed partition. A map that has not made that claim is a
 // declared partial slice — 433-F is one — and is REPORTED against the same two checks
 // rather than failed by them, because failing a map for not keeping a promise it never made
@@ -36,21 +43,21 @@
 // so a partial map can never be mistaken for a complete one.
 //
 // --saturated IS AN ASSERTION ABOUT THE SAMPLE, NOT ABOUT THE FORM. Pass it when the input is
-// an ACCEPTANCE sample built to reach every mapped cell, and step 8 fails on any mapped text
+// an ACCEPTANCE sample built to reach every mapped cell, and step 10 fails on any mapped text
 // cell the record left empty. Omit it for a PRODUCTION record, where an empty cell is the
 // normal shape of a real answer — someone with two bank accounts leaves two slots blank, and
 // that is a correctly filled form. Only that one assertion moves. The mode is banner-printed
-// here and again inside step 8, because a coverage report that does not say which rule it ran
+// here and again inside step 10, because a coverage report that does not say which rule it ran
 // under is a number nobody can act on.
 //
-// STEP 8 RUNS BEFORE THE ACCOUNTING AND THE TRIPWIRES ON PURPOSE. Steps 9 and 10 measure a
+// STEP 9 RUNS BEFORE THE ACCOUNTING AND THE TRIPWIRES ON PURPOSE. Steps 10 and 11 measure a
 // form against itself: every field accounted for, every total agreeing with the rows above
 // it. Both hold perfectly on a statement whose rows are filed under the wrong printed
 // headings — the figures are individually correct and the arithmetic still reconciles. A run
 // that reached the tripwires while rows sat under wrong headings would be reporting
 // reconciled totals for a misfiled statement, so the heading assertion is asked first.
 //
-// STEP 10 ALSO FOLLOWS THE MAP'S DECLARED SCOPE. A map that declares COMPLETE and has no
+// STEP 11 ALSO FOLLOWS THE MAP'S DECLARED SCOPE. A map that declares COMPLETE and has no
 // totals file FAILS — it promised the whole form and cannot prove its own arithmetic. A map
 // that declares no COMPLETE slice and has no totals file is SKIPPED with the reason stated,
 // because a partial slice may not contain a printed total to check yet, and failing it would
@@ -68,10 +75,10 @@ const saturated = argv.includes('--saturated');
 const [form, samplePath] = argv.filter(a => !a.startsWith('--'));
 if (!form || !samplePath) {
   console.error('usage: node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]');
-  console.error('  --saturated  the sample is an ACCEPTANCE sample: step 8 fails on any mapped');
+  console.error('  --saturated  the sample is an ACCEPTANCE sample: step 10 fails on any mapped');
   console.error('               text cell it left empty.');
   console.error('  (default)    the input is a PRODUCTION record: empty mapped cells are');
-  console.error('               reported by step 8, not failed.');
+  console.error('               reported by step 10, not failed.');
   process.exit(2);
 }
 
@@ -139,6 +146,14 @@ const steps = [
     return revOk && catOk ? ok('the loaded PDF is the revision the map was authored against')
                           : fail('REVISION MISMATCH — re-author the map against the new revision, do not just bump the pin');
   }],
+
+  // Asked of the BLANK source, before anything is written, because that is the only moment
+  // at which a pre-set box is distinguishable from one this run put there. It is second
+  // rather than first only because step 1 is what proves WHICH source PDF is loaded.
+  ['no pre-set boxes on the blank form', async () =>
+    runTool('assert-no-preset-boxes.mjs', [form])
+      ? ok('every checkbox on the blank source form is off, so any tick on the filled copy was put there by the fill engine')
+      : fail('a checkbox is already checked on the BLANK source form — it would print on the filed page as an answer nobody gave, and no later step looks at it')],
 
   ['validate-map', async () =>
     runTool('validate-map.mjs', [form])
@@ -218,7 +233,7 @@ const steps = [
   ['arithmetic tripwires', async () => {
     if (!existsSync(totalsPath)) {
       // A COMPLETE map that cannot prove its own arithmetic has not earned a pass; a declared
-      // partial slice may simply not hold a printed total yet. Same rule as steps 4 and 5:
+      // partial slice may simply not hold a printed total yet. Same rule as steps 5 and 6:
       // the map's own declared scope decides, and this file still names no form.
       return complete
         ? fail(`no ${totalsPath} — 0 totals checked. This map declares itself COMPLETE ("${mapDoc.slice}"), so it claims the whole form and must be able to prove its own arithmetic. This step proves NOTHING for ${form} until a totals declaration is authored from the form's printed captions, so it fails rather than passing on an empty check.`)
@@ -237,21 +252,42 @@ const steps = [
     };
 
     const resolveKey = (key) => mapDoc.map?.[key];
-    const groupTargets = (g, column) => {
+    // `row` is 0-based and OPTIONAL. Without it a group feeder is the whole column, which is
+    // what a group total sums. With it the feeder is ONE printed row, which is what a per-row
+    // printed formula — "current market value X .8 = quick sale value" — is written over.
+    // Every quick-sale tripwire on 433-A(OIC) is that shape: a cell whose caption states a
+    // factor over the cell beside it, not over a column.
+    const groupTargets = (g, column, row) => {
       const def = mapDoc.groups?.[g];
       if (!def || !Array.isArray(def.slots)) return null;
       // A slot is either flat ({column: target}) or nested under `text` — both shapes are
       // in use across the series, so the column is looked up in whichever one holds it.
-      const t = def.slots.map(s => (s?.text && s.text[column] !== undefined) ? s.text[column] : s?.[column]);
+      const pick = (s) => (s?.text && s.text[column] !== undefined) ? s.text[column] : s?.[column];
+      if (row !== undefined) {
+        if (!Number.isInteger(row) || row < 0 || row >= def.slots.length) return null;
+        const one = pick(def.slots[row]);
+        return one === undefined ? null : [one];
+      }
+      const t = def.slots.map(pick);
       return t.some(x => x === undefined) ? null : t;
+    };
+    // A total is addressed either by map key (`total_key`) or, when the printed cell is a
+    // column of a repeatable row rather than a scalar, by `total_cell: {group, column, row}`.
+    const resolveTotal = (entry) => {
+      if (entry.total_key) return { target: resolveKey(entry.total_key), how: `total_key "${entry.total_key}"` };
+      const c = entry.total_cell;
+      if (!c) return { target: undefined, how: 'neither `total_key` nor `total_cell`' };
+      const t = groupTargets(c.group, c.column, c.row);
+      return { target: t ? t[0] : undefined, how: `total_cell ${c.group}[${c.row}].${c.column}` };
     };
 
     const rows = [];
     for (const entry of decl.totals) {
-      const r = { line: entry.line, caption: entry.caption, checkable: true, why: null, printed: null, sum: 0, feeders: [] };
+      const r = { line: entry.line, caption: entry.caption, checkable: true, why: null, printed: null, sum: 0, feeders: [],
+                  floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false };
 
-      const totalTarget = resolveKey(entry.total_key);
-      if (!totalTarget) { r.checkable = false; r.why = `total_key "${entry.total_key}" is not in the map`; rows.push(r); continue; }
+      const { target: totalTarget, how: totalHow } = resolveTotal(entry);
+      if (!totalTarget) { r.checkable = false; r.why = `${totalHow} does not resolve to a target in the map`; rows.push(r); continue; }
       const tp = printed(totalTarget);
       if (tp.missing) { r.checkable = false; r.why = `the total's target is not a text field on the filled PDF`; rows.push(r); continue; }
       const tv = parseMoney(tp.text);
@@ -259,18 +295,31 @@ const steps = [
       r.printed = tv.n;
 
       for (const fd of entry.feeders) {
-        const sign = fd.sign === -1 ? -1 : 1;
+        const sign   = fd.sign === -1 ? -1 : 1;
+        // A FACTOR and a CONSTANT, and nothing more. Two printed shapes on 433-A(OIC) need
+        // them and neither is expressible by adding cells: "X .8 = $" states a factor over
+        // the cell to its left, and "Add lines (1a) through (1c) minus ($1,000)" states a
+        // constant the form prints and no cell holds. They are declared as two numbers rather
+        // than as an expression, so a totals file can still only say WHICH printed cells feed
+        // a line and by how much — it cannot become a second place where arithmetic is
+        // invented. A feeder that declares `constant` and no cells IS the printed constant.
+        const factor = (typeof fd.factor === 'number') ? fd.factor : 1;
+        const konst  = (typeof fd.constant === 'number') ? fd.constant : 0;
         let targets;
         if (Array.isArray(fd.keys)) {
           targets = fd.keys.map(resolveKey);
           const bad = fd.keys.filter((k, i) => !targets[i]);
           if (bad.length) { r.checkable = false; r.why = `feeder key(s) not in the map: ${bad.join(', ')}`; break; }
         } else if (fd.group) {
-          targets = groupTargets(fd.group, fd.column);
-          if (!targets) { r.checkable = false; r.why = `group "${fd.group}" column "${fd.column}" does not resolve to a target on every printed row`; break; }
-        } else { r.checkable = false; r.why = 'feeder declares neither `keys` nor `group`'; break; }
+          targets = groupTargets(fd.group, fd.column, fd.row);
+          if (!targets) { r.checkable = false; r.why = `group "${fd.group}" column "${fd.column}"${fd.row === undefined ? '' : ` row ${fd.row}`} does not resolve to a target on every printed row`; break; }
+        } else if (typeof fd.constant === 'number') {
+          targets = [];                       // a printed constant, contributing on its own
+        } else { r.checkable = false; r.why = 'feeder declares none of `keys`, `group` or `constant`'; break; }
 
         const re = fd.extract ? new RegExp(fd.extract) : null;
+        let cellSum = 0;
+        const cells = [];
         for (const t of targets) {
           const p = printed(t);
           if (p.missing) { r.checkable = false; r.why = `a feeder target is not a text field on the filled PDF: ${t}`; break; }
@@ -282,10 +331,20 @@ const steps = [
           }
           const v = parseMoney(raw);
           if (v.n === null) { r.checkable = false; r.why = `a feeder cell is not a number: ${JSON.stringify(v.raw.slice(0, 60))}`; break; }
-          if (!v.blank) { r.sum += sign * v.n; r.feeders.push({ target: t, sign, n: v.n }); }
+          if (!v.blank) { cellSum += v.n; cells.push({ target: t, n: v.n }); }
         }
         if (!r.checkable) break;
+        // Report each cell at the value it actually contributes, factor and sign applied, so
+        // the failure print-out adds up on the page rather than needing the reader to redo it.
+        cells.forEach(c => r.feeders.push({ target: c.target, sign, n: c.n, factor, contributes: sign * factor * c.n }));
+        if (konst !== 0) r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
+        r.sum += sign * (factor * cellSum + konst);
       }
+      // The floor is the form's own printed instruction — 433-A(OIC) page 2 y 668.1: "Do not
+      // enter a negative number. If any line item is a negative number, enter '0'." Applied
+      // AFTER the feeders, because that is where the page applies it, and recorded when it
+      // bites so a match that depended on it can never read as an unconditional match.
+      if (r.checkable && r.floor !== null && r.sum < r.floor) { r.sum = r.floor; r.floored = true; }
       r.match = r.checkable && cents(r.printed) === cents(r.sum);
       rows.push(r);
     }
@@ -298,7 +357,16 @@ const steps = [
         console.log(`  ${r.line.padEnd(w)} | ${'—'.padStart(15)} | ${'—'.padStart(19)} | NOT CHECKABLE`);
         continue;
       }
-      console.log(`  ${r.line.padEnd(w)} | ${money(r.printed).padStart(15)} | ${money(r.sum).padStart(19)} | ${r.match ? 'yes' : 'NO'}  (${r.feeders.length} feeder cell${r.feeders.length === 1 ? '' : 's'})`);
+      // Anything that moved the recomputation beyond "add the cells" is named on the line
+      // itself. A factor, a printed constant or a floor that fired changes what the match
+      // means, and a table that showed only the two figures would hide which rule produced them.
+      const applied = [
+        ...new Set(r.feeders.filter(f => f.factor !== 1).map(f => `x ${f.factor}`)),
+        ...r.feeders.filter(f => String(f.target).startsWith('(printed constant')).map(f => `${f.contributes < 0 ? '-' : '+'} ${money(Math.abs(f.contributes))}`),
+        ...(r.floored ? [`floored at ${money(r.floor)}`] : []),
+      ];
+      const cellCount = r.feeders.filter(f => !String(f.target).startsWith('(printed constant')).length;
+      console.log(`  ${r.line.padEnd(w)} | ${money(r.printed).padStart(15)} | ${money(r.sum).padStart(19)} | ${r.match ? 'yes' : 'NO'}  (${cellCount} feeder cell${cellCount === 1 ? '' : 's'}${applied.length ? `, ${applied.join(', ')}` : ''})`);
     }
 
     const unchecked = rows.filter(r => !r.checkable);
@@ -320,8 +388,12 @@ const steps = [
       console.log('');
       console.log(`  ${declined.length} printed total-shaped cell(s) DECLARED not checkable — written, deliberately not verified:`);
       for (const e of declined) {
-        console.log(`    ${e.map_key} — "${e.printed_caption}"`);
+        console.log(`    ${e.map_key || `${e.cell?.group}.${e.cell?.column}`} — "${e.printed_caption}"`);
         console.log(`      ${e.why_not_checkable}`);
+        // A declined cell whose caption states a FORMULA carries a requirement no check can
+        // enforce. render-review.mjs puts it beside the value for the preparer; it is echoed
+        // here so the gate transcript names every cell the machine handed to a person.
+        if (e.review_page_advisory) console.log(`      ADVISORY on the review page: ${e.review_page_advisory}`);
       }
     }
 
@@ -332,9 +404,9 @@ const steps = [
     for (const r of bad) {
       console.error(`  line ${r.line} — ${r.caption}`);
       console.error(`    printed total:       ${money(r.printed)}`);
-      console.error(`    sum of printed rows: ${money(r.sum)}`);
+      console.error(`    sum of printed rows: ${money(r.sum)}${r.floored ? `  (floored at ${money(r.floor)})` : ''}`);
       console.error(`    difference:          ${money(r.printed - r.sum)}`);
-      r.feeders.forEach(f => console.error(`      ${f.sign < 0 ? '-' : '+'} ${money(f.n).padStart(14)}  ${f.target}`));
+      r.feeders.forEach(f => console.error(`      ${f.contributes < 0 ? '-' : '+'} ${money(Math.abs(f.contributes)).padStart(14)}  ${f.target}${f.factor !== 1 ? `   [${money(f.n)} x ${f.factor}]` : ''}`));
     }
     return fail(`${bad.length} total(s) do not agree with the rows printed above them`);
   }],
@@ -345,8 +417,8 @@ console.log(`  map:    ${mapPath}`);
 console.log(`  sample: ${samplePath}`);
 console.log(`  out:    ${outPath}`);
 console.log(`  mode:   ${saturated
-  ? 'SATURATED — the sample must reach every mapped text cell (step 8 fails on any it misses)'
-  : 'production record — empty mapped text cells are reported by step 8, not failed'}`);
+  ? 'SATURATED — the sample must reach every mapped text cell (step 10 fails on any it misses)'
+  : 'production record — empty mapped text cells are reported by step 10, not failed'}`);
 
 const skipped = [];
 for (let i = 0; i < steps.length; i++) {

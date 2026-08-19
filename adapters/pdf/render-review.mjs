@@ -104,6 +104,31 @@ const lineOf = (key, target) => {
   return row || parts[parts.length - 1];
 };
 
+// --- advisories on cells the gate deliberately does not check --------------------------------
+//
+// The tripwire step declines to verify some printed money cells and says why: everything they
+// sum is on an ATTACHMENT, which this engine never sees. Declining is correct — nothing on the
+// page could verify them. But some of those captions STATE A FORMULA, and that formula binds
+// the preparer even though no check can enforce it. 433-A(OIC)'s (3b) is the sharp case: its
+// caption reads "[current market value X .8 minus loan balance(s)]", so a preparer who omits
+// the quick-sale discount on attached retirement accounts understates the offer by 20% of the
+// attached market value, and nothing on the page — no total, no tripwire, no accounting — can
+// catch it. Every other cell in this pipeline is checked by a machine; this class of cell can
+// only be checked by a person, so the requirement is put in front of that person here.
+//
+// Declared in `<form>.totals.json`, not here, so this file still names no form. An entry
+// addresses either a scalar map key or a whole group column, because the cell can be either.
+const totalsPath = `adapters/pdf/maps/${form}.totals.json`;
+const advisoryFor = { byKey: new Map(), byCell: new Map() };
+if (existsSync(totalsPath)) {
+  for (const e of (JSON.parse(readFileSync(totalsPath, 'utf8')).not_checkable?.entries || [])) {
+    if (!e.review_page_advisory) continue;
+    const adv = { caption: e.printed_caption, text: e.review_page_advisory };
+    if (e.map_key) advisoryFor.byKey.set(e.map_key, adv);
+    if (e.cell?.group && e.cell?.column) advisoryFor.byCell.set(`${e.cell.group}.${e.cell.column}`, adv);
+  }
+}
+
 // --- collect every binding the map declares -------------------------------------------------
 const rows = [];
 const add = (r) => {
@@ -113,6 +138,7 @@ const add = (r) => {
     ...r,
     pdfKind: t.kind,
     pdfValue,
+    advisory: r.advisory ?? (r.keys?.map(k => advisoryFor.byKey.get(k)).find(Boolean) ?? null),
     section: sectionOf(r.target),
     line: r.line ?? lineOf(r.keys?.[0], r.target),
     verdict: t.kind === 'missing' ? 'MISMATCH' : compare(r.hsValue, pdfValue),
@@ -186,6 +212,7 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
         target,
         hsValue: resolved[i]?.[sub],
         label: `${g} row ${i + 1} — ${sub}`,
+        advisory: advisoryFor.byCell.get(`${g}.${sub}`) ?? null,
         note: usedArray ? `from ${arrayKey}[${i}].${sub}` : (srcKey ? null : 'no scalar fallback key feeds this slot'),
       });
     }
@@ -308,7 +335,7 @@ const rowHtml = (r) => `
         <td>${esc(r.label ?? r.keys[0] ?? '')}<div class="target" title="${esc(r.target)}">${esc(seg(r.target).slice(-2).join(' › '))}</div></td>
         <td class="prop">${r.keys.length ? r.keys.map(k => esc(hsNameFor(k) ?? `(no property) ${k}`)).join('<br>') : '<span class="muted">— derived, no property</span>'}</td>
         <td class="val">${blank(r.hsValue) ? '<span class="muted">—</span>' : esc(r.hsValue)}</td>
-        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}</td>
+        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}${r.advisory ? `<div class="advisory"><strong>Not checkable — the printed caption states a formula:</strong> &ldquo;${esc(r.advisory.caption)}&rdquo;<br>${esc(r.advisory.text)}</div>` : ''}</td>
         <td>${badge(r.verdict)}</td>
       </tr>`;
 
@@ -333,6 +360,7 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   td.prop, .target { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 11.5px; }
   td.prop { color: #3d4650; }
   .target { color: #97a0aa; margin-top: 2px; }
+  .advisory { margin-top: 6px; padding: 7px 9px; border-left: 3px solid #b8860b; background: #fdf6e3; color: #5c4a12; font-size: 11.5px; line-height: 1.45; font-weight: 400; white-space: normal; }
   td.val { max-width: 260px; word-break: break-word; }
   .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
   .badge.ok { background: #dcf5e3; color: #16632f; }

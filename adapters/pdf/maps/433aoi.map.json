@@ -8,155 +8,364 @@
   "map_version": 2,
   "authored_from_page2": "adapters/pdf/align-block.mjs 433aoi page 2, whole page (117 printed text items, 68 widgets), cross-read against 433aoi.line-markers.txt (15 printed markers on page 2, every one attached to the widget this map binds it to) and 433aoi.checkboxes.txt (21 checkboxes on page 2, all probing on=/1). Every binding was taken from the PRINTED marker, the printed caption and the widget rectangle. THE LABEL FILE WAS NOT USED AS EVIDENCE ANYWHERE ON THIS PAGE - see _label_file_disagreements, which names the eight widgets it reports wrongly and the five where it contradicts the rectangle outright.",
   "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
-
   "_notes": [
     "KEY NAMING. 433-A keys are prefixed with the printed line marker (1a_full_name, 4f_tp_occupation). 433-A(OIC) PRINTS NO LINE MARKER ANYWHERE ON PAGE 1 - line-markers.mjs reports 0 markers on page 1 of 8, and the first printed marker on the form is (1a) on page 2. So the keys in this slice are prefixed with the printed SECTION number instead: s1_ for 'Section 1 Personal and Household Information', s2_ for 'Section 2 Employment Information for Wage Earners'. From page 2 onward the form does print markers and those keys will follow the marker without its parentheses - printed (32) gives 32_.",
-
     "THE KEY IS NOT THE PROPERTY NAME. Keys here name cells on this form. Where the same fact already exists in the backbone the crosswalk binds it as exact, and the HubSpot property name comes from the crosswalk, not from the key.",
-
     "THE INTERNAL NAMES ON THIS FORM ARE SEMANTIC, NOT POSITIONAL, AND FIVE OF THEM ARE WRONG. 433-A's leaf suffixes lag the printed line by exactly one, form-wide, which is a trap that announces itself the moment you count. This form's names carry no line reference at all (75 of 80 marker-attached widgets have no line token; 2 carry one and it agrees; 0 lag), so they read as descriptions - and a description that is wrong reads as right. The five measured so far, none of them in this slice, recorded here because someone will later read the name and try to 'fix' the map: (1) topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[0] is printed line (32), 'Additional sources of income used to support the household' - NOT interest and dividends; (2) topmostSubform[0].F433-A-OIC_Page6[0].tab_order[1].Interest_Dividends[0] is (32)'s 'List source(s)' free text; (3) topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1] is printed line (33) and IS interest, dividends and royalties - the only true one of the four; (4) topmostSubform[0].F433-A-OIC_Page6[0].tab_order[2].Interest_Dividends[0] is on the EXPENSE half of the page, printed line (50), 'List debt(s)/expense(s)' - seventeen printed lines away from any income; (5) topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] sits under a printed 'X .8 = $' at printed line (3a). Its name says seven; the page says point eight. Binding it by name would print a 0.7 multiplier on a statement signed under penalty of perjury.",
-
     "NO ALLOWED BLOCK, BY RULING. 433-A prints an 'IRS USE ONLY / Allowable Expenses' column beside every expense line and 433-F prints its Section H equivalent; 433-A(OIC) prints no such column anywhere. Its printed instruction folds the standard INTO the taxpayer's own figure on two lines only - 'For expenses claimed in boxes (39) and (45) only, you should list the full amount of the allowable standard even if the actual amount you pay is less' - and says nothing about it elsewhere. So nothing on this form is auto-filled from irs-standards-2026.json, and this map has no `allowed` key at all.",
-
     "WHERE NEVER-AUTOFILL LIVES ON THIS MAP. Because there is no `allowed` block, the never-autofill declaration is at the TOP LEVEL as `_never_autofill`, not at `allowed._never_autofill`. verify-form-coverage.mjs accepts either root. The construct itself is unchanged: entries are objects whose `target` is a string, so the schema-agnostic validator checks every one of them for existence, and each is validated and never written.",
-
     "SLICE BOUNDARY. This slice is the two printed sections that begin and end on page 1, and page 1 carries nothing else. That coincidence of section boundary and page boundary happens nowhere else on this form: Section 3 spans pages 2-4, Section 5 straddles 4-5, Section 6 shares page 5 with the tail of Section 5, and Section 9 spans 7-8. Taking Section 1 alone would have split a page; taking page 1 alone splits nothing, because page 1 is exactly these two sections. 74 of 425 fields.",
-
     "ROW ORDER IS PRINTED ORDER. household_members binds Row1..Row4 in descending y (324.0, 309.6, 295.2, 280.8), which is the order a person reads them in.",
-
     "SLICE 2 - THE SIXTH, SEVENTH AND EIGHTH WRONG NAMES, AND THE FIRST TWO ARE THE WORST SO FAR. topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0] IS NOT A RETIREMENT ACCOUNT. It is the DIGITAL ASSET block: every leaf under it is virtualCurrency, descriptionDigitalAsset, numberOfUnits, locationDigitalAsset, assetsAccountNumber or dollarEquivalentToday, it sits under the printed word 'Digital asset' at y 380.1, and its total is printed line (2c), which adds into (2) INVESTMENT accounts. topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0] is the block that IS a retirement account - the '2' in its name is not a row index, it is the first and only retirement row on the page. Binding the two by name would file every digital asset as a retirement holding and would apply the X .8 quick-sale multiplier to the wrong block: the digital asset row prints NO multiplier and the retirement row does. Third, topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].name_of_individual[0] is not a person's name - the caption printed directly above it (y 337.9, x 36.0..211.6) reads 'Digital asset address for self-hosted digital assets'.",
-
     "SLICE 2 - THE NINTH WRONG NAME. topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Investment_Account_Attached[0] is printed line (3b), 'Total of retirement accounts from attachment'. Its leaf says INVESTMENT; it is the RETIREMENT attachment total. The investment attachment total is a different cell on a different subform, TotalInvestmentAccts[0].Total_Investment_Acct_Attached[0], printed line (2d), fifteen printed lines higher up the page. The two leaf names differ by four characters, and the two cells differ by the whole X .8 multiplier: (2d)'s printed caption says '[current market value minus loan balance(s)]' and (3b)'s says '[current market value X .8 minus loan balance(s)]'.",
-
     "SLICE 2 - THE QUICK SALE TRIPWIRE AT (3a), MEASURED. topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0] occupies x 187.2..295.2 at y 219.6. The printed text immediately to its LEFT, at y 214.7, x 154.7..184.7, is 'X .8 = $' - and the cell that text multiplies, Current_Market_Value[0], ends at x 151.2, three points left of it. The name says seven. The page says point eight. Two further printed statements on this page agree with the page and not with the name: the (3b) caption '[current market value X .8 minus loan balance(s)]', and the printed Note at y 172.0, 'Your reduction from current market value may be greater than 20% due to potential tax consequences/withdrawal penalties' - a 20% reduction is a 0.8 multiplier. Binding by the name would print 0.7, understating the retirement asset by 10% of its market value on a statement signed under penalty of perjury, and (3), (3a) and every total below would still reconcile.",
-
     "SLICE 2 - COMPUTED vs NOT CHECKABLE, BY THE PRINTED CAPTION. A cell whose printed caption states a formula ENTIRELY in terms of other cells printed on this page is declared under _computed and is verifiable by recomputation from what the filled PDF prints. A cell whose printed caption sources its figure from an ATTACHMENT is writable input and is declared under _not_checkable with the caption as the reason, because nothing printed on the page could verify it. That one rule settles all of this page's total-shaped cells without a per-case decision. It follows the 433-F Section E footer precedent (433f.totals.json not_checkable.entries[0]) and its converse: rows the form has no slot for are dropped to an attachment and are NOT in a printed total, which is exactly what makes the other totals checkable, so a cell about precisely those dropped rows cannot be.",
-
     "SLICE 2 - NO adapters/pdf/maps/433aoi.totals.json IS AUTHORED IN THIS SLICE, DELIBERATELY. run-form-gate.mjs step 10 checks a totals file whenever one EXISTS. Its feeder schema can add and it can subtract (a feeder may carry sign: -1); it cannot MULTIPLY and it cannot carry a printed CONSTANT. Two of this page's computed cells need exactly those: (3a) needs Times_7 = current market value X .8, and (1) needs 'Add lines (1a) through (1c) minus ($1,000)'. A totals file authored now would switch step 10 on while being structurally incapable of checking the two cells on this page that most need checking, and the other eight lines would report a clean pass beside them. That is the 'no declared state' condition this repo keeps finding defects in. So the arithmetic is declared here under _computed, verified by read-back in this slice, and step 10 stays SKIPPED with its reason printed until the feeder schema gains a factor and a constant. Recorded for Principal as a TOOL change, not a map change - the same direction of fix as generalising verify-form-coverage.mjs to accept a top-level _never_autofill.",
-
     "SLICE 2 - NOTHING ON PAGE 2 IS DECLARED EXCLUSIVE, AND THAT IS A DECISION, NOT AN OMISSION. Page 1's option sets are exclusive because the page makes them so: a person is unmarried or married, and 'Do you' is one question with one answer. Page 2 prints THREE option lists - the bank account types on (1a) and (1b), 'Stocks / Bonds / Other' on (2a) and (2b), and '401K / IRA / Other' on (3a) - and prints no 'check one' instruction over any of them. One brokerage account can truthfully hold both stocks and bonds, so declaring that list exclusive would assert a constraint the page does not print and would hard-stop a truthful record. Little is lost: a group slot's checkboxes construct takes ONE input value and checks ONE box, so the read-back still shows exactly one box checked per row, and verify-form-coverage.mjs buckets the rest as 'checkboxes unchecked (independent)', which is an accounted-for state and not a gap. What IS lost is the guard against a box already set in the source PDF. Reported to Principal as arguable rather than resolved: the bank and the retirement lists are very likely exclusive in the world, and this map declines to say so because the page does not.",
-
     "SLICE 2 - THE TWO BANK ROWS ARE NOT THE SAME SHAPE, AND THE MAP SAYS SO. Printed line (1a) offers SIX account types - Cash, Checking, Savings, Money Market Account/CD, Online Account, Stored Value Card. Printed line (1b) offers FIVE: the same list without Cash. So 1ab_bank_accounts declares six options on slot 0 and five on slot 1 rather than a uniform table, because check-row-shape.mjs reads declaredColumns PER SLOT and a uniform declaration here would be a claim about the page that is false. A record whose SECOND bank row says 'Cash' hard-stops on UNKNOWN CHECKBOX OPTION rather than filing silently under the wrong type or leaving the type blank.",
-
     "SLICE 2 - equity MEANS TWO DIFFERENT THINGS ON THIS PAGE, SO IT IS TWO COLUMN NAMES. On investments (2a)/(2b) and on life insurance (4a) the printed row is '$ [value] - $ [loan] = $ [line]', so equity = value minus loan, which is the backbone's investment.equity and life_insurance_policy.equity. On retirement (3a) the printed row is '$ [value] X .8 = $ [qsv] - $ [loan] = $ (3a)', so the same-shaped cell is QUICK SALE value minus loan. It is declared as quick_sale_equity, NOT equity, precisely so a future engine computing equity = value - loan uniformly cannot reach it. Giving them one name would make the 20% error a one-line mistake in a shared helper.",
-
     "SLICE 2 - THE DIGITAL ASSET BLOCK IS BOUND AS SCALARS, NOT AS A GROUP, AND THE REASON IS THE ENGINE. Every other asset block on this page is a group, which buys row_class protection against a row landing in the wrong printed table. The digital asset block cannot be, because its row label carries a LONE checkbox ('Digital asset', box x 36.0..45.0 at y 378.9, printed word at x 50.4..94.0) with no counterpart cell, and fill-433aoi.mjs supports check_here only at the TOP LEVEL, not per group slot. Rather than invent a per-slot construct this slice cannot exercise, the block is bound as 2c_ scalars and its lone box under check_here. The form prints exactly one digital asset row, so nothing is lost today; when Section 9's digital asset questions are read, a per-slot check_here may be worth adding.",
-
     "THE DEPENDENT TABLE HAS ONE FEWER ROW THAN 433-A's. 433-A's household_members group has five slots because that form prints Row4 twice (Row4[0] and Row4[1] carry the same leaf names). This form prints four rows and enumerates four; max is 4. A fifth household member goes to an attachment - the form has no slot for it, and inventing one would print a person outside the printed rule."
   ],
-
   "map": {
-    "s1_tp_last_name":            "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].lastName[0]",
-    "s1_tp_first_name":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].firstName[0]",
-    "s1_tp_dob":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dateOfBirth[0]",
-    "s1_tp_ssn_itin":             "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ssnITIN[0]",
-    "s1_home_physical_address":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homePhysicalAddress[0]",
-    "s1_date_of_marriage":        "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].dateOfMarrage[0]",
-    "s1_housing_other_specify":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecifyLiving[0]",
-    "s1_county_of_residence":     "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].countyOfResidence[0]",
-    "s1_primary_phone":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].primaryPhone[0]",
-    "s1_secondary_phone":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].secondaryPhone[0]",
-    "s1_fax_number":              "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].faxNumber[0]",
-    "s1_home_mailing_address":    "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homeMailingAddress[0]",
-    "s1_sp_last_name":            "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseLastName[0]",
-    "s1_sp_first_name":           "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseFirstName[0]",
-    "s1_sp_dob":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseDateBirth[0]",
-    "s1_sp_ssn":                  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseSSN[0]",
-
-    "s2_tp_employer_name":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Name[0]",
-    "s2_tp_employer_address":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Address[0]",
-    "s2_tp_occupation":           "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Occupation[0]",
-    "s2_tp_tenure_years":         "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Years_With_Employer_1[0]",
-    "s2_tp_tenure_months":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Months_With_Employer_1[0]",
-    "s2_sp_employer_name":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Name[0]",
-    "s2_sp_employer_address":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Address[0]",
-    "s2_sp_occupation":           "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Occupation[0]",
-    "s2_sp_tenure_years":         "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Years_With_Employer_2[0]",
-    "s2_sp_tenure_months":        "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Months_With_Employer_2[0]",
-
-    "1c_bank_accounts_from_attachment":        "topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Accounts_Attachment[0]",
-    "1_total_bank_and_cash":                   "topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Amount_3[0]",
-
-    "2c_description_of_digital_asset":         "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].virtualCurrency[0].descriptionDigitalAsset[0]",
-    "2c_number_of_units":                      "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].numberOfUnits[0]",
-    "2c_location_of_digital_asset":            "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].locationDigitalAsset[0]",
-    "2c_custodian_account_number":             "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].assetsAccountNumber[0]",
-    "2c_self_hosted_asset_address":            "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].name_of_individual[0]",
-    "2c_us_dollar_equivalent_today":           "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0]",
-    "2c_total_digital_assets":                 "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].TotalCurrentMarketValue[0]",
-
-    "2d_investment_accounts_from_attachment":  "topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Acct_Attached[0]",
-    "2_total_investment_accounts":             "topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Accounts[0]",
-
-    "3b_retirement_accounts_from_attachment":  "topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Investment_Account_Attached[0]",
-    "3_total_retirement_accounts":             "topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Retirement_Accounts[0]",
-
-    "4b_life_insurance_from_attachment":       "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].TotalLifeIns[0].Total_Life_Ins_Attached[0]",
-    "4b_minus_loan_balances":                  "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].LessLoanbal2[0].Less_Loan_Balance[0]",
+    "s1_tp_last_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].lastName[0]",
+    "s1_tp_first_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].firstName[0]",
+    "s1_tp_dob": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dateOfBirth[0]",
+    "s1_tp_ssn_itin": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ssnITIN[0]",
+    "s1_home_physical_address": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homePhysicalAddress[0]",
+    "s1_date_of_marriage": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].dateOfMarrage[0]",
+    "s1_housing_other_specify": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecifyLiving[0]",
+    "s1_county_of_residence": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].countyOfResidence[0]",
+    "s1_primary_phone": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].primaryPhone[0]",
+    "s1_secondary_phone": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].secondaryPhone[0]",
+    "s1_fax_number": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].Col1[0].faxNumber[0]",
+    "s1_home_mailing_address": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].homeMailingAddress[0]",
+    "s1_sp_last_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseLastName[0]",
+    "s1_sp_first_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseFirstName[0]",
+    "s1_sp_dob": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseDateBirth[0]",
+    "s1_sp_ssn": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].spouseSSN[0]",
+    "s2_tp_employer_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Name[0]",
+    "s2_tp_employer_address": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Employer_Address[0]",
+    "s2_tp_occupation": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Your_Occupation[0]",
+    "s2_tp_tenure_years": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Years_With_Employer_1[0]",
+    "s2_tp_tenure_months": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].Months_With_Employer_1[0]",
+    "s2_sp_employer_name": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Name[0]",
+    "s2_sp_employer_address": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Employer_Address[0]",
+    "s2_sp_occupation": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Spouse_Occupation[0]",
+    "s2_sp_tenure_years": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Years_With_Employer_2[0]",
+    "s2_sp_tenure_months": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].Months_With_Employer_2[0]",
+    "1c_bank_accounts_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Accounts_Attachment[0]",
+    "1_total_bank_and_cash": "topmostSubform[0].F433-A-OIC_Page2[0].TotalAccounts[0].Total_Amount_3[0]",
+    "2c_description_of_digital_asset": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].virtualCurrency[0].descriptionDigitalAsset[0]",
+    "2c_number_of_units": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].numberOfUnits[0]",
+    "2c_location_of_digital_asset": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].locationDigitalAsset[0]",
+    "2c_custodian_account_number": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].assetsAccountNumber[0]",
+    "2c_self_hosted_asset_address": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].name_of_individual[0]",
+    "2c_us_dollar_equivalent_today": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0]",
+    "2c_total_digital_assets": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct1[0].TotalCurrentMarketValue[0]",
+    "2d_investment_accounts_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Acct_Attached[0]",
+    "2_total_investment_accounts": "topmostSubform[0].F433-A-OIC_Page2[0].TotalInvestmentAccts[0].Total_Investment_Accounts[0]",
+    "3b_retirement_accounts_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Investment_Account_Attached[0]",
+    "3_total_retirement_accounts": "topmostSubform[0].F433-A-OIC_Page2[0].TotalRetirementAccts[0].Total_Retirement_Accounts[0]",
+    "4b_life_insurance_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].TotalLifeIns[0].Total_Life_Ins_Attached[0]",
+    "4b_minus_loan_balances": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].LessLoanbal2[0].Less_Loan_Balance[0]",
     "4b_total_life_insurance_from_attachment": "topmostSubform[0].F433-A-OIC_Page2[0].TotalLife[0].Total_Life_Insurance[0]",
-    "4_total_life_insurance":                  "topmostSubform[0].F433-A-OIC_Page2[0].TotalCashLife[0].Total_Insurance[0]"
+    "4_total_life_insurance": "topmostSubform[0].F433-A-OIC_Page2[0].TotalCashLife[0].Total_Insurance[0]"
   },
-
   "_map_evidence": {
     "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
-    "s1_tp_last_name":          { "page": 1, "caption": "Last name",                                                     "caption_at": "y 561.1, x 36.0..73.4",                                            "widget_at": "y 548.6, x 36.0..176.4" },
-    "s1_tp_first_name":         { "page": 1, "caption": "First name",                                                    "caption_at": "y 561.1, x 183.6..221.4",                                          "widget_at": "y 548.6, x 183.6..316.8" },
-    "s1_tp_dob":                { "page": 1, "caption": "Date of birth (mm/dd/yyyy)",                                    "caption_at": "y 559.5, x 324.0..367.6 + y 558.5, x 370.4..412.4",                "widget_at": "y 548.6, x 324.0..453.6" },
-    "s1_tp_ssn_itin":           { "page": 1, "caption": "Social Security Number or ITIN",                                "caption_at": "y 559.7, x 460.8..571.0",                                          "widget_at": "y 548.6, x 460.8..576.0" },
-    "s1_home_physical_address": { "page": 1, "caption": "Home physical address (street, city, state, ZIP code)",         "caption_at": "y 530.7, x 183.6..266.7 + y 529.7, x 269.5..357.1",                "widget_at": "y 519.8, x 183.6..378.0" },
-    "s1_date_of_marriage":      { "page": 1, "caption": "If married, date of marriage (mm/dd/yyyy)",                     "caption_at": "y 503.5, x 36.0..132.5 + y 502.5, x 134.7..176.7",                 "widget_at": "y 491.0, x 36.0..176.4" },
-    "s1_housing_other_specify": { "page": 1, "caption": "Other (specify e.g., share rent, live with relative, etc.)",    "caption_at": "y 502.5, x 399.6..419.6 + y 501.5, x 421.8..565.8",                "widget_at": "y 489.6, x 399.6..576.0",
-      "_arguable": "The caption is one printed row ABOVE this cell rather than beside it, because the 'Other' checkbox occupies the caption's own row at x 385.2..394.2. The binding is made on x instead: the cell's left edge, 399.6, is exactly the left edge of the 'Do you' option-label column ('Own your home' 399.6, 'Other' 399.6), and no caption at all is drawn in the band y 489..501 anywhere right of x 385. Reported, not resolved." },
-    "s1_county_of_residence":   { "page": 1, "caption": "County of residence",                                           "caption_at": "y 460.3, x 36.0..107.1",                                           "widget_at": "y 447.8, x 36.0..190.8" },
-    "s1_primary_phone":         { "page": 1, "caption": "Primary phone",                                                 "caption_at": "y 460.3, x 198.0..250.0",                                          "widget_at": "y 447.8, x 198.0..316.8" },
-    "s1_home_mailing_address":  { "page": 1, "caption": "Home mailing address (if different from above or post office box number)", "caption_at": "y 460.3, x 324.0..403.6 + y 459.3, x 405.8..559.1",     "widget_at": "y 447.8, x 324.0..576.0" },
-    "s1_secondary_phone":       { "page": 1, "caption": "Secondary phone",                                               "caption_at": "y 431.5, x 36.0..98.7",                                            "widget_at": "y 419.0, x 36.0..190.8" },
-    "s1_fax_number":            { "page": 1, "caption": "FAX number",                                                    "caption_at": "y 431.5, x 198.0..242.9",                                          "widget_at": "y 419.0, x 198.0..316.8" },
-    "s1_sp_last_name":          { "page": 1, "caption": "Spouse's last name",                                            "caption_at": "y 388.3, x 36.0..105.6",                                           "widget_at": "y 375.8, x 36.0..190.8" },
-    "s1_sp_first_name":         { "page": 1, "caption": "Spouse's first name",                                           "caption_at": "y 388.3, x 198.0..268.0",                                          "widget_at": "y 375.8, x 198.0..316.8" },
-    "s1_sp_dob":                { "page": 1, "caption": "Date of birth (mm/dd/yyyy)",                                    "caption_at": "y 388.3, x 324.0..367.6 + y 387.3, x 369.8..411.8",                "widget_at": "y 375.8, x 324.0..453.6" },
-    "s1_sp_ssn":                { "page": 1, "caption": "Social Security Number",                                        "caption_at": "y 386.9, x 460.8..544.4",                                          "widget_at": "y 375.8, x 460.8..576.0" },
-    "s2_tp_employer_name":      { "page": 1, "caption": "Your employer's name",                                          "caption_at": "y 222.7, x 36.0..116.0",                                           "widget_at": "y 210.2, x 36.0..190.8" },
-    "s2_tp_employer_address":   { "page": 1, "caption": "Employer's address (street, city, state, ZIP code)",            "caption_at": "y 222.7, x 378.0..448.2 + y 221.7, x 450.5..538.0",                "widget_at": "y 210.2, x 378.0..576.0" },
-    "s2_tp_occupation":         { "page": 1, "caption": "Your occupation",                                               "caption_at": "y 165.1, x 36.0..93.8",                                            "widget_at": "y 152.6, x 36.0..190.8" },
-    "s2_tp_tenure_years":       { "page": 1, "caption": "How long with this employer / (years)",                         "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 239.6..264.4 (unit)", "widget_at": "y 151.2, x 198.0..237.6",
-      "_unit_label_is_to_the_RIGHT": "The unit label sits to the RIGHT of the cell it labels: the years cell ends at x 237.6 and '(years)' starts at 239.6; the months cell ends at 306.0 and '(months)' starts at 311.8. Nearest-neighbour correlation therefore reports '(years)' as the label of Months_With_Employer_1 in 433aoi.labels.txt, and that correlation is wrong. Both cells here are bound by rectangle." },
-    "s2_tp_tenure_months":      { "page": 1, "caption": "How long with this employer / (months)",                        "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 311.8..343.4 (unit)", "widget_at": "y 151.2, x 266.4..306.0" },
-    "s2_sp_employer_name":      { "page": 1, "caption": "Spouse's employer's name",                                      "caption_at": "y 136.3, x 36.0..131.8",                                           "widget_at": "y 123.8, x 36.0..190.8" },
-    "s2_sp_employer_address":   { "page": 1, "caption": "Employer's address (street, city, state, ZIP code)",            "caption_at": "y 136.3, x 378.0..448.2 + y 135.3, x 450.5..538.0",                "widget_at": "y 123.8, x 378.0..576.0" },
-    "s2_sp_occupation":         { "page": 1, "caption": "Spouse's occupation",                                           "caption_at": "y 78.7, x 36.0..109.6",                                            "widget_at": "y 66.2, x 36.0..190.8" },
-    "s2_sp_tenure_years":       { "page": 1, "caption": "How long with this employer / (years)",                         "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 239.6..264.4 (unit)",  "widget_at": "y 64.8, x 198.0..237.6" },
-    "s2_sp_tenure_months":      { "page": 1, "caption": "How long with this employer / (months)",                        "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 311.8..343.4 (unit)",  "widget_at": "y 64.8, x 266.4..306.0" }
+    "s1_tp_last_name": {
+      "page": 1,
+      "caption": "Last name",
+      "caption_at": "y 561.1, x 36.0..73.4",
+      "widget_at": "y 548.6, x 36.0..176.4"
+    },
+    "s1_tp_first_name": {
+      "page": 1,
+      "caption": "First name",
+      "caption_at": "y 561.1, x 183.6..221.4",
+      "widget_at": "y 548.6, x 183.6..316.8"
+    },
+    "s1_tp_dob": {
+      "page": 1,
+      "caption": "Date of birth (mm/dd/yyyy)",
+      "caption_at": "y 559.5, x 324.0..367.6 + y 558.5, x 370.4..412.4",
+      "widget_at": "y 548.6, x 324.0..453.6"
+    },
+    "s1_tp_ssn_itin": {
+      "page": 1,
+      "caption": "Social Security Number or ITIN",
+      "caption_at": "y 559.7, x 460.8..571.0",
+      "widget_at": "y 548.6, x 460.8..576.0"
+    },
+    "s1_home_physical_address": {
+      "page": 1,
+      "caption": "Home physical address (street, city, state, ZIP code)",
+      "caption_at": "y 530.7, x 183.6..266.7 + y 529.7, x 269.5..357.1",
+      "widget_at": "y 519.8, x 183.6..378.0"
+    },
+    "s1_date_of_marriage": {
+      "page": 1,
+      "caption": "If married, date of marriage (mm/dd/yyyy)",
+      "caption_at": "y 503.5, x 36.0..132.5 + y 502.5, x 134.7..176.7",
+      "widget_at": "y 491.0, x 36.0..176.4"
+    },
+    "s1_housing_other_specify": {
+      "page": 1,
+      "caption": "Other (specify e.g., share rent, live with relative, etc.)",
+      "caption_at": "y 502.5, x 399.6..419.6 + y 501.5, x 421.8..565.8",
+      "widget_at": "y 489.6, x 399.6..576.0",
+      "_arguable": "The caption is one printed row ABOVE this cell rather than beside it, because the 'Other' checkbox occupies the caption's own row at x 385.2..394.2. The binding is made on x instead: the cell's left edge, 399.6, is exactly the left edge of the 'Do you' option-label column ('Own your home' 399.6, 'Other' 399.6), and no caption at all is drawn in the band y 489..501 anywhere right of x 385. Reported, not resolved."
+    },
+    "s1_county_of_residence": {
+      "page": 1,
+      "caption": "County of residence",
+      "caption_at": "y 460.3, x 36.0..107.1",
+      "widget_at": "y 447.8, x 36.0..190.8"
+    },
+    "s1_primary_phone": {
+      "page": 1,
+      "caption": "Primary phone",
+      "caption_at": "y 460.3, x 198.0..250.0",
+      "widget_at": "y 447.8, x 198.0..316.8"
+    },
+    "s1_home_mailing_address": {
+      "page": 1,
+      "caption": "Home mailing address (if different from above or post office box number)",
+      "caption_at": "y 460.3, x 324.0..403.6 + y 459.3, x 405.8..559.1",
+      "widget_at": "y 447.8, x 324.0..576.0"
+    },
+    "s1_secondary_phone": {
+      "page": 1,
+      "caption": "Secondary phone",
+      "caption_at": "y 431.5, x 36.0..98.7",
+      "widget_at": "y 419.0, x 36.0..190.8"
+    },
+    "s1_fax_number": {
+      "page": 1,
+      "caption": "FAX number",
+      "caption_at": "y 431.5, x 198.0..242.9",
+      "widget_at": "y 419.0, x 198.0..316.8"
+    },
+    "s1_sp_last_name": {
+      "page": 1,
+      "caption": "Spouse's last name",
+      "caption_at": "y 388.3, x 36.0..105.6",
+      "widget_at": "y 375.8, x 36.0..190.8"
+    },
+    "s1_sp_first_name": {
+      "page": 1,
+      "caption": "Spouse's first name",
+      "caption_at": "y 388.3, x 198.0..268.0",
+      "widget_at": "y 375.8, x 198.0..316.8"
+    },
+    "s1_sp_dob": {
+      "page": 1,
+      "caption": "Date of birth (mm/dd/yyyy)",
+      "caption_at": "y 388.3, x 324.0..367.6 + y 387.3, x 369.8..411.8",
+      "widget_at": "y 375.8, x 324.0..453.6"
+    },
+    "s1_sp_ssn": {
+      "page": 1,
+      "caption": "Social Security Number",
+      "caption_at": "y 386.9, x 460.8..544.4",
+      "widget_at": "y 375.8, x 460.8..576.0"
+    },
+    "s2_tp_employer_name": {
+      "page": 1,
+      "caption": "Your employer's name",
+      "caption_at": "y 222.7, x 36.0..116.0",
+      "widget_at": "y 210.2, x 36.0..190.8"
+    },
+    "s2_tp_employer_address": {
+      "page": 1,
+      "caption": "Employer's address (street, city, state, ZIP code)",
+      "caption_at": "y 222.7, x 378.0..448.2 + y 221.7, x 450.5..538.0",
+      "widget_at": "y 210.2, x 378.0..576.0"
+    },
+    "s2_tp_occupation": {
+      "page": 1,
+      "caption": "Your occupation",
+      "caption_at": "y 165.1, x 36.0..93.8",
+      "widget_at": "y 152.6, x 36.0..190.8"
+    },
+    "s2_tp_tenure_years": {
+      "page": 1,
+      "caption": "How long with this employer / (years)",
+      "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 239.6..264.4 (unit)",
+      "widget_at": "y 151.2, x 198.0..237.6",
+      "_unit_label_is_to_the_RIGHT": "The unit label sits to the RIGHT of the cell it labels: the years cell ends at x 237.6 and '(years)' starts at 239.6; the months cell ends at 306.0 and '(months)' starts at 311.8. Nearest-neighbour correlation therefore reports '(years)' as the label of Months_With_Employer_1 in 433aoi.labels.txt, and that correlation is wrong. Both cells here are bound by rectangle."
+    },
+    "s2_tp_tenure_months": {
+      "page": 1,
+      "caption": "How long with this employer / (months)",
+      "caption_at": "y 165.1, x 198.0..297.6 (heading) + y 149.7, x 311.8..343.4 (unit)",
+      "widget_at": "y 151.2, x 266.4..306.0"
+    },
+    "s2_sp_employer_name": {
+      "page": 1,
+      "caption": "Spouse's employer's name",
+      "caption_at": "y 136.3, x 36.0..131.8",
+      "widget_at": "y 123.8, x 36.0..190.8"
+    },
+    "s2_sp_employer_address": {
+      "page": 1,
+      "caption": "Employer's address (street, city, state, ZIP code)",
+      "caption_at": "y 136.3, x 378.0..448.2 + y 135.3, x 450.5..538.0",
+      "widget_at": "y 123.8, x 378.0..576.0"
+    },
+    "s2_sp_occupation": {
+      "page": 1,
+      "caption": "Spouse's occupation",
+      "caption_at": "y 78.7, x 36.0..109.6",
+      "widget_at": "y 66.2, x 36.0..190.8"
+    },
+    "s2_sp_tenure_years": {
+      "page": 1,
+      "caption": "How long with this employer / (years)",
+      "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 239.6..264.4 (unit)",
+      "widget_at": "y 64.8, x 198.0..237.6"
+    },
+    "s2_sp_tenure_months": {
+      "page": 1,
+      "caption": "How long with this employer / (months)",
+      "caption_at": "y 78.7, x 198.0..297.6 (heading) + y 63.3, x 311.8..343.4 (unit)",
+      "widget_at": "y 64.8, x 266.4..306.0"
+    }
   },
-
   "_map_evidence_page2": {
     "_why": "The printed line MARKER, the printed caption and the widget rectangle that justify each page-2 binding. Page 2 prints a marker beside every money cell - 15 of them, listed in 433aoi.line-markers.txt - so unlike page 1 the primary evidence here is the marker, and the caption and rectangle confirm it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. Group columns are evidenced under groups._columns_by_x, not here.",
-
-    "1c_bank_accounts_from_attachment":        { "page": 2, "marker": "(1c)", "marker_at": "y 552.9, x 447.5..470.2", "caption": "Total of bank accounts from attachment",                                     "caption_at": "y 552.9, x 295.1..435.6", "widget_at": "y 554.4, x 471.6..576.0" },
-    "1_total_bank_and_cash":                   { "page": 2, "marker": "(1)",  "marker_at": "y 539.2, x 449.2..470.2", "caption": "Add lines (1a) through (1c) minus ($1,000) =",                                   "caption_at": "y 539.2, x 248.8..435.6", "widget_at": "y 540.0, x 471.6..576.0" },
-
-    "2c_description_of_digital_asset":         { "page": 2, "marker": null,   "caption": "Description of digital asset",                                                                                          "caption_at": "y 365.3, x 36.0..129.4",  "widget_at": "y 354.2, x 36.0..133.2" },
-    "2c_number_of_units":                      { "page": 2, "marker": null,   "caption": "Number / of units",                                                                                                     "caption_at": "y 381.1, x 140.4..168.8 + y 371.5, x 140.4..166.2", "widget_at": "y 354.2, x 140.4..169.2" },
-    "2c_location_of_digital_asset":            { "page": 2, "marker": null,   "caption": "Location of digital asset (exchange / account, self-hosted wallet)",                                                    "caption_at": "y 381.1, x 176.4..260.0 + y 381.1, x 262.2..299.6 + y 371.5, x 176.4..273.3", "widget_at": "y 354.2, x 176.4..302.4" },
-    "2c_custodian_account_number":             { "page": 2, "marker": null,   "caption": "Account number for assets held by / a custodian or broker",                                                              "caption_at": "y 381.1, x 309.6..432.8 + y 371.5, x 309.6..384.7", "widget_at": "y 354.2, x 309.6..435.6" },
-    "2c_self_hosted_asset_address":            { "page": 2, "marker": null,   "caption": "Digital asset address for self-hosted digital assets",                                                                   "caption_at": "y 337.9, x 36.0..211.6",  "widget_at": "y 320.4, x 36.0..216.0",
-      "_leaf_name_is_wrong": "The leaf is name_of_individual[0]. Nothing on this page asks for an individual's name. The caption above the cell asks for a wallet ADDRESS. Bound on the caption and the rectangle; the label file agrees here and the name does not." },
-    "2c_us_dollar_equivalent_today":           { "page": 2, "marker": null,   "caption": "US dollar equivalent of the digital asset as of today",                                                                  "caption_at": "y 338.0, x 223.2..402.8; the currency '$' is drawn separately at y 316.2, x 224.2..228.6", "widget_at": "y 320.4, x 230.4..338.4" },
-    "2c_total_digital_assets":                 { "page": 2, "marker": "(2c)", "marker_at": "y 315.3, x 445.3..468.0", "caption": "= (2c) $",                                                                       "caption_at": "the '=' at y 315.0, x 430.9..435.6, then the marker", "widget_at": "y 316.8, x 471.6..576.0" },
-
-    "2d_investment_accounts_from_attachment":  { "page": 2, "marker": "(2d)", "marker_at": "y 300.9, x 444.9..468.0", "caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]", "caption_at": "y 300.9, x 120.4..435.6", "widget_at": "y 302.4, x 471.6..576.0" },
-    "2_total_investment_accounts":             { "page": 2, "marker": "(2)",  "marker_at": "y 286.7, x 447.0..468.0", "caption": "Add lines (2a) through (2d) =",                                                  "caption_at": "y 285.4, x 313.3..435.6", "widget_at": "y 288.0, x 471.6..576.0" },
-
-    "3b_retirement_accounts_from_attachment":  { "page": 2, "marker": "(3b)", "marker_at": "y 200.1, x 444.9..468.0", "caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]", "caption_at": "y 200.1, x 97.7..435.6", "widget_at": "y 201.6, x 471.6..576.0",
-      "_leaf_name_is_wrong": "The leaf is Total_Investment_Account_Attached[0] and this is the RETIREMENT attachment total. See _notes." },
-    "3_total_retirement_accounts":             { "page": 2, "marker": "(3)",  "marker_at": "y 186.4, x 447.0..468.0", "caption": "Add lines (3a) through (3b) =",                                                  "caption_at": "y 186.4, x 313.3..435.6", "widget_at": "y 187.2, x 471.6..576.0" },
-
-    "4b_life_insurance_from_attachment":       { "page": 2, "marker": null,   "caption": "Total cash value of life insurance policies from attachment",                                                            "caption_at": "y 84.9, x 36.0..241.4; the currency '$' is drawn separately at y 67.1, x 37.0..41.4", "widget_at": "y 72.0, x 43.2..259.2" },
-    "4b_minus_loan_balances":                  { "page": 2, "marker": null,   "caption": "Minus loan balance(s)",                                                                                                 "caption_at": "y 84.9, x 259.2..337.4; the '– $' operator is drawn at y 67.1, x 263.8..277.2", "widget_at": "y 72.0, x 280.8..424.8" },
-    "4b_total_life_insurance_from_attachment": { "page": 2, "marker": "(4b)", "marker_at": "y 66.9, x 447.1..468.0",  "caption": "= (4b) $",                                                                       "caption_at": "the '=' at y 66.6, x 430.9..435.6, then the marker", "widget_at": "y 68.4, x 471.6..576.0" },
-    "4_total_life_insurance":                  { "page": 2, "marker": "(4)",  "marker_at": "y 51.4, x 449.5..468.0",  "caption": "Add lines (4a) through (4b) =",                                                  "caption_at": "y 51.4, x 313.3..435.6", "widget_at": "y 54.0, x 471.6..576.0" }
+    "1c_bank_accounts_from_attachment": {
+      "page": 2,
+      "marker": "(1c)",
+      "marker_at": "y 552.9, x 447.5..470.2",
+      "caption": "Total of bank accounts from attachment",
+      "caption_at": "y 552.9, x 295.1..435.6",
+      "widget_at": "y 554.4, x 471.6..576.0"
+    },
+    "1_total_bank_and_cash": {
+      "page": 2,
+      "marker": "(1)",
+      "marker_at": "y 539.2, x 449.2..470.2",
+      "caption": "Add lines (1a) through (1c) minus ($1,000) =",
+      "caption_at": "y 539.2, x 248.8..435.6",
+      "widget_at": "y 540.0, x 471.6..576.0"
+    },
+    "2c_description_of_digital_asset": {
+      "page": 2,
+      "marker": null,
+      "caption": "Description of digital asset",
+      "caption_at": "y 365.3, x 36.0..129.4",
+      "widget_at": "y 354.2, x 36.0..133.2"
+    },
+    "2c_number_of_units": {
+      "page": 2,
+      "marker": null,
+      "caption": "Number / of units",
+      "caption_at": "y 381.1, x 140.4..168.8 + y 371.5, x 140.4..166.2",
+      "widget_at": "y 354.2, x 140.4..169.2"
+    },
+    "2c_location_of_digital_asset": {
+      "page": 2,
+      "marker": null,
+      "caption": "Location of digital asset (exchange / account, self-hosted wallet)",
+      "caption_at": "y 381.1, x 176.4..260.0 + y 381.1, x 262.2..299.6 + y 371.5, x 176.4..273.3",
+      "widget_at": "y 354.2, x 176.4..302.4"
+    },
+    "2c_custodian_account_number": {
+      "page": 2,
+      "marker": null,
+      "caption": "Account number for assets held by / a custodian or broker",
+      "caption_at": "y 381.1, x 309.6..432.8 + y 371.5, x 309.6..384.7",
+      "widget_at": "y 354.2, x 309.6..435.6"
+    },
+    "2c_self_hosted_asset_address": {
+      "page": 2,
+      "marker": null,
+      "caption": "Digital asset address for self-hosted digital assets",
+      "caption_at": "y 337.9, x 36.0..211.6",
+      "widget_at": "y 320.4, x 36.0..216.0",
+      "_leaf_name_is_wrong": "The leaf is name_of_individual[0]. Nothing on this page asks for an individual's name. The caption above the cell asks for a wallet ADDRESS. Bound on the caption and the rectangle; the label file agrees here and the name does not."
+    },
+    "2c_us_dollar_equivalent_today": {
+      "page": 2,
+      "marker": null,
+      "caption": "US dollar equivalent of the digital asset as of today",
+      "caption_at": "y 338.0, x 223.2..402.8; the currency '$' is drawn separately at y 316.2, x 224.2..228.6",
+      "widget_at": "y 320.4, x 230.4..338.4"
+    },
+    "2c_total_digital_assets": {
+      "page": 2,
+      "marker": "(2c)",
+      "marker_at": "y 315.3, x 445.3..468.0",
+      "caption": "= (2c) $",
+      "caption_at": "the '=' at y 315.0, x 430.9..435.6, then the marker",
+      "widget_at": "y 316.8, x 471.6..576.0"
+    },
+    "2d_investment_accounts_from_attachment": {
+      "page": 2,
+      "marker": "(2d)",
+      "marker_at": "y 300.9, x 444.9..468.0",
+      "caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+      "caption_at": "y 300.9, x 120.4..435.6",
+      "widget_at": "y 302.4, x 471.6..576.0"
+    },
+    "2_total_investment_accounts": {
+      "page": 2,
+      "marker": "(2)",
+      "marker_at": "y 286.7, x 447.0..468.0",
+      "caption": "Add lines (2a) through (2d) =",
+      "caption_at": "y 285.4, x 313.3..435.6",
+      "widget_at": "y 288.0, x 471.6..576.0"
+    },
+    "3b_retirement_accounts_from_attachment": {
+      "page": 2,
+      "marker": "(3b)",
+      "marker_at": "y 200.1, x 444.9..468.0",
+      "caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
+      "caption_at": "y 200.1, x 97.7..435.6",
+      "widget_at": "y 201.6, x 471.6..576.0",
+      "_leaf_name_is_wrong": "The leaf is Total_Investment_Account_Attached[0] and this is the RETIREMENT attachment total. See _notes."
+    },
+    "3_total_retirement_accounts": {
+      "page": 2,
+      "marker": "(3)",
+      "marker_at": "y 186.4, x 447.0..468.0",
+      "caption": "Add lines (3a) through (3b) =",
+      "caption_at": "y 186.4, x 313.3..435.6",
+      "widget_at": "y 187.2, x 471.6..576.0"
+    },
+    "4b_life_insurance_from_attachment": {
+      "page": 2,
+      "marker": null,
+      "caption": "Total cash value of life insurance policies from attachment",
+      "caption_at": "y 84.9, x 36.0..241.4; the currency '$' is drawn separately at y 67.1, x 37.0..41.4",
+      "widget_at": "y 72.0, x 43.2..259.2"
+    },
+    "4b_minus_loan_balances": {
+      "page": 2,
+      "marker": null,
+      "caption": "Minus loan balance(s)",
+      "caption_at": "y 84.9, x 259.2..337.4; the '– $' operator is drawn at y 67.1, x 263.8..277.2",
+      "widget_at": "y 72.0, x 280.8..424.8"
+    },
+    "4b_total_life_insurance_from_attachment": {
+      "page": 2,
+      "marker": "(4b)",
+      "marker_at": "y 66.9, x 447.1..468.0",
+      "caption": "= (4b) $",
+      "caption_at": "the '=' at y 66.6, x 430.9..435.6, then the marker",
+      "widget_at": "y 68.4, x 471.6..576.0"
+    },
+    "4_total_life_insurance": {
+      "page": 2,
+      "marker": "(4)",
+      "marker_at": "y 51.4, x 449.5..468.0",
+      "caption": "Add lines (4a) through (4b) =",
+      "caption_at": "y 51.4, x 313.3..435.6",
+      "widget_at": "y 54.0, x 471.6..576.0"
+    }
   },
-
   "_label_file_disagreements": {
     "_why_each_path_is_preceded_by_the_words_the_cell": "Every path below is quoted WHOLE from topmostSubform[0], per the standing rule that a reader must never reconstruct a prefix from a fragment. Each is preceded by the words THE CELL for one mechanical reason: validate-map.mjs and verify-form-coverage.mjs walk this file schema-agnostically and treat ANY string that STARTS with topmostSubform[0]. as a binding, so a bare evidence path is counted as a second key writing that target and fails the duplicate-write step - which is exactly what it did on the first run of this slice. Prefixing is the convention _notes already uses. It is preferred over adding an evidence exemption to the walk: an exemption would be the hiding place the schema-agnostic walk exists to prevent.",
     "_why": "433aoi.labels.txt is a nearest-drawn-text correlation. On page 1 it was already measured wrong in two regions. On page 2 it is wrong or truncated on eight widgets and CONTRADICTS the rectangle on five. Recorded here so a later reader who opens the label file and finds it disagreeing with this map knows the disagreement was seen and which way it was decided. WHERE THE LABEL FILE AND THE RECTANGLE DISAGREE, THE RECTANGLE WINS.",
@@ -201,114 +410,146 @@
       "RetirementAcct1[0].name_of_individual[0] -> 'Digital asset address for self-hosted digital assets'. Correct, and it is the leaf name that lies. Recorded to keep the standing rule honest: the rule is that the RECTANGLE wins, not that the label file always loses."
     ]
   },
-
   "_computed": {
     "_why": "Cells whose printed caption states a formula ENTIRELY in terms of other cells printed on this page. They are ordinary writable map keys today - fill-433aoi.mjs computes nothing, and the record supplies them - and they are declared here so that (a) a read-back can recompute them from what the filled PDF prints, and (b) a future engine construct or totals declaration has the formulas already taken off the page rather than re-derived. Formulas are written over MAP KEYS and GROUP COLUMNS, never over targets, so verify-form-coverage.mjs's schema-agnostic walk does not count this block as a second binding.",
     "_not_yet_mechanised": "run-form-gate.mjs step 10 cannot check these yet: its feeder schema adds and subtracts but has no factor and no constant, which (3a) and (1) both need. See _notes. Until it does, this block is verified by read-back, not by the gate.",
     "entries": [
-      { "key": "1_total_bank_and_cash", "printed_caption": "Add lines (1a) through (1c) minus ($1,000) =",
+      {
+        "key": "1_total_bank_and_cash",
+        "printed_caption": "Add lines (1a) through (1c) minus ($1,000) =",
         "formula": "1ab_bank_accounts[0].account_balance + 1ab_bank_accounts[1].account_balance + 1c_bank_accounts_from_attachment - 1000",
         "floor": "The printed instruction at y 668.1 governs this and every money cell on the page: 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' So the value is max(0, ...), and a recomputation that ignores the floor will disagree with a correctly filled form whose accounts total under $1,000.",
-        "needs": "a printed CONSTANT feeder (-1000), which the totals schema has no field for" },
-
-      { "key": "1ab_bank_accounts[n].account_balance", "printed_caption": "(1a) $ / (1b) $",
-        "formula": "NOT COMPUTED - plain input. The row prints no formula: one account type, one bank, one account number, one amount. Listed here only so that a reader comparing (1a) with (2a) does not assume every marker cell on this page is arithmetic." },
-
-      { "key": "2ab_investment_accounts[n].equity", "printed_caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $ / (2b) $",
+        "needs": "a printed CONSTANT feeder (-1000), which the totals schema has no field for"
+      },
+      {
+        "key": "1ab_bank_accounts[n].account_balance",
+        "printed_caption": "(1a) $ / (1b) $",
+        "formula": "NOT COMPUTED - plain input. The row prints no formula: one account type, one bank, one account number, one amount. Listed here only so that a reader comparing (1a) with (2a) does not assume every marker cell on this page is arithmetic."
+      },
+      {
+        "key": "2ab_investment_accounts[n].equity",
+        "printed_caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $ / (2b) $",
         "formula": "current_value - loan_balance",
-        "note": "NO multiplier is printed on this row. The (2a)/(2b) rows carry 'Current market value' and 'Minus loan balance' and nothing between them - the drawn text between the two cells is '– $' at x 263.8..277.2, not 'X .8 = $'. This is the row an author expects to find a quick-sale column on and does not." },
-
-      { "key": "2c_total_digital_assets", "printed_caption": "$ [US dollar equivalent of the digital asset as of today] = (2c) $",
+        "note": "NO multiplier is printed on this row. The (2a)/(2b) rows carry 'Current market value' and 'Minus loan balance' and nothing between them - the drawn text between the two cells is '– $' at x 263.8..277.2, not 'X .8 = $'. This is the row an author expects to find a quick-sale column on and does not."
+      },
+      {
+        "key": "2c_total_digital_assets",
+        "printed_caption": "$ [US dollar equivalent of the digital asset as of today] = (2c) $",
         "formula": "2c_us_dollar_equivalent_today",
-        "_arguable": "A one-operand equation. The page draws an '=' at x 430.9..435.6 between the dollar-equivalent cell and the (2c) marker, and draws no other operator on the row, so the printed formula is an identity and (2c) is a copy. Declared computed on that reading. The case against: an '=' with a single operand could equally be read as decoration on a row where the taxpayer is expected to carry the figure across by hand, in which case (2c) is plain input. Reported, not resolved. Nothing on this page distinguishes the two readings, and the arithmetic is the same either way." },
-
-      { "key": "2_total_investment_accounts", "printed_caption": "Add lines (2a) through (2d) =",
+        "_arguable": "A one-operand equation. The page draws an '=' at x 430.9..435.6 between the dollar-equivalent cell and the (2c) marker, and draws no other operator on the row, so the printed formula is an identity and (2c) is a copy. Declared computed on that reading. The case against: an '=' with a single operand could equally be read as decoration on a row where the taxpayer is expected to carry the figure across by hand, in which case (2c) is plain input. Reported, not resolved. Nothing on this page distinguishes the two readings, and the arithmetic is the same either way."
+      },
+      {
+        "key": "2_total_investment_accounts",
+        "printed_caption": "Add lines (2a) through (2d) =",
         "formula": "2ab_investment_accounts[0].equity + 2ab_investment_accounts[1].equity + 2c_total_digital_assets + 2d_investment_accounts_from_attachment",
-        "note": "The caption names its addends outright, which is the test 433f.totals.json records for a caption being the form's own statement of the arithmetic rather than this engine's assertion." },
-
-      { "key": "3a_retirement_accounts[0].quick_sale_value", "printed_caption": "X .8 = $",
+        "note": "The caption names its addends outright, which is the test 433f.totals.json records for a caption being the form's own statement of the arithmetic rather than this engine's assertion."
+      },
+      {
+        "key": "3a_retirement_accounts[0].quick_sale_value",
+        "printed_caption": "X .8 = $",
         "formula": "current_value * 0.8",
         "THE_TRIPWIRE": "Target is topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]. The leaf says .7; the page says .8; the page is right and is corroborated twice more on the same page. See _notes.",
-        "needs": "a FACTOR feeder (x 0.8), which the totals schema has no field for" },
-
-      { "key": "3a_retirement_accounts[0].quick_sale_equity", "printed_caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] = (3a) $",
+        "needs": "a FACTOR feeder (x 0.8), which the totals schema has no field for"
+      },
+      {
+        "key": "3a_retirement_accounts[0].quick_sale_equity",
+        "printed_caption": "$ [Current market value] X .8 = $ [quick sale value] – $ [Minus loan balance] = (3a) $",
         "formula": "quick_sale_value - loan_balance",
-        "note": "NOT current_value - loan_balance. That is the whole reason this column is named quick_sale_equity and not equity." },
-
-      { "key": "3_total_retirement_accounts", "printed_caption": "Add lines (3a) through (3b) =",
-        "formula": "3a_retirement_accounts[0].quick_sale_equity + 3b_retirement_accounts_from_attachment" },
-
-      { "key": "4a_life_insurance_policies[0].equity", "printed_caption": "$ [Current cash value] – $ [Minus loan balance] = (4a) $",
+        "note": "NOT current_value - loan_balance. That is the whole reason this column is named quick_sale_equity and not equity."
+      },
+      {
+        "key": "3_total_retirement_accounts",
+        "printed_caption": "Add lines (3a) through (3b) =",
+        "formula": "3a_retirement_accounts[0].quick_sale_equity + 3b_retirement_accounts_from_attachment"
+      },
+      {
+        "key": "4a_life_insurance_policies[0].equity",
+        "printed_caption": "$ [Current cash value] – $ [Minus loan balance] = (4a) $",
         "formula": "current_cash_value - outstanding_loan_balance",
-        "note": "No multiplier printed. A life policy's cash surrender value is not quick-sale discounted on this form." },
-
-      { "key": "4b_total_life_insurance_from_attachment", "printed_caption": "$ [Total cash value of life insurance policies from attachment] – $ [Minus loan balance(s)] = (4b) $",
+        "note": "No multiplier printed. A life policy's cash surrender value is not quick-sale discounted on this form."
+      },
+      {
+        "key": "4b_total_life_insurance_from_attachment",
+        "printed_caption": "$ [Total cash value of life insurance policies from attachment] – $ [Minus loan balance(s)] = (4b) $",
         "formula": "4b_life_insurance_from_attachment - 4b_minus_loan_balances",
-        "note": "COMPUTED even though BOTH its inputs are attachment-sourced and both are declared not checkable. The rule is about where the FORMULA's operands are printed, not where their figures came from: both operands are printed cells on this page, so the subtraction is verifiable from the page. Same shape as (1), which sums (1c)." },
-
-      { "key": "4_total_life_insurance", "printed_caption": "Add lines (4a) through (4b) =",
-        "formula": "4a_life_insurance_policies[0].equity + 4b_total_life_insurance_from_attachment" }
+        "note": "COMPUTED even though BOTH its inputs are attachment-sourced and both are declared not checkable. The rule is about where the FORMULA's operands are printed, not where their figures came from: both operands are printed cells on this page, so the subtraction is verifiable from the page. Same shape as (1), which sums (1c)."
+      },
+      {
+        "key": "4_total_life_insurance",
+        "printed_caption": "Add lines (4a) through (4b) =",
+        "formula": "4a_life_insurance_policies[0].equity + 4b_total_life_insurance_from_attachment"
+      }
     ]
   },
-
   "_not_checkable": {
     "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both _computed and this block is indistinguishable from one nobody looked at. Follows 433f.totals.json not_checkable, and rule 3 of this slice - attachment-total cells take the 433-F Section E footer precedent. STILL WRITTEN: not checkable is not the same as not filled.",
     "entries": [
-      { "map_key": "1c_bank_accounts_from_attachment", "printed_caption": "Total of bank accounts from attachment",
-        "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable - the page prints this cell, and (1)'s recomputation reads what the page prints." },
-      { "map_key": "2d_investment_accounts_from_attachment", "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
-        "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here." },
-      { "map_key": "3b_retirement_accounts_from_attachment", "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
-        "why_not_checkable": "Attachment-sourced. Note that its caption carries the X .8 - so the quick-sale discount applies to attached retirement accounts too, and a preparer who omits it here understates the offer by 20% of the attached market value with nothing on the page to catch it. Not checkable, and worth an operator note." },
-      { "map_key": "4b_life_insurance_from_attachment", "printed_caption": "Total cash value of life insurance policies from attachment",
-        "why_not_checkable": "Attachment-sourced." },
-      { "map_key": "4b_minus_loan_balances", "printed_caption": "Minus loan balance(s)",
-        "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) - that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does." }
+      {
+        "map_key": "1c_bank_accounts_from_attachment",
+        "printed_caption": "Total of bank accounts from attachment",
+        "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable - the page prints this cell, and (1)'s recomputation reads what the page prints."
+      },
+      {
+        "map_key": "2d_investment_accounts_from_attachment",
+        "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Its bracketed caption states the arithmetic performed on the ATTACHED rows, none of which are printed here."
+      },
+      {
+        "map_key": "3b_retirement_accounts_from_attachment",
+        "printed_caption": "Total of retirement accounts from attachment. [current market value X .8 minus loan balance(s)]",
+        "why_not_checkable": "Attachment-sourced. Note that its caption carries the X .8 - so the quick-sale discount applies to attached retirement accounts too, and a preparer who omits it here understates the offer by 20% of the attached market value with nothing on the page to catch it. Not checkable, and worth an operator note."
+      },
+      {
+        "map_key": "4b_life_insurance_from_attachment",
+        "printed_caption": "Total cash value of life insurance policies from attachment",
+        "why_not_checkable": "Attachment-sourced."
+      },
+      {
+        "map_key": "4b_minus_loan_balances",
+        "printed_caption": "Minus loan balance(s)",
+        "why_not_checkable": "Attachment-sourced: it is the loan outstanding against the policies listed on the attachment, not against the policy printed at (4a) - that one has its own 'Minus loan balance' cell on the (4a) row. The plural in the printed caption is what tells the two apart, and it is the only thing that does."
+      }
     ]
   },
-
   "_nesting_note_page2": "AcroForm nesting depth is not uniform on page 2 either, and the money cells are where it varies. Institution1[0], Institution2[0] and RetirementAcct2[0] each wrap their value cell in a CurrentMarketValue[0] subform and their loan cell in a LessLoanBal[0] subform, but hang the ROW TOTAL (Total_Current_Market_Value[0]) directly off themselves. CurrentCash[0] uses CurrentCashValue[0] and LessLoanBal1[0] - note the '1'. TotalLife[0] uses TotalLifeIns[0] and LessLoanbal2[0] - note the '2' AND the lower-case 'b'. RetirementAcct1[0] puts its lone checkbox and its description under virtualCurrency[0] but numberOfUnits[0], locationDigitalAsset[0] and assetsAccountNumber[0] directly under itself. Institution1[0] and Institution2[0] reuse the SAME leaf names (CB2_12, CB2_13, CB2_14, Other, Name_Financial_Institution, Account_Number_3) and are told apart only by the subform. Every path in this file is therefore quoted whole from topmostSubform[0], and no prefix generalises.",
-
   "_nesting_note": "AcroForm nesting depth is NOT uniform inside Section1[0], which is why every path above is quoted whole from topmostSubform[0]. countyOfResidence, primaryPhone, secondaryPhone and faxNumber sit under Col1[0]. dateOfMarrage, statusUnmarried and statusMarried sit under maritalStatus[0]. homePhysicalAddress, homeMailingAddress, otherSpecifyLiving, ownYourHome, rent, otherSpecify, marriedLivedIn and the four spouse cells are DIRECT children of Section1[0]. There is no Section 1 prefix that generalises, and reconstructing a path from a fragment is how two earlier rounds of defects entered this engine.",
-
   "checkboxes": {
     "s1_marital_status": {
       "unmarried": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusUnmarried[0]",
-      "married":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusMarried[0]",
-      "_printed":  "Caption 'Marital status' y 532.3, x 36.0..83.6. 'Unmarried' y 516.9, x 50.4..87.7 with its box at y 515.7, x 36.0..45.0; 'Married' y 516.9, x 122.4..149.5 with its box at y 515.7, x 108.0..117.0. Each box is drawn to the LEFT of the word it labels, which is the convention everywhere on this page."
+      "married": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusMarried[0]",
+      "_printed": "Caption 'Marital status' y 532.3, x 36.0..83.6. 'Unmarried' y 516.9, x 50.4..87.7 with its box at y 515.7, x 36.0..45.0; 'Married' y 516.9, x 122.4..149.5 with its box at y 515.7, x 108.0..117.0. Each box is drawn to the LEFT of the word it labels, which is the convention everywhere on this page."
     },
     "s1_housing_status": {
-      "own":   "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ownYourHome[0]",
-      "rent":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].rent[0]",
+      "own": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].ownYourHome[0]",
+      "rent": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].rent[0]",
       "other": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].otherSpecify[0]",
       "_printed": "Caption 'Do you' y 532.3, x 385.2..410.5. 'Own your home' y 516.9, x 399.6..456.1 with its box at y 515.7, x 385.2..394.2; 'Rent' y 516.9, x 493.2..510.1 with its box at y 515.7, x 478.8..487.8; 'Other (specify e.g., share rent, live with relative, etc.)' y 502.5, x 399.6..565.8 with its box at y 501.3, x 385.2..394.2. Three options, one printed question, one column. The 'other' box shares its x with the 'own' box because it is the next printed ROW of the same option list, not a second column."
     },
     "s2_tp_pay_period": {
-      "weekly":    "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].weekly[0]",
+      "weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].weekly[0]",
       "bi-weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].biweekly[0]",
-      "monthly":   "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].monthly[0]",
-      "other":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].other[0]",
+      "monthly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].monthly[0]",
+      "other": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].pay_period[0].other[0]",
       "_printed": "Column caption 'Pay period' y 222.7, x 198.0..236.2, inside the taxpayer's own employer block. 'Weekly' y 221.7, x 270.0..296.2 (box y 220.5, x 255.6..264.6); 'Bi-weekly' y 221.7, x 331.2..365.4 (box y 220.5, x 316.8..325.8); 'Monthly' y 207.3, x 270.0..298.0 (box y 206.1, x 255.6..264.6); 'Other' y 207.3, x 331.2..351.2 (box y 206.1, x 316.8..325.8). Bound by rectangle, not by leaf name and not by the label file: 433aoi.labels.txt correlates all four of these to the Section 2 instruction paragraph ('you file a Schedule C, E, F, etc. ...'), which is the nearest drawn text and says nothing about pay periods."
     },
     "s2_sp_pay_period": {
-      "weekly":    "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].weekly[0]",
+      "weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].weekly[0]",
       "bi-weekly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].biweekly[0]",
-      "monthly":   "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].monthly[0]",
-      "other":     "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].other[0]",
+      "monthly": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].monthly[0]",
+      "other": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].pay_period[0].other[0]",
       "_printed": "The second, identically captioned 'Pay period' column at y 136.3, x 198.0..236.2, inside the spouse's employer block. 'Weekly'/'Bi-weekly' y 135.3 (boxes y 134.1); 'Monthly'/'Other' y 120.9 (boxes y 119.7). Same x columns as the taxpayer set, 86 points lower on the page. The two sets are told apart by y and by subform (You[0] vs Spouse[0]), never by the identical caption."
     },
     "s2_tp_business_ownership_interest": {
       "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_22[0]",
-      "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_23[0]",
+      "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].You[0].BusinessInterest[0].CB_23[0]",
       "_printed": "Question 'Do you have an ownership interest in this business' y 193.9, x 36.0..216.1. 'Yes' y 180.3, x 50.4..64.2 with its box at y 179.1, x 36.0..45.0, followed by '(also complete and submit Form 433-B)' y 179.3, x 66.4..189.3; 'No' y 180.3, x 212.4..222.6 with its box at y 179.1, x 198.0..207.0."
     },
     "s2_sp_business_ownership_interest": {
       "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_27[0]",
-      "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_28[0]",
+      "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section2[0].Spouse[0].InterestinBusiness[0].CB_28[0]",
       "_printed": "Question 'Does your spouse have an ownership interest in this business' y 107.5, x 36.0..255.2. 'Yes' y 93.9, x 50.4..64.2 with its box at y 92.7, x 36.0..45.0, followed by '(also complete and submit Form 433-B)' y 92.9, x 66.4..189.3; 'No' y 93.9, x 212.4..222.6 with its box at y 92.7, x 198.0..207.0."
     }
   },
-
   "check_here": {
     "_why": "A construct this form needs and 433-A does not. Every checkbox set on 433-A pairs an affirmative target with a negative one, so `checkboxes` can always name an option for either answer. This form prints a lone 'check here' box with NO counterpart cell: the negative answer is the box left blank. Modelling it as a yes/no option set would mean inventing a target for 'no', and there is no cell to invent it into. A truthy input checks the box; a falsy input leaves it blank; a value that is neither stops the run rather than being guessed at.",
     "s1_community_property_state_last_10_years": {
@@ -323,9 +564,8 @@
       "_why_check_here_and_not_checkboxes": "It is the ROW LABEL of the digital asset block, and it is the only row label on page 2 that carries a box. 'Investment account' (y 524.1, x 36.0..105.4) and 'Retirement account' (y 272.1, x 36.0..105.4) sit at the same left margin with NO box; the bank row's leftmost box at x 36.0 belongs to the option word 'Cash', not to a row label. So this box has no counterpart cell and no sibling option - the negative answer is the box left blank - which is exactly the construct check_here exists for. Inventing a 'no' target would be fabrication; folding it into a two-option set would need a second cell the page does not print."
     }
   },
-
   "exclusive": {
-    "_note_page_2": "NO PAGE-2 SET IS DECLARED HERE, DELIBERATELY. Page 2's three option lists - bank account type on (1a)/(1b), Stocks/Bonds/Other on (2a)/(2b), 401K/IRA/Other on (3a) - print no 'check one' instruction anywhere, and one brokerage account can truthfully hold both stocks and bonds. Declaring them exclusive would assert a constraint the page does not print and would hard-stop a truthful record. A group slot's checkboxes construct takes one input value and checks one box, so the read-back still shows exactly one checked per row; verify-form-coverage.mjs buckets the remainder as 'checkboxes unchecked (independent)', which is a declared state, not a gap. See _notes for the full reasoning and for what this gives up. 2c_digital_asset_held is absent for the same reason s1_community_property_state_last_10_years is: a lone box has nothing to be exclusive with.",
+    "_note_page_2": "PAGE 2 DECLARES ONE EXCLUSIVE SET AND TWO NON-EXCLUSIVE LISTS, AND THE REASON IS RECORDED ON EACH. (a) 3a_type_of_retirement_account IS exclusive: a single retirement account has ONE tax character. It is a 401(k) or an IRA or something else; it cannot be two, and a row claiming two would be claiming two accounts in one printed row. (b) Bank account type on (1a)/(1b) is NOT exclusive: an account can truthfully be both a Checking account and an Online Account, which are two of the printed options on the same row. (c) Investment type on (2a)/(2b) is NOT exclusive: one brokerage account can hold both stocks and bonds, and the page prints no 'check one' instruction over any of the three lists. Declaring (b) or (c) exclusive would assert a constraint the page does not print and would hard-stop a truthful record. WHAT THAT GIVES UP is covered instead by run-form-gate.mjs step 2, which asserts that no checkbox is already checked on the BLANK source PDF - the one defect a non-exclusive list cannot catch, now guarded form-wide across every box on all seven forms rather than only on the lists that could have been forced exclusive. 2c_digital_asset_held is absent for the same reason s1_community_property_state_last_10_years is: a lone box has nothing to be exclusive with.",
     "_note": "Guard, not a binding. Yes/No pairs and option sets on these forms are INDEPENDENT AcroForm checkboxes - nothing in the PDF stops two of them being checked at once - so the constraint is asserted here and read back off the saved form. Every target below is also bound above; that duplication is the point, and verify-form-coverage.mjs treats this root as a guard so it is not counted as a second binding. s1_community_property_state_last_10_years is deliberately ABSENT: a lone box has nothing to be exclusive with.",
     "s1_marital_status": [
       "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].maritalStatus[0].statusUnmarried[0]",
@@ -387,9 +627,13 @@
     "household_members[3].contributes_to_household_income": [
       "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_20[0]",
       "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_21[0]"
+    ],
+    "3a_type_of_retirement_account": [
+      "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_15[0]",
+      "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_16[0]",
+      "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_17[0]"
     ]
   },
-
   "groups": {
     "household_members": {
       "source": "household_members",
@@ -403,80 +647,84 @@
       "slots": [
         {
           "text": {
-            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Name_01[0]",
-            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Age_01[0]",
+            "name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Name_01[0]",
+            "age": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Age_01[0]",
             "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Relationship_01[0]"
           },
           "checkboxes": {
             "claimed_on_1040": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_06[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_07[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Dependent[0].CB_07[0]"
             },
             "contributes_to_household_income": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_08[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_09[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row1[0].Contributes[0].CB_09[0]"
             }
           }
         },
         {
           "text": {
-            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Name_02[0]",
-            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Age_02[0]",
+            "name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Name_02[0]",
+            "age": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Age_02[0]",
             "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Relationship_02[0]"
           },
           "checkboxes": {
             "claimed_on_1040": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_10[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_11[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Dependent[0].CB_11[0]"
             },
             "contributes_to_household_income": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_12[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_13[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row2[0].Contributes[0].CB_13[0]"
             }
           }
         },
         {
           "text": {
-            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Name_03[0]",
-            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Age_03[0]",
+            "name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Name_03[0]",
+            "age": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Age_03[0]",
             "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Relationship_03[0]"
           },
           "checkboxes": {
             "claimed_on_1040": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_14[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_15[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Dependent[0].CB_15[0]"
             },
             "contributes_to_household_income": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_16[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_17[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row3[0].Contributes[0].CB_17[0]"
             }
           }
         },
         {
           "text": {
-            "name":         "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Name_04[0]",
-            "age":          "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Age_04[0]",
+            "name": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Name_04[0]",
+            "age": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Age_04[0]",
             "relationship": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Relationship_04[0]"
           },
           "checkboxes": {
             "claimed_on_1040": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_18[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_19[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Dependent[0].CB_19[0]"
             },
             "contributes_to_household_income": {
               "yes": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_20[0]",
-              "no":  "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_21[0]"
+              "no": "topmostSubform[0].F433-A-OIC_Page1[0].Section1[0].dependentListing[0].Row4[0].Contributes[0].CB_21[0]"
             }
           }
         }
       ]
     },
-
     "1ab_bank_accounts": {
       "source": "bank_accounts",
       "max": 2,
       "overflow": "log",
-      "row_class": { "column": "asset_class", "accepts": ["bank_account"] },
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "bank_account"
+        ]
+      },
       "_printed_heading": "Cash and Investments (domestic and foreign)",
       "_heading_at": "y 656.2, x 36.0..231.0",
       "_printed_markers": "Slot 0 totals to printed (1a); slot 1 to printed (1b).",
@@ -490,44 +738,48 @@
         {
           "text": {
             "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Bank_Name_1[0]",
-            "account_number":               "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Account_Number_1[0]",
-            "account_balance":              "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Total_Amount_1[0]"
+            "account_number": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Account_Number_1[0]",
+            "account_balance": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].Total_Amount_1[0]"
           },
           "checkboxes": {
             "type_of_account": {
-              "cash":                    "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_01[0]",
-              "checking":                "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_02[0]",
-              "savings":                 "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_03[0]",
+              "cash": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_01[0]",
+              "checking": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_02[0]",
+              "savings": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_03[0]",
               "money market account/cd": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_04[0]",
-              "online account":          "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_05[0]",
-              "stored value card":       "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_06[0]"
+              "online account": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_05[0]",
+              "stored value card": "topmostSubform[0].F433-A-OIC_Page2[0].Account1[0].CB2_06[0]"
             }
           }
         },
         {
           "text": {
             "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Bank_Name_2[0]",
-            "account_number":               "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Account_Number_2[0]",
-            "account_balance":              "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Total_Amount_2[0]"
+            "account_number": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Account_Number_2[0]",
+            "account_balance": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].Total_Amount_2[0]"
           },
           "checkboxes": {
             "type_of_account": {
-              "checking":                "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_07[0]",
-              "savings":                 "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_08[0]",
+              "checking": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_07[0]",
+              "savings": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_08[0]",
               "money market account/cd": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_09[0]",
-              "online account":          "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_10[0]",
-              "stored value card":       "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_11[0]"
+              "online account": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_10[0]",
+              "stored value card": "topmostSubform[0].F433-A-OIC_Page2[0].Account2[0].CB2_11[0]"
             }
           }
         }
       ]
     },
-
     "2ab_investment_accounts": {
       "source": "investment_accounts",
       "max": 2,
       "overflow": "log",
-      "row_class": { "column": "asset_class", "accepts": ["investment"] },
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "investment"
+        ]
+      },
       "_printed_heading": "Cash and Investments (domestic and foreign)",
       "_heading_at": "y 656.2, x 36.0..231.0",
       "_printed_markers": "Slot 0 totals to printed (2a); slot 1 to printed (2b).",
@@ -539,46 +791,50 @@
       "slots": [
         {
           "text": {
-            "type_of_investment_other":     "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Other[0]",
+            "type_of_investment_other": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Other[0]",
             "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Name_Financial_Institution[0]",
-            "account_number":               "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Account_Number_3[0]",
-            "current_value":                "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CurrentMarketValue[0].Current_Market_Value[0]",
-            "loan_balance":                 "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].LessLoanBal[0].Less_Loan_Balance[0]",
-            "equity":                       "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Total_Current_Market_Value[0]"
+            "account_number": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Account_Number_3[0]",
+            "current_value": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CurrentMarketValue[0].Current_Market_Value[0]",
+            "loan_balance": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].LessLoanBal[0].Less_Loan_Balance[0]",
+            "equity": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].Total_Current_Market_Value[0]"
           },
           "checkboxes": {
             "type_of_investment": {
               "stocks": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CB2_12[0]",
-              "bonds":  "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CB2_13[0]",
-              "other":  "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CB2_14[0]"
+              "bonds": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CB2_13[0]",
+              "other": "topmostSubform[0].F433-A-OIC_Page2[0].Institution1[0].CB2_14[0]"
             }
           }
         },
         {
           "text": {
-            "type_of_investment_other":     "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Other[0]",
+            "type_of_investment_other": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Other[0]",
             "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Name_Financial_Institution[0]",
-            "account_number":               "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Account_Number_3[0]",
-            "current_value":                "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CurrentMarketValue[0].Current_Market_Value[0]",
-            "loan_balance":                 "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].LessLoanBal[0].Less_Loan_Balance[0]",
-            "equity":                       "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Total_Current_Market_Value[0]"
+            "account_number": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Account_Number_3[0]",
+            "current_value": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CurrentMarketValue[0].Current_Market_Value[0]",
+            "loan_balance": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].LessLoanBal[0].Less_Loan_Balance[0]",
+            "equity": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].Total_Current_Market_Value[0]"
           },
           "checkboxes": {
             "type_of_investment": {
               "stocks": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CB2_12[0]",
-              "bonds":  "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CB2_13[0]",
-              "other":  "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CB2_14[0]"
+              "bonds": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CB2_13[0]",
+              "other": "topmostSubform[0].F433-A-OIC_Page2[0].Institution2[0].CB2_14[0]"
             }
           }
         }
       ]
     },
-
     "3a_retirement_accounts": {
       "source": "retirement_accounts",
       "max": 1,
       "overflow": "log",
-      "row_class": { "column": "asset_class", "accepts": ["retirement_account"] },
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "retirement_account"
+        ]
+      },
       "_printed_heading": "Cash and Investments (domestic and foreign)",
       "_heading_at": "y 656.2, x 36.0..231.0",
       "_printed_markers": "The single slot totals to printed (3a).",
@@ -590,29 +846,33 @@
         {
           "text": {
             "type_of_retirement_account_other": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Other_Retirement_Acct[0]",
-            "institution_name_and_address":     "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Name_Financial_Institution[0]",
-            "account_number":                   "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Account_Number[0]",
-            "current_value":                    "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Current_Market_Value[0]",
-            "quick_sale_value":                 "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]",
-            "loan_balance":                     "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].LessLoanBal[0].Less_Loan_Balance[0]",
-            "quick_sale_equity":                "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Total_Current_Market_Value[0]"
+            "institution_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Name_Financial_Institution[0]",
+            "account_number": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Account_Number[0]",
+            "current_value": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Current_Market_Value[0]",
+            "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CurrentMarketValue[0].Times_7[0]",
+            "loan_balance": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].LessLoanBal[0].Less_Loan_Balance[0]",
+            "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].Total_Current_Market_Value[0]"
           },
           "checkboxes": {
             "type_of_retirement_account": {
-              "401k":  "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_15[0]",
-              "ira":   "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_16[0]",
+              "401k": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_15[0]",
+              "ira": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_16[0]",
               "other": "topmostSubform[0].F433-A-OIC_Page2[0].RetirementAcct2[0].CB2_17[0]"
             }
           }
         }
       ]
     },
-
     "4a_life_insurance_policies": {
       "source": "life_insurance_policies",
       "max": 1,
       "overflow": "log",
-      "row_class": { "column": "asset_class", "accepts": ["life_insurance_policy"] },
+      "row_class": {
+        "column": "asset_class",
+        "accepts": [
+          "life_insurance_policy"
+        ]
+      },
       "_printed_heading": "Cash value of Life Insurance Policies",
       "_heading_at": "y 156.9, x 36.0..167.2",
       "_printed_markers": "The single slot totals to printed (4a). Printed (4b) is the ATTACHMENT block below it and is bound as scalars, not as a second slot of this group - it prints no policy name and no policy number, only an attachment total and a loan balance, so it is not a row of this table.",
@@ -624,16 +884,15 @@
         {
           "text": {
             "company_name_and_address": "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Name_Insurance_Company[0]",
-            "policy_number":            "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Policy_Number[0]",
-            "current_cash_value":       "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].CurrentCashValue[0].Current_Cash_Value[0]",
+            "policy_number": "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Policy_Number[0]",
+            "current_cash_value": "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].CurrentCashValue[0].Current_Cash_Value[0]",
             "outstanding_loan_balance": "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].LessLoanBal1[0].Less_Loan_Balance[0]",
-            "equity":                   "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Total_Current_Cash_Value[0]"
+            "equity": "topmostSubform[0].F433-A-OIC_Page2[0].CurrentCash[0].Total_Current_Cash_Value[0]"
           }
         }
       ]
     }
   },
-
   "_never_autofill": {
     "_why": "Mapped, understood, and deliberately blank - a stronger claim than `_deferred`, which means 'not resolved yet'. Listed as objects whose `target` is a string VALUE, so the schema-agnostic validator checks every one of them for existence. Same construct 433a.map.json and 433f.map.json use; it sits at the TOP LEVEL here because this form has no `allowed` block to hang it under.",
     "fields": [
@@ -647,7 +906,6 @@
       }
     ]
   },
-
   "_partition": {
     "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
     "form_fields_total": 425,
