@@ -249,6 +249,38 @@ export const VACUOUS = [
 
   { id: 'G-38', file: 'probe-checkboxes.mjs', anchor: "catch (e) { on = 'ERR:' + e.message; }", verdict: 'sound',
     why: 'A DIAGNOSTIC CLI that prints each checkbox’s on-state. The error text is printed in the cell where the state would go, so a failure is louder in the output than a success, not quieter. Nothing reads this tool’s output programmatically.' },
+
+  // ─── the over-max assertion ──────────────────────────────────────────────────────────
+  { id: 'G-39', file: 'assert-overflow.mjs', anchor: 'const logged = logLine ?', verdict: 'sound',
+    why: 'FAILS CLOSED IN BOTH DIRECTIONS, AND THE EMPTY CASE IS ALREADY A STOP ABOVE IT. If the pattern reads no `group[index]` token out of the engine’s OVERFLOW line, `logged` is empty, every expected drop lands in `missing`, and each becomes an UNLOGGED problem — the loudest outcome the tool has, not the quietest. The other empty reading, no OVERFLOW line at all, never reaches here: the lines above exit 2 when the line is absent while drops are expected. And an over-max fixture that dropped nothing cannot get this far either, because question 1 pushes a NOT OVER-MAX problem for every group not run past its last slot. Three separate paths, none of which can turn an unread log into a pass.' },
+
+  // [G-42] WAS HERE AND IS GONE, WITH THE CODE IT DISPOSED OF. It read, verbatim:
+  //   anchor 'runs[0].unexercised.filter(id => runs.every(' -- verdict sound --
+  //   "THE EMPTY-`runs` READING CANNOT HAPPEN, AND IS NOT WHAT THIS SHAPE RISKS ANYWAY. `runs`
+  //   is non-empty by construction: the CLI exits 2 when no fixture is given, and every fixture
+  //   either pushes a run or exits 2 before reaching here, so `.every` is never asked about an
+  //   empty list. The reading worth stating is the OTHER one: `runs[0].unexercised` may
+  //   legitimately be empty, and then `still` is empty and the tool reports that every declared
+  //   behaviour is exercised by at least one fixture. That is the correct answer and not a
+  //   vacuous pass -- an empty unexercised list on the first fixture means that fixture
+  //   exercised everything, and the intersection with anything else is empty for a reason, not
+  //   for want of data. Seeding the intersection from `runs[0]` is exact because a declaration
+  //   unexercised by every fixture is in particular unexercised by the first."
+  // WHAT IT GOT RIGHT: `runs` is non-empty by construction, and that argument still holds for
+  // the flatMap that replaced the `.every`. WHAT IT GOT WRONG: it certified a computation that
+  // was answering the wrong question. Intersecting the UNEXERCISED lists reads "this
+  // declaration was absent from that run" as "that run exercised it", so a zero constant that
+  // is in class only on the leased branch, and a second zero constant in class only on the
+  // owned branch, cancelled each other out and 433-A(OIC) reported 80 of 83 with neither ever
+  // proved. The disposition was sound about the shape and silent about the meaning, which is
+  // the [N-05] failure at one more level out: a guard can be correct and still guard nothing
+  // worth guarding. The replacement unions the IN-CLASS sets, and the anchor is retired rather
+  // than re-pointed because the line it named no longer exists.
+  { id: 'G-41', file: 'declaration-coverage.mjs', anchor: "const m = /^([a-z_]+): (.*)$/.exec(line.trim());", verdict: 'sound',
+    why: 'FAIL-CLOSED BY THE LOOP UNDER IT. A summary block whose lines match nothing leaves `kv` empty, and the very next statement walks the four keys this tool needs and exits 2 naming the one it could not read. So a block this pattern cannot parse produces a STOP that names the missing key, never a fixture that silently contributes nothing to the union — which is the reading that would matter here, because a fixture contributing nothing and a fixture whose contribution was not read are indistinguishable in the union and only one of them is a fact.' },
+
+  { id: 'G-40', file: 'assert-overflow.mjs', anchor: 'if (!missing.length && !extra.length) console.log(', verdict: 'sound',
+    why: 'GATES A CONSOLE LINE, NOT A VERDICT. This is the shape of the original defect — two empty lists reading as agreement — and here the two empty lists ARE agreement, because they are the two directions of a set comparison whose populated case was already turned into a `problems.push` on the two lines above. The verdict is computed from `problems.length` at the end of the file and never from this branch, so deleting this line would change what the transcript says and not what the tool decides. Named rather than left undisposed, because "it only prints" is exactly the excuse the [N-05] generation of this defect was hiding behind, and the check is that the printing and the deciding are two different statements about the same fact.' },
 ];
 
 // ---------------------------------------------------------------------------------------
@@ -428,16 +460,46 @@ export const FIGURES = [
   { id: 'F-08', register: 'N-05', what: '433-A(OIC) markers whose pairing is a PDFCheckBox — why a widget-TYPE filter is vacuous on this form', stated: 0,
     derive: async () => (await underDetermination('433aoi')).checkbox },
 
-  // [F-09] IS WHY THIS REGISTER EARNS ITS KEEP. The disposition said "THE 23 PAGE-6 MARKERS",
-  // and 23 is not a figure this page produces under any reading: page 6 draws 25 markers, of
-  // which 22 are numbered line markers and 3 are box markers (D, E, F); all 22 line markers
-  // pair to a widget and none of the 3 boxes does. There is no 23. What slice 6 actually
-  // checked cannot now be recovered, because it was recorded in a chat report — the one
-  // artefact class no sweep reaches, which is the whole reason the crosswalk classification
-  // was moved into a file. The figure is replaced by the three that derive, and the
-  // irreconcilable 23 is recorded rather than quietly rounded to the nearest true number.
-  { id: 'F-09', register: 'N-05', what: '433-A(OIC) page-6 line markers, all of which pair to a widget', stated: 22,
-    derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6 && m.kind === 'line' && attach(m).winner).length; } },
+  // [F-09] IS WHY THIS REGISTER EARNS ITS KEEP, AND THE RECOVERY IS WHY A REPORT PRINTS ITS
+  // EVIDENCE. The disposition said "THE 23 PAGE-6 MARKERS", and 23 is not a figure this page
+  // produces under any reading: page 6 draws 25 markers, of which 22 are numbered line markers
+  // and 3 are box markers (D, E, F); all 22 numbered markers pair to a money cell whose
+  // rectangle CONTAINS the marker's y, and none of the 3 boxes pairs to anything. There is
+  // no 23.
+  //
+  // SUPERSEDED, KEPT VERBATIM: this comment previously read "What slice 6 actually checked
+  // cannot now be recovered, because it was recorded in a chat report — the one artefact class
+  // no sweep reaches". WHAT IT GOT RIGHT: a chat report is outside every sweep in this tree,
+  // and that is still the reason the crosswalk classification was moved into a file. WHAT IT
+  // GOT WRONG: it declared the figure unrecoverable without looking at what the report had
+  // printed one section BELOW the sentence. The slice-6 report printed its own marker table
+  // beside the count. Counting that table: (30) through (38) is nine, (39) through (51) is
+  // thirteen, twenty-two numbered markers, plus Box D, Box E and Box F, which pair with
+  // nothing — twenty-five drawn, twenty-two numbered. That agrees exactly with the independent
+  // finding recorded in the same report, "22 numbered lines (all pair) and Boxes D, E, F (none
+  // pair)". So F-09 is 22, RECOVERED FROM THE ENUMERATION PRINTED BESIDE THE COUNT IN THE
+  // SLICE-6 REPORT, and not merely replaced by a figure that happens to derive.
+  //
+  // That is the whole argument for printing evidence next to conclusions, one level out from
+  // where this file usually makes it: the discipline the sweep enforces on FILES is what made
+  // a REPORT repairable. A report that prints only its conclusions cannot be repaired at all,
+  // because there is nothing left to recount.
+  //
+  // CONTAINMENT IS ASSERTED WITHOUT THE TOLERANCE. attachIn() filters on the band widened by
+  // TOL_Y = 2, so "pairs to a widget" and "the rectangle contains the marker's y" are two
+  // different claims and the register must state the one the prose above states. Both are 22
+  // on this page — checked, not assumed: every one of the 22 sits strictly inside its cell's
+  // rect[1]..rect[3]. If a future revision moves a marker into the 2pt skirt, this derivation
+  // falls to 21 and the register fails, which is the point.
+  { id: 'F-09', register: 'N-05', what: '433-A(OIC) page-6 numbered markers, each paired to a money cell whose rectangle contains the y of that marker', stated: 22,
+    _recovered_from: 'The enumeration printed beside the count in the slice-6 report: (30)..(38) = 9, (39)..(51) = 13, 22 numbered; Boxes D, E and F pair with nothing; 25 drawn.',
+    derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => {
+      if (m.page !== 6 || m.kind !== 'line') return false;
+      const w = attach(m).winner;
+      // STRICT containment, no tolerance: the claim in `what` is about the rectangle, not
+      // about the filter's 2pt skirt, and a comparison this register makes carries no slack.
+      return !!w && w.rect && m.y >= w.rect[1] && m.y <= w.rect[3];
+    }).length; } },
 
   { id: 'F-09b', register: 'N-05', what: '433-A(OIC) page-6 markers drawn in total', stated: 25,
     derive: async () => { const { rows } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6).length; } },

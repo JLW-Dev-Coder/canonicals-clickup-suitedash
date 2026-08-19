@@ -648,16 +648,26 @@ const steps = [
     //
     // Derived on the pass that did the arithmetic. A second pass could disagree with the
     // first about what ran, and then coverage would be a claim rather than a record.
+    // EACH ENTRY CARRIES AN IDENTITY THAT DOES NOT MOVE WITH THE OUTCOME. `what` is the human
+    // sentence and for a predicate it ENDS IN THE BRANCH TAKEN — "... -> held" on one record
+    // and "... -> not-held" on another — so a coverage union keyed on `what` sees the same
+    // declaration as two, counts the same rule as in class twice, and reports one of the pair
+    // as never proved while the other was proved on the very next fixture. That is exactly
+    // what the first union across three 433-A(OIC) fixtures printed: 88 declarations in class
+    // where the form declares 83, and four predicates unexercised where all four are exercised
+    // by one fixture or the other. So `id` is the identity and `what` is the prose, and only
+    // `id` is ever compared. The default is `what` because for every other kind the two are
+    // the same string.
     const covers = [];
     for (const r of rows) {
-      const ctx0 = (kind, what, fired, why) => covers.push({ line: r.line, kind, what, fired, why });
+      const ctx0 = (kind, what, fired, why, id) => covers.push({ line: r.line, kind, what, fired, why, id: id ?? what });
       if (r.floor !== null)
         ctx0('floor', `floor ${r.floor}`, !!r.floored,
           r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : `the sum was ${money(r.sum)}, at or above the floor, so it never clamped`);
       for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'every cell it multiplies was blank or zero');
       for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
       for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
-      for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`);
+      for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`, `${p.key} = ${JSON.stringify(String(p.equals))}`);
     }
     // Overflow drops: a group whose printed slots ran out. Read from the map's declared max
     // against the rows the record actually carried, not from the fill engine's log — the
@@ -666,7 +676,7 @@ const steps = [
       const capDeclared = d.max ?? (d.slots || []).length;
       const src = sample?.[d.array || d.source || g];
       const fed = Array.isArray(src) ? src.length : null;
-      covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
+      covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, id: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
         why: fed === null ? 'the record carries no rows for this group' : `the record fed ${fed} row(s) into ${capDeclared} printed slot(s), so nothing overflowed` });
     }
     // Exclusive sets and not-checkable advisories are declared in the map and the totals file
@@ -675,7 +685,7 @@ const steps = [
     for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
       if (!Array.isArray(targets)) continue;
       const on = targets.filter(t => isChecked(t) === true);
-      covers.push({ line: set, kind: 'exclusive', what: `${targets.length} option(s)`, fired: on.length === 1,
+      covers.push({ line: set, kind: 'exclusive', what: `${targets.length} option(s)`, id: `${targets.length} option(s)`, fired: on.length === 1,
         why: on.length === 0 ? 'no option is checked on this fixture, so the set never had to be exclusive' : `${on.length} options are checked` });
     }
     // A NOT-CHECKABLE ENTRY THAT DECLARES NO ADVISORY IS NOT AN UNEXERCISED DECLARATION —
@@ -699,7 +709,7 @@ const steps = [
                  : e.cell ? (groupTargets(e.cell.group, e.cell.column) || []) : [];
       const vals = tgts.map(t => printed(t)).filter(p => !p.missing);
       const written = vals.some(p => p.text !== undefined && p.text !== null && String(p.text).trim() !== '');
-      covers.push({ line: key || '(unaddressed)', kind: 'advisory', what: `review-page advisory${tgts.length > 1 ? ` (${tgts.length} slots)` : ''}`, fired: written,
+      covers.push({ line: key || '(unaddressed)', kind: 'advisory', what: `review-page advisory${tgts.length > 1 ? ` (${tgts.length} slots)` : ''}`, id: 'review-page advisory', fired: written,
         why: !tgts.length ? 'the entry names neither a map_key nor a cell{group,column}, so nothing could be resolved to check'
            : !vals.length ? 'no slot it advises about is a text field on the filled PDF'
            : 'every cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
@@ -716,7 +726,25 @@ const steps = [
       for (const d of unex) console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}\n                  ${d.why}`);
     }
     SUMMARY.declarations = { total: covers.length, exercised: covers.length - unex.length, unexercised: unex.length,
-      unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none' };
+      unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none',
+      // THE IDENTITIES, NOT ONLY THE TALLY. A form is now exercised by SEVERAL fixtures - an
+      // acceptance one, a negative-driving one, an over-max one - and no single run can report
+      // the form's coverage, because a floor exercised by one fixture and an overflow exercised
+      // by another are both exercised and neither run says so. Unioning tallies is meaningless;
+      // unioning IDENTITIES is exact. So each declaration is NAMED here, and
+      // declaration-coverage.mjs unions the named sets across a form's fixtures. One line, no
+      // newline, `kind|line|what` per entry - the block's own format rule.
+      //
+      // TWO LISTS, NOT ONE, AND THE SECOND IS THE ONE THAT KEEPS THE UNION HONEST. Which
+      // declarations are even IN CLASS depends on the fixture: a `when` clause puts the
+      // constant at "6a leased" in class only on a record whose first vehicle is leased, and
+      // on every other record that line is SKIPPED and the constant is not a declaration this
+      // run had any opportunity to exercise. A union computed from the unexercised lists alone
+      // reads "absent from this run" as "exercised by this run" and reports 82 of 83 where the
+      // truth is that two zero constants were never in class together. So the in-class set is
+      // named too, and the union subtracts one from the other.
+      in_class_ids: covers.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none',
+      unexercised_ids: unex.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none' };
     // Never collapsed to a pass count. Checked, skipped and failed are three different
     // things and a single number cannot say which one a line was in.
     const tally = `${checked.length} checked, ${skippedRows.length} skipped, ${bad.length} failed`
@@ -853,6 +881,8 @@ if (skipped.length) {
   L.push(`declarations_exercised: ${dc ? dc.exercised : 'n/a'}`);
   L.push(`declarations_unexercised: ${dc ? dc.unexercised : 'n/a'}`);
   L.push(`declarations_unexercised_kinds: ${dc ? dc.unexercised_kinds : 'n/a'}`);
+  L.push(`declarations_in_class_ids: ${dc ? dc.in_class_ids : 'n/a'}`);
+  L.push(`declarations_unexercised_ids: ${dc ? dc.unexercised_ids : 'n/a'}`);
   L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : 'none declared'}`);
   L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : 'none declared'}`);
   L.push(`registry_page_imprecise: ${lies ? kindCount('page_imprecise') : 'none declared'}`);
