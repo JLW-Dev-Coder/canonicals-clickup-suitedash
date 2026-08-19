@@ -5,7 +5,7 @@
  "_what": "The printed heading each mapped group's rows must sit beneath on Form 433-A(OIC). Read by adapters/pdf/verify-headings.mjs. Every `text` below is drawn on the page verbatim; the tool refuses to run if a string cannot be found on its declared page, which makes this file a second, independent pin on the revision.",
  "_why": "This form's internal names are semantic rather than positional, which removes 433-A's off-by-one trap and installs a worse one: a name that describes the wrong thing reads as correct. Five such names are already measured (see 433aoi.map.json `_notes`). Nothing in a name can be trusted to say which printed section a row is in, so geometry says it.",
  "_band_rule": "Each heading owns the vertical band from its own printed baseline down to the next declared heading on the same page. A widget belongs to the band containing its rectangle. Headings are declared densely enough to bound every group - INCLUDING headings no group claims, because an undeclared heading between two declared ones silently widens the band above it. On page 1 that means declaring the spouse sub-heading and both section rules, not only the one banner household_members sits under.",
- "_slice": "Pages 1, 2, 3 and 4. Sections 5-10 beyond printed line (8) are not mapped yet, so no heading on pages 5-8 is declared: a declaration for a page nobody has read would be an unchecked claim, and verify-headings.mjs requires the map and this file to agree group-for-group.",
+ "_slice": "PRINTED PAGES 1, 2, 3, 4 AND 5.",
  "headings": [
   {
    "id": "SECTION_1_PERSONAL",
@@ -96,6 +96,30 @@
    "page": 4,
    "text": "Business Asset Information",
    "_at": "y 273.5, x 144.0..276.3. 'Section 5' (x 36.0..80.5) and '(for Self-Employed) (Domestic and Foreign)' (x 279.0..485.7) are separate drawn items. Owns the band 273.5 to the foot of the page, which holds both business bank rows, the whole digital-asset block and the (8d) and (8) cells. It also closes the SECTION_4_SELF_EMPLOYED band at the bottom of the type-of-business row (widget y 275.8)."
+  },
+  {
+   "id": "SECTION_5_BUSINESS_ASSETS_CONTINUED_P5",
+   "page": 5,
+   "text": "Business Asset Information",
+   "_at": "y 755.9, x 144.0..276.3. “Section 5” (x 36.0..80.5), “(Continued)” (x 83.2..133.7) and “(for Self-Employed) (Domestic and Foreign)” (x 279.0..485.7) are separate drawn items, so the banner is declared by the part that names the subject - the same treatment SECTION_3_ASSETS and SECTION_5_BUSINESS_ASSETS get. Owns the band 755.9 down to the Section 6 banner at 446.3, which holds both (9a)/(9b) asset rows, the (9c)/(9)/(10)/(11) cells, the two receivable Yes/No pairs and Box B."
+  },
+  {
+   "id": "NOTES_RECEIVABLE",
+   "page": 5,
+   "text": "Notes Receivable",
+   "_at": "y 581.7, x 36.0..102.2. Claimed by no group - declared so it does not silently widen SECTION_5_BUSINESS_ASSETS_CONTINUED_P5’s band down over the receivable questions, and so the band the (9a)/(9b) rows sit in has a bottom bound at the foot of the (11) row rather than an open-ended tail."
+  },
+  {
+   "id": "ACCOUNTS_RECEIVABLE",
+   "page": 5,
+   "text": "Accounts Receivable",
+   "_at": "y 537.8, x 36.0..116.5. Claimed by no group, declared for the same reason as NOTES_RECEIVABLE. Neither block prints a text cell: both say “attach” or “provide a list”, so the only widgets between them are the four Yes/No boxes."
+  },
+  {
+   "id": "SECTION_6_BUSINESS_INCOME_AND_EXPENSE",
+   "page": 5,
+   "text": "Business Income and Expense Information",
+   "_at": "y 446.3, x 144.0..348.5. “Section 6” (x 36.0..80.5) and “(for Self-Employed)” (x 351.3..443.5) are separate drawn items. Closes the SECTION_5_BUSINESS_ASSETS_CONTINUED_P5 band below Box B (widget y 446.4) and owns the rest of the page: the period-provided row, the five income lines, (17), the eleven expense lines, (29) and Box C. Claimed by no group - Section 6 prints twenty-six scalars and no repeatable table."
   }
  ],
  "_page_2_row_labels_are_NOT_declared_as_headings": "Three phrases on page 2 print at the same left margin as the two sub-banners and could each look like a heading: 'Investment account' (y 524.1 and again at y 452.1), 'Retirement account' (y 272.1) and 'Description of digital asset' (y 365.3). None is declared, for two measured reasons. First, 'Investment account' is drawn TWICE - once per printed row - so it cannot be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. Second, the (2a) row's write-in widget sits at y 525.6, one and a half points ABOVE the 'Investment account' text at y 524.1, so a band opened at that text would exclude a widget of the very group it was meant to bound. They are row labels on the option row, not banners. THE COST OF THIS IS STATED RATHER THAN HIDDEN: with only CASH_AND_INVESTMENTS declared, the heading check cannot tell a bank row bound into an investment slot from a correct one - all three groups are in the same band. What catches that is row_class, which 1ab_bank_accounts, 2ab_investment_accounts and 3a_retirement_accounts each declare, and which refuses a row whose stated asset_class the group does not print. The two mechanisms are complementary here, and on this page the second is the one doing the work.",
@@ -135,6 +159,10 @@
   "8ab_business_bank_accounts": {
    "heading": "SECTION_5_BUSINESS_ASSETS",
    "_why": "Slot 0 spans y 220.5 down to 183.6 and slot 1 spans 180.9 down to 144.0, both inside the 273.5..foot band. Slot 0 is the higher, which is printed order, and printed order is not interchangeable: slot 0 totals to (8a) and slot 1 to (8b). The digital-asset block below them (y 141.3 down to 64.8) is in the same band and is bound as scalars, not as a third slot - it prints a description of a digital asset, a number of units and a wallet address, and none of those is a column of a bank row."
+  },
+  "9ab_business_assets": {
+   "heading": "SECTION_5_BUSINESS_ASSETS_CONTINUED_P5",
+   "_why": "Both rows print between the Section 5 (Continued) banner at y 755.9 and the “Notes Receivable” block label at y 581.7: slot 0 spans y 741.1 down to 684.0 and slot 1 spans y 682.5 down to 640.8. Slot 0 is the higher, which is printed order, and printed order is not interchangeable here - slot 0 totals to (9a) and slot 1 to (9b). NO PRINTED HEADING IS DRAWN BETWEEN THE TWO SLOTS, which is exactly what makes this a two-slot group where (7a)/(7b) on page 4 are two scalar blocks: there a heading is drawn between them at y 671.7. See map._arguable_page5 P5-1."
   }
  },
  "_page_3_row_labels_are_NOT_declared_as_headings": "Four phrases on page 3 print at or near the same left margin as the two declared sub-headings and could each look like a banner: 'Property description' (y 683.5 and again at y 550.3), 'Current market value' (y 578.6, 445.4, 300.9 and 182.1), 'Vehicle make & model' (y 359.5 and again at 240.7) and 'Location' (y 625.9 and 492.7). NONE is declared, and the reason is the one already recorded for page 2: every one of them is drawn MORE THAN ONCE — once per printed row — so none can be a unique anchor, and verify-headings.mjs locates a heading by finding its text verbatim on the page. They are column headers on a repeating row, not banners. THE COST IS STATED RATHER THAN HIDDEN: within REAL_PROPERTY the band cannot tell slot 0 from slot 1, and within VEHICLES it cannot tell a vehicle row from the (6b) cell that sits between the two rows. What catches a misfiled row is row_class, which both new groups declare, plus the printed-marker evidence recorded per slot in the map."

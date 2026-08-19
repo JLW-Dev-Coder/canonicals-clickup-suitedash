@@ -4,7 +4,7 @@
  "catalog": "55896Q",
  "pdf": "adapters/pdf/forms/f433aoi.pdf",
  "fields_source": "adapters/pdf/maps/433aoi.fields.json",
- "slice": "PARTIAL - printed pages 1, 2, 3 and 4. Page 1 is the whole of Section 1 (Personal and Household Information) and Section 2 (Employment Information for Wage Earners). Pages 2 and 3 are Section 3 (Personal Asset Information (Domestic and Foreign)), printed lines (1a) through (6): page 2 carries bank and cash accounts, investment accounts, digital assets, retirement accounts and the cash value of life insurance policies; page 3 carries real property at (5a)-(5) and vehicles at (6a)-(6). Page 4 finishes Section 3 at printed lines (7a) through (7) and Box A, then carries the whole of Section 4 (Self-Employed Information) and the whole of Section 5 (Business Asset Information (for Self-Employed) (Domestic and Foreign)) through printed lines (8a) to (8). Section 5 CONTINUES onto page 5 and is NOT finished here. Pages 5-8 are not authored yet and their fields are deliberately unreferenced. This map does NOT claim completeness, so verify-form-coverage.mjs will not hold it to whole-form accounting.",
+ "slice": "PRINTED PAGES 1, 2, 3, 4 AND 5. Pages 6-8 are not authored. The map declares no COMPLETE slice, so coverage is reported and not required.",
  "map_version": 3,
  "authored_from_page2": "adapters/pdf/align-block.mjs 433aoi page 2, whole page (117 printed text items, 68 widgets), cross-read against 433aoi.line-markers.txt (15 printed markers on page 2, every one attached to the widget this map binds it to) and 433aoi.checkboxes.txt (21 checkboxes on page 2, all probing on=/1). Every binding was taken from the PRINTED marker, the printed caption and the widget rectangle. THE LABEL FILE WAS NOT USED AS EVIDENCE ANYWHERE ON THIS PAGE - see _label_file_disagreements, which names the eight widgets it reports wrongly and the five where it contradicts the rectangle outright.",
  "authored_from": "adapters/pdf/align-block.mjs 433aoi page 1, five bands (y 480-760, 380-492, 245-392, 100-270, 20-122), cross-read against 433aoi.labels.txt and 433aoi.checkboxes.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number.",
@@ -120,7 +120,33 @@
   "8c_us_dollar_equivalent_today": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0]",
   "8c_total_digital_assets": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].RetirementAcct1[0].TotalCurrentMarketValue[0]",
   "8d_bank_accounts_from_attachment": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Accounts_Attached[0]",
-  "8_total_business_bank_accounts": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]"
+  "8_total_business_bank_accounts": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]",
+  "9c_business_assets_from_attachment": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Value_Assets_Attached[0]",
+  "9_total_business_assets": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Value_Assets[0]",
+  "10_irs_allowed_deduction_books_and_tools": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Line10[0]",
+  "11_business_assets_less_deduction": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].TotalValue[0].Total_Assets_Less_Deduction[0]",
+  "box_b_available_business_equity_in_assets": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Available_Business_Equity_in_Assets[0]",
+  "s6_period_provided_beginning": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].PeriodProvidedBegining[0]",
+  "s6_period_provided_through": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Through[0]",
+  "12_gross_receipts": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Receipts[0]",
+  "13_gross_rental_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Rental_Income[0]",
+  "14_interest_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Interest_Income[0]",
+  "15_dividends": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Dividend_Income[0]",
+  "16_other_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Income[0]",
+  "17_total_business_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Income[0]",
+  "18_materials_purchased": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Materials_Purchased[0]",
+  "19_inventory_purchased": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Inventory_Purchased[0]",
+  "20_gross_wages_and_salaries": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Gross_Wages_Salaries[0]",
+  "21_rent": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Rent[0]",
+  "22_supplies": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Supplies[0]",
+  "23_utilities_telephones": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Utilities_Telephones[0]",
+  "24_vehicle_costs": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Vehicle_Costs[0]",
+  "25_business_insurance": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Business_Insurance[0]",
+  "26_current_business_taxes": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Current_Business_Taxes[0]",
+  "27_secured_debts_not_credit_cards": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Secured_Debts[0]",
+  "28_other_business_expenses": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Other_Business_Expenses[0]",
+  "29_total_business_expenses": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Expenses[0]",
+  "box_c_net_business_income": "topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Net_Business_Income[0]"
  },
  "_map_evidence": {
   "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim, with the ASCII apostrophe standing in for the form's typographic one where the two differ.",
@@ -485,6 +511,12 @@
      "decided": "RECTANGLE AND LABEL FILE TOGETHER, against the leaf name."
     }
    ]
+  },
+  "page_5": {
+   "_what_disagreed_on_this_page_was_not_the_label_file": "On pages 1-4 the disagreements were between 433aoi.labels.txt and the widget rectangle. ON PAGE 5 THE LABEL FILE AGREES WITH THE RECTANGLE EVERYWHERE IT SPEAKS. What disagrees is line-markers.mjs, which pairs a printed marker with the widget to its right and gets TWO of page 5 wrong - both of them Boxes. Recorded in the same place because the rule is the same: rectangle over tool, and say which was right.",
+   "THE CELL topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Net_Business_Income[0]": "line-markers.mjs reports the Box C marker at y 70.1 pairing with THE CELL topmostSubform[0].F433-A-OIC_Page5[0].Section6[0].Total_Business_Expenses[0], which is printed line (29) at y 86.4..72.0 - sixteen points ABOVE the label, reached upward because nothing sits on the label row. THE RECTANGLE WAS RIGHT AND THE TOOL WAS WRONG. Box C is Net_Business_Income[0] at y 50.4..36.0, bound from the printed caption “Subtract line (29) from line (17) and enter the amount in Box C =” at y 49.6 and the “$” at y 48.9 x 451.4..455.8. A map that took the tool’s answer would have written Box C into line (29) and left Box C blank.",
+   "THE CELL topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Available_Business_Equity_in_Assets[0]": "line-markers.mjs reports the Box B marker at y 489.2 as having no widget to its right, which is true and is not an answer. THE RECTANGLE AND THE CAPTION WERE RIGHT: Box B is this cell at y 460.8..446.4, bound from “Add lines (8) and (11) and enter the amount in Box B =” at y 460.0 and the “$” at y 459.3.",
+   "_the_general_shape_now_confirmed_three_times": "Box A (page 4, label y 570.1, cell y 550.8), Box B (label y 489.2, cell y 460.8) and Box C (label y 70.1, cell y 50.4). A Box is a right-margin TITLE BLOCK with its value cell one or two rows below under its own “enter the amount in Box X =” caption. Pages 6-8 carry Boxes D through H and a marker-to-widget pairing will be wrong on every one of them."
   }
  },
  "_computed": {
@@ -772,6 +804,18 @@
    "_printed": "Caption 'Type of business' y 299.1, x 36.0..96.5 followed by '(select one)' y 298.1, x 98.7..135.3. 'Partnership' y 286.5, x 50.4..91.3 (box y 285.3, x 36.0..45.0); 'LLC' x 122.4..137.1 (box x 108.0..117.0); 'Corporation' x 165.8..207.6 (box x 151.4..160.4); 'Other' x 237.8..257.8 (box x 223.4..232.4). The write-in cell Other_Type_Of_Business[0] is at x 262.8..388.8 on the same printed row.",
    "_the_page_prints_select_one": "THIS IS THE FIRST OPTION LIST ON 433-A(OIC) THAT PRINTS ITS OWN EXCLUSIVITY. '(select one)' is drawn on the page at y 298.1, x 98.7..135.3. Every other option list on this form — the bank account types at (1a)/(1b) and now (8a)/(8b), the investment types at (2a)/(2b), the retirement types at (3a) — prints no such instruction, which is why _notes[12] declines to declare those exclusive. This one is declared exclusive on the page's own words rather than on a judgement about the world. It is also the answer to half of carried item C-04: the question was never whether those lists ARE exclusive in fact, it was whether the map may say so when the page does not. Here the page does.",
    "_nesting": "CB4_05 through CB4_08 hang DIRECTLY off Section4[0], with no subform of their own — unlike CB4_01/CB4_02 (under Business[0]) and CB4_03/CB4_04 (under OtherBusinessInterests[0]). Three checkbox sets on one section, three different nesting depths."
+  },
+  "s5_has_notes_receivable": {
+   "_printed": "Do you have notes receivable — y 567.3, x 36.0..141.4",
+   "_option_order_is_from_x_not_from_the_leaf_numbering": "CB5_01 sits at x 173.0..182.0, left of the printed 'Yes' at x 187.4..201.2. CB5_02 sits at x 216.0..225.0, left of the printed 'No' at x 228.4..238.7.",
+   "yes": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_01[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_02[0]"
+  },
+  "s5_has_accounts_receivable": {
+   "_printed": "Do you have accounts receivable, including e-payment, factoring companies, and any bartering or online auction accounts — y 525.3 wrapping to y 515.7",
+   "_option_order_is_from_x_not_from_the_leaf_numbering": "CB5_03 sits at x 284.4..293.4, left of the printed 'Yes' at x 298.8..312.6. CB5_04 sits at x 327.4..336.4, left of the printed 'No' at x 341.8..352.0.",
+   "yes": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_03[0]",
+   "no": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_04[0]"
   }
  },
  "check_here": {
@@ -890,7 +934,15 @@
    "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_07[0]",
    "topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].CB4_08[0]"
   ],
-  "_note_page_4": "PAGE 4 DECLARES THREE EXCLUSIVE SETS AND ONE NON-EXCLUSIVE LIST, AND FOR THE FIRST TIME ON THIS FORM ONE OF THEM IS DECLARED ON THE PAGE'S OWN WORDS. (a) s4_business_is_sole_proprietorship and s4_other_business_interests are Yes/No pairs on one printed question each — a form answering both has answered neither. (b) s4_other_business_type is exclusive because the page PRINTS '(select one)' at y 298.1, x 98.7..135.3. That is the only such instruction anywhere on 433-A(OIC), and it is the difference between declaring a constraint the page states and declaring one the map believes. (c) The (8a)/(8b) account-type list is NOT declared exclusive, for the identical reason the (1a)/(1b) list is not: no 'check one' is printed over it, and an account can truthfully be both a Checking account and an Online Account. The contrast with (b) on the SAME PAGE is the whole argument — the IRS knows how to print 'select one' and did not print it there."
+  "_note_page_4": "PAGE 4 DECLARES THREE EXCLUSIVE SETS AND ONE NON-EXCLUSIVE LIST, AND FOR THE FIRST TIME ON THIS FORM ONE OF THEM IS DECLARED ON THE PAGE'S OWN WORDS. (a) s4_business_is_sole_proprietorship and s4_other_business_interests are Yes/No pairs on one printed question each — a form answering both has answered neither. (b) s4_other_business_type is exclusive because the page PRINTS '(select one)' at y 298.1, x 98.7..135.3. That is the only such instruction anywhere on 433-A(OIC), and it is the difference between declaring a constraint the page states and declaring one the map believes. (c) The (8a)/(8b) account-type list is NOT declared exclusive, for the identical reason the (1a)/(1b) list is not: no 'check one' is printed over it, and an account can truthfully be both a Checking account and an Online Account. The contrast with (b) on the SAME PAGE is the whole argument — the IRS knows how to print 'select one' and did not print it there.",
+  "s5_has_notes_receivable": [
+   "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_01[0]",
+   "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_02[0]"
+  ],
+  "s5_has_accounts_receivable": [
+   "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_03[0]",
+   "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].CB5_04[0]"
+  ]
  },
  "groups": {
   "household_members": {
@@ -1356,6 +1408,47 @@
      }
     }
    ]
+  },
+  "9ab_business_assets": {
+   "source": "business_assets",
+   "max": 2,
+   "overflow": "Rows past slot 1 are logged and dropped. The printed page offers two and (9c) is where the rest go, on an attachment.",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "business_property"
+    ],
+    "_why": "Which asset class the rows in this group ARE. business_property is printed by exactly ONE group on this form, so no discriminator is declared and none is required — and that is a checked fact, not an assumption: check-row-shape.mjs refuses any map where two groups print the same class and either lacks a discriminator.",
+    "_and_it_is_NOT_personal_property": "Section 5 is Business Asset Information (for Self-Employed) and its own printed instruction on page 4 y 247.5 ends 'Do not include personal assets listed in Section 3.' The (7a)/(7b) rows on page 4 are personal_property under Section 3. Two structurally identical tables, two classes, and the page draws the line between them in words."
+   },
+   "_printed_heading": "Section 5 (Continued) Business Asset Information (for Self-Employed) (Domestic and Foreign)",
+   "_heading_at": "y 755.9, x 144.0..276.3 for the subject, with 'Section 5' at x 36.0..80.5, '(Continued)' at x 83.2..133.7 and '(Domestic and Foreign)' at x 279.0..485.7",
+   "_printed_markers": "(9a) y 696.9 x 452.1..475.2 and (9b) y 653.7 x 452.1..475.2",
+   "_row_order": "Slot 0 is printed (9a), slot 1 is printed (9b). Proven by RECTANGLE CONTAINMENT: marker (9a) at y 696.9 falls inside Asset1[0].Total_Value[0] (y 698.4..684.0), marker (9b) at y 653.7 falls inside Asset2[0].Total_Value[0] (y 655.2..640.8). Not taken from the Asset1/Asset2 leaf numbering.",
+   "_columns_by_x": "description (slot 0: x 36.0..576.0, slot 1: x 115.2..442.8) | current_fmv x 43.2..122.4 | quick_sale_value x 158.4..234.0 | current_loan_balance x 255.6..331.2 | quick_sale_equity x 478.8..576.0",
+   "_no_maxlen": "Not one of the forty fields on page 5 declares a /MaxLen. The column ceiling comes from the widget RECT, and the two description cells differ by 212.4pt of width.",
+   "_the_total_column_is_a_printed_conditional_with_no_selector": "quick_sale_equity holds printed (9a)/(9b), whose caption is 'Total value (if leased or used in the production of income, enter 0 as the total value)'. No lease indicator and no production-of-income indicator is printed anywhere on page 5, so both entries are declared not checkable in 433aoi.totals.json. The quick_sale_value column is unaffected and IS checked: the conditional is drawn in the Total value column at x 334.8..424.7, not in the X .8 column.",
+   "_crosswalk": "CLASS business_property, EXACT from adapters/hubspot/asset-row-shapes.json. description, current_fmv and current_loan_balance are exact column names. quick_sale_value and quick_sale_equity are NEW on this class and are the same two columns vehicle gained in slice 3 and personal_property gained in slice 4. The backbone's `equity` is FMV minus loan with NO discount and is deliberately NOT bound here — the page draws 'X .8' between the market value and the total, so `equity` would have named the wrong arithmetic.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].Description_Asset[0]",
+      "current_fmv": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].LessLoan[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset1[0].Total_Value[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].Description_Asset[0]",
+      "current_fmv": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].LessLoan[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-A-OIC_Page5[0].Section5[0].Asset2[0].Total_Value[0]"
+     }
+    }
+   ]
   }
  },
  "_never_autofill": {
@@ -1514,14 +1607,22 @@
     "partially_answered_in_slice_4": "HALF OF IT IS ANSWERED, AND BY THE PAGE. Section 4's 'Type of business' list prints '(select one)' at y 298.1, x 98.7..135.3 - the only such instruction anywhere on 433-A(OIC) - and is declared exclusive on those words. That settles the METHOD question this item was really about: the map may declare exclusivity when the page states it, and declines to when the page does not. What remains open is unchanged and is now narrower: the (1a)/(1b), (2a)/(2b), (3a) and (8a)/(8b) option lists print no such instruction and are still not declared exclusive, even though a bank account being simultaneously Cash and Money Market/CD is not a thing. The contrast is now on ONE PAGE - Section 4 prints 'select one' and Section 5, eight printed lines below it, does not."
    },
    {
-    "id": "C-05",
-    "raised_in_slice": 4,
-    "subject": "row_class discriminates by class only, and two printed tables on this form share a class",
-    "where": "groups.1ab_bank_accounts and groups.8ab_business_bank_accounts, both declaring row_class accepts ['bank_account']",
-    "the_question": "Section 3 prints personal bank accounts at (1a)/(1b) and Section 5 prints business bank accounts at (8a)/(8b). They are the same backbone class - the class carries an is_business_account row flag precisely for this split, and 433-A uses it to route a row to line 65 or line 13. This form prints no per-row flag; the printed TABLE is the flag. row_class reads one column and compares it to a list of accepted classes, so both groups accept both rows and nothing stops a business account printing on the personal line or the reverse.",
-    "what_was_done": "Both groups declare accepts ['bank_account'], which is true. The gap is reported rather than papered over by inventing two classes: splitting bank_account into personal and business would break reconciliation with 433-A, which files both through one shape, and would be a backbone change made to work around an engine limit.",
-    "why_still_open": "Closing it means row_class gaining a second discriminating column - something like {column: \"is_business_account\", equals: true} beside the class test. That is an engine change, it is the same shape as the feeder predicate authorised this slice, and it is NOT built unasked. Reported to Principal.",
-    "also_affects": "The same gap exists between (7a) other valuable items and any future page-5 business-property row, both of which are personal_property / business_property shaped. It is a general limit, not a bank-account one."
+    "id": "C-06",
+    "raised_in_slice": 5,
+    "subject": "the Section 6 P&L route makes (17) and (29) legitimately unfed, and both tripwires would fail a correctly filed form",
+    "where": "433aoi.map.json._map_evidence_page5.section_6_income_and_expenses and _arguable_page5 P5-2",
+    "the_question": "The printed preamble at page 5 y 429.3 says: enter the total gross monthly income on line 17 and your monthly expenses on line 29, and DO NOT COMPLETE lines (12)-(16) and (18)-(28). A form filed that way prints (17) and (29) with every operand blank. The tripwires for (17) and (29) sum blanks to zero and would report a failure against a filing the page itself authorises.",
+    "what_was_done": "Both tripwires declared and left EXACT. Not weakened, not given a tolerance, not turned into a skip. The acceptance fixture supplies every operand so both check.",
+    "why_still_open": "The only two fixes available are a feeder predicate over a cell this page does not print - there is no P&L-route indicator anywhere on page 5 - and a tolerance, which standing rule refuses. A third option exists and is not a slice decision: declare (17) and (29) not checkable, which would give up two real checks to accommodate a route no record has yet taken. Principal rules."
+   },
+   {
+    "id": "C-07",
+    "raised_in_slice": 5,
+    "subject": "Section 5 and Section 3 both continue across a page break and neither reprints its rounding instruction",
+    "where": "433aoi.map.json.rounding blocks P3_REAL_PROPERTY_AND_VEHICLES, P4_OTHER_VALUABLE_ITEMS and P5_SECTION_5_CONTINUED",
+    "the_question": "Section 3 opens on page 2 under a rounding instruction and continues onto pages 3 and 4 with none reprinted. Section 5 opens on page 4 under one and continues onto page 5 with none reprinted. Twice is a habit, not an accident - but the page still does not say whether the instruction scopes to the SECTION or to the BLOCK it is drawn over, and the two readings differ by up to a dollar on every total that crosses the boundary.",
+    "what_was_done": "All three continuation blocks declared none_printed, with the absence recorded as a thing that was looked for. none_printed asserts only what is drawn.",
+    "why_still_open": "Deciding it means either reading it out of the IRS instructions booklet, which this repo does not hold, or asserting a scope the printed page does not draw. Neither is a call a form slice gets to make. It now affects TWO Boxes: Box A has three uninstructed operands of seven, Box B has one of two."
    }
   ],
   "resolved": [
@@ -1531,6 +1632,18 @@
     "resolved_in_slice": 4,
     "subject": "(6a)/(6c) — the one place the totals schema could reach and did not",
     "what_resolved_it": "The single-equality feeder predicate authorised for slice 4. The printed conditional is now checked on both branches: an owned row is verified as quick sale value minus loan balance, a leased row is verified against the printed 0, and whichever branch the form is not on is SKIPPED with the key and its actual value printed. The not_checkable entry it replaced was removed in the same commit."
+   },
+   {
+    "id": "C-05",
+    "raised_in_slice": 4,
+    "subject": "row_class discriminates by class only, and two printed tables on this form share a class",
+    "where": "groups.1ab_bank_accounts and groups.8ab_business_bank_accounts, both declaring row_class accepts ['bank_account']",
+    "the_question": "Section 3 prints personal bank accounts at (1a)/(1b) and Section 5 prints business bank accounts at (8a)/(8b). They are the same backbone class - the class carries an is_business_account row flag precisely for this split, and 433-A uses it to route a row to line 65 or line 13. This form prints no per-row flag; the printed TABLE is the flag. row_class reads one column and compares it to a list of accepted classes, so both groups accept both rows and nothing stops a business account printing on the personal line or the reverse.",
+    "what_was_done": "Both groups declare accepts ['bank_account'], which is true. The gap is reported rather than papered over by inventing two classes: splitting bank_account into personal and business would break reconciliation with 433-A, which files both through one shape, and would be a backbone change made to work around an engine limit.",
+    "why_still_open": "Closing it means row_class gaining a second discriminating column - something like {column: \"is_business_account\", equals: true} beside the class test. That is an engine change, it is the same shape as the feeder predicate authorised this slice, and it is NOT built unasked. Reported to Principal.",
+    "also_affects": "The same gap exists between (7a) other valuable items and any future page-5 business-property row, both of which are personal_property / business_property shaped. It is a general limit, not a bank-account one.",
+    "resolved_in_slice": 5,
+    "resolved_by": "row_class gained ONE optional discriminating key, {column, equals}, single-equality, same grammar as the totals feeder predicate and no composition. 1ab_bank_accounts declares is_business_account = false and 8ab_business_bank_accounts declares is_business_account = true, from the backbone flag named in P4-4. THE ASSERTION IS THE REAL FIX: check-row-shape.mjs refuses any map where two groups accept the same class and either lacks a discriminator, asked before a single row is read. It also refuses same-class groups discriminating on different columns, or on the same value. Both crossing directions were proved refused on a Checking account, which both printed tables offer and which the per-slot option list therefore cannot catch. AND THE ASSERTION IMMEDIATELY FOUND THE SAME COLLISION ON 433-A, which C-05 was never filed against; that form is closed too, on the printed evidence PERSONAL BANK ACCOUNTS at page 2 y 464.1 and BUSINESS BANK ACCOUNTS at page 7 y 405.4."
    }
   ],
   "_count": {
@@ -1638,7 +1751,7 @@
   "_order": "ROUND FIRST, THEN FLOOR. Page 2 y 668.1 prints the two sentences in that order — 'Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".' — and the engine applies them in that order.",
   "_wording_variants_are_recorded_not_tested": "Page 2 prints 'Round to the nearest dollar'. Every later instance prints 'Round to the nearest whole dollar'. A string-exact check for the later wording reads page 2 as UNINSTRUCTED and leaves the entire personal-asset block unrounded. So the mode names the variant — nearest_dollar vs nearest_whole_dollar — and both do the same arithmetic.",
   "_the_mixed_scope_finding": "Box A adds lines (1) through (7) and is drawn under 'Round to the nearest whole dollar' at y 567.5. THREE of its seven operands are not: (5) and (6) are on page 3, which prints no instruction anywhere, and (7) is on page 4 ABOVE the y 567.5 sentence, which is drawn between (7) and Box A. Whether that is a drafting gap or a deliberate scope cannot be told from the page. It is recorded here rather than resolved, and the blocks below declare what is printed, not what was probably meant.",
-  "_slice": "PRINTED PAGES 1, 2, 3 AND 4 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 5-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
+  "_slice": "PRINTED PAGES 1, 2, 3, 4 AND 5 — the pages the map covers today. Page 1 carries NO money cell of any kind (Sections 1 and 2 are names, dates, addresses and phone numbers): money-probe.mjs flags 0 of its 38 mapped text cells, so page 1 declares no block and that absence is a checked result rather than a gap. Pages 6-8 are unmapped; a money cell on those pages is in no block yet, and the totals cross-check in validate-map.mjs is what stops the gate when one is added.",
   "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, and the arithmetic closes. adapters/pdf/money-probe.mjs reports, for every mapped text target, the printed text drawn immediately to its left in the same vertical band, and flags the cell when that text ends in a “$” within 14pt. It finds 0 money cells on page 1, 27 on page 2, 24 on page 3 and 18 on page 4. This declaration holds 72 money cells once its group COLUMNS are expanded across their slots: 27 on page 2, 27 on page 3, 18 on page 4. Pages 2 and 4 agree with the probe exactly. Page 3 declares THREE MORE than the probe flags, and those three are named in that block’s _money_without_a_printed_dollar_sign — the real-property listing price and the two mortgage payment cells, which the form draws no “$” against and which are money on their printed caption. 27 - 24 = 3, and the three are enumerated, so nothing is declared money that cannot be pointed at on the page. Nothing was declared money on its field name.",
   "blocks": [
    {
@@ -1833,9 +1946,217 @@
       ]
      }
     ]
+   },
+   {
+    "id": "P5_SECTION_5_CONTINUED",
+    "page": 5,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Page 5 prints exactly three rounding sentences — y 479.0, y 380.1 and y 70.2 — and ALL THREE are below this block. This block runs from the 'Section 5 (Continued)' banner at y 755.9 down to line (11) at y 596.8 (widget y 597.6..583.2). The nearest instruction, at y 479.0, is drawn 117.8pt below line (11) and 10.2pt below the 'Box B' label at y 489.2; it opens the Box B block. Nothing rounding-shaped is drawn above y 596.8 on this page.",
+    "_this_is_the_page_3_situation_repeated": "Section 5 begins on page 4 UNDER a printed instruction at y 236.1 and continues onto page 5, which re-prints the banner and not the instruction — exactly as Section 3 begins on page 2 under y 668.1 and continues onto pages 3 and 4 with no instruction reprinted. Two sections, the same drafting habit, the same undecidable scope. Declared none_printed for the same reason: none_printed asserts only what is drawn.",
+    "keys": [
+     "9c_business_assets_from_attachment",
+     "9_total_business_assets",
+     "10_irs_allowed_deduction_books_and_tools",
+     "11_business_assets_less_deduction"
+    ],
+    "cells": [
+     {
+      "group": "9ab_business_assets",
+      "columns": [
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "quick_sale_equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P5_BOX_B",
+    "page": 5,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar.",
+    "printed_at": {
+     "page": 5,
+     "y": 479,
+     "x": [
+      320.9,
+      442.8
+     ]
+    },
+    "_band": "One cell. The sentence at y 479.0 sits inside the Box B title block — below 'Do not include amounts from the lines with a letter beside the number [for example: (9c)].' at y 488.6 and above 'Do not enter a negative number...' at y 469.4 — and the Box B value cell is at y 460.8..446.4 under its own 'Add lines (8) and (11) and enter the amount in Box B =' caption at y 460.0.",
+    "_the_wording_here_is_the_SHORT_form": "Page 4's Box A instruction is two sentences and carries the do-not-include clause inside the same printed run. Box B splits them: the do-not-include clause is its own run at y 488.6 and the rounding sentence is a bare 'Round to the nearest whole dollar.' at y 479.0. Quoted as drawn.",
+    "_one_of_its_two_operands_is_uninstructed": "Box B adds (8) and (11). (8) is in P4_SECTION_5_BUSINESS_ASSETS, which rounds under the same wording. (11) is in P5_SECTION_5_CONTINUED, which is none_printed. See rounding._the_mixed_scope_finding — Box B is the second total on this form to cross a rounding boundary, and the first to do it with only one operand on the far side.",
+    "keys": [
+     "box_b_available_business_equity_in_assets"
+    ],
+    "cells": []
+   },
+   {
+    "id": "P5_SECTION_6",
+    "page": 5,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+    "printed_at": {
+     "page": 5,
+     "y": 380.1,
+     "x": [
+      138.9,
+      574.6
+     ]
+    },
+    "_band": "Opens at y 380.1, directly below the Section 6 banner (y 446.3), its three-line P&L preamble (y 429.3, 419.7, 410.1) and the period-provided row (y 394.5), and above the 'Business income' sub-label at y 365.7 and the first income line (12) at y 351.3. Closes above the Box C title block at y 70.2. Same shape as the page-2 and page-4 Section 5 instances: drawn under the section preamble, above the first table.",
+    "_wording": "Word-for-word the page-4 Section 5 sentence, which is itself the page-2 sentence with 'whole' inserted. Three of the six printed instances on this form are this exact string.",
+    "_covers_the_totals_too": "(17) and (29) sit inside this band — (17) at y 280.0 and (29) at y 85.6, both above y 70.2 — so both are rounded under the same instruction as the lines that feed them. Neither crosses a rounding boundary.",
+    "keys": [
+     "12_gross_receipts",
+     "13_gross_rental_income",
+     "14_interest_income",
+     "15_dividends",
+     "16_other_income",
+     "17_total_business_income",
+     "18_materials_purchased",
+     "19_inventory_purchased",
+     "20_gross_wages_and_salaries",
+     "21_rent",
+     "22_supplies",
+     "23_utilities_telephones",
+     "24_vehicle_costs",
+     "25_business_insurance",
+     "26_current_business_taxes",
+     "27_secured_debts_not_credit_cards",
+     "28_other_business_expenses",
+     "29_total_business_expenses"
+    ],
+    "_keys_deliberately_absent": "s6_period_provided_beginning and s6_period_provided_through are DATES, not money. No '$' is drawn against either — the probe finds none within 14pt — and their printed captions name a period, not an amount.",
+    "cells": []
+   },
+   {
+    "id": "P5_BOX_C",
+    "page": 5,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar.",
+    "printed_at": {
+     "page": 5,
+     "y": 70.2,
+     "x": [
+      320.9,
+      442.8
+     ]
+    },
+    "_band": "One cell. The sentence at y 70.2 sits beside the 'Box C' label at y 70.1 and above 'Do not enter a negative number...' at y 59.4; the Box C value cell, Net_Business_Income[0], is at y 50.4..36.0 under its 'Subtract line (29) from line (17) and enter the amount in Box C =' caption at y 49.6.",
+    "_it_crosses_no_boundary": "Both operands, (17) and (29), are in P5_SECTION_6, which rounds under the same instruction. Box C is the first Box on this form whose operands share its own rule.",
+    "_it_is_declared_separately_from_P5_SECTION_6_anyway": "Because the page draws it a separate instruction, at a separate y, in the separate short wording. Folding it into P5_SECTION_6 because the arithmetic happens to agree would assert a scope the page does not draw — and would hide it if a later revision changed one and not the other.",
+    "keys": [
+     "box_c_net_business_income"
+    ],
+    "cells": []
    }
   ],
   "_the_mixed_scope_finding_measured": "MEASURED, not estimated. Of the 32 declared totals on pages 1-4, EXACTLY ONE crosses a rounding boundary — Box A, whose total cell is in nearest_whole_dollar while operands (5), (6) and (7) are in none_printed blocks. Every other total shares its operands’ rule. Worst-case divergence was brute-forced over all 1,000,000 cent-combinations of the three fractional operands: |round(sum of operands) - sum of rounded operands| reaches 1 and never 2, first at cents (0.00, 0.01, 0.49). So the two PREPARATION METHODS - round the sum, or round each line and add - can differ by at most one dollar on this form. THE ENGINE AND THE PAGE CANNOT: step 11 recomputes Box A from the seven PRINTED operand cells and rounds by Box A’s own block, so it reconciles exactly and needs neither a tolerance nor a not_checkable declaration.",
   "_can_the_page_3_omission_be_read": "NOT DECIDABLE FROM THE PAGE, and that is the answer rather than a missing one. FOR a drafting gap: the sentence appears six times on this form and is absent from exactly the one page that is entirely money; page 3’s totals feed Box A, which is drawn under it; and the page-4 Section 5 instance is word-for-word the page-2 one with “whole” inserted, which reads like a copy that was not propagated backwards. FOR a deliberate scope: every printed instance sits directly under a SECTION banner and its preamble, page 3 carries only a “(Continued)” banner and no preamble, and the IRS knows how to print it on a continuation page and did not. Nothing on the page separates the two. Declared none_printed either way, because none_printed asserts only what is drawn."
- }
+ },
+ "authored_from_page5": "adapters/pdf/page-geometry.mjs read directly, dumping every printed run and every widget RECTANGLE on page 5 into one coordinate space sorted y-descending. Corroborated by adapters/pdf/line-markers.mjs (26 printed markers on page 5: 9a, 9b, 9c, 9, 10, 11, Box B, 12-17, 18-29, Box C) and by adapters/pdf/maps/433aoi.labels.txt. Every binding below was taken from the PRINTED caption and the widget rectangle. No binding was taken from a leaf name, and no binding was derived from a 433-A line number. TWO of line-markers.mjs's own pairings on this page are WRONG and are corrected below by rectangle: Box B and Box C.",
+ "_map_evidence_page5": {
+  "_printed_markers_in_printed_order": "Twenty-six, top to bottom: (9a) y 696.9 | (9b) y 653.7 | (9c) y 639.3 | (9) y 625.6 | (10) y 610.5 | (11) y 596.8 | Box B y 489.2 | (12) y 351.3 | (13) y 336.9 | (14) y 322.5 | (15) y 308.1 | (16) y 293.7 | (17) y 280.0 | (18) y 250.5 | (19) y 236.1 | (20) y 221.7 | (21) y 207.3 | (22) y 192.9 | (23) y 178.5 | (24) y 164.1 | (25) y 149.7 | (26) y 126.9 | (27) y 113.7 | (28) y 99.3 | (29) y 85.6 | Box C y 70.1. All twenty-four numbered markers are drawn at x 451.7..475.2; the two Box labels are drawn at x 453.6..476.7, which is the same shape Box A used on page 4.",
+  "_printed_section_headings": "Two, and both are re-printed continuations rather than new sections. 'Section 5 (Continued) Business Asset Information (for Self-Employed) (Domestic and Foreign)' at y 755.9 - 'Section 5' at x 36.0..80.5, '(Continued)' at x 83.2..133.7, the subject at x 144.0..276.3 and the parenthetical at x 279.0..485.7. 'Section 6 Business Income and Expense Information (for Self-Employed)' at y 446.3 - 'Section 6' at x 36.0..80.5, the subject at x 144.0..348.5, '(for Self-Employed)' at x 351.3..443.5. Two further printed block labels are NOT section banners and are declared so they do not silently widen a band: 'Notes Receivable' at y 581.7 x 36.0..102.2 and 'Accounts Receivable' at y 537.8 x 36.0..116.5.",
+  "the_two_line_markers_pairings_that_are_WRONG_on_this_page": {
+   "_what": "line-markers.mjs pairs a printed marker with the widget to its right on the same row. On this page that answer is wrong twice, and BOTH times on a Box.",
+   "Box_B": "line-markers.mjs reports 'Box B y 489.2 -> (no widget to its right on this row)' - correct as far as it goes, and NOT an answer. The Box B VALUE cell is Available_Business_Equity_in_Assets[0] at y 460.8..446.4, x 460.8..576.0, twenty-eight points BELOW the label. It is bound by the printed caption 'Add lines (8) and (11) and enter the amount in Box B =' at y 460.0 x 211.0..442.8 and by the '$' drawn at y 459.3 x 451.4..455.8, immediately left of the widget's x 460.8. Same shape as Box A on page 4.",
+   "Box_C": "line-markers.mjs reports 'Box C y 70.1 -> Total_Business_Expenses[0]', and that is WRONG. Total_Business_Expenses[0] occupies y 86.4..72.0 and is printed line (29), sixteen points ABOVE the Box C label - the tool reached UPWARD for the nearest widget because nothing sits on the label's own row. The Box C value cell is Net_Business_Income[0] at y 50.4..36.0, x 460.8..576.0, bound by the printed caption 'Subtract line (29) from line (17) and enter the amount in Box C =' at y 49.6 x 170.0..442.8 and by the '$' at y 48.9 x 451.4..455.8. RECTANGLE OVER LABEL FILE: the rectangle was right and the tool was wrong, and a map that took the tool's answer would have written Box C into line (29) and left Box C blank, with (29) then failing its own tripwire for a reason nothing on the page explains.",
+   "the_general_shape": "A Box on this form is drawn as a TITLE BLOCK in the right margin - the label, then the box's name, then instructions - with the value cell one or two rows below under its own 'Add/Subtract ... and enter the amount in Box X =' caption. Three Boxes now confirm it: Box A (page 4, label y 570.1, cell y 550.8), Box B (label y 489.2, cell y 460.8) and Box C (label y 70.1, cell y 50.4). A marker-to-widget pairing tool cannot get this right and is not asked to."
+  },
+  "9ab_business_assets": {
+   "printed_heading": "Section 5 (Continued) Business Asset Information (for Self-Employed) (Domestic and Foreign)",
+   "printed_heading_at": "y 755.9",
+   "printed_markers": "(9a) at y 696.9 x 452.1..475.2 and (9b) at y 653.7 x 452.1..475.2",
+   "why_this_is_a_TWO_SLOT_GROUP_and_7a_7b_on_page_4_were_not": "BECAUSE NO PRINTED HEADING IS DRAWN BETWEEN THEM. P4-1 separated (7a) from (7b) on exactly one ground - 'Value of remaining furniture and personal effects' is drawn at page 4 y 671.7, BETWEEN the two blocks - and D1 is the reason that ground is decisive: a group whose slots straddle a printed heading is the defect that put the printed-heading assertion into the gate. Here the printed text between (9a) at y 696.9 and (9b) at y 653.7 is 'Description of asset:' at y 682.5 and the (9b) row's own column captions, and nothing else. No heading, no attachment line between them, no singular/plural difference in the column headers - both rows print 'Current market value', 'Minus loan balance' / 'Minus Loan Balance' and 'Total value'. So the two-slot reading is the one D1 supports here, and the scalar reading is the one it refused on page 4. Same rule, opposite answer, because the page is different.",
+   "_the_one_asymmetry_between_the_two_slots": "The DESCRIPTION cell. Slot 0's caption 'Description of asset' is drawn ABOVE its widget (caption y 741.1 x 36.0..106.2; widget y 728.6..712.8 spanning the full x 36.0..576.0). Slot 1's caption 'Description of asset:' - note the colon - is drawn INLINE at y 682.5 x 36.0..108.5 with the widget beside it at y 684.0..669.6, x 115.2..442.8. Slot 1's description cell is therefore 327.6pt wide against slot 0's 540.0pt. It is a PRINTED asymmetry, recorded because a value that fits (9a) may not fit (9b) and neither cell declares a /MaxLen: no field on page 5 does. The column ceiling comes from the RECT.",
+   "columns_by_x": "description | current market value x 43.2..122.4 | X .8 x 158.4..234.0 | minus loan balance x 255.6..331.2 | total value x 478.8..576.0. The printed operators between them: '$' at x 37.0..41.4, 'X .8 = $' at x 125.9..155.9, '– $' at x 235.0..248.3, '=' at x 438.1..442.8.",
+   "row_order": "Printed order top to bottom is (9a) then (9b), and slot 0 is (9a). Proven by rectangle: the (9a) marker at y 696.9 falls inside Asset1[0].Total_Value[0] (y 698.4..684.0) and the (9b) marker at y 653.7 falls inside Asset2[0].Total_Value[0] (y 655.2..640.8). Not taken from the Asset1/Asset2 leaf numbering, which is exactly the evidence AcroForm slot order has already been shown not to be.",
+   "crosswalk": "CLASS business_property, reused EXACT from adapters/hubspot/asset-row-shapes.json, and reused because THE ARITHMETIC AGREES. That class's own description reads 'Tools, books, machinery, equipment, inventory or other assets used in trade or business', which is what Section 5's printed instruction on page 4 lists. description, current_fmv and current_loan_balance are EXACT column names. TWO COLUMNS ARE NEW ON THIS CLASS and they are the same two vehicle gained in slice 3 and personal_property gained in slice 4: quick_sale_value and quick_sale_equity. The backbone's equity is FMV MINUS LOAN WITH NO DISCOUNT and is NOT what this cell holds - the page draws 'X .8' between the market value and the total - so binding equity here would have understated the discount by naming the wrong column. The backbone's location, title_holders, purchase_date, year_purchased, monthly_payment, final_payment_date, lender_name_address and lender_phone have no printed cell on these rows: (9a)/(9b) print a description and three money cells and nothing else.",
+   "row_class_has_no_collision": "business_property is printed by exactly ONE group on this form, so no discriminator is declared and none is required. The same-class assertion in check-row-shape.mjs is what makes that a checked fact rather than an assumption."
+  },
+  "the_9a_9b_total_is_a_printed_conditional_with_NO_selector_on_this_form": {
+   "printed_caption": "Total value (if leased or used in the production of income, enter 0 as the total value)",
+   "printed_at": "y 711.8 x 334.8..369.0 wrapping to y 703.3 x 334.8..420.8 and y 694.9 x 334.8..413.8 for slot 0; y 668.6 / y 660.1 / y 651.7 for slot 1",
+   "why_it_cannot_be_recovered": "The vehicle rows on page 3 print the same shape - '(if leased, enter 0 as the total value)' - and there the branch IS recoverable, because each vehicle row prints its own Lease/Own checkbox pair and slice 3 declared a feeder predicate over it. PAGE 5 PRINTS NO SUCH BOX. The only four checkboxes on this page are CB5_01..CB5_04, which are the Notes Receivable and Accounts Receivable Yes/No pairs at y 566.1 and y 515.7; there is no per-row lease indicator anywhere in Section 5's continuation. So no predicate over a printed cell could decide it.",
+   "and_the_second_clause_is_worse": "'or used in the production of income' is a SECOND condition, broader than the lease question and new on this form - the page-3 vehicle caption has no counterpart to it. Even if a lease/own box were printed here, that clause would still have no cell. This is the (6d) class, not the (6a)/(6c) class: a gap that can never close, not one that can.",
+   "consequence": "(9a) and (9b) totals are declared NOT CHECKABLE in 433aoi.totals.json with this reason and a review-page advisory. The (9a)/(9b) QUICK-SALE cells are unaffected and ARE checked: the conditional is drawn in the Total value column at x 334.8..424.7, not in the X .8 column, exactly as page 3's is drawn against 'Total value of vehicle' and not against its X .8 cell."
+  },
+  "9c_and_9_and_10_and_11": {
+   "9": "'Add lines (9a) through (9c) =' at y 625.6 x 318.0..439.8, marker (9) at y 625.6 x 456.7..475.2, widget Total_Value_Assets[0] at y 626.4..612.0. NOTE THE OPERANDS INCLUDE THE LETTERED LINES - the caption names (9a) through (9c) explicitly - which is the opposite of what Box B's own instruction says four rows below. The two are not in conflict: (9) is a sub-total OF the lettered lines and Box B is a total of the unlettered ones.",
+   "10": "'IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –' at y 610.5 x 87.5..442.8, marker (10) at y 610.5 x 452.1..475.2, widget Line10[0] at y 612.0..597.6. THE FORM PRINTS NO FIGURE. Unlike the $1,000 on line (1) and the $3,450 on (6b)/(6d), which the page draws itself, this allowance is published in a table this repo does not hold and this form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere. So (10) is INPUT, bound as an ordinary map key, and nothing is auto-filled into it. Declared not checkable in the totals file with that reason.",
+   "11": "'Enter the value of line (9) minus line (10). If less than zero enter zero. =' at y 596.8 x 138.5..439.8, marker (11) at y 596.8 x 451.7..475.2, widget Total_Assets_Less_Deduction[0] at y 597.6..583.2. THE FLOOR IS IN THE LINE'S OWN CAPTION - 'If less than zero enter zero' - not inherited from a block instruction. Same shape as (6b) on page 3, whose caption repeats its own floor.",
+   "9c": "'Total value of assets listed from attachment [current market value X .8 minus any loan balance(s)]' at y 639.3 x 96.9..442.8, marker (9c) at y 639.3 x 452.5..475.2, widget Total_Value_Assets_Attached[0] at y 640.8..626.4. THE X .8 IS IN THE CAPTION. Fifth attachment total on this form to say so.",
+   "the_leaf_name_Line10_says_nothing_and_that_is_not_a_lie": "Line10[0] describes the cell no better and no worse than its own line number does. It is not entered in 433aoi.name-lies.json: a name that says nothing cannot disagree with the page. Recorded here so its absence from the registry is a decision rather than an oversight."
+  },
+  "box_b": {
+   "printed_caption": "Add lines (8) and (11) and enter the amount in Box B =",
+   "printed_at": "y 460.0, x 211.0..442.8",
+   "printed_label": "'Box B' at y 489.2 x 453.6..476.7, with 'Available Business Equity in' at y 481.2 x 453.6..553.6 wrapping to 'Assets' at y 473.2 x 453.6..477.6",
+   "printed_instructions_on_the_same_block": [
+    "'Do not include amounts from the lines with a letter beside the number [for example: (9c)].' at y 488.6, x 128.0..442.8",
+    "'Round to the nearest whole dollar.' at y 479.0, x 320.9..442.8",
+    "'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' at y 469.4, x 148.5..442.8"
+   ],
+   "why_the_first_instruction_matters_and_how_it_differs_from_box_a": "Box A's version reads 'Do not include amount on the lines with a letter beside the number'. Box B's version NAMES AN EXAMPLE - '[for example: (9c)]' - and that example is the tell: it confirms the rule is about the lettered SUB-lines of the totals being added, not about the totals themselves. Box B has exactly two operands, (8) and (11), and the caption says so in terms. A recomputation that added (9a), (9b) and (9c) would double-count every business asset on this page, because (9) already contains them and (11) is (9) minus (10).",
+   "THE_SECOND_CROSS_PAGE_TOTAL_ON_THIS_FORM": "(8) is printed on PAGE 4 and (11) on page 5. Box A was the first cross-page total; this is the second, and it needed no schema change for the same reason - a feeder names map keys, and a map key names a field wherever it is drawn.",
+   "and_it_crosses_a_rounding_boundary_the_same_way_box_a_does": "Box B is drawn under 'Round to the nearest whole dollar' at y 479.0. Operand (8) is in rounding block P4_SECTION_5_BUSINESS_ASSETS, which rounds under the same wording. Operand (11) is in P5_SECTION_5_CONTINUED, which is none_printed - page 5's Section 5 continuation prints no rounding instruction above (9a), exactly as page 3's Section 3 continuation prints none. ONE of Box B's two operands is uninstructed, against three of Box A's seven.",
+   "the_widget_is_NOT_the_one_line_markers_names": "See the_two_line_markers_pairings_that_are_WRONG_on_this_page."
+  },
+  "section_6_income_and_expenses": {
+   "17": "'Add lines (12) through (16) =' at y 280.0 x 321.0..442.8, marker (17) at y 280.0 x 451.7..475.2, widget Total_Business_Income[0] at y 280.8..266.4.",
+   "29": "'Add lines (18) through (28) =' at y 85.6 x 321.0..442.8, marker (29) at y 85.6 x 451.7..475.2, widget Total_Business_Expenses[0] at y 86.4..72.0. ELEVEN operands, and the printed list runs (18) through (28) with no gap and no lettered line anywhere in Section 6.",
+   "printed_preamble": "If you provide a current profit and loss (P&L) statement for the information below, enter the total gross monthly income on line 17 and your monthly expenses on line 29 below. Do not complete lines (12) - (16) and (18) - (28). You may use the amounts claimed for income and expenses on your most recent Schedule C; however, if the amount has changed significantly within the past year, a current P&L should be submitted to substantiate the claim.",
+   "printed_preamble_at": "y 429.3 x 36.0..553.6, wrapping to y 419.7 and y 410.1",
+   "THIS_PREAMBLE_MAKES_17_AND_29_LEGITIMATELY_UNFED": "It is the page authorising a form on which (17) and (29) are filled and every one of (12)-(16) and (18)-(28) is BLANK. The tripwires for (17) and (29) are still declared and still exact - a blank feeder contributes zero and does not disable a check - but a preparer who took the P&L route prints a (17) that no printed cell on this page feeds. That is a legitimate filing, not a defect, and it is the one printed instruction on this form that authorises a total to disagree with the rows above it. RECORDED HERE AND NOT SILENTLY ACCOMMODATED: it is not made a tolerance, it is not made a skip, and the tripwire is not weakened for it. What it means is that a (17) failure on a real record needs this sentence read before it is called a defect.",
+   "period_provided": "'Period provided beginning' at y 394.5 x 36.0..128.9 with widget PeriodProvidedBegining[0] at y 396.0..381.6 x 144.0..234.0, and 'through' at y 394.5 x 237.6..264.7 with widget Through[0] at y 396.0..381.6 x 280.8..367.2. Two date cells, no printed format hint and no /MaxLen. Note the leaf name misspells 'Beginning'; that is a typo, not a claim about the cell, and it is not a name lie.",
+   "income_lines": "(12) Gross receipts y 351.3 | (13) Gross rental income y 336.9 | (14) Interest income y 322.5 | (15) Dividends y 308.1 | (16) Other income y 293.7. All five captions at x 36.0, all five markers at x 454.3..475.2, all five widgets at x 478.8..576.0. Each widget is exactly 14.4pt tall and CONTAINS its marker's y.",
+   "expense_lines": "(18) Materials purchased y 250.5 | (19) Inventory purchased y 236.1 | (20) Gross wages and salaries y 221.7 | (21) Rent y 207.3 | (22) Supplies y 192.9 | (23) Utilities/telephones y 178.5 | (24) Vehicle costs y 164.1 | (25) Business insurance y 149.7 | (26) Current business taxes y 126.9 | (27) Secured debts y 113.7 | (28) Other business expenses y 99.3.",
+   "THE_26_ROW_IS_THE_RECTANGLE_FINDING_OF_THIS_SLICE": "Every expense widget on this page is 14.4pt tall and sits 1.5pt above its marker - (25) marker y 149.7, widget y 151.2..136.8; (27) marker y 113.7, widget y 115.2..100.8. LINE (26) BREAKS BOTH RULES. Its marker prints at y 126.9, which is 9.9pt BELOW where the pattern puts it, because the caption 'Current business taxes (e.g., real estate, excise, franchise, occupational, personal property, sales and employer's portion of' wraps to a second line 'employment taxes)' at y 126.2 and the marker is set on the SECOND line. Its widget, Current_Business_Taxes[0], is 21.6pt tall - y 136.8..115.2 - to hold the two-line row. Marker y 126.9 falls INSIDE that rectangle, so the pairing is right; but it is right by RECTANGLE CONTAINMENT and it is NOT right by the 1.5pt offset that pairs the other ten. A map authored on the offset would have put (26) in the row below and shifted (26) through (28) by one, and lines (26), (27) and (28) would all have printed the wrong figure while (29) still summed to whatever was entered."
+  },
+  "box_c": {
+   "printed_caption": "Subtract line (29) from line (17) and enter the amount in Box C =",
+   "printed_at": "y 49.6, x 170.0..442.8",
+   "printed_label": "'Box C' at y 70.1 x 453.6..476.7 with 'Net Business Income' at y 62.1 x 453.6..529.2",
+   "printed_instructions_on_the_same_block": [
+    "'Round to the nearest whole dollar.' at y 70.2, x 320.9..442.8",
+    "'Do not enter a negative number. If any line item is a negative, enter \"0\" on that line.' at y 59.4, x 148.5..442.8"
+   ],
+   "the_subtraction_order_is_printed_and_is_the_reverse_of_the_reading_order": "'Subtract line (29) from line (17)' means (17) MINUS (29), not (29) minus (17), and the caption names (29) FIRST. A totals entry written in the order the words appear would negate Box C on every filed form. This is the only printed formula on the four pages read so far whose operand order in prose is the reverse of its arithmetic.",
+   "the_floor_is_what_makes_a_loss_printable": "A business with expenses above income has a negative net, and the printed instruction at y 59.4 says enter zero. So Box C is floored at 0 and the floor is declared. Both operands are in the same rounding block, P5_SECTION_6, so Box C crosses no rounding boundary.",
+   "the_widget_is_NOT_the_one_line_markers_names": "See the_two_line_markers_pairings_that_are_WRONG_on_this_page."
+  },
+  "notes_and_accounts_receivable": {
+   "notes": "'Do you have notes receivable' at y 567.3 x 36.0..141.4 with 'Yes' at x 187.4..201.2 and 'No' at x 228.4..238.7. Boxes CB5_01[0] at x 173.0..182.0 and CB5_02[0] at x 216.0..225.0, both y 566.1..557.1. Each box is drawn to the LEFT of the word it answers - 173.0 < 187.4 and 216.0 < 228.4 - so CB5_01 is Yes and CB5_02 is No, taken from the x order and not from the 01/02 numbering. Follow-up printed at y 552.9: 'If yes, attach current listing that includes name(s) and amount of note(s) receivable'. NO CELL IS PRINTED for that listing - it goes on an attachment - so this Yes/No pair has no counterpart text field.",
+   "accounts": "'Do you have accounts receivable, including e-payment, factoring companies, and any bartering or online auction accounts' at y 525.3 wrapping to y 515.7, with 'Yes' at x 298.8..312.6 and 'No' at x 341.8..352.0. Boxes CB5_03[0] at x 284.4..293.4 and CB5_04[0] at x 327.4..336.4, both y 515.7..506.7. Same left-of-the-word rule: CB5_03 is Yes, CB5_04 is No. Follow-up at y 502.5: 'If yes, provide a list of your current accounts receivable (include the age and amount)'. Again no printed cell.",
+   "why_both_are_exclusive_sets": "A Yes and a No both ticked on a signed statement answers nothing and asserts both. Declared in `exclusive` and read back off the filled form, the same treatment every Yes/No pair on this form gets.",
+   "and_neither_feeds_anything": "Section 5's Box B sums (8) and (11) only. A taxpayer who answers Yes to either question contributes nothing to any printed total on this form - the value is on an attachment. Recorded so nobody later reads the absence of these from the totals file as an omission."
+  }
+ },
+ "_nesting_note_page5": "AcroForm nesting depth is not uniform on page 5 either, and page 5 adds a shape the first four pages did not have: A SECTION CONTAINER THAT WRAPS EVERYTHING AND A SIBLING THAT WRAPS NOTHING. Section5[0] wraps Asset1[0] and Asset2[0] - each of which puts its market-value pair under CurrentMarket[0] (note 'CurrentMarket', not 'CurrentMarketValue' as on page 2 and page 4, and 'LessLoan', not 'LessLoanBal' or 'LessLoanBalance') and hangs its row total Total_Value[0] directly off itself - plus TotalValue[0], which holds the (9c), (9), (10) and (11) cells, plus the four checkboxes CB5_01..CB5_04 flat with no subform, plus Available_Business_Equity_in_Assets[0], which is Box B, hanging directly off Section5[0] with no total subform. That last is the same shape Box A takes on page 4. Section6[0] by contrast wraps its TWENTY cells - two dates, five income lines, (17), eleven expense lines, (29) and Net_Business_Income[0] which is Box C - COMPLETELY FLAT, with no intermediate subform anywhere. Page 4's Section4[0] put three checkbox sets at three different depths; page 5's Section6[0] puts twenty cells at one. Every path in this file is therefore quoted whole from topmostSubform[0], and no prefix generalises. That is now true on five pages out of five.",
+ "_arguable_page5": [
+  {
+   "id": "P5-1",
+   "subject": "(9a) and (9b) are bound as a TWO-SLOT GROUP rather than as scalars, which is the opposite of the P4-1 ruling on (7a)/(7b)",
+   "reported": "See _map_evidence_page5[\"9ab_business_assets\"][\"why_this_is_a_TWO_SLOT_GROUP_and_7a_7b_on_page_4_were_not\"]. The two decisions turn on the same test and land opposite ways because the pages differ: a printed heading is drawn between (7a) and (7b), and nothing is drawn between (9a) and (9b). REPORTED AND NOT PRESENTED AS SETTLED, because the counter-argument exists: the two description cells are geometrically asymmetric (540.0pt vs 327.6pt wide) and their captions differ by a colon, which is weak evidence for two separately-drafted blocks. It is weak because a heading is what D1 made decisive and there is none, and because nothing filed differs either way - the same four money cells print in the same four places under both readings."
+  },
+  {
+   "id": "P5-2",
+   "subject": "the Section 6 P&L preamble authorises a filed form on which (17) and (29) are fed by nothing printed",
+   "reported": "See _map_evidence_page5.section_6_income_and_expenses.THIS_PREAMBLE_MAKES_17_AND_29_LEGITIMATELY_UNFED. The tripwires for (17) and (29) are declared and exact and are NOT weakened. On the acceptance fixture every operand is supplied, so both check. On a real record that took the P&L route, both totals would be present with every operand blank and both tripwires would FAIL against a correctly filed form. Reported rather than resolved because the two candidate fixes are a feeder predicate over a cell this page does not print, and a tolerance - and a tolerance is refused by standing rule."
+  },
+  {
+   "id": "P5-3",
+   "subject": "line (10) is an IRS-published allowance and this repo holds no table for it",
+   "reported": "The caption reads 'IRS allowed deduction for professional books and tools of trade for individuals and sole-proprietors –' and the form prints NO figure, unlike the $1,000 at (1) and the $3,450 at (6b)/(6d). This form prints no 'IRS USE ONLY / Allowable Expenses' column anywhere, so it carries no `allowed` block and nothing is auto-filled. (10) is bound as ordinary input and declared not checkable. Whether the review page should surface the published figure beside it is a question for the provisioning pass, not for a map slice."
+  },
+  {
+   "id": "P5-4",
+   "subject": "the leaf name Other_Secured_Debts[0] is used for TWO different printed lines on two pages",
+   "reported": "Declared in 433aoi.name-lies.json as L13 (page 5) with the page-6 cell named as its twin. Raised here because the duplicate was found by a leaf-name scan across the whole form rather than by reading page 5, and because the same scan found L14 on page 7 - a cell named Gross_Receipts[0] whose printed caption is 'Amount of dispute' in the litigation block. Neither was looked for by any earlier slice."
+  }
+ ]
 }
