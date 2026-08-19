@@ -19,9 +19,10 @@
 // -----------------------------------
 // A MONEY$ flag is strong evidence: the form drew a currency symbol against that cell and
 // against no other. The absence of a flag is NOT evidence of the reverse — 433-A(OIC) prints
-// three money cells with no "$" at all (the real-property listing price and the two mortgage
-// payment cells), each identified by its printed CAPTION instead and each named in its block's
-// `_money_without_a_printed_dollar_sign`. So the tool narrows the reading; it does not make it.
+// five money cells with no "$" at all — on page 3 the real-property listing price and the two
+// mortgage payment cells, and on page 5 line (29) and Box C, whose left-scan finds the neighbouring
+// "Box C" title and the page footer where the currency symbol would be. Each is identified by its
+// printed CAPTION instead and each is named in its block's `_money_without_a_printed_dollar_sign`. So the tool narrows the reading; it does not make it.
 //
 // The 14pt threshold is the widest gap any true "$" on 433-A(OIC) sits at (the Section 4 payroll
 // cell, 5.8pt) with room to spare, and the narrowest FALSE neighbour is 11pt of unrelated

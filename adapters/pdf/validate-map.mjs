@@ -179,6 +179,76 @@ if (!existsSync(liesPath)) {
 }
 
 // ---------------------------------------------------------------------------------------
+// EVERY OTHER COUNT THE MAP DECLARES ABOUT ITSELF.
+//
+// The name-lie registry above derives its tally from a list and checks the declared figure
+// against it. That guard was built because a retyped count drifted for three slices. It was
+// then applied to exactly one of this map's four self-describing counts, and the other three
+// drifted the same way within two slices: `_carried._count` said 5 open when open[] held 6,
+// and `_partition` described the map as it stood a page ago while contradicting its own
+// per-page breakdown. Same defect, same file, one key over.
+//
+// So the rule is now the one the registry states: a number a person retypes always can drift,
+// and a number derived from a list by length cannot. Both counts stay DECLARED, so a reader
+// sees them without running anything, and both are now derived and checked.
+{
+  const problems = [];
+
+  // ---- _carried: the open-questions ledger. Derived from the arrays, not from the sentence.
+  const carried = mapDoc._carried;
+  if (carried) {
+    const derived = { open: (carried.open || []).length, resolved: (carried.resolved || []).length };
+    const declared = carried._count || {};
+    for (const [k, v] of Object.entries(derived)) {
+      if (declared[k] === undefined)
+        problems.push(`_carried._count declares no "${k}" — the derived value is ${v}. A ledger whose length is not stated cannot be checked for over- or under-reporting.`);
+      else if (declared[k] !== v)
+        problems.push(`_carried._count says ${k} = ${declared[k]}, but _carried.${k}[] holds ${v}. An item left this ledger by being forgotten, or joined it without being counted — which is the one way _carried._rule says an item may never leave.`);
+    }
+    const ids = (carried.open || []).concat(carried.resolved || []).map(o => o.id);
+    const dupe = ids.filter((id, i) => ids.indexOf(id) !== i);
+    if (dupe.length) problems.push(`_carried declares id(s) twice: ${[...new Set(dupe)].join(', ')} — an item cannot be both open and resolved.`);
+    console.log(`carried questions: ${derived.open} open, ${derived.resolved} resolved/withdrawn — DERIVED from the arrays and checked against the declared _count.`);
+    if (derived.open) console.log(`  open: ${(carried.open || []).map(o => o.id).join(', ')}`);
+  }
+
+  // ---- _partition: what the map claims to have accounted for, against what it references.
+  //
+  // in_this_slice is checked against the map's OWN unique target count, which is derived a
+  // hundred lines above and is the same number the gate's partition step reports. That is the
+  // cross-check that makes the declaration a claim rather than a caption: authoring a page
+  // without updating the partition now fails here instead of being noticed two slices later.
+  const part = mapDoc._partition;
+  if (part) {
+    const sum = (part.bound_writable || 0) + (part.excluded_never_autofill || 0) + (part.deferred || 0);
+    if (sum !== part.in_this_slice)
+      problems.push(`_partition: bound_writable ${part.bound_writable} + never_autofill ${part.excluded_never_autofill} + deferred ${part.deferred} = ${sum}, but in_this_slice says ${part.in_this_slice}.`);
+    if (part.in_this_slice !== unique.size)
+      problems.push(`_partition says in_this_slice = ${part.in_this_slice}, but the map references ${unique.size} unique field(s). The partition describes a map that is no longer this one — re-derive it for the pages now authored.`);
+    if (part.form_fields_total !== names.size)
+      problems.push(`_partition says form_fields_total = ${part.form_fields_total}, but the field list holds ${names.size}.`);
+    if ((part.in_this_slice || 0) + (part.unaccounted || 0) !== names.size)
+      problems.push(`_partition: in_this_slice ${part.in_this_slice} + unaccounted ${part.unaccounted} = ${(part.in_this_slice || 0) + (part.unaccounted || 0)}, but the form has ${names.size} field(s).`);
+    // The per-page breakdown is prose with numbers in it, and prose with numbers in it is the
+    // thing that drifted. Its arithmetic is read back out and checked against `unaccounted`.
+    if (typeof part._unaccounted_by_page === 'string') {
+      const nums = [...part._unaccounted_by_page.matchAll(/p[1-8]s+(d+)/g)].map(m => Number(m[1]));
+      const tot = nums.reduce((a, b) => a + b, 0);
+      if (nums.length && tot !== part.unaccounted)
+        problems.push(`_partition._unaccounted_by_page lists pages summing to ${tot}, but the declared unaccounted says ${part.unaccounted}. The breakdown and the total disagree.`);
+    }
+    console.log(`partition: ${part.bound_writable} writable + ${part.excluded_never_autofill} never-autofill + ${part.deferred} deferred = ${part.in_this_slice} of ${part.form_fields_total}; ${part.unaccounted} unaccounted — CHECKED against the ${unique.size} target(s) this map actually references.`);
+  }
+
+  if (problems.length) {
+    console.error(`SELF-DESCRIBING COUNTS — ${problems.length} problem(s):`);
+    problems.forEach(m => console.error(`  ${m}`));
+    process.exit(2);
+  }
+  if (carried || part) console.log('OK — every count the map declares about itself was re-derived and agrees.');
+}
+
+// ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.
 //
 // Asserted here rather than as a twelfth gate step, because it is a statement the map makes
