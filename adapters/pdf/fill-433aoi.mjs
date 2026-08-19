@@ -58,7 +58,7 @@ import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
-import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
+import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses, checkRowClassCollisions, reportRowClassCollisions } from './check-row-shape.mjs';
 import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
 
 const argv      = process.argv.slice(2);
@@ -68,6 +68,15 @@ const data    = JSON.parse(readFileSync(argv.filter(a => !a.startsWith('--'))[0]
 const pdfPath = mapDoc.pdf || formPath(mapDoc.form);
 const pdf     = await PDFDocument.load(readFileSync(pdfPath));
 const form    = pdf.getForm();
+
+// C-05: TWO GROUPS OF THE SAME ASSET CLASS WITH NOTHING KEEPING THEM APART.
+// Asked HERE, before a single row is read, because it is a question about the MAP and the
+// answer decides whether any row can be placed at all. A form that prints the same class in
+// two tables must give each group a discriminator, or nothing decides which printed table a
+// row lands in and the answer comes from which input property it happened to be stored in —
+// which is defect D1 one level up. See check-row-shape.mjs.
+if (reportRowClassCollisions(checkRowClassCollisions(mapDoc), "adapters/pdf/maps/433aoi.map.json")) process.exit(2);
+
 
 let filled = 0, cbFilled = 0;
 const skipped = [], overflow = [], written = new Set();

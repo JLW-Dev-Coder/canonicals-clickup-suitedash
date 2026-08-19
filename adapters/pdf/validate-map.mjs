@@ -90,7 +90,14 @@ if (!existsSync(liesPath)) {
   console.log(`name-lie registry: no ${liesPath} — this form declares none. (Not a failure: only forms whose leaf names have been read AND found wrong carry one.)`);
 } else {
   const lies = JSON.parse(readFileSync(liesPath, 'utf8'));
-  const KINDS = new Set(['lie', 'container', 'inherited', 'control']);
+  // `page_imprecise` is the third status, added in slice 5. A name that UNDERSTATES a cell the
+  // printed page also understates is neither a lie nor a control: admitting it as a lie would
+  // stop the lie total meaning "the name disagrees with the page", and dropping it entirely
+  // would make 433-B(OIC) re-litigate the same fork from nothing.
+  const KINDS = new Set(['lie', 'container', 'inherited', 'control', 'page_imprecise']);
+  // Which kinds the ACTIVE LIE total counts. The other kinds are recorded and not counted, and
+  // this set is the one place that says which is which.
+  const COUNTED_AS_LIE = new Set(['lie', 'container']);
   const problems = [];
 
   // Resolve a `bound_to` the way the map itself addresses cells: a scalar `map` key, or a
@@ -136,8 +143,33 @@ if (!existsSync(liesPath)) {
     }
   }
 
+  // THE TALLY IS RECOMPUTED FROM entries[] AND CHECKED AGAINST THE ONE THE FILE DECLARES.
+  //
+  // This is the assertion the eleven-versus-twelve error asked for. The count reached "eleven"
+  // and stayed there because it was a SENTENCE re-typed each cycle while the list underneath it
+  // changed — and the sentence that carried it contradicted its own sub-item. A number derived
+  // from a list by length cannot drift from the list; a number a person retypes always can.
+  // So the file still declares its tally, because a reader should be able to see it without
+  // running anything, and the declared figure is now checked against the derived one.
+  const ents = lies.entries || [];
+  const derived = {
+    active_lies: ents.filter(e => COUNTED_AS_LIE.has(e.kind)).length,
+    of_which_leaf: ents.filter(e => e.kind === 'lie').length,
+    of_which_container: ents.filter(e => e.kind === 'container').length,
+    inherited_not_counted: ents.filter(e => e.kind === 'inherited').length,
+    controls_verified_true: ents.filter(e => e.kind === 'control').length,
+    page_imprecise_not_counted: ents.filter(e => e.kind === 'page_imprecise').length,
+    total_entries: ents.length,
+  };
   const t = lies._tally || {};
-  console.log(`name-lie registry: ${liesPath} — ${(lies.entries || []).length} entries (${t.active_lies ?? '?'} active lies, ${t.controls_verified_true ?? '?'} verified-true controls, ${t.bound_today ?? '?'} bound today)`);
+  for (const [k, v] of Object.entries(derived)) {
+    if (t[k] === undefined) problems.push(`_tally declares no "${k}" — the derived value is ${v}. Every count the registry reports must be stated so it can be checked.`);
+    else if (t[k] !== v) problems.push(`_tally says ${k} = ${t[k]}, but entries[] holds ${v}. The count and the list disagree — and a retyped count drifting from the list underneath it is exactly how "eleven" survived three slices when the honest figure was ten.`);
+  }
+  // THREE COUNTS, NEVER ONE. A single "how many lies" number cannot say whether a name family is
+  // unreliable or merely unread, and cannot hold a name the page itself is loose about.
+  console.log(`name-lie registry: ${liesPath} — ${ents.length} entries, THREE counts: ${derived.active_lies} active lies (${derived.of_which_leaf} leaf + ${derived.of_which_container} container), ${derived.controls_verified_true} verified-true controls, ${derived.page_imprecise_not_counted} page-imprecise. ${t.bound_today ?? '?'} bound today.`);
+  console.log(`  counts DERIVED from entries[] and checked against the declared _tally — not read from it.`);
   if (problems.length) {
     console.error(`NAME-LIE REGISTRY — ${problems.length} problem(s):`);
     problems.forEach(m => console.error(`  ${m}`));

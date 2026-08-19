@@ -104,21 +104,24 @@
    "type_of_account": "Cash",
    "institution_name_and_address": "(1a) Cash on hand - no institution, United States",
    "account_number": "(1a) none - cash on hand",
-   "account_balance": "12345"
+   "account_balance": "12345",
+   "is_business_account": false
   },
   {
    "asset_class": "bank_account",
    "type_of_account": "Money Market Account/CD",
    "institution_name_and_address": "(1b) Second Testbank of Sampleton, Canada",
    "account_number": "1B-0000-2222",
-   "account_balance": "23456"
+   "account_balance": "23456",
+   "is_business_account": false
   },
   {
    "asset_class": "bank_account",
    "type_of_account": "Savings",
    "institution_name_and_address": "OVERFLOW - third bank row, form prints two, must be dropped and logged",
    "account_number": "1X-0000-9999",
-   "account_balance": "999999"
+   "account_balance": "999999",
+   "is_business_account": false
   }
  ],
  "1c_bank_accounts_from_attachment": "3111",
@@ -360,21 +363,24 @@
    "type_of_account": "Cash",
    "institution_name_and_address": "(8a) Cash float held on the business premises, United States",
    "account_number": "(8a) none - cash on hand",
-   "account_balance": "3410"
+   "account_balance": "3410",
+   "is_business_account": true
   },
   {
    "asset_class": "bank_account",
    "type_of_account": " Money Market/CD ",
    "institution_name_and_address": "(8b) Testville Merchants Bank, business money market, United States",
    "account_number": "8B-0000-2211",
-   "account_balance": "27655"
+   "account_balance": "27655",
+   "is_business_account": true
   },
   {
    "asset_class": "bank_account",
    "type_of_account": "Checking",
    "institution_name_and_address": "OVERFLOW - a third business bank account, the form prints two, must be dropped and logged",
    "account_number": "OVERFLOW",
-   "account_balance": "999999"
+   "account_balance": "999999",
+   "is_business_account": true
   }
  ],
  "8c_digital_asset_held": true,

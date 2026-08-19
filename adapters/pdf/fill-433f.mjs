@@ -1,7 +1,7 @@
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
-import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses } from './check-row-shape.mjs';
+import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses, checkRowClassCollisions, reportRowClassCollisions } from './check-row-shape.mjs';
 import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
 
 // --saturated is an assertion about the INPUT, not about the form — the same one the gate
@@ -18,6 +18,15 @@ const STANDARDS = 'adapters/pdf/maps/irs-standards-2026.json';
 const std    = existsSync(STANDARDS) ? JSON.parse(readFileSync(STANDARDS, 'utf8')) : null;
 const pdf    = await PDFDocument.load(readFileSync(mapDoc.pdf));
 const form   = pdf.getForm();
+
+// C-05: TWO GROUPS OF THE SAME ASSET CLASS WITH NOTHING KEEPING THEM APART.
+// Asked HERE, before a single row is read, because it is a question about the MAP and the
+// answer decides whether any row can be placed at all. A form that prints the same class in
+// two tables must give each group a discriminator, or nothing decides which printed table a
+// row lands in and the answer comes from which input property it happened to be stored in —
+// which is defect D1 one level up. See check-row-shape.mjs.
+if (reportRowClassCollisions(checkRowClassCollisions(mapDoc), "adapters/pdf/maps/433f.map.json")) process.exit(2);
+
 
 let filled = 0; const skipped = [];
 // A value the FIELD refuses is a HARD failure, not a skip — the same rule fill-433a.mjs

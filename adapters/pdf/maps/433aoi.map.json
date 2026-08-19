@@ -981,7 +981,12 @@
     "column": "asset_class",
     "accepts": [
      "bank_account"
-    ]
+    ],
+    "discriminator": {
+     "column": "is_business_account",
+     "equals": false,
+     "_why": "C-05. This form prints bank accounts TWICE - personal at (1a)/(1b) on page 2 and business at (8a)/(8b) on page 4 - and both tables print the same asset class, correctly, because it IS the same class. The backbone’s own discriminator for the split is the is_business_account row flag, and this form prints no per-row flag for row_class to read, so the flag is what the discriminator reads. Without it, which printed table a bank_account row lands in is decided by which input property it happened to be stored in, and a business account printing in the personal assets table leaves (1) and (8) both reconciling with nothing on the page able to show it."
+    }
    },
    "_printed_heading": "Cash and Investments (domestic and foreign)",
    "_heading_at": "y 656.2, x 36.0..231.0",
@@ -1301,7 +1306,12 @@
     "column": "asset_class",
     "accepts": [
      "bank_account"
-    ]
+    ],
+    "discriminator": {
+     "column": "is_business_account",
+     "equals": true,
+     "_why": "The other half of C-05. Same column, opposite value: printed line (8a)/(8b) is under Section 5, Business Asset Information (for Self-Employed), whose preamble at page 4 y 247.5 says in terms “Do not include personal assets listed in Section 3.” That sentence is the page telling the two tables apart, and this is it declared."
+    }
    },
    "_printed_heading": "Business Asset Information",
    "_heading_at": "y 273.5, x 144.0..276.3. 'Section 5' is drawn separately at x 36.0..80.5 and '(for Self-Employed) (Domestic and Foreign)' separately again at x 279.0..485.7, so the banner is declared by the part that names the subject — the same treatment every Section banner on this form gets.",
@@ -1608,7 +1618,7 @@
   {
    "id": "P4-2",
    "subject": "the leaf name Total_Value_Bank_Accounts[0] understates line (8), and it is NOT declared a name lie",
-   "reported": "Printed line (8) is 'Add lines (8a) through (8d) =' and (8c) is the digital-asset total, so the cell holds more than bank accounts. It is deliberately NOT entered in 433aoi.name-lies.json, because THE PAGE ITSELF IS LOOSE HERE: printed line (8d) reads 'Total bank accounts from attachment' while (8) sums it with (8c). The leaf name echoes the page's own wording rather than contradicting it, and a registry that admitted entries where the page is imprecise would stop meaning 'the name disagrees with the page'. Reported here instead so the decision is visible and reversible."
+   "reported": "Printed line (8) is 'Add lines (8a) through (8d) =' and (8c) is the digital-asset total, so the cell holds more than bank accounts. It is deliberately NOT entered in 433aoi.name-lies.json, because THE PAGE ITSELF IS LOOSE HERE: printed line (8d) reads 'Total bank accounts from attachment' while (8) sums it with (8c). The leaf name echoes the page's own wording rather than contradicting it, and a registry that admitted entries where the page is imprecise would stop meaning 'the name disagrees with the page'. Reported here instead so the decision is visible and reversible. RESOLVED IN SLICE 5, as a THIRD REGISTRY STATUS rather than as an entry or as silence: 433aoi.name-lies.json entry P01, kind page_imprecise, NOT counted in the lie total. The registry now reports three counts."
   },
   {
    "id": "P4-3",
@@ -1618,7 +1628,7 @@
   {
    "id": "P4-4",
    "subject": "nothing prevents a business bank account being filed into the personal (1a)/(1b) table, or the reverse",
-   "reported": "Both groups declare row_class accepts ['bank_account'], because it IS the same class - the backbone's own discriminator for the split is the is_business_account row flag, and this form prints no per-row flag for row_class to read. Carried item C-05."
+   "reported": "Both groups declare row_class accepts ['bank_account'], because it IS the same class - the backbone's own discriminator for the split is the is_business_account row flag, and this form prints no per-row flag for row_class to read. Carried item C-05. CLOSED IN SLICE 5. Both groups now declare row_class.discriminator {column: is_business_account, equals: false/true}, and check-row-shape.mjs refuses any map where two groups print the same class and either lacks a discriminator - so the collision cannot be reintroduced silently on 433-B, 433-B(OIC), 433-D or 433-H."
   }
  ],
  "rounding": {

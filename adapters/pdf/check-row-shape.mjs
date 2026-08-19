@@ -196,12 +196,92 @@ export const reportRowShapes = (result, saturated) => {
 // A row with NO class is reported, not failed. Only the map can say what a scalar-fallback row
 // is (it declares `_class` per fallback entry), and a hand-authored fixture predating this
 // construct is a gap in the record, not a wrong claim.
+//
+// AND THE CLASS ALONE IS NOT ALWAYS ENOUGH — C-05, WHICH IS D1 ONE LEVEL UP.
+// ---------------------------------------------------------------------------
+// D1 was ONE group's slots straddling TWO printed sub-tables. C-05 is TWO groups of the SAME
+// CLASS on one form with nothing keeping them apart: 433-A(OIC) prints personal bank accounts
+// at (1a)/(1b) on page 2 and BUSINESS bank accounts at (8a)/(8b) on page 4, and both groups
+// accept `bank_account` — correctly, because it IS the same class. The backbone's own
+// discriminator for the split is a per-row flag, and this form prints no per-row flag for
+// row_class to read. Same consequence as D1 and the same invisibility: a business account
+// printed in the personal table on a signed OIC, with (1) and (8) both reconciling.
+//
+// So a group may declare ONE optional discriminating key — `{column, equals}`, the same
+// single-equality grammar the totals feeder predicate uses, and deliberately no composition.
+// One equality is enough to split two same-class tables and is not enough to become a rule
+// language living in a map.
+//
+// THE ASSERTION IS THE REAL FIX. Any form declaring two or more groups of the same class where
+// even one lacks a discriminator is a STOP — checked below in `checkRowClassCollisions`, run
+// before any row is read. That makes the collision impossible to reintroduce silently on
+// 433-B, 433-B(OIC), 433-D or 433-H, which inherit this template lineage. Without the
+// assertion, the discriminator is a thing someone has to remember; with it, forgetting stops
+// the run.
+
+/** Normalise a discriminator value the way an equality over a stored row should read it. */
+const dnorm = (v) => (v === undefined || v === null) ? '' : String(v).trim().toLowerCase();
+
+/**
+ * THE STOP. Two or more groups accepting the same class, where any of them declares no
+ * discriminator, is refused before a single row is read. Returns a list of messages.
+ */
+export const checkRowClassCollisions = (mapDoc) => {
+  const byClass = new Map();
+  for (const [group, def] of Object.entries(mapDoc.groups || {})) {
+    const rc = def?.row_class;
+    if (!rc || !Array.isArray(rc.accepts)) continue;
+    for (const cls of rc.accepts) {
+      if (!byClass.has(cls)) byClass.set(cls, []);
+      byClass.get(cls).push({ group, disc: rc.discriminator });
+    }
+  }
+  const problems = [];
+  for (const [cls, groups] of byClass) {
+    if (groups.length < 2) continue;
+    const naked = groups.filter((g) => !g.disc);
+    if (naked.length) {
+      problems.push(
+        `${groups.length} groups print asset class "${cls}" — ${groups.map((g) => g.group).join(', ')} — and ${naked.length} of them declare NO discriminator: ${naked.map((g) => g.group).join(', ')}.\n` +
+        `    Nothing decides which printed table a "${cls}" row lands in, so the answer comes from which input property it happened to be stored in — which is defect D1 one level up, and just as invisible to every printed total.\n` +
+        `    Give each same-class group a row_class.discriminator {column, equals}.`);
+      continue;
+    }
+    // Every group has one. They must also be DISTINGUISHING: two groups discriminating on
+    // different columns cannot be compared, and two on the same column with the same value
+    // are not a split at all.
+    const cols = new Set(groups.map((g) => g.disc.column));
+    if (cols.size > 1) {
+      problems.push(`${groups.length} groups print asset class "${cls}" and discriminate on DIFFERENT columns (${[...cols].join(', ')}). A row would satisfy more than one, or none, depending on which keys it happens to carry.`);
+      continue;
+    }
+    const vals = groups.map((g) => dnorm(g.disc.equals));
+    if (new Set(vals).size !== vals.length)
+      problems.push(`${groups.length} groups print asset class "${cls}" and two of them discriminate on the SAME value (${vals.join(', ')}) of column "${[...cols][0]}". That is not a split.`);
+  }
+  return problems;
+};
+
+/** Validate one group's discriminator declaration. Returns a message or null. */
+const badDiscriminator = (group, d) => {
+  if (d === undefined) return null;
+  if (!d || typeof d !== 'object' || Array.isArray(d)) return `${group}: row_class.discriminator is not an object`;
+  if (typeof d.column !== 'string' || !d.column.trim()) return `${group}: row_class.discriminator.column is missing`;
+  if (d.equals === undefined || d.equals === null) return `${group}: row_class.discriminator.equals is missing`;
+  for (const extra of Object.keys(d))
+    if (extra !== 'column' && extra !== 'equals' && !extra.startsWith('_'))
+      return `${group}: row_class.discriminator carries "${extra}" — the clause is exactly {column, equals} and nothing else. A second condition arriving by the back door would be ignored, and an ignored condition reads as an honoured one.`;
+  return null;
+};
 
 export const checkRowClasses = (mapDoc, rowsByGroup) => {
-  const wrong = [], unstated = [];
+  const wrong = [], unstated = [], misdirected = [], undiscriminated = [];
+  const shape = [];
   for (const [group, def] of Object.entries(mapDoc.groups || {})) {
     const rc = def.row_class;
     if (!rc || !Array.isArray(rc.accepts)) continue;
+    const bad = badDiscriminator(group, rc.discriminator);
+    if (bad) { shape.push(bad); continue; }
     const entry = rowsByGroup[group];
     if (!entry) continue;
     const cap = Math.min(def.max ?? def.slots.length, def.slots.length);
@@ -210,28 +290,73 @@ export const checkRowClasses = (mapDoc, rowsByGroup) => {
       const stated = row && typeof row === 'object' ? row[rc.column] : undefined;
       const v = stated === undefined || stated === null ? '' : String(stated).trim();
       if (!v) { unstated.push({ group, index: i, accepts: rc.accepts }); return; }
-      if (!rc.accepts.includes(v)) wrong.push({ group, index: i, stated: v, accepts: rc.accepts });
+      if (!rc.accepts.includes(v)) { wrong.push({ group, index: i, stated: v, accepts: rc.accepts }); return; }
+      // The class is right. Now: is this row in the right one of the same-class tables?
+      if (!rc.discriminator) return;
+      const d = rc.discriminator;
+      const got = row[d.column];
+      if (got === undefined) { undiscriminated.push({ group, index: i, column: d.column, wanted: d.equals }); return; }
+      if (dnorm(got) !== dnorm(d.equals))
+        misdirected.push({ group, index: i, column: d.column, got: String(got), wanted: String(d.equals), cls: v });
     });
   }
-  return { wrong, unstated };
+  return { wrong, unstated, misdirected, undiscriminated, shape };
+};
+
+/** Print the collision STOP. Returns the number of problems (0 = the map is safe to fill from). */
+export const reportRowClassCollisions = (problems, mapPath) => {
+  if (!problems.length) {
+    console.log('ROW CLASS: no two groups print the same asset class without a discriminator between them.');
+    return 0;
+  }
+  console.error(`ROW CLASS COLLISION — ${problems.length} same-class group pair(s) in ${mapPath}. No PDF written.`);
+  problems.forEach((p) => console.error(`  ${p}`));
+  console.error('  This is defect D1 one level up: D1 was one group straddling two printed sub-tables, this is');
+  console.error('  two groups printing the same class with nothing keeping them apart. Both file a row under a');
+  console.error('  printed heading it does not belong under, and both leave every printed total reconciling.');
+  return problems.length;
 };
 
 /** Print the finding. Returns the number of rows that must STOP the run. */
 export const reportRowClasses = (result) => {
-  const { wrong, unstated } = result;
+  const { wrong, unstated, misdirected, undiscriminated, shape } = result;
+  if (shape.length) {
+    console.error(`ROW CLASS — ${shape.length} malformed discriminator declaration(s). No PDF written.`);
+    shape.forEach((s) => console.error(`  ${s}`));
+    return shape.length;
+  }
   if (unstated.length) {
     console.log(`ROW CLASS: ${unstated.length} slotted row(s) state no asset class — reported, not failed. The group still prints them under its own declared heading.`);
     for (const u of unstated) console.log(`  ${u.group}[${u.index}]: no asset_class (group accepts ${u.accepts.join(', ')})`);
   }
-  if (!wrong.length) {
-    console.log('ROW CLASS: every slotted row that states an asset class states one its group prints.');
+  // A row that states its class but not the key that splits two same-class tables. REPORTED,
+  // like an unstated class and for the same reason: the record is silent, not wrong, and the
+  // group still prints it under its own declared heading. A record that says the WRONG thing
+  // is the one that stops.
+  if (undiscriminated.length) {
+    console.log(`ROW CLASS: ${undiscriminated.length} slotted row(s) carry no key for the discriminating column their group declares — reported, not failed.`);
+    for (const u of undiscriminated) console.log(`  ${u.group}[${u.index}]: no "${u.column}" (this group prints rows where ${u.column} = ${JSON.stringify(String(u.wanted))})`);
+  }
+  if (!wrong.length && !misdirected.length) {
+    console.log('ROW CLASS: every slotted row that states an asset class states one its group prints, and every row that states its discriminator states the one its group prints.');
     return 0;
   }
-  console.error(`ROW CLASS MISMATCH — ${wrong.length} row(s) claim an asset class the group does not print. No PDF written.`);
-  for (const w of wrong) {
-    console.error(`  ${w.group}[${w.index}]: row says asset_class ${JSON.stringify(w.stated)}, this group prints ${w.accepts.map((a) => JSON.stringify(a)).join(', ')}`);
+  if (wrong.length) {
+    console.error(`ROW CLASS MISMATCH — ${wrong.length} row(s) claim an asset class the group does not print. No PDF written.`);
+    for (const w of wrong) {
+      console.error(`  ${w.group}[${w.index}]: row says asset_class ${JSON.stringify(w.stated)}, this group prints ${w.accepts.map((a) => JSON.stringify(a)).join(', ')}`);
+    }
+    console.error('  Printing it anyway would file the row under a printed heading it does not belong under —');
+    console.error('  which is what defect D1 did, and the reason a row is allowed to say what it is.');
   }
-  console.error('  Printing it anyway would file the row under a printed heading it does not belong under —');
-  console.error('  which is what defect D1 did, and the reason a row is allowed to say what it is.');
-  return wrong.length;
+  if (misdirected.length) {
+    console.error(`ROW CLASS MISDIRECTED — ${misdirected.length} row(s) are the right class for the WRONG one of two same-class tables. No PDF written.`);
+    for (const m of misdirected) {
+      console.error(`  ${m.group}[${m.index}]: class ${JSON.stringify(m.cls)} is correct, but ${m.column} = ${JSON.stringify(m.got)} and this group prints ${JSON.stringify(m.wanted)}`);
+    }
+    console.error('  On 433-A(OIC) that is a business bank account printing in the personal assets table, or the');
+    console.error('  reverse. Both totals still reconcile and nothing on the page shows it — which is exactly why');
+    console.error('  it stops the run rather than being reported.');
+  }
+  return wrong.length + misdirected.length;
 };

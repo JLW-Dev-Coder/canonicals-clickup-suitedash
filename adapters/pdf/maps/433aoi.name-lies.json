@@ -5,13 +5,14 @@
  "_what_this_file_is": "Every AcroForm leaf name on Form 433-A(OIC) that is KNOWN TO DESCRIBE SOMETHING OTHER THAN THE CELL IT NAMES, with the printed evidence that settled each one. It is a registry, not a binding: nothing here is read by any fill engine and no map key is resolved through it. validate-map.mjs asserts it against the PDF and against 433aoi.map.json, so a lie declared here cannot quietly stop being true.",
  "_why_a_file_and_not_twelve_paragraphs": "Two reasons, and neither is tidiness. (1) 433-B(OIC) is drawn from the same template lineage as this form and will very likely inherit both the leaf names and the lies; a machine-checked list can be diffed against the next form's field enumeration, and prose spread across slice reports cannot. (2) A preparer or a later author reading 433aoi.map.json in a year will see a map key whose name disagrees with the field it points at, and the honest first assumption is that the MAP is wrong. This file is the standing answer: the map is right, the leaf name is wrong, and here is the printed page that says so.",
  "_the_standing_rule_this_file_exists_to_defend": "A binding on this form comes from the printed caption and the widget rectangle. A leaf name is never evidence - not when it disagrees with the page, and not when it agrees, because on this form a name that happens to be right is a coincidence. The controls at the bottom of this file are the proof: nine cells across four pages sit under an identical printed 'X .8 = $', eight are named Times_8 / times_8, and one is named Times_7. The eight that agree do not make the name a witness; they make the one that disagrees invisible to anyone who trusts names.",
- "_counting": "TWELVE ACTIVE LIES, not eleven. The running count in 433aoi.map.json._notes reached 'eleven' by slice 3 and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. Through slice 3 the honest count is TEN. Slice 4 adds two more, both on page 4 and both the page-4 twins of page-2 lies already recorded, taking it to twelve. The three verified-true entries are kept here as CONTROLS rather than deleted: a registry that lists only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest.",
+ "_counting": "TWELVE ACTIVE LIES, not eleven. The running count in 433aoi.map.json._notes reached 'eleven' by slice 3 and that number double-counted one entry: _notes[2] item (3), topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1], is described in its own sentence as 'the only true one of the four' and is NOT a lie. Through slice 3 the honest count is TEN. Slice 4 adds two more, both on page 4 and both the page-4 twins of page-2 lies already recorded, taking it to twelve. The three verified-true entries are kept here as CONTROLS rather than deleted: a registry that lists only the failures cannot tell a reader whether the name family is unreliable or whether nobody checked the rest. A THIRD STATUS ARRIVES IN SLICE 5: page_imprecise, for a name that understates a cell the PAGE also understates. It is counted in neither the lie total nor the control total, and the registry now reports THREE counts rather than one. P4-2 - Total_Value_Bank_Accounts[0] on printed line (8) - is its first and so far only entry, and admitting it as a lie would have been the thing that stopped the lie total meaning \"the name disagrees with the page\".",
  "_what_is_machine_checked_and_what_is_not": "CHECKED by validate-map.mjs: every `path` exists verbatim in 433aoi.fields.json (or, for a `container` entry, at least one enumerated field is a descendant of it); every non-null `bound_to` resolves through 433aoi.map.json to exactly this `path`; every entry declares a `kind` the validator knows; and no two entries claim the same path. NOT CHECKED, and deliberately: `printed_line`, `printed_line_at`, `printed_marker_at` and `rect` are transcriptions of the drawn page. Asserting those in code would mean re-deriving from the PDF the very reading the entry records, which is circular. They are quoted verbatim so a human can re-measure them with adapters/pdf/align-block.mjs and adapters/pdf/line-markers.mjs, which is how each one was taken.",
  "_kinds": {
   "lie": "The leaf name describes something other than the cell. Counted in the active total.",
   "container": "A SUBFORM, not a field. The lie is the subform name; its children are told apart only by it. Counted in the active total. `path` is a prefix, not an enumerated field.",
   "inherited": "The leaf name is defensible on its own and misleads only because of the container it sits in. NOT counted in the active total; recorded so the count cannot be inflated by re-listing a container lie once per child.",
-  "control": "VERIFIED TRUE against the printed page. Not a lie. Recorded so the registry states what it checked and did not find, and so the running count cannot absorb one by accident."
+  "control": "VERIFIED TRUE against the printed page. Not a lie. Recorded so the registry states what it checked and did not find, and so the running count cannot absorb one by accident.",
+  "page_imprecise": "The leaf name UNDERSTATES the cell, and the printed page understates it the same way. Not a lie - the name echoes the page rather than contradicting it - and not a control, because it is not verified true either. NOT counted in the active total. Recorded so the finding survives into the forms that inherit this block (433-B(OIC)) instead of being re-litigated from nothing."
  },
  "entries": [
   {
@@ -332,6 +333,27 @@
    ],
    "bound_to": "5ab_real_property[0].quick_sale_value",
    "verified_true": "Agrees with the page. Recorded to keep the family complete: with C02 and L04 it makes three identically-captioned cells on three pages, two named right and one named wrong."
+  },
+  {
+   "id": "P01",
+   "kind": "page_imprecise",
+   "page": 4,
+   "slice_found": 4,
+   "path": "topmostSubform[0].F433-A-OIC_Page4[0].Section5[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]",
+   "leaf": "Total_Value_Bank_Accounts[0]",
+   "rect": "y 64.8..50.4, x 471.6..576.0",
+   "what_the_name_implies": "A total of bank accounts, and nothing else.",
+   "printed_line": "Add lines (8a) through (8d) =",
+   "printed_line_at": "y 51.0, x 273.6..435.6",
+   "printed_marker": "(8)",
+   "printed_marker_at": "y 51.3, x 449.5..468.0",
+   "why_the_name_understates": "Line (8) sums (8a) through (8d), and (8c) is the DIGITAL ASSET total - the total of cryptocurrency and other digital-asset holdings, which are not bank accounts. So the cell holds strictly more than its name says.",
+   "why_this_is_not_a_lie": "THE PAGE ITSELF IS LOOSE HERE, and loose in the SAME DIRECTION. Printed line (8d) reads \"Total bank accounts from attachment\" at y 65.4 x 90.7..245.2, and line (8) sums that with (8c). The page draws a bank-accounts caption over a sub-total whose siblings include digital assets, and the leaf name echoes the page's own wording rather than contradicting it. A registry that admitted entries where the page is imprecise would stop meaning \"the name disagrees with the page\" and start meaning \"the name is not as precise as I would have drafted it\" - which is a different and much weaker claim, and one that cannot be checked.",
+   "why_not_dropped_entirely": "Because 433-B(OIC) prints the same business-asset block and will re-raise it. Dropping the finding means the next slice author reaches the same fork with no record of it having been reached before, and may resolve it the other way. It is recorded, given its own status, and NOT counted in the lie total.",
+   "counted_in_lie_total": false,
+   "bound_to": "8_total_business_bank_accounts",
+   "the_binding_is_still_from_the_page": "The map binds this target from the printed marker (8) at y 51.3, not from the leaf name. The name being merely imprecise rather than wrong changes nothing about how the cell was bound - no cell on this form is bound by name.",
+   "_reported_as": "Arguable item P4-2 in 433aoi.map.json._arguable_page4, which is where it was first raised. That entry stands and now points here."
   }
  ],
  "_tally": {
@@ -340,8 +362,11 @@
   "of_which_container": 3,
   "inherited_not_counted": 0,
   "controls_verified_true": 3,
-  "total_entries": 15,
-  "bound_today": 8,
-  "unbound_because_the_page_is_unauthored": 7
+  "page_imprecise_not_counted": 1,
+  "total_entries": 16,
+  "bound_today": 9,
+  "unbound_because_the_page_is_unauthored": 4,
+  "_the_three_counts": "THE REGISTRY REPORTS THREE COUNTS AND NOT ONE. active_lies is names that disagree with the page. controls_verified_true is names that were checked and AGREE - kept so a reader can tell an unreliable name family from an unchecked one, and so the lie total cannot absorb one by accident. page_imprecise is names that understate a cell the page also understates - neither wrong nor verified right. A single number could not carry any of that, and a single number is how the count reached eleven when the honest figure was ten.",
+  "_how_this_is_derived": "COMPUTED FROM entries[] BY LENGTH, not retyped. The eleven-versus-twelve error entered because the total was a sentence someone re-typed each cycle while the list underneath it changed."
  }
 }
