@@ -377,7 +377,7 @@ export const EMPTY_DEMAND = [
   { blanket: 'S-18', instrument: 'line-markers.mjs', forms: ['433boi'],
     why: 'The ledger names printed lines only twice - B4 says Total_Value_Bank_Accounts sits at line (1) here where 433-A(OIC) has it at (8) - and page 1, the only page this slice authored, draws no numbered marker at all. The marker prover reads the union over every mapped form, so what is empty is the demand of this region and not the output of the instrument: line-markers.mjs reports 44 markers on this form, and [S-24] derives that figure and the per-page split against it.' },
 
-  // [S-26] IS A 433-B(OIC) DISPOSITION AND THE AUDIT RUNS PER FORM.
+  // [S-27] IS A 433-B(OIC) DISPOSITION AND THE AUDIT RUNS PER FORM.
   //
   // The sites it covers live in 433boi.map.json and every coordinate in them is drawn on
   // 433-B(OIC). When the audit runs for another form it measures against THAT form's page, so
@@ -389,8 +389,8 @@ export const EMPTY_DEMAND = [
   // a manifest id already taken by the crosswalk-classification disposition. The two merged
   // silently — the count sweep has no duplicate-id check — and the blanket audit then attributed
   // 433-A(OIC) classification sites to a citation about 433-B(OIC) coordinates. The renumbering
-  // to [S-26] is the fix; the missing duplicate-id check is carried.
-  { blanket: 'S-26', instrument: 'align-block.mjs', forms: ['433a', '433f', '433aoi'],
+  // to [S-26] was not the fix either — see [S-27]; the missing duplicate-id check is carried.
+  { blanket: 'S-27', instrument: 'align-block.mjs', forms: ['433a', '433f', '433aoi'],
     why: 'This disposition covers sites in 433boi.map.json, whose coordinates are drawn on 433-B(OIC). An audit run for a different form measures against a different PDF, so there is nothing here for it to extract — and extracting something WOULD be the finding, because it would mean one form evidence was being proved against another form page. The citation is measured, non-empty and proved on the 433boi run.' },
 
   { blanket: 'S-17f', instrument: 'align-block.mjs', forms: ['433a', '433f'],
@@ -622,7 +622,7 @@ export const DETECTORS = {
   'count-sweep.mjs': { canary: 'THE atLeast CONTRACT, which is the same idea per claim site: a detector declares the minimum it must find in an input it was handed, and finding fewer is a STOP rather than a clean sweep. It is the construct the canary generalises.' },
   'guard-sweep.mjs': { canary: 'THE ORPHAN CHECK. Every register entry carries an `anchor` that must match a real line in the file it disposes of; an anchor matching nothing is a STOP. That is a canary per entry rather than one per run - the register cannot go quiet without saying so.' },
   'assert-row-class-routes.mjs': { canary: '`__canary_not_a_class__`, poisoned into every declaring group with an asserted expected yield of one refusal each. Proved by breaking it: with the poison write removed the harness reported 64 DID NOT STOP, CANARY 0 of 32, and exited 2.' },
-  'exclusion-sweep.mjs': { canary: 'runCanary() builds a synthetic spec whose one class claims a printed table "not currently mapped" AND a synthetic map that routes that class, then runs [X-01]\'s comparison over the pair. Expected yield: exactly one excusal and exactly one contradiction. It is the [A3] defect in miniature — an excusal whose sentence the map disproves — so a cross-check that stops comparing reports 1 excused and 0 contradicted and takes the run down, rather than reporting nothing to contradict. The map half goes through the SAME acceptorsOf() the real assertion uses, imported rather than copied, so the canary cannot pass against a second implementation of the routing.' },
+  'exclusion-sweep.mjs': { canary: 'runCanary() builds a synthetic spec whose one class claims a printed table "not currently mapped" AND a synthetic map that routes that class, then runs [EX-01]\'s comparison over the pair. Expected yield: exactly one excusal and exactly one contradiction. It is the [A3] defect in miniature — an excusal whose sentence the map disproves — so a cross-check that stops comparing reports 1 excused and 0 contradicted and takes the run down, rather than reporting nothing to contradict. The map half goes through the SAME acceptorsOf() the real assertion uses, imported rather than copied, so the canary cannot pass against a second implementation of the routing.' },
   'success-sweep.mjs': { canary: 'CANARY_SRC, fourteen lines of synthetic source holding one site of each of the four classes, classified in memory by the same classify() the sweep uses. Line 13 is the defect verbatim — `process.exitCode = 3` inside a failure guard, then a bare `all assertions passed.` — arranged BELOW an earlier guard that does jump, because a witness accepting any jump above would certify the very line the file was written for. Expected yield: guarded, terminal, UNCONDITIONAL, narrative, in that order. CANARY_EXPECT\'s length is asserted against CANARY_CLASSES before the loop, so a shortened list cannot make `every` vacuously true.' },
   'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
   'fill-433a.mjs': { not_a_detector: 'A FILL ENGINE. Its universe is the targets of the map, enumerated and partitioned, and the partition is asserted to account for every field in the PDF. Its regexes parse known values, not search open text.' },
@@ -692,7 +692,7 @@ export const COMPLETENESS = [
   //
   // ONE COUNTER SERVES ALL OF THEM because they are one claim said four ways. Universe: the
   // widgets the PDF draws on the authored page. Covered: those the map binds.
-  C({ id: 'K-10', match: /all \d+ widgets are (?:bound|accounted)|every widget on this page is accounted|all \d+ fields/i,
+  C({ id: 'K-18', match: /all \d+ widgets are (?:bound|accounted)|every widget on this page is accounted|all \d+ fields/i,
     kind: 'counter',
     what: 'every widget the PDF draws on the authored pages of this map is bound by it',
     count: (ctx) => {
@@ -721,7 +721,7 @@ export const COMPLETENESS = [
   // Universe: the map's `map{}` block. Covered: those whose widget is above the heading's
   // baseline on page 1. The number that matters is that NONE of them is below it, because a
   // scalar below the heading would be reachable as a row of the partners table.
-  C({ id: 'K-11', match: /all fourteen scalars|ALL above the sentence and are bound/i,
+  C({ id: 'K-19', match: /all fourteen scalars|ALL above the sentence and are bound/i,
     kind: 'counter',
     what: 'every scalar the map binds on page 1 prints ABOVE the partners heading, so none is reachable as a table row',
     count: (ctx) => {
@@ -915,7 +915,7 @@ export const COMPLETENESS = [
       return { universe: p78.length, covered: covered.length, uncoveredList: p78.filter(t => ev[keyOf(t)] === undefined).map(keyOf) };
     } }),
 
-  C({ id: 'K-12', match: /each box is bound|each is bound|all bound|all three now bound|all three are now bound|all resolve|all three agree with what is bound|each, validated|all 22 cases — checked|every leaf under it is/i,
+  C({ id: 'K-20', match: /each box is bound|each is bound|all bound|all three now bound|all three are now bound|all resolve|all three agree with what is bound|each, validated|all 22 cases — checked|every leaf under it is/i,
     kind: 'counter',
     what: 'the local binding claims: every target the map declares is classified as writable, excluded or deferred by classifyMapTargets — the partition the gate\'s step 6 closes',
     count: (ctx) => {

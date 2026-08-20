@@ -80,7 +80,7 @@ function candidates(pageIdx, r) {
   // THAT FIGURE WAS TYPED AS 25 AND IS 26. It is measured by MUTATION, not by reading the
   // tree: revert `isFormatHint` out of `isDescriptive`, regenerate, and diff the widget
   // labels against the pre-sweep file. No sweep can re-derive it, so it is declared
-  // underivable with that procedure named, at adapters/pdf/guard-sweep.mjs [F-01].
+  // underivable with that procedure named, at adapters/pdf/guard-sweep.mjs [FIG-01].
   //
   // Each bucket is now kept twice: `*_desc` holds the descriptive candidates and `*_mark` the
   // markers, each ranked and truncated WITHIN its own kind, so truncating one can never hide

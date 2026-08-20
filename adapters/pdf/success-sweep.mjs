@@ -110,7 +110,7 @@ const isProse = (l) => { const t = l.trim(); return t.startsWith('//') || t.star
 // eight failure messages report as unconditional successes on the first run of this file.
 //
 // THAT IS AN EXCLUSION, SO IT IS A CLAIM, SO IT IS COUNTED AND CROSS-CHECKED — registered as
-// [X-11] in adapters/pdf/exclusion-sweep.mjs, whose cross-check asserts that no `console.error`
+// [EX-11] in adapters/pdf/exclusion-sweep.mjs, whose cross-check asserts that no `console.error`
 // line in the swept files OPENS with a verdict (OK / PASSED / verified / …). A success message
 // that moved to stderr would break that assertion rather than slip through this one.
 const EMITS = /console\.(log|warn)\s*\(|(?:^|[^\w.])say\s*\(/;

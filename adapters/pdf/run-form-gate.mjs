@@ -1,4 +1,4 @@
-// The release gate for one form in the 433 series. Eleven steps, in order, stopping at the
+// The release gate for one form in the 433 series. Twelve steps, in order, stopping at the
 // first failure.
 //
 // CLI:  node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]
@@ -16,6 +16,7 @@
 //   9  printed-heading        every group row sits beneath the heading it is declared to belong to
 //  10  verify-form-coverage   the whole-form accounting closes
 //  11  arithmetic tripwires   every printed total agrees with the rows it prints above it
+//  12  declaration coverage  every declared behaviour is named, and said to be exercised or not
 //
 // STEP 2 IS THE ONLY STEP THAT ASKS ABOUT THE BLANK FORM. Every other step judges what this
 // run produced. A box already ticked in the source PDF is not something this run produced, is
@@ -149,6 +150,258 @@ const money = (n) => (n < 0 ? '-' : '') + Math.abs(n).toLocaleString('en-US', { 
 
 // ---------------------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------------------
+// CELL READERS AND ADDRESSING, HOISTED OUT OF STEP 11.
+//
+// Step 11 and the new step 12 both read printed cells off the same filled PDF, and step 12
+// has to run on a form where step 11 SKIPPED. That is B9: the declaration-coverage table
+// lived inside step 11, step 11 skips on a form with no totals file, and so 433-B(OIC)'s
+// declarations were counted by nothing at all. Hoisted rather than copied — a second copy of
+// a cell reader is a second thing to keep in step with the first.
+const makeReaders = (live) => ({
+  // Read the PRINTED cell, never the input record: a total that agrees with the record but
+  // not with the page is exactly the defect worth catching, and comparing the record to
+  // itself would report a match on it.
+  printed: (target) => {
+    let f; try { f = live.getField(target); } catch { return { missing: true }; }
+    if (!(f instanceof PDFTextField)) return { missing: true };
+    return { text: f.getText() };
+  },
+  isChecked: (target) => {
+    let f; try { f = live.getField(target); } catch { return null; }
+    if (!(f instanceof PDFCheckBox)) return null;
+    return f.isChecked();
+  },
+});
+const makeAddressing = (m) => ({
+  resolveKey: (key) => m.map?.[key],
+  groupTargets: (g, column, row) => {
+    const def = m.groups?.[g];
+    if (!def || !Array.isArray(def.slots)) return null;
+    // A slot is either flat ({column: target}) or nested under `text` — both shapes are in
+    // use across the series, so the column is looked up in whichever one holds it.
+    const pick = (s) => (s?.text && s.text[column] !== undefined) ? s.text[column] : s?.[column];
+    if (row !== undefined) {
+      if (!Number.isInteger(row) || row < 0 || row >= def.slots.length) return null;
+      const one = pick(def.slots[row]);
+      return one === undefined ? null : [one];
+    }
+    const t = def.slots.map(pick);
+    return t.some(x => x === undefined) ? null : t;
+  },
+});
+
+// ---------------------------------------------------------------------------------------
+// WHAT STEP 11 DERIVED, HANDED TO STEP 12.
+//
+// Step 11 is the only step that reads the totals declaration, so the ARITHMETIC half of the
+// coverage table — floors, factors, constants, signs, predicates, advisories — can only come
+// from it. The MAP half — overflow caps, row classes, exclusive sets — comes from the map and
+// needs no totals file at all. Splitting them here is what lets step 12 run unconditionally:
+// on a form whose step 11 skipped, these three arrays are empty, which is the truthful answer
+// — that form declares no printed totals yet — rather than the absent one B9 was about.
+//
+// `ran` is not decoration. Step 12 prints WHICH half was in scope, because a coverage figure
+// that does not say whether the arithmetic half was even available is a number nobody can act
+// on, and reporting a partial slice's map-half coverage as if it were the form's is the same
+// class of thing as reporting a skipped step as a passed one.
+const ARITH = { rows: [], declined: [], declTotals: [], ran: false };
+
+// ---------------------------------------------------------------------------------------
+// THE COVERAGE COUNTER. Moved out of step 11 UNEDITED. `mapDoc` and `sample` are parameters
+// rather than module reads so the canary in declaration-coverage.mjs can drive it with a
+// synthetic map and assert the yield: a counter with no canary is the least trustworthy
+// object in the repo, and this one decides a figure four forms are now reported on.
+export const computeDeclarationCoverage = ({ live, rows, declined, declTotals, mapDoc, sample }) => {
+  const decl = { totals: declTotals || [] };
+  const { printed, isChecked } = makeReaders(live);
+  const { resolveKey, groupTargets } = makeAddressing(mapDoc);
+  const SUMMARY = { declarations: null };
+
+    // ─── DECLARATION COVERAGE ────────────────────────────────────────────────────────────
+    //
+    // EVERY DECLARED BEHAVIOUR, AND THE FIXTURE FACT THAT EXERCISED IT OR THE STATEMENT THAT
+    // NONE DID. Box F's floor is declared and no fixture has ever driven Box F negative, so
+    // nothing has ever proved the floor fires there rather than merely being written down;
+    // C-16 records the same gap on (7). Unexercised is a NAMED GAP and not a failure — some
+    // of these can only fire on a taxpayer whose figures this repo has no business inventing.
+    // What is forbidden is silence, because "no fixture exercises this" and "this works" are
+    // indistinguishable from the outside, and that indistinguishability is the whole subject
+    // of this engine.
+    //
+    // Derived on the pass that did the arithmetic. A second pass could disagree with the
+    // first about what ran, and then coverage would be a claim rather than a record.
+    // EACH ENTRY CARRIES AN IDENTITY THAT DOES NOT MOVE WITH THE OUTCOME. `what` is the human
+    // sentence and for a predicate it ENDS IN THE BRANCH TAKEN — "... -> held" on one record
+    // and "... -> not-held" on another — so a coverage union keyed on `what` sees the same
+    // declaration as two, counts the same rule as in class twice, and reports one of the pair
+    // as never proved while the other was proved on the very next fixture. That is exactly
+    // what the first union across three 433-A(OIC) fixtures printed: 88 declarations in class
+    // where the form declares 83, and four predicates unexercised where all four are exercised
+    // by one fixture or the other. So `id` is the identity and `what` is the prose, and only
+    // `id` is ever compared. The default is `what` because for every other kind the two are
+    // the same string.
+    const covers = [];
+    for (const r of rows) {
+      const ctx0 = (kind, what, fired, why, id) => covers.push({ line: r.line, kind, what, fired, why, id: id ?? what });
+      if (r.floor !== null)
+        ctx0('floor', `floor ${r.floor}`, !!r.floored,
+          r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : `the sum was ${money(r.sum)}, at or above the floor, so it never clamped`);
+      for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'every cell it multiplies was blank or zero');
+      for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
+      for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
+      for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`, `${p.key} = ${JSON.stringify(String(p.equals))}`);
+    }
+    // Overflow drops: a group whose printed slots ran out. Read from the map's declared max
+    // against the rows the record actually carried, not from the fill engine's log — the
+    // engine drops silently by design and this is the declaration, not the drop.
+    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
+      const capDeclared = d.max ?? (d.slots || []).length;
+      const src = sample?.[d.array || d.source || g];
+      const fed = Array.isArray(src) ? src.length : null;
+      covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, id: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
+        why: fed === null ? 'the record carries no rows for this group' : `the record fed ${fed} row(s) into ${capDeclared} printed slot(s), so nothing overflowed` });
+    }
+    // ROW CLASSES. A group declaring `row_class.accepts` is declaring a RULE — rows of these
+    // classes route here and rows of any other class are refused — and until now that rule was
+    // in no coverage table. `real_property` and `available_credit` carried a class no acceptance
+    // fixture ever stated, so on every run since they were authored the routing was reported and
+    // never exercised: the declaration was present, the refusal path was proved by
+    // assert-row-class-routes.mjs against a synthetic wrong class, and NOTHING had ever driven a
+    // correctly-classed row through it from a fixture.
+    //
+    // That is the same gap as an unexercised floor and it belongs in the same table. A class is
+    // EXERCISED when the record feeds at least one row into the group that accepts it AND the
+    // row states its class; it is UNEXERCISED — named, not failed — when the group is declared
+    // and this fixture sends nothing through it.
+    //
+    // `id` is `accepts <class>` per class rather than per group, because one group accepting two
+    // classes is two rules and a fixture can exercise one without the other.
+    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
+      const accepts = d?.row_class?.accepts;
+      if (!Array.isArray(accepts)) continue;
+      const src = sample?.[d.array || d.source || g];
+      const fedRows = Array.isArray(src) ? src : [];
+      // THE KEY THE ENGINE ACTUALLY READS. `row_class.column` is the discriminator
+      // adapters/pdf/assert-row-class-routes.mjs poisons to prove the refusal path, so it is
+      // the key a row must state for the ACCEPTANCE path to have been exercised too. Reading a
+      // different key here would report coverage of a rule the engine does not consult.
+      const classKey = d.row_class.column;
+      for (const cls of accepts) {
+        // EXERCISED MEANS A ROW STATED THE CLASS. A first draft counted a single-class group
+        // as exercised whenever the record fed it any rows at all — "there is no other class
+        // the row could be" — and that reading is wrong in the way this whole ruling is about:
+        // it reports 14 of 14 covered on 433-A and erases the exact gap the ruling names. The
+        // engine routes on `row_class.column`; a row that does not set that column has not
+        // driven the acceptance rule, whatever a human can infer about which table it landed in.
+        const stated = fedRows.filter((r) => r && typeof r === 'object' && String(r[classKey] ?? '') === cls).length;
+        covers.push({ line: g, kind: 'row_class', what: `accepts ${cls}`, id: `accepts ${cls}`, fired: stated > 0,
+          why: !fedRows.length ? 'the record carries no rows for this group, so no row was routed under this class'
+             : stated ? `the record fed ${stated} row(s) stating ${classKey} = "${cls}"`
+             : `the record fed ${fedRows.length} row(s) and NONE states ${classKey} = "${cls}" — the class is declared and no fixture has driven a row through it` });
+      }
+    }
+    // Exclusive sets and not-checkable advisories are declared in the map and the totals file
+    // and are exercised by verify-form-coverage (step 10) and render-review respectively;
+    // counted here so the coverage table names every declaration KIND, not only the arithmetic ones.
+    for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
+      if (!Array.isArray(targets)) continue;
+      const on = targets.filter(t => isChecked(t) === true);
+      covers.push({ line: set, kind: 'exclusive', what: `${targets.length} option(s)`, id: `${targets.length} option(s)`, fired: on.length === 1,
+        why: on.length === 0 ? 'no option is checked on this fixture, so the set never had to be exclusive' : `${on.length} options are checked` });
+    }
+    // A NOT-CHECKABLE ENTRY THAT DECLARES NO ADVISORY IS NOT AN UNEXERCISED DECLARATION —
+    // it is an ABSENT one, and counting the two together would report a gap where there is
+    // no rule. Most of these entries need none: (1c) is an attachment roll-up whose caption
+    // says everything a preparer needs. Only entries that DO declare an advisory are in
+    // class, and such an advisory is exercised when the cell it advises about was actually
+    // written on this fixture — an advisory beside an empty cell is one no preparer sees.
+    let noAdvisory = 0;
+    for (const e of declined) {
+      const adv = e.review_page_advisory || e.review_page_advisory_summary || null;
+      if (!adv) { noAdvisory++; continue; }
+      // BOTH ADDRESSING FORMS, the same two the rest of this file reads: a scalar `map_key`,
+      // or a `cell: {group, column}` naming a column of a repeatable row — which addresses
+      // EVERY slot of that group, so the advisory is exercised when any one of them is
+      // written. Reading only `map_key` reported the one group-cell entry on this form as an
+      // advisory whose cell "is not a text field", which is a fact about the measurement and
+      // not about the form.
+      const key = e.map_key || (e.cell ? `${e.cell.group}.${e.cell.column}` : null);
+      const tgts = e.map_key ? [resolveKey(e.map_key)].filter(Boolean)
+                 : e.cell ? (groupTargets(e.cell.group, e.cell.column) || []) : [];
+      const vals = tgts.map(t => printed(t)).filter(p => !p.missing);
+      const written = vals.some(p => p.text !== undefined && p.text !== null && String(p.text).trim() !== '');
+      covers.push({ line: key || '(unaddressed)', kind: 'advisory', what: `review-page advisory${tgts.length > 1 ? ` (${tgts.length} slots)` : ''}`, id: 'review-page advisory', fired: written,
+        why: !tgts.length ? 'the entry names neither a map_key nor a cell{group,column}, so nothing could be resolved to check'
+           : !vals.length ? 'no slot it advises about is a text field on the filled PDF'
+           : 'every cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
+    }
+
+    // CONSTRAINT ADVISORIES: declared on a CHECKED total rather than on a not_checkable
+    // entry, because the cell they advise about is one the gate verifies. Counted here for the
+    // same reason the not-checkable ones are - an advisory nobody is ever shown is a declared
+    // rule no fixture has proved - and exercised on the same test: the cell it advises about
+    // was actually written on this fixture, since an advisory beside an empty cell reaches no
+    // preparer.
+    for (const e of (decl.totals || [])) {
+      if (!e.review_page_advisory || !e.total_key) continue;
+      const t = resolveKey(e.total_key);
+      const v = t ? printed(t) : null;
+      covers.push({ line: e.total_key, kind: 'advisory', what: 'review-page advisory (on a checked total)', id: 'review-page advisory (constraint)',
+        fired: !!v && !v.missing && v.text !== undefined && v.text !== null && String(v.text).trim() !== '',
+        why: !t ? 'the total_key does not resolve to a target through the map'
+           : (!v || v.missing) ? 'the cell it advises about is not a text field on the filled PDF'
+           : 'the cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
+    }
+
+    const unex = covers.filter(d => !d.fired);
+    const byKind = covers.reduce((a, d) => { (a[d.kind] ||= { n: 0, un: 0 }); a[d.kind].n++; if (!d.fired) a[d.kind].un++; return a; }, {});
+    console.log('');
+    console.log(`  DECLARATION COVERAGE — ${covers.length} declared behaviour(s); ${covers.length - unex.length} exercised by this fixture, ${unex.length} not.`);
+    console.log(`    (${noAdvisory} not-checkable entr${noAdvisory === 1 ? 'y declares' : 'ies declare'} no review-page advisory at all — an absent rule, not an unexercised one, and not counted above.)`);
+    console.log(`    ${Object.entries(byKind).map(([k, v]) => `${k}: ${v.n - v.un}/${v.n}`).join('   ')}`);
+    if (unex.length) {
+      console.log('    NOT EXERCISED BY THIS FIXTURE — each is a declared rule no fixture has proved. Named, not failed:');
+      for (const d of unex) console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}\n                  ${d.why}`);
+    }
+    SUMMARY.declarations = { total: covers.length, exercised: covers.length - unex.length, unexercised: unex.length,
+      unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none',
+      // THE IDENTITIES, NOT ONLY THE TALLY. A form is now exercised by SEVERAL fixtures - an
+      // acceptance one, a negative-driving one, an over-max one - and no single run can report
+      // the form's coverage, because a floor exercised by one fixture and an overflow exercised
+      // by another are both exercised and neither run says so. Unioning tallies is meaningless;
+      // unioning IDENTITIES is exact. So each declaration is NAMED here, and
+      // declaration-coverage.mjs unions the named sets across a form's fixtures. One line, no
+      // newline, `kind|line|what` per entry - the block's own format rule.
+      //
+      // TWO LISTS, NOT ONE, AND THE SECOND IS THE ONE THAT KEEPS THE UNION HONEST. Which
+      // declarations are even IN CLASS depends on the fixture: a `when` clause puts the
+      // constant at "6a leased" in class only on a record whose first vehicle is leased, and
+      // on every other record that line is SKIPPED and the constant is not a declaration this
+      // run had any opportunity to exercise. A union computed from the unexercised lists alone
+      // reads "absent from this run" as "exercised by this run" and reports 82 of 83 where the
+      // truth is that two zero constants were never in class together. So the in-class set is
+      // named too, and the union subtracts one from the other.
+      in_class_ids: covers.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none',
+      unexercised_ids: unex.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none' };
+  return { covers, unex, byKind, noAdvisory, declarations: SUMMARY.declarations };
+};
+
+// THE FLOOR THE TABLE MUST REACH, derived from the map alone. Three declaration kinds push
+// exactly one entry each, unconditionally, for every group / class / exclusive set a map
+// declares: overflow, row_class and exclusive. So a map that declares any of them and yields
+// a table that does not reach this floor has a counting loop that stopped running — which is
+// B9 one level in, and is a STOP rather than a coverage report of zero. The floor is DERIVED
+// from the same map the counter reads, never typed.
+export const declarationFloor = (m) => {
+  const groups = Object.entries(m.groups || {});
+  const overflow = groups.length;
+  const classes = groups.reduce((n, [, d]) => n + (Array.isArray(d?.row_class?.accepts) ? d.row_class.accepts.length : 0), 0);
+  const exclusive = Object.values(m.exclusive || {}).filter(Array.isArray).length;
+  return { overflow, classes, exclusive, floor: overflow + classes + exclusive };
+};
+
+
 const steps = [
   ['revision pin', async () => {
     if (!mapDoc.form_revision) {
@@ -263,13 +516,9 @@ const steps = [
     // Read the PRINTED cell, never the input record: a total that agrees with the record
     // but not with the page is exactly the defect worth catching, and comparing the record
     // to itself would report a match on it.
-    const printed = (target) => {
-      let f; try { f = live.getField(target); } catch { return { missing: true }; }
-      if (!(f instanceof PDFTextField)) return { missing: true };
-      return { text: f.getText() };
-    };
+    const { printed, isChecked } = makeReaders(live);
 
-    const resolveKey = (key) => mapDoc.map?.[key];
+    const { resolveKey, groupTargets } = makeAddressing(mapDoc);
 
     // --- FEEDER PREDICATES -----------------------------------------------------------
     // A feeder may carry ONE optional `when`, and `when` is ONE equality test against ONE
@@ -298,11 +547,6 @@ const steps = [
     // lone `check_here` box, or a per-row group set written "group[row].set".
     const predicateStops = [];
     const norm = (v) => String(v).trim().toLowerCase();
-    const isChecked = (target) => {
-      let f; try { f = live.getField(target); } catch { return null; }
-      if (!(f instanceof PDFCheckBox)) return null;
-      return f.isChecked();
-    };
     const optionsOf = (obj) => Object.entries(obj || {}).filter(([k, v]) => !k.startsWith('_') && typeof v === 'string');
 
     // Returns one of:
@@ -376,20 +620,6 @@ const steps = [
     // printed formula — "current market value X .8 = quick sale value" — is written over.
     // Every quick-sale tripwire on 433-A(OIC) is that shape: a cell whose caption states a
     // factor over the cell beside it, not over a column.
-    const groupTargets = (g, column, row) => {
-      const def = mapDoc.groups?.[g];
-      if (!def || !Array.isArray(def.slots)) return null;
-      // A slot is either flat ({column: target}) or nested under `text` — both shapes are
-      // in use across the series, so the column is looked up in whichever one holds it.
-      const pick = (s) => (s?.text && s.text[column] !== undefined) ? s.text[column] : s?.[column];
-      if (row !== undefined) {
-        if (!Number.isInteger(row) || row < 0 || row >= def.slots.length) return null;
-        const one = pick(def.slots[row]);
-        return one === undefined ? null : [one];
-      }
-      const t = def.slots.map(pick);
-      return t.some(x => x === undefined) ? null : t;
-    };
     // A total is addressed either by map key (`total_key`) or, when the printed cell is a
     // column of a repeatable row rather than a scalar, by `total_cell: {group, column, row}`.
     const resolveTotal = (entry) => {
@@ -686,172 +916,10 @@ const steps = [
     console.log('');
     console.log(`  per-line result written to ${tripwirePath} — read by render-review.mjs so "verified" on the review page names this run and not the declaration.`);
 
-    // ─── DECLARATION COVERAGE ────────────────────────────────────────────────────────────
-    //
-    // EVERY DECLARED BEHAVIOUR, AND THE FIXTURE FACT THAT EXERCISED IT OR THE STATEMENT THAT
-    // NONE DID. Box F's floor is declared and no fixture has ever driven Box F negative, so
-    // nothing has ever proved the floor fires there rather than merely being written down;
-    // C-16 records the same gap on (7). Unexercised is a NAMED GAP and not a failure — some
-    // of these can only fire on a taxpayer whose figures this repo has no business inventing.
-    // What is forbidden is silence, because "no fixture exercises this" and "this works" are
-    // indistinguishable from the outside, and that indistinguishability is the whole subject
-    // of this engine.
-    //
-    // Derived on the pass that did the arithmetic. A second pass could disagree with the
-    // first about what ran, and then coverage would be a claim rather than a record.
-    // EACH ENTRY CARRIES AN IDENTITY THAT DOES NOT MOVE WITH THE OUTCOME. `what` is the human
-    // sentence and for a predicate it ENDS IN THE BRANCH TAKEN — "... -> held" on one record
-    // and "... -> not-held" on another — so a coverage union keyed on `what` sees the same
-    // declaration as two, counts the same rule as in class twice, and reports one of the pair
-    // as never proved while the other was proved on the very next fixture. That is exactly
-    // what the first union across three 433-A(OIC) fixtures printed: 88 declarations in class
-    // where the form declares 83, and four predicates unexercised where all four are exercised
-    // by one fixture or the other. So `id` is the identity and `what` is the prose, and only
-    // `id` is ever compared. The default is `what` because for every other kind the two are
-    // the same string.
-    const covers = [];
-    for (const r of rows) {
-      const ctx0 = (kind, what, fired, why, id) => covers.push({ line: r.line, kind, what, fired, why, id: id ?? what });
-      if (r.floor !== null)
-        ctx0('floor', `floor ${r.floor}`, !!r.floored,
-          r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : `the sum was ${money(r.sum)}, at or above the floor, so it never clamped`);
-      for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'every cell it multiplies was blank or zero');
-      for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
-      for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
-      for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`, `${p.key} = ${JSON.stringify(String(p.equals))}`);
-    }
-    // Overflow drops: a group whose printed slots ran out. Read from the map's declared max
-    // against the rows the record actually carried, not from the fill engine's log — the
-    // engine drops silently by design and this is the declaration, not the drop.
-    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
-      const capDeclared = d.max ?? (d.slots || []).length;
-      const src = sample?.[d.array || d.source || g];
-      const fed = Array.isArray(src) ? src.length : null;
-      covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, id: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
-        why: fed === null ? 'the record carries no rows for this group' : `the record fed ${fed} row(s) into ${capDeclared} printed slot(s), so nothing overflowed` });
-    }
-    // ROW CLASSES. A group declaring `row_class.accepts` is declaring a RULE — rows of these
-    // classes route here and rows of any other class are refused — and until now that rule was
-    // in no coverage table. `real_property` and `available_credit` carried a class no acceptance
-    // fixture ever stated, so on every run since they were authored the routing was reported and
-    // never exercised: the declaration was present, the refusal path was proved by
-    // assert-row-class-routes.mjs against a synthetic wrong class, and NOTHING had ever driven a
-    // correctly-classed row through it from a fixture.
-    //
-    // That is the same gap as an unexercised floor and it belongs in the same table. A class is
-    // EXERCISED when the record feeds at least one row into the group that accepts it AND the
-    // row states its class; it is UNEXERCISED — named, not failed — when the group is declared
-    // and this fixture sends nothing through it.
-    //
-    // `id` is `accepts <class>` per class rather than per group, because one group accepting two
-    // classes is two rules and a fixture can exercise one without the other.
-    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
-      const accepts = d?.row_class?.accepts;
-      if (!Array.isArray(accepts)) continue;
-      const src = sample?.[d.array || d.source || g];
-      const fedRows = Array.isArray(src) ? src : [];
-      // THE KEY THE ENGINE ACTUALLY READS. `row_class.column` is the discriminator
-      // adapters/pdf/assert-row-class-routes.mjs poisons to prove the refusal path, so it is
-      // the key a row must state for the ACCEPTANCE path to have been exercised too. Reading a
-      // different key here would report coverage of a rule the engine does not consult.
-      const classKey = d.row_class.column;
-      for (const cls of accepts) {
-        // EXERCISED MEANS A ROW STATED THE CLASS. A first draft counted a single-class group
-        // as exercised whenever the record fed it any rows at all — "there is no other class
-        // the row could be" — and that reading is wrong in the way this whole ruling is about:
-        // it reports 14 of 14 covered on 433-A and erases the exact gap the ruling names. The
-        // engine routes on `row_class.column`; a row that does not set that column has not
-        // driven the acceptance rule, whatever a human can infer about which table it landed in.
-        const stated = fedRows.filter((r) => r && typeof r === 'object' && String(r[classKey] ?? '') === cls).length;
-        covers.push({ line: g, kind: 'row_class', what: `accepts ${cls}`, id: `accepts ${cls}`, fired: stated > 0,
-          why: !fedRows.length ? 'the record carries no rows for this group, so no row was routed under this class'
-             : stated ? `the record fed ${stated} row(s) stating ${classKey} = "${cls}"`
-             : `the record fed ${fedRows.length} row(s) and NONE states ${classKey} = "${cls}" — the class is declared and no fixture has driven a row through it` });
-      }
-    }
-    // Exclusive sets and not-checkable advisories are declared in the map and the totals file
-    // and are exercised by verify-form-coverage (step 10) and render-review respectively;
-    // counted here so the coverage table names every declaration KIND, not only the arithmetic ones.
-    for (const [set, targets] of Object.entries(mapDoc.exclusive || {})) {
-      if (!Array.isArray(targets)) continue;
-      const on = targets.filter(t => isChecked(t) === true);
-      covers.push({ line: set, kind: 'exclusive', what: `${targets.length} option(s)`, id: `${targets.length} option(s)`, fired: on.length === 1,
-        why: on.length === 0 ? 'no option is checked on this fixture, so the set never had to be exclusive' : `${on.length} options are checked` });
-    }
-    // A NOT-CHECKABLE ENTRY THAT DECLARES NO ADVISORY IS NOT AN UNEXERCISED DECLARATION —
-    // it is an ABSENT one, and counting the two together would report a gap where there is
-    // no rule. Most of these entries need none: (1c) is an attachment roll-up whose caption
-    // says everything a preparer needs. Only entries that DO declare an advisory are in
-    // class, and such an advisory is exercised when the cell it advises about was actually
-    // written on this fixture — an advisory beside an empty cell is one no preparer sees.
-    let noAdvisory = 0;
-    for (const e of declined) {
-      const adv = e.review_page_advisory || e.review_page_advisory_summary || null;
-      if (!adv) { noAdvisory++; continue; }
-      // BOTH ADDRESSING FORMS, the same two the rest of this file reads: a scalar `map_key`,
-      // or a `cell: {group, column}` naming a column of a repeatable row — which addresses
-      // EVERY slot of that group, so the advisory is exercised when any one of them is
-      // written. Reading only `map_key` reported the one group-cell entry on this form as an
-      // advisory whose cell "is not a text field", which is a fact about the measurement and
-      // not about the form.
-      const key = e.map_key || (e.cell ? `${e.cell.group}.${e.cell.column}` : null);
-      const tgts = e.map_key ? [resolveKey(e.map_key)].filter(Boolean)
-                 : e.cell ? (groupTargets(e.cell.group, e.cell.column) || []) : [];
-      const vals = tgts.map(t => printed(t)).filter(p => !p.missing);
-      const written = vals.some(p => p.text !== undefined && p.text !== null && String(p.text).trim() !== '');
-      covers.push({ line: key || '(unaddressed)', kind: 'advisory', what: `review-page advisory${tgts.length > 1 ? ` (${tgts.length} slots)` : ''}`, id: 'review-page advisory', fired: written,
-        why: !tgts.length ? 'the entry names neither a map_key nor a cell{group,column}, so nothing could be resolved to check'
-           : !vals.length ? 'no slot it advises about is a text field on the filled PDF'
-           : 'every cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
-    }
-
-    // CONSTRAINT ADVISORIES: declared on a CHECKED total rather than on a not_checkable
-    // entry, because the cell they advise about is one the gate verifies. Counted here for the
-    // same reason the not-checkable ones are - an advisory nobody is ever shown is a declared
-    // rule no fixture has proved - and exercised on the same test: the cell it advises about
-    // was actually written on this fixture, since an advisory beside an empty cell reaches no
-    // preparer.
-    for (const e of (decl.totals || [])) {
-      if (!e.review_page_advisory || !e.total_key) continue;
-      const t = resolveKey(e.total_key);
-      const v = t ? printed(t) : null;
-      covers.push({ line: e.total_key, kind: 'advisory', what: 'review-page advisory (on a checked total)', id: 'review-page advisory (constraint)',
-        fired: !!v && !v.missing && v.text !== undefined && v.text !== null && String(v.text).trim() !== '',
-        why: !t ? 'the total_key does not resolve to a target through the map'
-           : (!v || v.missing) ? 'the cell it advises about is not a text field on the filled PDF'
-           : 'the cell it advises about is empty on this fixture, so no preparer would be shown the advisory' });
-    }
-
-    const unex = covers.filter(d => !d.fired);
-    const byKind = covers.reduce((a, d) => { (a[d.kind] ||= { n: 0, un: 0 }); a[d.kind].n++; if (!d.fired) a[d.kind].un++; return a; }, {});
-    console.log('');
-    console.log(`  DECLARATION COVERAGE — ${covers.length} declared behaviour(s); ${covers.length - unex.length} exercised by this fixture, ${unex.length} not.`);
-    console.log(`    (${noAdvisory} not-checkable entr${noAdvisory === 1 ? 'y declares' : 'ies declare'} no review-page advisory at all — an absent rule, not an unexercised one, and not counted above.)`);
-    console.log(`    ${Object.entries(byKind).map(([k, v]) => `${k}: ${v.n - v.un}/${v.n}`).join('   ')}`);
-    if (unex.length) {
-      console.log('    NOT EXERCISED BY THIS FIXTURE — each is a declared rule no fixture has proved. Named, not failed:');
-      for (const d of unex) console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}\n                  ${d.why}`);
-    }
-    SUMMARY.declarations = { total: covers.length, exercised: covers.length - unex.length, unexercised: unex.length,
-      unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none',
-      // THE IDENTITIES, NOT ONLY THE TALLY. A form is now exercised by SEVERAL fixtures - an
-      // acceptance one, a negative-driving one, an over-max one - and no single run can report
-      // the form's coverage, because a floor exercised by one fixture and an overflow exercised
-      // by another are both exercised and neither run says so. Unioning tallies is meaningless;
-      // unioning IDENTITIES is exact. So each declaration is NAMED here, and
-      // declaration-coverage.mjs unions the named sets across a form's fixtures. One line, no
-      // newline, `kind|line|what` per entry - the block's own format rule.
-      //
-      // TWO LISTS, NOT ONE, AND THE SECOND IS THE ONE THAT KEEPS THE UNION HONEST. Which
-      // declarations are even IN CLASS depends on the fixture: a `when` clause puts the
-      // constant at "6a leased" in class only on a record whose first vehicle is leased, and
-      // on every other record that line is SKIPPED and the constant is not a declaration this
-      // run had any opportunity to exercise. A union computed from the unexercised lists alone
-      // reads "absent from this run" as "exercised by this run" and reports 82 of 83 where the
-      // truth is that two zero constants were never in class together. So the in-class set is
-      // named too, and the union subtracts one from the other.
-      in_class_ids: covers.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none',
-      unexercised_ids: unex.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none' };
+    // The ARITHMETIC half of the declaration coverage table, handed to step 12. It used to be
+    // COUNTED here — inside a step that skips on a form with no totals file, which meant
+    // 433-B(OIC)'s declarations were counted by nothing at all. That is B9. See ARITH.
+    ARITH.rows = rows; ARITH.declined = declined; ARITH.declTotals = decl.totals || []; ARITH.ran = true;
     // Never collapsed to a pass count. Checked, skipped and failed are three different
     // things and a single number cannot say which one a line was in.
     const tally = `${checked.length} checked, ${skippedRows.length} skipped, ${bad.length} failed`
@@ -893,6 +961,40 @@ const steps = [
       r.feeders.forEach(f => console.error(`      ${f.contributes < 0 ? '-' : '+'} ${money(Math.abs(f.contributes)).padStart(14)}  ${f.target}${f.factor !== 1 ? `   [${money(f.n)} x ${f.factor}]` : ''}`));
     }
     return fail(`${bad.length} total(s) do not agree with the rows printed above them`);
+  }],
+
+  // ─── STEP 12 — DECLARATION COVERAGE ─────────────────────────────────────────────────────
+  //
+  // IT RUNS UNCONDITIONALLY, AND THAT IS THE WHOLE POINT OF ITS EXISTENCE. This table used to
+  // be computed at the bottom of step 11, which SKIPS on a form that declares no COMPLETE
+  // slice and has no totals file. 433-B(OIC) is such a form, so through slice 1 its declared
+  // behaviours — one group's overflow cap, two exclusive sets — were counted by nothing at
+  // all, and the summary block printed `declarations_total: n/a` where a reader would take
+  // "the coverage table has nothing to say about this form yet" rather than "the coverage
+  // table did not run". That is ruling 5's own shape one level out, and it compounds with
+  // every slice that adds a declaration. Carried as [B9]; closed here.
+  //
+  // The step can still only count what exists. On a form whose step 11 skipped, the arithmetic
+  // half is empty and the step SAYS SO on its own line rather than letting the tally imply it.
+  ['declaration coverage', async () => {
+    const pdf  = await PDFDocument.load(readFileSync(outPath));
+    const cov  = computeDeclarationCoverage({ live: pdf.getForm(), rows: ARITH.rows, declined: ARITH.declined,
+                                              declTotals: ARITH.declTotals, mapDoc, sample });
+    SUMMARY.declarations = cov.declarations;
+    const fl = declarationFloor(mapDoc);
+    console.log('');
+    console.log(`  SCOPE — map half: ALWAYS in scope (${fl.overflow} group(s), ${fl.classes} declared row class(es), ${fl.exclusive} exclusive set(s)).`);
+    console.log(`         arithmetic half: ${ARITH.ran ? `in scope — step 11 ran and derived ${ARITH.rows.length} declared total line(s)` : `OUT OF SCOPE — step 11 SKIPPED (no ${totalsPath}), so no floor, factor, constant, sign, predicate or advisory declaration exists to count. This is not a coverage figure of zero for those kinds; it is the absence of any such declaration on this form.`}`);
+
+    // THE GUARD, AND IT IS GUARDED BY THE THING IT REPORTS ON. Three declaration kinds push
+    // exactly one entry each for every group, row class and exclusive set the map declares,
+    // unconditionally and with no fixture involvement. A table that does not reach that floor
+    // has a counting loop that stopped running, and would otherwise print a small clean number.
+    if (cov.covers.length < fl.floor)
+      return fail(`DECLARATION COVERAGE UNDER-COUNTED — the map declares ${fl.overflow} group(s) + ${fl.classes} row class(es) + ${fl.exclusive} exclusive set(s) = ${fl.floor} behaviour(s) that are counted unconditionally, and the table returned ${cov.covers.length} entr${cov.covers.length === 1 ? 'y' : 'ies'}. A coverage counter that stops counting reports a clean small number, which is the failure this step exists to make impossible.`);
+    if (fl.floor === 0 && !ARITH.ran)
+      return fail(`NOTHING TO COUNT — ${mapPath} declares no group, no row class and no exclusive set, and step 11 skipped, so this step would report coverage of an empty set and pass. A gate step that can only ever say "0 of 0" proves nothing; author a declaration or remove the step.`);
+    return ok(`${cov.covers.length} declared behaviour(s) counted, ${cov.covers.length - cov.unex.length} exercised by this fixture, ${cov.unex.length} not — at or above the ${fl.floor} the map declares unconditionally`);
   }],
 ];
 

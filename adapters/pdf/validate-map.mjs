@@ -19,6 +19,7 @@ import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
 import { runExclusionSweep, reportExclusionSweep } from './exclusion-sweep.mjs';
+import { runRegisterIdSweep, reportRegisterIdSweep } from './register-ids.mjs';
 import { runSuccessSweep, reportSuccessSweep } from './success-sweep.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
 import { reclassify, report as reportReclassify } from '../hubspot/reclassify-against-backbone.mjs';
@@ -297,6 +298,18 @@ if (reportExclusionSweep(await runExclusionSweep(), { verbose: process.argv.incl
 // run since they were written. Every success message in the engine must be tied to a finding
 // count, sit after a jumping failure path, or state what was found rather than that nothing was.
 if (reportSuccessSweep(runSuccessSweep(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (e4) THE REGISTER-ID SWEEP. Every sweep above is keyed on ids, and until [D-07] nothing
+// asserted that an id names one thing. A count-sweep MANIFEST entry written as [S-25] collided
+// with the crosswalk-classification disposition of the same id; the two merged in silence and
+// the blanket audit then attributed 433-A(OIC) classification sites to a citation about
+// 433-B(OIC) coordinates — a symptom two tools from its cause, naming neither. The renumbering
+// that fixed it landed on [S-26], which was ALSO taken, because still nothing checked. Twelve
+// within-register duplicates and forty-one cross-register ones were live when this was written,
+// across guard-sweep, count-sweep, blanket-audit, exclusion-sweep and the carried registers,
+// while every one of those tools reported clean. Asked here, on every form, because the
+// registers are engine-wide and a collision in any of them can be paid by any tool citing an id.
+if (reportRegisterIdSweep(runRegisterIdSweep(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // (f) THE BLANKET AUDIT. The sweeps above dispose of every claim site; most sites are disposed
 // by a handful of catch-all reasons, and this asks whether those reasons are true of what they

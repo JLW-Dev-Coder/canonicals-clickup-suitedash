@@ -2366,7 +2366,7 @@
    "scope": "Reported. Retiring the fallback entirely is the cleaner outcome of the reshape."
   },
   {
-   "id": "D-05",
+   "id": "D3",
    "severity": "HIGH - the D1 shape, on three finished forms",
    "where": "adapters/pdf/maps/433a.map.json (8 groups), adapters/pdf/maps/433f.map.json (3 groups), adapters/pdf/maps/433aoi.map.json (1 group)",
    "what": "Twelve mapped groups declared no `row_class`. check-row-shape.mjs skips every group that declares none - `if (!rc || !Array.isArray(rc.accepts)) continue;` - so nothing asserted that a row landing in those twelve printed tables was a row of that table's class. A row filed under the wrong group printed under a printed heading it does not belong under, on a statement signed under penalty of perjury, with every printed total still reconciling. That is defect D1 exactly, in the places the row_class construct was never extended to.",
@@ -2375,7 +2375,9 @@
    "how_each_class_was_settled": "From the PRINTED PAGE. Every heading is located as drawn text by page-geometry.mjs, its coordinates quoted in the group's row_class._why, and its band membership asserted by verify-headings.mjs. No AcroForm leaf name was consulted: on this series the leaf names are what lied. Three pairs share printed vocabulary and are told apart by what the printed columns ask for, each argued in the group's _why: payment_processor against bank_account (both printed instructions name PayPal), payment_processor against digital_asset (both name virtual currency), and credit_cards_accepted against credit_line (both say credit card).",
    "personal_and_business_property_are_two_classes_not_one_flag": "bank_account is ONE class split by an is_business_account discriminator; personal_property and business_property are TWO classes. That is not an inconsistency. The bank tables print the same four columns and the page itself carries the discriminating sentence (\"Report Personal Accounts in Section 4.\"); 20a/20b and 67a/67b print DIFFERENT column sets - BUSINESS ASSETS prints a title-holder column and PERSONAL ASSETS prints none - so the spec already held them apart, and two classes is the stronger of the two guards: a business-asset row stored under PERSONAL ASSETS is a WRONG CLASS and stops the run, where a missing flag on one shared class would only be reported.",
    "no_row_moved": "Proved, not asserted. Every group's heading routing was snapshotted cell by cell from the filled PDF before and after; verify-headings reports 0 findings on all three forms both sides. A row_class declares what a row must SAY it is; it moves no cell.",
-   "status": "RESOLVED. Twelve row_class declarations, eight unrouted blocks retired, three stale printed-table claims corrected."
+   "status": "RESOLVED. Twelve row_class declarations, eight unrouted blocks retired, three stale printed-table claims corrected.",
+   "cross_form_item": "D-05",
+   "_why_renumbered": "This entry was filed as D-05, which is the id of the CROSS-FORM carried item it describes — so one id string was defined by two registers, this one and adapters/pdf/maps/_carried.cross-form.json. It is a REFERENCE, not a second definition, and it now says so in `cross_form_item` while carrying a local id in this list's own D1/D2 sequence."
   }
  ],
  "migration_cost": {

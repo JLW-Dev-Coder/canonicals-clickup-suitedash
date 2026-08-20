@@ -62,9 +62,9 @@
    "status": "OPEN for 433-B(OIC), 433-B, 433-D and 433-H; SATISFIED for the three forms already mapped."
   },
   {
-   "id": "C-23",
+   "id": "D-06",
    "form": "all three mapped forms, and 433-B(OIC) inherits it",
-   "raised_in": "Prompt 39 ruling 1 - found by adapters/pdf/exclusion-sweep.mjs [X-03] on its first run",
+   "raised_in": "Prompt 39 ruling 1 - found by adapters/pdf/exclusion-sweep.mjs [EX-03] on its first run",
    "subject": "row_flag is one key carrying two incompatible definitions, and the maps show neither covers all five flagged columns",
    "the_two_definitions": {
     "artefact": "adapters/hubspot/asset-row-shapes.json  meta.how_to_read.row_flag: \"A column whose value prints as a CHECKBOX, not text. The fill engines read these off the same row object the text layer prints, so they belong in the row shape even though no text cell corresponds.\"",
@@ -90,19 +90,10 @@
     "ONE KEY, UNION DEFINITION: row_flag means \"not a printed TEXT cell\", covering both halves, and [A2] excuses on it as now. Cheapest, and it keeps the two household_member columns excused from a check they would pass.",
     "ONE KEY, CODE COMMENT WINS: drop row_flag from the two household_member columns and let [A2] check them. They pass today. Corrects meta.how_to_read to match. Widens the check, and is the only option under which the two columns stop being latent hiders."
    ],
-   "what_is_true_under_all_three": "No flagged column is reachable as TEXT on any accepting group. That is the assertion adapters/pdf/exclusion-sweep.mjs [X-03] makes and it holds today; the split above is REPORTED and counted on every run, not failed.",
-   "status": "OPEN"
-  },
-  {
-   "id": "C-24",
-   "form": "engine-wide",
-   "raised_in": "Prompt 39 commit 3 - found by an id collision while authoring 433-B(OIC) slice 1",
-   "subject": "count-sweep.mjs MANIFEST has no duplicate-id check, and a collision merges two dispositions silently",
-   "what_happened": "A new manifest entry for 433-B(OIC)'s page-1 structural prose was written as [S-25]. That id was already in use by the crosswalk-classification disposition. Nothing complained. The two entries co-existed under one id, and the blanket audit then reported an EMPTY DEMAND for [S-25] -> align-block.mjs on 433-A(OIC) - attributing that form's classification sites to a citation written about 433-B(OIC) coordinates. The symptom appeared two tools away from the cause and named neither.",
-   "why_it_matters": "The manifest is the register that decides whether every count in this repo is derived or declared underivable. An id is how a disposition is referred to from prose, from EMPTY_DEMAND, from FORWARD and from the report a person reads. Two entries sharing one id means a citation can be paid by the wrong disposition, and the blanket audit's whole forward-reference mechanism is built on ids being unique. Nothing in the engine asserts that they are.",
-   "the_same_shape_elsewhere": "guard-sweep.mjs VACUOUS, blanket-audit.mjs COMPLETENESS / FORWARD / EMPTY_DEMAND / DETECTORS, exclusion-sweep.mjs PREDICATES and DECLARED, and success-sweep.mjs OVERRIDES are all id-keyed registers with no uniqueness assertion. guard-sweep already carries TWO entries numbered G-40 and TWO numbered G-41, on different files, which is survivable only because its lookup is by (file, anchor) rather than by id - and that is luck rather than design.",
-   "not_fixed_here": "A uniqueness assertion across six registers is a change to six guards and each no-op path must be proved in the same run. The immediate collision is fixed by renumbering to [S-26]; the missing check is not.",
-   "status": "OPEN"
+   "what_is_true_under_all_three": "No flagged column is reachable as TEXT on any accepting group. That is the assertion adapters/pdf/exclusion-sweep.mjs [EX-03] makes and it holds today; the split above is REPORTED and counted on every run, not failed.",
+   "status": "OPEN",
+   "_renumbered_from": "C-23",
+   "_why_renumbered": "Filed as C-23 while the C- family is 433-A(OIC)'s own per-form carried register, which ALREADY held a resolved C-23. Two registers, one id string, two different items — the same collision this register's [D-07] is about, one level out. Cross-form items are D- prefixed."
   }
  ],
  "resolved": [
@@ -123,10 +114,39 @@
    "and_the_instrument_had_been_switched_off_over_three_of_them": "The three on 433-F were invisible to adapters/pdf/assert-row-shape-spec.mjs [A3], which is the check written to find exactly this. asset-row-shapes.json declared 433-F's DIGITAL ASSETS, E1 and E2 tables \"printed, not currently mapped\"; claimsNothing() excuses that phrase from the routing assertion; and 433f.map.json has bound all three since they were authored, each group's own _why saying in terms that the shared row class binds. A stale sentence in the spec turned the assertion off over three tables, and excusedClaims() printed all three on every run with nothing comparing them to the map. Claims corrected in the same commit; excused claims fall from 7 to 4 and declared routing gaps from 8 to 0.",
    "no_row_moved": "PROVED, NOT ASSERTED. Every 433-A group was snapshotted cell by cell from the filled PDF before and after - 290 cells across 14 groups, same target and same printed value in every one. verify-headings reports 0 findings on all three forms both sides. A row_class declares what a row must SAY it is; it moves no cell.",
    "what_it_cost": "Twelve row_class blocks, eight retired unrouted declarations, three corrected printed-table claims, asset_class on 82 fixture rows, and one derived-scope routing assertion. No printed cell moved on any form."
+  },
+  {
+   "id": "D-07",
+   "form": "engine-wide",
+   "raised_in": "Prompt 39 commit 3 - found by an id collision while authoring 433-B(OIC) slice 1",
+   "subject": "count-sweep.mjs MANIFEST has no duplicate-id check, and a collision merges two dispositions silently",
+   "what_happened": "A new manifest entry for 433-B(OIC)'s page-1 structural prose was written as [S-25]. That id was already in use by the crosswalk-classification disposition. Nothing complained. The two entries co-existed under one id, and the blanket audit then reported an EMPTY DEMAND for [S-25] -> align-block.mjs on 433-A(OIC) - attributing that form's classification sites to a citation written about 433-B(OIC) coordinates. The symptom appeared two tools away from the cause and named neither.",
+   "why_it_matters": "The manifest is the register that decides whether every count in this repo is derived or declared underivable. An id is how a disposition is referred to from prose, from EMPTY_DEMAND, from FORWARD and from the report a person reads. Two entries sharing one id means a citation can be paid by the wrong disposition, and the blanket audit's whole forward-reference mechanism is built on ids being unique. Nothing in the engine asserts that they are.",
+   "the_same_shape_elsewhere": "guard-sweep.mjs VACUOUS, blanket-audit.mjs COMPLETENESS / FORWARD / EMPTY_DEMAND / DETECTORS, exclusion-sweep.mjs PREDICATES and DECLARED, and success-sweep.mjs OVERRIDES are all id-keyed registers with no uniqueness assertion. guard-sweep already carries TWO entries numbered G-40 and TWO numbered G-41, on different files, which is survivable only because its lookup is by (file, anchor) rather than by id - and that is luck rather than design.",
+   "status": "RESOLVED",
+   "_renumbered_from": "C-24",
+   "_why_renumbered": "Filed as C-24 for the same reason as [D-06]. C- is 433-A(OIC)'s per-form family; this item is engine-wide and belongs in the D- sequence.",
+   "_superseded_not_fixed_here": "A uniqueness assertion across six registers is a change to six guards and each no-op path must be proved in the same run. The immediate collision is fixed by renumbering to [S-26]; the missing check is not.",
+   "resolved_in": "Prompt 40, commit 1",
+   "what_the_fix_is": "adapters/pdf/register-ids.mjs — every id-keyed register in the engine, enumerated, each declaring a SCOPE, and three assertions over them: no id is defined twice inside one register; no id is defined in two registers that could be confused; and every `view` register (one that deliberately REFERS to ids another defines) resolves against its target. It carries a canary of three planted defects, one of each kind, driven through the same runRegisterIdSweep the real run uses. It is called from validate-map.mjs, which is gate step 3, so it runs on every form on every gate.",
+   "two_namespaces_and_why": "A blanket \"ids are globally unique\" would assert a falsehood. A printed heading called PERSONAL_BANK_ACCOUNTS exists on 433-A and on 433-F and is one heading on two forms. So form-scoped ids are unique within their form and free against OTHER FORMS — but never free against the engine namespace, which is exactly what [D-06]/[D-07] were: 433-A(OIC) held C-23 as a resolved item of its own while this register held C-23 as an open engine-wide one.",
+   "what_was_found": {
+    "registers_read": 32,
+    "within_register_duplicates": 12,
+    "cross_register_collisions": 41,
+    "_derived_by": "adapters/pdf/register-ids.mjs on its first run over the tree at b12e387, before any renumbering. Both figures are the sweep's own output, not a hand tally.",
+    "the_estimate_this_entry_made": "This entry said \"six registers\". The sweep enumerated THIRTY-TWO, and this entry's own list named five of them. The gap is the point: an estimate of how many registers exist, made without enumerating them, is the same class of figure as a retyped count.",
+    "duplicates_by_register": "guard-sweep.mjs VACUOUS 7 (G-40, G-41, G-43, G-44, G-45, G-55, G-56); count-sweep.mjs MANIFEST 2 (S-24, S-26); blanket-audit.mjs COMPLETENESS 3 (K-10, K-11, K-12).",
+    "collisions_by_pair": "exclusion-sweep.mjs PREDICATES/DECLARED/RETIRED x 433aoi.crosswalk-classification.json entries — 26 ids, X-01..X-32, two registers with two unrelated meanings for every one of them. guard-sweep.mjs FIGURES x 433f.map.json _carried — F-01, F-02. _carried.cross-form.json open x 433aoi.map.json _carried — C-23. _carried.cross-form.json resolved x asset-row-shapes.json defects_found_while_specifying — D-05. 433boi.map.json _carried x _arguable_page1 — B6, B7, B8, which turned out NOT to be a collision but a deliberate view, and is now asserted as one.",
+    "the_second_collision_on_one_entry": "This entry recorded that the 433-B(OIC) page-1 disposition was written as [S-25], collided with the crosswalk-classification disposition, and was renumbered to [S-26] as the fix. [S-26] was ALREADY TAKEN by the marker-count derivation at count-sweep.mjs:801. The renumber that fixed the first collision created a second one, because there was still nothing that checked. It is now [S-27].",
+    "a_predicate_name_doing_the_same_thing": "exclusion-sweep.mjs [X-16] disposed of `field.isChecked()` in verify-appearances.mjs. isChecked is a pdf-lib METHOD, and pdf-lib is not a swept file; the name was in the engine-defined predicate universe only because run-form-gate.mjs happened to declare an unrelated local `const isChecked` in gate step 11. Hoisting that local for [B9] moved it into an object property, the name left the universe, and the orphan check named the entry. The entry is RETIRED with its text kept verbatim. Same shape as an id collision, with a predicate name in place of an id."
+   },
+   "which_side_moved_and_why": "Decided per id by reading the bracketed citations of it, not by array position. [G-45] cites `forwardRefsIn`, which is the blanket-audit entry, so the validate-map entry moved instead of the later one. [K-12] cites COORDINATES twice, so the coordinate entry kept the number and the each-box-is-bound entry moved. [S-24] has four citations, three describing the drawn-page entry, so the `_table_or_scalars.` entry moved to [S-28] and the one citation that meant it was rewritten. The X- family moved off the exclusion register rather than off the classification register because the classification ids are cited from fields.433aoi.json (27 property definitions), crosswalk.433aoi.json and three provisioning reports, and the exclusion ids only from engine prose inside adapters/pdf.",
+   "one_citation_deliberately_left_stale": "adapters/pdf/maps/433aoi.map.json `_the_count_in_the_line_above_was_23_and_is_22` cites [F-09], now [FIG-09]. That block is marked SUPERSEDED, KEPT VERBATIM, and rewriting a citation inside a verbatim-kept record would edit the record. It is named here instead. Every other [F-nn] and [X-nn] citation in the tree was rewritten and the counts are in the commit."
   }
  ],
  "_count": {
-  "open": 6,
-  "resolved": 1
+  "open": 5,
+  "resolved": 2
  }
 }

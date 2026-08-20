@@ -82,7 +82,7 @@ export const load = () => {
 };
 
 // EXPORTED SO THE EXCLUSION SWEEP CROSS-CHECKS AGAINST THIS, NOT AGAINST A COPY OF IT.
-// [A3]'s excusals are compared to reality by adapters/pdf/exclusion-sweep.mjs [X-01], and the
+// [A3]'s excusals are compared to reality by adapters/pdf/exclusion-sweep.mjs [EX-01], and the
 // reality it compares against must be the SAME routing map this file asserts on. guard-sweep's
 // (c) register records what a second implementation costs: a re-derived copy of the marker
 // pairing disagreed 40-to-3 with the original, and the whole disagreement was in the copy.

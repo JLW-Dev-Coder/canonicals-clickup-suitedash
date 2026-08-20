@@ -692,7 +692,7 @@ export const MANIFEST = [
   // _map_evidence, and three of those bindings are the correlate-labels.mjs probes for this
   // form — including the two that discriminate against a leaf name and against an 18pt-adjacent
   // total. Those probes are a STOP: the tool writes no label file at all until they pass.
-  D({ id: 'S-26', file: /433boi\.map\.json$/,
+  D({ id: 'S-27', file: /433boi\.map\.json$/,
     at: /^(_the_condition_that_governs_page_1\.|_printed_headings_and_markers_first\.|_no_lettered_box_on_this_page$|_map_evidence\.|_nesting_note$|checkboxes\.|check_here\.|exclusive\._why$|_computed\.|groups\.|_never_autofill\.|_not_checkable\.|_deferred_pages$|_arguable_page1\[|_carried$|authored_from$|slice$|_partition\._why_unaccounted_is_the_word_and_not_deferred$)/,
     kind: 'underivable',
     reason: 'A transcription of the DRAWN PAGE: a caption quoted verbatim, the y of its baseline, the x range it spans, and the printed convention that makes a pairing determinate. The numbers are COORDINATES and printed-line references, not counts of anything this map holds, and re-deriving them here would be one instrument measuring the page and then comparing the answer with itself. Every coordinate in the covered sites is checked by adapters/pdf/align-block.mjs, whose prover compares quoted y and x runs against the geometry actually drawn on the page. The claims that DO state a count about the page - how many markers it draws, how many runs form the heading, how many bullets carry no widget - are derived by [S-24], and a count-stating site [S-24] does not recognise is reported UNDISPOSED rather than falling here.' }),
@@ -781,7 +781,7 @@ export const MANIFEST = [
   // ENUMERATES the printed markers on a page and then says how many there are is a count of a
   // list sitting in the same string. `authored_from_page6._printed_markers_first` enumerated
   // twenty-two numbered markers and said "the 23 numbered markers" twice, and that 23 is the
-  // same wrong figure [F-09] was raised for. Fixing the figure register did not reach it,
+  // same wrong figure [FIG-09] was raised for. Fixing the figure register did not reach it,
   // because the figure register sweeps figures quoted BY A DISPOSITION — figures inside
   // guard-sweep.mjs's own registers — and this one lives in map prose that a blanket
   // underivable had already excused.
@@ -789,7 +789,7 @@ export const MANIFEST = [
   // Each generation of this defect was fixed correctly and certified the next blind spot one
   // level out: a retyped count, then a derivation whose guard was dead, then a sweep whose
   // prose was unchecked, then a register that covers only its own file. So the shape the
-  // recovery of [F-09] turned on — a count printed beside the list it counts — stops being a
+  // recovery of [FIG-09] turned on — a count printed beside the list it counts — stops being a
   // thing a careful reader notices and becomes a thing the tree refuses.
   //
   // FIRES ONLY WHERE THERE IS A LIST TO COUNT. A string that names no marker in the
@@ -902,7 +902,7 @@ export const MANIFEST = [
   // worked examples have gone stale teaches the wrong answer with full confidence. Every
   // figure it states about a shape THIS REPO HOLDS is derived here; the rest is reasoning
   // about the printed page and about past slices, and is declared underivable below.
-  D({ id: 'S-24', file: /\.map\.json$/, at: /^_table_or_scalars\./,
+  D({ id: 'S-28', file: /\.map\.json$/, at: /^_table_or_scalars\./,
     kind: 'derived',
     derive: (ctx, v) => {
       const rows = [];

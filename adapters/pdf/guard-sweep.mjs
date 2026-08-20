@@ -260,7 +260,7 @@ export const VACUOUS = [
   { id: 'G-43', file: 'count-sweep.mjs', anchor: 'const numbered = [...str.matchAll(', verdict: 'guarded', family: true,
     why: 'THE ENUMERATION COUNTERS FOR [S-26], AND THE EMPTY READING IS STATED FIRST. Both extractions can legitimately read zero — most `_printed_markers` prose lists no marker at all and belongs to [S-18], and page 8 of this form genuinely draws none — so an empty result cannot simply be a failure. What it also cannot be is a silent hand-off, because a changed enumeration format looks exactly like a string with no list: the stated count survives and the entry that checks it steps aside. So the line below skips ONLY a string that lists no marker AND states no count. A string that states a count is always compared, even against a derived 0, and one claiming a non-zero count beside no readable list comes out as a MISMATCH naming both sides. Three readings, three outcomes, none of them a pass. THE FIRST VERSION MADE THE STATED-COUNT-WITH-NO-LIST CASE A `fail`, and it reported page 8’s honest "reports 0 on page 8" as an unreadable input — right about the risk, wrong about which reading carried it, and caught by the sweep it was written for on the first run.' },
 
-  { id: 'G-45', file: 'validate-map.mjs', anchor: 'const cb = /^([A-Za-z0-9_]+)', verdict: 'sound',
+  { id: 'G-81', file: 'validate-map.mjs', anchor: 'const cb = /^([A-Za-z0-9_]+)', verdict: 'sound',
     why: 'A SPELLING DISPATCH IN resolveBinding, AND THE END OF THE CHAIN IS A NAMED FAILURE. Four spellings are tried in order - a scalar `map` key, a group[row].column cell, a `check_here` key, and this one, checkboxSet.option. A no-match here falls through to the final `return { how: ... }`, which carries no `target`, and the caller reports a registry entry whose declared binding does not resolve as a problem naming all four spellings it tried. So an unparsed `bound_to` is a failure with the reason printed, never an entry quietly accepted - which matters more here than in the other dispatches of this shape, because the thing being checked IS whether the map still points the key at the field the registry names.' },
 
   { id: 'G-43b', file: 'count-sweep.mjs', anchor: 'const boxes    = [...str.matchAll(', verdict: 'guarded',
@@ -301,20 +301,20 @@ export const VACUOUS = [
   { id: 'G-40', file: 'assert-overflow.mjs', anchor: 'if (!missing.length && !extra.length) console.log(', verdict: 'sound',
     why: 'GATES A CONSOLE LINE, NOT A VERDICT. This is the shape of the original defect — two empty lists reading as agreement — and here the two empty lists ARE agreement, because they are the two directions of a set comparison whose populated case was already turned into a `problems.push` on the two lines above. The verdict is computed from `problems.length` at the end of the file and never from this branch, so deleting this line would change what the transcript says and not what the tool decides. Named rather than left undisposed, because "it only prints" is exactly the excuse the [N-05] generation of this defect was hiding behind, and the check is that the printing and the deciding are two different statements about the same fact.' },
   // ─── the row-shape specification assertion ────────────────────────────────────────────
-  { id: 'G-40', file: 'assert-row-shape-spec.mjs', anchor: 'try { cols = slotColumnsOf(map, group) || []; } catch { cols = []; }', verdict: 'sound',
+  { id: 'G-77', file: 'assert-row-shape-spec.mjs', anchor: 'try { cols = slotColumnsOf(map, group) || []; } catch { cols = []; }', verdict: 'sound',
     why: 'FAILS OPEN INTO THE LOUDEST POSSIBLE REPORT. `cols` is the set A2 asks every contributed column to be reachable in, so an empty one makes EVERY column of that class report as MISSING COLUMN on that group. A group whose slots cannot be read does not quietly pass this check; it fails it as many times as the class has columns. The catch is there because slotColumnsOf throws on a malformed slot list and a throw at that point would take the whole assertion down instead of reporting the one group.' },
 
-  { id: 'G-41', file: 'assert-row-shape-spec.mjs', anchor: 'if (real.length && !routed && !un[form])', verdict: 'guarded',
+  { id: 'G-78', file: 'assert-row-shape-spec.mjs', anchor: 'if (real.length && !routed && !un[form])', verdict: 'guarded',
     why: 'THE `length &&` SHAPE, AND THE ONE PLACE IN THIS FILE IT COULD HAVE GONE WRONG. `real` is what survives `claimsNothing()`, so a filter that quietly widened would empty `real` and switch the routing assertion off with no output at all. Two things close it. The empty case is disposed by the NEXT check in the same loop — an `unrouted` declaration for a form with no routable claim is reported as ORPHAN UNROUTED, so a class whose claims all vanished cannot keep a silent declaration standing over nothing. And `excusedClaims()` enumerates every entry the filter removed, with its class and its text, and reportRowShapeSpec prints the count on every run. An assertion that stops asserting here cannot do it without saying how many claims it excused.' },
 
   // ─── the blanket audit ────────────────────────────────────────────────────────────────
   { id: 'G-42', file: 'blanket-audit.mjs', anchor: 'for (const m of String(v).matchAll(new RegExp(String.raw`(?<![\\w-])(${N})(?![\\w-])`', verdict: 'guarded',
     why: 'THE PROBE’S NUMBER EXTRACTOR, GUARDED BY A CANARY RATHER THAN BY A PER-SITE TEST. An empty read here yields no findings for that site, and if the regex ever died every sampled site would come back clean and the audit would print a green sample over an instrument that reads nothing. A PER-SITE heuristic was tried first — "the site has a digit and I read no number" — and it is WRONG: `entries[30].id` is "L30" and `_at` is "y 668.1", and reading no standalone number out of either is the correct answer, which is what the boundary rule exists to produce. It reported ten live sites as unreadable. `PROBE_CANARY` asks the only question that separates a dead extractor from a site with nothing in it: a fixed string, not drawn from the artefacts, carrying two register phrases and one entry id, expected to yield exactly two. A canary that does not come back is a STOP and every "0 findings" in the same run is declared meaningless.' },
 
-  { id: 'G-43', file: 'blanket-audit.mjs', anchor: 'const hist = HISTORICAL.exec(window);', verdict: 'sound',
+  { id: 'G-79', file: 'blanket-audit.mjs', anchor: 'const hist = HISTORICAL.exec(window);', verdict: 'sound',
     why: 'FAILS OPEN IN THE SAFE DIRECTION. No match means the probe PROCEEDS to derive and compare, so a dead HISTORICAL regex produces MORE findings, not fewer — a false report a person disposes of, never a real one suppressed. Every stand-down it does make is counted and printed with the marker that caused it, so the quiet direction is not available either.' },
 
-  { id: 'G-44', file: 'blanket-audit.mjs', anchor: 'try { derived = s.count(ctx); } catch { derived = null; }', verdict: 'sound',
+  { id: 'G-80', file: 'blanket-audit.mjs', anchor: 'try { derived = s.count(ctx); } catch { derived = null; }', verdict: 'sound',
     why: 'A COUNTER THAT THROWS STILL PRODUCES THE FINDING. `derived` becomes null and the finding is pushed anyway, so the report reads "the site states N ... a set this repo counts as null" — visible, and a STOP like any other finding. The exception is not swallowed into a skip; it is swallowed into a value that cannot equal anything.' },
 
   { id: 'G-45', file: 'blanket-audit.mjs', anchor: "...[...t.matchAll(/\\b([a-zA-Z0-9-]+\\.mjs)\\b/g)].map(m => m[1]),", verdict: 'guarded', family: true,
@@ -382,9 +382,9 @@ export const VACUOUS = [
   // classifier is built so that ignorance is indistinguishable from the defect rather than
   // from health. The canary then separates the two, by running four synthetic sites of known
   // class through the same code path on every invocation.
-  { id: 'G-55', file: 'success-sweep.mjs', anchor: 'const inlineElseIf = self.match(', verdict: 'sound', family: true,
+  { id: 'G-82', file: 'success-sweep.mjs', anchor: 'const inlineElseIf = self.match(', verdict: 'sound', family: true,
     why: 'Reads an `} else if (…) {` head. No match means "this is not an else-if", the walk continues upward, and a chain it cannot read ends at a null condition — which denies the site its `guarded` witness rather than granting it. Fails closed into UNCONDITIONAL.' },
-  { id: 'G-56', file: 'success-sweep.mjs', anchor: 'const m = head.match(/if\\s*\\((.+)\\)\\s*$/);', verdict: 'sound', family: true,
+  { id: 'G-83', file: 'success-sweep.mjs', anchor: 'const m = head.match(/if\\s*\\((.+)\\)\\s*$/);', verdict: 'sound', family: true,
     why: 'THE `if` HEAD READER, at both of its sites — the else-chain walker and the enclosing-condition walker. A head this cannot read yields `cond: null`, and a null condition never satisfies FINDING_IDENT, so witness (a) is withheld. Withholding a witness moves a site TOWARDS the problem state and never away from it.' },
   { id: 'G-57', file: 'success-sweep.mjs', anchor: 'const inline = lines[idx].match(', verdict: 'sound',
     why: 'The inline `if (…) console.log(…)` form. No match falls through to the brace walk, which is the general case; the inline test is an optimisation over it, not the only path to the answer.' },
@@ -428,18 +428,28 @@ export const VACUOUS = [
   { id: 'G-64', file: 'exclusion-sweep.mjs', anchor: "try { raw = readFileSync(p, 'utf8'); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }", verdict: 'FIXED',
     why: 'WAS `catch { return null }` OVER BOTH FAILURE MODES, WITH `?? 0` DOWNSTREAM. A missing sidecar and an unparseable one produced the same silent zero. Now the catch handles exactly one condition — the file not existing, which is a fact about a form not yet mapped — and re-throws everything else. The parse itself is outside the try, so a malformed map cannot be read as an empty one. The excused total therefore counts only forms whose declarations were actually read.' },
   { id: 'G-65', file: 'exclusion-sweep.mjs', anchor: 'const m = ln.match(DEF); if (m) out.add(m[1]);', verdict: 'guarded',
-    why: 'THE DEFINITION HARVESTER, AND THE ONE PLACE IN THIS FILE A DEAD REGEX WOULD FAIL OPEN. An empty `DEFINED` set makes [X-90] remove EVERY raw exclusion position, so nothing is registered and nothing is checked — the [A3] shape committed by the file written against it. Closed two ways: [X-90] counts what it removed and prints the figure beside the raw total on every run, so 175 raw / 0 named is visible rather than silent; and the ORPHAN rule then fires for all sixteen registered predicates at once, because none of them appears in an exclusion position any more. A harvester that dies takes the register down with it, loudly.' },
+    why: 'THE DEFINITION HARVESTER, AND THE ONE PLACE IN THIS FILE A DEAD REGEX WOULD FAIL OPEN. An empty `DEFINED` set makes [EX-90] remove EVERY raw exclusion position, so nothing is registered and nothing is checked — the [A3] shape committed by the file written against it. Closed two ways: [EX-90] counts what it removed and prints the figure beside the raw total on every run, so 175 raw / 0 named is visible rather than silent; and the ORPHAN rule then fires for all sixteen registered predicates at once, because none of them appears in an exclusion position any more. A harvester that dies takes the register down with it, loudly.' },
   { id: 'G-66', file: 'exclusion-sweep.mjs', anchor: 'const m = code.match(re);', verdict: 'sound',
     why: 'THE POSITION MATCHER. No match means this line is not an exclusion position and the loop tries the next shape; a line matching no shape is not a site. A shape that stopped matching would shrink the swept population — which is why the population size is printed on every run and the ORPHAN rule fires for any registered predicate that stops appearing. Registered rather than argued away, because "it only shrinks the input" is exactly what a sentence in asset-row-shapes.json did.' },
   { id: 'G-67', file: 'exclusion-sweep.mjs', anchor: 'const calls = [...String(m[1]).matchAll(CALL)].map((x) => x[1]);', verdict: 'sound',
     why: 'READS THE PREDICATE NAMES OUT OF A CONDITION ALREADY KNOWN TO BE AN EXCLUSION POSITION. An empty result returns early without counting the line as a raw hit, which is correct: `if (i > 3) continue` calls nothing and excuses nothing anybody authored. The names it does find are then filtered against DEFINED, whose failure mode is disposed at [G-65].' },
   { id: 'G-68', file: 'exclusion-sweep.mjs', anchor: "for (const lit of ln.match(STRLIT) || []) {", verdict: 'sound',
-    why: "[X-11]'s CROSS-CHECK. An unreadable literal list yields no iterations and therefore no contradiction — which would be a silent pass, except that the same extractor runs over the same lines in success-sweep.mjs's site selector, where an empty result drops the site count from 79 to 0. The two figures are printed by two tools in the same gate and cannot disagree quietly." },
+    why: "[EX-11]'s CROSS-CHECK. An unreadable literal list yields no iterations and therefore no contradiction — which would be a silent pass, except that the same extractor runs over the same lines in success-sweep.mjs's site selector, where an empty result drops the site count from 79 to 0. The two figures are printed by two tools in the same gate and cannot disagree quietly." },
   { id: 'G-69', file: 'exclusion-sweep.mjs', anchor: 'catch (err) {', verdict: 'sound', family: true,
     why: "THE THREE RUNNER CATCHES, AND THEY ARE THE OPPOSITE OF SWALLOWING. Each wraps one of count(), crosscheck() and observe(), and each turns the exception into an UNREADABLE PROBLEM naming the entry and the message — never a skip, never a zero. This is the atLeast contract at the register level: an exclusion whose size or whose comparison cannot be computed reports that it could not be computed, and the sweep exits 2.",
   },
   { id: 'G-63', file: 'success-sweep.mjs', anchor: 'for (const o of OVERRIDES) if (!rows.some(', verdict: 'sound',
     why: 'THE ORPHAN-OVERRIDE CHECK, AND EMPTY IS THE FAILING CASE. If `rows` is empty the negated `some` is true for every override, so all of them report as ORPHAN — the loudest possible outcome, not a silent pass. An override standing over code that has moved is exactly what this is for.' },
+
+  // ─── the register-id sweep [D-07] ─────────────────────────────────────────────────────
+  { id: 'G-84', file: 'register-ids.mjs', anchor: "try { raw = readFileSync(p, 'utf8'); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }", verdict: 'sound',
+    why: 'ABSENCE AND UNREADABILITY ARE SEPARATED, WHICH IS THE WHOLE POINT OF THE catch. ENOENT is a register that does not exist on this tree — 433-F has no name-lie registry — and returns null, which the caller skips and never counts. ANY OTHER ERROR RETHROWS and takes the run down. So a register that exists and will not parse can never contribute the same zero as one that is absent, and the sweep can never report \'no collisions\' over a file it could not open.' },
+
+  { id: 'G-85', file: 'register-ids.mjs', anchor: 'const isView = ids.length > 0 && ids.every((i) => carriedSet.has(i));', verdict: 'guarded',
+    why: 'THE EMPTY CASE IS EXCLUDED FIRST AND IT IS THE DANGEROUS ONE. `[].every(...)` is true, so without `ids.length > 0` an EMPTY arguable list would classify itself as a VIEW of the map\'s carried register — and a view is deliberately excluded from the cross-register collision pass. An empty input would switch the check off for that register rather than find nothing in it. With the guard, an empty list is a register of zero ids, which collides with nothing and is reported as zero.' },
+
+  { id: 'G-86', file: 'register-ids.mjs', anchor: 'ids.length > 0 && ids.every((i) => crossIds.has(i))', verdict: 'guarded',
+    why: 'THE SAME TEST ON asset-row-shapes.json\'s defect list, guarded the same way and for the same reason. It is written with its own `ids.length > 0` rather than relying on the enclosing `if (d.length)` — an outer guard is one the next edit can move away from, and this one decides whether a register is measured at all.' },
 ];
 
 // ---------------------------------------------------------------------------------------
@@ -461,7 +471,7 @@ export const SELECTIONS = [
 
   { id: 'N-02', file: 'correlate-labels.mjs', anchor: 'const s = [...arr].sort(byDist);', order: 'FIXED', family: true,
     property: 'the printed run is DESCRIPTIVE (a caption, not a marker or a currency glyph)',
-    why: 'THE SAME DEFECT ONE LEVEL UP, AND IT WAS LOAD-BEARING. `nearestDescriptive` and `markerFor` both filter before they rank and are correct in themselves — but the BUCKETS they read were truncated to the nearest 3 (nearest 5 for `nearest`) before any property filter ran, so a descriptive caption sitting behind three non-descriptive runs was cut from the bucket and never seen. On 433-A page 3, field p2_t32_16[0]’s `above` bucket holds five "$" runs at 31–161pt and the first descriptive run at 198.9pt: truncation dropped every candidate and the label fell through to a run 273.7pt away in another column. Measured across the three forms: 26 of 515 widgets on 433-A took a different label and 4 took a different marker; 433-F and 433-A(OIC) were unaffected. THAT FIGURE WAS TYPED AS 25 AND IS 26 — see [F-01], which states how it was measured and why the sweep cannot re-derive it. Each bucket now filters, then ranks, then truncates.' },
+    why: 'THE SAME DEFECT ONE LEVEL UP, AND IT WAS LOAD-BEARING. `nearestDescriptive` and `markerFor` both filter before they rank and are correct in themselves — but the BUCKETS they read were truncated to the nearest 3 (nearest 5 for `nearest`) before any property filter ran, so a descriptive caption sitting behind three non-descriptive runs was cut from the bucket and never seen. On 433-A page 3, field p2_t32_16[0]’s `above` bucket holds five "$" runs at 31–161pt and the first descriptive run at 198.9pt: truncation dropped every candidate and the label fell through to a run 273.7pt away in another column. Measured across the three forms: 26 of 515 widgets on 433-A took a different label and 4 took a different marker; 433-F and 433-A(OIC) were unaffected. THAT FIGURE WAS TYPED AS 25 AND IS 26 — see [FIG-01], which states how it was measured and why the sweep cannot re-derive it. Each bucket now filters, then ranks, then truncates.' },
 
   { id: 'N-03', file: 'correlate-labels.mjs', anchor: 'if (!isDescriptive(cand.text)) continue;', order: 'filter-then-rank',
     property: 'descriptive text',
@@ -473,7 +483,7 @@ export const SELECTIONS = [
 
   { id: 'N-05', file: 'line-markers.mjs', anchor: 'const cands = widgets', order: 'no-property',
     property: '(none available) — same page, band-containing, to the right',
-    why: 'IT DOES NOT CARRY THE money-probe DEFECT, AND THE HONEST ANSWER IS THAT IT CANNOT: there is no post-rank property test here at all, because there is no property to test. `cands[0]` is returned unconditionally after a filter that is purely geometric — same page, marker y inside the widget band, widget left edge at or right of the marker — and then ranked by distance from the marker to each candidate’s vertical centre. Every property in the filter is a property sought, so the ORDER is right. THE EXPOSURE IS UNDER-DETERMINATION: on 433-A(OIC) 42 of 89 markers leave more than one candidate standing after the filter and the distance tie-break decides between them; on 433-A it is 146 of 205. Swapping the tie-break from vertical-centre to leftmost changes the answer for 3 markers on 433-A(OIC) and 26 on 433-A, so the tie-break is load-bearing and nothing on the page justifies one over the other. A widget TYPE filter was tried and is vacuous on 433-A(OIC) — every candidate there is a PDFTextField — but on 433-A 16 markers pair to a PDFCheckBox, and this tool has no way to know whether a printed line is a checkbox line or a money line, so it cannot tell a correct checkbox pairing from a wrong one. THIS IS WHY THE PAGE-6 MARKERS WERE CHECKED CELL BY CELL AGAINST THE RECTANGLES RATHER THAN TAKEN FROM THIS TOOL’S PAIRING (page 6 draws 25 markers — 22 numbered lines, all of which pair, and Boxes D, E and F, none of which do; this sentence said "the 23 page-6 markers" and 23 is not a figure this page produces, see [F-09]), and why the two wrong page-5 pairings are recorded in the map at `_map_evidence_page5.the_two_line_markers_pairings_that_are_WRONG_on_this_page`. The tool now prints how many markers its filter left under-determined, so a reader is told which answers the tie-break invented — AND UNTIL THIS SENTENCE WAS AUDITED IT DID NOT: line-markers.mjs had a zero-byte diff in the commit that first wrote this claim. The print exists now, and [F-03]..[F-09c] derive its figures from the same function rather than from a second copy of the filter. It is an authoring instrument, exports nothing, and no gate step reads it.' },
+    why: 'IT DOES NOT CARRY THE money-probe DEFECT, AND THE HONEST ANSWER IS THAT IT CANNOT: there is no post-rank property test here at all, because there is no property to test. `cands[0]` is returned unconditionally after a filter that is purely geometric — same page, marker y inside the widget band, widget left edge at or right of the marker — and then ranked by distance from the marker to each candidate’s vertical centre. Every property in the filter is a property sought, so the ORDER is right. THE EXPOSURE IS UNDER-DETERMINATION: on 433-A(OIC) 42 of 89 markers leave more than one candidate standing after the filter and the distance tie-break decides between them; on 433-A it is 146 of 205. Swapping the tie-break from vertical-centre to leftmost changes the answer for 3 markers on 433-A(OIC) and 26 on 433-A, so the tie-break is load-bearing and nothing on the page justifies one over the other. A widget TYPE filter was tried and is vacuous on 433-A(OIC) — every candidate there is a PDFTextField — but on 433-A 16 markers pair to a PDFCheckBox, and this tool has no way to know whether a printed line is a checkbox line or a money line, so it cannot tell a correct checkbox pairing from a wrong one. THIS IS WHY THE PAGE-6 MARKERS WERE CHECKED CELL BY CELL AGAINST THE RECTANGLES RATHER THAN TAKEN FROM THIS TOOL’S PAIRING (page 6 draws 25 markers — 22 numbered lines, all of which pair, and Boxes D, E and F, none of which do; this sentence said "the 23 page-6 markers" and 23 is not a figure this page produces, see [FIG-09]), and why the two wrong page-5 pairings are recorded in the map at `_map_evidence_page5.the_two_line_markers_pairings_that_are_WRONG_on_this_page`. The tool now prints how many markers its filter left under-determined, so a reader is told which answers the tie-break invented — AND UNTIL THIS SENTENCE WAS AUDITED IT DID NOT: line-markers.mjs had a zero-byte diff in the commit that first wrote this claim. The print exists now, and [FIG-03]..[FIG-09c] derive its figures from the same function rather than from a second copy of the filter. It is an authoring instrument, exports nothing, and no gate step reads it.' },
 
   { id: 'N-06', file: 'verify-headings.mjs', anchor: 'const items = (printed[h.page - 1]?.items || []).filter(t => t.str === h.text)', order: 'filter-then-rank',
     property: 'the printed run IS the declared heading text, verbatim',
@@ -595,31 +605,31 @@ const fileMatches = (spec, file) => (spec instanceof RegExp ? spec.test(file) : 
 // centre order. A check that re-derives a claim from its own copy of the logic tests the
 // copy. That is class (c), committed by the file that enumerates class (c).
 export const FIGURES = [
-  { id: 'F-01', register: 'N-02', what: '433-A widget labels that moved when the truncation order was fixed', stated: 26,
+  { id: 'FIG-01', register: 'N-02', what: '433-A widget labels that moved when the truncation order was fixed', stated: 26,
     measured_by: 'MUTATION, and it cannot be re-derived from the tree: revert `isFormatHint` out of `isDescriptive` in correlate-labels.mjs, run `node adapters/pdf/correlate-labels.mjs 433a`, and diff widget `label` against the pre-sweep file at 8c9f38e. Both inputs — a source mutation and a git revision — are outside anything a sweep over the working tree can reach. Declared underivable with the procedure named, in the same shape as the NEG-* floor fixtures.' },
 
-  { id: 'F-02', register: 'N-02', what: '433-A widget markers that moved', stated: 4,
-    measured_by: 'The same mutation procedure as [F-01], reading `marker` instead of `label`.' },
+  { id: 'FIG-02', register: 'N-02', what: '433-A widget markers that moved', stated: 4,
+    measured_by: 'The same mutation procedure as [FIG-01], reading `marker` instead of `label`.' },
 
-  { id: 'F-03', register: 'N-05', what: '433-A(OIC) markers left under-determined by the geometric filter', stated: 42,
+  { id: 'FIG-03', register: 'N-05', what: '433-A(OIC) markers left under-determined by the geometric filter', stated: 42,
     derive: async () => (await underDetermination('433aoi')).under },
 
-  { id: 'F-04', register: 'N-05', what: '433-A markers left under-determined by the geometric filter', stated: 146,
+  { id: 'FIG-04', register: 'N-05', what: '433-A markers left under-determined by the geometric filter', stated: 146,
     derive: async () => (await underDetermination('433a')).under },
 
-  { id: 'F-05', register: 'N-05', what: '433-A(OIC) pairings where the distance tie-break and a leftmost tie-break disagree', stated: 3,
+  { id: 'FIG-05', register: 'N-05', what: '433-A(OIC) pairings where the distance tie-break and a leftmost tie-break disagree', stated: 3,
     derive: async () => (await underDetermination('433aoi')).invented },
 
-  { id: 'F-06', register: 'N-05', what: '433-A pairings where the distance tie-break and a leftmost tie-break disagree', stated: 26,
+  { id: 'FIG-06', register: 'N-05', what: '433-A pairings where the distance tie-break and a leftmost tie-break disagree', stated: 26,
     derive: async () => (await underDetermination('433a')).invented },
 
-  { id: 'F-07', register: 'N-05', what: '433-A markers whose pairing is a PDFCheckBox', stated: 16,
+  { id: 'FIG-07', register: 'N-05', what: '433-A markers whose pairing is a PDFCheckBox', stated: 16,
     derive: async () => (await underDetermination('433a')).checkbox },
 
-  { id: 'F-08', register: 'N-05', what: '433-A(OIC) markers whose pairing is a PDFCheckBox — why a widget-TYPE filter is vacuous on this form', stated: 0,
+  { id: 'FIG-08', register: 'N-05', what: '433-A(OIC) markers whose pairing is a PDFCheckBox — why a widget-TYPE filter is vacuous on this form', stated: 0,
     derive: async () => (await underDetermination('433aoi')).checkbox },
 
-  // [F-09] IS WHY THIS REGISTER EARNS ITS KEEP, AND THE RECOVERY IS WHY A REPORT PRINTS ITS
+  // [FIG-09] IS WHY THIS REGISTER EARNS ITS KEEP, AND THE RECOVERY IS WHY A REPORT PRINTS ITS
   // EVIDENCE. The disposition said "THE 23 PAGE-6 MARKERS", and 23 is not a figure this page
   // produces under any reading: page 6 draws 25 markers, of which 22 are numbered line markers
   // and 3 are box markers (D, E, F); all 22 numbered markers pair to a money cell whose
@@ -636,7 +646,7 @@ export const FIGURES = [
   // thirteen, twenty-two numbered markers, plus Box D, Box E and Box F, which pair with
   // nothing — twenty-five drawn, twenty-two numbered. That agrees exactly with the independent
   // finding recorded in the same report, "22 numbered lines (all pair) and Boxes D, E, F (none
-  // pair)". So F-09 is 22, RECOVERED FROM THE ENUMERATION PRINTED BESIDE THE COUNT IN THE
+  // pair)". So FIG-09 is 22, RECOVERED FROM THE ENUMERATION PRINTED BESIDE THE COUNT IN THE
   // SLICE-6 REPORT, and not merely replaced by a figure that happens to derive.
   //
   // That is the whole argument for printing evidence next to conclusions, one level out from
@@ -650,7 +660,7 @@ export const FIGURES = [
   // on this page — checked, not assumed: every one of the 22 sits strictly inside its cell's
   // rect[1]..rect[3]. If a future revision moves a marker into the 2pt skirt, this derivation
   // falls to 21 and the register fails, which is the point.
-  { id: 'F-09', register: 'N-05', what: '433-A(OIC) page-6 numbered markers, each paired to a money cell whose rectangle contains the y of that marker', stated: 22,
+  { id: 'FIG-09', register: 'N-05', what: '433-A(OIC) page-6 numbered markers, each paired to a money cell whose rectangle contains the y of that marker', stated: 22,
     _recovered_from: 'The enumeration printed beside the count in the slice-6 report: (30)..(38) = 9, (39)..(51) = 13, 22 numbered; Boxes D, E and F pair with nothing; 25 drawn.',
     derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => {
       if (m.page !== 6 || m.kind !== 'line') return false;
@@ -660,21 +670,21 @@ export const FIGURES = [
       return !!w && w.rect && m.y >= w.rect[1] && m.y <= w.rect[3];
     }).length; } },
 
-  { id: 'F-09b', register: 'N-05', what: '433-A(OIC) page-6 markers drawn in total', stated: 25,
+  { id: 'FIG-09b', register: 'N-05', what: '433-A(OIC) page-6 markers drawn in total', stated: 25,
     derive: async () => { const { rows } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6).length; } },
 
-  { id: 'F-09c', register: 'N-05', what: '433-A(OIC) page-6 box markers, none of which pairs to a widget', stated: 3,
+  { id: 'FIG-09c', register: 'N-05', what: '433-A(OIC) page-6 box markers, none of which pairs to a widget', stated: 3,
     derive: async () => { const { rows, attach } = await markerPairing('433aoi'); return rows.filter(m => m.page === 6 && m.kind === 'box' && !attach(m).winner).length; } },
 
-  { id: 'F-10', register: 'P-03', what: 'entries the totals copy of _not_checkable had grown to', stated: 19,
+  { id: 'FIG-10', register: 'P-03', what: 'entries the totals copy of _not_checkable had grown to', stated: 19,
     _was: 'Stated 18 through slice 6. Slice 7 added ONE: s8_box_g_or_box_h, whose value the page cannot decide between Box G and Box H. It briefly added a second, s8_offer_amount, and gate step 11 refused it — a cell cannot be both checked by a tripwire and declared not checkable, and that cell IS checked. Its printed constraint "your offer must be more than zero" moved to a review_page_advisory on the TOTAL, which is a channel this slice had to open. The figure moves with the list because it derives from the list.',
     derive: async () => { const t = JSON.parse(readFileSync(`${DIR}/maps/433aoi.totals.json`, 'utf8')); return (t.not_checkable?.entries || []).length; } },
 
-  { id: 'F-11', register: 'P-03', what: 'entries the map copy sat at before the merge', stated: 15,
+  { id: 'FIG-11', register: 'P-03', what: 'entries the map copy sat at before the merge', stated: 15,
     measured_by: 'Read at 8c9f38e, the commit before the merge. The map copy holds no entries[] today — that is what "merged" means — so the pre-merge length is a fact about a git revision, not about the tree. Re-derived on audit as 15, with 15 shared keys and 3 held only by the totals copy.' },
 
-  { id: 'F-12', register: 'P-03', what: 'fields that differed across the 15 shared entries', stated: 17,
-    measured_by: 'The same pre-merge revision as [F-11], comparing every field of every shared entry. Re-derived on audit as 17.' },
+  { id: 'FIG-12', register: 'P-03', what: 'fields that differed across the 15 shared entries', stated: 17,
+    measured_by: 'The same pre-merge revision as [FIG-11], comparing every field of every shared entry. Re-derived on audit as 17.' },
 ];
 
 /** Run the figure register. Async: the marker figures are read out of the PDFs themselves. */

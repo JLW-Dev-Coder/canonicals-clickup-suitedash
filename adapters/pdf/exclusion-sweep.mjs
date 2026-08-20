@@ -59,7 +59,7 @@
 // Exclusion positions: `if (…) continue`, `if (…) return`, a filter or some/every over a
 // negated predicate, a filter over a bare predicate.
 //
-// "DEFINED IN ONE OF THE SWEPT FILES" IS ITSELF AN EXCLUSION, so it is registered as [X-90]
+// "DEFINED IN ONE OF THE SWEPT FILES" IS ITSELF AN EXCLUSION, so it is registered as [EX-90]
 // and cross-checked. It removes `has`, `isArray`, `startsWith`, `test`, `includes` and the
 // rest of the built-in vocabulary — 149 of the 187 raw hits — on the ground that they are the
 // ordinary grammar of a condition and not predicates anyone authored to excuse anything. The
@@ -91,7 +91,7 @@ export const POSITIONS = [
   ['filter-pred',   /\.filter\(\s*(?:\(?\s*\w+\s*\)?\s*=>\s*)?([A-Za-z_$][\w$]*)\s*\(/],
 ];
 
-/** Every predicate the engine defines. The universe [X-90] narrows the raw hits down to. */
+/** Every predicate the engine defines. The universe [EX-90] narrows the raw hits down to. */
 export const enginePredicates = () => {
   const out = new Set();
   for (const f of sweptFiles()) for (const ln of readFileSync(f, 'utf8').split('\n')) {
@@ -100,7 +100,7 @@ export const enginePredicates = () => {
   return out;
 };
 
-/** Every exclusion site, with the predicate governing it. `raw` counts hits before [X-90]. */
+/** Every exclusion site, with the predicate governing it. `raw` counts hits before [EX-90]. */
 export const exclusionSites = () => {
   const defined = enginePredicates();
   const rows = [];
@@ -130,7 +130,7 @@ export const exclusionSites = () => {
 export const PREDICATES = [
 
   // ─── the archetype ────────────────────────────────────────────────────────────────────
-  { id: 'X-01', pred: 'claimsNothing', kind: 'claiming',
+  { id: 'EX-01', pred: 'claimsNothing', kind: 'claiming',
     what: 'Removes a printed_tables entry from [A3]\'s routing assertion when its text opens with "none" or contains "not currently mapped".',
     count: () => excusedClaims().length,
     // THE CROSS-CHECK THE DEFECT WOULD HAVE FAILED. "not currently mapped" is a statement about
@@ -144,13 +144,13 @@ export const PREDICATES = [
       for (const e of excusedClaims()) {
         const routed = (acc.get(e.class_id) || []).filter((a) => a.form === e.form);
         if (!routed.length) continue;
-        out.push(`[X-01] CONTRADICTED — ${e.class_id} on ${e.form} is excused from the routing assertion by the text ${JSON.stringify(e.text.slice(0, 80))}, and ${e.form} DOES route that class, at ${routed.map((a) => `groups.${a.group}`).join(', ')}. The excusal describes a state the map left behind. Correct the sentence in ${SPEC}; do not widen the predicate.`);
+        out.push(`[EX-01] CONTRADICTED — ${e.class_id} on ${e.form} is excused from the routing assertion by the text ${JSON.stringify(e.text.slice(0, 80))}, and ${e.form} DOES route that class, at ${routed.map((a) => `groups.${a.group}`).join(', ')}. The excusal describes a state the map left behind. Correct the sentence in ${SPEC}; do not widen the predicate.`);
       }
       return out;
     } },
 
   // ─── the two column-level excusals in the same file, never before compared to anything ──
-  { id: 'X-02', pred: '(declared) printed_but_unmapped_on', kind: 'claiming', declaredIn: SPEC,
+  { id: 'EX-02', pred: '(declared) printed_but_unmapped_on', kind: 'claiming', declaredIn: SPEC,
     what: 'Removes a canonical column from [A2]\'s reachability assertion on a named form, on the claim that the form PRINTS the column and the map does not bind it.',
     count: () => {
       const { spec } = load();
@@ -169,7 +169,7 @@ export const PREDICATES = [
             const alias = col.printed_as?.[form];
             const key = alias ?? col.key;
             if (a.cols.has(key))
-              out.push(`[X-02] CONTRADICTED — ${c.class_id}.${col.key} is excused from [A2] on ${form} as "printed but unmapped", and ${form}.${a.group} DECLARES the column "${key}". It is mapped. The excusal is stale; drop it and let [A2] check the column.`);
+              out.push(`[EX-02] CONTRADICTED — ${c.class_id}.${col.key} is excused from [A2] on ${form} as "printed but unmapped", and ${form}.${a.group} DECLARES the column "${key}". It is mapped. The excusal is stale; drop it and let [A2] check the column.`);
           }
         }
       }
@@ -190,7 +190,7 @@ export const PREDICATES = [
   // cleanly in two — with neither definition covering both halves. Carried as [C-23]; see
   // adapters/pdf/maps/_carried.cross-form.json. NOT resolved here: the key is shared vocabulary
   // across three finished forms and 433-B(OIC) inherits it.
-  { id: 'X-03', pred: '(declared) row_flag', kind: 'claiming', declaredIn: SPEC,
+  { id: 'EX-03', pred: '(declared) row_flag', kind: 'claiming', declaredIn: SPEC,
     what: 'Removes a canonical column from [A2]\'s reachability assertion. What it CLAIMS depends on which of the two definitions is read — see the split reported below.',
     count: () => {
       const { spec } = load();
@@ -225,7 +225,7 @@ export const PREDICATES = [
           const slot0 = maps[a.form]?.groups?.[a.group]?.slots?.[0] || {};
           const asCheckbox = !!(slot0.checkboxes || {})[key];
           if (!asCheckbox)
-            out.push(`[X-03] CONTRADICTED — ${c.class_id}.${col.key} is excused from [A2] by row_flag, and ${a.form}.${a.group} declares "${key}" as a TEXT column. Neither definition of row_flag admits that: it is not a checkbox and it is not unprinted. Bind it or drop the flag.`);
+            out.push(`[EX-03] CONTRADICTED — ${c.class_id}.${col.key} is excused from [A2] by row_flag, and ${a.form}.${a.group} declares "${key}" as a TEXT column. Neither definition of row_flag admits that: it is not a checkbox and it is not unprinted. Bind it or drop the flag.`);
         }
       }
       return out;
@@ -247,13 +247,13 @@ export const PREDICATES = [
     } },
 
   // ─── the excusal that was already cross-checked, named so the count is visible ─────────
-  { id: 'X-04', pred: '(declared) unrouted', kind: 'scoped', declaredIn: SPEC,
+  { id: 'EX-04', pred: '(declared) unrouted', kind: 'scoped', declaredIn: SPEC,
     what: 'Removes a class/form pair from [A3]\'s STOP, on a declared and reasoned routing gap.',
     assertedBy: 'assert-row-shape-spec.mjs [A3] STALE UNROUTED — a declaration for a pair that IS routed is a STOP — and A3 ORPHAN UNROUTED, for a declaration about a form the class claims no routable table on. Both directions are covered, which is why this one is `scoped` and not `claiming`.',
     count: () => { const { spec } = load(); return (spec.classes || []).reduce((n, c) => n + Object.keys(c.unrouted || {}).length, 0); } },
 
   // ─── an artefact key with no consumer at all ──────────────────────────────────────────
-  { id: 'X-05', pred: '(declared) not_a_row_column', kind: 'inert', declaredIn: SPEC,
+  { id: 'EX-05', pred: '(declared) not_a_row_column', kind: 'inert', declaredIn: SPEC,
     what: 'Names a fact the printed table carries as a TABLE-LEVEL SCALAR rather than a row column — a balance-as-of date in a column header, a single account-holder cell serving three rows.',
     inert_because: 'NOTHING IN THIS REPO READS IT. Grepped across both swept directories on 2026-08-20: no consumer. It excuses nothing today because no assertion consults it, so it has no scope to narrow and nothing to contradict. It is registered anyway, and its inertness is asserted below, because the day something DOES read it, it becomes a `claiming` exclusion — a sentence about what the page prints, deciding what a check may skip — and it must not acquire that power without acquiring a cross-check in the same commit.',
     count: () => { const { spec } = load(); return (spec.classes || []).reduce((n, c) => n + (c.not_a_row_column || []).length, 0); },
@@ -262,7 +262,7 @@ export const PREDICATES = [
       for (const f of sweptFiles()) {
         // THIS FILE IS NOT A CONSUMER OF THE KEY; IT IS THE REGISTER THAT NAMES IT. Counting
         // its own `count()` — which reads `c.not_a_row_column` to size the declaration — as
-        // evidence that something now excludes on the key made [X-05] report itself on its
+        // evidence that something now excludes on the key made [EX-05] report itself on its
         // first run. The self-exclusion is stated rather than silent, and it is narrow: one
         // named file, not a pattern.
         if (f === 'adapters/pdf/exclusion-sweep.mjs') continue;
@@ -272,12 +272,12 @@ export const PREDICATES = [
         });
       }
       return hits.length
-        ? [`[X-05] NO LONGER INERT — not_a_row_column is now read as code at ${hits.join(', ')}. It has become an exclusion that decides what a check may skip. Reclassify it as \`claiming\` and give it a cross-check in the same commit that wired it up.`]
+        ? [`[EX-05] NO LONGER INERT — not_a_row_column is now read as code at ${hits.join(', ')}. It has become an exclusion that decides what a check may skip. Reclassify it as \`claiming\` and give it a cross-check in the same commit that wired it up.`]
         : [];
     } },
 
   // ─── the source predicates ────────────────────────────────────────────────────────────
-  { id: 'X-10', pred: 'isProse', kind: 'structural',
+  { id: 'EX-10', pred: 'isProse', kind: 'structural',
     what: 'Excuses a comment line from the source scanners in guard-sweep.mjs, success-sweep.mjs and gen-fields-from-map.mjs.',
     structural_because: 'A shape inside a comment is PROSE ABOUT the defect, not an instance of it — guard-sweep\'s own header contains a dozen written-out vacuous guards. It separates code from commentary and makes no claim about the world. Its failure mode is also the safe one: a comment misread as code adds a site that must then be disposed, which is noise, never silence.' },
 
@@ -285,7 +285,7 @@ export const PREDICATES = [
   // test. It excuses more sites than anything else in this register, so it is registered as an
   // exclusion; `viaConst` tells the orphan rule to prove it by its DEFINITION rather than by
   // looking for a call in an exclusion position, which is a shape it does not have.
-  { id: 'X-11', pred: 'EXCLUDED_STREAM', kind: 'claiming', viaConst: 'adapters/pdf/success-sweep.mjs',
+  { id: 'EX-11', pred: 'EXCLUDED_STREAM', kind: 'claiming', viaConst: 'adapters/pdf/success-sweep.mjs',
     what: 'Removes every `console.error` line from success-sweep.mjs\'s site set, on the claim that stderr in this engine carries failures and never verdicts of success.',
     count: () => {
       let n = 0;
@@ -308,24 +308,24 @@ export const PREDICATES = [
           if (!/console\.error\s*\(/.test(ln.replace(STRLIT, '""'))) return;
           for (const lit of ln.match(STRLIT) || []) {
             if (VERDICT_OPENER.test(lit.slice(1, -1)))
-              out.push(`[X-11] CONTRADICTED — ${f}:${i + 1} writes a SUCCESS VERDICT to stderr: ${lit.slice(0, 90)}. success-sweep.mjs does not read that stream, so this message is outside its assertion entirely. Move it to console.log, or widen the sweep and dispose of every stderr site.`);
+              out.push(`[EX-11] CONTRADICTED — ${f}:${i + 1} writes a SUCCESS VERDICT to stderr: ${lit.slice(0, 90)}. success-sweep.mjs does not read that stream, so this message is outside its assertion entirely. Move it to console.log, or widen the sweep and dispose of every stderr site.`);
           }
         });
       }
       return out;
     } },
 
-  { id: 'X-12', pred: 'absent', kind: 'scoped',
+  { id: 'EX-12', pred: 'absent', kind: 'scoped',
     what: 'Excuses an undefined, null or whitespace-only value from being written to a PDF cell, in fill-433a.mjs and fill-433aoi.mjs.',
     assertedBy: 'check-row-shape.mjs counts every absent and blank cell per group and the gate prints the figures; adapters/pdf/verify-form-coverage.mjs then asserts the WHOLE-FORM partition closes — form_fields_total = in_this_slice + excluded_never_autofill + deferred + unaccounted, each side derived from widget geometry by count-sweep [S-01]. A cell this predicate skips is still counted as a cell, so the exclusion cannot shrink the denominator.' },
 
-  { id: 'X-13', pred: 'blank', kind: 'scoped',
+  { id: 'EX-13', pred: 'blank', kind: 'scoped',
     what: 'The same absence test in render-review.mjs, deciding which bound cells the review page reports as "both empty".',
     assertedBy: 'The review page prints the four-way tally — match / MISMATCH / both empty / pdf-only — and every bound cell lands in exactly one bucket. Nothing is removed from the denominator, so a widened `blank` moves cells between reported buckets rather than out of the report.' },
 
-  { id: 'X-14', pred: 'isDescriptive', kind: 'claiming',
+  { id: 'EX-14', pred: 'isDescriptive', kind: 'claiming',
     what: 'Excuses a drawn text run from becoming a widget LABEL in correlate-labels.mjs, on the claim that a bare line marker "(13a)" or a format hint "mm/dd/yyyy" is not a description of the cell.',
-    assertedBy: 'guard-sweep.mjs [F-01]/[F-02] — 26 labels and 4 markers moved when the truncation order was fixed, and the register records the mutation procedure that measured it.',
+    assertedBy: 'guard-sweep.mjs [FIG-01]/[FIG-02] — 26 labels and 4 markers moved when the truncation order was fixed, and the register records the mutation procedure that measured it.',
     count: () => {
       // Every run this predicate removes from the label pool today, across the mapped forms.
       // Every form that HAS a labels sidecar, read from disk. A parse failure propagates and
@@ -340,10 +340,10 @@ export const PREDICATES = [
     // A widget left with a marker and NO label is a cell whose every nearby run this predicate
     // rejected. That is a legitimate outcome — some cells are drawn with nothing but a number
     // beside them — so it is reported and counted rather than failed. What is NOT legitimate is
-    // the count moving without anyone noticing, which is what [F-01] was written for.
+    // the count moving without anyone noticing, which is what [FIG-01] was written for.
     crosscheck: () => [] },
 
-  { id: 'X-15', pred: 'isNarrative', kind: 'claiming',
+  { id: 'EX-15', pred: 'isNarrative', kind: 'claiming',
     what: 'Excuses a success-message site from success-sweep.mjs\'s control-flow witnesses, on the claim that the message states what was FOUND rather than that nothing was.',
     count: () => 0,   // replaced below by the live figure; see runExclusionSweep
     crosscheck: async () => {
@@ -356,57 +356,53 @@ export const PREDICATES = [
       // interpolates a value or is a markdown row, and none is a bare success sentence.
       for (const r of s.rows.filter((x) => x.verdict === 'narrative')) {
         if (!/\$\{|\|/.test(r.text) && !/\bNOT\b|\bnot |\bcannot\b|\bNothing to\b|\bRefusing\b/.test(r.text))
-          out.push(`[X-15] CONTRADICTED — ${r.at} is excused as narrative and is a bare sentence: ${r.text.slice(0, 90)}. It interpolates nothing, is no table row, and negates nothing, so it makes a claim about the whole run.`);
+          out.push(`[EX-15] CONTRADICTED — ${r.at} is excused as narrative and is a bare sentence: ${r.text.slice(0, 90)}. It interpolates nothing, is no table row, and negates nothing, so it makes a claim about the whole run.`);
       }
       return out;
     } },
 
-  { id: 'X-26', pred: 'hit', kind: 'structural',
+  { id: 'EX-26', pred: 'hit', kind: 'structural',
     what: 'Tests, in blanket-audit [K-12], whether a coordinate quoted in the map or headings file is a value the page actually draws.',
     structural_because: 'IT IS THE CHECK, NOT AN EXCUSAL FROM ONE. It partitions the quoted coordinates into covered and uncovered and BOTH halves are reported: the covered count becomes the numerator of the counter, and every uncovered coordinate is listed by name in the coverage-gap message. Nothing leaves the assertion by failing it. Registered because the sweep found it on its first run over new code, which is the outcome the completeness rule is for.' },
 
-  { id: 'X-16', pred: 'isChecked', kind: 'structural',
-    what: 'Separates checkbox widgets in the ON state from those in the OFF state in verify-appearances.mjs.',
-    structural_because: 'A state test on a widget, not an excusal. Both branches are verified — an ON box must draw its ON appearance and an OFF box must draw nothing — so neither state leaves the assertion. The report prints checkedText and checkedBoxes separately and the two sum to the checked total.' },
-
-  { id: 'X-17', pred: 'under', kind: 'structural',
+  { id: 'EX-17', pred: 'under', kind: 'structural',
     what: 'Tests whether a field path lies under a declared root in verify-form-coverage.mjs — `path === root`, or the root followed by `.` or `[`.',
     structural_because: 'A path-prefix relation, not a claim about the form. It ROUTES fields into partition categories rather than removing them from the partition; the accounting then has to close against the form\'s own field count, so a field this misroutes shows up as an unaccounted field, not as an absent one.' },
 
-  { id: 'X-18', pred: 'inMoneyBand', kind: 'scoped',
+  { id: 'EX-18', pred: 'inMoneyBand', kind: 'scoped',
     what: 'Decides in gen-fields-from-map.mjs whether a derived HubSpot property takes the money type.',
     assertedBy: 'adapters/hubspot/hs-verify-provision.mjs reads every property back FROM THE PORTAL and compares type, fieldType, options and group against the definition file, exiting 3 on any mismatch. A misclassified band is caught against the live portal, not against the file that made the classification.' },
 
-  { id: 'X-19', pred: 'fileMatches', kind: 'structural',
+  { id: 'EX-19', pred: 'fileMatches', kind: 'structural',
     what: 'Matches a guard-sweep register entry\'s `file` spec — a string or a RegExp — against a filename.',
     structural_because: 'A dispatch test binding a disposition to its file. A non-match does not excuse a site: it leaves the site UNDISPOSED, which guard-sweep reports as a STOP. Failing to match moves a site towards the problem state.' },
 
-  { id: 'X-20', pred: 'covers', kind: 'structural',
+  { id: 'EX-20', pred: 'covers', kind: 'structural',
     what: 'Blanket-audit\'s test for whether a demanded atom is present in a published scope.',
     structural_because: 'The forward-reference prover. A `covers` that returns false does not skip the reference; it reports it UNPROVED. Fails closed.' },
 
-  { id: 'X-21', pred: 'drawnOn', kind: 'structural',
+  { id: 'EX-21', pred: 'drawnOn', kind: 'structural',
     what: 'Blanket-audit\'s page test for a geometry claim.',
     structural_because: 'Selects which page a claimed coordinate is checked against. A wrong answer produces a failed geometry claim, not a skipped one.' },
 
-  { id: 'X-22', pred: 'norm', kind: 'structural',
+  { id: 'EX-22', pred: 'norm', kind: 'structural',
     what: 'Normalises a claim string before comparison in blanket-audit.mjs.',
     structural_because: 'A comparison normaliser — case and whitespace. It changes what counts as equal, not what counts as present, and both sides of every comparison go through it.' },
 
-  { id: 'X-23', pred: 'ok', kind: 'structural',
+  { id: 'EX-23', pred: 'ok', kind: 'structural',
     what: 'Blanket-audit\'s per-claim verdict accessor, used to select the FAILING claims for the report.',
     structural_because: 'Selects failures for printing out of a set every member of which has already been judged. It excuses nothing from judgement; it decides what gets printed after.' },
 
-  { id: 'X-24', pred: 'body', kind: 'structural',
+  { id: 'EX-24', pred: 'body', kind: 'structural',
     what: 'Strips the quote characters off a string literal in success-sweep.mjs before testing its text.',
     structural_because: 'A string accessor, not a predicate. `\'OK — …\'` and `OK — …` must compare the same way whichever quote style the source used.' },
 
-  { id: 'X-25', pred: 'DETECTOR_SIG', kind: 'structural',
+  { id: 'EX-25', pred: 'DETECTOR_SIG', kind: 'structural',
     what: 'Blanket-audit\'s completeness-detector signature test.',
     structural_because: 'Recognises the shape of a completeness claim. A signature that stops matching detects fewer claims — which is the [A3] shape — and that is precisely why the detector carries CANARY, a fixed synthetic string expecting one assert claim and one geometry claim, whose failure declares every "0 detected" in the same run meaningless.' },
 
   // ─── the exclusion inside the completeness check ──────────────────────────────────────
-  { id: 'X-90', pred: '(meta) engine-defined only', kind: 'claiming',
+  { id: 'EX-90', pred: '(meta) engine-defined only', kind: 'claiming',
     what: 'Removes from THIS FILE\'S completeness check every predicate call in an exclusion position whose name is not defined in a swept file — `has`, `isArray`, `startsWith`, `test`, `includes`, `trim`, `map`, `some`.',
     count: () => { const s = exclusionSites(); return s.raw - s.rows.length; },
     // A SWEEP THAT NARROWS ITS OWN INPUT IS THE DEFECT THIS FILE IS ABOUT, so the narrowing is
@@ -419,7 +415,7 @@ export const PREDICATES = [
       const { rows } = exclusionSites();
       const registered = new Set(PREDICATES.map((p) => p.pred));
       for (const r of rows) if (defined.has(r.pred) && !registered.has(r.pred))
-        out.push(`[X-90] ${r.pred} at ${r.at} is defined in a swept file and excuses a site, and no register entry names it.`);
+        out.push(`[EX-90] ${r.pred} at ${r.at} is defined in a swept file and excuses a site, and no register entry names it.`);
       return out;
     } },
 ];
@@ -451,18 +447,42 @@ const sidecar = (form, kind) => {
 const mapDoc = (f) => sidecar(f, 'map');
 const totalsDoc = (f) => sidecar(f, 'totals');
 
+// ---------------------------------------------------------------------------------------
+// THE REGISTER — RETIRED SOURCE PREDICATES.
+// ---------------------------------------------------------------------------------------
+// AN ENTRY LEAVES PREDICATES ONLY WHEN ITS PREDICATE LEAVES THE ENGINE-DEFINED UNIVERSE, and
+// it leaves with its old text attached. Deleting the entry would delete the reasoning, and
+// the reasoning is the part that says what the sweep once believed and why that turned out
+// to rest on something that was not true.
+//
+// A retired entry is NOT orphan-checked — that is the point of retiring it — so it is checked
+// the other way instead: runExclusionSweep STOPS if a retired predicate is excusing a site
+// again. Retirement can shrink the register; it cannot shrink what the register covers.
+export const RETIRED = [
+  { id: 'EX-16', pred: 'isChecked', retired_in: 'Prompt 40, commit 1',
+    kept_verbatim: [
+      "{ id: 'EX-16', pred: 'isChecked', kind: 'structural',",
+      "what: 'Separates checkbox widgets in the ON state from those in the OFF state in verify-appearances.mjs.',",
+      "structural_because: 'A state test on a widget, not an excusal. Both branches are verified — an ON box must draw its ON appearance and an OFF box must draw nothing — so neither state leaves the assertion. The report prints checkedText and checkedBoxes separately and the two sum to the checked total.' },",
+    ],
+    what_it_got_right: "The SITE is real and the description of it is accurate. adapters/pdf/verify-appearances.mjs:224 reads \"if (!field.isChecked()) continue;\", it does separate ON-state checkbox widgets from OFF-state ones, and both branches are verified exactly as the entry says.",
+    what_it_got_wrong: "That isChecked was an ENGINE-DEFINED predicate. It is PDFCheckBox.prototype.isChecked, a pdf-lib method, and pdf-lib is not a swept file. The name entered enginePredicates() only because adapters/pdf/run-form-gate.mjs happened to declare a LOCAL \"const isChecked = (target) => …\" inside gate step 11 — an unrelated helper, in a different file, that read a checkbox off the filled form. [EX-90] narrows sites to engine-defined predicates precisely so that library methods stay out; this entry was paying for a site [EX-90] should always have removed, and it looked sound for exactly as long as the name collision held.",
+    how_it_surfaced: "Hoisting that helper out of step 11 for [B9] moved it from \"const isChecked = (target) =>\" to an object property \"isChecked: (target) =>\", which the DEF regex does not match. The name left the universe, the site stopped being reported, and the orphan check named this entry on the next run. Nothing about the site changed; what changed is that the accident stopped holding it up.",
+    why_it_is_the_id_collision_one_level_out: "A register entry whose disposition was load-bearing on a NAME being the same in two unrelated places. That is the [D-07] subject exactly, with a predicate name in place of an id — and it is the argument for asserting uniqueness rather than trusting that a lookup happens not to use the colliding key." },
+];
+
 export const DECLARED = [
-  { id: 'X-30', key: '_partition.excluded_never_autofill', kind: 'scoped',
+  { id: 'EX-30', key: '_partition.excluded_never_autofill', kind: 'scoped',
     what: 'Removes a form field from the set that must be bound — a signature block, a preparer-use box, a field the engine will never fill.',
     assertedBy: 'count-sweep.mjs [S-01], which derives the figure from widget geometry via classifyMapTargets and compares it against the declaration; and verify-form-coverage.mjs, which requires the six partition categories to sum to the form\'s own field count.',
     count: () => MAPPED_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.excluded_never_autofill ?? 0), 0) },
 
-  { id: 'X-31', key: '_partition.deferred', kind: 'scoped',
+  { id: 'EX-31', key: '_partition.deferred', kind: 'scoped',
     what: 'Removes a form field from the current slice\'s binding obligation, deferring it to a later one.',
     assertedBy: 'The same [S-01] derivation and the same closing partition. A deferred field is still counted in form_fields_total, so deferring cannot shrink the denominator.',
     count: () => MAPPED_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.deferred ?? 0), 0) },
 
-  { id: 'X-32', key: 'not_checkable.entries', kind: 'scoped',
+  { id: 'EX-32', key: 'not_checkable.entries', kind: 'scoped',
     what: 'Removes a printed total-shaped cell from the tripwire arithmetic — a total whose printed constraint arithmetic cannot express.',
     assertedBy: 'run-form-gate.mjs step 11, which is a STOP when a cell is BOTH checked by a tripwire and declared not checkable; blanket-audit.mjs\'s completeness counter over `not_checkable.entries[]`, which requires every entry to carry `why_not_checkable`; and the gate summary, which prints tripwires_declared_not_checkable on every run.',
     count: () => MAPPED_FORMS().reduce((n, f) => n + ((totalsDoc(f)?.not_checkable?.entries || []).length), 0) },
@@ -472,7 +492,7 @@ export const DECLARED = [
 // THE CANARY.
 //
 // A synthetic spec and map, held in memory, in which one class claims a 433-F table as "not
-// currently mapped" AND a synthetic map routes it. [X-01]'s cross-check must contradict it.
+// currently mapped" AND a synthetic map routes it. [EX-01]'s cross-check must contradict it.
 // This is the [A3] defect in miniature, run on every invocation, so a cross-check that stops
 // comparing fails loudly rather than reporting nothing to contradict.
 // ---------------------------------------------------------------------------------------
@@ -557,6 +577,17 @@ export const runExclusionSweep = async () => {
     const at = sites.rows.filter((r) => r.pred === p).map((r) => r.at);
     problems.push(`UNREGISTERED  ${p}  (${at.length} site(s): ${at.slice(0, 4).join(', ')}${at.length > 4 ? ', …' : ''})\n      excuses a site from a check and appears in no entry of PREDICATES.\n      Register it as structural, scoped or claiming — and if claiming, give it a crosscheck().\n      There is no fourth state.`);
   }
+  // RETIRED ENTRIES, AND THE GUARD RUNS THE OTHER WAY. An entry leaves PREDICATES because
+  // its predicate left the engine-defined universe; if the name comes BACK into that
+  // universe and excuses a site again, the retirement is silently excusing it. So a retired
+  // predicate that reappears as a live site is a STOP. Without this, "retire the entry"
+  // would be a way to make the orphan check go quiet, which is the same move as deleting a
+  // failing assertion.
+  for (const e of RETIRED) {
+    if (sites.predicates.includes(e.pred))
+      problems.push(`RESURRECTED  [${e.id}]  ${e.pred}\n      is RETIRED from PREDICATES and is excusing a site again: ${sites.rows.filter((r) => r.pred === e.pred).map((r) => r.at).join(', ')}.\n      Either the retirement reasoning is wrong or the predicate came back. Re-read it and re-register it.`);
+  }
+
   // And an entry whose predicate no longer excuses anything is a disposition over dead code.
   for (const e of PREDICATES) {
     if (e.pred.startsWith('(')) continue;                       // declared/meta entries have no source site
@@ -578,7 +609,7 @@ export const reportExclusionSweep = (s, { verbose = false } = {}) => {
   const tally = s.rows.reduce((a, r) => { a[r.verdict] = (a[r.verdict] || 0) + 1; return a; }, {});
   const excused = s.rows.reduce((a, r) => a + (typeof r.count === 'number' ? r.count : 0), 0);
   console.log(`exclusion sweep: ${s.rows.length} registered exclusion(s) — ${Object.entries(tally).map(([k, v]) => `${v} ${k}`).join(', ')}`);
-  console.log(`                 ${s.sites.rows.length} source site(s) governed by ${s.sites.predicates.length} engine-defined predicate(s), out of ${s.sites.raw} raw exclusion position(s) [X-90 removes ${s.sites.raw - s.sites.rows.length}]`);
+  console.log(`                 ${s.sites.rows.length} source site(s) governed by ${s.sites.predicates.length} engine-defined predicate(s), out of ${s.sites.raw} raw exclusion position(s) [EX-90 removes ${s.sites.raw - s.sites.rows.length}]`);
   console.log(`                 ${excused} site(s) excused in total across every counted exclusion`);
   console.log(`                 canary: ${s.canary.ok ? 'holds' : 'DEAD'} (${s.canary.contradicted}/${s.canary.excused} synthetic excusal(s) contradicted)`);
   for (const r of s.rows) {
