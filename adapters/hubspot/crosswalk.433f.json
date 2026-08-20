@@ -1181,7 +1181,8 @@
         "name_of_digital_asset",
         "email_used_to_set_up",
         "location_of_digital_asset",
-        "amount_and_value_usd"
+        "amount_and_value_usd",
+        "asset_class"
       ]
     },
     {
@@ -1196,7 +1197,8 @@
       "row_shape": [
         "name",
         "address",
-        "amount_due"
+        "amount_due",
+        "asset_class"
       ]
     },
     {
@@ -1211,7 +1213,8 @@
       "row_shape": [
         "credit_card",
         "issuing_bank_name_and_address",
-        "merchant_account_number"
+        "merchant_account_number",
+        "asset_class"
       ]
     }
   ],

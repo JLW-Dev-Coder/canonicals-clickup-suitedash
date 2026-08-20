@@ -460,7 +460,14 @@
       }
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "household_member"
+    ],
+    "_why": "Section 1, printed at page 1 y 537.3 x 49.3..350.8: \"Provide information for all other persons in the household or claimed as a dependent.\" Its printed column captions are \"Name\" (y 520.3), \"Relationship\" (y 520.3), \"Claimed as a dependent\" / \"on your Form 1040\" (y 525.0/515.4) and \"Contributes to\" / \"household income\" (y 525.0/515.4) - the exact five-member row asset-row-shapes.json declares as class household_member. THE COLUMN IS NAMED asset_class AND A HOUSEHOLD MEMBER IS NOT AN ASSET. That misnomer is declared rather than fixed: check-row-shape.mjs reads whatever column the group names, so a second column name here would buy accuracy at the price of a record having to know which of two vocabularies each group wants - which is the vocabulary mismatch check-row-shape.mjs was written about. One column name across every group on every form, and the name is wrong for this one group. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "bank_accounts": {
    "source": "bank_accounts",
@@ -752,7 +759,14 @@
       "amount_and_value_usd": "topmostSubform[0].Page2[0].Table_Line14de[0].Row13b[2].p2_t15_13b[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "digital_asset"
+    ],
+    "_why": "15a-15d, printed \"DIGITAL ASSETS\" at page 3 y 721.2 x 43.2..108.4, instruction on the same line at x 110.6..572.9: \"List all digital assets such as virtual currency (cryptocurrency), non-fungible token (NFT), and smart contracts you own or in which you have a financial interest (e.g., Bitcoin, Ethereum, Litecoin, Ripple, etc.)\". NOT payment_processor, although both printed instructions name virtual currency: 62a/62b PAYMENT PROCESSOR (page 7 y 598.5) says \"Include virtual currency wallet, exchange or digital currency exchange\" and asks for the BUSINESS's processor account - two columns, name and address plus a processor account number - while this table asks what the taxpayer HOLDS, in five columns, inside Section 4 Personal Asset Information. The two are told apart by what the printed columns ask for, not by the word they share. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "available_credit": {
    "source": "available_credit",
@@ -843,7 +857,14 @@
       "outstanding_loan_balance": "topmostSubform[0].Page2[0].Lines16b-f[0].Lines16b-f_Column3[0].p2_t44_16f[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "life_insurance_policy"
+    ],
+    "_why": "17a-17e, printed \"LIFE INSURANCE\" at page 3 y 194.2 x 57.6..123.9, instruction on the same line at x 128.3..400.4: \"Do you own or have any interest in any life insurance policies with cash value\", and below at y 182.8 \"If yes, complete blocks 16b through 16f for each policy.\" NOTE this group is printed TRANSPOSED - three POLICY COLUMNS at one y, not three stacked rows - which verify-headings measures off the page and reports as \"slot[0..2] share a line; x-centres x=259.2 < x=385.2 < x=511.2\". The transposition changes where a row prints, never what class it is. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "property_line_20": {
    "source": "property_line_20",
@@ -879,7 +900,14 @@
       "lender_phone": "topmostSubform[0].#subform[4].Lender-phone4[0].p2_t18_13c[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "personal_property"
+    ],
+    "_why": "20a/20b, printed \"PERSONAL ASSETS\" at page 5 y 734.9 x 43.2..120.4, instruction on the same line at x 124.9..544.0: \"Include all furniture, personal effects, artwork, jewelry, collections (coins, guns, etc.), antiques or other assets. Include intangible assets such as licenses, domain names, patents, copyrights, mining claims, etc.\" NOT business_property, and the page draws the split itself: 67a/67b BUSINESS ASSETS at page 8 y 735.9 says \"Include all tools, books, machinery, equipment, inventory or other assets used in trade or business.\" The two are held apart as SEPARATE CLASSES rather than one class with a business flag - which is the shape bank_account uses - because their printed COLUMN SETS differ: BUSINESS ASSETS prints a title-holder column and PERSONAL ASSETS prints none. Two classes is the stronger guard of the two: a business-asset row stored here is a WRONG CLASS and stops the run, where a missing flag on one shared class would only be reported. This is the binding C-22 turned on, and C-22 is resolved, so the evidence settles it here rather than by side effect. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "business_bank_accounts": {
    "source": "business_bank_accounts",
@@ -984,7 +1012,14 @@
      "_join_why": "Comma-space, because the printed caption asks for the party AND its street address in one box and that is how an address is written after a name. The separator is a PRESENTATION choice made here, at the form, and never stored — crosswalk A6 already ruled that deriving two facts back out of one combined string is what a stored separator invites."
     }
    },
-   "_split_note": "The shared row class SPLIT receivable_name_and_address into name + address, the one non-additive change in the fourteen-table union. Free on the day it was made: adapters/hubspot/asset-row-shapes.json records held_data = false on every irs433_ property, so no record needed migrating. The slot targets below did not move and their printed column did not change; what changed is that the row arriving from the backbone now carries two keys where it carried one, and this map joins them."
+   "_split_note": "The shared row class SPLIT receivable_name_and_address into name + address, the one non-additive change in the fourteen-table union. Free on the day it was made: adapters/hubspot/asset-row-shapes.json records held_data = false on every irs433_ property, so no record needed migrating. The slot targets below did not move and their printed column did not change; what changed is that the row arriving from the backbone now carries two keys where it carried one, and this map joins them.",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "receivable"
+    ],
+    "_why": "66a-66e, printed \"ACCOUNTS/NOTES RECEIVABLE\" at page 7 y 278.6 x 43.2..171.8, instructions below at y 268.6: \"(List all contracts separately, including contracts awarded, but not started.)\" and \"Include Federal, state and local government grants and contracts.\" Printed column captions at y 253.5: \"Accounts/Notes Receivable & Address\", \"Status\", \"Date Due\", \"Invoice Number or Government\" - the class receivable, whose canonical row is the one place in the spec where the union was not additive (433-A's single name-and-address cell is composed here from the record's separate name and address, see row_composites below). Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "business_property": {
    "source": "business_property",
@@ -1022,7 +1057,14 @@
       "lender_phone": "topmostSubform[0].Page6[0].Lender-Phone2[0].p2_t18_13c[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "business_property"
+    ],
+    "_why": "67a/67b, printed \"BUSINESS ASSETS\" at page 8 y 735.9 x 43.2..117.2, instruction on the same line at x 123.8..575.2: \"Include all tools, books, machinery, equipment, inventory or other assets used in trade or business. Include a list and show the value of all intangible assets such as licenses, patents, domain names, copyrights, trademarks, mining claims, etc.\" The other half of the personal/business asset split argued at property_line_20 above: this table prints a title-holder column and 20a/20b does not, which is why the two are separate classes and a row of either is stopped in the other. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "payment_processors": {
    "source": "payment_processors",
@@ -1042,7 +1084,14 @@
       "processor_account_number": "topmostSubform[0].Page5[0].AB61[0].b61[0].p5_t11_61b[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "payment_processor"
+    ],
+    "_why": "62a/62b, printed \"PAYMENT PROCESSOR\" at page 7 y 598.5 x 43.2..135.7, instruction on the same line at x 137.9..574.9: \"(e.g., PayPal, Authorize.net, Google Checkout, BitPay, Crypto.com, etc.) Include virtual currency wallet, exchange or digital currency exchange\", gated by the printed question at y 621.3 \"Does the business engage in e-Commerce (Internet sales) ... If yes, complete lines 62a and 62b\". TWO PRINTED INSTRUCTIONS ON THIS FORM NAME PayPal AND THIS IS THE OTHER ONE: 13a-13d PERSONAL BANK ACCOUNTS says \"Include all checking, online and mobile (e.g., PayPal etc.) accounts\". A taxpayer's own PayPal balance is a bank_account row in Section 4; the processor a BUSINESS is paid through is this class, in Section 6, with two columns and no balance. Same brand name, two different questions, and before this declaration nothing but which property the row was stored in decided which table it printed in. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "credit_cards_accepted": {
    "source": "credit_cards_accepted",
@@ -1071,7 +1120,14 @@
       "issuing_bank_name_and_address": "topmostSubform[0].Page5[0].Table62[0].L62C[0].p5_t20_62c[0]"
      }
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "credit_cards_accepted"
+    ],
+    "_why": "63a/63b/63c, printed \"CREDIT CARDS ACCEPTED BY THE BUSINESS\" at page 7 y 505.8 x 43.2..224.1, printed column captions at y 490.7: \"Credit Card\", \"Merchant Account Number\", \"Issuing Bank Name & Address (Street, City, State, ZIP code, and Country)\". NOT credit_line: 16a-16d AVAILABLE CREDIT is credit EXTENDED TO the taxpayer and prints a limit, a balance owed and an available figure; this table is the cards a business ACCEPTS and prints a merchant account number and no money column at all. Both say \"credit card\" and neither printed row would look wrong in the other's table. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   }
  },
  "exclusive": {

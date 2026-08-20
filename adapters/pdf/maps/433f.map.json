@@ -326,7 +326,8 @@
     {
      "type_of_digital_asset": "433f_vc_type",
      "name_of_digital_asset": "433f_vc_wallet",
-     "amount_and_value_usd": "433f_vc_value"
+     "amount_and_value_usd": "433f_vc_value",
+     "_class": "digital_asset"
     }
    ],
    "slots": [
@@ -344,7 +345,14 @@
      "location_of_digital_asset": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t16_13b[0]",
      "amount_and_value_usd": "topmostSubform[0].Page1[0].Table_Line14[0].Row13b[0].p2_t15_13b[0]"
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "digital_asset"
+    ],
+    "_why": "Section A, printed \"DIGITAL ASSETS (CRYPTOCURRENCY)\", two printed rows. FOUND BY DERIVING THE SET RATHER THAN TAKING THE FILED LIST. D-05 was filed against 433-A's eight; this group is the same defect on a second finished form, and the instrument that should have reported it was switched off by a sentence: adapters/hubspot/asset-row-shapes.json declared this printed table \"printed, not currently mapped\", assert-row-shape-spec.mjs [A3] excuses exactly that phrase from the routing assertion via claimsNothing(), and the map has bound the table since it was authored - this group's own _why already says the shared digital_asset row class binds unchanged. A stale claim turned off the check that would have named it. The claim is corrected in the same commit. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "accounts_receivable": {
    "_why": "E1. Accounts Receivable owed to you or your business - two printed rows, columns Name / Address / Amount Owed. The shared `receivable` row class binds here after its one non-additive change: 433-A's single receivable_name_and_address cell splits into `name` + `address`, because this form prints them as two cells and the finer granularity is the one that loses nothing. 433-A's map composes them back into its one printed cell.",
@@ -362,7 +370,14 @@
      "amount_due": "topmostSubform[0].Page2[0].sectionE[0].#subform[0].#subform[3].M_n_mim_Mon_hly_Payment3[1]"
     }
    ],
-   "column_name_note": "The money column's key is `amount_due`, the shared `receivable` class's name for the fact, though this form prints the header 'Amount Owed' and 433-A prints 'Amount Due'. Following the printed caption instead would have given one fact two keys and left the cell blank on every row fetched from the backbone — matching on name and address is enough to clear the fetch layer's shape check, so the blank would have been silent."
+   "column_name_note": "The money column's key is `amount_due`, the shared `receivable` class's name for the fact, though this form prints the header 'Amount Owed' and 433-A prints 'Amount Due'. Following the printed caption instead would have given one fact two keys and left the cell blank on every row fetched from the backbone — matching on name and address is enough to clear the fetch layer's shape check, so the blank would have been silent.",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "receivable"
+    ],
+    "_why": "Section E1, printed \"Accounts Receivable owed to you or your business\", two printed rows, printed columns Name / Address / Amount Owed. Same stale-claim mechanism as digital_assets above: the spec said \"printed, not currently mapped\" over a table the map binds, and [A3] excused it from the routing assertion. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   },
   "credit_cards_accepted": {
    "_why": "E2 - three printed rows, columns Credit Card / Issuing Bank Name and Address / Merchant Account Number. The shared `credit_cards_accepted` row class binds unchanged; only the printed left-to-right order differs from 433-A's line 63, which is the map's job.",
@@ -385,7 +400,14 @@
      "issuing_bank_name_and_address": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].Crad_i_L_m_t3[4]",
      "merchant_account_number": "topmostSubform[0].Page2[0].sectionE[0].#subform[4].#subform[8].M_n_mim_Mon_hly_Payment3[6]"
     }
-   ]
+   ],
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "credit_cards_accepted"
+    ],
+    "_why": "Section E2, three printed rows, printed columns Credit Card / Issuing Bank Name and Address / Merchant Account Number. Same stale-claim mechanism as digital_assets above. NOT credit_line: this form's Section D CREDIT CARDS is the taxpayer's own credit and is already class credit_line on groups.credit_cards, and the two tables print on the same page. Class declared from the PRINTED PAGE, located as drawn text by adapters/pdf/page-geometry.mjs and asserted in place by adapters/pdf/verify-headings.mjs. No AcroForm leaf name was read: on this series the leaf names are what lied (defect D1)."
+   }
   }
  },
  "checkboxes": {

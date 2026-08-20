@@ -1292,7 +1292,7 @@
           "15a-15d DIGITAL ASSETS"
         ],
         "433f": [
-          "A > DIGITAL ASSETS (CRYPTOCURRENCY) - printed, not currently mapped"
+          "A > DIGITAL ASSETS (CRYPTOCURRENCY) - two printed rows, mapped at groups.digital_assets"
         ]
       },
       "verdict": "RECONCILABLE, and the strongest case in the set. Five columns, same order, same AcroForm leaf sequence on both forms.",
@@ -1333,10 +1333,7 @@
       "supersedes": [
         "irs433_digital_assets",
         "the crypto row the 433-F map's accounts fallback currently misroutes - see defect D2"
-      ],
-      "unrouted": {
-        "433a": "433-A prints 15a-15d DIGITAL ASSETS and adapters/pdf/maps/433a.map.json groups.digital_assets binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      ]
     },
     {
       "class_id": "credit_line",
@@ -1482,10 +1479,7 @@
         "irs433_life_insurance_policies",
         "the whole-life rows of irs433f_other_assets"
       ],
-      "_printed_as_why": "433-F PRINTS ONE 'OTHER ASSETS' TABLE FOR FOUR CLASSES, UNDER GENERIC COLUMN HEADS. A whole-life policy reaches Section C through columns named for assets in general - Current Value, Balance Owed, Monthly Payment - so this class's own column keys are not the keys 433f.other_assets declares. The correspondence was already stated per column in prose ('433-F's Section C Current Value receives this'); printed_as is that same sentence in a form assert-row-shape-spec.mjs can check, and a printed_as naming a column the group does not declare is a STOP rather than an exemption.",
-      "unrouted": {
-        "433a": "433-A prints 17a-17e LIFE INSURANCE and adapters/pdf/maps/433a.map.json groups.life_insurance_policies binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      "_printed_as_why": "433-F PRINTS ONE 'OTHER ASSETS' TABLE FOR FOUR CLASSES, UNDER GENERIC COLUMN HEADS. A whole-life policy reaches Section C through columns named for assets in general - Current Value, Balance Owed, Monthly Payment - so this class's own column keys are not the keys 433f.other_assets declares. The correspondence was already stated per column in prose ('433-F's Section C Current Value receives this'); printed_as is that same sentence in a form assert-row-shape-spec.mjs can check, and a printed_as naming a column the group does not declare is a STOP rather than an exemption."
     },
     {
       "class_id": "real_property",
@@ -1820,10 +1814,7 @@
         "irs433_other_personal_property",
         "the residual rows of irs433f_other_assets"
       ],
-      "note": "Not in the brief's list of thirteen. Added because 433-A line 20 is one of the fourteen tables and has to land somewhere, and folding it into vehicles would put a car in the jewellery table.",
-      "unrouted": {
-        "433a": "433-A prints 20a/20b PERSONAL ASSETS and adapters/pdf/maps/433a.map.json groups.property_line_20 binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      "note": "Not in the brief's list of thirteen. Added because 433-A line 20 is one of the fourteen tables and has to land somewhere, and folding it into vehicles would put a car in the jewellery table."
     },
     {
       "class_id": "business_property",
@@ -1916,10 +1907,7 @@
       "supersedes": [
         "irs433_business_property",
         "the business-asset rows of irs433f_other_assets"
-      ],
-      "unrouted": {
-        "433a": "433-A prints 67a/67b BUSINESS ASSETS and adapters/pdf/maps/433a.map.json groups.business_property binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      ]
     },
     {
       "class_id": "receivable",
@@ -1928,7 +1916,7 @@
           "66a-66e ACCOUNTS/NOTES RECEIVABLE"
         ],
         "433f": [
-          "E1. Accounts Receivable owed to you or your business - printed, not currently mapped"
+          "E1. Accounts Receivable owed to you or your business - two printed rows, mapped at groups.accounts_receivable"
         ]
       },
       "verdict": "RECONCILABLE ONLY BY SPLITTING AN EXISTING BACKBONE COLUMN. This is the one class where the union is not purely additive.",
@@ -1974,10 +1962,7 @@
       "cost_note": "Because this REPLACES rather than extends the existing column, any record already written against it would need migrating rather than re-keying. The audit reports held_data = false on every irs433_ property, so today that cost is zero and it will not be later.",
       "supersedes": [
         "irs433_accounts_notes_receivable"
-      ],
-      "unrouted": {
-        "433a": "433-A prints 66a-66e ACCOUNTS/NOTES RECEIVABLE and adapters/pdf/maps/433a.map.json groups.accounts_notes_receivable binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      ]
     },
     {
       "class_id": "credit_cards_accepted",
@@ -1986,7 +1971,7 @@
           "63a/63b/63c CREDIT CARDS ACCEPTED BY THE BUSINESS"
         ],
         "433f": [
-          "E2 - printed, not currently mapped"
+          "E2. Credit cards accepted by the business - three printed rows, mapped at groups.credit_cards_accepted"
         ]
       },
       "verdict": "RECONCILABLE, exactly. The same three columns on both forms; only the printed left-to-right order differs, which is the map's job.",
@@ -2017,10 +2002,7 @@
       "supersedes": [
         "irs433_credit_cards_accepted"
       ],
-      "do_not_confuse_with": "credit_line - see arguable A1-2.",
-      "unrouted": {
-        "433a": "433-A prints 63a/63b/63c CREDIT CARDS ACCEPTED BY THE BUSINESS and adapters/pdf/maps/433a.map.json groups.credit_cards_accepted binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      "do_not_confuse_with": "credit_line - see arguable A1-2."
     },
     {
       "class_id": "payment_processor",
@@ -2051,10 +2033,7 @@
       "arguable": "A1-6 - 433-F's E2 scalar 'Name of individual or business on account' is arguably this fact. Reported, not resolved.",
       "supersedes": [
         "irs433_payment_processors (unchanged; listed for completeness)"
-      ],
-      "unrouted": {
-        "433a": "433-A prints 62a/62b PAYMENT PROCESSOR and adapters/pdf/maps/433a.map.json groups.payment_processors binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      ]
     },
     {
       "class_id": "household_member",
@@ -2114,10 +2093,7 @@
       },
       "supersedes": [
         "irs433_household_members (unchanged; listed for completeness)"
-      ],
-      "unrouted": {
-        "433a": "433-A prints the Section 1 household members table and adapters/pdf/maps/433a.map.json groups.household_members binds it, and that group declares NO row_class. So a stored row reaches this printed table by GROUP NAME alone: check-row-shape.mjs skips every group without a row_class, so nothing asserts that a row landing here is a row of this class, and a row filed under the wrong group prints under a printed heading it does not belong under with every printed total still reconciling. That is defect D1's shape, in the eight places the row_class construct was never extended to. Declared rather than fixed because giving the group a row_class is a routing change to a filed-form engine and belongs to 433-A's own track. Carried as D-05 in adapters/pdf/maps/_carried.cross-form.json."
-      }
+      ]
     },
     {
       "class_id": "retirement_account",

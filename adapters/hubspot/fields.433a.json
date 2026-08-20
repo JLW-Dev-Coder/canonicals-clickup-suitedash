@@ -3750,7 +3750,7 @@
       "form": "433a",
       "field": "household_members",
       "label": "[433] Household members (JSON array; 5 rows fit 433-A)",
-      "description": "433-A (input key: household_members). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name, age, relationship, claimed_on_1040, contributes_to_household_income.",
+      "description": "433-A (input key: household_members). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name, age, relationship, claimed_on_1040, contributes_to_household_income, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3758,14 +3758,15 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (5 printed slots x 5 columns, serialized)",
+      "source": "groups (5 printed slots x 6 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "name",
         "age",
         "relationship",
         "claimed_on_1040",
-        "contributes_to_household_income"
+        "contributes_to_household_income",
+        "asset_class"
       ]
     },
     {
@@ -3904,7 +3905,7 @@
       "form": "433a",
       "field": "digital_assets",
       "label": "[433] Digital assets (JSON array; 4 rows fit 433-A)",
-      "description": "433-A (input key: digital_assets). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_digital_asset, name_of_digital_asset, email_used_to_set_up, location_of_digital_asset, amount_and_value_usd.",
+      "description": "433-A (input key: digital_assets). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: type_of_digital_asset, name_of_digital_asset, email_used_to_set_up, location_of_digital_asset, amount_and_value_usd, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3912,14 +3913,15 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (4 printed slots x 5 columns, serialized)",
+      "source": "groups (4 printed slots x 6 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "type_of_digital_asset",
         "name_of_digital_asset",
         "email_used_to_set_up",
         "location_of_digital_asset",
-        "amount_and_value_usd"
+        "amount_and_value_usd",
+        "asset_class"
       ]
     },
     {
@@ -3959,7 +3961,7 @@
       "form": "433a",
       "field": "life_insurance_policies",
       "label": "[433] Life insurance policies (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: company_name_and_address, policy_number, owner_of_policy, current_cash_value, outstanding_loan_balance.",
+      "description": "433-A (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: company_name_and_address, policy_number, owner_of_policy, current_cash_value, outstanding_loan_balance, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3967,14 +3969,15 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (3 printed slots x 5 columns, serialized)",
+      "source": "groups (3 printed slots x 6 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "company_name_and_address",
         "policy_number",
         "owner_of_policy",
         "current_cash_value",
-        "outstanding_loan_balance"
+        "outstanding_loan_balance",
+        "asset_class"
       ]
     },
     {
@@ -3985,7 +3988,7 @@
       "form": "433a",
       "field": "property_line_20",
       "label": "[433] Other personal property (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: property_line_20). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, location, lender_name_address, lender_phone.",
+      "description": "433-A (input key: property_line_20). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, location, lender_name_address, lender_phone, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -3993,7 +3996,7 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (2 printed slots x 10 columns, serialized)",
+      "source": "groups (2 printed slots x 11 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "description",
@@ -4005,7 +4008,8 @@
         "equity",
         "location",
         "lender_name_address",
-        "lender_phone"
+        "lender_phone",
+        "asset_class"
       ]
     },
     {
@@ -4043,7 +4047,7 @@
       "form": "433a",
       "field": "accounts_notes_receivable",
       "label": "[433] Accounts notes receivable (JSON array; 5 rows fit 433-A)",
-      "description": "433-A (input key: accounts_notes_receivable). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: status, date_due, invoice_or_contract_number, amount_due, name, address.",
+      "description": "433-A (input key: accounts_notes_receivable). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: status, date_due, invoice_or_contract_number, amount_due, name, address, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -4051,7 +4055,7 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (5 printed slots x 6 columns, serialized)",
+      "source": "groups (5 printed slots x 7 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "status",
@@ -4059,7 +4063,8 @@
         "invoice_or_contract_number",
         "amount_due",
         "name",
-        "address"
+        "address",
+        "asset_class"
       ]
     },
     {
@@ -4070,7 +4075,7 @@
       "form": "433a",
       "field": "business_property",
       "label": "[433] Business property (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: business_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, title_holders, location, lender_name_address, lender_phone.",
+      "description": "433-A (input key: business_property). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: description, purchase_date, current_fmv, current_loan_balance, monthly_payment, final_payment_date, equity, title_holders, location, lender_name_address, lender_phone, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -4078,7 +4083,7 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (2 printed slots x 11 columns, serialized)",
+      "source": "groups (2 printed slots x 12 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "description",
@@ -4091,7 +4096,8 @@
         "title_holders",
         "location",
         "lender_name_address",
-        "lender_phone"
+        "lender_phone",
+        "asset_class"
       ]
     },
     {
@@ -4102,7 +4108,7 @@
       "form": "433a",
       "field": "payment_processors",
       "label": "[433] Payment processors (JSON array; 2 rows fit 433-A)",
-      "description": "433-A (input key: payment_processors). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name_and_address, processor_account_number.",
+      "description": "433-A (input key: payment_processors). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: name_and_address, processor_account_number, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -4110,11 +4116,12 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (2 printed slots x 2 columns, serialized)",
+      "source": "groups (2 printed slots x 3 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "name_and_address",
-        "processor_account_number"
+        "processor_account_number",
+        "asset_class"
       ]
     },
     {
@@ -4125,7 +4132,7 @@
       "form": "433a",
       "field": "credit_cards_accepted",
       "label": "[433] Credit cards accepted (JSON array; 3 rows fit 433-A)",
-      "description": "433-A (input key: credit_cards_accepted). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: credit_card, merchant_account_number, issuing_bank_name_and_address.",
+      "description": "433-A (input key: credit_cards_accepted). Shared across the 433 series - named for the fact, not the form. PII - handle per VLP PII rule. JSON array of row objects with keys: credit_card, merchant_account_number, issuing_bank_name_and_address, asset_class.",
       "group": "irs433",
       "type": "string",
       "fieldType": "textarea",
@@ -4133,12 +4140,13 @@
       "map_option_by_value": null,
       "pii": true,
       "line_ref": null,
-      "source": "groups (3 printed slots x 3 columns, serialized)",
+      "source": "groups (3 printed slots x 4 columns, serialized)",
       "type_basis": "repeatable table, serialized as a JSON array",
       "row_shape": [
         "credit_card",
         "merchant_account_number",
-        "issuing_bank_name_and_address"
+        "issuing_bank_name_and_address",
+        "asset_class"
       ]
     },
     {
