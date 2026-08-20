@@ -4,9 +4,9 @@
  "catalog": "55897B",
  "pdf": "adapters/pdf/forms/f433boi.pdf",
  "fields_source": "adapters/pdf/maps/433boi.fields.json",
- "slice": "SLICE 1 - page 1 only. Pages 2 through 6 are deferred and declared in _partition.",
- "map_version": 1,
- "authored_from": "THE PRINTED PAGE, read with adapters/pdf/align-block.mjs 433boi 1. Not one binding on this page was taken from an AcroForm leaf name, and on this form that is not a formality: adapters/pdf/maps/433boi.lineage-433aoi.json found three leaf names that are honest on one page of this document and false on another page of the same document.",
+ "slice": "SLICE 2 - pages 1, 2 and 3. Pages 4 through 6 are unauthored and counted as unaccounted in _partition.",
+ "map_version": 2,
+ "authored_from": "THE PRINTED PAGE, read with adapters/pdf/align-block.mjs 433boi 1. Not one binding on this page was taken from an AcroForm leaf name, and on this form that is not a formality: adapters/pdf/maps/433boi.lineage-433aoi.json found three leaf names that are honest on one page of this document and false on another page of the same document. Slice 2 adds pages 2 and 3, where the FIRST admissible basis - a determinate marker pairing - IS available: adapters/pdf/line-markers.mjs draws 10 markers on page 2 and 9 on page 3, (1a) through (2) and (3a) through (4). Every money total on these pages is bound against its printed marker by RECTANGLE CONTAINMENT, and every non-money cell against a printed caption whose x1 equals the widget x0. Four cells on these pages are bound AGAINST their leaf names; each is named in _the_four_names_that_lie_on_pages_2_and_3.",
  "_the_condition_that_governs_page_1": {
   "no_printed_line_markers": "PAGE 1 DRAWS NO NUMBERED LINE MARKER AT ALL. adapters/pdf/line-markers.mjs finds 44 markers on this form and none of them on page 1 (p1=0, p2=10, p3=9, p4=22, p5=3, p6=0). So the FIRST of the two admissible bases for a binding - a determinate marker pairing - is unavailable on every cell of this slice.",
   "so_every_binding_carries_a_named_second_witness": "Prompt 35 ruling 2 in its second form. The witness used throughout page 1 is LEFT-EDGE IDENTITY: the caption's x1 equals the widget's x0 to 0.0pt. That is not a proximity argument and it does not degrade with distance - it is the layout grid this page is set on, and it either holds exactly or it does not hold. Where it does not hold, the witness is named individually in _map_evidence and the reason is given.",
@@ -53,7 +53,16 @@
   "s1_payroll_provider_name_and_address": "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].Provider_Name_Address[0]",
   "s1_total_number_of_employees": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].EmployeesNumber[0].Total_Number_Employees[0]",
   "s1_frequency_of_tax_deposits": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].Frequency_Tax_Deposits[0]",
-  "s1_average_gross_monthly_payroll": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].Average_Gross_Monthly_Payroll[0]"
+  "s1_average_gross_monthly_payroll": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].Average_Gross_Monthly_Payroll[0]",
+  "s2_1d_bank_accounts_from_attachment": "topmostSubform[0].F433-B-OIC_Page2[0].TotalAccounts[0].Total_Accounts_Attached[0]",
+  "s2_1_total_bank_accounts": "topmostSubform[0].F433-B-OIC_Page2[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]",
+  "s2_2d_investment_accounts_from_attachment": "topmostSubform[0].F433-B-OIC_Page2[0].TotalInvestmentAcct[0].Total_Investment_Accounts_Attached[0]",
+  "s2_2_total_investment_accounts": "topmostSubform[0].F433-B-OIC_Page2[0].TotalInvestmentAcct[0].Total_Investment_Accounts[0]",
+  "s2_real_property_listing_price": "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].listing_price[0]",
+  "s2_3c_property_from_attachment": "topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Value_Property_Attached[0]",
+  "s2_3_total_real_estate": "topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Real_Estate[0]",
+  "s2_4d_vehicles_from_attachment": "topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
+  "s2_4_total_vehicles": "topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles[0]"
  },
  "_map_evidence": {
   "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from adapters/pdf/page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim. `witness` names WHY the pairing is determinate, because page 1 offers no line marker to pair against.",
@@ -174,7 +183,26 @@
    "_printed": "Question \"Does the business outsource its payroll processing and tax return\" y 460.0, x 313.4..545.1 continuing \"preparation for a fee\" y 450.4, x 313.4..385.4. \"Yes\" y 434.1, x 327.8..341.6 with its box at y 432.4, x 313.4..321.4; \"No\" y 434.1, x 367.4..377.6 with its box at y 432.4, x 353.0..361.0.",
    "_witness": "The same box-left-of-word convention, at 6.4pt both times (321.4 -> 327.8, and 361.0 -> 367.4). Constant within the pair, and differing from the FederalContractor pair's 5.4pt, which is why the gap is measured per pair and not carried across."
   },
-  "_C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET": "THE TRAP ON THIS PAGE. The four leaf names run C1_01, C1_02, C1_03, C1_04 in one unbroken sequence and read exactly like a single four-option group. They are two independent Yes/No pairs on two unrelated questions, and THE INDEX ORDER IS NOT THE PRINTED ORDER: C1_03 and C1_04 (payroll outsourcing) are drawn at y 432.4, ABOVE C1_01 and C1_02 (federal contractor) at y 414.9, and in a different column - x 313.4/353.0 against x 36.0/79.2. Reading the sequence as one set would produce a four-way exclusive rule that no printed question asks, and it would be wrong in both directions at once: it would forbid a business from being a federal contractor AND outsourcing its payroll, which the form plainly allows. Established from the rectangles, not from the names. This is the 433-B(OIC) instance of the recorded shape that AcroForm slot order is not printed order."
+  "_C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET": "THE TRAP ON THIS PAGE. The four leaf names run C1_01, C1_02, C1_03, C1_04 in one unbroken sequence and read exactly like a single four-option group. They are two independent Yes/No pairs on two unrelated questions, and THE INDEX ORDER IS NOT THE PRINTED ORDER: C1_03 and C1_04 (payroll outsourcing) are drawn at y 432.4, ABOVE C1_01 and C1_02 (federal contractor) at y 414.9, and in a different column - x 313.4/353.0 against x 36.0/79.2. Reading the sequence as one set would produce a four-way exclusive rule that no printed question asks, and it would be wrong in both directions at once: it would forbid a business from being a federal contractor AND outsourcing its payroll, which the form plainly allows. Established from the rectangles, not from the names. This is the 433-B(OIC) instance of the recorded shape that AcroForm slot order is not printed order.",
+  "s2_notes_receivable": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page2[0].C2_25[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page2[0].C2_26[0]",
+   "_printed": "Sub-banner \"Notes Receivable\" y 199.3 x 36.0..102.2. Question \"Do you have notes receivable\" y 181.3 x 36.0..141.4. \"Yes\" y 181.3 x 180.0..193.8 with its box at y 179.1 x 165.6..174.6; \"No\" y 181.3 x 223.2..233.4 with its box at y 179.1 x 208.8..217.8. Follow-up \"If yes, attach current listing which includes name, age, and amount of note(s) receivable\" y 166.9 x 36.0..346.8.",
+   "_witness": "BOX LEFT OF WORD BY 5.4pt BOTH TIMES (174.6 -> 180.0, and 217.8 -> 223.2). Identical within the pair, which is the same convention slice 1 established on this form and measured per pair rather than carried across."
+  },
+  "s2_accounts_receivable": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page2[0].C2_27[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page2[0].C2_28[0]",
+   "_printed": "Sub-banner \"Accounts Receivable\" y 148.9 x 36.0..116.5. Question \"Do you have accounts receivable, including e-payment, factoring\" y 128.5 x 36.0..265.0 continuing \"companies, and any bartering or online auction accounts\" y 118.9 x 36.0..236.5. \"Yes\" y 120.1 x 320.4..334.2 with its box at y 117.9 x 306.0..315.0; \"No\" y 120.1 x 363.6..373.8 with its box at y 117.9 x 349.2..358.2.",
+   "_witness": "BOX LEFT OF WORD BY 5.4pt BOTH TIMES (315.0 -> 320.4, and 358.2 -> 363.6). The pair is drawn in the RIGHT half of the page while its question wraps across the left half on two baselines, so proximity alone would have offered the question text as a nearer neighbour; the pairing rests on the box/word gap, which is constant, and on the fact that these are the only two boxes below y 148.9 on the page."
+  },
+  "s2_real_property_for_sale": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_15[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_16[0]",
+   "_printed": "Question \"Is your real property currently for sale or do you anticipate selling your real property to fund the offer amount\" y 692.5 x 36.0..417.5. \"Yes\" y 678.1 x 50.4..64.2 with its box at y 675.9 x 36.0..45.0; \"No\" y 678.1 x 208.8..219.0 with its box at y 675.9 x 194.4..203.4, and the listing-price cell between them.",
+   "_witness": "BOX LEFT OF WORD BY 5.4pt BOTH TIMES (45.0 -> 50.4, and 203.4 -> 208.8). The subform is named ForSale and the printed question does ask whether the property is for sale, so the name agrees with the page here - checked, not assumed, and recorded as agreement rather than relied on.",
+   "_the_leaf_names_are_page_2_style_on_page_3": "CB2_15 and CB2_16 are drawn on PAGE 3 and numbered in the CB2_ series. Page 2's own boxes run CB2_01..CB2_06 then C2_07..C2_28, so CB2_15/CB2_16 collide numerically with page 2's C2_15/C2_16 while living under a different page subform. Recorded because a reader scanning leaf names for \"which page is this box on\" would place these two on page 2. Their full paths differ - F433-B-OIC_Page3[0] against F433-B-OIC_Page2[0] - and every target in this map is a full path, so nothing here is ambiguous; it is the reading of the name that is."
+  }
  },
  "check_here": {
   "s1_only_employee": {
@@ -193,7 +221,19 @@
    "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_03[0]",
    "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_04[0]"
   ],
-  "_why": "Two sets of two, one per printed question. NOT one set of four - see checkboxes._C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET. s1_only_employee is deliberately absent: it is a lone tick with no companion box, so there is no set for it to be exclusive within, and declaring a one-member exclusive set would assert a rule the page does not print."
+  "_why": "Two sets of two, one per printed question. NOT one set of four - see checkboxes._C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET. s1_only_employee is deliberately absent: it is a lone tick with no companion box, so there is no set for it to be exclusive within, and declaring a one-member exclusive set would assert a rule the page does not print. Slice 2 adds three more sets of two, one per printed Yes/No question on pages 2 and 3. The per-row Lease/Own pairs inside 4ac_vehicles are NOT declared here: they live inside a repeatable slot, are declared in the slot's own `checkboxes` block, and 433-A(OIC) holds the same shape at 6ac_vehicles. The digital-asset tick is also absent, for slice 1's reason - it is a lone tick with no companion box, so there is no set for it to be exclusive within.",
+  "s2_notes_receivable": [
+   "topmostSubform[0].F433-B-OIC_Page2[0].C2_25[0]",
+   "topmostSubform[0].F433-B-OIC_Page2[0].C2_26[0]"
+  ],
+  "s2_accounts_receivable": [
+   "topmostSubform[0].F433-B-OIC_Page2[0].C2_27[0]",
+   "topmostSubform[0].F433-B-OIC_Page2[0].C2_28[0]"
+  ],
+  "s2_real_property_for_sale": [
+   "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_15[0]",
+   "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_16[0]"
+  ]
  },
  "_computed": {
   "s1_payroll_provider_name_and_address": {
@@ -259,28 +299,330 @@
      }
     }
    ]
+  },
+  "1ac_bank_accounts": {
+   "source": "bank_accounts",
+   "max": 3,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "bank_account"
+    ],
+    "_why": "The class is declared in adapters/hubspot/asset-row-shapes.json and already routes on 433-A (two printed tables) and 433-F (one). Its printed_tables list does not yet name this form; that is a crosswalk fact and is added in the classification pass, not here. `asset_class` is the one discriminator spelling this repo uses everywhere."
+   },
+   "_printed_heading": "Cash and investments (domestic and foreign)",
+   "_heading_at": "y 651.1, x 36.0..120.9, continuing \"(domestic and foreign)\" x 123.1..192.8",
+   "_printed_markers": "Slot 0 totals to printed (1a), slot 1 to (1b), slot 2 to (1c). Markers at y 606.1 / 562.9 / 519.7, x 444.9..468.0 (445.3 on the third), each contained in its slot's total-cell rectangle: 606.1 inside 601.2..615.6, 562.9 inside 558.0..572.4, 519.7 inside 514.8..529.2.",
+   "_row_order": "Descending y. Slot 0: six type boxes at y 632.7..641.7, two text cells at y 601.2..617.0, total at y 601.2..615.6. Slot 1: boxes y 589.5..598.5, text y 558.0..573.8, total y 558.0..572.4. Slot 2: boxes y 546.3..555.3, text y 514.8..530.6, total y 514.8..529.2. Row pitch 43.2pt, constant.",
+   "_columns_by_x": "The six type boxes are at x 36.0 / 79.2 / 136.8 / 190.8 / 277.2 / 352.8, each 9.0pt wide, and the six printed words at x 50.4 \"Cash\" / 93.6 \"Checking\" / 151.2 \"Savings\" / 205.2 \"Money Market/CD\" / 291.6 \"Online Account\" / 367.2 \"Stored Value Card\". Each word is the nearest run to the right of exactly one box and no box has two candidates: the gaps are 5.4 / 5.4 / 5.4 / 5.4 / 5.4 / 5.4 - identical six times, on all three rows. Then \"Bank name and country location\" x 36.0..150.3 over a cell x 36.0..302.4 (left edges equal), \"Account number\" x 309.6..367.8 over a cell x 309.6..435.6 (left edges equal), and the total cell x 471.6..576.0 against the marker column.",
+   "_the_first_row_numbers_its_boxes_differently": "Slot 0's six boxes are CB2_01..CB2_06 and slots 1 and 2 use C2_07..C2_12 and C2_13..C2_18 - a \"CB2_\" prefix on the first row and \"C2_\" on the other two, in one unbroken numeric run. Recorded because the prefix change is the kind of thing that reads as a boundary between two different constructs and is not one: all eighteen boxes sit in the same three-row table at the same six x positions.",
+   "_no_row_flag": "NO `row_flag` IS DECLARED ON THIS GROUP, AND THE CLASS HAS ONE THAT WOULD FIT. Cross-form item [D-06] records that `row_flag` carries two incompatible definitions - adapters/hubspot/asset-row-shapes.json meta.how_to_read says \"a column whose value prints as a CHECKBOX, not text\", the code that consumes it says \"a routing flag, not a printed cell\", and a checkbox IS a printed cell. The standing ruling is that no new group on this form uses the key until it is split. So the flag is REPORTED here and the group is bound without it. The column here is bank_account.is_business_account, contributed_by 433f. Every account on 433-B(OIC) is a business account - the form is the business collection statement and its banner reads \"Business Asset Information\" - so this group would set the flag true on every row it ever writes, which is exactly a routing discriminator and exactly not a printed cell. It is the clearest case for the split and it is reported, not bound.",
+   "slots": [
+    {
+     "text": {
+      "institution_name_and_address": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].Bank_Name[0]",
+      "account_number": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].Account_Number[0]",
+      "account_balance": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].Total_Account[0]"
+     },
+     "checkboxes": {
+      "type_of_account": {
+       "cash": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_01[0]",
+       "checking": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_02[0]",
+       "savings": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_03[0]",
+       "money_market_or_cd": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_04[0]",
+       "online_account": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_05[0]",
+       "stored_value_card": "topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].CB2_06[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "institution_name_and_address": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].Bank_Name[0]",
+      "account_number": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].Account_Number[0]",
+      "account_balance": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].Total_Account[0]"
+     },
+     "checkboxes": {
+      "type_of_account": {
+       "cash": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_07[0]",
+       "checking": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_08[0]",
+       "savings": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_09[0]",
+       "money_market_or_cd": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_10[0]",
+       "online_account": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_11[0]",
+       "stored_value_card": "topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].C2_12[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "institution_name_and_address": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].Bank_Name[0]",
+      "account_number": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].Account_Number[0]",
+      "account_balance": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].Total_Account[0]"
+     },
+     "checkboxes": {
+      "type_of_account": {
+       "cash": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_13[0]",
+       "checking": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_14[0]",
+       "savings": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_15[0]",
+       "money_market_or_cd": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_16[0]",
+       "online_account": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_17[0]",
+       "stored_value_card": "topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].C2_18[0]"
+      }
+     }
+    }
+   ]
+  },
+  "2ab_investment_accounts": {
+   "source": "investment_accounts",
+   "max": 2,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "investment"
+    ]
+   },
+   "_printed_heading": "Cash and investments (domestic and foreign)",
+   "_heading_at": "y 651.1, x 36.0..120.9 - the SAME banner the bank table prints under. Section 2 draws one banner over three tables on page 2 (banks, investments, digital asset), which is why 433boi.headings.json declares the band once and routes all three groups into it.",
+   "_printed_markers": "Slot 0 totals to printed (2a) at y 408.1, contained in the total cell's 403.2..417.6; slot 1 to (2b) at y 336.1, contained in 331.2..345.6.",
+   "_row_order": "Descending y. Slot 0: three type boxes y 463.5..472.5, the Other write-in y 460.8..475.2, two text cells y 432.0..447.8, two money cells y 404.6..421.2, total y 403.2..417.6. Slot 1 the same shape at y 391.5 / 388.8 / 360.0 / 332.6 / 331.2. Row pitch 72.0pt.",
+   "_columns_by_x": "Row label \"Investment account\" x 36.0..105.4 with NO box of its own. Stocks box x 115.2..124.2 (word x 129.6..153.6), Bonds box x 165.6..174.6 (word x 180.0..202.7), Other box x 216.0..225.0 (word x 233.0..253.0) - the box-to-word gap is 5.4 / 5.4 / 8.0. Then the write-in cell x 259.2..435.6, which begins 6.2pt right of where \"Other\" ends. \"Name of Financial Institution and country location\" x 36.0..210.7 over a cell x 36.0..302.4 (left edges equal); \"Account number\" x 309.6..367.8 over a cell x 309.6..435.6 (left edges equal). \"Current market value\" x 36.0..110.7 over a cell x 43.2..219.6 preceded by a printed \"$\" at x 37.0..41.4; \"Minus loan balance\" x 219.6..288.5 over a cell x 241.2..424.8 preceded by \"– $\" at x 224.2..237.6. Then \"=\" at x 430.9..435.6, the marker at x 444.9..468.0, the total cell x 471.6..576.0.",
+   "_NO_MULTIPLIER_ON_THIS_ROW": "The only text drawn between the value cell and the loan cell on the (2a) and (2b) rows is \"– $\". There is no \"X .8\" anywhere in the investment block. The real-estate and vehicle blocks on page 3 DO print \"X .8 = $\" and have a third money cell for it. Stated because the two row shapes are otherwise identical and 433-A(OIC) carries the same distinction at its own (2a)/(3a) boundary.",
+   "_the_write_in_has_no_caption_of_its_own": "The cell at x 259.2..435.6 carries no printed header. It is bound as the \"Other\" specify cell on x and on exclusion: it starts 6.2pt right of the word \"Other\", it is the only text cell on that baseline, and the three captions on the baseline below it are already taken by the two text cells and are 28.8pt lower. Same construct and same reasoning as 433-A(OIC) groups.2ab_investment_accounts._arguable_write_in.",
+   "_no_row_flag": "NO `row_flag` IS DECLARED ON THIS GROUP, AND THE CLASS HAS ONE THAT WOULD FIT. Cross-form item [D-06] records that `row_flag` carries two incompatible definitions - adapters/hubspot/asset-row-shapes.json meta.how_to_read says \"a column whose value prints as a CHECKBOX, not text\", the code that consumes it says \"a routing flag, not a printed cell\", and a checkbox IS a printed cell. The standing ruling is that no new group on this form uses the key until it is split. So the flag is REPORTED here and the group is bound without it. The column here is investment.is_business_account, contributed_by 433f, and the same argument applies as on the bank table.",
+   "slots": [
+    {
+     "text": {
+      "type_of_investment_other": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].Other_Investment_Account[0]",
+      "institution_name_and_address": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].Name_Financial_Institution[0]",
+      "account_number": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].Account_Number[0]",
+      "current_value": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].CurrentMarketValue[0].Current_Market_Value[0]",
+      "loan_balance": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].LessLoanBal[0].Less_Loan_Balance[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].Total_Market_Value[0]"
+     },
+     "checkboxes": {
+      "type_of_investment": {
+       "stocks": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].C2_19[0]",
+       "bonds": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].C2_20[0]",
+       "other": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].C2_21[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "type_of_investment_other": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].Other_Investment_Account[0]",
+      "institution_name_and_address": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].Name_Financial_Institution[0]",
+      "account_number": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].Account_Number[0]",
+      "current_value": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].CurrentMarketValue[0].Current_Market_Value[0]",
+      "loan_balance": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].LessLoanBal[0].Less_Loan_Balance[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].Total_Market_Value[0]"
+     },
+     "checkboxes": {
+      "type_of_investment": {
+       "stocks": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].C2_22[0]",
+       "bonds": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].C2_23[0]",
+       "other": "topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].C2_24[0]"
+      }
+     }
+    }
+   ]
+  },
+  "2c_digital_asset": {
+   "source": "digital_assets",
+   "max": 1,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "digital_asset"
+    ],
+    "_why": "Declared in adapters/hubspot/asset-row-shapes.json and already routed on 433-A (15a-15d) and 433-F. Established from the PRINTED PAGE here and not from the container, which says RetirementAcct1 - see _the_four_names_that_lie_on_pages_2_and_3.RetirementAcct1_subform."
+   },
+   "_printed_heading": "Cash and investments (domestic and foreign)",
+   "_heading_at": "y 651.1, x 36.0..120.9 - the third table under page 2's one banner.",
+   "_printed_markers": "The single slot totals to printed (2c) at y 256.9 x 445.3..468.0, contained in the total cell's 252.0..266.4.",
+   "_ONE_ROW_AND_THE_FORM_PRINTS_ONE": "max is 1 because the page draws one digital-asset row and one only. 433-A(OIC) prints four (15a-15d) and 433-F prints two. A record carrying two digital assets overflows here and the drop is logged, which is the correct outcome and not a mapping gap: there is no second printed row for a second asset to go in, and the form's own answer is the attachment line at (2d).",
+   "_row_order": "One row over three baselines. Tick at y 319.5..328.5; five text cells at y 288.0..303.8; two text cells at y 252.0..270.0; total at y 252.0..266.4.",
+   "_columns_by_x": "EVERY ONE OF THESE IS A LEFT-EDGE IDENTITY, and they had to be: the correlator paired four of them with fragments of two-line headers - \"of units\", \"a custodian or broker\", \"account, self-hosted wallet)\" - which name nothing on their own. Read as whole headers with their own x: \"Description of digital asset\" y 306.9 x 36.0..129.4 over a cell x 36.0..133.2; \"Number / of units\" y 322.7/313.1 x 140.4..168.8 over a cell x 140.4..169.2; \"Location of digital asset (exchange / account, self-hosted wallet)\" y 322.7/313.1 x 176.4..299.6 over a cell x 176.4..302.4; \"Account number for assets held by / a custodian or broker\" y 322.7/313.1 x 309.6..432.8 over a cell x 309.6..439.2. Four headers, four cells, four exact left-edge matches, and the four x positions are 36.0 / 140.4 / 176.4 / 309.6 in both lists. Then on the row below: \"Digital asset address for self-hosted digital assets\" y 279.5 x 36.0..211.6 over a cell x 36.0..216.0, and \"US dollar equivalent of the digital asset as of today\" y 279.6 x 223.2..402.8 over a cell x 230.4..338.4 preceded by a printed \"$\" at x 224.2..228.6.",
+   "_the_tick_is_not_a_set": "The box at x 36.0..45.0 y 319.5..328.5 carries the word \"Digital asset\" at x 50.4..94.0 - box left of word by 5.4pt, the convention on this form. There is no companion box, so it is bound as a named single inside the slot and is deliberately absent from `exclusive`: a one-member exclusive set would assert a rule the page does not print. Slice 1 made the same call for s1_only_employee. It is declared as a one-option set named `row_type`, and the option key is the PRINTED WORD - \"digital_asset\" from \"Digital asset\" at x 50.4..94.0 - for the same reason every other option key on this form is: the option keys are read from the page and the leaf names are not consulted. A record's row says row_type: \"digital_asset\". Naming the option \"yes\" would have been easier to write and would have invented a word the page does not draw.",
+   "_no_row_flag": "The digital_asset class declares no row_flag column at all, so this group is not one of the cases [D-06] covers. Recorded so the absence reads as checked rather than overlooked.",
+   "slots": [
+    {
+     "text": {
+      "description_of_digital_asset": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].virtualCurrency[0].descriptionDigitalAsset[0]",
+      "number_of_units": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].numberOfUnits[0]",
+      "location_of_digital_asset": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].locationDigitalAsset[0]",
+      "account_number_custodian_or_broker": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].assetsAccountNumber[0]",
+      "self_hosted_wallet_address": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].name_of_individual[0]",
+      "usd_equivalent_today": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].TotalCurrentMarketValue[0]"
+     },
+     "checkboxes": {
+      "row_type": {
+       "digital_asset": "topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].virtualCurrency[0].virtualCurrency[0]"
+      }
+     }
+    }
+   ]
+  },
+  "3ab_real_estate": {
+   "source": "real_estate",
+   "max": 2,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "real_property"
+    ]
+   },
+   "_printed_heading": "Real estate (buildings, lots, commercial property, etc.)",
+   "_heading_at": "y 708.7, x 36.0..78.2, continuing \"(buildings, lots, commercial property, etc.)\" x 80.5..210.0",
+   "_printed_markers": "Slot 0 totals to printed (3a) at y 563.1, contained in the total cell's 558.0..572.4; slot 1 to (3b) at y 447.9, contained in 442.8..457.2.",
+   "_row_order": "Descending y. Slot 0: description/date row y 644.4..660.2, mortgage-payment/final-date row y 615.6..631.4, lender row y 586.8..602.6, address cell spanning y 586.8..649.4 (three baselines tall, one cell), money row y 559.4..572.4, total y 558.0..572.4. Slot 1 the same at y 529.2 / 500.4 / 471.6 / 444.2 / 442.8. Row pitch 115.2pt.",
+   "_columns_by_x": "THREE WIDGETS SHARE THE LEFT EDGE x=176.4 ON THREE DIFFERENT BASELINES, so left-edge identity alone cannot separate them and the y band does. Captions, all at x1 176.4: \"Property description (indicate if rental property, vacant, etc.)\" y 664.7 x 176.4..370.8; \"Monthly mortgage payment\" y 635.9 x 176.4..273.3; \"Name of lender/contract holder\" y 607.1 x 176.4..286.2. Widget tops, all at x0 176.4: 660.2, 631.4, 602.6. Caption-to-widget-top gap: 4.5, 4.5, 4.5. Elsewhere on the row: \"Property address (street address, city,\" y 664.7 x 36.0..162.2 continuing \"state, ZIP code, county, and country)\" y 655.9 x 36.0..150.4 over a cell x 36.0..169.2; \"Date purchased\" y 664.7 x 378.0..434.5 over a cell x 378.0..435.6; \"Date of final payment\" y 635.9 x 356.4..432.0 over a cell x 356.4..435.6. Money row: \"Current market value\" y 577.3 x 36.0..110.7 over a cell x 43.2..122.4 preceded by \"$\" x 37.0..41.4; \"X .8 = $\" x 125.9..155.9 immediately left of the quick-sale cell x 158.4..234.0; \"Minus loan balance (mortgages, etc.)\" x 219.6..358.1 with \"– $\" at x 237.9..251.2 immediately left of the loan cell x 255.6..331.2.",
+   "_THE_TWO_LIES_ON_THIS_ROW": "monthly_payment is bound to a field named Name_Creditor and lender_name_address to a field named County_Country. Both are read off the page and both are set out in full, with the same-row honest witness that makes them determinate, in _the_four_names_that_lie_on_pages_2_and_3. Repeated here because a reader of this group must not have to find that block to know it exists.",
+   "_no_row_flag": "NO `row_flag` IS DECLARED ON THIS GROUP, AND THE CLASS HAS ONE THAT WOULD FIT. Cross-form item [D-06] records that `row_flag` carries two incompatible definitions - adapters/hubspot/asset-row-shapes.json meta.how_to_read says \"a column whose value prints as a CHECKBOX, not text\", the code that consumes it says \"a routing flag, not a printed cell\", and a checkbox IS a printed cell. The standing ruling is that no new group on this form uses the key until it is split. So the flag is REPORTED here and the group is bound without it. The column here is real_property.kind, contributed_by 433f - one of the three [D-06] calls load-bearing. This form prints one real-estate table and no printed cell asks which kind of property it is beyond the free-text description, so `kind` would be pure routing metadata here. Reported and not bound.",
+   "slots": [
+    {
+     "text": {
+      "location": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Property_Address[0]",
+      "description": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Property_Description[0]",
+      "purchase_date": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Date_Purchased[0]",
+      "monthly_payment": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Name_Creditor[0]",
+      "final_payment_date": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Date_Final_Payment[0]",
+      "lender_name_address": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].County_Country[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].LessLoan[0].Less_Loan_Balance[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Total_Value_Real_Estate[0]"
+     }
+    },
+    {
+     "text": {
+      "location": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Property_Address[0]",
+      "description": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Property_Description[0]",
+      "purchase_date": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Date_Purchased[0]",
+      "monthly_payment": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Name_Creditor[0]",
+      "final_payment_date": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Date_Final_Payment[0]",
+      "lender_name_address": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].County_Country[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].LessLoan[0].Less_Loan_Balance[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Total_Value_Real_Estate[0]"
+     }
+    }
+   ]
+  },
+  "4ac_vehicles": {
+   "source": "vehicles",
+   "max": 3,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "vehicle"
+    ]
+   },
+   "_printed_heading": "Business vehicles (cars, boats, motorcycles, trailers, etc.). Include those located in foreign countries or jurisdictions. If additional space is needed, list on an attachment.",
+   "_heading_at": "y 396.7, x 36.0..105.4, continuing x 107.6..573.3 and \"attachment.\" y 387.1 x 36.0..77.8",
+   "_printed_markers": "Slot 0 totals to (4a) at y 292.9, contained in 288.0..302.4; slot 1 to (4b) at y 199.3, contained in 194.4..208.8; slot 2 to (4c) at y 105.7, contained in 100.8..115.2.",
+   "_row_order": "Descending y. Slot 0: five-cell identity row y 352.8..368.6, Lease tick y 341.1..350.1, Own tick y 326.7..335.7, payment/creditor/date row y 324.0..339.8, money row y 289.4..309.6, total y 288.0..302.4. Slot 1 at y 259.2 / 247.5 / 233.1 / 230.4 / 195.8 / 194.4; slot 2 at y 165.6 / 153.9 / 139.5 / 136.8 / 102.2 / 100.8. Row pitch 93.6pt, constant.",
+   "_columns_by_x": "Identity row captions y 373.1: \"Vehicle make & model\" x 36.0..115.6 over a cell x 36.0..162.0; \"Year\" x 169.2..186.1 over a cell x 169.2..198.0; \"Date purchased\" x 205.2..261.7 over a cell x 205.2..266.4; \"Mileage or use hours\" x 273.6..348.3 over a cell x 273.6..352.8; \"License/Tag number\" x 360.0..432.9 over a cell x 360.0..435.6. Five captions, five cells, five exact left-edge matches. Second row captions y 344.3: \"Monthly lease/loan amount\" x 90.0..185.6 over a cell x 97.2..198.0 preceded by a printed \"$\" at x 91.4..95.8; \"Name of creditor\" x 205.2..264.3 over a cell x 205.2..352.8 (left edges equal); \"Date of final payment\" x 360.0..435.6 over a cell x 360.0..435.6 (BOTH edges equal). Ticks: \"Lease\" y 343.3 x 50.4..72.2 with its box x 36.0..45.0; \"Own\" y 328.9 x 50.4..66.8 with its box x 36.0..45.0 - box left of word by 5.4pt both times. Money row y 314.5: \"Current market value\" x 36.0..110.7 over a cell x 43.2..111.6 preceded by \"$\" x 37.0..41.4; \"X .8 = $\" x 115.1..145.1 immediately left of the quick-sale cell x 147.6..219.6; \"Minus loan balance\" x 219.6..288.5 with \"– $\" x 220.6..233.9 immediately left of the loan cell x 241.2..313.2.",
+   "_the_printed_conditional_on_the_total": "The (4a)/(4b)/(4c) cells print \"Total value of vehicle\" x 317.0..392.1 continuing \"(if the vehicle\" x 394.4..435.6 and \"is leased, enter 0 as the total value)\" y 291.7 x 316.3..426.8. One printed cell with two defined values and a printed selector on the same row - the Lease/Own pair. Declared as TWO predicated total lines per slot in 433boi.totals.json, exactly as 433-A(OIC) declares its 6a/6c pair, so that exactly one branch is checked on any filled form and the other is SKIPPED with its reason printed.",
+   "_SLOT_1_IS_ASSEMBLED_FROM_TWO_CONTAINER_PREFIXES": "mileage and license_tag on slot 1 are Vehicle1[0].Mileage[1] and Vehicle1[0].LicenseTagNumber[1]; every other column of slot 1 is under Vehicle2[0]. There is no Vehicle2[0].Mileage and no Vehicle2[0].LicenseTagNumber on this form. Set out in full, with the rectangle proof, at _Vehicle1_Mileage_1_AND_LicenseTagNumber_1_DRAW_ON_VEHICLE_ROW_2. This is why slots are addressed by full path in this repo rather than by a per-row container prefix.",
+   "_no_row_flag": "The vehicle class declares no row_flag column, so this group is not one of the cases [D-06] covers. lease_or_own is a printed CHECKBOX PAIR with two drawn boxes on the page and is bound as a slot checkbox set, which is the construct 433-A(OIC) uses at 6ac_vehicles - not a row flag under either of [D-06]'s two definitions.",
+   "slots": [
+    {
+     "text": {
+      "make_model": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Vehicle_Make_Model[0]",
+      "model_year": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Year[0]",
+      "purchase_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Date_Purchased[0]",
+      "mileage": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Mileage[0]",
+      "license_tag": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].LicenseTagNumber[0]",
+      "monthly_payment": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].MonthlyLeaseAmt[0].Monthly_Lease_Amount[0]",
+      "lender_name_address": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Name_Creditor[0]",
+      "final_payment_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Date_Final_Payment[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].LessLoan[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Total_Value_Vehicle[0]"
+     },
+     "checkboxes": {
+      "lease_or_own": {
+       "lease": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_05[0]",
+       "own": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].LeaseLoan[0].CB3_06[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "make_model": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Vehicle_Make_Model[0]",
+      "model_year": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Year[0]",
+      "purchase_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Date_Purchased[0]",
+      "mileage": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Mileage[1]",
+      "license_tag": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].LicenseTagNumber[1]",
+      "monthly_payment": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].MonthlyLeaseAmt[0].Monthly_Lease_Amount[0]",
+      "lender_name_address": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Name_Creditor[0]",
+      "final_payment_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Date_Final_Payment[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].LessLoan[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Total_Value_Vehicle[0]"
+     },
+     "checkboxes": {
+      "lease_or_own": {
+       "lease": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_05[0]",
+       "own": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].LeaseLoan[0].CB3_06[0]"
+      }
+     }
+    },
+    {
+     "text": {
+      "make_model": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Vehicle_Make_Model[0]",
+      "model_year": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Year[0]",
+      "purchase_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Date_Purchased[0]",
+      "mileage": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Mileage[0]",
+      "license_tag": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].LicenseTagNumber[0]",
+      "monthly_payment": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].MonthlyLeaseAmt[0].Monthly_Lease_Amount[0]",
+      "lender_name_address": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Name_Creditor[0]",
+      "final_payment_date": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Date_Final_Payment[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].LessLoan[0].Less_Loan_Balance[0]",
+      "quick_sale_equity": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Total_Value_Vehicle[0]"
+     },
+     "checkboxes": {
+      "lease_or_own": {
+       "lease": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].LeaseLoan[0].CB3_05[0]",
+       "own": "topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].LeaseLoan[0].CB3_06[0]"
+      }
+     }
+    }
+   ]
   }
  },
  "_never_autofill": {
-  "_why": "EMPTY ON PAGE 1, AND THAT IS A FINDING RATHER THAN AN OMISSION. Every one of this page's 43 fields is business data a record can supply - there is no signature block, no preparer-use box and no IRS-use cell anywhere on page 1. Checked against the enumeration: all 43 widgets are bound above. 433-A(OIC) declares 5 never-autofill fields and 433-A declares 14, so an empty block here would otherwise read as a step someone forgot.",
+  "_why": "EMPTY ACROSS PAGES 1, 2 AND 3, AND THAT IS STILL A FINDING RATHER THAN AN OMISSION. All 173 fields on these three pages are business data a record can supply. There is no signature block, no preparer-use box and no IRS-use cell on any of them - the form's signature block is on page 6, which this slice has not read. Checked against the enumeration: all 173 widgets are bound. 433-A(OIC) declares 5 never-autofill fields and 433-A declares 14, so an empty block here would otherwise read as a step someone forgot.",
   "entries": []
  },
  "_not_checkable": {
-  "_why": "EMPTY ON PAGE 1. There is no total-shaped cell on this page at all - no lettered Box, no \"Add lines\" instruction, no arithmetic of any kind. s1_average_gross_monthly_payroll is the only money cell and it is an INPUT, not a total: nothing on the page adds anything to produce it. So there is nothing for a tripwire to check and nothing to declare not checkable, and the two states are distinguished rather than collapsed.",
-  "entries": []
+  "_why": "ONE LIST, AND IT IS NOT THIS ONE. Printed money cells this map writes and deliberately does not verify are declared in adapters/pdf/maps/433boi.totals.json under not_checkable.entries[], each with the printed caption that makes it unverifiable and the review-page advisory a preparer is shown. STILL WRITTEN - not checkable is not the same as not filled.",
+  "_page_1_had_nothing_to_declare": "Slice 1 left this block empty with a reason: page 1 prints no total-shaped cell at all, so there was nothing for a tripwire to check and nothing to excuse from one. Pages 2 and 3 print four attachment lines and a listing price, and all five are declared in the totals file.",
+  "_this_block_briefly_held_a_second_copy": "SLICE 2 WROTE THE LIST TWICE - four entries here and five in the totals file - and guard-sweep [P-03] refused it on the first run, reporting \"map._not_checkable holds no second copy of the list: states 0, derived 4\". That is the same defect [P-03] was written for on 433-A(OIC), where two copies of one list drifted in both directions across 17 fields, and it reappeared here within one commit of being authored. The guard caught it before the fixture was written, which is the argument for the guard."
  },
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 267,
-  "in_this_slice": 43,
-  "bound_writable": 43,
+  "in_this_slice": 173,
+  "bound_writable": 173,
   "excluded_never_autofill": 0,
   "deferred": 0,
-  "unaccounted": 224,
-  "_check": "43 + 0 + 0 = 43 — bound writable, never-autofill, deferred, and their sum is every unique target this map references, which is every field on page 1. Then 267 - 43 = 224 unaccounted: the fields on pages 2 through 6 that this slice has not read. page-geometry reports 43 for p1, 61 for p2, 69 for p3, 30 for p4, 33 for p5 and 31 for p6. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03] against the field list and the widget geometry; none is typed.",
-  "_why_unaccounted_is_the_word_and_not_deferred": "A FIRST DRAFT OF THIS BLOCK CALLED PAGES 2-6 `deferred` AND THE COUNT SWEEP REFUSED IT. The two words are not synonyms in this engine and the distinction is the point. `deferred` is derived by classifyMapTargets from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration. Slice 1 has read one page and says so. This map is therefore NOT CLOSED, which is worth stating because the other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; the figure falls to zero when slice 4 lands and not before."
+  "unaccounted": 94,
+  "_check": "173 + 0 + 0 = 173 — bound writable, never-autofill, deferred, and their sum is every unique target this map references, which is every field on pages 1, 2 and 3 (43 + 130). Then 267 - 173 = 94 unaccounted: pages 4, 5 and 6. page-geometry reports 30 for p4, 33 for p5 and 31 for p6, which sum to 94. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03] against the field list and the widget geometry; none is typed.",
+  "_why_unaccounted_is_the_word_and_not_deferred": "A FIRST DRAFT OF THIS BLOCK CALLED PAGES 2-6 `deferred` AND THE COUNT SWEEP REFUSED IT. The two words are not synonyms in this engine and the distinction is the point. `deferred` is derived by classifyMapTargets from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration. Slice 1 has read one page and says so. This map is therefore NOT CLOSED, which is worth stating because the other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; the figure falls to zero when slice 4 lands and not before.",
+  "_still_not_closed": "THE MAP IS STILL NOT CLOSED. Slice 2 has read three of six pages. The other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; `unaccounted` falls to zero when slice 4 lands and not before."
  },
- "_deferred_pages": "Pages 2-6, 224 fields. Slice 2 takes pages 2-3 (130 fields, including the Section 6 litigation block's four inherited lies on page 5 - no, page 5 is slice 3; see 433boi.lineage-433aoi.json for where each inherited name falls). Nothing on those pages is bound, referenced or partly authored by this slice.",
+ "_deferred_pages": "Pages 4-6, 94 fields. Slice 3 takes pages 4 and 5 (63 fields, including the Section 6 litigation block on page 5 where Name_Creditor, Date_Final_Payment and Gross_Receipts all carry the inherited lies - see 433boi.lineage-433aoi.json and _the_four_names_that_lie_on_pages_2_and_3._the_BOTH_names_this_slice_touches). Slice 4 takes page 6, 31 fields. Nothing on those pages is bound, referenced or partly authored by this slice.",
  "_arguable_page1": [
   {
    "id": "B6",
@@ -354,12 +696,270 @@
     "id": "B9",
     "subject": "DECLARATION COVERAGE DOES NOT RUN ON THIS FORM. The coverage table - including the row_class kind added for ruling 5 - is built inside gate step 11, and step 11 SKIPS when a form has no totals file. 433-B(OIC) page 1 prints no total, so it correctly has none, and the consequence is that this map's one row_class declaration is counted by nothing: the gate reports declarations_total n/a. The declaration is not thereby unchecked - its refusal path is proved by adapters/pdf/assert-row-class-routes.mjs and its acceptance path by adapters/pdf/check-row-shape.mjs, which reported 3 slotted rows across 1 declaring group on this slice's fill - but it is absent from the table that exists to NAME unexercised declarations, which is the gap ruling 5 was written about, one level out. Moving the coverage table out of step 11 is a refactor of a guard, and its no-op path would have to be proved on the three finished forms in the same run. Not attempted in this slice.",
     "raised_in": "slice 1, found by running the gate"
+   },
+   {
+    "id": "B10",
+    "raised": "slice 2",
+    "what": "No /MaxLen on any of the 130 fields on pages 2 and 3, so no printed cell carries a limit the PDF enforces, while the shared row shapes declare ceilings derived from other forms. See _arguable_pages_2_and_3[0].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B11",
+    "raised": "slice 2",
+    "what": "The intake lineage report reads page-3 captions downward and places two of them one row low; its verdict that RealEstate Name_Creditor is honest is wrong. Corrected in the map, not in the report. See _arguable_pages_2_and_3[1].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B12",
+    "raised": "slice 2",
+    "what": "Three groups on pages 2 and 3 want the business/personal discriminator that cross-form item [D-06] freezes. Bound without it and reported. See _arguable_pages_2_and_3[2].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B13",
+    "raised": "slice 2",
+    "what": "One printed digital-asset row against a class that allows many; overflow drops silently into an attachment line this map declares not checkable. See _arguable_pages_2_and_3[3].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B14",
+    "raised": "slice 2",
+    "what": "The digital-asset row's six column keys are caption-derived and only one matches the declared digital_asset class. See _arguable_pages_2_and_3[4].",
+    "status": "OPEN"
    }
   ],
   "resolved": [],
   "_count": {
-   "open": 9,
+   "open": 14,
    "resolved": 0
   }
- }
+ },
+ "_the_condition_that_governs_pages_2_and_3": {
+  "markers_are_available_here_and_were_not_on_page_1": "Page 1 draws zero numbered markers, so slice 1 had to rest every binding on left-edge identity. Pages 2 and 3 draw nineteen between them - (1a) (1b) (1c) (1d) (1) (2a) (2b) (2c) (2d) (2) on page 2 and (3a) (3b) (3c) (3) (4a) (4b) (4c) (4d) (4) on page 3 - and adapters/pdf/line-markers.mjs pairs eighteen of the nineteen with a widget on the same row. Every money total below is bound on that pairing.",
+  "how_a_marker_pairing_is_made_determinate": "BY RECTANGLE CONTAINMENT, not by nearest neighbour. The nineteen markers sit in one column at x 444.9..468.0 and the nineteen total cells in another at x 471.6..576.0, and consecutive totals are stacked with SHARED boundaries: (1d) occupies y 496.8..514.8 and (1) occupies y 475.2..496.8. A distance tie-break between two cells 18pt apart is a coin toss. Containment is not: the marker \"(1d) $\" has baseline y 503.5, which lies inside 496.8..514.8 and outside 475.2..496.8, and \"(1) $\" has baseline y 483.4, which lies inside the second and outside the first. Both directions checked for all nineteen.",
+  "the_second_witness_for_every_non_money_cell": "LEFT-EDGE IDENTITY, the same witness slice 1 used: the printed caption's x1 equals the widget's x0 to 0.0pt. Where three widgets on page 3 share the left edge x=176.4 on three different rows, the discriminator is the y band and the gap is UNIFORM AT 4.5pt from caption baseline to widget top - measured on the row whose identity is not in question and then applied. See _the_four_names_that_lie_on_pages_2_and_3.RealEstate_Name_Creditor.",
+  "no_widget_on_these_pages_declares_a_MaxLen": "Checked against the enumeration: 0 of the 130 fields on pages 2 and 3 carries /MaxLen. Page 1 carried none either and slice 1 raised [B6] about one 18pt cell. Here it is every cell, so the ceiling of every text column on these pages is the drawn box width and nothing in the PDF stops an over-long value being accepted and clipped. Carried as [B10] rather than restated per cell."
+ },
+ "_printed_headings_and_markers_pages_2_and_3": {
+  "_why_this_block_comes_before_the_bindings": "Same rule as slice 1: the printed structure is recorded before anything is bound to it, so a binding cannot be justified by a heading invented to justify it.",
+  "page_2": {
+   "banner": "\"Section 2\" y 745.9 x 36.0..80.5 + \"Business Asset Information\" x 144.0..276.3 + \"(Domestic and Foreign)\" x 279.0..390.7 - three runs on one baseline.",
+   "sub_banners": [
+    "\"Cash and investments\" y 651.1 x 36.0..120.9 + \"(domestic and foreign)\" x 123.1..192.8",
+    "\"Notes Receivable\" y 199.3 x 36.0..102.2",
+    "\"Accounts Receivable\" y 148.9 x 36.0..116.5"
+   ],
+   "the_floor_instruction": "\"Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\".\" y 670.9 x 165.2..576.0. This is the printed basis for the floor 0 declared on lines (1), (2), (3) and (4) in 433boi.totals.json - the form says it, in those words, above the first of them.",
+   "markers": "(1a) y 606.1 x 444.9..468.0; (1b) y 562.9 x 444.9..468.0; (1c) y 519.7 x 445.3..468.0; (1d) y 503.5 x 444.9..468.0; (1) y 483.4 x 449.5..468.0; (2a) y 408.1 x 444.9..468.0; (2b) y 336.1 x 444.9..468.0; (2c) y 256.9 x 445.3..468.0; (2d) y 240.7 x 444.9..468.0; (2) y 220.6 x 447.0..468.0."
+  },
+  "page_3": {
+   "banner": "\"Section 2\" y 745.9 x 36.0..80.5 + \"(Continued)\" x 83.2..133.7 + \"Business Asset Information\" x 144.0..276.3 + \"(Domestic and Foreign)\" x 279.0..390.7.",
+   "sub_banners": [
+    "\"Real estate\" y 708.7 x 36.0..78.2 + \"(buildings, lots, commercial property, etc.)\" x 80.5..210.0",
+    "\"Business vehicles\" y 396.7 x 36.0..105.4 + \"(cars, boats, motorcycles, trailers, etc.). Include those located in foreign countries or jurisdictions. If additional space is needed, list on an\" x 107.6..573.3, continuing \"attachment.\" y 387.1 x 36.0..77.8"
+   ],
+   "markers": "(3a) y 563.1 x 444.9..468.0; (3b) y 447.9 x 444.9..468.0; (3c) y 431.5 x 445.3..468.0; (3) y 413.2 x 447.0..468.0; (4a) y 292.9 x 447.1..468.0; (4b) y 199.3 x 447.1..468.0; (4c) y 105.7 x 447.6..468.0; (4d) y 97.5 x 444.9..468.0; (4) y 80.2 x 447.0..468.0."
+  },
+  "_no_lettered_box_on_either_page": "Neither page draws a Box A-H construct. adapters/pdf/line-markers.mjs finds the form's first lettered Box - Box A - on PAGE 4 at y 609.7, and none before it. Every total on pages 2 and 3 is a numbered line, so there is no printed operand list of the \"Box A = (1) + (2) + ...\" shape to quote verbatim on these pages. Stated with the evidence, because \"no Box here\" and \"nobody looked\" are otherwise indistinguishable."
+ },
+ "_the_four_names_that_lie_on_pages_2_and_3": {
+  "_why": "adapters/pdf/maps/433boi.lineage-433aoi.json was authored at intake and is the reason these were looked for. Two of the four it named. Two it did not, and one of those two CONTRADICTS it - see the_lineage_report_is_wrong_about_this_one.",
+  "RealEstate_Name_Creditor": {
+   "the_name_says": "the name of a creditor",
+   "the_page_says": "\"Monthly mortgage payment\", drawn at y 635.9 x 176.4..273.3 for row 1 and y 520.7 x 176.4..273.3 for row 2",
+   "bound_to": "monthly_payment",
+   "witness": "THE SAME-ROW HONEST WITNESS, then the uniform gap. Date_Final_Payment[0] sits on the SAME row as Name_Creditor[0] - both at widget y 615.6..631.4 on row 1 - at x 356.4..435.6, and its caption \"Date of final payment\" is drawn at y 635.9 x 356.4..432.0, x1 equal to its x0. So the caption line for that row IS y 635.9, and the only other caption on y 635.9 is \"Monthly mortgage payment\" at x 176.4, whose x1 equals Name_Creditor's x0. The gap from caption baseline to widget top is 4.5pt, the same 4.5pt as Property_Description/Date_Purchased (664.7 over 660.2) and County_Country (607.1 over 602.6). Three rows, one gap, no tolerance used.",
+   "the_lineage_report_is_wrong_about_this_one": "adapters/pdf/maps/433boi.lineage-433aoi.json verdicts[0].boi_true_at lists \"p3 RealEstate1[0].Name_Creditor[0] ... printed \\\"Name of lender/contract holder\\\" y=615.1\" and the same for RealEstate2. That is the caption BELOW the widget, not above it: \"Name of lender/contract holder\" has baseline y 607.1 (the report quotes tops, y2 = y1 + 8.0, which is why its number reads 615.1) and the widget bottom is y 615.6. Reading downward instead of upward puts every caption on this block one row out. Kept here rather than corrected in place in that file, and carried as [B11]. The report's HEADLINE survives the correction and gets stronger: Name_Creditor is honest at three page-3 cells, not five, and the first two occurrences in page order are lies.",
+   "consequence_if_bound_by_name": "A lender name would print in the monthly-payment column and the monthly payment in the lender column, on both rows, and every arithmetic tripwire on this page would still reconcile - neither cell feeds a total.",
+   "cells": [
+    "groups.3ab_real_estate.slots[0].text.monthly_payment  (leaf RealEstate1[0].Name_Creditor[0])",
+    "groups.3ab_real_estate.slots[1].text.monthly_payment  (leaf RealEstate2[0].Name_Creditor[0])"
+   ],
+   "_why_addresses_and_not_paths": "THE CELLS ARE NAMED BY MAP ADDRESS AND LEAF NAME, NOT BY FULL PATH. A full `topmostSubform[0]...` path written anywhere in this map is a BINDING as far as walkTargets is concerned, so quoting one in evidence binds the cell a second time and gate step 4 refuses the map - which is exactly what happened on this block's first draft, 12 targets written by more than one key. The address points at the binding that holds the path, so nothing is lost and the two cannot drift."
+  },
+  "RealEstate_County_Country": {
+   "the_name_says": "a county and a country",
+   "the_page_says": "\"Name of lender/contract holder\", drawn at y 607.1 x 176.4..286.2 for row 1 and y 491.9 x 176.4..286.2 for row 2",
+   "bound_to": "lender_name_address",
+   "witness": "Left-edge identity (176.4 = 176.4) plus the 4.5pt caption-above-widget gap established on the same block: caption y 607.1, widget top y 602.6. The county IS asked for on this form, inside the Property_Address caption - \"(street address, city, state, ZIP code, county, and country)\" - which is bound to `location`, so the fact the name points at is already elsewhere on the row.",
+   "not_in_the_lineage_report": "County_Country is not a shared leaf name with 433-A(OIC) and so appears in no verdict there. It was found by reading this page.",
+   "cells": [
+    "groups.3ab_real_estate.slots[0].text.lender_name_address  (leaf RealEstate1[0].County_Country[0])",
+    "groups.3ab_real_estate.slots[1].text.lender_name_address  (leaf RealEstate2[0].County_Country[0])"
+   ],
+   "_why_addresses_and_not_paths": "THE CELLS ARE NAMED BY MAP ADDRESS AND LEAF NAME, NOT BY FULL PATH. A full `topmostSubform[0]...` path written anywhere in this map is a BINDING as far as walkTargets is concerned, so quoting one in evidence binds the cell a second time and gate step 4 refuses the map - which is exactly what happened on this block's first draft, 12 targets written by more than one key. The address points at the binding that holds the path, so nothing is lost and the two cannot drift."
+  },
+  "RetirementAcct1_subform": {
+   "the_name_says": "a retirement account",
+   "the_page_says": "a DIGITAL ASSET row. \"Digital asset\" y 321.7 x 50.4..94.0 with its tick box at x 36.0..45.0; \"Description of digital asset\" y 306.9 x 36.0..129.4; \"Number / of units\" y 322.7/313.1 x 140.4..168.8; \"Location of digital asset (exchange / account, self-hosted wallet)\" x 176.4..299.6; \"Account number for assets held by / a custodian or broker\" x 309.6..432.8; \"US dollar equivalent of the digital asset as of today\" y 279.6 x 223.2..402.8; \"Digital asset address for self-hosted digital assets\" y 279.5 x 36.0..211.6.",
+   "witness": "The word \"retirement\" is drawn NOWHERE on page 2 - checked against every text run on the page - and the eight widgets under RetirementAcct1[0] all sit inside the digital-asset block's y band 252.0..328.5, whose banner runs are quoted above. This is a container-path lie, so both halves of the address are wrong at once.",
+   "lineage": "The report names the leaf name_of_individual (its verdicts[3], carried [B2]) and records the container as \"the_second_trap\". It is the same eight widgets.",
+   "cells": [
+    "groups.2c_digital_asset.slots[0].checkboxes.row_type.digital_asset  (leaf RetirementAcct1[0].virtualCurrency[0].virtualCurrency[0])",
+    "groups.2c_digital_asset.slots[0].text.description_of_digital_asset  (leaf RetirementAcct1[0].virtualCurrency[0].descriptionDigitalAsset[0])",
+    "groups.2c_digital_asset.slots[0].text.number_of_units  (leaf RetirementAcct1[0].numberOfUnits[0])",
+    "groups.2c_digital_asset.slots[0].text.location_of_digital_asset  (leaf RetirementAcct1[0].locationDigitalAsset[0])",
+    "groups.2c_digital_asset.slots[0].text.account_number_custodian_or_broker  (leaf RetirementAcct1[0].assetsAccountNumber[0])",
+    "groups.2c_digital_asset.slots[0].text.usd_equivalent_today  (leaf RetirementAcct1[0].dollarEquivalentToday[0].digitalAssetToday[0])",
+    "groups.2c_digital_asset.slots[0].text.self_hosted_wallet_address  (leaf RetirementAcct1[0].name_of_individual[0])",
+    "groups.2c_digital_asset.slots[0].text.equity  (leaf RetirementAcct1[0].TotalCurrentMarketValue[0])"
+   ],
+   "_why_addresses_and_not_paths": "THE CELLS ARE NAMED BY MAP ADDRESS AND LEAF NAME, NOT BY FULL PATH. A full `topmostSubform[0]...` path written anywhere in this map is a BINDING as far as walkTargets is concerned, so quoting one in evidence binds the cell a second time and gate step 4 refuses the map - which is exactly what happened on this block's first draft, 12 targets written by more than one key. The address points at the binding that holds the path, so nothing is lost and the two cannot drift."
+  },
+  "name_of_individual": {
+   "the_name_says": "the name of a person",
+   "the_page_says": "\"Digital asset address for self-hosted digital assets\", y 279.5 x 36.0..211.6",
+   "bound_to": "self_hosted_wallet_address",
+   "witness": "Left-edge identity, x1 36.0 = x0 36.0, and it is the only caption on that baseline whose x span begins left of x 223.2. The other caption on the same baseline, \"US dollar equivalent of the digital asset as of today\" x 223.2..402.8, pairs with digitalAssetToday[0] at x 230.4..338.4, which has a printed \"$\" at x 224.2..228.6 immediately to its left. Both cells on the row are therefore accounted for and neither could take the other's caption.",
+   "lineage": "MATCHES THE LIE the registry recorded on 433-A(OIC) pages 2 and 4 (entries L07 and L12), inherited unchanged. Confirmed here against this page rather than carried across.",
+   "cells": [
+    "groups.2c_digital_asset.slots[0].text.self_hosted_wallet_address  (leaf RetirementAcct1[0].name_of_individual[0])"
+   ],
+   "_why_addresses_and_not_paths": "THE CELLS ARE NAMED BY MAP ADDRESS AND LEAF NAME, NOT BY FULL PATH. A full `topmostSubform[0]...` path written anywhere in this map is a BINDING as far as walkTargets is concerned, so quoting one in evidence binds the cell a second time and gate step 4 refuses the map - which is exactly what happened on this block's first draft, 12 targets written by more than one key. The address points at the binding that holds the path, so nothing is lost and the two cannot drift."
+  },
+  "_the_BOTH_names_this_slice_touches": {
+   "_the_rule": "A leaf name with mixed verdicts is recorded as BOTH, PER OCCURRENCE, with page order. The verdict cannot collapse to a name, and the honest occurrence coming FIRST in page order is the trap: an author reading top-down meets the true one first and generalises from it.",
+   "Name_Creditor": {
+    "verdict": "BOTH",
+    "honest_occurrences": "3 - p3 Vehicle1/Vehicle2/Vehicle3 Name_Creditor[0], each at x 205.2..352.8 under a printed \"Name of creditor\" at x 205.2..264.3 (y 344.3 / 250.7 / 157.1).",
+    "lying_occurrences": "2 on page 3 (RealEstate1, RealEstate2 - \"Monthly mortgage payment\"), and 4 more on page 5 that slice 3 will meet (Location of filing, Represented by, Possible completion date, Subject of litigation, per lineage verdicts[0]).",
+    "drawn_first": "THE LIES COME FIRST HERE. RealEstate1 Name_Creditor is at y 615.6, RealEstate2 at y 500.4, and the first honest occurrence is Vehicle1 at y 324.0. So on page 3 an author reading top-down meets a LIE first. That is the opposite of what the lineage headline states for this name and it is the safer arrangement, not the worse one - but the headline is right about the name overall, because page 3 as a whole comes before page 5.",
+    "what_the_lineage_headline_still_gets_right": "For Date_Final_Payment and Gross_Receipts the honest occurrence does come first. The sentence is corrected for Name_Creditor only, and only as to WHICH page-3 cells are honest."
+   },
+   "Date_Final_Payment": {
+    "verdict": "BOTH",
+    "honest_occurrences": "5, all on page 3 and all bound in this slice - RealEstate1 (y 615.6..631.4, x 356.4..435.6), RealEstate2 (y 500.4..516.2), Vehicle1 (y 324.0..339.8, x 360.0..435.6), Vehicle2 (y 230.4..246.2), Vehicle3 (y 136.8..152.6). Each under a printed \"Date of final payment\" whose x1 equals the widget x0.",
+    "lying_occurrences": "1, on page 5 - section_6[0].Date_Final_Payment[0] under a printed \"Docket/Case number\" (lineage verdicts[1], registry L19). Slice 3.",
+    "drawn_first": "THE HONEST OCCURRENCES COME FIRST, five of them, on the page this slice authors. An author who checks this name here and generalises will be wrong once on page 5."
+   },
+   "Gross_Receipts": {
+    "verdict": "BOTH",
+    "touched_by_this_slice": "NO. Both occurrences are outside pages 2 and 3 - honest at page 4 line (6), lying at page 5 \"Amount in dispute\". Recorded here because the standing rule says to carry the sentence into every slice that touches one of the three, and stating that this slice touches only two of them is what makes the third's absence a checked fact rather than an omission.",
+    "drawn_first": "The honest occurrence (page 4) comes before the lie (page 5)."
+   }
+  }
+ },
+ "_Vehicle1_Mileage_1_AND_LicenseTagNumber_1_DRAW_ON_VEHICLE_ROW_2": {
+  "_what": "There is no Vehicle2[0].Mileage[0] and no Vehicle2[0].LicenseTagNumber[0] on this form. Vehicle row 2's mileage and license/tag cells are two SEPARATE FIELDS whose leaf names are Vehicle1[0].Mileage[1] and Vehicle1[0].LicenseTagNumber[1] - bound at groups.4ac_vehicles.slots[1].text.mileage and .license_tag. Leaf names only: a full AcroForm path written into this prose would be a second binding of those two cells and gate step 4 would refuse the map.",
+  "_established_how": "Each is its own field with exactly one widget - adapters/pdf/maps/433boi.labels.json reports \"widget 0 of 1\" for all four of Mileage[0], Mileage[1], LicenseTagNumber[0], LicenseTagNumber[1] - so the [1] is an occurrence index in the FIELD NAME, not a second widget of one field. Writing Mileage[0] therefore writes row 1 only, and writing Mileage[1] writes row 2 only.",
+  "_proved_by_rectangle": "Mileage[0] rect y 352.8..368.6, which is Vehicle1's make/model row (Vehicle1[0].Vehicle_Make_Model[0] is at y 352.8..368.6). Mileage[1] rect y 259.2..275.0, which is Vehicle2's make/model row (Vehicle2[0].Vehicle_Make_Model[0] is at y 259.2..275.0). Identical x in both cases - 273.6..352.8 for mileage, 360.0..435.6 for license - under the repeated captions \"Mileage or use hours\" x 273.6..348.3 and \"License/Tag number\" x 360.0..432.9, drawn once per vehicle row.",
+  "_why_it_is_dangerous_rather_than_untidy": "Vehicle3[0].Mileage[0] and Vehicle3[0].LicenseTagNumber[0] DO exist under their own prefix, so the pattern is broken for exactly one of the three rows. An author who reads Vehicle1/Vehicle3 and assumes Vehicle2 by symmetry writes a target that does not exist, and validate-map stops them. An author who instead \"corrects\" the map toward the container name would put row 2's mileage in row 1's cell, overwriting it, and NOTHING downstream would catch it: neither cell feeds a total and both are text.",
+  "_how_this_map_binds_them": "Slot 1 of 4ac_vehicles takes Vehicle1[0].Mileage[1] and Vehicle1[0].LicenseTagNumber[1] for its mileage and license_tag columns, and every other column of slot 1 from Vehicle2[0]. The slot is therefore assembled from two container prefixes, which is exactly the \"nesting depth is not uniform\" case and is why slots are addressed by full path here rather than by a per-row prefix."
+ },
+ "_map_evidence_pages_2_and_3": {
+  "_why": "The printed marker or caption and the widget rectangle that justify each scalar above. Coordinates are PDF user space from adapters/pdf/page-geometry.mjs, y ascending. `witness` names why the pairing is determinate.",
+  "s2_1d_bank_accounts_from_attachment": {
+   "marker": "(1d) $",
+   "marker_at": "y 503.5, x 444.9..468.0",
+   "caption": "Total bank accounts from attachment",
+   "caption_at": "y 503.5, x 304.0..435.6",
+   "widget": "y 496.8..514.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 503.5 lies inside 496.8..514.8 and outside the (1) cell's 475.2..496.8 directly below. Both directions checked."
+  },
+  "s2_1_total_bank_accounts": {
+   "marker": "(1) $",
+   "marker_at": "y 483.4, x 449.5..468.0",
+   "caption": "Add lines (1a) through (1d) =",
+   "caption_at": "y 483.4, x 310.3..435.6",
+   "widget": "y 475.2..496.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 483.4 lies inside 475.2..496.8 and outside 496.8..514.8. The printed caption names its own operand list, which is quoted verbatim in 433boi.totals.json."
+  },
+  "s2_2d_investment_accounts_from_attachment": {
+   "marker": "(2d) $",
+   "marker_at": "y 240.7, x 444.9..468.0",
+   "caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+   "caption_at": "y 240.7, x 120.3..435.6",
+   "widget": "y 234.0..252.0, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 240.7 inside 234.0..252.0, outside the (2) cell's 212.4..234.0."
+  },
+  "s2_2_total_investment_accounts": {
+   "marker": "(2) $",
+   "marker_at": "y 220.6, x 447.0..468.0",
+   "caption": "Add lines (2a) through (2d) =",
+   "caption_at": "y 220.6, x 313.3..435.6",
+   "widget": "y 212.4..234.0, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 220.6 inside 212.4..234.0, outside 234.0..252.0."
+  },
+  "s2_real_property_listing_price": {
+   "caption": "(listing price)",
+   "caption_at": "y 678.1, x 80.2..119.9",
+   "widget": "y 674.6..687.6, x 122.4..187.2",
+   "witness": "The caption is drawn 2.5pt to the LEFT of the cell on the SAME baseline, and the two Yes/No boxes on that row are accounted for separately - the box at x 36.0..45.0 takes \"Yes\" x 50.4..64.2 and the box at x 194.4..203.4 takes \"No\" x 208.8..219.0, each with the word immediately to its right. Three widgets, three printed runs, one arrangement that fits."
+  },
+  "s2_3c_property_from_attachment": {
+   "marker": "(3c) $",
+   "marker_at": "y 431.5, x 445.3..468.0",
+   "caption": "Total value of property(s) listed from attachment [current market value X .8 minus any loan balance(s)]",
+   "caption_at": "y 431.5, x 71.9..435.6",
+   "widget": "y 424.8..442.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 431.5 inside 424.8..442.8, outside the (3) cell's 406.8..424.8."
+  },
+  "s2_3_total_real_estate": {
+   "marker": "(3) $",
+   "marker_at": "y 413.2, x 447.0..468.0",
+   "caption": "Add lines (3a) through (3c) =",
+   "caption_at": "y 413.2, x 313.8..435.6",
+   "widget": "y 406.8..424.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 413.2 inside 406.8..424.8, outside 424.8..442.8. NOTE the operand list is (3a) through (3c) - three terms, not four - because the real-estate block prints two rows and one attachment line where the vehicle block prints three and one."
+  },
+  "s2_4d_vehicles_from_attachment": {
+   "marker": "(4d) $",
+   "marker_at": "y 97.5, x 444.9..468.0",
+   "caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+   "caption_at": "y 97.5, x 83.9..435.6",
+   "widget": "y 82.8..100.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 97.5 inside 82.8..100.8, outside the (4) cell's 64.8..82.8. This is the pairing 433boi.lineage-433aoi.json verdicts[4] used to CONTRADICT registry entry L09: the leaf name Total_Value_Vehicles_Attached is a lie on 433-A(OIC) and true here."
+  },
+  "s2_4_total_vehicles": {
+   "marker": "(4) $",
+   "marker_at": "y 80.2, x 447.0..468.0",
+   "caption": "Add lines (4a) through (4d) =",
+   "caption_at": "y 80.2, x 313.3..435.6",
+   "widget": "y 64.8..82.8, x 471.6..576.0",
+   "witness": "RECTANGLE CONTAINMENT. 80.2 inside 64.8..82.8, outside 82.8..100.8."
+  }
+ },
+ "_arguable_pages_2_and_3": [
+  {
+   "id": "B10",
+   "subject": "Not one of the 130 fields on pages 2 and 3 declares a /MaxLen, so no printed cell has a limit the PDF enforces.",
+   "the_evidence": "Derived over 433boi.labels.json: of the 130 widgets on pages 2 and 3, 0 carry maxLen. Page 1 was the same and slice 1 raised [B6] about one cell in particular.",
+   "why_it_is_arguable": "The row shapes this repo already holds DO carry ceilings - bank_account.account_number is declared pdf_ceiling 16 from 433-A line 65, institution_name_and_address 86. Those ceilings came from OTHER forms. On this form the ceiling of every column is the drawn box width and an over-long value is accepted by the field and clipped in the appearance. So a value that round-trips cleanly through this form can silently lose characters on the page, and a value sized against the crosswalk ceilings will fit some cells here and not others.",
+   "what_this_slice_did": "Bound every cell and declared no ceiling of its own. Deriving a character limit from a box width needs the font metrics of the appearance stream and is a measurement this repo does not yet make.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B11",
+   "subject": "adapters/pdf/maps/433boi.lineage-433aoi.json places two page-3 captions one row too low, and its verdict on RealEstate Name_Creditor is wrong as a result.",
+   "the_evidence": "verdicts[0].boi_true_at lists RealEstate1[0].Name_Creditor[0] and RealEstate2[0].Name_Creditor[0] under a printed \"Name of lender/contract holder\". That caption has baseline y 607.1 and the row-1 widget occupies y 615.6..631.4, so the caption is BELOW the widget. The caption above it is \"Monthly mortgage payment\" at y 635.9, 4.5pt clear of the widget top - the same 4.5pt gap as the two cells on that block whose identity is not in question.",
+   "why_it_is_arguable_and_not_simply_wrong": "The report quotes y as the TOP of a text run and this map quotes the BASELINE, a constant 8.0pt apart at this font size, so its \"y=615.1\" and this map's \"y=607.1\" are the same printed run. What is wrong is the DIRECTION it read in, not the measurement. The report was authored at intake with no bindings to check it against, which is exactly when a direction error is invisible.",
+   "what_this_slice_did": "Bound Name_Creditor to monthly_payment and County_Country to lender_name_address on both real-estate rows, on the same-row honest witness. The lineage file is NOT edited: it is the intake record and correcting it in place would erase what intake actually concluded. The correction lives in _the_four_names_that_lie_on_pages_2_and_3.RealEstate_Name_Creditor.the_lineage_report_is_wrong_about_this_one.",
+   "what_it_does_not_change": "The report's headline. Name_Creditor is still BOTH, and page 3 still comes before page 5.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B12",
+   "subject": "Three groups on these pages want a business/personal discriminator that [D-06] forbids them from declaring.",
+   "the_evidence": "1ac_bank_accounts routes bank_account, whose canonical row declares is_business_account as a row_flag; 2ab_investment_accounts routes investment, same column; 3ab_real_estate routes real_property, whose row_flag is `kind`. All three are among the five flagged columns [D-06] found, and all three are in its load-bearing three.",
+   "why_it_is_arguable": "Every row this form writes IS a business row - the banner reads \"Business Asset Information\" - so on 433-B(OIC) the flag would be a constant, which is the strongest evidence yet that it is routing metadata and not a printed cell. That is [D-06] option 1 (SPLIT THE KEY) reading as correct, and this slice is not the place to decide it.",
+   "what_this_slice_did": "Bound all three groups WITHOUT a row_flag, per the standing ruling, and said so in each group's _no_row_flag block.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B13",
+   "subject": "The digital-asset table has one printed row and the row shape this repo holds allows many.",
+   "the_evidence": "Page 2 draws exactly one digital-asset row - one tick, one description cell, one units cell, one location cell, one custodian-account cell, one wallet-address cell, one USD cell, one total at (2c). 433-A(OIC) prints four (15a-15d) and 433-F prints two.",
+   "why_it_is_arguable": "A business holding three digital assets has two of them dropped by the overflow rule, logged and not printed, and the form's own remedy is the attachment line at (2d) - which this map declares NOT CHECKABLE. So the arithmetic still reconciles while two assets are absent from the page, and the only trace is the overflow log.",
+   "what_this_slice_did": "Declared max 1, which is what the page prints, with overflow: log.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B14",
+   "subject": "The digital-asset row's column keys are new and do not match the declared digital_asset class.",
+   "the_evidence": "asset-row-shapes.json digital_asset declares type_of_digital_asset, name_of_digital_asset, email_used_to_set_up, location_of_digital_asset, amount_and_value_usd. This form prints Description of digital asset, Number of units, Location of digital asset, Account number for assets held by a custodian or broker, US dollar equivalent as of today, and a self-hosted wallet address - six facts, of which only location_of_digital_asset lands on a declared key.",
+   "why_it_is_arguable": "The keys were taken from THIS FORM'S printed captions rather than bent onto the declared ones, because number_of_units and account_number_custodian_or_broker are facts the declared row has no column for and email_used_to_set_up is a fact this form does not ask. Naming them after the nearest declared key would assert a sameness the pages do not support.",
+   "what_this_slice_did": "Used caption-derived keys and left the class alone. Reconciling them is crosswalk work and belongs in the classification pass, where every new key is classified against the backbone with compared_against.",
+   "status": "OPEN"
+  }
+ ]
 }

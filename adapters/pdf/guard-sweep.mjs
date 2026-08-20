@@ -450,6 +450,19 @@ export const VACUOUS = [
 
   { id: 'G-86', file: 'register-ids.mjs', anchor: 'ids.length > 0 && ids.every((i) => crossIds.has(i))', verdict: 'guarded',
     why: 'THE SAME TEST ON asset-row-shapes.json\'s defect list, guarded the same way and for the same reason. It is written with its own `ids.length > 0` rather than relying on the enclosing `if (d.length)` — an outer guard is one the next edit can move away from, and this one decides whether a register is measured at all.' },
+
+  // ─── the 433-B(OIC) slice-2 shared-widget derivation [S-30] ────────────────────────────
+  //
+  // BOTH LOOPS ARE GUARDED BY THE SAME `recognised` FLAG, and the flag is what makes an empty
+  // read a STOP rather than a pass. [S-30] exists to check a claim about how many widgets four
+  // named fields carry; if both extractions matched nothing, the entry would have compared
+  // nothing and reported the claim as disposed. So `recognised` stays false, the fallback
+  // pushes { unrecognised: true }, and the sweep names the site. Same construct as [G-43]'s.
+  { id: 'G-87', file: 'count-sweep.mjs', anchor: 'for (const m of str.matchAll(new RegExp(String.raw`for\\s+all\\s+(${N})\\s+of`', verdict: 'guarded', family: true,
+    why: 'THE "for all N of" HALF OF [S-30]. An empty match sets nothing and leaves `recognised` false; a false `recognised` after BOTH loops pushes { unrecognised: true }, which the sweep reports as an unrecognised phrasing rather than as agreement. The empty case therefore cannot reach a success verdict, and it is the FALLBACK that carries the disposition rather than the loop.' },
+
+  { id: 'G-88', file: 'count-sweep.mjs', anchor: 'for (const m of str.matchAll(new RegExp(String.raw`widget\\s+0\\s+of\\s+(${N})`', verdict: 'guarded', family: true,
+    why: 'THE QUOTED "widget 0 of N" HALF OF [S-30], with the same disposition and the same `recognised` flag. The two halves are separate loops rather than one alternation because they compare against DIFFERENT derived figures - the first against how many of the four named fields carry exactly one widget, the second against the largest per-field widget count among them - and a single loop would have to pick one.' },
 ];
 
 // ---------------------------------------------------------------------------------------

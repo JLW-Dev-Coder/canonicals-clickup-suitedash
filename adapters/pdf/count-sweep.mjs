@@ -692,6 +692,86 @@ export const MANIFEST = [
   // _map_evidence, and three of those bindings are the correlate-labels.mjs probes for this
   // form — including the two that discriminate against a leaf name and against an 18pt-adjacent
   // total. Those probes are a STOP: the tool writes no label file at all until they pass.
+
+  // ═══ 433-B(OIC) slice 2, pages 2 and 3 ═══════════════════════════════════════════════
+  //
+  // [S-29] AND [S-30] ARE DERIVED BECAUSE THEY CAN BE. Both are counts over artefacts this
+  // repo holds - the widget geometry and the enumerated field list - rather than over a drawn
+  // caption, so declaring them underivable would be declining a derivation that is available.
+  // [S-31] is the structural transcription and takes [S-27]'s disposition for [S-27]'s reason.
+
+  D({ id: 'S-29', file: /433boi\.map\.json$/,
+    at: /^(_the_condition_that_governs_pages_2_and_3\.no_widget_on_these_pages_declares_a_MaxLen$|_arguable_pages_2_and_3\[0\]\.(subject|the_evidence)$)/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const str = String(v);
+      // Both halves of the claim, DERIVED FROM THE WIDGET GEOMETRY: how many widgets are on
+      // pages 2 and 3, and how many of them declare a /MaxLen. `maxLen` is null when the field
+      // declares none, which is the distinction the claim is about.
+      const on23 = ctx.widgets.filter((w) => w.page === 2 || w.page === 3);
+      const withMax = on23.filter((w) => w.maxLen !== null && w.maxLen !== undefined).length;
+      const rows = [];
+      const N = `(?:${WORD_NUM}|\\d+)`;
+      const num = (t) => word(t) ?? Number(t);
+      const all = (re, what, derived, from) => {
+        let hit = false;
+        for (const m of str.matchAll(new RegExp(re, 'gi'))) { hit = true; rows.push({ what, claimed: num(m[1]), derived, from }); }
+        return hit;
+      };
+      let recognised = false;
+      // "0 of the 130 fields on pages 2 and 3 carries /MaxLen"
+      recognised = all(String.raw`(?<!\bnot\s)(${N})\s+of\s+the\s+${N}\s+fields\s+on\s+pages\s+2\s+and\s+3`, 'widgets on pages 2 and 3 that declare a /MaxLen', withMax, 'the widget geometry: every widget on pages 2 and 3 whose field reports a non-null /MaxLen') || recognised;
+      // "of the 130 widgets on pages 2 and 3, 0 carry maxLen"
+      recognised = all(String.raw`of\s+the\s+${N}\s+widgets\s+on\s+pages\s+2\s+and\s+3,\s*(${N})\s+carry`, 'widgets on pages 2 and 3 that declare a /MaxLen', withMax, 'the widget geometry, same derivation') || recognised;
+      // and the denominator, wherever it is stated
+      recognised = all(String.raw`(?:the\s+)?(${N})\s+(?:fields|widgets)\s+on\s+pages\s+2\s+and\s+3`, 'widgets on pages 2 and 3', on23.length, 'the widget geometry: every widget whose page is 2 or 3') || recognised;
+      // "Not one of the 130 fields on pages 2 and 3 declares a /MaxLen" - the count is the WORD
+      // "Not one", which no numeric pattern reaches, so it is recognised and compared as zero.
+      if (/not one of the/i.test(str)) { recognised = true; rows.push({ what: 'widgets on pages 2 and 3 that declare a /MaxLen (claimed as "Not one")', claimed: 0, derived: withMax, from: 'the widget geometry, same derivation' }); }
+      if (!recognised) rows.push({ unrecognised: true });
+      return rows;
+    },
+    fallback: {
+      kind: 'underivable',
+      reason: 'A /MaxLen CLAIM IN A PHRASING THIS ENTRY DOES NOT KNOW. Four are recognised: "N of the M fields on pages 2 and 3", "of the M widgets on pages 2 and 3, N carry", a bare "M fields on pages 2 and 3", and the word form "Not one of the M fields". A fifth phrasing lands here rather than being silently derived as zero, because a claim this entry cannot parse and reports as agreeing is exactly the failure the manifest exists to prevent.' } }),
+
+  D({ id: 'S-30', file: /433boi\.map\.json$/,
+    at: /^_Vehicle1_Mileage_1_AND_LicenseTagNumber_1_DRAW_ON_VEHICLE_ROW_2\._established_how$/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const str = String(v);
+      // THE CLAIM IS THAT FOUR NAMED FIELDS HAVE ONE WIDGET EACH, which is what makes
+      // Mileage[1] a separate field rather than a second widget of Mileage[0] - and that
+      // distinction is the whole reason slot 1 of 4ac_vehicles is assembled from two container
+      // prefixes. Derived from the widget geometry by counting widgets per field name.
+      const per = new Map();
+      for (const w of ctx.widgets) per.set(w.name, (per.get(w.name) || 0) + 1);
+      const NAMES = ['Vehicle1[0].Mileage[0]', 'Vehicle1[0].Mileage[1]', 'Vehicle1[0].LicenseTagNumber[0]', 'Vehicle1[0].LicenseTagNumber[1]']
+        .map((leaf) => `topmostSubform[0].F433-B-OIC_Page3[0].${leaf}`);
+      const singles = NAMES.filter((n) => per.get(n) === 1).length;
+      const rows = [];
+      const N = `(?:${WORD_NUM}|\\d+)`;
+      const num = (t) => word(t) ?? Number(t);
+      let recognised = false;
+      // 'reports "widget 0 of 1" for all four of ...'
+      for (const m of str.matchAll(new RegExp(String.raw`for\s+all\s+(${N})\s+of`, 'gi'))) {
+        recognised = true; rows.push({ what: 'of those named fields that carry exactly one widget', claimed: num(m[1]), derived: singles, from: 'the widget geometry: widgets grouped by full field name, counted' });
+      }
+      // "widget 0 of 1" itself - the per-field widget count the claim quotes.
+      for (const m of str.matchAll(new RegExp(String.raw`widget\s+0\s+of\s+(${N})`, 'gi'))) {
+        recognised = true; rows.push({ what: 'widgets on each of the four named fields', claimed: num(m[1]), derived: Math.max(...NAMES.map((n) => per.get(n) || 0)), from: 'the widget geometry: the largest per-field widget count among the four' });
+      }
+      if (!recognised) rows.push({ unrecognised: true });
+      return rows;
+    },
+    fallback: {
+      kind: 'underivable',
+      reason: 'A SHARED-WIDGET CLAIM IN A PHRASING THIS ENTRY DOES NOT KNOW. Two are recognised: "for all N of" and the quoted "widget 0 of N". A third phrasing lands here rather than being reported as agreeing.' } }),
+
+  D({ id: 'S-31', file: /433boi\.map\.json$/,
+    at: /^(_the_condition_that_governs_pages_2_and_3\.|_printed_headings_and_markers_pages_2_and_3\.|_the_four_names_that_lie_on_pages_2_and_3\.|_Vehicle1_Mileage_1_AND_LicenseTagNumber_1_DRAW_ON_VEHICLE_ROW_2\.|_map_evidence_pages_2_and_3\.|_arguable_pages_2_and_3\[\d+\]\.|_partition\._still_not_closed$)/,
+    kind: 'underivable',
+    reason: 'A TRANSCRIPTION OF THE DRAWN PAGE AND OF A PRIOR ARTEFACT, taking [S-27]\'s disposition for [S-27]\'s reason. The numbers in these blocks are COORDINATES - a caption\'s baseline y, the x range it spans, a widget rectangle, the gap in points between a caption and the cell beneath it - together with printed line markers and references to entries in adapters/pdf/maps/433boi.lineage-433aoi.json and adapters/pdf/maps/433aoi.name-lies.json quoted by id. None of them is a count of anything this repo holds a list of, so there is no set to re-derive them from; what re-checks them is re-reading the page, which is what adapters/pdf/align-block.mjs does and what every _at in 433boi.headings.json is re-measured against on every run. The two claims in these blocks that ARE counts over artefacts - the /MaxLen figure and the per-field widget count - are pulled out and DERIVED by [S-29] and [S-30], which is why this reason can be honest about the rest.' }),
   D({ id: 'S-27', file: /433boi\.map\.json$/,
     at: /^(_the_condition_that_governs_page_1\.|_printed_headings_and_markers_first\.|_no_lettered_box_on_this_page$|_map_evidence\.|_nesting_note$|checkboxes\.|check_here\.|exclusive\._why$|_computed\.|groups\.|_never_autofill\.|_not_checkable\.|_deferred_pages$|_arguable_page1\[|_carried$|authored_from$|slice$|_partition\._why_unaccounted_is_the_word_and_not_deferred$)/,
     kind: 'underivable',

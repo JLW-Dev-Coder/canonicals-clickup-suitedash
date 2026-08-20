@@ -369,6 +369,19 @@ export const EMPTY_DEMAND = [
     why: 'The covered sites are the carried ledger, and no entry in it names a GROUP. B1 to B5 are findings about inherited leaf names across two forms, B6 to B8 are about three page-1 scalars, and B9 is about where the coverage table is built. The map DOES declare a group and check-row-shape.mjs does resolve its columns — reporting 3 slotted rows across 1 declaring group on the fill this slice runs — but that happens under `groups.partners`, which is a different region from the one this blanket covers. The demand is empty because the ledger discusses cells and names, not row shapes.' },
   { blanket: 'S-18', instrument: 'validate-map.mjs', forms: ['433boi'],
     why: 'THE LEDGER QUOTES NO FULL ACROFORM PATH, AND THAT IS DELIBERATE RATHER THAN INCIDENTAL. A `topmostSubform[0]...` path written into prose counts as a second binding and trips the duplicate-write gate — a defect this repo has already met — so carried entries name the LEAF NAME (Name_Creditor, CB8_08) or the INPUT KEY (s1_total_number_of_employees) instead. There is therefore nothing for the path prover to extract, and a non-empty demand here would itself be the finding.' },
+  // [S-15] ON THIS FORM: THE TOTALS FILE QUOTES NO PRINTED MONEY CONSTANT.
+  //
+  // The prover for [S-15] -> gate step 11 extracts the printed money constants a covered site
+  // quotes and asserts each one is carried as a feeder the step recomputes. 433-A(OIC) prints
+  // "minus ($1,000)" on line (1) and 433-B(OIC) prints no such figure anywhere on pages 2 or 3:
+  // the only two constants in this declaration are the 0.8 multiplier, which is a FACTOR and is
+  // carried as one, and the literal 0 the leased-vehicle branch writes, which is carried as a
+  // constant feeder with its printed caption. Neither is written with a currency sign, which is
+  // what the extractor looks for. So the demand is empty because the FORM prints no money
+  // constant, not because the citation is wrong about what step 11 does.
+  { blanket: 'S-15', instrument: 'gate step 11', forms: ['433boi'],
+    why: 'This form\'s pages 2 and 3 print no money constant at all. The two constants the totals declaration carries are a 0.8 factor and a literal 0, both declared as feeders with their printed captions and both recomputed by step 11; neither is a currency figure drawn on the page, which is the atom the prover extracts. The demand is empty because there is nothing of that kind on the page to demand.' },
+
   { blanket: 'S-18', instrument: 'gate step 11', forms: ['433boi'],
     why: 'No printed money constant is quoted in the covered sites, because page 1 prints none anywhere: the map records that this page draws no lettered Box, no "Add lines" instruction and no total-shaped cell at all, and its one money cell is an input. Gate step 11 is SKIPPED on this form for the same reason and says so in terms. The absence is the same fact reported by two instruments, not a gap in either.' },
 
@@ -726,7 +739,17 @@ export const COMPLETENESS = [
     what: 'every scalar the map binds on page 1 prints ABOVE the partners heading, so none is reachable as a table row',
     count: (ctx) => {
       const HEADING_Y = 370.5;
-      const scalars = Object.values(ctx.mapDoc.map || {});
+      // SCOPED TO PAGE 1, AND IT HAS TO BE. The claim is about the fourteen scalars printed
+      // ABOVE the partners heading ON PAGE 1; the heading is a page-1 baseline and comparing a
+      // page-3 widget's y against it is comparing two different pages' coordinate spaces. The
+      // first version of this counter took every value of `map{}`, which was the same set while
+      // 433-B(OIC) had authored one page and became 23 of which 9 are elsewhere the moment slice
+      // 2 landed - reporting 14 of 23 covered and naming nine page-2 and page-3 totals as
+      // "uncovered" scalars that had never been in the claim. Nothing had moved; the counter's
+      // universe had widened underneath it. A counter that grows its own universe is [K-18] in
+      // reverse: that one could see nothing and passed, this one saw too much and failed.
+      const onPage1 = new Set((ctx.widgets || []).filter((w) => w.page === 1).map((w) => w.name));
+      const scalars = Object.values(ctx.mapDoc.map || {}).filter((t) => onPage1.has(t));
       const byName = new Map((ctx.widgets || []).map(w => [w.name, w]));
       const above = scalars.filter((t) => { const w = byName.get(t); return w && w.page === 1 && w.rect && w.rect[1] > HEADING_Y; });
       if (!byName.size) return { universe: scalars.length, covered: 0, fail: 'no widget geometry available, so no scalar could be placed above or below the heading' };
@@ -978,6 +1001,62 @@ export const COMPLETENESS = [
     kind: 'not-coverage',
     reason: 'A CLAIM ABOUT WHAT KIND OF THING EVERY NUMBER IS, NOT THAT A SET HAS BEEN COVERED. [S-22] classifies the numbers in crosswalk.433f.json as printed line markers, property counts from a completed run, or forecasts inside an `arguable` item — and a forecast about work not yet done cannot be derived from a tree where the work has not happened, by construction. The COVERAGE half of that same reason, "every binding names a map key that exists", is a real completeness claim and is counted by [K-09]. Splitting the two is the point: one sentence carried both, and only one of them had a set to count.' }),
 
+  // ── 433-B(OIC) slice 2: the pages 2 and 3 completeness claims ─────────────────────────
+
+  // "Every money total on these pages is bound against its printed marker" is the claim the
+  // whole slice rests on, said twice. Universe: the widgets in the TOTAL COLUMN on pages 2
+  // and 3 - x0 = 471.6, which is where all nineteen marker-paired cells are drawn and where
+  // nothing else is. Covered: those the map binds. The x is DERIVED from the geometry by
+  // equality rather than by a band, because the column is a layout grid position on this form
+  // and either a widget starts on it or it does not.
+  C({ id: 'K-21', match: /[Ee]very money total (?:on these pages|below) is bound/,
+    kind: 'counter',
+    what: 'every money total the PDF draws in the marker column on pages 2 and 3 is bound by this map',
+    count: (ctx) => {
+      const targets = new Set(walkTargets(ctx.mapDoc).map((t) => t.target));
+      const col = (ctx.widgets || []).filter((w) => (w.page === 2 || w.page === 3) && Math.abs(w.rect[0] - 471.6) < 0.05);
+      // AN EMPTY UNIVERSE IS A DEAD COUNTER, NOT A SATISFIED ONE - [K-18]'s lesson, applied.
+      if (!col.length) return { universe: 0, covered: 0, fail: 'no widget on pages 2 or 3 starts at x 471.6 - the counter could not see its universe, so "every money total is bound" is unproved rather than true. Either the geometry stopped being read or the form was re-laid out.' };
+      const covered = col.filter((w) => targets.has(w.name));
+      return { universe: col.length, covered: covered.length, uncoveredList: col.filter((w) => !targets.has(w.name)).map((w) => w.name) };
+    } }),
+
+  // "No /MaxLen on any of the 130 fields on pages 2 and 3". Universe: the widgets on those two
+  // pages. Covered: those declaring no /MaxLen. The claim holds only when the two are equal,
+  // so a single cell acquiring a limit fails it and names the cell - which is the outcome that
+  // matters, because [B10] is carried on the assumption that none has one.
+  C({ id: 'K-22', match: /any of the \d+ fields on pages 2 and 3, so no printed cell carries a limit/,
+    kind: 'counter',
+    what: 'every widget on pages 2 and 3 declares no /MaxLen',
+    count: (ctx) => {
+      const on23 = (ctx.widgets || []).filter((w) => w.page === 2 || w.page === 3);
+      if (!on23.length) return { universe: 0, covered: 0, fail: 'no widgets read on pages 2 or 3 - the counter could not see its universe.' };
+      const none = on23.filter((w) => w.maxLen === null || w.maxLen === undefined);
+      return { universe: on23.length, covered: none.length, uncoveredList: on23.filter((w) => w.maxLen !== null && w.maxLen !== undefined).map((w) => `${w.name} (/MaxLen ${w.maxLen})`) };
+    } }),
+
+  // "Each of the three rows is declared as TWO predicated lines." Universe: the slots of
+  // 4ac_vehicles. Covered: slots whose quick_sale_equity cell carries exactly two declared
+  // total lines in the totals file. A row declared once would leave one branch of the printed
+  // conditional unverified on every filled form while the transcript read clean, which is the
+  // exact failure the two-line construct exists to prevent.
+  C({ id: 'K-23', match: /Each of the three rows is declared as TWO predicated lines/,
+    kind: 'counter',
+    what: 'every vehicle slot declares both branches of the printed lease/own conditional',
+    count: (ctx) => {
+      const g = ctx.mapDoc.groups?.['4ac_vehicles'];
+      const slots = g?.slots?.length ?? 0;
+      if (!slots) return { universe: 0, covered: 0, fail: 'the map declares no 4ac_vehicles group with slots - the counter could not see its universe.' };
+      const byRow = new Map();
+      for (const t of (ctx.totalsDoc?.totals || [])) {
+        if (t.total_cell?.group !== '4ac_vehicles' || t.total_cell?.column !== 'quick_sale_equity') continue;
+        byRow.set(t.total_cell.row, (byRow.get(t.total_cell.row) || 0) + 1);
+      }
+      const rows = [...Array(slots).keys()];
+      const covered = rows.filter((i) => byRow.get(i) === 2);
+      return { universe: slots, covered: covered.length, uncoveredList: rows.filter((i) => byRow.get(i) !== 2).map((i) => `4ac_vehicles[${i}] declares ${byRow.get(i) || 0} predicated line(s), expected 2`) };
+    } }),
+
   // ── the families that are NOT coverage claims ──────────────────────────────────────────
   C({ id: 'K-90', match: null, kind: 'not-coverage', appliesTo: 'geometry',
     reason: 'A QUANTIFIER OVER GEOMETRY, NOT OVER COVERAGE. "all sit under y 668", "each holds exactly one cell", "every printed instance sits in the same block" — these describe where the page draws things. They assert nothing about a set having been checked, so there is no covered set to count and a counter would be counting the wrong thing. What DOES check them is the coordinate half of the forward-reference register: align-block.mjs and verify-headings.mjs re-measure every coordinate these phrases quote, and that proof runs above.' }),
@@ -986,6 +1065,10 @@ export const COMPLETENESS = [
     kind: 'not-coverage',
     reason: 'A STATEMENT ABOUT MUTUAL EXCLUSION ON ONE RUN, not about a set being covered. "either line can hold on any filled form, so exactly one is checked" says that the two are exclusive and that the gate reports the other as skipped — which is exactly what the gate\'s declared/checked/skipped triple already reports and what `tripwires_skipped` carries into the summary. The covered set is a set of size one by construction.' }),
 
+
+  C({ id: 'K-24', match: /every slice that touches one of the three/,
+    kind: 'not-coverage',
+    reason: 'A STATEMENT ABOUT WHICH SLICES A STANDING RULE APPLIES TO, not that a set in this tree is covered. The rule is that a leaf name with mixed verdicts is recorded per occurrence in every slice that binds one of its occurrences; the sentence says this slice binds occurrences of two of the three such names and none of the third, and that the third is named anyway so its absence reads as checked rather than forgotten. The set it quantifies over is FUTURE SLICES, which nothing in this tree can count, and the fact it asserts about the present - that Gross_Receipts has no occurrence on pages 2 or 3 - is not a coverage claim but a negative one, disposed of by [K-21]: every widget in the total column on those pages is bound by this map and none of them is a Gross_Receipts cell.' }),
   C({ id: 'K-92', match: /every 433-A table and for the same reason|Each copy’s _why claimed to mirror the other and nothing checked|Every added entry covers keys the completeness blanket claimed were already covered|any loan where you pledged an asset as collateral|any of their identity columns can land|any kind is drawn on this page|any separate line|any map where two groups accept the same class/i,
     kind: 'not-coverage',
     reason: 'PROSE ABOUT A PAST STATE, A DECISION, OR THE PRINTED FORM — not a claim that a set in this tree is covered. Three shapes appear here: a recorded reason for NOT provisioning something ("every 433-A table and for the same reason: indexing a table per slot needs a property per row per column"), a superseded finding kept verbatim ("Each copy\'s _why claimed to mirror the other and nothing checked it" — the defect, quoted, in the past tense), and a transcription of a printed caption ("any loan where you pledged an asset as collateral"). None names a set with a cardinality this tree can produce, and asserting one would be inventing a denominator.' }),

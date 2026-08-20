@@ -5,8 +5,7 @@
  "_what": "The printed banners this form draws, and which group's rows print under which banner. adapters/pdf/verify-headings.mjs re-measures every `_at` out of the PDF and asserts that each group's slots fall inside its heading's band and run in printed order.",
  "_why": "A group whose slots are correct individually can still be routed under the wrong heading, and the result prints cleanly and is wrong. On this form the risk is concrete rather than theoretical: Section 1 contains a block of business scalars AND a three-row table of people, one after the other under a single banner, and the fourteen scalars must never be reachable as rows of that table nor the rows as scalars.",
  "_band_rule": "A group's band runs from its declared heading's baseline down to the next printed structure below it — here the page's lowest drawn run. Slots must fall strictly inside; a slot on the boundary is a slot whose heading is arguable, and this file declares none.",
- "_slice": "SLICE 1 - page 1 only. Pages 2 through 6 declare no heading here yet and no group; their banners are read when their slices are authored, from the page, not by extrapolating this one.",
-
+ "_slice": "SLICE 2 - pages 1, 2 and 3. Pages 4 through 6 declare no heading here yet and no group; their banners are read when their slices are authored, from the page, not by extrapolating these.",
  "headings": [
   {
    "id": "SECTION_1_BUSINESS",
@@ -20,15 +19,56 @@
    "text": "Provide information about all partners, officers, LLC members, major shareholders (domestic and foreign), etc., associated with the business.",
    "_at": "y 370.5, x 36.2..575.0. A full-width instruction sentence rather than a short banner, continued by 'Include attachments if additional space is needed.' at y 360.9, x 36.2..226.9.",
    "_why_a_sentence_is_declared_as_a_heading": "Because it is what the page draws. Section 1 has ONE banner and TWO structures under it, and the sentence at y 370.5 is the only printed thing separating the business scalars above from the three person-rows below. Declaring the Section 1 banner as the partners table's heading would put its band's top at y 620.9 and swallow all fourteen scalars — which is exactly the misrouting this file exists to prevent."
+  },
+  {
+   "id": "CASH_AND_INVESTMENTS",
+   "page": 2,
+   "text": "Cash and investments",
+   "_at": "y 651.1, x 36.0..120.9, with the qualifier \"(domestic and foreign)\" drawn as a second run at x 123.1..192.8 on the same baseline. The Section 2 banner above it - \"Section 2\" / \"Business Asset Information\" / \"(Domestic and Foreign)\" at y 745.9 - is NOT declared as a heading here, for the reason PARTNERS_AND_OFFICERS gives on page 1: it would put the band top at y 745.9 and swallow the four paragraphs of valuation instructions between y 729.7 and y 670.9.",
+   "_why_one_heading_over_three_tables": "Page 2 prints ONE sub-banner and THREE repeatable tables under it - bank accounts at (1a)-(1c), investment accounts at (2a)-(2b), and the single digital-asset row at (2c). Nothing is drawn between them except the row captions themselves. \"Investment account\" at y 465.7 x 36.0..105.4 and \"Digital asset\" at y 321.7 x 50.4..94.0 are ROW LABELS, not banners: the first is on the same baseline as its own three type-boxes and the second has a tick box 5.4pt to its left. Declaring either as a heading would assert a printed structure the page does not draw.",
+   "_the_banner_is_more_than_one_drawn_run": "The banner is TWO drawn runs on one baseline: \"Cash and investments\" x 36.0..120.9 and \"(domestic and foreign)\" x 123.1..192.8. The declaration names the run that names the subject, which is the convention SECTION_1_BUSINESS already holds on page 1, and verify-headings re-measures THAT run out of the PDF on every run. Declaring the reading-order concatenation would declare a string the page draws nowhere."
+  },
+  {
+   "id": "REAL_ESTATE",
+   "page": 3,
+   "text": "Real estate",
+   "_at": "y 708.7, x 36.0..78.2, with \"(buildings, lots, commercial property, etc.)\" as a second run at x 80.5..210.0.",
+   "_the_banner_is_more_than_one_drawn_run": "Two drawn runs: \"Real estate\" x 36.0..78.2 and \"(buildings, lots, commercial property, etc.)\" x 80.5..210.0. Same convention."
+  },
+  {
+   "id": "BUSINESS_VEHICLES",
+   "page": 3,
+   "text": "Business vehicles",
+   "_at": "y 396.7, x 36.0..105.4, continuing x 107.6..573.3 and \"attachment.\" at y 387.1 x 36.0..77.8.",
+   "_the_banner_is_more_than_one_drawn_run": "Three drawn runs across two baselines: \"Business vehicles\" y 396.7 x 36.0..105.4, the long qualifier x 107.6..573.3, and \"attachment.\" y 387.1 x 36.0..77.8. Same convention."
   }
  ],
-
  "groups": {
   "partners": {
    "heading": "PARTNERS_AND_OFFICERS",
    "_why": "The three person-rows print between the instruction sentence at y 370.5 and the foot of the page. Row 1's cells are at y 332.6 / 303.8 / 275.0, row 2's at y 246.2 / 217.4 / 188.6, row 3's at y 159.8 / 131.0 / 102.2 — every one of the nine baselines strictly below y 370.5 and strictly above the footer at y 36.1. The business scalars above (y 591.8 down to y 386.6) are ALL above the sentence and are bound as scalars in the map, never as rows: the lowest of them, s1_average_gross_monthly_payroll at y 386.6, sits 16.1pt above the heading, so the band boundary separates them cleanly rather than by a tolerance."
+  },
+  "1ac_bank_accounts": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "Three rows between the banner at y 651.1 and the next declared structure. Slot baselines at y 632.7/601.2, 589.5/558.0 and 546.3/514.8 - every one strictly below 651.1 and strictly above the investment block's first row at y 463.5."
+  },
+  "2ab_investment_accounts": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "Two rows at y 463.5..403.2 and y 391.5..331.2, below the bank block and above the digital-asset row at y 319.5. Same banner, and the band is shared rather than subdivided because the page draws nothing to subdivide it with."
+  },
+  "2c_digital_asset": {
+   "heading": "CASH_AND_INVESTMENTS",
+   "_why": "One row at y 319.5..252.0, the lowest of the three tables under this banner. Below it the page draws the (2d) and (2) scalars and then the \"Notes Receivable\" sub-banner at y 199.3, which is where this band ends."
+  },
+  "3ab_real_estate": {
+   "heading": "REAL_ESTATE",
+   "_why": "Two rows at y 660.2..442.8, between the banner at y 708.7 and the \"Business vehicles\" banner at y 396.7. The (3c) and (3) scalars at y 424.8..406.8 are bound as scalars and are not slots of this group."
+  },
+  "4ac_vehicles": {
+   "heading": "BUSINESS_VEHICLES",
+   "_why": "Three rows at y 368.6..288.0, y 275.0..194.4 and y 181.4..100.8, all below the banner at y 396.7 and above the footer at y 24.7. The (4d) and (4) scalars at y 100.8..64.8 are scalars, not slots."
   }
  },
-
- "_no_other_group_on_page_1": "Page 1 draws one repeatable table and one only. The fourteen scalars above the partners block are not a table: each has its own caption at its own y, no caption repeats among them, and no two share a row shape. By contrast every one of the partner block's eight captions is drawn three times at identical x and differing y, which is what a repeated row looks like on this form. Stated so that 'only one group' is a reading of the page rather than an absence of effort."
+ "_no_other_group_on_page_1": "Page 1 draws one repeatable table and one only. The fourteen scalars above the partners block are not a table: each has its own caption at its own y, no caption repeats among them, and no two share a row shape. By contrast every one of the partner block's eight captions is drawn three times at identical x and differing y, which is what a repeated row looks like on this form. Stated so that 'only one group' is a reading of the page rather than an absence of effort.",
+ "_no_other_group_on_pages_2_and_3": "Pages 2 and 3 draw five repeatable tables and five only, and every one is declared above. The nine scalars bound on these pages - (1d), (1), (2d), (2), (3c), (3), (4d), (4) and the listing price - are not tables: each has its own caption at its own y, none of those captions repeats, and eight of the nine are the only widget on their baseline. By contrast every caption in each of the five tables is drawn once per row at identical x and differing y, which is what a repeated row looks like on this form."
 }

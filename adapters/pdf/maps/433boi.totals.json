@@ -1,0 +1,492 @@
+{
+ "form": "433boi",
+ "form_revision": "4-2026",
+ "catalog": "55897B",
+ "_why": "Every printed total on pages 2 and 3, with the printed operands that feed it, so gate step 11 can recompute each one from what the PAGE draws rather than from what the record says. Authored from the printed captions, quoted verbatim.",
+ "authored_from": "THE PRINTED PAGE, read with adapters/pdf/page-geometry.mjs. Every `caption` below is drawn text quoted verbatim; every operand list is the one the caption itself names.",
+ "_slice": "SLICE 2 - the nineteen markers on pages 2 and 3. Pages 4, 5 and 6 print lines (5) through (20) and Boxes A through H and are NOT declared here; step 11 checks what this file declares and reports the rest as unauthored, which is what a partial slice should read as.",
+ "_notes": [
+  "THE FLOOR IS PRINTED AND IT IS PRINTED ONCE. \"Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\".\" is drawn at y 670.9 x 165.2..576.0 on page 2, above the first total on the form. It is quoted as floor_caption on all four Add-lines totals rather than on the first only, because a floor declared on one line and not its siblings would read as a difference between the lines that the page does not draw.",
+  "THE MULTIPLIER IS 0.8 AND IT IS READ OFF THE PAGE. \"X .8 = $\" is drawn six times on page 3 - twice in the real-estate block at x 125.9..155.9 and four times in the vehicle block at x 115.1..145.1 (three rows plus the (4d) attachment caption). The leaf name is Times_8 and it agrees, which is recorded as agreement and not relied on: 433-A(OIC) carries a cell named Times_7 that the page multiplies by .8, and that is registry entry C02 and the reason this declaration reads the factor off the drawn text.",
+  "THE INVESTMENT ROWS CARRY NO MULTIPLIER. The (2a) and (2b) rows print \"– $\" between the value cell and the loan cell and nothing else. Declared with no factor. The real-estate and vehicle rows print \"X .8 = $\" and a third money cell for the result. Two shapes that look alike at a glance and are not.",
+  "THE VEHICLE TOTAL IS ONE PRINTED CELL WITH TWO DEFINED VALUES. \"Total value of vehicle (if the vehicle is leased, enter 0 as the total value)\" names a selector that is a printed box on the same row - the Lease/Own pair. Each of the three rows is declared as TWO predicated lines, so exactly one is checked on any filled form and the other is SKIPPED with its reason printed. Declaring only the OWN branch would leave the printed 0 on a leased row unverified while the transcript read clean."
+ ],
+ "totals": [
+  {
+   "line": "1",
+   "caption": "Add lines (1a) through (1d) =",
+   "caption_at": "y 483.4, x 310.3..435.6, with the marker \"(1) $\" at x 449.5..468.0",
+   "total_key": "s2_1_total_bank_accounts",
+   "floor": 0,
+   "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+   "feeders": [
+    {
+     "group": "1ac_bank_accounts",
+     "column": "account_balance"
+    },
+    {
+     "keys": [
+      "s2_1d_bank_accounts_from_attachment"
+     ]
+    }
+   ],
+   "_the_operand_list_is_the_captions_own": "The caption names (1a) through (1d). (1a), (1b) and (1c) are the three bank rows' account_balance cells and (1d) is the attachment scalar - four printed cells, four feeders, and no fifth term anywhere on the block."
+  },
+  {
+   "line": "2a",
+   "caption": "$ [Current market value] – $ [Minus loan balance] = (2a) $",
+   "caption_at": "money row captions \"Current market value\" x 36.0..110.7 and \"Minus loan balance\" x 219.6..288.5; the marker \"(2a) $\" at y 408.1 x 444.9..468.0",
+   "total_cell": {
+    "group": "2ab_investment_accounts",
+    "column": "equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "2ab_investment_accounts",
+     "column": "current_value",
+     "row": 0
+    },
+    {
+     "group": "2ab_investment_accounts",
+     "column": "loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_no_multiplier": "Nothing is drawn between the two cells on this row except \"– $\" at x 224.2..237.6."
+  },
+  {
+   "line": "2b",
+   "caption": "$ [Current market value] – $ [Minus loan balance] = (2b) $",
+   "caption_at": "money row captions \"Current market value\" x 36.0..110.7 and \"Minus loan balance\" x 219.6..288.5; the marker \"(2b) $\" at y 336.1 x 444.9..468.0",
+   "total_cell": {
+    "group": "2ab_investment_accounts",
+    "column": "equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "2ab_investment_accounts",
+     "column": "current_value",
+     "row": 1
+    },
+    {
+     "group": "2ab_investment_accounts",
+     "column": "loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_no_multiplier": "Nothing is drawn between the two cells on this row except \"– $\" at x 224.2..237.6."
+  },
+  {
+   "line": "2",
+   "caption": "Add lines (2a) through (2d) =",
+   "caption_at": "y 220.6, x 313.3..435.6, with the marker \"(2) $\" at x 447.0..468.0",
+   "total_key": "s2_2_total_investment_accounts",
+   "floor": 0,
+   "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+   "feeders": [
+    {
+     "group": "2ab_investment_accounts",
+     "column": "equity"
+    },
+    {
+     "group": "2c_digital_asset",
+     "column": "equity"
+    },
+    {
+     "keys": [
+      "s2_2d_investment_accounts_from_attachment"
+     ]
+    }
+   ],
+   "_where_2c_comes_from": "The caption names (2a) through (2d), which is FOUR terms over THREE printed structures: (2a) and (2b) are the two investment rows, (2c) is the single digital-asset row's total, and (2d) is the attachment scalar. The digital-asset row is a separate group in the map because it is a separate printed table with its own columns, and its one total is the (2c) the caption names."
+  },
+  {
+   "line": "3a QSV",
+   "caption": "X .8 = $",
+   "caption_at": "x 125.9..155.9, drawn immediately left of the quick-sale cell at x 158.4..234.0",
+   "total_cell": {
+    "group": "3ab_real_estate",
+    "column": "quick_sale_value",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "3ab_real_estate",
+     "column": "current_fmv",
+     "row": 0,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed on the row between the current-market-value cell and this one. The quick-sale discount the IRS applies to property it would have to liquidate."
+    }
+   ]
+  },
+  {
+   "line": "3a",
+   "caption": "$ [Current market value] X .8 = $ – $ [Minus loan balance] (3a) $ Total value of real estate =",
+   "caption_at": "the marker \"(3a) $\" at y 563.1 x 444.9..468.0, with \"Total value of real estate\" drawn to its right",
+   "total_cell": {
+    "group": "3ab_real_estate",
+    "column": "equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "3ab_real_estate",
+     "column": "quick_sale_value",
+     "row": 0
+    },
+    {
+     "group": "3ab_real_estate",
+     "column": "current_loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_the_feeder_is_the_quick_sale_cell_and_not_the_market_value": "The page prints THREE money cells on this row and the discount lands in the middle one. The subtraction the marker cell shows is quick-sale-value minus loan balance, not market value minus loan balance; feeding the market value would overstate every row by 20% of it and (3) would still reconcile against the overstated rows."
+  },
+  {
+   "line": "3b QSV",
+   "caption": "X .8 = $",
+   "caption_at": "x 125.9..155.9, drawn immediately left of the quick-sale cell at x 158.4..234.0",
+   "total_cell": {
+    "group": "3ab_real_estate",
+    "column": "quick_sale_value",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "3ab_real_estate",
+     "column": "current_fmv",
+     "row": 1,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed on the row between the current-market-value cell and this one. The quick-sale discount the IRS applies to property it would have to liquidate."
+    }
+   ]
+  },
+  {
+   "line": "3b",
+   "caption": "$ [Current market value] X .8 = $ – $ [Minus loan balance] (3b) $ Total value of real estate =",
+   "caption_at": "the marker \"(3b) $\" at y 447.9 x 444.9..468.0, with \"Total value of real estate\" drawn to its right",
+   "total_cell": {
+    "group": "3ab_real_estate",
+    "column": "equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "3ab_real_estate",
+     "column": "quick_sale_value",
+     "row": 1
+    },
+    {
+     "group": "3ab_real_estate",
+     "column": "current_loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_the_feeder_is_the_quick_sale_cell_and_not_the_market_value": "The page prints THREE money cells on this row and the discount lands in the middle one. The subtraction the marker cell shows is quick-sale-value minus loan balance, not market value minus loan balance; feeding the market value would overstate every row by 20% of it and (3) would still reconcile against the overstated rows."
+  },
+  {
+   "line": "3",
+   "caption": "Add lines (3a) through (3c) =",
+   "caption_at": "y 413.2, x 313.8..435.6, with the marker \"(3) $\" at x 447.0..468.0",
+   "total_key": "s2_3_total_real_estate",
+   "floor": 0,
+   "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+   "feeders": [
+    {
+     "group": "3ab_real_estate",
+     "column": "equity"
+    },
+    {
+     "keys": [
+      "s2_3c_property_from_attachment"
+     ]
+    }
+   ],
+   "_three_terms_not_four": "The caption names (3a) through (3c) - the real-estate block prints TWO rows and one attachment line, where the bank block prints three and one and the vehicle block prints three and one. Quoted rather than carried across from the neighbouring lines."
+  },
+  {
+   "line": "4a QSV",
+   "caption": "X .8 = $",
+   "caption_at": "x 115.1..145.1, drawn immediately left of the quick-sale cell at x 147.6..219.6",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_value",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "current_fmv",
+     "row": 0,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed on the row between the current-market-value cell and this one."
+    }
+   ]
+  },
+  {
+   "line": "4a own",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4a) $",
+   "caption_at": "\"Total value of vehicle\" x 317.0..392.1, \"(if the vehicle\" x 394.4..435.6, \"is leased, enter 0 as the total value)\" x 316.3..426.8; marker \"(4a) $\" at y 292.9 x 447.1..468.0",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "quick_sale_value",
+     "row": 0,
+     "when": {
+      "key": "4ac_vehicles[0].lease_or_own",
+      "equals": "own"
+     }
+    },
+    {
+     "group": "4ac_vehicles",
+     "column": "current_loan_balance",
+     "row": 0,
+     "sign": -1,
+     "when": {
+      "key": "4ac_vehicles[0].lease_or_own",
+      "equals": "own"
+     }
+    }
+   ],
+   "_printed_conditional": "The selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0. So the page prints one cell with two defined values and names which one applies."
+  },
+  {
+   "line": "4a leased",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4a) $",
+   "caption_at": "the same printed cell as the own branch above",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "constant": 0,
+     "constant_caption": "if the vehicle is leased, enter 0 as the total value",
+     "constant_why": "The form prints the figure itself, in words, in the caption of the cell it applies to. It is not an assumption about leases; it is the instruction drawn on the page.",
+     "when": {
+      "key": "4ac_vehicles[0].lease_or_own",
+      "equals": "lease"
+     }
+    }
+   ],
+   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Together they close the cell on both branches and the skip count says out loud which branch this form is on. Same construct as 433-A(OIC) lines \"6a own\" / \"6a leased\"."
+  },
+  {
+   "line": "4b QSV",
+   "caption": "X .8 = $",
+   "caption_at": "x 115.1..145.1, drawn immediately left of the quick-sale cell at x 147.6..219.6",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_value",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "current_fmv",
+     "row": 1,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed on the row between the current-market-value cell and this one."
+    }
+   ]
+  },
+  {
+   "line": "4b own",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4b) $",
+   "caption_at": "\"Total value of vehicle\" x 317.0..392.1, \"(if the vehicle\" x 394.4..435.6, \"is leased, enter 0 as the total value)\" x 316.3..426.8; marker \"(4b) $\" at y 199.3 x 447.1..468.0",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "quick_sale_value",
+     "row": 1,
+     "when": {
+      "key": "4ac_vehicles[1].lease_or_own",
+      "equals": "own"
+     }
+    },
+    {
+     "group": "4ac_vehicles",
+     "column": "current_loan_balance",
+     "row": 1,
+     "sign": -1,
+     "when": {
+      "key": "4ac_vehicles[1].lease_or_own",
+      "equals": "own"
+     }
+    }
+   ],
+   "_printed_conditional": "The selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0. So the page prints one cell with two defined values and names which one applies."
+  },
+  {
+   "line": "4b leased",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4b) $",
+   "caption_at": "the same printed cell as the own branch above",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "constant": 0,
+     "constant_caption": "if the vehicle is leased, enter 0 as the total value",
+     "constant_why": "The form prints the figure itself, in words, in the caption of the cell it applies to. It is not an assumption about leases; it is the instruction drawn on the page.",
+     "when": {
+      "key": "4ac_vehicles[1].lease_or_own",
+      "equals": "lease"
+     }
+    }
+   ],
+   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Together they close the cell on both branches and the skip count says out loud which branch this form is on. Same construct as 433-A(OIC) lines \"6a own\" / \"6a leased\"."
+  },
+  {
+   "line": "4c QSV",
+   "caption": "X .8 = $",
+   "caption_at": "x 115.1..145.1, drawn immediately left of the quick-sale cell at x 147.6..219.6",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_value",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "current_fmv",
+     "row": 2,
+     "factor": 0.8,
+     "factor_caption": "X .8 = $",
+     "factor_why": "Printed on the row between the current-market-value cell and this one."
+    }
+   ]
+  },
+  {
+   "line": "4c own",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4c) $",
+   "caption_at": "\"Total value of vehicle\" x 317.0..392.1, \"(if the vehicle\" x 394.4..435.6, \"is leased, enter 0 as the total value)\" x 316.3..426.8; marker \"(4c) $\" at y 105.7 x 447.1..468.0",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "quick_sale_value",
+     "row": 2,
+     "when": {
+      "key": "4ac_vehicles[2].lease_or_own",
+      "equals": "own"
+     }
+    },
+    {
+     "group": "4ac_vehicles",
+     "column": "current_loan_balance",
+     "row": 2,
+     "sign": -1,
+     "when": {
+      "key": "4ac_vehicles[2].lease_or_own",
+      "equals": "own"
+     }
+    }
+   ],
+   "_printed_conditional": "The selector is a printed box on this same row - the Lease/Own pair at x 36.0..45.0. So the page prints one cell with two defined values and names which one applies."
+  },
+  {
+   "line": "4c leased",
+   "caption": "Total value of vehicle (if the vehicle is leased, enter 0 as the total value) = (4c) $",
+   "caption_at": "the same printed cell as the own branch above",
+   "total_cell": {
+    "group": "4ac_vehicles",
+    "column": "quick_sale_equity",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "constant": 0,
+     "constant_caption": "if the vehicle is leased, enter 0 as the total value",
+     "constant_why": "The form prints the figure itself, in words, in the caption of the cell it applies to. It is not an assumption about leases; it is the instruction drawn on the page.",
+     "when": {
+      "key": "4ac_vehicles[2].lease_or_own",
+      "equals": "lease"
+     }
+    }
+   ],
+   "_why_two_lines_and_not_one": "Exactly one of this pair can hold on any filled form, so exactly one is checked and exactly one is SKIPPED with its reason printed. Together they close the cell on both branches and the skip count says out loud which branch this form is on. Same construct as 433-A(OIC) lines \"6a own\" / \"6a leased\"."
+  },
+  {
+   "line": "4",
+   "caption": "Add lines (4a) through (4d) =",
+   "caption_at": "y 80.2, x 313.3..435.6, with the marker \"(4) $\" at x 447.0..468.0",
+   "total_key": "s2_4_total_vehicles",
+   "floor": 0,
+   "floor_caption": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+   "feeders": [
+    {
+     "group": "4ac_vehicles",
+     "column": "quick_sale_equity"
+    },
+    {
+     "keys": [
+      "s2_4d_vehicles_from_attachment"
+     ]
+    }
+   ]
+  }
+ ],
+ "not_checkable": {
+  "_why": "Printed money cells this map WRITES and deliberately does not verify, each with the printed caption that makes it unverifiable. Declared rather than left out: a cell absent from both lists is indistinguishable from one nobody looked at. Mirrors 433boi.map.json._not_checkable. STILL WRITTEN - not checkable is not the same as not filled.",
+  "entries": [
+   {
+    "map_key": "s2_1d_bank_accounts_from_attachment",
+    "printed_caption": "Total bank accounts from attachment",
+    "why_not_checkable": "Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. It is nevertheless an operand of (1), which IS checkable.",
+    "review_page_advisory": "Line (1d) is a total of bank accounts listed on an attachment. Nothing on this form verifies it; check it against the attachment before filing."
+   },
+   {
+    "map_key": "s2_2d_investment_accounts_from_attachment",
+    "printed_caption": "Total investment accounts from attachment. [current market value minus loan balance(s)]",
+    "why_not_checkable": "Same shape as (1d). The bracketed part of the caption states arithmetic the preparer does on the attachment, not arithmetic this form prints operands for.",
+    "review_page_advisory": "Line (2d) is a total from an attachment, already net of loan balances. Nothing on this form verifies it."
+   },
+   {
+    "map_key": "s2_3c_property_from_attachment",
+    "printed_caption": "Total value of property(s) listed from attachment [current market value X .8 minus any loan balance(s)]",
+    "why_not_checkable": "Same shape as (1d), and the bracketed instruction repeats the X .8 discount for rows that are not on this page.",
+    "review_page_advisory": "Line (3c) must already have the X .8 quick-sale discount applied to the attached properties. This form applies it only to the two rows it prints."
+   },
+   {
+    "map_key": "s2_4d_vehicles_from_attachment",
+    "printed_caption": "Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]",
+    "why_not_checkable": "Same shape as (3c). An operand of (4).",
+    "review_page_advisory": "Line (4d) must already have the X .8 quick-sale discount applied to the attached vehicles, and leased vehicles on the attachment must be entered as 0."
+   },
+   {
+    "map_key": "s2_real_property_listing_price",
+    "printed_caption": "(listing price)",
+    "why_not_checkable": "NOT A TOTAL AT ALL AND DECLARED HERE ANYWAY. It is a money-shaped cell on pages this slice authors that no line adds up and no line adds it into - the only such cell on either page. Listing it makes \"no total checks this\" a stated fact rather than an absence; leaving it out would put it in neither list, which is the state this block exists to prevent.",
+    "review_page_advisory": "The listing price is what the property is currently offered at, not its market value. It feeds no total on this form."
+   }
+  ]
+ }
+}

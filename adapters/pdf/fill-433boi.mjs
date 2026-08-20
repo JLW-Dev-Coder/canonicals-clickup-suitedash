@@ -2,24 +2,34 @@
 //
 //   node adapters/pdf/fill-433boi.mjs [samplePath] [--saturated]
 //
-// SLICE 1 — PAGE 1 ONLY. The map binds 43 of the form's 267 fields and declares the other 224
-// unaccounted; this engine writes exactly what the map binds and nothing else. A cell on pages
-// 2-6 is not skipped here, it is unreachable: there is no key for it.
+// SLICE 2 — PAGES 1, 2 AND 3. The map binds 173 of the form's 267 fields and declares the
+// other 94 unaccounted; this engine writes exactly what the map binds and nothing else. A cell
+// on pages 4-6 is not skipped here, it is unreachable: there is no key for it.
 //
 // WHAT THIS ENGINE DOES NOT CARRY, AND WHY EACH ABSENCE IS DECLARED
 // -----------------------------------------------------------------
-// `split`     — page 1 prints no cell pair a single value must straddle. 433-F needs it for a
-//               two-box mo/yr date; this page has no such construct. Wired in anyway would be
-//               dead code, so it is absent and named here instead.
+// `split`     — pages 1-3 print no cell pair a single value must straddle. 433-F needs it for
+//               a two-box mo/yr date; these pages have no such construct. Wired in anyway would
+//               be dead code, so it is absent and named here instead.
 // `allowed`   — the Collection Financial Standards are a 433-F and 433-A(OIC) construct. This
-//               form prints no allowable-expense table on page 1.
+//               form prints no allowable-expense table on any page this slice has read.
 // `rounding`  — wired in and loaded, exactly as on 433-F, which also declares none. It is
 //               loaded rather than skipped so that a later slice declaring a rounding block
 //               cannot find the mechanism missing at the moment it first matters.
 //
-// The one money cell on this page — s1_average_gross_monthly_payroll — is an INPUT, not a
-// total. Nothing on page 1 adds anything, so there is no arithmetic here for a tripwire to
-// check and none is declared.
+// WHAT SLICE 2 ADDED, RECORDED RATHER THAN QUIETLY BACKFILLED
+// ----------------------------------------------------------
+// `slot option sets` — per-row named-option checkboxes. Absent in slice 1 because page 1 prints
+//               two top-level Yes/No pairs and one lone tick and NO per-row box at all, so the
+//               mechanism would have been dead code there. Pages 2 and 3 print 18 account-type
+//               boxes, 6 investment-type boxes, one digital-asset row-type tick and 6 Lease/Own
+//               boxes, every one of them inside a repeatable row.
+//
+// PAGE 1 HAD NO ARITHMETIC AND PAGES 2 AND 3 HAVE PLENTY. Slice 1 declared no totals file at
+// all, and gate step 11 SKIPPED for this form in consequence. Slice 2 authors
+// adapters/pdf/maps/433boi.totals.json with the nineteen printed markers on these two pages, so
+// step 11 now runs here. s1_average_gross_monthly_payroll remains the one money cell on page 1
+// and remains an INPUT that nothing adds to.
 
 import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
@@ -86,6 +96,31 @@ const normalize = (v) => (v === true ? 'yes' : v === false ? 'no' : String(v)).t
 const PREFIX = `${mapDoc.form}_`;
 const input = (name) => data[name] ?? data[PREFIX + name];
 
+// ── option sets ────────────────────────────────────────────────────────────────────────────
+//
+// A NAMED OPTION IS MATCHED AGAINST THE MAP'S OPTION KEY AND NEVER AGAINST A WIDGET NAME. The
+// option keys on this form are read from the printed page - "Checking" drawn to the right of
+// its box - and the leaf names are C2_07..C2_18, which say nothing. Slice 2 needs this on four
+// of its five groups: six account types per bank row, three investment types per investment
+// row, the digital-asset row-type tick, and Lease/Own per vehicle row.
+//
+// AN UNRECOGNISED OPTION IS A HARD FAILURE, NOT A SKIP. A typo'd "Savings Account" quietly
+// leaving every box on that row blank files a form that asserts nothing where the taxpayer
+// said something, and the arithmetic on the page reconciles either way because no box feeds a
+// total. Collected and reported with the whole list of options the map declares.
+const optionErrors = [];
+const applyOption = (key, options, raw) => {
+  if (raw === undefined || raw === null || String(raw).trim() === '') return;   // absent is fine
+  const want = normalize(raw);
+  let target = null;
+  for (const [opt, t] of Object.entries(options)) {
+    if (opt.startsWith('_')) continue;                       // `_printed` prose, same convention as the map
+    if (typeof t === 'string' && opt.trim().toLowerCase() === want) { target = t; break; }
+  }
+  if (!target) { optionErrors.push({ key, value: raw, options: Object.keys(options).filter((o) => !o.startsWith('_')) }); return; }
+  checkBox(target);
+};
+
 // ── scalars ────────────────────────────────────────────────────────────────────────────────
 for (const [key, name] of Object.entries(mapDoc.map)) setText(name, input(key), key);
 
@@ -112,6 +147,8 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
     if (i >= def.slots.length) { overflow.push(`${g}[${i}]`); return; }
     const slot = def.slots[i];
     for (const [sub, name] of Object.entries(slot.text || {})) setText(name, row[sub], `groups.${g}.slots[${i}].${sub}`);
+    for (const [sub, options] of Object.entries(slot.checkboxes || {}))
+      applyOption(`${g}[${i}].${sub}`, options, row[sub]);
   });
 }
 
@@ -177,6 +214,17 @@ for (const [key, def] of Object.entries(mapDoc._computed || {})) {
   const supplied = input(key);
   if (supplied !== undefined && supplied !== null && String(supplied).trim() !== '' && normalize(input(onKey) ?? '') !== normalize(onVal))
     contradictions.push(`${key} carries a value and ${onKey} is ${JSON.stringify(normalize(input(onKey) ?? '(absent)'))}, not ${JSON.stringify(normalize(onVal))} — the page prints "${def.printed_basis}"`);
+}
+
+if (optionErrors.length) {
+  console.error(`OPTION — ${optionErrors.length} value(s) name no option the map declares. No PDF written.`);
+  for (const e of optionErrors) {
+    console.error(`  ${e.key}: ${JSON.stringify(e.value)}`);
+    console.error(`    the map declares: ${e.options.join(', ')}`);
+  }
+  console.error('  Left as a skip this would tick nothing on that row, and every printed total on the');
+  console.error('  page would still reconcile, because no option box feeds a total.');
+  process.exit(2);
 }
 
 if (capacityErrors.length) {
