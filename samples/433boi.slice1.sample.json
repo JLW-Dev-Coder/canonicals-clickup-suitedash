@@ -1,0 +1,60 @@
+{
+ "_synthetic": "Fabricated fixture. ACME Holdings LLC / Sample Partners at 400 Example Plaza, Denton TX; the EIN and every Social Security Number are XXXX-masked placeholders in ranges the IRS does not issue, every telephone is in the 555 range reserved for fiction, and the web and FAX values point at example.com (RFC 2606). No part of this record came from a real taxpayer.",
+ "_what_this_covers": "433-B(OIC) slice 1 — page 1 only, all 43 fields. Saturated: every mapped text cell carries a value, both Yes/No pairs are answered, the lone check-here tick is set, and the partners table is fed to its printed maximum of three rows so the group is exercised at capacity without overflowing.",
+
+ "s1_business_name": "ACME Holdings LLC",
+ "s1_ein": "XX-XXX4417",
+ "s1_business_physical_address": "400 Example Plaza, Suite 210, Denton, TX 76201",
+ "s1_county_of_business_location": "Denton",
+ "s1_description_of_business_and_dba": "Commercial equipment leasing; DBA \"ACME Leasing\"",
+ "s1_business_primary_phone": "(555) 0100-441",
+ "s1_business_secondary_phone": "(555) 0100-442",
+ "s1_business_mailing_address": "PO Box 5512, Denton, TX 76202",
+ "s1_business_website_address": "www.example.com",
+ "s1_business_fax_number": "(555) 0100-449",
+
+ "s1_federal_contractor": "yes",
+ "s1_payroll_outsourced": "yes",
+ "s1_payroll_provider_name_and_address": "Example Payroll Services Inc, 88 Example Row, Dallas, TX 75201",
+
+ "s1_total_number_of_employees": "24",
+ "s1_only_employee": false,
+ "s1_frequency_of_tax_deposits": "Semi-weekly",
+ "s1_average_gross_monthly_payroll": "84250.00",
+
+ "partners": [
+  {
+   "asset_class": "business_principal",
+   "last_name": "Sample",
+   "first_name": "Dana",
+   "title": "Managing Member",
+   "percent_ownership_and_annual_salary": "55% / $180,000",
+   "ssn": "XXX-XX-1001",
+   "home_address": "12 Example Court, Denton, TX 76201",
+   "primary_phone": "(555) 0100-511",
+   "secondary_phone": "(555) 0100-512"
+  },
+  {
+   "asset_class": "business_principal",
+   "last_name": "Placeholder",
+   "first_name": "Morgan",
+   "title": "Chief Financial Officer",
+   "percent_ownership_and_annual_salary": "30% / $145,000",
+   "ssn": "XXX-XX-1002",
+   "home_address": "44 Example Lane, Lewisville, TX 75057",
+   "primary_phone": "(555) 0100-521",
+   "secondary_phone": "(555) 0100-522"
+  },
+  {
+   "asset_class": "business_principal",
+   "last_name": "Fictitious",
+   "first_name": "Robin",
+   "title": "Minority Shareholder",
+   "percent_ownership_and_annual_salary": "15% / $0",
+   "ssn": "XXX-XX-1003",
+   "home_address": "7 Example Terrace, Flower Mound, TX 75022",
+   "primary_phone": "(555) 0100-531",
+   "secondary_phone": "(555) 0100-532"
+  }
+ ]
+}

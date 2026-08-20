@@ -1,0 +1,365 @@
+{
+ "form": "433boi",
+ "form_revision": "4-2026",
+ "catalog": "55897B",
+ "pdf": "adapters/pdf/forms/f433boi.pdf",
+ "fields_source": "adapters/pdf/maps/433boi.fields.json",
+ "slice": "SLICE 1 - page 1 only. Pages 2 through 6 are deferred and declared in _partition.",
+ "map_version": 1,
+ "authored_from": "THE PRINTED PAGE, read with adapters/pdf/align-block.mjs 433boi 1. Not one binding on this page was taken from an AcroForm leaf name, and on this form that is not a formality: adapters/pdf/maps/433boi.lineage-433aoi.json found three leaf names that are honest on one page of this document and false on another page of the same document.",
+ "_the_condition_that_governs_page_1": {
+  "no_printed_line_markers": "PAGE 1 DRAWS NO NUMBERED LINE MARKER AT ALL. adapters/pdf/line-markers.mjs finds 44 markers on this form and none of them on page 1 (p1=0, p2=10, p3=9, p4=22, p5=3, p6=0). So the FIRST of the two admissible bases for a binding - a determinate marker pairing - is unavailable on every cell of this slice.",
+  "so_every_binding_carries_a_named_second_witness": "Prompt 35 ruling 2 in its second form. The witness used throughout page 1 is LEFT-EDGE IDENTITY: the caption's x1 equals the widget's x0 to 0.0pt. That is not a proximity argument and it does not degrade with distance - it is the layout grid this page is set on, and it either holds exactly or it does not hold. Where it does not hold, the witness is named individually in _map_evidence and the reason is given.",
+  "the_grid_columns_read_from_the_page": "Left column x=36.0. Second column x=190.8 (and x=176.4 / x=205.2 in the partner block). Right column x=313.4. Every caption and every widget on this page starts on one of these, which is what makes left-edge identity a witness rather than a coincidence."
+ },
+ "_printed_headings_and_markers_first": {
+  "_why_this_block_comes_before_the_bindings": "The printed structure is recorded before anything is bound to it, so a binding cannot be justified by a heading invented to justify it.",
+  "line_markers_on_page_1": "NONE. Zero drawn.",
+  "section_heading": {
+   "text": "Section 1",
+   "at": "y 620.9, x 36.0..80.5",
+   "continues": "\"Business Information\" y 620.9, x 144.0..246.2, and \"(Domestic and Foreign)\" y 620.9, x 249.0..360.7 - three separately drawn runs on one baseline forming one heading."
+  },
+  "masthead_and_footer": [
+   "\"Form\" y 745.9 x 39.4..62.7; \"433-B (OIC)\" y 751.9 x 68.3..155.4; \"(April 2026)\" y 731.2 x 74.1..120.6",
+   "\"Department of the Treasury — Internal Revenue Service\" y 752.8 x 267.3..467.4",
+   "\"Collection Information Statement for Businesses\" y 738.9 x 205.2..529.6",
+   "\"Catalog Number 55897B\" y 32.7 x 36.0..124.0; \"(Rev. 4-2026)\" y 32.1 x 527.1..576.0"
+  ],
+  "eligibility_prose_above_the_section": [
+   "\"Complete this form if your business is a\" y 711.3 x 36.2..188.2",
+   "bullet \"●\" y 696.9 x 68.4..73.2 + \"Corporation\" x 79.9..121.7",
+   "bullet \"●\" y 696.9 x 284.4..289.2 + \"Limited Liability Company (LLC) classified as a corporation\" x 295.9..504.0",
+   "bullet \"●\" y 682.5 x 68.4..73.2 + \"Partnership\" x 79.9..120.8",
+   "bullet \"●\" y 682.5 x 284.4..289.2 + \"Other LLC\" x 295.9..332.8",
+   "\"Note: If your business is a sole proprietorship do not use this form. Instead, complete Form 433-A (OIC) Collection Information Statement for\" y 662.1 x 36.0..570.8",
+   "\"Wage Earners and Self-Employed Individuals. This form should only be used with the Form 656, Offer in Compromise.\" y 652.5 x 36.0..484.6",
+   "\"Include attachments if additional space is needed to respond completely to any question.\" y 635.7 x 36.2..375.8"
+  ],
+  "_the_four_bullets_are_PRINTED_PROSE_AND_NOT_A_FIELD_SET": "Corporation / LLC-as-corporation / Partnership / Other LLC read like a four-way entity-type choice and there is NO WIDGET against any of them. All four bullets are drawn glyphs, and page 1's five checkboxes are at y 432.4, y 414.9 and y 415.4 - none within 240pt of these lines. Recorded because a reader who expects an entity-type selector on a business form will look for one here and must find this note instead of inventing a binding. Confirmed against the 43-widget enumeration: every widget on this page is accounted for below and none of them is on these rows."
+ },
+ "_no_lettered_box_on_this_page": "Page 1 prints no Box A-H construct and no total-shaped cell of any kind. The only two occurrences of the word \"box\" are prose inside other captions - \"(if different from above or post office box number)\" y 516.9 x 406.3..559.6, and \"If yes, list provider name and address in box below\" y 438.4 x 396.2..575.8 - and neither is a lettered Box nor names an operand list. Stated with the evidence rather than left silent, because \"no Box on this page\" and \"nobody looked for a Box on this page\" are indistinguishable otherwise.",
+ "map": {
+  "s1_business_name": "topmostSubform[0].F433-B-OIC_Page1[0].Business_Name[0]",
+  "s1_ein": "topmostSubform[0].F433-B-OIC_Page1[0].EIN[0]",
+  "s1_business_physical_address": "topmostSubform[0].F433-B-OIC_Page1[0].Col1a[0].Business_Address[0]",
+  "s1_county_of_business_location": "topmostSubform[0].F433-B-OIC_Page1[0].County_Business_Location[0]",
+  "s1_description_of_business_and_dba": "topmostSubform[0].F433-B-OIC_Page1[0].Description_Business_DBA[0]",
+  "s1_business_primary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].Col1a[0].PrimaryPhone[0]",
+  "s1_business_secondary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].Col1a[0].SecondaryPhone[0]",
+  "s1_business_mailing_address": "topmostSubform[0].F433-B-OIC_Page1[0].Mailing_Address[0]",
+  "s1_business_website_address": "topmostSubform[0].F433-B-OIC_Page1[0].Col1a[0].Business_Web_Address[0]",
+  "s1_business_fax_number": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].FaxNumber[0]",
+  "s1_payroll_provider_name_and_address": "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].Provider_Name_Address[0]",
+  "s1_total_number_of_employees": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].EmployeesNumber[0].Total_Number_Employees[0]",
+  "s1_frequency_of_tax_deposits": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].Frequency_Tax_Deposits[0]",
+  "s1_average_gross_monthly_payroll": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].Average_Gross_Monthly_Payroll[0]"
+ },
+ "_map_evidence": {
+  "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from adapters/pdf/page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim. `witness` names WHY the pairing is determinate, because page 1 offers no line marker to pair against.",
+  "s1_business_name": {
+   "page": 1,
+   "caption": "Business name",
+   "caption_at": "y 604.3, x 36.0..90.7",
+   "widget_at": "y 591.8, x 36.0..370.8",
+   "witness": "LEFT-EDGE IDENTITY: caption x1 36.0 = widget x0 36.0. The next caption down this column is \"Business physical address\" at y 575.5, 28.8pt lower, so an off-by-one row is visible rather than plausible. This cell is also probe 1 of correlate-labels.mjs for this form and it PASSES."
+  },
+  "s1_ein": {
+   "page": 1,
+   "caption": "Employer Identification Number",
+   "caption_at": "y 604.3, x 378.0..489.6",
+   "widget_at": "y 591.8, x 378.0..576.0",
+   "witness": "LEFT-EDGE IDENTITY at x 378.0. Note this is NOT one of the page's three grid columns - the EIN cell and its caption share an edge of their own, and the pair is determinate because both sit on it."
+  },
+  "s1_business_physical_address": {
+   "page": 1,
+   "caption": "Business physical address",
+   "caption_at": "y 575.5, x 36.0..130.3",
+   "qualifier": "\"(street, city, state, ZIP code)\" y 574.5, x 132.5..220.0 - drawn 1.0pt lower on its own baseline, which is this form's convention for a parenthetical qualifier",
+   "widget_at": "y 563.0, x 36.0..306.0",
+   "witness": "LEFT-EDGE IDENTITY at x 36.0, and the widget stops at x 306.0 where the right column begins at x 313.4, so it cannot be the county cell beside it."
+  },
+  "s1_county_of_business_location": {
+   "page": 1,
+   "caption": "County of business location",
+   "caption_at": "y 575.5, x 313.4..411.2",
+   "widget_at": "y 563.0, x 313.4..576.2",
+   "witness": "LEFT-EDGE IDENTITY at x 313.4, the right-column edge. Its row-mate to the left starts at x 36.0, so the two are separated by 277pt of grid rather than by a distance tie-break."
+  },
+  "s1_description_of_business_and_dba": {
+   "page": 1,
+   "caption": "Description of business and DBA or \"Trade Name\"",
+   "caption_at": "y 546.7, x 313.4..492.0",
+   "widget_at": "y 534.2, x 313.4..576.2",
+   "witness": "LEFT-EDGE IDENTITY at x 313.4. THIS ROW HAS NO LEFT-COLUMN CELL - the left column is blank between y 563.0 and y 505.4 - so the right column stands alone and there is nothing for the pairing to be confused with."
+  },
+  "s1_business_primary_phone": {
+   "page": 1,
+   "caption": "Primary phone",
+   "caption_at": "y 517.9, x 36.0..88.0",
+   "widget_at": "y 505.4, x 36.0..183.6",
+   "witness": "LEFT-EDGE IDENTITY at x 36.0. \"Primary phone\" is drawn FOUR times on this page - y 517.9 (business), y 287.5, y 201.1 and y 114.7 (the three partner rows). They are told apart by y alone, and the three lower ones are bound inside the partners group, not here."
+  },
+  "s1_business_secondary_phone": {
+   "page": 1,
+   "caption": "Secondary phone",
+   "caption_at": "y 517.9, x 190.8..253.5",
+   "widget_at": "y 505.4, x 190.8..306.0",
+   "witness": "LEFT-EDGE IDENTITY at x 190.8, the second grid column. Same four-fold repetition as the primary phone above, told apart by y."
+  },
+  "s1_business_mailing_address": {
+   "page": 1,
+   "caption": "Business mailing address",
+   "caption_at": "y 517.9, x 313.4..404.1",
+   "qualifier": "\"(if different from above or post office box number)\" y 516.9, x 406.3..559.6",
+   "widget_at": "y 505.4, x 313.4..576.2",
+   "witness": "LEFT-EDGE IDENTITY at x 313.4."
+  },
+  "s1_business_website_address": {
+   "page": 1,
+   "caption": "Business website address",
+   "caption_at": "y 489.1, x 36.0..128.5",
+   "widget_at": "y 476.6, x 36.0..306.0",
+   "witness": "LEFT-EDGE IDENTITY at x 36.0, and this row prints nothing in the right column, so the cell stands alone."
+  },
+  "s1_business_fax_number": {
+   "page": 1,
+   "caption": "FAX number",
+   "caption_at": "y 460.3, x 36.0..80.9",
+   "widget_at": "y 447.8, x 36.0..306.0",
+   "witness": "LEFT-EDGE IDENTITY at x 36.0. The right column on this row carries the payroll-outsourcing question, which begins at x 313.4 and whose own cells are 265pt away."
+  },
+  "s1_payroll_provider_name_and_address": {
+   "page": 1,
+   "caption": "If yes, list provider name and address in box below",
+   "caption_at": "y 438.4, x 396.2..575.8",
+   "qualifier": "\"(street, city, state, ZIP code)\" y 428.6, x 396.2..483.7",
+   "widget_at": "y 417.6, x 313.4..576.2",
+   "witness": "NOT left-edge identity, and the exception is named. The caption starts at x 396.2 and the widget at x 313.4, because the caption is set to the RIGHT of the Yes/No pair it depends on while the cell spans the whole right column beneath both. The pairing is determinate on three grounds instead: (1) it is the only widget in the right column between y 432.4 and y 390.2; (2) the caption is the only caption in that band that names a cell rather than a choice; (3) the caption's own qualifier \"(street, city, state, ZIP code)\" at y 428.6 sits directly between the caption and the widget, in the gap, which is this form's convention for binding a qualifier to the cell below it. CONDITIONAL CELL: it is filled only when s1_payroll_outsourced is yes, and that dependency is declared in _computed rather than left to the caption."
+  },
+  "s1_total_number_of_employees": {
+   "page": 1,
+   "caption": "Total number of employees",
+   "caption_at": "y 431.6, x 126.0..222.9",
+   "widget_at": "y 415.4, x 126.0..144.0",
+   "witness": "LEFT-EDGE IDENTITY at x 126.0. AND THE CAPTION SPANS TWO WIDGETS, which is why the edge matters here more than anywhere else on the page: the caption runs x 126.0..222.9 and there are two widgets under it - this 18pt text cell at x 126.0..144.0 and a 10pt CHECKBOX at x 147.6..157.6. A nearest-caption reading would give the checkbox the same caption. The text cell takes it because their left edges are identical; the checkbox belongs to the caption to ITS right (see check_here.s1_only_employee), which is the opposite convention and is itself established from the page."
+  },
+  "s1_frequency_of_tax_deposits": {
+   "page": 1,
+   "caption": "Frequency of tax deposits",
+   "caption_at": "y 402.7, x 36.2..127.8",
+   "widget_at": "y 390.2, x 36.2..183.8",
+   "witness": "LEFT-EDGE IDENTITY at x 36.2 - note 36.2 and not 36.0; this caption and its cell share an edge that is 0.2pt off the page's left column, and they share it exactly. That 0.2pt is the witness: two runs both at 36.2 while everything around them is at 36.0."
+  },
+  "s1_average_gross_monthly_payroll": {
+   "page": 1,
+   "caption": "Average gross monthly payroll",
+   "caption_at": "y 402.7, x 191.0..298.6",
+   "currency_symbol": "\"$\" y 388.3, x 191.0..195.4 - printed, drawn to the LEFT of the cell",
+   "widget_at": "y 386.6, x 205.4..306.2",
+   "witness": "NOT left-edge identity, and the exception is named: the caption starts at x 191.0 and the widget at x 205.4, because a printed \"$\" occupies x 191.0..195.4 between them. The witness is the CURRENCY SYMBOL - the caption, the $ and the cell run left to right on one row with nothing else in the band, and the $ shares the caption's left edge exactly (191.0). This is the only money cell on page 1."
+  }
+ },
+ "_nesting_note": "THE SUBFORM PREFIX IS NOT A SECTION. Page 1's fourteen scalars sit at three different depths under F433-B-OIC_Page1[0]: five are its DIRECT children (Business_Name, EIN, County_Business_Location, Description_Business_DBA, Mailing_Address), four are under Col1a[0], three under Col1b[0] (one of those two levels deep, under EmployeesNumber[0]), and one under Col2b[0]. Business_Address is in Col1a and County_Business_Location - printed on the SAME ROW, 7pt apart - is not in any Col subform at all. So no prefix generalises to a section, a column or a row, and none was used to justify a binding. This is the shape recorded on 433-A as \"AcroForm nesting depth is not uniform\": cells between two sub-tables are siblings of both.",
+ "checkboxes": {
+  "s1_federal_contractor": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].FederalContractor[0].C1_01[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].FederalContractor[0].C1_02[0]",
+   "_printed": "Caption \"Federal contractor\" y 431.5, x 36.0..100.9. \"Yes\" y 416.1, x 50.4..64.2 with its box at y 414.9, x 36.0..45.0; \"No\" y 416.1, x 93.6..103.8 with its box at y 414.9, x 79.2..88.2.",
+   "_witness": "EACH BOX IS DRAWN TO THE LEFT OF THE WORD IT LABELS, by 5.4pt both times (45.0 -> 50.4, and 88.2 -> 93.6). The two gaps are identical, which is what makes this a convention on this page rather than an observation about one box. The subform is named FederalContractor and the printed caption above the pair is \"Federal contractor\" - the name agrees with the page here, checked rather than assumed."
+  },
+  "s1_payroll_outsourced": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_03[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_04[0]",
+   "_printed": "Question \"Does the business outsource its payroll processing and tax return\" y 460.0, x 313.4..545.1 continuing \"preparation for a fee\" y 450.4, x 313.4..385.4. \"Yes\" y 434.1, x 327.8..341.6 with its box at y 432.4, x 313.4..321.4; \"No\" y 434.1, x 367.4..377.6 with its box at y 432.4, x 353.0..361.0.",
+   "_witness": "The same box-left-of-word convention, at 6.4pt both times (321.4 -> 327.8, and 361.0 -> 367.4). Constant within the pair, and differing from the FederalContractor pair's 5.4pt, which is why the gap is measured per pair and not carried across."
+  },
+  "_C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET": "THE TRAP ON THIS PAGE. The four leaf names run C1_01, C1_02, C1_03, C1_04 in one unbroken sequence and read exactly like a single four-option group. They are two independent Yes/No pairs on two unrelated questions, and THE INDEX ORDER IS NOT THE PRINTED ORDER: C1_03 and C1_04 (payroll outsourcing) are drawn at y 432.4, ABOVE C1_01 and C1_02 (federal contractor) at y 414.9, and in a different column - x 313.4/353.0 against x 36.0/79.2. Reading the sequence as one set would produce a four-way exclusive rule that no printed question asks, and it would be wrong in both directions at once: it would forbid a business from being a federal contractor AND outsourcing its payroll, which the form plainly allows. Established from the rectangles, not from the names. This is the 433-B(OIC) instance of the recorded shape that AcroForm slot order is not printed order."
+ },
+ "check_here": {
+  "s1_only_employee": {
+   "target": "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].EmployeesNumber[0].OnlyEmployee[0]",
+   "_printed": "\"Check here if you are the only employee\" y 416.1, x 162.0..305.2, with its box at y 415.4, x 147.6..157.6.",
+   "_witness": "Box drawn to the LEFT of its caption by 4.4pt (157.6 -> 162.0), the same convention as both Yes/No pairs above. It sits inside the subform EmployeesNumber[0] alongside Total_Number_Employees[0], and the two are told apart by left edge: the text cell shares x 126.0 with the caption ABOVE it, this box sits 4.4pt LEFT of the caption BESIDE it. Two different conventions on one row, both read from the page.",
+   "_why_check_here_and_not_a_checkbox_pair": "The form prints no companion box. There is no \"not the only employee\" cell, so the construct is a single self-describing tick and belongs in check_here, which is the class this repo uses for exactly that."
+  }
+ },
+ "exclusive": {
+  "s1_federal_contractor": [
+   "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].FederalContractor[0].C1_01[0]",
+   "topmostSubform[0].F433-B-OIC_Page1[0].Col1b[0].FederalContractor[0].C1_02[0]"
+  ],
+  "s1_payroll_outsourced": [
+   "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_03[0]",
+   "topmostSubform[0].F433-B-OIC_Page1[0].Col2b[0].C1_04[0]"
+  ],
+  "_why": "Two sets of two, one per printed question. NOT one set of four - see checkboxes._C1_01_TO_C1_04_ARE_TWO_QUESTIONS_AND_NOT_ONE_FOUR_WAY_SET. s1_only_employee is deliberately absent: it is a lone tick with no companion box, so there is no set for it to be exclusive within, and declaring a one-member exclusive set would assert a rule the page does not print."
+ },
+ "_computed": {
+  "s1_payroll_provider_name_and_address": {
+   "conditional_on": "s1_payroll_outsourced = \"yes\"",
+   "printed_basis": "\"If yes, list provider name and address in box below\" y 438.4, x 396.2..575.8",
+   "_why": "Declared rather than left to the caption. The cell is writable on the blank whatever the Yes/No pair says, so nothing in the PDF enforces the dependency; recording it here is what lets a record carrying a provider name with the answer set to \"no\" be visible as a contradiction rather than printed silently."
+  }
+ },
+ "groups": {
+  "partners": {
+   "source": "partners",
+   "max": 3,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "business_principal"
+    ],
+    "_why": "Section 1's second half prints a three-row table of people associated with the business, and the class is DECLARED in adapters/hubspot/asset-row-shapes.json in this same commit - [A1] makes a group accepting an undefined class a STOP, which is the whole point of declaring it rather than routing under a bare string. `asset_class` is the discriminator column every group in this repo uses, including 433-A's household_members, which is also a people table; one spelling across the repo so a path cannot be right here and wrong three files away. Class declared from the PRINTED PAGE: the heading below names partners, officers, LLC members and major shareholders, and no AcroForm leaf name was read to establish it."
+   },
+   "_printed_heading": "Provide information about all partners, officers, LLC members, major shareholders (domestic and foreign), etc., associated with the business.",
+   "_heading_at": "y 370.5, x 36.2..575.0",
+   "_heading_continues": "\"Include attachments if additional space is needed.\" y 360.9, x 36.2..226.9",
+   "_columns_by_x": "Each row prints EIGHT cells over FOUR baselines. Row 1 as the reference: Last name x 36.0..183.6 under caption \"Last name\" x 36.0..73.4; First name x 190.8..342.0 under \"First name\" x 190.8..228.6; Title x 349.2..576.0 under \"Title\" x 349.2..364.3 - three captions at y 345.1, three widgets at y 332.6, each pair sharing a left edge exactly. Then Percent of ownership and annual salary x 36.0..183.6 under \"Percent of ownership and annual salary\" x 36.0..176.5; Social Security Number x 190.8..306.0 under \"Social Security Number\" x 190.8..274.4; Home address x 313.2..576.0 under \"Home address\" x 313.2..365.2 with its qualifier \"(street, city, state, ZIP code)\" at y 313.7 x 368.0..455.5 - three captions at y 316.3/314.7, three widgets at y 303.8. Then Primary phone x 36.0..183.6 under \"Primary phone\" x 36.0..88.0 and Secondary phone x 190.8..306.0 under \"Secondary phone\" x 190.8..253.5 - two captions at y 287.5, two widgets at y 275.0.",
+   "_row_order": "PartnerInfo1 captions at y 345.1/316.3/287.5 and cells at y 332.6/303.8/275.0; PartnerInfo2 at y 258.7/229.9/201.1 and cells at y 246.2/217.4/188.6; PartnerInfo3 at y 172.3/143.5/114.7 and cells at y 159.8/131.0/102.2. Descending y throughout, which is printed order, and the three blocks are spaced 86.4pt apart uniformly - so the subform suffix 1/2/3 AGREES with printed order here. Checked, not assumed: on 433-A(OIC) the same kind of suffix lagged the printed line by one, and CB8_08's two widgets on that form are drawn out of index order entirely.",
+   "_every_caption_repeats_three_times": "\"Last name\", \"First name\", \"Title\", \"Percent of ownership and annual salary\", \"Social Security Number\", \"Home address\", \"Primary phone\" and \"Secondary phone\" are each drawn three times on this page, once per row, at identical x and differing y. The rows are therefore told apart by y ALONE, and every x above is shared by all three. That is why _row_order records the y of all nine baselines rather than describing the spacing.",
+   "_Title_is_a_shared_leaf_name": "`Title` is one of the 83 leaf names this form shares with 433-A(OIC) and it carries no name-lie entry there. It is bound here on left-edge identity with the printed caption \"Title\" (x 349.2 = x 349.2) and not on the strength of the shared name - see 433boi.lineage-433aoi.json on why a shared name proves nothing in either direction.",
+   "slots": [
+    {
+     "text": {
+      "last_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Last_Name[0]",
+      "first_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].First_Name[0]",
+      "title": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Title[0]",
+      "percent_ownership_and_annual_salary": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Percent_Ownership_Salary[0]",
+      "ssn": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].SocialSecurityNumber[0]",
+      "home_address": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Home_Address[0]",
+      "primary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].PrimaryPhone[0]",
+      "secondary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].SecondaryPhone[0]"
+     }
+    },
+    {
+     "text": {
+      "last_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Last_Name[0]",
+      "first_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].First_Name[0]",
+      "title": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Title[0]",
+      "percent_ownership_and_annual_salary": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Percent_Ownership_Salary[0]",
+      "ssn": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].SocialSecurityNumber[0]",
+      "home_address": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Home_Address[0]",
+      "primary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].PrimaryPhone[0]",
+      "secondary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].SecondaryPhone[0]"
+     }
+    },
+    {
+     "text": {
+      "last_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Last_Name[0]",
+      "first_name": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].First_Name[0]",
+      "title": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Title[0]",
+      "percent_ownership_and_annual_salary": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Percent_Ownership_Salary[0]",
+      "ssn": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].SocialSecurityNumber[0]",
+      "home_address": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Home_Address[0]",
+      "primary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].PrimaryPhone[0]",
+      "secondary_phone": "topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].SecondaryPhone[0]"
+     }
+    }
+   ]
+  }
+ },
+ "_never_autofill": {
+  "_why": "EMPTY ON PAGE 1, AND THAT IS A FINDING RATHER THAN AN OMISSION. Every one of this page's 43 fields is business data a record can supply - there is no signature block, no preparer-use box and no IRS-use cell anywhere on page 1. Checked against the enumeration: all 43 widgets are bound above. 433-A(OIC) declares 5 never-autofill fields and 433-A declares 14, so an empty block here would otherwise read as a step someone forgot.",
+  "entries": []
+ },
+ "_not_checkable": {
+  "_why": "EMPTY ON PAGE 1. There is no total-shaped cell on this page at all - no lettered Box, no \"Add lines\" instruction, no arithmetic of any kind. s1_average_gross_monthly_payroll is the only money cell and it is an INPUT, not a total: nothing on the page adds anything to produce it. So there is nothing for a tripwire to check and nothing to declare not checkable, and the two states are distinguished rather than collapsed.",
+  "entries": []
+ },
+ "_partition": {
+  "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
+  "form_fields_total": 267,
+  "in_this_slice": 43,
+  "bound_writable": 43,
+  "excluded_never_autofill": 0,
+  "deferred": 0,
+  "unaccounted": 224,
+  "_check": "43 + 0 + 0 = 43 — bound writable, never-autofill, deferred, and their sum is every unique target this map references, which is every field on page 1. Then 267 - 43 = 224 unaccounted: the fields on pages 2 through 6 that this slice has not read. page-geometry reports 43 for p1, 61 for p2, 69 for p3, 30 for p4, 33 for p5 and 31 for p6. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03] against the field list and the widget geometry; none is typed.",
+  "_why_unaccounted_is_the_word_and_not_deferred": "A FIRST DRAFT OF THIS BLOCK CALLED PAGES 2-6 `deferred` AND THE COUNT SWEEP REFUSED IT. The two words are not synonyms in this engine and the distinction is the point. `deferred` is derived by classifyMapTargets from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration. Slice 1 has read one page and says so. This map is therefore NOT CLOSED, which is worth stating because the other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; the figure falls to zero when slice 4 lands and not before."
+ },
+ "_deferred_pages": "Pages 2-6, 224 fields. Slice 2 takes pages 2-3 (130 fields, including the Section 6 litigation block's four inherited lies on page 5 - no, page 5 is slice 3; see 433boi.lineage-433aoi.json for where each inherited name falls). Nothing on those pages is bound, referenced or partly authored by this slice.",
+ "_arguable_page1": [
+  {
+   "id": "B6",
+   "cell": "s1_total_number_of_employees",
+   "what": "The printed cell is 18.0pt wide (x 126.0..144.0) and carries no /MaxLen.",
+   "why_it_is_arguable": "18pt of the form's body face holds roughly two digits, maybe three. A business with 1,200 employees has a true answer this cell cannot print, and the PDF declares no /MaxLen for the fill engine to refuse against - so a four-digit value would be written, silently overflow the rectangle, and print clipped or not at all. Every other narrow cell on the three mapped forms that has this problem declares a /MaxLen; this one does not.",
+   "what_this_slice_did": "Bound it, and recorded the width. NOT resolved: whether the engine should impose a ceiling the PDF does not declare is a question about diverging from the form, and this repo's standing position is that the form is the authority.",
+   "carried": true
+  },
+  {
+   "id": "B7",
+   "cell": "s1_description_of_business_and_dba",
+   "what": "One printed cell carries two facts - the description of the business AND the DBA or trade name.",
+   "why_it_is_arguable": "The caption is \"Description of business and DBA or \"Trade Name\"\" over a single widget. A CRM holding those as two properties must join them to fill this cell, and the join order is not printed. The same shape occurs at partners.percent_ownership_and_annual_salary, which pairs a percentage with a salary in one cell.",
+   "what_this_slice_did": "Bound the cell as one key and declared the two-facts-one-cell shape in the row-shape spec for the partner column. NOT resolved: the crosswalk decides whether the backbone holds one property or two, and that is slice 5.",
+   "carried": true
+  },
+  {
+   "id": "B8",
+   "cell": "the four eligibility bullets at y 696.9 and y 682.5",
+   "what": "Corporation / LLC-classified-as-a-corporation / Partnership / Other LLC are printed as bulleted prose with NO widget against any of them.",
+   "why_it_is_arguable": "It reads like the entity-type selector a business form would be expected to have, and 433-B (the non-OIC form) may well print one. A later slice, or a reader coming from another form in the series, could take the absence here for an enumeration gap and go looking for four missing checkboxes.",
+   "what_this_slice_did": "Recorded it in _printed_headings_and_markers_first with the evidence that all 43 widgets are accounted for elsewhere and none is within 240pt of these rows. NOT resolved: whether the entity type should be captured as data at all is a product question, not a mapping one.",
+   "carried": true
+  }
+ ],
+ "_carried": {
+  "_why": "B1-B5 are raised in adapters/pdf/maps/433boi.lineage-433aoi.json and concern inherited leaf names. B6-B9 are raised by this slice. All nine are OPEN and none is resolved here.",
+  "open": [
+   {
+    "id": "B1",
+    "subject": "Three leaf names — Name_Creditor, Date_Final_Payment, Gross_Receipts — are honest on one page of this form and false on another page of the same form, with the honest occurrence FIRST in page order.",
+    "raised_in": "433boi.lineage-433aoi.json"
+   },
+   {
+    "id": "B2",
+    "subject": "name_of_individual on page 2 sits inside a subform named RetirementAcct1 and its printed caption is a digital-asset address, so the leaf name AND the container path both point the wrong way.",
+    "raised_in": "433boi.lineage-433aoi.json"
+   },
+   {
+    "id": "B3",
+    "subject": "Total_Value_Vehicles_Attached contradicts its 433-A(OIC) lie — the name is TRUE here — which is the direction that teaches a reader to trust a name they should not generalise.",
+    "raised_in": "433boi.lineage-433aoi.json"
+   },
+   {
+    "id": "B4",
+    "subject": "Total_Value_Bank_Accounts inherits page_imprecise at printed line (1) where 433-A(OIC) has it at (8). Same shape, different marker; a map carrying the marker across with the name would cite a line this form does not print there.",
+    "raised_in": "433boi.lineage-433aoi.json"
+   },
+   {
+    "id": "B5",
+    "subject": "CB8_08's out-of-order-index lie cannot arise here (one widget, not a pair), and the printed wording differs by two transposed words. Whether page 6's box order follows index order is unestablished and must be read from the page in slice 4.",
+    "raised_in": "433boi.lineage-433aoi.json"
+   },
+   {
+    "id": "B6",
+    "subject": "s1_total_number_of_employees is an 18.0pt cell with NO /MaxLen. A four-digit headcount would be accepted by the PDF and drawn clipped or not at all, and no declared limit exists for the fill engine to refuse against.",
+    "raised_in": "slice 1"
+   },
+   {
+    "id": "B7",
+    "subject": "Two printed cells each carry two facts: s1_description_of_business_and_dba, and the partner column percent_ownership_and_annual_salary. Whether the backbone holds one property or two is a crosswalk decision, not a mapping one.",
+    "raised_in": "slice 1"
+   },
+   {
+    "id": "B8",
+    "subject": "The four eligibility bullets read like an entity-type selector and have NO widget against them. Recorded with the evidence so a later slice does not go looking for four missing checkboxes.",
+    "raised_in": "slice 1"
+   },
+   {
+    "id": "B9",
+    "subject": "DECLARATION COVERAGE DOES NOT RUN ON THIS FORM. The coverage table - including the row_class kind added for ruling 5 - is built inside gate step 11, and step 11 SKIPS when a form has no totals file. 433-B(OIC) page 1 prints no total, so it correctly has none, and the consequence is that this map's one row_class declaration is counted by nothing: the gate reports declarations_total n/a. The declaration is not thereby unchecked - its refusal path is proved by adapters/pdf/assert-row-class-routes.mjs and its acceptance path by adapters/pdf/check-row-shape.mjs, which reported 3 slotted rows across 1 declaring group on this slice's fill - but it is absent from the table that exists to NAME unexercised declarations, which is the gap ruling 5 was written about, one level out. Moving the coverage table out of step 11 is a refactor of a guard, and its no-op path would have to be proved on the three finished forms in the same run. Not attempted in this slice.",
+    "raised_in": "slice 1, found by running the gate"
+   }
+  ],
+  "resolved": [],
+  "_count": {
+   "open": 9,
+   "resolved": 0
+  }
+ }
+}

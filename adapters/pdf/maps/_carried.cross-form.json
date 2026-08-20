@@ -92,6 +92,17 @@
    ],
    "what_is_true_under_all_three": "No flagged column is reachable as TEXT on any accepting group. That is the assertion adapters/pdf/exclusion-sweep.mjs [X-03] makes and it holds today; the split above is REPORTED and counted on every run, not failed.",
    "status": "OPEN"
+  },
+  {
+   "id": "C-24",
+   "form": "engine-wide",
+   "raised_in": "Prompt 39 commit 3 - found by an id collision while authoring 433-B(OIC) slice 1",
+   "subject": "count-sweep.mjs MANIFEST has no duplicate-id check, and a collision merges two dispositions silently",
+   "what_happened": "A new manifest entry for 433-B(OIC)'s page-1 structural prose was written as [S-25]. That id was already in use by the crosswalk-classification disposition. Nothing complained. The two entries co-existed under one id, and the blanket audit then reported an EMPTY DEMAND for [S-25] -> align-block.mjs on 433-A(OIC) - attributing that form's classification sites to a citation written about 433-B(OIC) coordinates. The symptom appeared two tools away from the cause and named neither.",
+   "why_it_matters": "The manifest is the register that decides whether every count in this repo is derived or declared underivable. An id is how a disposition is referred to from prose, from EMPTY_DEMAND, from FORWARD and from the report a person reads. Two entries sharing one id means a citation can be paid by the wrong disposition, and the blanket audit's whole forward-reference mechanism is built on ids being unique. Nothing in the engine asserts that they are.",
+   "the_same_shape_elsewhere": "guard-sweep.mjs VACUOUS, blanket-audit.mjs COMPLETENESS / FORWARD / EMPTY_DEMAND / DETECTORS, exclusion-sweep.mjs PREDICATES and DECLARED, and success-sweep.mjs OVERRIDES are all id-keyed registers with no uniqueness assertion. guard-sweep already carries TWO entries numbered G-40 and TWO numbered G-41, on different files, which is survivable only because its lookup is by (file, anchor) rather than by id - and that is luck rather than design.",
+   "not_fixed_here": "A uniqueness assertion across six registers is a change to six guards and each no-op path must be proved in the same run. The immediate collision is fixed by renumbering to [S-26]; the missing check is not.",
+   "status": "OPEN"
   }
  ],
  "resolved": [
@@ -115,7 +126,7 @@
   }
  ],
  "_count": {
-  "open": 5,
+  "open": 6,
   "resolved": 1
  }
 }

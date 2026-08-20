@@ -53,6 +53,11 @@ export const FORMS = [
   { form: '433a',   sample: 'samples/433a.sample.json',       engine: 'adapters/pdf/fill-433a.mjs' },
   { form: '433f',   sample: 'samples/433f.multi.sample.json', engine: 'adapters/pdf/fill-433f.mjs' },
   { form: '433aoi', sample: 'samples/433aoi.sample.json',     engine: 'adapters/pdf/fill-433aoi.mjs' },
+  // 433-B(OIC) JOINS AT ITS SLICE 1. A form absent from this list has its refusal path unproved
+  // and nothing says so — the same exclusion-by-omission that kept it out of
+  // assert-row-shape-spec's FORMS and out of blanket-audit's marker union. Its one group,
+  // `partners`, accepts the business_principal class declared for it in the same commit.
+  { form: '433boi', sample: 'samples/433boi.slice1.sample.json', engine: 'adapters/pdf/fill-433boi.mjs' },
 ];
 
 const CANARY = '__canary_not_a_class__';

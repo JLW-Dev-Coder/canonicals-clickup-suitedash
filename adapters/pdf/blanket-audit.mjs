@@ -354,6 +354,45 @@ export const EMPTY_DEMAND = [
     why: 'Neither map quotes a printed dollar constant of $1,000 or more. The printed constants step 11 folds into a total — the $1,000 at (1) and the $11,980 at (7) — are a 433-A(OIC) feature; 433-A and 433-F print no such constant inside a total caption, and their totals declarations carry no `constant` feeder for one.' },
   { blanket: 'S-15', instrument: 'gate step 11', forms: ['433a', '433f'],
     why: 'Same absence, in the totals declaration rather than the map: these two forms declare no printed money constant as a feeder, so there is no constant for the prover to demand. The other half of [S-15]\'s citation — that step 11 recomputes each declared total — is counted by [K-05], which holds on all three forms.' },
+  // ── [S-18] on 433-B(OIC): three of its four citations demand nothing on a one-page slice ──
+  //
+  // ALL FOUR, and a correction: the first draft of this block declared three and asserted that
+  // align-block.mjs was "NOT empty — this map quotes coordinates throughout". The audit
+  // disagreed and the audit was right. The map DOES quote coordinates throughout, and they are
+  // proved — but not HERE. The region [S-18] covers on this form is `_carried`, and the carried
+  // ledger deliberately quotes neither coordinates nor markers nor paths: it names findings.
+  // The coordinates live in `_map_evidence` and `_printed_headings_and_markers_first`, which
+  // [S-25] covers and where align-block's demand is emphatically not empty. Recorded rather
+  // than quietly amended, because the mistake was assuming which region a blanket covered
+  // instead of reading what the prover extracted from it.
+  { blanket: 'S-18', instrument: 'check-row-shape.mjs', forms: ['433boi'],
+    why: 'The covered sites are the carried ledger, and no entry in it names a GROUP. B1 to B5 are findings about inherited leaf names across two forms, B6 to B8 are about three page-1 scalars, and B9 is about where the coverage table is built. The map DOES declare a group and check-row-shape.mjs does resolve its columns — reporting 3 slotted rows across 1 declaring group on the fill this slice runs — but that happens under `groups.partners`, which is a different region from the one this blanket covers. The demand is empty because the ledger discusses cells and names, not row shapes.' },
+  { blanket: 'S-18', instrument: 'validate-map.mjs', forms: ['433boi'],
+    why: 'THE LEDGER QUOTES NO FULL ACROFORM PATH, AND THAT IS DELIBERATE RATHER THAN INCIDENTAL. A `topmostSubform[0]...` path written into prose counts as a second binding and trips the duplicate-write gate — a defect this repo has already met — so carried entries name the LEAF NAME (Name_Creditor, CB8_08) or the INPUT KEY (s1_total_number_of_employees) instead. There is therefore nothing for the path prover to extract, and a non-empty demand here would itself be the finding.' },
+  { blanket: 'S-18', instrument: 'gate step 11', forms: ['433boi'],
+    why: 'No printed money constant is quoted in the covered sites, because page 1 prints none anywhere: the map records that this page draws no lettered Box, no "Add lines" instruction and no total-shaped cell at all, and its one money cell is an input. Gate step 11 is SKIPPED on this form for the same reason and says so in terms. The absence is the same fact reported by two instruments, not a gap in either.' },
+
+  { blanket: 'S-18', instrument: 'align-block.mjs', forms: ['433boi'],
+    why: 'The carried ledger quotes no coordinate. Every one of the nine entries states a FINDING — a name that lies on one page and not another, a cell 18pt wide with no declared limit, a bullet list with no widget against it — and where a measurement backs the finding, the measurement lives in `_map_evidence` or `_printed_headings_and_markers_first`, which [S-25] covers and where this prover extracts and proves the whole coordinate set. An entry in the ledger that DID quote a coordinate would be duplicating evidence that already has a home, which is the two-lists-of-one-fact shape guard-sweep (c) exists to forbid.' },
+  { blanket: 'S-18', instrument: 'line-markers.mjs', forms: ['433boi'],
+    why: 'The ledger names printed lines only twice - B4 says Total_Value_Bank_Accounts sits at line (1) here where 433-A(OIC) has it at (8) - and page 1, the only page this slice authored, draws no numbered marker at all. The marker prover reads the union over every mapped form, so what is empty is the demand of this region and not the output of the instrument: line-markers.mjs reports 44 markers on this form, and [S-24] derives that figure and the per-page split against it.' },
+
+  // [S-26] IS A 433-B(OIC) DISPOSITION AND THE AUDIT RUNS PER FORM.
+  //
+  // The sites it covers live in 433boi.map.json and every coordinate in them is drawn on
+  // 433-B(OIC). When the audit runs for another form it measures against THAT form's page, so
+  // the extraction correctly yields nothing rather than testing one document's coordinates
+  // against another document's geometry. On the 433-B(OIC) run the demand is not empty and the
+  // citation is proved there, which is where it belongs.
+  //
+  // Found by an ID COLLISION, which is worth recording: this entry was first written as [S-25],
+  // a manifest id already taken by the crosswalk-classification disposition. The two merged
+  // silently — the count sweep has no duplicate-id check — and the blanket audit then attributed
+  // 433-A(OIC) classification sites to a citation about 433-B(OIC) coordinates. The renumbering
+  // to [S-26] is the fix; the missing duplicate-id check is carried.
+  { blanket: 'S-26', instrument: 'align-block.mjs', forms: ['433a', '433f', '433aoi'],
+    why: 'This disposition covers sites in 433boi.map.json, whose coordinates are drawn on 433-B(OIC). An audit run for a different form measures against a different PDF, so there is nothing here for it to extract — and extracting something WOULD be the finding, because it would mean one form evidence was being proved against another form page. The citation is measured, non-empty and proved on the 433boi run.' },
+
   { blanket: 'S-17f', instrument: 'align-block.mjs', forms: ['433a', '433f'],
     why: 'The change log on these two maps records what a slice decided in field-name terms and quotes no coordinate. Same measurement as the [S-18] entry above.' },
   { blanket: 'S-17f', instrument: 'line-markers.mjs', forms: ['433f'],
@@ -643,6 +682,79 @@ export const COMPLETENESS = [
     // reimplementation is a new instrument and is not evidence about the old one.
     count: (ctx) => coverageCount(ctx.form) }),
 
+  // ── 433-B(OIC) slice 1: the page-1 completeness claims ────────────────────────────────
+  //
+  // Four sentences across the map and the headings file say some version of "all 43 widgets
+  // are bound" / "every widget on this page is accounted for". They are load-bearing rather
+  // than decorative: the four eligibility bullets are declared to be prose WITH NO FIELD SET
+  // precisely because every widget is accounted for elsewhere, so if that stopped being true
+  // the map would be silently incomplete on exactly the rows a reader would go looking at.
+  //
+  // ONE COUNTER SERVES ALL OF THEM because they are one claim said four ways. Universe: the
+  // widgets the PDF draws on the authored page. Covered: those the map binds.
+  C({ id: 'K-10', match: /all \d+ widgets are (?:bound|accounted)|every widget on this page is accounted|all \d+ fields/i,
+    kind: 'counter',
+    what: 'every widget the PDF draws on the authored pages of this map is bound by it',
+    count: (ctx) => {
+      const targets = new Set(walkTargets(ctx.mapDoc).map(t => t.target));
+      const pages = new Set(ctx.authoredPages || [1]);
+      const onPage = (ctx.widgets || []).filter(w => pages.has(w.page));
+      const covered = onPage.filter(w => targets.has(w.name));
+      // AN EMPTY UNIVERSE IS A DEAD COUNTER, NOT A SATISFIED ONE.
+      //
+      // The first draft of this read `ctx.widgets`, which the audit context did not expose —
+      // so `onPage` was empty, the counter reported 0 of 0, and the blanket audit passed it.
+      // A counter written to prove that every widget is bound, reporting success by seeing no
+      // widgets at all: [G-01] committed inside the instrument built to prevent it, on its
+      // first run. `ctx.widgets` is now exposed and the empty case is a STOP as well, because
+      // the next person to move that key would otherwise get the same silent pass.
+      if (!onPage.length) return { universe: 0, covered: 0, fail: `no widgets read on page(s) ${[...pages].join(', ')} — the counter could not see its universe, so "every widget is bound" is unchecked rather than true` };
+      return {
+        universe: onPage.length,
+        covered: covered.length,
+        uncoveredList: onPage.filter(w => !targets.has(w.name)).map(w => w.name),
+      };
+    } }),
+
+  // The headings file's own version of the same claim, about the SCALARS rather than the
+  // widgets: "all fourteen scalars" sit above the partners heading and are bound as scalars.
+  // Universe: the map's `map{}` block. Covered: those whose widget is above the heading's
+  // baseline on page 1. The number that matters is that NONE of them is below it, because a
+  // scalar below the heading would be reachable as a row of the partners table.
+  C({ id: 'K-11', match: /all fourteen scalars|ALL above the sentence and are bound/i,
+    kind: 'counter',
+    what: 'every scalar the map binds on page 1 prints ABOVE the partners heading, so none is reachable as a table row',
+    count: (ctx) => {
+      const HEADING_Y = 370.5;
+      const scalars = Object.values(ctx.mapDoc.map || {});
+      const byName = new Map((ctx.widgets || []).map(w => [w.name, w]));
+      const above = scalars.filter((t) => { const w = byName.get(t); return w && w.page === 1 && w.rect && w.rect[1] > HEADING_Y; });
+      if (!byName.size) return { universe: scalars.length, covered: 0, fail: 'no widget geometry available, so no scalar could be placed above or below the heading' };
+      return { universe: scalars.length, covered: above.length, uncoveredList: scalars.filter((t) => !above.includes(t)) };
+    } }),
+
+  // [S-25]'s own completeness claim, counted rather than asserted.
+  //
+  // The disposition says every coordinate in the sites it covers is checked against the drawn
+  // page. That is a claim about a set, so it gets a counter over that set: every `y NNN.N` and
+  // every `x A..B` run quoted anywhere in this form's map and headings file, against the y and
+  // x values the PDF actually draws. `drawnY` and `drawnX` are built by this file's own context
+  // from readPrintedText and readWidgetGeometry, rounded to a tenth, which is the precision the
+  // evidence is written at.
+  C({ id: 'K-12', match: /Every coordinate in the covered/i,
+    kind: 'counter',
+    what: 'every coordinate quoted in the map and headings files is a value the page actually draws',
+    count: (ctx) => {
+      const text = [JSON.stringify(ctx.mapDoc || {}), JSON.stringify(ctx.headingsDoc || {})].join(' ');
+      const ys = [...text.matchAll(/y (\d+(?:\.\d+)?)/g)].map(m => Number(m[1]));
+      const xs = [...text.matchAll(/x (\d+(?:\.\d+)?)\.\.(\d+(?:\.\d+)?)/g)].flatMap(m => [Number(m[1]), Number(m[2])]);
+      const all = [...ys.map(v => ['y', v]), ...xs.map(v => ['x', v])];
+      if (!all.length) return { universe: 0, covered: 0, fail: 'no coordinate was read out of the map or headings file, so the claim that every one of them is drawn is unchecked rather than true' };
+      const hit = ([axis, v]) => (axis === 'y' ? ctx.drawnY : ctx.drawnX).has(Math.round(v * 10) / 10);
+      const covered = all.filter(hit);
+      return { universe: all.length, covered: covered.length, uncoveredList: all.filter(c => !hit(c)).map(([a, v]) => `${a} ${v}`) };
+    } }),
+
   C({ id: 'K-02', match: /every declared path exists|every `?path`? exists/i,
     kind: 'counter',
     what: 'every target the map declares exists verbatim in the fields file',
@@ -919,9 +1031,16 @@ const buildAuditContext = async (form, sweep) => {
   // line-markers.mjs is run PER FORM, and map evidence quotes markers from more than one form
   // in the same sentence. The union over the forms this repo maps is what that instrument
   // actually supplies across the tree.
+  // DERIVED FROM THE FORMS DIRECTORY, NOT TYPED. This read `['433a', '433f', '433aoi']`, so a
+  // form whose blank had entered the repo was silently outside the marker union until someone
+  // remembered to add it — an exclusion by omission, which is the shape
+  // adapters/pdf/exclusion-sweep.mjs exists for. 433-B(OIC) is the form that would have been
+  // missed. The list now comes from what is on disk.
   const markersByForm = {};
-  for (const f of ['433a', '433f', '433aoi'])
-    if (existsSync(`adapters/pdf/forms/f${f}.pdf`)) markersByForm[f] = await markerPairing(f);
+  for (const file of readdirSync('adapters/pdf/forms').filter(f => /^f.+\.pdf$/.test(f)).sort()) {
+    const f = file.replace(/^f/, '').replace(/\.pdf$/, '');
+    markersByForm[f] = await markerPairing(f);
+  }
 
   return {
     form, mapDoc, fieldsDoc, sweep,
@@ -933,6 +1052,7 @@ const buildAuditContext = async (form, sweep) => {
     standards: rd('adapters/pdf/maps/irs-standards-2026.json'),
     names: new Set(fieldsDoc.fields.map(f => f.name)),
     pageOf: new Map(widgets.map(w => [w.name, w.page])),
+    widgets,
     widgetsByPage, drawnY, drawnX, nodes, markersByForm, printedText: text,
     markers: markersByForm[form],
     revision: readFormRevision(form),

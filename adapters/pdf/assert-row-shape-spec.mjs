@@ -66,7 +66,11 @@ const SPEC = 'adapters/hubspot/asset-row-shapes.json';
 // The forms whose maps this spec is joined against. 433-A(OIC) carries no `printed_tables`
 // key in the spec — the spec predates it — so it contributes to A1 only, which is exactly
 // where it belongs: its groups accept classes and those classes must be defined.
-const FORMS = ['433a', '433f', '433aoi'];
+// 433-B(OIC) JOINS AT ITS SLICE 1. A form absent from this list is silently outside A1, A2 and A3
+// — its groups can accept an undeclared class and nothing says so — which is an exclusion by
+// omission and exactly the shape adapters/pdf/exclusion-sweep.mjs exists for. The list is widened
+// in the same commit that gives 433-B(OIC) its first group.
+const FORMS = ['433a', '433f', '433aoi', '433boi'];
 const mapPath = (f) => `adapters/pdf/maps/${f}.map.json`;
 
 /** Load the spec and every map that exists. */

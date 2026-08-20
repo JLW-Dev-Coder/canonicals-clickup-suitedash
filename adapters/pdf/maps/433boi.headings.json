@@ -1,0 +1,34 @@
+{
+ "form": "433boi",
+ "form_revision": "4-2026",
+ "catalog": "55897B",
+ "_what": "The printed banners this form draws, and which group's rows print under which banner. adapters/pdf/verify-headings.mjs re-measures every `_at` out of the PDF and asserts that each group's slots fall inside its heading's band and run in printed order.",
+ "_why": "A group whose slots are correct individually can still be routed under the wrong heading, and the result prints cleanly and is wrong. On this form the risk is concrete rather than theoretical: Section 1 contains a block of business scalars AND a three-row table of people, one after the other under a single banner, and the fourteen scalars must never be reachable as rows of that table nor the rows as scalars.",
+ "_band_rule": "A group's band runs from its declared heading's baseline down to the next printed structure below it — here the page's lowest drawn run. Slots must fall strictly inside; a slot on the boundary is a slot whose heading is arguable, and this file declares none.",
+ "_slice": "SLICE 1 - page 1 only. Pages 2 through 6 declare no heading here yet and no group; their banners are read when their slices are authored, from the page, not by extrapolating this one.",
+
+ "headings": [
+  {
+   "id": "SECTION_1_BUSINESS",
+   "page": 1,
+   "text": "Business Information",
+   "_at": "y 620.9, x 144.0..246.2. The words 'Section 1' are drawn as a separate text item at x 36.0..80.5 and the qualifier '(Domestic and Foreign)' as a third at x 249.0..360.7, all on the same baseline; the banner is declared by the part that names the subject, which is the convention this repo already holds on 433-A(OIC)."
+  },
+  {
+   "id": "PARTNERS_AND_OFFICERS",
+   "page": 1,
+   "text": "Provide information about all partners, officers, LLC members, major shareholders (domestic and foreign), etc., associated with the business.",
+   "_at": "y 370.5, x 36.2..575.0. A full-width instruction sentence rather than a short banner, continued by 'Include attachments if additional space is needed.' at y 360.9, x 36.2..226.9.",
+   "_why_a_sentence_is_declared_as_a_heading": "Because it is what the page draws. Section 1 has ONE banner and TWO structures under it, and the sentence at y 370.5 is the only printed thing separating the business scalars above from the three person-rows below. Declaring the Section 1 banner as the partners table's heading would put its band's top at y 620.9 and swallow all fourteen scalars — which is exactly the misrouting this file exists to prevent."
+  }
+ ],
+
+ "groups": {
+  "partners": {
+   "heading": "PARTNERS_AND_OFFICERS",
+   "_why": "The three person-rows print between the instruction sentence at y 370.5 and the foot of the page. Row 1's cells are at y 332.6 / 303.8 / 275.0, row 2's at y 246.2 / 217.4 / 188.6, row 3's at y 159.8 / 131.0 / 102.2 — every one of the nine baselines strictly below y 370.5 and strictly above the footer at y 36.1. The business scalars above (y 591.8 down to y 386.6) are ALL above the sentence and are bound as scalars in the map, never as rows: the lowest of them, s1_average_gross_monthly_payroll at y 386.6, sits 16.1pt above the heading, so the band boundary separates them cleanly rather than by a tolerance."
+  }
+ },
+
+ "_no_other_group_on_page_1": "Page 1 draws one repeatable table and one only. The fourteen scalars above the partners block are not a table: each has its own caption at its own y, no caption repeats among them, and no two share a row shape. By contrast every one of the partner block's eight captions is drawn three times at identical x and differing y, which is what a repeated row looks like on this form. Stated so that 'only one group' is a reading of the page rather than an absence of effort."
+}

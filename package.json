@@ -17,7 +17,8 @@
     "stress:433aoi": "node adapters/pdf/run-form-gate.mjs 433aoi samples/433aoi.negative.sample.json --saturated && node adapters/pdf/run-form-gate.mjs 433aoi samples/433aoi.overmax.sample.json --saturated && node adapters/pdf/assert-overflow.mjs 433aoi samples/433aoi.overmax.sample.json",
     "coverage:433a": "node adapters/pdf/declaration-coverage.mjs 433a samples/433a.sample.json samples/433a.overmax.sample.json",
     "coverage:433f": "node adapters/pdf/declaration-coverage.mjs 433f samples/433f.multi.sample.json samples/433f.overmax.sample.json",
-    "coverage:433aoi": "node adapters/pdf/declaration-coverage.mjs 433aoi samples/433aoi.sample.json samples/433aoi.negative.sample.json samples/433aoi.overmax.sample.json"
+    "coverage:433aoi": "node adapters/pdf/declaration-coverage.mjs 433aoi samples/433aoi.sample.json samples/433aoi.negative.sample.json samples/433aoi.overmax.sample.json",
+    "gate:433boi": "node adapters/pdf/run-form-gate.mjs 433boi samples/433boi.slice1.sample.json --saturated"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

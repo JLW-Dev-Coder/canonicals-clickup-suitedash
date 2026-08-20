@@ -361,6 +361,10 @@ export const PREDICATES = [
       return out;
     } },
 
+  { id: 'X-26', pred: 'hit', kind: 'structural',
+    what: 'Tests, in blanket-audit [K-12], whether a coordinate quoted in the map or headings file is a value the page actually draws.',
+    structural_because: 'IT IS THE CHECK, NOT AN EXCUSAL FROM ONE. It partitions the quoted coordinates into covered and uncovered and BOTH halves are reported: the covered count becomes the numerator of the counter, and every uncovered coordinate is listed by name in the coverage-gap message. Nothing leaves the assertion by failing it. Registered because the sweep found it on its first run over new code, which is the outcome the completeness rule is for.' },
+
   { id: 'X-16', pred: 'isChecked', kind: 'structural',
     what: 'Separates checkbox widgets in the ON state from those in the OFF state in verify-appearances.mjs.',
     structural_because: 'A state test on a widget, not an excusal. Both branches are verified — an ON box must draw its ON appearance and an OFF box must draw nothing — so neither state leaves the assertion. The report prints checkedText and checkedBoxes separately and the two sum to the checked total.' },

@@ -39,7 +39,15 @@
 // is exactly as unchecked as a claim nobody wrote a check for, and it is reported the same way.
 
 import { readFileSync, existsSync } from 'node:fs';
-import { readWidgetGeometry } from './page-geometry.mjs';
+import { readWidgetGeometry, readPrintedText } from './page-geometry.mjs';
+import { markerPairing } from './line-markers.mjs';
+// Printed pages, read once per form and memoised: S-24 asks three questions of page 1 and
+// re-inflating six pages of content streams for each of them is the same measurement thrice.
+const _printedCache = new Map();
+const printedPages = async (form) => {
+  if (!_printedCache.has(form)) _printedCache.set(form, await readPrintedText(readFileSync(`adapters/pdf/forms/f${form}.pdf`)));
+  return _printedCache.get(form);
+};
 import { classifyMapTargets, walkTargets } from './verify-form-coverage.mjs';
 import { probeMoneyCells, declaredMoneyCells } from './money-probe.mjs';
 
@@ -608,6 +616,87 @@ export const MANIFEST = [
       reason: 'A totals note whose numbers describe the PRINTED FORM — how many operands a printed caption names, which printed lines a printed instruction covers, what a printed row draws. Those are transcriptions of the page, re-measured by line-markers.mjs and align-block.mjs against the PDF, not counts of anything this file holds. Every note that DOES state a count about this file (per-row entries, floors, quick-sale tripwires, the Times_8 split) is derived above and a note that states one and is not recognised is reported as unrecognised, not as underivable.',
     } }),
 
+  // ═══ 433-B(OIC) slice 1: the printed structure recorded before any binding ═══════════
+  //
+  // Page 1 of 433-B(OIC) draws no numbered line marker, so every binding on it rests on
+  // caption geometry. The map records that condition in prose, and the prose states counts —
+  // how many markers the form draws, how many are on page 1, how many runs form the section
+  // heading, how many eligibility bullets carry no widget. Each of those is a fact about the
+  // DRAWN PAGE and each is therefore re-measurable, so each is DERIVED rather than excused as
+  // a transcription. The bullet claim in particular is load-bearing: it is the reason no
+  // entity-type field set is mapped, and a later revision that added widgets on those rows
+  // would make the map silently incomplete.
+  D({ id: 'S-24', file: /433boi\.map\.json$/,
+    at: /^(_the_condition_that_governs_page_1\.no_printed_line_markers|_printed_headings_and_markers_first\.(section_heading\.continues|_the_four_bullets_are_PRINTED_PROSE_AND_NOT_A_FIELD_SET))$/,
+    kind: 'derived',
+    derive: async (ctx, v) => {
+      const rows = [];
+      let recognised = false, m;
+
+      // "adapters/pdf/line-markers.mjs finds 44 markers on this form and none of them on page 1
+      //  (p1=0, p2=10, p3=9, p4=22, p5=3, p6=0)"
+      if (/finds (\d+) markers? on this form/.test(v)) {
+        recognised = true;
+        const { rows: mk } = await markerPairing('433boi');
+        m = /finds (\d+) markers? on this form/.exec(v);
+        rows.push({ what: 'markers drawn on 433-B(OIC)', claimed: Number(m[1]), derived: mk.length, from: 'line-markers.mjs markerPairing' });
+        for (const pm of v.matchAll(/p([1-6])=(\d+)/g))
+          rows.push({ what: `markers drawn on page ${pm[1]}`, claimed: Number(pm[2]), derived: mk.filter((r) => r.page === Number(pm[1])).length, from: 'line-markers.mjs markerPairing' });
+      }
+
+      // "three separately drawn runs on one baseline forming one heading" — the Section 1 banner
+      if ((m = new RegExp(String.raw`(${WORD_NUM}|\d+) separately drawn runs on one baseline`, 'i').exec(v))) {
+        recognised = true;
+        const pages = await printedPages('433boi');
+        const n = (pages[0].items || []).filter((t) => Math.abs(t.y2 - 620.9) < 0.6).length;
+        rows.push({ what: 'runs drawn on the Section 1 heading baseline y 620.9', claimed: word(m[1]) ?? Number(m[1]), derived: n, from: 'page-geometry readPrintedText, page 1' });
+      }
+
+      // "All four bullets are drawn glyphs, and page 1's five checkboxes are at ... none within
+      //  240pt of these lines."
+      if (/bullets are drawn glyphs/.test(v)) {
+        recognised = true;
+        const pages = await printedPages('433boi');
+        const bullets = (pages[0].items || []).filter((t) => t.str.trim() === '●' && (Math.abs(t.y2 - 696.9) < 0.6 || Math.abs(t.y2 - 682.5) < 0.6));
+        if ((m = new RegExp(String.raw`All (${WORD_NUM}|\d+) bullets are drawn glyphs`, 'i').exec(v)))
+          rows.push({ what: 'eligibility bullets drawn on page 1', claimed: word(m[1]) ?? Number(m[1]), derived: bullets.length, from: 'page-geometry readPrintedText, page 1, the two bullet baselines' });
+        if ((m = new RegExp(String.raw`page 1's (${WORD_NUM}|\d+) checkboxes`, 'i').exec(v))) {
+          const { widgets } = await readWidgetGeometry(readFileSync('adapters/pdf/forms/f433boi.pdf'));
+          const cb = widgets.filter((w) => w.page === 1 && w.type === 'PDFCheckBox');
+          rows.push({ what: 'checkboxes on page 1', claimed: word(m[1]) ?? Number(m[1]), derived: cb.length, from: 'widget geometry' });
+          // THE CLAIM THAT MATTERS: no widget of any kind sits on the bullet rows.
+          const onBullets = widgets.filter((w) => w.page === 1 && w.rect && w.rect[3] > 670 && w.rect[1] < 710).length;
+          rows.push({ what: 'widgets of any type on the eligibility-bullet rows (y 670..710)', claimed: 0, derived: onBullets, from: 'widget geometry — the reason no entity-type field set is mapped' });
+        }
+      }
+
+      // "Every one of this page's 43 fields", "all 43 widgets are accounted for" and friends.
+      if ((m = /(\d+) widgets are accounted for|this page's (\d+) fields/.exec(v))) {
+        recognised = true;
+        rows.push({ what: 'fields on page 1', claimed: Number(m[1] ?? m[2]), derived: ctx.widgetsByPage.get(1), from: 'widget geometry' });
+      }
+
+      if (!recognised) rows.push({ unrecognised: true });
+      return rows;
+    } }),
+
+  // The rest of 433-B(OIC) slice 1's structural prose, and the evidence blocks under it.
+  //
+  // These state COORDINATES, not counts: the verbatim text of a drawn run and the y and x of
+  // its baseline. "y 620.9, x 36.0..80.5" holds three numbers and none of them counts anything
+  // this map contains. Re-deriving them here would be adapters/pdf/page-geometry.mjs measuring
+  // the page and then comparing the answer with itself, which is the second-implementation
+  // failure guard-sweep's (c) register exists to name.
+  //
+  // What makes them checkable is not counting. Every coordinate that JUSTIFIES A BINDING is in
+  // _map_evidence, and three of those bindings are the correlate-labels.mjs probes for this
+  // form — including the two that discriminate against a leaf name and against an 18pt-adjacent
+  // total. Those probes are a STOP: the tool writes no label file at all until they pass.
+  D({ id: 'S-26', file: /433boi\.map\.json$/,
+    at: /^(_the_condition_that_governs_page_1\.|_printed_headings_and_markers_first\.|_no_lettered_box_on_this_page$|_map_evidence\.|_nesting_note$|checkboxes\.|check_here\.|exclusive\._why$|_computed\.|groups\.|_never_autofill\.|_not_checkable\.|_deferred_pages$|_arguable_page1\[|_carried$|authored_from$|slice$|_partition\._why_unaccounted_is_the_word_and_not_deferred$)/,
+    kind: 'underivable',
+    reason: 'A transcription of the DRAWN PAGE: a caption quoted verbatim, the y of its baseline, the x range it spans, and the printed convention that makes a pairing determinate. The numbers are COORDINATES and printed-line references, not counts of anything this map holds, and re-deriving them here would be one instrument measuring the page and then comparing the answer with itself. Every coordinate in the covered sites is checked by adapters/pdf/align-block.mjs, whose prover compares quoted y and x runs against the geometry actually drawn on the page. The claims that DO state a count about the page - how many markers it draws, how many runs form the heading, how many bullets carry no widget - are derived by [S-24], and a count-stating site [S-24] does not recognise is reported UNDISPOSED rather than falling here.' }),
+
   D({ id: 'S-15', file: /\.totals\.json$/, at: /^(totals\[\d+\]|not_checkable(\.|$)|_why$|_slice$|authored_from)/,
     kind: 'underivable',
     reason: 'The body of the totals declaration: a printed caption quoted verbatim, the operands that caption names, and the reason a printed total-shaped cell is not checkable. Every number in it is a PRINTED LINE MARKER or a figure the page draws. It is checked — but by step 11 of the gate, which recomputes each declared total from the filled PDF and reports checked/skipped/failed, and by validate-map.mjs, which requires every money cell here to sit in exactly one rounding block. Counting is the wrong instrument for it.' }),
@@ -956,7 +1045,13 @@ export const runCountSweep = async (form) => {
         continue;
       }
       let out;
-      try { out = entry.derive(ctx, claim.value, claim.at, doc) || []; }
+      // AWAITED. Every derivation through slice 7 was synchronous; [S-24] reads the DRAWN PAGE —
+      // marker geometry and printed runs out of the PDF — and cannot be. `await` on a non-promise
+      // yields the value unchanged, so this is a no-op for all 23 earlier entries, and that no-op
+      // is proved in the same run: the sweep's own totals over the three finished forms are
+      // unchanged by this line, and a derivation that silently returned a promise before it would
+      // have thrown `out.some is not a function` — which is exactly how this was found.
+      try { out = (await entry.derive(ctx, claim.value, claim.at, doc)) || []; }
       catch (e) { problems.push(`UNREADABLE  ${file}  ${claim.at}  [${entry.id}]\n      the derivation threw: ${e.message}`); rows.push({ file, at: claim.at, id: entry.id, disposition: 'UNREADABLE' }); continue; }
 
       if (out.some(r => r.unrecognised)) {
