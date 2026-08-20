@@ -10,7 +10,7 @@
   "what_this_is": "THE KEY-TO-ENTRY BINDING, AND NOTHING ELSE IS BOUND HERE. One row per input key the 433-A(OIC) fill engine can consume, saying which crosswalk-classification entry covers it and which FACT it names. It does NOT carry the HubSpot property name: that is DERIVED by derive-names-433aoi.mjs from the entry CATEGORY, read out of the classification file, so that a category and a name can never disagree.",
   "the_naming_rule": "Ruling 5. exact -> irs433_<fact>, shared across the series. new -> irs433aoi_<fact>, form-specific. The middle four - superset, different-arithmetic-same-name, different-shape, same-fact-different-decomposition - are exactly the categories where the wrong call creates a permanent duplicate or a permanent collision, so each row in them MUST declare `scope` and `scope_reason` and the deriver STOPs on a row that does not. asymmetric-the-other-way binds no OIC key by definition, and a row claiming one is a STOP.",
   "the_governing_question": "Not \"is this the same fact\" but \"WOULD ONE PROPERTY SERVING BOTH FORMS EVER HAVE TO HOLD TWO DIFFERENT VALUES FOR ONE TAXPAYER AT ONE MOMENT.\" If yes, they are two properties whatever the label says. Every scope_reason below answers it in those terms, and the answer is what put the asset TABLES on the shared side and their TOTALS on the form-specific side - the discount lives in the total, not in the row.",
-  "fact_naming": "Mechanical where it can be: the input key with this form printed section or line marker stripped (s1_tp_last_name -> tp_last_name, 12_gross_receipts -> the backbone fact bizinc_gross_receipts). Two deliberate deviations, both because the mechanical strip would have produced a name too vague to survive: the (7b) residual block takes a remaining_furniture_ prefix rather than yielding irs433aoi_current_market_value, and the (8c) business digital-asset block takes a business_ prefix rather than colliding with the (2c) personal block. Both are recorded here rather than applied silently.",
+  "fact_naming": "Mechanical where it can be: the input key with this form's printed section or line marker stripped (s1_tp_last_name -> tp_last_name, 12_gross_receipts -> the backbone fact bizinc_gross_receipts). ONE STATED DEVIATION, applied uniformly: where the strip would drop the context the printed BLOCK gave the cell, the block is put back into the fact. The (7b) residual block takes a remaining_furniture_ prefix rather than yielding irs433aoi_current_market_value; the (2c) personal digital-asset block takes a digital_asset_ prefix on the three cells whose own names do not carry it, rather than yielding irs433_number_of_units and irs433_custodian_account_number; and the (8c) business block takes business_digital_asset_ so the two blocks read as the pair they are. Recorded here rather than applied silently, and applied to every cell in scope rather than only the ones that looked wrong first - a rule applied where the problem was noticed is a rule that certifies its own blind spot.",
   "backbone_key_meaning": "The 433-A (or, for one row, 433-F) INPUT KEY whose fact this row reuses, or null. It is a reviewable claim, not a lookup: null means \"no existing property holds this fact\", and the deriver reports every exact-classified row whose derived shared name does not already exist on the portal, because `exact` is the category that invites reuse and a new name under it deserves to be looked at.",
   "types_are_stated_not_inferred": "gen-fields-from-map.mjs types 433-A money cells STRUCTURALLY, from the printed line number each key carries as its own prefix. This form numbers its own lines 1-51 plus seven boxes plus nine section prefixes, so that rule has nothing it can read here and would type box_a_ and s9_ cells wrongly. Each row therefore states type, fieldType and a basis, the same way crosswalk.433f.json does."
  },
@@ -312,7 +312,7 @@
   {
    "key": "2c_number_of_units",
    "entry": "X-09",
-   "fact": "number_of_units",
+   "fact": "digital_asset_number_of_units",
    "backbone_key": null,
    "type": "string",
    "fieldType": "text",
@@ -332,7 +332,7 @@
   {
    "key": "2c_custodian_account_number",
    "entry": "X-09",
-   "fact": "custodian_account_number",
+   "fact": "digital_asset_custodian_account_number",
    "backbone_key": null,
    "type": "string",
    "fieldType": "text",
@@ -352,7 +352,7 @@
   {
    "key": "2c_us_dollar_equivalent_today",
    "entry": "X-09",
-   "fact": "us_dollar_equivalent_today",
+   "fact": "digital_asset_us_dollar_equivalent_today",
    "backbone_key": null,
    "type": "number",
    "fieldType": "number",
@@ -818,7 +818,7 @@
   {
    "key": "8c_number_of_units",
    "entry": "X-18",
-   "fact": "business_number_of_units",
+   "fact": "business_digital_asset_number_of_units",
    "backbone_key": null,
    "type": "string",
    "fieldType": "text",
@@ -842,7 +842,7 @@
   {
    "key": "8c_custodian_account_number",
    "entry": "X-18",
-   "fact": "business_custodian_account_number",
+   "fact": "business_digital_asset_custodian_account_number",
    "backbone_key": null,
    "type": "string",
    "fieldType": "text",
@@ -866,7 +866,7 @@
   {
    "key": "8c_us_dollar_equivalent_today",
    "entry": "X-18",
-   "fact": "business_us_dollar_equivalent_today",
+   "fact": "business_digital_asset_us_dollar_equivalent_today",
    "backbone_key": null,
    "type": "number",
    "fieldType": "number",
