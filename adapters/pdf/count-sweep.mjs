@@ -875,11 +875,19 @@ export const MANIFEST = [
       else rows.push({ unrecognised: false, skip: true });
       return rows;
     },
-    fallback: { kind: 'underivable', reason: 'A row class names the PRINTED TABLES it covers on each form and the columns it declares. The numbers inside those names are printed line markers ("13a", "18a-c"), not counts. The list LENGTHS are what matter and they are asserted by validate-crosswalk.mjs, which requires every declared column to exist on every table the class claims.' } }),
+    fallback: { kind: 'underivable', reason: 'A row class names the PRINTED TABLES it covers on each form and the columns it declares. The numbers inside those names are printed line markers ("13a", "18a-c"), not counts. The list LENGTHS are what matter and they are asserted by adapters/pdf/assert-row-shape-spec.mjs [A2], which requires every column a class says a form contributes to be reachable on the group that accepts that class on that form — by its own key or by a declared and separately verified `printed_as` alias.',
+      _reason_was: 'THIS REASON NAMED validate-crosswalk.mjs UNTIL THE BLANKET AUDIT ASKED IT TO PAY. validate-crosswalk.mjs does not open asset-row-shapes.json; the check it was credited with did not exist. Kept here because the wrong half is instructive: the sentence described a real and necessary check accurately enough that three slices read it and believed it, which is how a forward reference launders an intention into a fact.' } }),
 
+  // A FORWARD REFERENCE IS A PROMISSORY NOTE, AND THIS ONE BOUNCED. The reason below said,
+  // for three slices, that this file's lists were "asserted structurally by
+  // adapters/hubspot/validate-crosswalk.mjs". That tool reads crosswalk.<form>.json, the map
+  // and the 433-A backbone, and never opens this file — nothing in the repo did. 269 claim
+  // sites, over the artefact `row_class` routing is authored from, stood on a check that had
+  // never been written. Found by adapters/pdf/blanket-audit.mjs; the check now exists.
   D({ id: 'S-21', file: /asset-row-shapes\.json$/, at: /./,
     kind: 'underivable',
-    reason: 'The shared row-class specification. Its numbers are printed line markers on 433-A and 433-F ("line 13", "18a-c", "Section E"), HubSpot property counts quoted from a provisioning run that already happened, and the migration-cost narrative for a migration that was completed. None counts a list this file holds; the lists it does hold — classes, columns, printed tables — are asserted structurally by adapters/hubspot/validate-crosswalk.mjs, which fails when a declared column is missing from a claimed table. A count would be weaker than the check already running.' }),
+    reason: 'The shared row-class specification. Its numbers are printed line markers on 433-A and 433-F ("line 13", "18a-c", "Section E"), HubSpot property counts quoted from a provisioning run that already happened, and the migration-cost narrative for a migration that was completed. None counts a list this file holds; the lists it does hold — classes, columns, printed tables — are asserted structurally by adapters/pdf/assert-row-shape-spec.mjs: [A1] every class any map routes rows under is declared here, [A2] every contributed column is reachable on the group that accepts the class, and [A3] every printed table a class claims is either routed by a group or carries a live `unrouted` declaration, with a stale one a STOP. A count would be weaker than that check.',
+    _reason_was: 'IT NAMED validate-crosswalk.mjs, "which fails when a declared column is missing from a claimed table", and validate-crosswalk.mjs has never read this file. What the old reason got RIGHT: that counting is the wrong instrument here, and that the load-bearing property of the file is structural reachability rather than cardinality. What it got WRONG: that the structural check was running. It was not, and the first run of the one that replaced it found fifteen problems — an undeclared live class, six unreachable columns, and eight printed tables no group routes.' }),
 
   D({ id: 'S-22', file: /crosswalk\.433f\.json$/, at: /./,
     kind: 'underivable',

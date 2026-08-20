@@ -294,6 +294,72 @@ export const VACUOUS = [
 
   { id: 'G-40', file: 'assert-overflow.mjs', anchor: 'if (!missing.length && !extra.length) console.log(', verdict: 'sound',
     why: 'GATES A CONSOLE LINE, NOT A VERDICT. This is the shape of the original defect — two empty lists reading as agreement — and here the two empty lists ARE agreement, because they are the two directions of a set comparison whose populated case was already turned into a `problems.push` on the two lines above. The verdict is computed from `problems.length` at the end of the file and never from this branch, so deleting this line would change what the transcript says and not what the tool decides. Named rather than left undisposed, because "it only prints" is exactly the excuse the [N-05] generation of this defect was hiding behind, and the check is that the printing and the deciding are two different statements about the same fact.' },
+  // ─── the row-shape specification assertion ────────────────────────────────────────────
+  { id: 'G-40', file: 'assert-row-shape-spec.mjs', anchor: 'try { cols = slotColumnsOf(map, group) || []; } catch { cols = []; }', verdict: 'sound',
+    why: 'FAILS OPEN INTO THE LOUDEST POSSIBLE REPORT. `cols` is the set A2 asks every contributed column to be reachable in, so an empty one makes EVERY column of that class report as MISSING COLUMN on that group. A group whose slots cannot be read does not quietly pass this check; it fails it as many times as the class has columns. The catch is there because slotColumnsOf throws on a malformed slot list and a throw at that point would take the whole assertion down instead of reporting the one group.' },
+
+  { id: 'G-41', file: 'assert-row-shape-spec.mjs', anchor: 'if (real.length && !routed && !un[form])', verdict: 'guarded',
+    why: 'THE `length &&` SHAPE, AND THE ONE PLACE IN THIS FILE IT COULD HAVE GONE WRONG. `real` is what survives `claimsNothing()`, so a filter that quietly widened would empty `real` and switch the routing assertion off with no output at all. Two things close it. The empty case is disposed by the NEXT check in the same loop — an `unrouted` declaration for a form with no routable claim is reported as ORPHAN UNROUTED, so a class whose claims all vanished cannot keep a silent declaration standing over nothing. And `excusedClaims()` enumerates every entry the filter removed, with its class and its text, and reportRowShapeSpec prints the count on every run. An assertion that stops asserting here cannot do it without saying how many claims it excused.' },
+
+  // ─── the blanket audit ────────────────────────────────────────────────────────────────
+  { id: 'G-42', file: 'blanket-audit.mjs', anchor: 'for (const m of String(v).matchAll(new RegExp(String.raw`(?<![\\w-])(${N})(?![\\w-])`', verdict: 'guarded',
+    why: 'THE PROBE’S NUMBER EXTRACTOR, GUARDED BY A CANARY RATHER THAN BY A PER-SITE TEST. An empty read here yields no findings for that site, and if the regex ever died every sampled site would come back clean and the audit would print a green sample over an instrument that reads nothing. A PER-SITE heuristic was tried first — "the site has a digit and I read no number" — and it is WRONG: `entries[30].id` is "L30" and `_at` is "y 668.1", and reading no standalone number out of either is the correct answer, which is what the boundary rule exists to produce. It reported ten live sites as unreadable. `PROBE_CANARY` asks the only question that separates a dead extractor from a site with nothing in it: a fixed string, not drawn from the artefacts, carrying two register phrases and one entry id, expected to yield exactly two. A canary that does not come back is a STOP and every "0 findings" in the same run is declared meaningless.' },
+
+  { id: 'G-43', file: 'blanket-audit.mjs', anchor: 'const hist = HISTORICAL.exec(window);', verdict: 'sound',
+    why: 'FAILS OPEN IN THE SAFE DIRECTION. No match means the probe PROCEEDS to derive and compare, so a dead HISTORICAL regex produces MORE findings, not fewer — a false report a person disposes of, never a real one suppressed. Every stand-down it does make is counted and printed with the marker that caused it, so the quiet direction is not available either.' },
+
+  { id: 'G-44', file: 'blanket-audit.mjs', anchor: 'try { derived = s.count(ctx); } catch { derived = null; }', verdict: 'sound',
+    why: 'A COUNTER THAT THROWS STILL PRODUCES THE FINDING. `derived` becomes null and the finding is pushed anyway, so the report reads "the site states N ... a set this repo counts as null" — visible, and a STOP like any other finding. The exception is not swallowed into a skip; it is swallowed into a value that cannot equal anything.' },
+
+  { id: 'G-45', file: 'blanket-audit.mjs', anchor: "...[...t.matchAll(/\\b([a-zA-Z0-9-]+\\.mjs)\\b/g)].map(m => m[1]),", verdict: 'guarded', family: true,
+    why: 'THE FORWARD-REFERENCE EXTRACTOR, AND THE SITE WHERE AN EMPTY READ WOULD BE WORST. If this stopped matching, every blanket would report zero forward references, the register would demand zero provers, and the audit would print "0 unproved" over a tree in which nothing was checked. So `forwardRefsIn` returns `{ refs, unreadable }`, where `unreadable` is true for a reason that contains the literal ".mjs" or "step N" and yielded no reference, and the caller turns that into an UNPROVED FWD problem naming the blanket. An extraction that cannot read its input is not a reason with no forward references.' },
+
+  { id: 'G-46', file: 'blanket-audit.mjs', anchor: "for (const m of t.matchAll(/\\((\\d{1,2}[a-z]?)\\)/g)) out.add(m[1]);", verdict: 'guarded', family: true,
+    why: 'A PROVER’S DEMAND EXTRACTOR, AND AN EMPTY DEMAND IS A STOP RATHER THAN A PROOF. Every extractor in this family — markers, coordinates, AcroForm paths, revision pins, printed constants — feeds a prover that reports `demanded / supplied / uncovered`, and an empty `demanded` makes `uncovered` empty too, which reads as green. That is the vacuous shape this register exists for, committed inside the register built to pay forward references. So the runner checks `demanded.length === 0` on every pair and requires it to appear in `EMPTY_DEMAND` with the reason the citation is about something other than the atoms this prover measures; undeclared, it is an EMPTY DEMAND problem that names the blanket, the instrument and the prover’s own `how`. Two pairs are declared today, both citing validate-map.mjs for a claim that is not about paths.' },
+
+  { id: 'G-47', file: 'blanket-audit.mjs', anchor: 'try { if (slotColumnsOf(ctx.mapDoc, g)?.length) supplied.add(g); } catch', verdict: 'sound',
+    why: 'A GROUP WHOSE COLUMNS CANNOT BE READ IS NOT ADDED TO `supplied`, so any covered site naming it comes out as UNCOVERED and the forward reference to check-row-shape.mjs fails for that group. The catch converts a throw into a reported gap rather than into silence, and the empty case is covered by [G-46]: if NO group resolves, `demanded` is unchanged and every demanded group is reported uncovered.' },
+
+  { id: 'G-48', file: 'blanket-audit.mjs', anchor: "const demanded = [...new Set([...t.matchAll(/\\$\\s?([\\d,]{3,})", verdict: 'guarded',
+    why: 'The printed-constant demand for gate step 11 — same family and same disposition as [G-46]. An empty extraction is caught by the EMPTY_DEMAND check before it can read as a proof.' },
+
+  { id: 'G-49', file: 'blanket-audit.mjs', anchor: "...[...t.matchAll(/\\b(\\d{1,2}-\\d{4})\\b/g)].map(m => m[1]),", verdict: 'sound', family: true,
+    why: 'THE REVISION PROVER DOES NOT USE ITS OWN EXTRACTION FOR THE VERDICT. `uncovered` is computed from `ctx.mapDoc.form_revision` and `ctx.mapDoc.catalog` read straight out of the map header and compared against `readFormRevision(form)`, which reads the drawn page bytes. The regex only widens what is DISPLAYED as demanded; an empty read cannot make the pin agree with itself, because the pin is never taken from the prose.' },
+
+  { id: 'G-50', file: 'blanket-audit.mjs', anchor: "for (const m of s.matchAll(clause(ASSERTS))) out.push({ where, kind: 'assert'", verdict: 'guarded', family: true,
+    why: 'THE COMPLETENESS DETECTOR, AND THE QUIETEST POSSIBLE FAILURE IN THIS FILE. A detector that stops matching reports "0 claims detected, 0 undisposed" and reads as a clean tree — the loudest problem printed as the calmest success. Guarded by `CANARY`: a fixed string carrying one assert-shaped claim and one geometry-shaped one, run before the tree is scanned, with the expected split stated. It is deliberately not drawn from the artefacts, because a canary taken from the input it guards dies with it. A canary that does not come back is a STOP, and the problem it raises says in as many words that every "0 detected" in that run is meaningless.' },
+
+  { id: 'G-51', file: 'blanket-audit.mjs', anchor: 'const g = /^([A-Za-z0-9_]+)\\[(\\d+)\\]\\.([A-Za-z0-9_]+)$/.exec(str);', verdict: 'sound',
+    why: 'ONE OF FOUR RESOLUTION ROUTES, AND NO-MATCH FALLS THROUGH TO THE OTHERS. [K-03] asks whether a `bound_to` resolves; this pattern reads the group-slot-column spelling, and a string that is not in that shape is then tried as a map key, a check_here key, a checkboxes key, a verbatim field name and a map path. Only a binding that fails ALL of them is reported, so an empty match here narrows nothing and hides nothing. The FIRST draft of this counter knew only two of the routes and reported four live bindings as unresolvable, which is what the four routes are for.' },
+
+  { id: 'G-52', file: 'blanket-audit.mjs', anchor: 'catch (e) { forward.push({ blanket: b.id, instrument: inst, unproved: true', verdict: 'sound',
+    why: 'A PROVER THAT THROWS IS AN UNPROVED FORWARD REFERENCE, which is a STOP by the rule this file enforces. The exception message is carried into the problem text. Nothing is skipped.' },
+
+  { id: 'G-53', file: 'blanket-audit.mjs', anchor: "catch (e) { disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed:", verdict: 'sound',
+    why: 'A COUNTER THAT THROWS IS REPORTED AS COUNTER DEAD and counted as a problem. A completeness claim whose counter cannot run is in exactly the state the register forbids — disposed on paper and unmeasured in fact — so it fails rather than falling back to the claim’s own word for it.' },
+  { id: 'G-45b', file: 'blanket-audit.mjs', anchor: "...[...t.matchAll(/\\b(?:gate\\s+)?step\\s+(\\d+)\\b/gi)].map(m => `gate step ${m[1]}`),", verdict: 'guarded',
+    why: 'The gate-step half of the forward-reference extractor. Same disposition as [G-45]: `forwardRefsIn` reports `unreadable` for a reason that names "step N" and yields nothing, and the caller turns that into an UNPROVED FWD problem.' },
+
+  { id: 'G-46b', file: 'blanket-audit.mjs', anchor: "for (const m of t.matchAll(/\\bBox\\s+([A-H])\\b/g)) out.add(`Box ${m[1].toUpperCase()}`);", verdict: 'guarded',
+    why: 'The Box-marker half of the line-markers demand. Same disposition as [G-46]: an empty demand is caught by the EMPTY_DEMAND check before it can read as a proof.' },
+
+  { id: 'G-46c', file: 'blanket-audit.mjs', anchor: "for (const m of t.matchAll(/\\blines?\\s+(\\d{1,2}[a-z]?)(?:\\s*[-–]\\s*(\\d{1,2}[a-z]?))?/gi))", verdict: 'guarded',
+    why: 'The "line NN" / "lines NN-MM" half of the line-markers demand. Same disposition as [G-46]. Note the second capture group is added only `if (m[2])`, so a range that matched only its first half contributes one marker rather than an undefined one — an undefined in the demanded set would be reported as an uncovered atom named "undefined", which is noise rather than a finding.' },
+
+  { id: 'G-46d', file: 'blanket-audit.mjs', anchor: "for (const m of t.matchAll(/\\by\\s+(\\d{2,3}(?:\\.\\d+)?)\\b/g)) out.push({ axis: 'y'", verdict: 'guarded',
+    why: 'The y half of the coordinate demand, for align-block.mjs and verify-headings.mjs. Same disposition as [G-46].' },
+
+  { id: 'G-46e', file: 'blanket-audit.mjs', anchor: "for (const m of t.matchAll(/\\bx\\s+(\\d{1,3}(?:\\.\\d+)?)\\s*\\.\\.\\s*(\\d{1,3}(?:\\.\\d+)?)/g))", verdict: 'guarded',
+    why: 'The x-range half of the coordinate demand. Same disposition as [G-46]. Both ends of the range are pushed, so a stated span is proved at both edges rather than at its start.' },
+
+  { id: 'G-46f', file: 'blanket-audit.mjs', anchor: "[...textOf(sites).matchAll(/topmostSubform\\[0\\](?:\\.[A-Za-z0-9_#\\-]+(?:\\[\\d+\\])?)+/g)].map(m => m[0]))];", verdict: 'guarded',
+    why: 'The AcroForm-path demand for validate-map.mjs. Same disposition as [G-46], and this is the family where the EMPTY_DEMAND register earns its keep: BOTH declared empty demands are validate-map citations, one about rounding and one asserting that the classification binds nothing at all.' },
+
+  { id: 'G-49b', file: 'blanket-audit.mjs', anchor: "...[...t.matchAll(/\\b(\\d{5}[A-Z])\\b/g)].map(m => m[1]),", verdict: 'sound',
+    why: 'The catalog-number half of the revision demand. Same disposition as [G-49]: the verdict is computed from the map header against readFormRevision(form) and never from this extraction.' },
+
+  { id: 'G-50b', file: 'blanket-audit.mjs', anchor: 'for (const m of s.matchAll(clause(GEOMS))) {', verdict: 'guarded',
+    why: 'The geometry-shaped half of the completeness detector. Same disposition as [G-50], and it is the half the canary would notice first: CANARY expects one geometry claim as well as one assert claim, so a detector that lost either half fails the canary and takes the whole run down with an explicit statement that every "0 detected" in it is meaningless.' },
 ];
 
 // ---------------------------------------------------------------------------------------

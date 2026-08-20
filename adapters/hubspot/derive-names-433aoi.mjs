@@ -42,6 +42,8 @@ const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
 const emit = argv.includes('--emit');
 
+import { keySpaceOf, coverageOf } from './classification-coverage.mjs';
+
 const R = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const MAP = R('adapters/pdf/maps/433aoi.map.json');
 const CLS = R('adapters/pdf/maps/433aoi.crosswalk-classification.json');
@@ -56,14 +58,11 @@ const STOP = (id, msg) => stops.push(`[${id}] ${msg}`);
 // ---------------------------------------------------------------------------------------
 // THE KEY SPACE, derived from the map. Never typed.
 // ---------------------------------------------------------------------------------------
-const groupSourceByName = {};
-for (const [g, d] of Object.entries(MAP.groups || {})) if (!g.startsWith('_')) groupSourceByName[g] = d.source || g;
-
-const keySpace = new Map(); // input key -> construct
-for (const k of Object.keys(MAP.map || {})) if (!k.startsWith('_')) keySpace.set(k, 'map');
-for (const [k, v] of Object.entries(MAP.checkboxes || {})) if (!k.startsWith('_') && v && typeof v === 'object' && !Array.isArray(v)) keySpace.set(k, 'checkboxes');
-for (const [k, v] of Object.entries(MAP.check_here || {})) if (!k.startsWith('_') && v && typeof v === 'object' && typeof v.target === 'string') keySpace.set(k, 'check_here');
-for (const src of Object.values(groupSourceByName)) keySpace.set(src, 'groups');
+// IMPORTED, NOT REBUILT. adapters/hubspot/classification-coverage.mjs holds the one key space
+// and the one reading of what an entry names, because adapters/pdf/blanket-audit.mjs [K-01]
+// counts the same thing and a second copy there answered 232 of 238 against this file's 238 of
+// 238 - two instruments, two answers, one claim. See that module's header.
+const { keySpace, groupSource: groupSourceByName } = keySpaceOf(MAP);
 
 if (keySpace.size < 200) STOP('A0', `the key space read only ${keySpace.size} keys out of 433aoi.map.json, which cannot be right for a form with ${MAP._partition?.bound_writable} bound fields. Refusing to derive names against an input this file could not read.`);
 
@@ -86,59 +85,14 @@ for (const b of bindings) if (!keySpace.has(b.key)) STOP('A1', `crosswalk.433aoi
 // would otherwise read as a second claim on it, which is the duplicate-write defect one level
 // up. Four naming mechanisms, each mechanically checkable; anything else is a STOP.
 // ---------------------------------------------------------------------------------------
-const MECHANISM = {
-  // A prefix glob is only safe where the prefix belongs to ONE entry. `s2_sp_` does not: it
-  // also matches the pay-period and business-interest cells, which are two other questions
-  // under two other entries. So X-04's five spouse counterparts are derived by SUBSTITUTION
-  // from the five taxpayer keys it names verbatim - which is what "counterparts" means and
-  // what a prefix cannot express. The first draft of this table used the prefix, and the
-  // count check below is what caught it.
-  'X-04': { kind: 'counterpart_substitution', phrase: 'and the five spouse counterparts', from: 's2_tp_', to: 's2_sp_', expect: 5 },
-  'X-14': { kind: 'prefix_glob', phrase: '7b_* as five scalars', prefix: '7b_', expect: 5 },
-  'X-18': { kind: 'prefix_glob', phrase: '8c_* digital-asset block', prefix: '8c_', expect: 8 },
-  'X-26': {
-    kind: 'prefix_glob', phrase: 'and the five 31_spouse_* counterparts', prefix: '31_', expect: 5,
-    note: 'THE PHRASE AND ITS OWN GLOB DISAGREE. Four keys match 31_spouse_* literally; the fifth counterpart is 31_total_spouse_income, which does not. The COUNT of five is right and the glob is one short, so the mechanism is read as the glob over the 31_ prefix, which yields exactly the five the phrase claims. Reported rather than silently widened.',
-  },
-};
+const { coverage, namedBy, problems: coverageProblems, notes: coverageNotes, MECHANISM } = coverageOf(CLS, MAP, '433aoi');
+for (const p of coverageProblems) STOP(p.id, p.msg);
+notes.push(...coverageNotes);
 
 const entryById = new Map(CLS.entries.map((e) => [e.id, e]));
-const verbatim = (entry, key) => {
-  const prose = String(entry.oic || '');
-  const re = new RegExp(`(^|[^A-Za-z0-9_])${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^A-Za-z0-9_]|$)`);
-  if (re.test(prose)) return 'verbatim';
-  for (const [g, src] of Object.entries(groupSourceByName)) {
-    if (src === key && new RegExp(`(^|[^A-Za-z0-9_])groups\\.${g}([^A-Za-z0-9_]|$)`).test(prose)) return `verbatim (as groups.${g})`;
-  }
-  return null;
-};
-
-// Per-entry coverage: what the entry names verbatim, plus what its declared mechanism adds.
-const coverage = new Map(); // entry id -> Map(key -> how)
-for (const e of CLS.entries) {
-  const got = new Map();
-  for (const k of keySpace.keys()) { const how = verbatim(e, k); if (how) got.set(k, how); }
-  const m = MECHANISM[e.id];
-  if (m) {
-    const added = [];
-    if (m.kind === 'prefix_glob') { for (const k of keySpace.keys()) if (!got.has(k) && k.startsWith(m.prefix)) added.push(k); }
-    else if (m.kind === 'counterpart_substitution') { for (const v of [...got.keys()]) { const c = v.replace(m.from, m.to); if (c !== v && keySpace.has(c) && !got.has(c)) added.push(c); } }
-    if (!String(e.oic || '').includes(m.phrase)) STOP('A2', `${e.id} was expected to carry the phrase "${m.phrase}" in its oic field and does not. The mechanism cannot read its own input, which is not the same as there being nothing to check.`);
-    if (added.length !== m.expect) STOP('A2', `${e.id} mechanism ${m.kind} expected to add ${m.expect} key(s) and added ${added.length}: [${added.join(', ')}]. A mechanism whose count does not hold is covering the wrong keys.`);
-    for (const k of added) got.set(k, m.kind);
-    if (m.note) notes.push(`${e.id}: ${m.note}`);
-  }
-  coverage.set(e.id, got);
-}
-for (const id of Object.keys(MECHANISM)) if (!entryById.has(id)) STOP('A2', `naming mechanism declared for ${id}, which is not an entry in the classification.`);
 
 const namesKey = (entry, key) => coverage.get(entry.id)?.get(key) || null;
 
-const namedBy = new Map(); // key -> [entry ids that name it]
-for (const e of CLS.entries) for (const k of coverage.get(e.id).keys()) namedBy.set(k, [...(namedBy.get(k) || []), e.id]);
-
-const ambiguous = [...namedBy.entries()].filter(([, ids]) => ids.length > 1);
-for (const [k, ids] of ambiguous) STOP('A2', `input key "${k}" is named by ${ids.length} entries (${ids.join(', ')}). A key covered twice is a key whose category depends on which entry you read.`);
 
 // ---------------------------------------------------------------------------------------
 // A3  Category read from the entry; middle four must declare their own scope.

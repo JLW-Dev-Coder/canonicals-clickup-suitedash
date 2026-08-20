@@ -20,6 +20,7 @@
 // gate would not notice: an unticked checkbox and an unasked question print identically.
 
 import { readFileSync } from 'fs';
+import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 
 const form = process.argv[2];
 if (!form) {
@@ -27,17 +28,13 @@ if (!form) {
   process.exit(2);
 }
 
-// Inputs the fill engine reads that the map does not name as input keys. Sourced from the
-// engine, per form, and stated here rather than guessed from the map's shape.
-const ENGINE_EXTRA_INPUTS = {
-  '433f': [
-    '433f_address_differs',   // fill-433f.mjs: input('address_differs') -> checkboxes.address_differs
-    '433f_pay_freq',          // fill-433f.mjs: input('pay_freq')        -> checkboxes.pay_freq.you
-    '433f_spouse_pay_freq',   // fill-433f.mjs: input('spouse_pay_freq') -> checkboxes.pay_freq.spouse
-    '433f_hh_size',           // fill-433f.mjs: data.household_size ?? data['433f_hh_size']
-    '433f_age_band',          // fill-433f.mjs: input('age_band')        -> allowed.oop_by_age
-  ],
-};
+// Inputs the fill engine reads that the map does not name as input keys — sourced from the
+// engine, per form. MOVED to adapters/hubspot/classification-coverage.mjs and imported back,
+// because adapters/pdf/blanket-audit.mjs [K-09] counts the same key space to prove [S-22]'s
+// forward reference to this file, and a second copy of the table there would be the
+// parallel-list defect guard-sweep.mjs exists to enumerate. The first draft of that counter
+// did rebuild the key space without these five and reported five live bindings as
+// unconsumable — the list disagreeing with its copy, on its first run.
 
 const xw = JSON.parse(readFileSync(`adapters/hubspot/crosswalk.${form}.json`, 'utf8'));
 const map = JSON.parse(readFileSync(`adapters/pdf/maps/${form}.map.json`, 'utf8'));

@@ -17,6 +17,8 @@ import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { auditRounding, reportRounding } from './rounding.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
+import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
+import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -243,6 +245,22 @@ if (reportGuardSweep(guards, { verbose: process.argv.includes('--sweep') }) > 0)
 // figure that only failed one gate out of three would leave two green gates standing over it.
 const figures = await runFigureSweep();
 if (reportFigureSweep(figures) > 0) process.exit(2);
+
+// (e) THE ROW-SHAPE SPECIFICATION. The shared class list, its canonical columns and the
+// printed tables each class claims, joined to every map through `row_class.accepts`. It runs on
+// every form for the same reason the figure register does — the spec is shared, so a defect in
+// it is a defect for all three forms and failing one gate would leave two green ones over it.
+// It exists at all because count-sweep [S-21] credited validate-crosswalk.mjs with this check
+// for three slices and validate-crosswalk.mjs never opened the file.
+if (reportRowShapeSpec({ verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (f) THE BLANKET AUDIT. The sweeps above dispose of every claim site; most sites are disposed
+// by a handful of catch-all reasons, and this asks whether those reasons are true of what they
+// stand over. Three questions, each a STOP: does a seeded sample of the covered sites hold up,
+// is every instrument a blanket names actually proved against the scope it claims, and does
+// every completeness claim in the tree have something that counts the covered set.
+const blankets = await runBlanketAudit(form);
+if (reportBlanketAudit(blankets, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.
