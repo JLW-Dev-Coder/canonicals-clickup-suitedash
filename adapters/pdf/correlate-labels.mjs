@@ -249,6 +249,39 @@ for (const g of geometry) {
 // Each probe names a field by its FULL path from topmostSubform[0]. Reconstructing a prefix
 // from a fragment is where two rounds of 433-F defects entered; nothing here does it.
 const PROBES = {
+  '433boi': [
+    // ESTABLISHED FROM THE PRINTED PAGE with align-block.mjs, never from a leaf name — this
+    // form is the one whose lineage report found three names true on one page and false on
+    // another, so a probe taken from a name would be a probe of the wrong thing.
+    //
+    // "Business name" prints at y 604.3, x 36..90.7. The widget spans x 36..370.8 with its top
+    // at y 591.8 — directly beneath, sharing a left edge to 0.0pt. The next caption down the
+    // same column is "Business physical address" at y 575.5, 29pt lower, so an off-by-one row
+    // is visible rather than plausible.
+    { label: 'Page1 Section 1 business-name cell -> "Business name"',
+      field: 'topmostSubform[0].F433-B-OIC_Page1[0].Business_Name[0]', want: /business\s*name/i },
+    // THE PROBE THAT MATTERS ON THIS FORM. Page 5's Section 6 litigation block reuses FOUR
+    // leaf names that are honest elsewhere on the same form — Name_Creditor, Date_Final_Payment
+    // and Gross_Receipts among them. Name_Creditor[0] spans x 129.6..266.4 and the caption
+    // directly above it at y 175.9 is "Location of filing", whose x1 is exactly 129.6. A
+    // correlation that read the NAME here would answer "creditor" and the field name would
+    // agree with the wrong answer, which is the whole reason the probe is placed here.
+    { label: 'Page5 Section 6 Name_Creditor[0] -> "Location of filing", NOT a creditor',
+      field: 'topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Name_Creditor[0]', want: /location\s*of\s*filing/i },
+    // The two page-3 vehicle totals sit 18pt apart in one column against markers (4d) and (4).
+    // Total_Value_Vehicles_Attached spans y 82.8..100.8 and (4d)'s caption prints at y 97.5,
+    // inside that rectangle; (4) prints at y 80.2, outside it. This is the cell where the
+    // 433-A(OIC) registry says the name LIES and on this form it tells the truth, so the probe
+    // pins the containment reading that established it.
+    // ASSERTED ON THE MARKER, WHICH IS WHAT THE CELL IS IDENTIFIED BY AND WHAT THE TOOL
+    // ACTUALLY RETURNS. A first draft of this probe expected /attachment/i, matching the
+    // caption; the correlator answers "(4d) $", because the marker is nearer. Both are the
+    // same finding and only one of them is what the instrument produces, so the probe asserts
+    // that one — and it is the sharper test, because (4d) and (4) are 18pt apart in one column
+    // and the caption is shared prose while the marker is not.
+    { label: 'Page3 vehicles-from-attachment total -> marker (4d), NOT the (4) Add-lines total below it',
+      field: 'topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles_Attached[0]', want: /\(4d\)/ },
+  ],
   '433a': [
     { label: 'Page-1 taxpayer name field -> label containing "Name"',
       field: 'topmostSubform[0].Page1[0].c1[0].Lines1a-b[0].p1-t4[0]', want: /name/i },

@@ -1,0 +1,176 @@
+{
+ "_what_this_is": "The lineage of 433-B(OIC)'s AcroForm leaf names against 433-A(OIC)'s, and against the name-lie registry that form earned. Authored at intake, BEFORE any binding, because the whole value of a lineage report is that it is read before the names get a chance to be believed.",
+ "_the_question_it_answers": "Of the leaf names this form shares with 433-A(OIC), which appear in adapters/pdf/maps/433aoi.name-lies.json, and for each: does the printed caption on THIS form match the lie, contradict it, or raise a new question under an inherited name? An inherited name that is TRUE here and FALSE there is as dangerous as the reverse, because the first accurate occurrence teaches a reader to trust the name.",
+ "_every_figure_here_is_derived": "By adapters/pdf/tmp/gen-lineage.mjs over 433boi.fields.json and 433aoi.fields.json, and by reading each widget's printed neighbourhood out of the drawn page. The prompt that commissioned this stated 86 shared names; the derived figure is 83. No count in this file is typed.",
+ "counts": {
+  "boi_fields": 267,
+  "aoi_fields": 425,
+  "boi_distinct_leaf_names": 170,
+  "aoi_distinct_leaf_names": 322,
+  "shared_distinct_leaf_names": 83,
+  "boi_fields_carrying_a_shared_leaf_name": 155,
+  "boi_only_leaf_names": 87,
+  "registry_entries_total": 31,
+  "shared_leaf_names_appearing_in_the_registry": 9,
+  "registry_entries_standing_on_those_9_names": 13,
+  "_derived_by": "adapters/pdf/tmp/gen-lineage.mjs — re-runnable; a figure that disagrees with this block is a STOP."
+ },
+ "_the_headline": "THREE INHERITED NAMES ARE TRUE ON ONE PAGE OF THIS FORM AND FALSE ON ANOTHER PAGE OF THE SAME FORM. Name_Creditor, Date_Final_Payment and Gross_Receipts are each accurate where the form asks a lender's name, a final payment date and business revenue — and each is reused, unchanged, in the Section 6 litigation block on page 5 for something entirely different. On 433-A(OIC) the same names were lies on page 7 only. Here the accurate occurrence comes FIRST, in printed order and in page order, which is the worse arrangement: a reader who checks Name_Creditor on page 3, finds it honest, and generalises will be wrong four times on page 5.",
+ "verdicts": [
+  {
+   "leaf": "Name_Creditor",
+   "boi_widgets": 9,
+   "aoi_registry": [
+    "L15",
+    "L16",
+    "L17",
+    "L18"
+   ],
+   "aoi_says": "Four lies on 433-A(OIC) page 7: the name implies a creditor and the printed captions are Location of filing, Represented by, Possible completion date, Subject of litigation.",
+   "boi_verdict": "BOTH — true on page 3, and the SAME four-fold lie on page 5.",
+   "boi_true_at": [
+    "p3 RealEstate1[0].Name_Creditor[0]  x=176.4..349.2 y=615.6..631.4  printed \"Name of lender/contract holder\" y=615.1 x=176.4..286.2",
+    "p3 RealEstate2[0].Name_Creditor[0]  x=176.4..349.2 y=500.4..516.2  printed \"Name of lender/contract holder\" y=499.9 x=176.4..286.2",
+    "p3 Vehicle1[0].Name_Creditor[0]     x=205.2..352.8 y=324.0..339.8  printed \"Name of creditor\" y=352.3 x=205.2..264.3",
+    "p3 Vehicle2[0].Name_Creditor[0]     x=205.2..352.8 y=230.4..246.2  printed \"Name of creditor\" y=258.7 x=205.2..264.3",
+    "p3 Vehicle3[0].Name_Creditor[0]     x=205.2..352.8 y=136.8..152.6  printed \"Name of creditor\" y=165.1 x=205.2..264.3"
+   ],
+   "boi_lie_at": [
+    "p5 section_6[0].Name_Creditor[0]  x=129.6..266.4 y=147.6..163.4  printed \"Location of filing\" y=175.9 x=129.6..187.4 — x agrees to 0.0pt",
+    "p5 section_6[0].Name_Creditor[1]  x=273.6..478.8 y=147.6..163.4  printed \"Represented by\" y=175.9 x=273.6..330.1 — x agrees to 0.0pt",
+    "p5 section_6[0].Name_Creditor[2]  x=129.6..266.4 y=118.8..134.6  printed \"Possible completion date\" y=147.1 x=129.6..218.5 — x agrees to 0.0pt",
+    "p5 section_6[0].Name_Creditor[3]  x=273.6..576.0 y=118.8..134.6  printed \"Subject of litigation\" y=147.1 x=273.6..340.7 — x agrees to 0.0pt"
+   ],
+   "pairing_basis": "COLUMN-X IDENTITY, not nearest-neighbour distance. Each Section 6 caption's x1 equals its widget's x0 exactly (129.6, 273.6, 486.0), and the captions sit one row above their cells throughout the block. That is a determinate marker pairing under Prompt 35 ruling 2; no tie-break was needed and none was used.",
+   "carried": "B1"
+  },
+  {
+   "leaf": "Date_Final_Payment",
+   "boi_widgets": 6,
+   "aoi_registry": [
+    "L19"
+   ],
+   "aoi_says": "A lie on 433-A(OIC) page 7: printed caption is Docket/Case number. The registry notes the name IS accurate at that form's page-3 vehicle cells.",
+   "boi_verdict": "BOTH — true five times on page 3, and the inherited lie once on page 5.",
+   "boi_true_at": [
+    "p3 RealEstate1, RealEstate2, Vehicle1, Vehicle2, Vehicle3 — five widgets at x=356.4..435.6 / x=360.0..435.6, each under a printed \"Date of final payment\" whose x1 equals the widget's x0"
+   ],
+   "boi_lie_at": [
+    "p5 section_6[0].Date_Final_Payment[0]  x=486.0..576.0 y=147.6..163.4  printed \"Docket/Case number\" y=175.9 x=486.0..561.1 — x agrees to 0.0pt"
+   ],
+   "carried": "B1"
+  },
+  {
+   "leaf": "Gross_Receipts",
+   "boi_widgets": 2,
+   "aoi_registry": [
+    "L14"
+   ],
+   "aoi_says": "A lie on 433-A(OIC) page 7: printed caption is \"Amount of dispute\". Accurate at that form's page-5 line (12).",
+   "boi_verdict": "BOTH — true on page 4 at printed line (6), and the inherited lie on page 5.",
+   "boi_true_at": [
+    "p4 Section3[0].Gross_Receipts[0]  x=471.6..576.0 y=466.2..480.6  printed \"Gross receipts\" y=479.1 x=36.0..87.6 with marker \"(6) $\" y=479.1 x=449.3..468.0 immediately left of the cell"
+   ],
+   "boi_lie_at": [
+    "p5 section_6[0].tab_order[1].Gross_Receipts[0]  x=43.2..122.4 y=118.8..133.2  printed \"Amount in dispute\" y=146.1 x=36.0..100.0, with its \"$\" at y=131.7 x=36.0..40.4 immediately left of the cell"
+   ],
+   "wording_differs_from_the_registry": "433-A(OIC) prints \"Amount of dispute\"; 433-B(OIC) prints \"Amount in dispute\". Recorded because the registry quotes captions verbatim and a future reader comparing the two strings must not read the difference as a transcription error in either file.",
+   "carried": "B1"
+  },
+  {
+   "leaf": "name_of_individual",
+   "boi_widgets": 1,
+   "aoi_registry": [
+    "L07",
+    "L12"
+   ],
+   "aoi_says": "A lie twice on 433-A(OIC), pages 2 and 4: the name implies a person and the printed caption is \"Digital asset address for self-hosted digital assets\".",
+   "boi_verdict": "MATCHES THE LIE — inherited unchanged, once rather than twice.",
+   "boi_lie_at": [
+    "p2 RetirementAcct1[0].name_of_individual[0]  x=36.0..216.0 y=252.0..270.0  printed \"Digital asset address for self-hosted digital assets\" y=287.5 x=36.0..211.6 — x agrees to 0.0pt"
+   ],
+   "the_second_trap": "The widget sits inside a subform named RetirementAcct1[0]. So BOTH the leaf name and its container path point at retirement/persons, and the printed page says digital assets. adapters/pdf/maps/acroform-nesting notes apply: the subform prefix is no more trustworthy than the leaf.",
+   "carried": "B2"
+  },
+  {
+   "leaf": "Total_Value_Vehicles_Attached",
+   "boi_widgets": 1,
+   "aoi_registry": [
+    "L09"
+   ],
+   "aoi_says": "A lie on 433-A(OIC) page 3: the name implies the vehicles-from-attachment total and the printed line is the joint-offer subtraction at (6d).",
+   "boi_verdict": "CONTRADICTS THE LIE — the name is TRUE on this form.",
+   "boi_true_at": [
+    "p3 Total_Value_Vehicles_Attached[0]  x=471.6..576.0 y=82.8..100.8  printed \"Total value of vehicles listed from attachment [current market value X .8 minus any loan balance(s)]\" y=97.5 x=83.9..435.6, marker \"(4d) $\" y=97.5 x=444.9..468.0"
+   ],
+   "how_it_was_made_determinate": "TWO totals sit in the same column within 18pt of each other — Total_Value_Vehicles_Attached[0] (rect y 82.8..100.8) and Total_Value_Vehicles[0] (rect y 64.8..82.8), against markers \"(4d) $\" at y=97.5 and \"(4) $\" at y=80.2. Assigned by RECTANGLE CONTAINMENT, not by distance: 97.5 lies inside 82.8..100.8 and 80.2 does not, so (4d) is the attachment total and (4) is the Add-lines total below it. This is the one place on the form where a nearest-neighbour tie-break would have been available and it was not used.",
+   "why_it_matters": "This is the reverse direction and it is the one that quietly teaches the wrong lesson. A reader carrying the 433-A(OIC) registry forward would treat this cell as suspect and it is honest; a reader who then generalises 'the lies did not transfer' walks into Name_Creditor on page 5.",
+   "carried": "B3"
+  },
+  {
+   "leaf": "Total_Value_Bank_Accounts",
+   "boi_widgets": 1,
+   "aoi_registry": [
+    "P01"
+   ],
+   "aoi_says": "page_imprecise on 433-A(OIC) page 4: the name says bank accounts and nothing else, and the printed line is \"Add lines (8a) through (8d) =\", which sweeps in more than bank accounts. Neither a lie nor a control — the printed page understates it too.",
+   "boi_verdict": "MATCHES, same shape, different line numbers.",
+   "boi_at": [
+    "p2 TotalAccounts[0].Total_Value_Bank_Accounts[0]  x=471.6..576.0 y=475.2..496.8  printed \"Add lines (1a) through (1d) =\" y=492.4 x=310.3..432.6, marker \"(1) $\" y=492.4 x=449.5..468.0"
+   ],
+   "the_difference_that_matters": "On 433-A(OIC) this is line (8); here it is line (1). A map that carried the marker across with the name would bind the right cell to the wrong printed line, and every arithmetic tripwire written against it would quote a line number this form does not print there.",
+   "carried": "B4"
+  },
+  {
+   "leaf": "Times_8",
+   "boi_widgets": 6,
+   "aoi_registry": [
+    "C02"
+   ],
+   "aoi_says": "A CONTROL, verified true on 433-A(OIC): a quick-sale cell carrying a 0.8 multiplier, printed \"X .8 = $\".",
+   "boi_verdict": "MATCHES — the control holds here too, six times.",
+   "boi_at": [
+    "p3 RealEstate1[0].CurrentMarket[0].Times_8[0]  x=158.4..234.0 y=559.4..572.4  printed \"X .8 = $\" y=571.1 x=125.9..155.9",
+    "p3 RealEstate2[0].CurrentMarket[0].Times_8[0]  x=158.4..234.0 y=444.2..457.2  printed \"X .8 = $\" y=455.9 x=125.9..155.9",
+    "p3 Vehicle1[0].CurrentMarket[0].Times_8[0]     x=147.6..219.6 y=289.4..309.6  printed \"X .8 = $\" y=301.1 x=115.1..145.1",
+    "p3 Vehicle2[0].CurrentMarket[0].Times_8[0]     x=147.6..219.6 y=195.8..216.0  printed \"X .8 = $\" y=207.5 x=115.1..145.1",
+    "p3 Vehicle3[0].CurrentMarket[0].Times_8[0]     x=147.6..219.6 y=102.2..122.4  printed \"X .8 = $\" y=113.9 x=115.1..145.1",
+    "p4 Section2[0].CurrentMarket[0].Times_8[0]     x=147.6..219.6 y=653.0..673.2  printed \"X .8 = $\" y=664.7 x=115.1..145.1, under \"Current market value\" and beside \"Total value of equipment\" at marker (5a)"
+   ],
+   "note": "FIVE on page 3 and ONE on page 4, not six on page 3 — corrected against the widget geometry before this file was committed. The page-4 occurrence is the EQUIPMENT quick-sale cell at (5a), a construct 433-A(OIC) has no equivalent of, so the control is inherited onto a row class this form introduces."
+  },
+  {
+   "leaf": "Funds_Held_Trust",
+   "boi_widgets": 1,
+   "aoi_registry": [
+    "C07"
+   ],
+   "aoi_says": "A CONTROL, verified true on 433-A(OIC) page 8: the amount of funds held in trust, printed \"If yes, how much $\".",
+   "boi_verdict": "MATCHES — the control holds here.",
+   "boi_at": [
+    "p6 Funds_Held_Trust[0]  x=183.6..244.8 y=517.0..529.2  under \"Does the business have any funds being held in trust by a third party\" y=542.1, with \"If yes, how much $\" y=527.6 x=111.6..178.3 immediately left of the cell"
+   ]
+  },
+  {
+   "leaf": "CB8_08",
+   "boi_widgets": 1,
+   "aoi_registry": [
+    "L22"
+   ],
+   "aoi_says": "A lie about PRINTED ORDER on 433-A(OIC) page 8: CB8_08[0] and CB8_08[1] are drawn with CB8_09[0] between them, so index order is not printed order. The caption quoted is \"Completed and signed current Form 656.\"",
+   "boi_verdict": "THE LIE DOES NOT TRANSFER, AND A NEW QUESTION REPLACES IT.",
+   "why": "The 433-A(OIC) defect was a REPEATED INDEX drawn out of order — CB8_08[0] … CB8_09[0] … CB8_08[1]. On 433-B(OIC) CB8_08 has exactly ONE widget, so there is no index pair to be out of order and the specific lie cannot arise.",
+   "boi_at": [
+    "p6 CB8_08[0]  PDFCheckBox  x=47.6..57.6 y=185.8..195.8, with printed \"Completed and current signed Form 656.\" y=196.3 x=64.8..228.9 to its right"
+   ],
+   "the_new_question": "The printed wording differs from 433-A(OIC): \"Completed and CURRENT SIGNED Form 656.\" here against \"Completed and SIGNED CURRENT Form 656.\" there. Two words transposed. Whether the checkbox ORDER on this page follows index order is a page-6 question and is NOT answered here — this report covers the inherited name only, and slice 4 must establish page 6's box order from the page rather than inherit the answer either way.",
+   "carried": "B5"
+  }
+ ],
+ "_shared_names_NOT_in_the_registry": "74 of the 83 shared leaf names carry no registry entry on 433-A(OIC). That is NOT a clean bill: the registry records names that were READ AND FOUND WRONG, so a name absent from it was either read and found honest or never read on the cell in question. The two are not distinguished by the registry and this report does not pretend otherwise. Slices 1-4 read each cell's printed caption on THIS form regardless of what the name says or what the registry does not say.",
+ "_what_this_report_does_not_establish": [
+  "That the 74 unregistered shared names are honest on this form. See above.",
+  "That the 87 names unique to 433-B(OIC) are honest. They have no 433-A(OIC) precedent at all, so the registry says nothing about them in either direction, and they are the larger set.",
+  "That a name true on one page stays true on the next. Three of the nine are counter-examples WITHIN THIS FORM."
+ ]
+}

@@ -1,0 +1,111 @@
+{
+ "_what_this_is": "The intake record for Form 433-B(OIC). Everything established BEFORE any binding was authored, in the fixed order the standing ruling sets: the blank enters forms/ with its SHA in forms.sha256 in the first commit that touches this form, before anything reads it; then revision, catalog and page count FROM DRAWN PAGE BYTES; then enumeration, checkbox probe, the pre-set assertion, and label correlation.",
+
+ "the_filename_trap_was_real": "Carried item D-04 recorded that f433boic.pdf 404s and the IRS filename is f433boi.pdf. Downloaded at the recorded name and it returned HTTP 200, application/pdf, 227,483 bytes. Had the wrong name been used it would have presented as a network failure and invited a retry rather than a correction.",
+
+ "blank": {
+  "file": "adapters/pdf/forms/f433boi.pdf",
+  "source": "https://www.irs.gov/pub/irs-pdf/f433boi.pdf",
+  "http": "200, application/pdf, content-length 227483",
+  "bytes_written": 227483,
+  "header": "%PDF-1.7",
+  "sha256": "e79b398a797f99c02262ce6bbe880a7455ef1078cf6c17d9912e3a2d5077f6f7",
+  "pinned_in": "adapters/pdf/forms/forms.sha256, in this same commit, before anything read the file",
+  "verified": "sha256sum -c forms.sha256 -> f433a.pdf OK, f433f.pdf OK, f433aoi.pdf OK, f433boi.pdf OK"
+ },
+
+ "from_drawn_page_bytes": {
+  "_method": "adapters/pdf/read-form-revision.mjs, which inflates every content stream and reads the footer out of the DRAWN TEXT. The /Info and XMP dictionaries on these IRS hybrids carry stale revisions and are never consulted.",
+  "streams_inflated": 146,
+  "form": "433-B (OIC)",
+  "revision": "Rev. 4-2026",
+  "catalog": "55897B",
+  "pages": 6,
+  "footer_read_verbatim_from_page_1": [
+   "y=32.7  x=36.0..124.0    \"Catalog Number 55897B\"",
+   "y=32.1  x=527.1..576.0   \"(Rev. 4-2026)\"",
+   "y=36.1  x=459.5..524.9   \"433-B (OIC)\"",
+   "y=731.2 x=74.1..120.6    \"(April 2026)\"   — the masthead date, agreeing with the footer revision"
+  ],
+  "sha_read_back_by_the_same_tool": "E79B398A797F99C02262CE6BBE880A7455EF1078CF6C17D9912E3A2D5077F6F7 — matches the pin",
+  "_the_footer_says_Catalog_Number": "Not \"Cat. No.\". The reader handles both; recorded because a hand-written grep for the wrong string reads as an absent catalog number rather than a wrong pattern."
+ },
+
+ "enumeration": {
+  "_method": "adapters/pdf/enumerate-fields.mjs -> adapters/pdf/maps/433boi.fields.json",
+  "fields_total": 267,
+  "by_type": { "PDFTextField": 190, "PDFCheckBox": 77 },
+  "widgets_total": 267,
+  "widgets_unplaced": 0,
+  "_one_widget_per_field": "267 fields and 267 widgets with none unplaced, so on this form no field carries a second widget. That is NOT true of 433-A(OIC), where CB8_08 has two and they are drawn out of index order (registry L22). Established here rather than assumed either way.",
+  "by_page": {
+   "p1": { "total": 43, "PDFTextField": 38, "PDFCheckBox": 5 },
+   "p2": { "total": 61, "PDFTextField": 32, "PDFCheckBox": 29 },
+   "p3": { "total": 69, "PDFTextField": 61, "PDFCheckBox": 8 },
+   "p4": { "total": 30, "PDFTextField": 30, "PDFCheckBox": 0 },
+   "p5": { "total": 33, "PDFTextField": 19, "PDFCheckBox": 14 },
+   "p6": { "total": 31, "PDFTextField": 10, "PDFCheckBox": 21 }
+  },
+  "_by_page_sums_to": 267,
+  "_derived_by": "widget /P resolved against each page's ref, with the page-/Annots scan as the source of truth; no page number is taken from a widget's own /P alone."
+ },
+
+ "checkbox_probe": {
+  "_method": "adapters/pdf/probe-checkboxes.mjs -> adapters/pdf/maps/433boi.checkboxes.txt",
+  "checkboxes": 77,
+  "distinct_on_states": ["/1"],
+  "_all_77_share_one_on_state": "Every box on this form turns on with /1. 433-A and 433-A(OIC) are not uniform in this, so it is read per form and never carried across.",
+  "radio_groups": 0
+ },
+
+ "preset_assertion": {
+  "_method": "adapters/pdf/assert-no-preset-boxes.mjs 433boi",
+  "inspected": "77 checkbox(es) + 0 radio group(s), 77 widget(s), on /V, /DV and every widget's /AS",
+  "result": "PASS — every box on the blank is off on all three, so any tick on a filled copy was put there by the fill engine"
+ },
+
+ "line_markers": {
+  "_method": "adapters/pdf/line-markers.mjs -> adapters/pdf/maps/433boi.line-markers.txt",
+  "by_page": { "p1": 0, "p2": 10, "p3": 9, "p4": 22, "p5": 3, "p6": 0 },
+  "total": 44,
+  "with_a_widget_on_the_same_row_to_the_right": 38,
+  "under_determined_pairings": 12,
+  "_PAGE_1_DRAWS_NO_NUMBERED_MARKER_AT_ALL": "This is the single most consequential fact for slice 1. On 433-A(OIC) a page-1 binding could be anchored to a printed line marker; here there is nothing to anchor to. Every page-1 binding therefore rests on caption geometry, and Prompt 35 ruling 2 applies in its second form throughout: a determinate marker pairing is unavailable, so each binding carries a NAMED SECOND WITNESS.",
+  "_the_12_under_determined": "Reported by the tool as its own choice rather than the page's. None is on page 1 (page 1 has no markers), so slice 1 inherits none of them; slices 2-4 must check each against the rectangles before binding."
+ },
+
+ "label_correlation": {
+  "_method": "adapters/pdf/correlate-labels.mjs 433boi -> 433boi.labels.json + .labels.txt",
+  "probes_required_before_output": 3,
+  "probes_result": "3 PASS, 0 FAIL",
+  "probes": [
+   "Page1 Section 1 business-name cell -> \"Business name\"  (PASS)",
+   "Page5 Section 6 Name_Creditor[0] -> \"Location of filing\", NOT a creditor  (PASS)",
+   "Page3 vehicles-from-attachment total -> marker (4d), NOT the (4) Add-lines total 18pt below  (PASS)"
+  ],
+  "_the_middle_probe_is_the_one_that_matters": "It is placed on a cell whose LEAF NAME would agree with the wrong answer. The lineage report found Name_Creditor honest five times on page 3 and false four times on page 5; the probe pins the page-5 reading, so a correlator that drifted back towards the name would fail here rather than pass quietly."
+ },
+
+ "inherited_guards_during_intake": {
+  "_why_this_is_recorded": "A guard that never fires on a new form is a guard that has not been tested on new input. Both outcomes are recorded — fired and did-not-fire — because only the pair distinguishes a guard that is working from a guard that is asleep.",
+  "FIRED": [
+   "correlate-labels.mjs PROBES requirement — STOPPED with exit 2 and wrote nothing: \"NO PROBES DECLARED for 433boi\". Three probes then had to be established from the printed page with align-block.mjs before any label file existed.",
+   "correlate-labels.mjs SELF-CHECK — FAILED on the first attempt and wrote nothing. The third probe had been authored against the printed CAPTION (/attachment/i) and the correlator returns the nearer MARKER, \"(4d) $\". The guard refused output until the probe asserted what the instrument actually produces. The corrected probe is strictly sharper: (4d) and (4) are 18pt apart in one column and the caption is shared prose while the marker is not.",
+   "line-markers.mjs under-determination report — reported 12 of 38 pairings as the tool's choice rather than the page's."
+  ],
+  "RAN_AND_DID_NOT_FIRE": [
+   "enumerate-fields.mjs zero-field STOP — 267 fields found. It is not idle: 433-H has zero AcroForm fields and this is the check that will catch it.",
+   "read-form-revision.mjs no-revision STOP — the footer was read from drawn text.",
+   "assert-no-preset-boxes.mjs — all 77 boxes off on /V, /DV and /AS.",
+   "forms.sha256 verification — all four blanks OK."
+  ],
+  "NOT_YET_APPLICABLE": [
+   "row_class on every group — no groups are declared until the repeatable tables on pages 1-3 are mapped. Page 1's PartnerInfo1..3 block is the first candidate and is declared in slice 1.",
+   "the enumerated-granularity rule and the glob STOP — they govern map authoring and first apply in slice 1.",
+   "the same-fact assertion and the crosswalk comparison against the backbone — slice 5, once there are keys to compare.",
+   "the canary rule — the two new sweeps' canaries run inside validate-map.mjs, which has no 433boi map to validate yet."
+  ]
+ },
+
+ "next": "Slice 1 binds page 1 — 43 fields, no printed line markers, one repeatable three-row block. Slices 2-4 cover pages 2-6, 224 fields."
+}

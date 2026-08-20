@@ -1,0 +1,63 @@
+Removing XFA form data as pdf-lib does not support reading or writing XFA
+adapters/pdf/forms/f433boi.pdf — 6 pages, 44 printed marker(s)
+
+--- page 1: 0 marker(s) ---
+
+--- page 2: 10 marker(s) ---
+      1a  y= 614.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].Account1[0].Total_Account[0]
+      1b  y= 570.9  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].Account2[0].Total_Account[0]
+      1c  y= 527.7  x= 445.3..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].Account3[0].Total_Account[0]
+      1d  y= 511.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].TotalAccounts[0].Total_Accounts_Attached[0]
+       1  y= 492.4  x= 449.5..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].TotalAccounts[0].Total_Value_Bank_Accounts[0]
+      2a  y= 416.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct1[0].Total_Market_Value[0]
+      2b  y= 344.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].InvestmentAcct2[0].Total_Market_Value[0]
+      2c  y= 264.9  x= 445.3..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].RetirementAcct1[0].TotalCurrentMarketValue[0]
+      2d  y= 248.7  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].TotalInvestmentAcct[0].Total_Investment_Accounts_Attached[0]
+       2  y= 229.6  x=   447..   468  -> topmostSubform[0].F433-B-OIC_Page2[0].TotalInvestmentAcct[0].Total_Investment_Accounts[0]
+
+--- page 3: 9 marker(s) ---
+      3a  y= 570.9  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].RealEstate1[0].Total_Value_Real_Estate[0]
+      3b  y= 455.7  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].RealEstate2[0].Total_Value_Real_Estate[0]
+      3c  y= 439.5  x= 445.3..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Value_Property_Attached[0]
+       3  y= 422.2  x=   447..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Real_Estate[0]
+      4a  y= 300.9  x= 447.1..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].Vehicle1[0].Total_Value_Vehicle[0]
+      4b  y= 207.3  x= 447.1..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].Vehicle2[0].Total_Value_Vehicle[0]
+      4c  y= 113.7  x= 447.6..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].Vehicle3[0].Total_Value_Vehicle[0]
+      4d  y=  97.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles_Attached[0]
+       4  y=  80.2  x=   447..   468  -> topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles[0]
+
+--- page 4: 22 marker(s) ---
+      5a  y= 664.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_Equipment[0]
+      5b  y= 650.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_Equipment_Attached[0]
+       5  y= 624.7  x= 449.3..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_All_Business_Equipment[0]
+   Box A  y= 609.7  x= 446.4.. 469.5  -> (no widget to its right on this row)
+       6  y= 479.1  x= 449.3..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Gross_Receipts[0]
+       7  y= 464.7  x= 449.3..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Gross_Rental_Income[0]
+       8  y= 450.3  x= 449.3..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Interest_Income[0]
+       9  y= 435.9  x= 449.3..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Dividends[0]
+      10  y= 421.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Other_Income[0]
+   Box B  y= 406.3  x= 446.4.. 469.5  -> (no widget to its right on this row)
+      11  y= 281.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Materials_Purchased[0]
+      12  y= 266.7  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Inventory_Purchased[0]
+      13  y= 252.3  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Gross_Wages_Salaries[0]
+      14  y= 237.9  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Rent[0]
+      15  y= 212.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Supplies[0]
+      16  y= 198.3  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Utilities_Telephones[0]
+      17  y= 183.9  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Vehicle_Costs[0]
+      18  y= 169.5  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Insurance[0]
+      19  y= 144.1  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Current_Taxes[0]
+      20  y= 129.9  x= 444.9..   468  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Other_Expenses[0]
+   Box C  y= 116.9  x= 446.4.. 469.5  -> topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Other_Expenses[0]
+   Box D  y=  80.9  x= 446.4.. 469.5  -> (no widget to its right on this row)
+
+--- page 5: 3 marker(s) ---
+   Box E  y= 651.3  x= 370.8.. 509.3  -> (no widget to its right on this row)
+   Box F  y= 600.9  x= 370.8.. 508.8  -> (no widget to its right on this row)
+   Box E  y= 538.3  x= 219.6.. 284.1  -> (no widget to its right on this row)
+
+--- page 6: 0 marker(s) ---
+
+38 of 44 marker(s) have a widget on the same row to their right.
+12 of 38 pairing(s) were UNDER-DETERMINED: more than one widget survived
+the geometric filter and the distance tie-break chose between them. Those pairings are this
+tool's choice and not the page's. Check them against the rectangles before binding one.
