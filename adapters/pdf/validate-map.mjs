@@ -19,6 +19,7 @@ import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
+import { reclassify, report as reportReclassify } from '../hubspot/reclassify-against-backbone.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -261,6 +262,19 @@ if (reportRowShapeSpec({ verbose: process.argv.includes('--sweep') }) > 0) proce
 // every completeness claim in the tree have something that counts the covered set.
 const blankets = await runBlanketAudit(form);
 if (reportBlanketAudit(blankets, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (g) THE CROSSWALK AGAINST THE BACKBONE. A classification authored against ONE predecessor
+// form cannot see a fact another form in the series contributed, which is how a `new` category
+// derives a duplicate name for a fact the backbone already holds. This widens the comparison to
+// the live irs433_* backbone plus every mapped form, requires every same-fact candidate to
+// carry a ruling, and asserts that no `asymmetric-the-other-way` entry names a 433-A group
+// whose asset class a group on THIS form accepts - the C-22 shape, whose consequence is a
+// preparer dropping the taxpayer's facts from a filing. Runs only for a form that HAS a
+// classification; a form without one is not held to a comparison it never made.
+if (existsSync(`adapters/pdf/maps/${form}.crosswalk-classification.json`)) {
+  const rc = reclassify(form);
+  if (reportReclassify(rc, { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+}
 
 // ---------------------------------------------------------------------------------------
 // THE ROUNDING DECLARATION.

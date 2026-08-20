@@ -771,6 +771,19 @@ export const COMPLETENESS = [
       return { universe: cols.length, covered: cols.length - problems.length, uncoveredList: problems };
     } }),
 
+  C({ id: 'K-17', match: /EVERY ENTRY CARRIES `granularity`, DERIVED|Every entry carries a derived|every classification entry now carries `compared_against`, derived/i,
+    kind: 'counter',
+    what: 'every classification entry carries the two derived declarations ruling 2 and ruling 4 require: `compared_against` and `granularity`',
+    // THE CLAIM THIS PROMPT ADDED, AND THEREFORE THE CLAIM THIS PROMPT OWES A COUNTER. Both
+    // fields are written by reclassify-against-backbone.mjs --emit and re-derived on every run,
+    // so a stale one shows as a mismatch there; what is counted HERE is that no entry is
+    // missing them, which is the coverage half and the half the completeness blanket failed on.
+    count: (ctx) => {
+      const E = ctx.classDoc?.entries || [];
+      const ok = (e) => Array.isArray(e.compared_against) && typeof e.granularity === 'string' && e.granularity.length > 0;
+      return { universe: E.length, covered: E.filter(ok).length, uncoveredList: E.filter(e => !ok(e)).map(e => e.id) };
+    } }),
+
   C({ id: 'K-16', match: /Every number in it is a printed line marker, a HubSpot property count/i,
     kind: 'not-coverage',
     reason: 'A CLAIM ABOUT WHAT KIND OF THING EVERY NUMBER IS, NOT THAT A SET HAS BEEN COVERED. [S-22] classifies the numbers in crosswalk.433f.json as printed line markers, property counts from a completed run, or forecasts inside an `arguable` item — and a forecast about work not yet done cannot be derived from a tree where the work has not happened, by construction. The COVERAGE half of that same reason, "every binding names a map key that exists", is a real completeness claim and is counted by [K-09]. Splitting the two is the point: one sentence carried both, and only one of them had a set to count.' }),
