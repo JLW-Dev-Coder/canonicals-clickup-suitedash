@@ -360,6 +360,8 @@ export const VACUOUS = [
 
   { id: 'G-50b', file: 'blanket-audit.mjs', anchor: 'for (const m of s.matchAll(clause(GEOMS))) {', verdict: 'guarded',
     why: 'The geometry-shaped half of the completeness detector. Same disposition as [G-50], and it is the half the canary would notice first: CANARY expects one geometry claim as well as one assert claim, so a detector that lost either half fails the canary and takes the whole run down with an explicit statement that every "0 detected" in it is meaningless.' },
+  { id: 'G-54', file: 'render-review.mjs', anchor: 'catch (e) { tripWhy = `${tripwirePath} could not be read', verdict: 'sound',
+    why: 'AN UNREADABLE ARITHMETIC RESULT MAKES THE PAGE SAY SO, IN THREE PLACES. `trip` stays null, `tripWhy` carries the exception message, the page prints a red banner naming it above everything a preparer reads, and the Arithmetic column reads "unknown" on every row rather than falling back to the totals DECLARATION. Falling back is the failure this catch exists to prevent: a declaration says a line is checkABLE, and the question the column answers is whether anything checked it on this record. The two other ways the result can be wrong — the file being absent, and the file belonging to a different document — take the same path, and the document binding is by SHA-256 rather than by filename.' },
 ];
 
 // ---------------------------------------------------------------------------------------

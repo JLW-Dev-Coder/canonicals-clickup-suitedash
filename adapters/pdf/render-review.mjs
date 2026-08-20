@@ -25,6 +25,7 @@
 
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { createHash } from 'node:crypto';
 import { verifyFormCoverage } from './verify-form-coverage.mjs';
 
 const [form, recordPath, filledPath, outArg] = process.argv.slice(2);
@@ -104,6 +105,78 @@ const lineOf = (key, target) => {
   return row || parts[parts.length - 1];
 };
 
+// --- WHAT THE ENGINE ACTUALLY VERIFIED, ON THIS DOCUMENT -------------------------------------
+//
+// The preparer's question is not "is this cell declared checkable" but "did anything check it".
+// Those are different: a line can be declared checkable and still have been SKIPPED on this
+// record because its printed conditional is not the branch this taxpayer is on. A review page
+// that read `verified` off the declaration would print a tick beside a cell nothing recomputed,
+// which is worse than printing nothing.
+//
+// So the verdict comes from `<filled>.tripwires.json`, which gate step 11 writes on the pass
+// that does the arithmetic, and it is bound to the document by SHA-256. Three ways it can be
+// wrong and all three are visible on the page: absent, belonging to another document, or
+// unreadable. In every one of them the page says the engine's verification is UNKNOWN rather
+// than quietly falling back to the declaration. A guard that cannot read its input says so.
+const tripwirePath = filledPath.replace(/\.pdf$/, '.tripwires.json');
+const filledSha = createHash('sha256').update(readFileSync(filledPath)).digest('hex');
+let trip = null, tripWhy = null;
+if (!existsSync(tripwirePath)) {
+  tripWhy = `no ${tripwirePath}. Gate step 11 writes it beside the filled PDF; run the gate for this record and the verification column fills in.`;
+} else {
+  try {
+    const t = JSON.parse(readFileSync(tripwirePath, 'utf8'));
+    if (t.filled_sha256 !== filledSha) tripWhy = `${tripwirePath} records a run against a DIFFERENT document (its SHA-256 is ${String(t.filled_sha256).slice(0, 12)}…, this PDF is ${filledSha.slice(0, 12)}…). A stale result read as a fresh one is the failure this check exists for.`;
+    else trip = t;
+  } catch (e) { tripWhy = `${tripwirePath} could not be read: ${e.message}`; }
+}
+
+// addr -> { state, ... } for every total-shaped cell the engine has an opinion about.
+//   'verified'      step 11 recomputed it from the printed operands and it matched
+//   'verified+ask'  the same, AND the printed caption asks something arithmetic cannot express
+//   'not-checkable' nothing on the page could verify it; some of these state a printed formula
+//   'skipped'       the line's printed conditional is not the branch this record is on
+//
+// SEVERAL DECLARED LINES CAN ADDRESS ONE PRINTED CELL, so the join AGGREGATES rather than
+// overwriting. (6a) declares an `own` branch and a `leased` branch for the same quick-sale-
+// equity cell and exactly one runs on any record; a `Map.set` per line keeps whichever came
+// last, which on this fixture meant a cell the engine verified reported as skipped, and the
+// page's own "0 not on this branch" disagreed with the gate's "2 skipped" in the same run.
+const VERIFY = new Map();
+if (trip) {
+  const push = (addr, v) => { if (!VERIFY.has(addr)) VERIFY.set(addr, []); VERIFY.get(addr).push(v); };
+  for (const l of trip.lines) {
+    if (!l.addr) continue;
+    push(l.addr, { state: l.verdict, line: l.line, caption: l.caption, why: l.why, printed: l.printed, recomputed: l.recomputed });
+  }
+  for (const e of trip.declared_not_checkable) {
+    if (!e.addr) continue;
+    push(e.addr, { state: 'not-checkable', caption: e.printed_caption, why: e.why_not_checkable, formula: !!e.review_page_advisory });
+  }
+}
+/**
+ * ONE CELL, ONE STATE, DERIVED FROM EVERY LINE THAT ADDRESSES IT. Precedence is by what a
+ * preparer needs to know first: a failure, then a verification (a cell one branch verified IS
+ * verified, and the other branch's skip is reported beside it), then not-checkable, then
+ * skipped — which is only the whole answer when NO line for this cell ran.
+ */
+const verifyFor = (addr, fallbackAddr) => {
+  const list = (addr && VERIFY.get(addr)) || (fallbackAddr && VERIFY.get(fallbackAddr)) || null;
+  if (!list || !list.length) return null;
+  const pick = (st) => list.find(v => v.state === st);
+  const chosen = pick('failed') || pick('not-checkable-at-runtime') || pick('verified') || pick('not-checkable') || pick('skipped') || list[0];
+  const others = list.filter(v => v !== chosen);
+  return { ...chosen, siblings: others, lines: list.length,
+    // A cell verified on one branch whose OTHER declared branch did not run: the preparer is
+    // told, because "verified" alone would hide that the form carries a conditional here.
+    sibling_note: others.length ? `${others.length} other declared line(s) address this same printed cell: ${others.map(o => `${o.line ?? '?'} (${o.state})`).join(', ')}.` : null };
+};
+const addrForKey = (key) => `key:${key}`;
+const addrForCell = (group, column, row) => `cell:${group}.${column}#${row}`;
+// A not_checkable entry may name a cell with NO row, meaning the whole column. That is the
+// fallback every row of the column falls back to when it has no row-specific line of its own.
+const addrForColumn = (group, column) => `cell:${group}.${column}`;
+
 // --- advisories on cells the gate deliberately does not check --------------------------------
 //
 // The tripwire step declines to verify some printed money cells and says why: everything they
@@ -148,8 +221,13 @@ const rows = [];
 const add = (r) => {
   const t = readTarget(r.target);
   const pdfValue = t.kind === 'checkbox' ? (t.value ? 'checked' : '') : (t.kind === 'missing' ? null : t.value);
+  const v = verifyFor(r.addr, r.addrColumn);
   rows.push({
     ...r,
+    // 'verified' PLUS a constraint advisory is the third state the preparer needs: the engine
+    // checked the sum AND the printed caption asks for something the sum cannot express.
+    verify: v && v.state === 'verified' && (r.advisory ?? (r.keys?.map(k => advisoryFor.byKey.get(k)).find(Boolean)))?.kind === 'constraint'
+      ? { ...v, state: 'verified+ask' } : v,
     pdfKind: t.kind,
     pdfValue,
     advisory: r.advisory ?? (r.keys?.map(k => advisoryFor.byKey.get(k)).find(Boolean) ?? null),
@@ -162,7 +240,7 @@ const add = (r) => {
 // 1. scalar 1:1
 for (const [key, target] of Object.entries(mapDoc.map || {})) {
   if (key.startsWith('_')) continue;
-  add({ construct: 'map', keys: [key], target, hsValue: data[key], label: labelFor(key) });
+  add({ construct: 'map', keys: [key], target, hsValue: data[key], label: labelFor(key), addr: addrForKey(key) });
 }
 
 // 2. `special` composites — several input keys joined into one printed cell
@@ -226,6 +304,8 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
         target,
         hsValue: resolved[i]?.[sub],
         label: `${g} row ${i + 1} — ${sub}`,
+        addr: addrForCell(g, sub, i),
+        addrColumn: addrForColumn(g, sub),
         advisory: advisoryFor.byCell.get(`${g}.${sub}`) ?? null,
         note: usedArray ? `from ${arrayKey}[${i}].${sub}` : (srcKey ? null : 'no scalar fallback key feeds this slot'),
       });
@@ -329,6 +409,20 @@ const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').
 
 const mismatches = rows.filter(r => r.verdict === 'MISMATCH');
 const counts = rows.reduce((a, r) => { a[r.verdict] = (a[r.verdict] || 0) + 1; return a; }, {});
+// COUNTED OVER THE ROWS THIS PAGE RENDERS, not over the totals declaration — a cell the map
+// binds twice would otherwise be counted once here and shown twice below, and the header would
+// disagree with the table under it.
+// AND RECONCILED AGAINST THE GATE'S OWN LINE COUNTS, out loud. The two will differ and both
+// are right: the gate counts DECLARED LINES and this page counts PRINTED CELLS. (6a) declares
+// an `own` line and a `leased` line for one cell, so the gate reports one checked and one
+// skipped where the page reports one verified cell carrying a note that its other branch did
+// not run; and a not_checkable entry naming a whole COLUMN covers every printed row of it. A
+// reader holding the gate transcript beside this page would otherwise read the difference as a
+// disagreement, which is the only reason both figures are printed.
+const vcount = (st) => rows.filter(r => r.verify?.state === st).length;
+const verifiedN = vcount('verified'), askN = vcount('verified+ask'), notCheckN = vcount('not-checkable'),
+      skipN = vcount('skipped'), failN = vcount('failed') + vcount('not-checkable-at-runtime');
+const formulaN = rows.filter(r => r.verify?.state === 'not-checkable' && r.advisory).length;
 
 const sections = [];
 for (const r of rows) {
@@ -343,13 +437,38 @@ const badge = (v) => {
   return `<span class="badge ${cls}">${esc(text)}</span>`;
 };
 
+// THE THREE STATES A PREPARER HAS TO BE ABLE TO TELL APART, AND A FOURTH FOR "NOT A TOTAL".
+// Colour alone does not carry it — a printed page and a colour-blind reader both lose it — so
+// each state carries a mark and a word, and the word says what was done rather than how it went.
+const VERIFY_LABEL = {
+  'verified':      { mark: '✓', text: 'verified',        cls: 'v-ok',   title: 'Gate step 11 recomputed this total from the operands printed above it, and the two agreed.' },
+  'verified+ask':  { mark: '✓!', text: 'verified + asks', cls: 'v-ask',  title: 'The arithmetic was recomputed and held — AND the printed caption states a requirement arithmetic cannot express. Read the note below the value.' },
+  'not-checkable': { mark: '—',  text: 'not checkable',   cls: 'v-none', title: 'Declared not checkable: nothing printed on this form could verify it. See the reason below the value.' },
+  'skipped':       { mark: '⊘',  text: 'not on this branch', cls: 'v-skip', title: 'This line has a printed conditional and this record is not on its branch, so nothing was recomputed. It is neither checked nor failed.' },
+  'failed':        { mark: '✗',  text: 'FAILED',          cls: 'v-bad',  title: 'The recomputation disagreed with the printed total. This should never reach a review page — the gate fails on it.' },
+  'not-checkable-at-runtime': { mark: '?', text: 'no operand to read', cls: 'v-none', title: 'A feeder did not resolve to a printed cell on this document, so nothing could be recomputed.' },
+};
+const verifyCell = (r) => {
+  if (!r.verify) {
+    // NOT A TOTAL-SHAPED CELL. Most cells on the form are values the taxpayer supplies; there
+    // is no arithmetic to verify and saying "not checkable" about them would drown the cells
+    // where that sentence means something. The read-back column already proves the value reached
+    // the page — that is a different guarantee and it is stated in the legend as one.
+    return trip ? '<span class="v-na" title="Not a printed total. Its value was read back off the PDF, which is what the two value columns show; there is no arithmetic here to verify.">not a total</span>'
+                : '<span class="v-unknown" title="No verification result is available for this document — see the banner at the top of the page.">unknown</span>';
+  }
+  const L = VERIFY_LABEL[r.verify.state] ?? { mark: '?', text: r.verify.state, cls: 'v-none', title: '' };
+  return `<span class="vb ${L.cls}" title="${esc(L.title)}"><b>${L.mark}</b> ${esc(L.text)}</span>`;
+};
+
 const rowHtml = (r) => `
       <tr class="${r.verdict === 'MISMATCH' ? 'bad-row' : (r.verdict === 'empty' ? 'empty-row' : '')}">
         <td class="line">${esc(r.line)}</td>
         <td>${esc(r.label ?? r.keys[0] ?? '')}<div class="target" title="${esc(r.target)}">${esc(seg(r.target).slice(-2).join(' › '))}</div></td>
         <td class="prop">${r.keys.length ? r.keys.map(k => esc(hsNameFor(k) ?? `(no property) ${k}`)).join('<br>') : '<span class="muted">— derived, no property</span>'}</td>
         <td class="val">${blank(r.hsValue) ? '<span class="muted">—</span>' : esc(r.hsValue)}</td>
-        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}${r.advisory ? `<div class="advisory"><strong>${r.advisory.kind === 'constraint' ? 'Checked, and the printed caption asks something arithmetic cannot:' : 'Not checkable — the printed caption states a formula:'}</strong> &ldquo;${esc(r.advisory.caption)}&rdquo;<br>${esc(r.advisory.text)}</div>` : ''}</td>
+        <td class="val">${blank(r.pdfValue) ? (r.pdfKind === 'missing' ? '<span class="bad">field not on form</span>' : '<span class="muted">—</span>') : esc(r.pdfValue)}${r.advisory ? `<div class="advisory ${r.advisory.kind === 'constraint' ? 'adv-ask' : 'adv-none'}"><strong>${r.advisory.kind === 'constraint' ? 'The engine checked this sum, and the printed caption asks for something more:' : 'The engine could not check this, and the printed caption states a formula:'}</strong> &ldquo;${esc(r.advisory.caption)}&rdquo;<br>${esc(r.advisory.text)}</div>` : ''}${r.verify && r.verify.state === 'not-checkable' && !r.advisory ? `<div class="advisory adv-none"><strong>Not checkable.</strong> ${esc(r.verify.why ?? '')}</div>` : ''}${r.verify && r.verify.state === 'skipped' ? `<div class="advisory adv-skip"><strong>Not on this record&rsquo;s branch.</strong> ${esc(r.verify.why ?? '')}</div>` : ''}${r.verify?.sibling_note ? `<div class="advisory adv-skip">${esc(r.verify.sibling_note)}</div>` : ''}</td>
+        <td class="vc">${verifyCell(r)}</td>
         <td>${badge(r.verdict)}</td>
       </tr>`;
 
@@ -375,6 +494,25 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   td.prop { color: #3d4650; }
   .target { color: #97a0aa; margin-top: 2px; }
   .advisory { margin-top: 6px; padding: 7px 9px; border-left: 3px solid #b8860b; background: #fdf6e3; color: #5c4a12; font-size: 11.5px; line-height: 1.45; font-weight: 400; white-space: normal; }
+  /* THE TWO ADVISORY KINDS ARE DRAWN DIFFERENTLY, because they say different things.
+     adv-ask sits under a cell the engine DID check and adds a requirement arithmetic cannot
+     express; adv-none sits under a cell nothing could check. A reader who cannot tell them
+     apart has been told the same thing about two opposite situations. */
+  .adv-ask  { border-left-color: #1a4d94; background: #eef4fd; color: #143a70; }
+  .adv-none { border-left-color: #b8860b; background: #fdf6e3; color: #5c4a12; }
+  .adv-skip { border-left-color: #79818b; background: #f2f3f5; color: #4a525b; }
+  td.vc { white-space: nowrap; }
+  .vb { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .vb b { font-family: ui-monospace, Consolas, monospace; }
+  .v-ok   { background: #dcf5e3; color: #16632f; }
+  .v-ask  { background: #dfeafc; color: #1a4d94; }
+  .v-none { background: #fdf6e3; color: #7a5c0d; }
+  .v-skip { background: #eef0f3; color: #5b636d; }
+  .v-bad  { background: #fbdcdc; color: #8f1616; }
+  .v-na, .v-unknown { color: #b3bac1; font-size: 11px; }
+  .v-unknown { color: #8f1616; }
+  .legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px 20px; }
+  .legend div { font-size: 12.5px; line-height: 1.5; }
   td.val { max-width: 260px; word-break: break-word; }
   .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
   .badge.ok { background: #dcf5e3; color: #16632f; }
@@ -395,6 +533,28 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   <p class="sub">Every &ldquo;read back&rdquo; value on this page was fetched from the filled PDF&rsquo;s own field values, not re-rendered from the record.</p>
 
   <div class="banner"><strong>Synthetic test record.</strong> Every value below is invented. No client information appears on this page.</div>
+
+  ${trip ? '' : `<div class="alarm"><strong>The engine&rsquo;s arithmetic result is not available for this document, so the Arithmetic column reads &ldquo;unknown&rdquo; on every row.</strong><br>${esc(tripWhy ?? '')}<br>The two value columns are unaffected: they are read from this PDF and from the record, and the Match column still means what it says.</div>`}
+
+  <h2>What the engine checked, and what it handed to you</h2>
+  <div class="card">
+    <div class="grid">
+      <div class="kv"><div class="k">Totals verified</div><div class="v">${verifiedN}</div></div>
+      <div class="kv"><div class="k">Verified &mdash; and the page asks more</div><div class="v">${askN}</div></div>
+      <div class="kv"><div class="k">Not checkable</div><div class="v">${notCheckN} <span class="muted">(${formulaN} state a printed formula)</span></div></div>
+      <div class="kv"><div class="k">Not on this record&rsquo;s branch</div><div class="v">${skipN}</div></div>
+      ${failN ? `<div class="kv"><div class="k">Unresolved</div><div class="v bad">${failN}</div></div>` : ''}
+    </div>
+    ${trip ? `<p class="sub" style="margin:12px 0 0">These count <strong>printed cells</strong>. The gate transcript counts <strong>declared lines</strong> and reports ${trip.lines.filter(l => l.verdict === 'verified').length} checked, ${trip.lines.filter(l => l.verdict === 'skipped').length} skipped and ${trip.lines.filter(l => l.verdict === 'failed').length} failed of ${trip.lines.length} declared, plus ${trip.declared_not_checkable.length} declared not checkable. The two differ where more than one declared line addresses one printed cell &mdash; a line with an <em>own</em> branch and a <em>leased</em> branch is two declarations and one box on the page &mdash; and where a not-checkable entry names a whole column rather than one row. Both figures are right about different things.</p>` : ''}
+  </div>
+  <div class="card legend">
+    <div><span class="vb v-ok"><b>&check;</b> verified</span> &mdash; the engine recomputed this total from the figures printed above it and the two agreed. Nothing here needs your arithmetic.</div>
+    <div><span class="vb v-ask"><b>&check;!</b> verified + asks</span> &mdash; the sum was recomputed and held, <strong>and</strong> the printed caption states a requirement no arithmetic can enforce. The blue note under the value is the requirement. <strong>This is the one to read.</strong></div>
+    <div><span class="vb v-none"><b>&mdash;</b> not checkable</span> &mdash; nothing printed on this form could verify it, usually because everything it sums is on an attachment. The amber note says why, and where the caption states a formula it quotes it.</div>
+    <div><span class="vb v-skip"><b>&#8856;</b> not on this branch</span> &mdash; the line carries a printed conditional and this record is not on its branch. Neither checked nor failed.</div>
+    <div><span class="v-na">not a total</span> &mdash; a value the client supplied rather than a figure the form computes. There is no arithmetic to check; the two value columns show it reached the page.</div>
+    <div><span class="badge ok">match</span> &mdash; a different guarantee, and an independent one: the value stored in the CRM is the value this PDF prints. Every row has it. It says nothing about whether the arithmetic is right.</div>
+  </div>
 
   ${mismatches.length
     ? `<div class="alarm"><strong>${mismatches.length} row${mismatches.length === 1 ? '' : 's'} disagree between the CRM and the PDF.</strong> They are highlighted below and listed in full in the next table.</div>`
@@ -435,7 +595,7 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   ${mismatches.length ? `
   <h2>Disagreements</h2>
   <div class="scroll"><table>
-    <thead><tr><th>Printed line</th><th>Label</th><th>HubSpot property</th><th>Value in HubSpot</th><th>Read back from PDF</th><th>Match</th></tr></thead>
+    <thead><tr><th>Printed line</th><th>Label</th><th>HubSpot property</th><th>Value in HubSpot</th><th>Read back from PDF</th><th>Arithmetic</th><th>Match</th></tr></thead>
     <tbody>${mismatches.map(rowHtml).join('')}</tbody>
   </table></div>` : ''}
 
@@ -467,7 +627,7 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   ${sections.map(s => `
   <h2>${esc(s.name)} <span class="muted" style="font-weight:400">(${s.rows.length} bound cell${s.rows.length === 1 ? '' : 's'})</span></h2>
   <div class="scroll"><table>
-    <thead><tr><th>Printed line</th><th>Label</th><th>HubSpot property</th><th>Value in HubSpot</th><th>Read back from PDF</th><th>Match</th></tr></thead>
+    <thead><tr><th>Printed line</th><th>Label</th><th>HubSpot property</th><th>Value in HubSpot</th><th>Read back from PDF</th><th>Arithmetic</th><th>Match</th></tr></thead>
     <tbody>${s.rows.map(rowHtml).join('')}</tbody>
   </table></div>`).join('')}
 
@@ -483,6 +643,14 @@ console.log(`  record: ${recordPath}`);
 console.log(`  filled: ${filledPath}`);
 console.log(`  wrote:  ${outPath}`);
 console.log(`  ${rows.length} bound cell(s): ${counts.ok ?? 0} match, ${counts.MISMATCH ?? 0} MISMATCH, ${counts.empty ?? 0} both empty, ${counts['pdf-only'] ?? 0} PDF-only`);
+if (trip) {
+  console.log(`  arithmetic, from ${tripwirePath} (bound to this PDF by SHA-256 ${filledSha.slice(0, 12)}…):`);
+  console.log(`    printed cells: ${verifiedN} verified, ${askN} verified with a printed requirement arithmetic cannot express, ${notCheckN} not checkable (${formulaN} of them stating a printed formula), ${skipN} not on this record's branch${failN ? `, ${failN} UNRESOLVED` : ''}`);
+  console.log(`    declared lines (as the gate counts them): ${trip.lines.filter(l => l.verdict === 'verified').length} checked, ${trip.lines.filter(l => l.verdict === 'skipped').length} skipped, ${trip.lines.filter(l => l.verdict === 'failed').length} failed of ${trip.lines.length}; ${trip.declared_not_checkable.length} declared not checkable`);
+  console.log(`    the two differ where several declared lines address one printed cell, or a not-checkable entry names a whole column`);
+} else {
+  console.log(`  arithmetic: UNKNOWN — ${tripWhy}`);
+}
 if (orphans.length) {
   console.log('');
   console.log(`  ${orphans.length} record value(s) reach NO printed cell:`);

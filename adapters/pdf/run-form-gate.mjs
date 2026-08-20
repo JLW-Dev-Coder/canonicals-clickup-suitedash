@@ -65,7 +65,8 @@
 // whatever the map claims.
 
 import { spawnSync } from 'node:child_process';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
@@ -99,6 +100,9 @@ const fieldsDoc  = JSON.parse(readFileSync(fieldsPath, 'utf8'));
 const sample     = JSON.parse(readFileSync(samplePath, 'utf8'));
 const outPath    = `adapters/pdf/out/${form}_filled_${sample.intake_id || 'sample'}.pdf`;
 const complete   = mapClaimsComplete(mapDoc);
+// The per-line arithmetic result, written beside the filled PDF and read by render-review.mjs.
+// Named from the same pieces as outPath so the two always belong to each other.
+const tripwirePath = outPath.replace(/\.pdf$/, '.tripwires.json');
 
 const fieldNames = fieldsDoc.fields.map(f => f.name);
 const { deferred, never, writable } = classifyMapTargets(mapDoc);
@@ -416,8 +420,14 @@ const steps = [
                   wasRounded: false,
                   feederModes: new Set(),
                   crossesRoundingBoundary: false,
+                  // THE ROW IS PART OF THE ADDRESS. Two declared lines can address ONE printed
+                  // cell — 433-A(OIC)'s (6a) declares an `own` branch and a `leased` branch for
+                  // the same quick-sale-equity cell, and exactly one of them runs on any given
+                  // record. Without the row index, `6a own` and `6c own` collide on one address
+                  // and a consumer joining on it sees the last line written rather than the pair.
                   addr: entry.total_key ? `key:${entry.total_key}`
-                      : (entry.total_cell?.group && entry.total_cell?.column) ? `cell:${entry.total_cell.group}.${entry.total_cell.column}`
+                      : (entry.total_cell?.group && entry.total_cell?.column)
+                        ? `cell:${entry.total_cell.group}.${entry.total_cell.column}${typeof entry.total_cell.row === 'number' ? `#${entry.total_cell.row}` : ''}`
                       : null,
                   floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false,
                   // DECLARATION COVERAGE. What this line DECLARES, and what actually FIRED on
@@ -587,7 +597,7 @@ const steps = [
     // form that checked them — which is the whole condition the predicate was granted on.
     if (skippedRows.length) {
       console.log('');
-      console.log(`  ${skippedRows.length} of ${rows.length} line(s) SKIPPED — a feeder predicate was false, so the form is not on this line's printed branch:`);
+      console.log(`  ${skippedRows.length} of ${rows.length} line(s) SKIPPED — a feeder predicate was false, so the form is not on this line’s printed branch:`);
       skippedRows.forEach(r => console.log(`    ${r.line}: ${r.skipWhy}`));
     }
 
@@ -642,6 +652,39 @@ const steps = [
     // skipped because the form is not on its printed branch, or failed.
     SUMMARY.tripwires = { checked: checked.length, skipped: skippedRows.length, failed: bad.length,
       not_checkable: unchecked.length, declared_lines: rows.length, declared_not_checkable: declined.length };
+
+    // ─── THE PER-LINE RESULT, WRITTEN DOWN ───────────────────────────────────────────────
+    //
+    // render-review.mjs tells a preparer which printed money cells the engine VERIFIED, which
+    // it could not, and which it verified while the printed caption asks for something more.
+    // The first of those three is a claim about a RUN, not about a declaration: a cell can be
+    // declared checkable and still have been skipped on this record because its feeder
+    // predicate was false. A review page that read "verified" off the declaration would print
+    // a green tick beside a line nothing recomputed.
+    //
+    // So the arithmetic pass writes what it actually did, keyed on the same `addr` the
+    // declaration uses, beside the PDF it did it to. render-review reads this file and refuses
+    // to claim verification when it is absent or belongs to another document — the two ways a
+    // stale result could quietly become a fresh one.
+    writeFileSync(tripwirePath, JSON.stringify({
+      form, filled: outPath, filled_sha256: createHash('sha256').update(readFileSync(outPath)).digest('hex'),
+      sample: samplePath, mode: saturated ? 'saturated' : 'production',
+      _what_this_is: 'THE RESULT OF GATE STEP 11 ON THE PDF NAMED ABOVE, per declared total line. `verdict` is one of: verified (recomputed from the printed operands and it matched), failed, skipped (a feeder predicate was false, so this form is not on this line’s printed branch), or not-checkable-at-runtime (a feeder did not resolve to a printed cell). It is a record of a RUN. A consumer that reads it against a different document is reading a stale answer, which is why the filled PDF’s SHA-256 is here.',
+      lines: rows.map(r => ({
+        line: r.line, addr: r.addr, caption: r.caption,
+        verdict: !r.checkable ? 'not-checkable-at-runtime' : r.skipped ? 'skipped' : r.match ? 'verified' : 'failed',
+        why: r.why ?? r.skipWhy ?? null,
+        printed: r.printed ?? null, recomputed: r.checkable && !r.skipped ? r.sum : null,
+        rounding_mode: r.roundingMode ?? null, floored: !!r.floored,
+      })),
+      declared_not_checkable: declined.map(e => ({
+        addr: e.map_key ? `key:${e.map_key}` : (e.cell?.group && e.cell?.column) ? `cell:${e.cell.group}.${e.cell.column}` : null,
+        printed_caption: e.printed_caption, why_not_checkable: e.why_not_checkable,
+        review_page_advisory: e.review_page_advisory ?? null,
+      })),
+    }, null, 1) + '\n');
+    console.log('');
+    console.log(`  per-line result written to ${tripwirePath} — read by render-review.mjs so "verified" on the review page names this run and not the declaration.`);
 
     // ─── DECLARATION COVERAGE ────────────────────────────────────────────────────────────
     //
