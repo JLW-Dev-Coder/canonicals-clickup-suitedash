@@ -221,9 +221,16 @@ if (usePortal) {
   portal = new Map(all.map((p) => [p.name, p]));
   const custom = all.filter((p) => !p.hubspotDefined);
 
+  // A7 asks "is this name already taken by something else". Once this pass has run, most of
+  // these names are taken BY THIS PASS, and a guard that cannot tell those apart would fire on
+  // every re-run and be turned off. The discriminator is read from the PORTAL and not from a
+  // list this file carries: hs-provision writes the input key into the description, so a
+  // property whose live description names this form and THIS key is one we created, and any
+  // other occupant of the name is still a STOP.
+  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').startsWith(`433-A(OIC) (input key: ${d.key})`);
   for (const d of derived) {
-    if (portal.has(d.hs_name) && !d.backbone_key) {
-      STOP('A7', `"${d.key}" derives "${d.hs_name}", which already exists on the portal, and its row claims no backbone_key. Either it is the same fact and the row must say which 433-A key it reuses, or it is a different fact and the name is taken.`);
+    if (portal.has(d.hs_name) && !d.backbone_key && !oursByDescription(d)) {
+      STOP('A7', `"${d.key}" derives "${d.hs_name}", which already exists on the portal, its row claims no backbone_key, and its live description does not name this form and this key. Either it is the same fact and the row must say which 433-A key it reuses, or it is a different fact and the name is taken.`);
     }
     if (d.scope === 'form-specific' && portal.has('irs433_' + d.fact)) {
       STOP('A8', `"${d.key}" is form-specific and derives "${d.hs_name}", but irs433_${d.fact} ALREADY EXISTS on the portal for the same fact. Creating this would be a permanent duplicate. Re-read the classification entry: this is what X-17 looked like before it was corrected.`);
@@ -231,8 +238,19 @@ if (usePortal) {
   }
   portal.custom = custom;
 }
-exactButNew = derived.filter((d) => d.category === 'exact' && d.scope === 'shared' && !backboneNames.has(d.hs_name) && !(portal && portal.has(d.hs_name)));
-const exactOffBackbone = derived.filter((d) => d.category === 'exact' && d.scope === 'shared' && !backboneNames.has(d.hs_name) && portal && portal.has(d.hs_name));
+// THE DURABLE LIST is "exact, shared, and NOT a fact fields.433a.json carries" - which does not
+// change when this pass creates the properties. An earlier draft filtered on "does not exist on
+// the portal", so re-running it after provisioning reported zero and the finding vanished from
+// its own report. A report whose finding disappears once the work is done is a report that only
+// ever documents the future.
+exactButNew = derived.filter((d) => d.category === 'exact' && d.scope === 'shared' && !backboneNames.has(d.hs_name));
+const statusOf = (d) => {
+  if (!portal) return 'portal not read';
+  const l = portal.get(d.hs_name);
+  if (!l) return '**would be created**';
+  if ((l.description || '').startsWith('433-A(OIC) (input key: ' + d.key + ')')) return 'created by this pass';
+  return 'already live - contributed by another form in the series';
+};
 
 // ---------------------------------------------------------------------------------------
 // REPORT
@@ -302,30 +320,23 @@ else {
 }
 say('');
 
-say('## `exact` keys that still create a NEW shared property');
+say('## `exact` keys whose fact the 433-A backbone does not carry');
 say('');
-say('`exact` means a 433-A value needs no transformation to become the OIC value. It does not mean a property exists.');
-say('These are the keys where it does not, and each is a place the two forms ask one fact at a different granularity -');
-say('so each is a shared property this pass creates under a category that invited reuse. Reported individually because');
-say('that is exactly the combination worth a second look before a name becomes permanent.');
+say('`exact` means a 433-A value needs no transformation to become the OIC value. It does NOT mean a property exists.');
+say('These are the keys where it does not: each is a place the two forms ask one fact at a different granularity, and');
+say('each therefore takes a shared name under a category that invited reuse. Reported individually because that is');
+say('exactly the combination worth a second look before a name becomes permanent.');
 say('');
-if (!usePortal) say('_Portal not read; this list is against `fields.433a.json` only and will over-report facts 433-F contributed._');
+say('The list is against `fields.433a.json` and does not shrink once the properties are created - the `status` column');
+say('says what happened, so the finding survives the work being done.');
 say('');
 if (!exactButNew.length) say('None.');
 else {
-  say('| key | entry | derived name | what 433-A holds instead |');
-  say('|---|---|---|---|');
-  for (const d of exactButNew) say(`| \`${d.key}\` | ${d.entry} | \`${d.hs_name}\` | ${d.backbone_key ? 'row claims backbone key `' + d.backbone_key + '`, which produced no property of this name' : 'the fact at a different granularity, or nothing'} |`);
+  say('| key | entry | derived name | what 433-A holds instead | status |');
+  say('|---|---|---|---|---|');
+  for (const d of exactButNew) say(`| \`${d.key}\` | ${d.entry} | \`${d.hs_name}\` | ${d.backbone_key ? 'row claims backbone key `' + d.backbone_key + '`, which produced no property of this name' : 'the fact at a different granularity, or nothing'} | ${statusOf(d)} |`);
 }
 say('');
-if (usePortal && exactOffBackbone.length) {
-  say('And these `exact` keys reuse a shared property that is live but is NOT in `fields.433a.json`, because another form in the series contributed it:');
-  say('');
-  say('| key | entry | reused property | contributed by |');
-  say('|---|---|---|---|');
-  for (const d of exactOffBackbone) say(`| \`${d.key}\` | ${d.entry} | \`${d.hs_name}\` | \`${d.backbone_key || '(unclaimed)'}\` |`);
-  say('');
-}
 
 say('## Full derivation');
 say('');
@@ -393,7 +404,7 @@ if (emit && !stops.length) {
 // ---------------------------------------------------------------------------------------
 console.log(`433-A(OIC) naming derivation: ${derived.length} name(s) from ${keySpace.size} input key(s).`);
 console.log(`  shared ${scopeCount.shared} / form-specific ${scopeCount['form-specific']}; ${derived.filter((d) => backboneNames.has(d.hs_name)).length} already on the backbone.`);
-console.log(`  lie-registry echoes: ${echoes.length}; exact-but-new-shared: ${exactButNew.length}.`);
+console.log(`  lie-registry echoes: ${echoes.length}; exact keys off the 433-A backbone: ${exactButNew.length}.`);
 if (usePortal) {
   const before = portal.custom.length;
   const toCreate = derived.filter((d) => !portal.has(d.hs_name));
@@ -404,6 +415,9 @@ console.log('  report -> adapters/hubspot/433aoi.naming-derivation.md');
 if (stops.length) {
   console.error(`\nSTOP - ${stops.length} assertion failure(s):`);
   for (const s of stops) console.error('  ' + s);
-  process.exit(3);
+  // exitCode, not exit(): calling process.exit() while the fetch keep-alive sockets are still
+  // open trips a libuv assertion on Windows, and a guard whose FAILURE path crashes is a guard
+  // whose failure is easy to mistake for a crash. Setting the code lets node drain and exit 3.
+  process.exitCode = 3;
 }
 console.log('all assertions passed.');

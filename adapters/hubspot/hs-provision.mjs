@@ -82,11 +82,18 @@ for (let i = 0; i < toCreate.length; i += 100) {
 // Read the portal back rather than trusting the response: a create that reported success and a
 // name that is actually queryable are different claims, and only the second one is the one the
 // fetch layer depends on.
-const after = new Set(((await hs(`/crm/v3/properties/${objectType}`)).results || []).map((p) => p.name));
+const afterAll = (await hs(`/crm/v3/properties/${objectType}`)).results || [];
+const after = new Set(afterAll.map((p) => p.name));
+// CUSTOM, not total. This line used to print the TOTAL under the word "custom", which on a
+// portal with 405 HubSpot-defined properties reads as 1,068 against a 1,000 ceiling - a
+// number that would stop a provisioning run that had 337 of headroom left. The ceiling
+// counts customs only, so this counts customs only.
+const afterCustom = afterAll.filter((p) => !p.hubspotDefined);
 const notThere = toCreate.filter((b) => !after.has(b.name));
 if (notThere.length) {
   console.error(`  ${notThere.length} propert(ies) reported created but are not in the portal: ${notThere.map((b) => b.name).join(', ')}`);
   process.exit(3);
 }
 console.log(`done. created ${created} propert(ies); all ${created} read back from the portal.`);
-console.log(`  ${objectType} custom properties now: ${[...after].length} total on the object`);
+console.log(`  ${objectType} CUSTOM properties now: ${afterCustom.length} (of ${afterAll.length} total; ${afterAll.length - afterCustom.length} are HubSpot-defined and do not count against the ceiling)`);
+console.log(`  headroom at the documented 1,000-custom ceiling: ${1000 - afterCustom.length}`);

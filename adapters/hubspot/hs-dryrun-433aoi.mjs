@@ -29,28 +29,16 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { hs } from './hs-lib.mjs';
-
-const CEILING = 1000;
-
-// EVERY DIVERGENCE NEEDS A RECORDED DECISION, and a divergence without one is a STOP.
-//
+// EVERY DIVERGENCE NEEDS A RECORDED DECISION, and a divergence without one is a STOP below.
 // Not because the provisioner would do the wrong thing - it skips existing properties and so
 // does nothing at all here - but because "the provisioner does nothing" and "we decided the
 // live definition is the one to keep" are indistinguishable from the outside, and that
-// indistinguishability is the defect. So each is answered here, by name, with the evidence.
-const DECISIONS = {
-  irs433_tp_pay_period: {
-    decision: 'KEEP THE LIVE DEFINITION. Create nothing, change nothing, and do not remove the fifth option.',
-    why: 'The live property carries five options and 433-A(OIC) prints four; the extra one is `semi-monthly`, added for 433-F by crosswalk.433f.json option_extensions because 433-F prints Weekly / Biweekly / Semi-monthly / Monthly and has no Other box. The live set is a strict SUPERSET of what this form needs, so every value this form can print is storable, and the direction is what makes it safe. Removing the option would break 433-F and cannot be walked back for a taxpayer already recorded as semi-monthly; adding a second property would split one fact across two names.',
-    what_happens_to_a_semi_monthly_taxpayer_on_this_form:
-      'It fails LOUDLY, twice, and prints nothing wrong. hs-fetch-433aoi.mjs resolves the stored value through map_option_by_value, which has no `semi-monthly` key, and REFUSES TO WRITE the record. If a hand-authored record reached the engine anyway, fill-433aoi.mjs applyOption finds no matching option and pushes an optionError, and no PDF is written. That is the correct behaviour for a form that prints no box for the answer: 433-A(OIC) prints an Other box, and whether a semi-monthly taxpayer should be recorded as `other` here is a data-entry question, not a schema one.',
-  },
-  irs433_sp_pay_period: {
-    decision: 'KEEP THE LIVE DEFINITION. Same as irs433_tp_pay_period, on the spouse side.',
-    why: 'Identical divergence from the identical cause - the 433-F option extension - on the spouse pay-period property. Decided the same way deliberately: reading two identically-caused divergences two different ways would be worse than reading them both wrong.',
-    what_happens_to_a_semi_monthly_taxpayer_on_this_form: 'As above.',
-  },
-};
+// indistinguishability is the defect. The rulings live in their own file because
+// hs-readback-433aoi.mjs needs the same list to tell a known divergence from a property this
+// pass created wrongly, and a second copy of a judgement is a second judgement.
+import { DIVERGENCE_DECISIONS as DECISIONS } from './433aoi.divergence-decisions.mjs';
+
+const CEILING = 1000;
 const defs = JSON.parse(readFileSync('adapters/hubspot/fields.433aoi.json', 'utf8'));
 const props = defs.properties;
 
@@ -163,7 +151,7 @@ else {
       say('');
       say(dec.why);
       say('');
-      say(`_What happens to a taxpayer whose stored value this form cannot print:_ ${dec.what_happens_to_a_semi_monthly_taxpayer_on_this_form}`);
+      say(`_What happens to a taxpayer whose stored value this form cannot print:_ ${dec.what_happens_to_a_value_this_form_cannot_print}`);
       say('');
     }
   }
