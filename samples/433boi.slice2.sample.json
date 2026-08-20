@@ -1,0 +1,207 @@
+{
+ "_synthetic": "Fabricated fixture. ACME Holdings LLC / Sample Partners at 400 Example Plaza, Denton TX; the EIN and every Social Security Number are XXXX-masked placeholders in ranges the IRS does not issue, every telephone is in the 555 range reserved for fiction, and the web and FAX values point at example.com (RFC 2606). No part of this record came from a real taxpayer. Slice 2 adds asset rows for the same fabricated business: bank and brokerage names are Example-* placeholders, every account number is a masked XXXX form, the wallet address is a non-checksummed 0xEXAMPLE string, and every property and vehicle is at an Example address with a fictitious tag.",
+ "_what_this_covers": "433-B(OIC) slice 2 — pages 1, 2 and 3, all 173 mapped fields. Saturated: every mapped text cell carries a value, all five Yes/No pairs are answered, the lone check-here tick is set, every option set on every row names an option, and all five repeatable tables are fed to their printed maximum — three bank rows, two investment rows, one digital asset, two properties, three vehicles — so each group is exercised at capacity without overflowing.",
+ "s1_business_name": "ACME Holdings LLC",
+ "s1_ein": "XX-XXX4417",
+ "s1_business_physical_address": "400 Example Plaza, Suite 210, Denton, TX 76201",
+ "s1_county_of_business_location": "Denton",
+ "s1_description_of_business_and_dba": "Commercial equipment leasing; DBA \"ACME Leasing\"",
+ "s1_business_primary_phone": "(555) 0100-441",
+ "s1_business_secondary_phone": "(555) 0100-442",
+ "s1_business_mailing_address": "PO Box 5512, Denton, TX 76202",
+ "s1_business_website_address": "www.example.com",
+ "s1_business_fax_number": "(555) 0100-449",
+ "s1_federal_contractor": "yes",
+ "s1_payroll_outsourced": "yes",
+ "s1_payroll_provider_name_and_address": "Example Payroll Services Inc, 88 Example Row, Dallas, TX 75201",
+ "s1_total_number_of_employees": "24",
+ "s1_only_employee": false,
+ "s1_frequency_of_tax_deposits": "Semi-weekly",
+ "s1_average_gross_monthly_payroll": "84250.00",
+ "partners": [
+  {
+   "asset_class": "business_principal",
+   "last_name": "Sample",
+   "first_name": "Dana",
+   "title": "Managing Member",
+   "percent_ownership_and_annual_salary": "55% / $180,000",
+   "ssn": "XXX-XX-1001",
+   "home_address": "12 Example Court, Denton, TX 76201",
+   "primary_phone": "(555) 0100-511",
+   "secondary_phone": "(555) 0100-512"
+  },
+  {
+   "asset_class": "business_principal",
+   "last_name": "Placeholder",
+   "first_name": "Morgan",
+   "title": "Chief Financial Officer",
+   "percent_ownership_and_annual_salary": "30% / $145,000",
+   "ssn": "XXX-XX-1002",
+   "home_address": "44 Example Lane, Lewisville, TX 75057",
+   "primary_phone": "(555) 0100-521",
+   "secondary_phone": "(555) 0100-522"
+  },
+  {
+   "asset_class": "business_principal",
+   "last_name": "Fictitious",
+   "first_name": "Robin",
+   "title": "Minority Shareholder",
+   "percent_ownership_and_annual_salary": "15% / $0",
+   "ssn": "XXX-XX-1003",
+   "home_address": "7 Example Terrace, Flower Mound, TX 75022",
+   "primary_phone": "(555) 0100-531",
+   "secondary_phone": "(555) 0100-532"
+  }
+ ],
+ "bank_accounts": [
+  {
+   "asset_class": "bank_account",
+   "type_of_account": "checking",
+   "institution_name_and_address": "Example National Bank, 1 Example Way, Denton, TX 76201, USA",
+   "account_number": "XXXX-XXXX-3311",
+   "account_balance": "41283.17"
+  },
+  {
+   "asset_class": "bank_account",
+   "type_of_account": "savings",
+   "institution_name_and_address": "Placeholder Savings & Loan, 27 Sample Road, Plano, TX 75023, USA",
+   "account_number": "XXXX-XXXX-7742",
+   "account_balance": "12907.44"
+  },
+  {
+   "asset_class": "bank_account",
+   "type_of_account": "money_market_or_cd",
+   "institution_name_and_address": "Fictitious Credit Union, 903 Example Blvd, Frisco, TX 75034, USA",
+   "account_number": "XXXX-XXXX-5168",
+   "account_balance": "6055.29"
+  }
+ ],
+ "s2_1d_bank_accounts_from_attachment": "3410.88",
+ "s2_1_total_bank_accounts": "63656.78",
+ "investment_accounts": [
+  {
+   "asset_class": "investment",
+   "type_of_investment": "stocks",
+   "type_of_investment_other": "Common equities, non-retirement",
+   "institution_name_and_address": "Example Brokerage LLC, 500 Sample Tower, Dallas, TX 75201, USA",
+   "account_number": "XXXX-9021",
+   "current_value": "88400.00",
+   "loan_balance": "15250.00",
+   "equity": "73150.00"
+  },
+  {
+   "asset_class": "investment",
+   "type_of_investment": "other",
+   "type_of_investment_other": "Municipal bond ladder",
+   "institution_name_and_address": "Placeholder Securities Inc, 12 Example Circle, Austin, TX 78701, USA",
+   "account_number": "XXXX-4477",
+   "current_value": "31775.50",
+   "loan_balance": "2300.25",
+   "equity": "29475.25"
+  }
+ ],
+ "digital_assets": [
+  {
+   "asset_class": "digital_asset",
+   "row_type": "digital_asset",
+   "description_of_digital_asset": "Sample-coin (SMPL)",
+   "number_of_units": "412.5",
+   "location_of_digital_asset": "Example Exchange Ltd (custodial account)",
+   "account_number_custodian_or_broker": "XXXX-EX-6630",
+   "self_hosted_wallet_address": "0xEXAMPLE00000000000000000000000000009f21",
+   "usd_equivalent_today": "18644.60",
+   "equity": "18644.60"
+  }
+ ],
+ "s2_2d_investment_accounts_from_attachment": "7112.05",
+ "s2_2_total_investment_accounts": "128381.90",
+ "s2_notes_receivable": "yes",
+ "s2_accounts_receivable": "no",
+ "s2_real_property_for_sale": "yes",
+ "s2_real_property_listing_price": "529000.00",
+ "real_estate": [
+  {
+   "asset_class": "real_property",
+   "location": "1200 Example Industrial Parkway, Denton, Denton County, TX 76207, USA",
+   "description": "Warehouse and yard, owner-occupied",
+   "purchase_date": "03/14/2016",
+   "monthly_payment": "3184.22",
+   "final_payment_date": "03/14/2036",
+   "lender_name_address": "Example Commercial Mortgage Co, 44 Sample Street, Fort Worth, TX 76102",
+   "current_fmv": "468000.00",
+   "quick_sale_value": "374400.00",
+   "current_loan_balance": "212450.75",
+   "equity": "161949.25"
+  },
+  {
+   "asset_class": "real_property",
+   "location": "58 Sample Ridge Court, Lewisville, Denton County, TX 75067, USA",
+   "description": "Rental duplex, both units tenanted",
+   "purchase_date": "11/02/2019",
+   "monthly_payment": "1477.06",
+   "final_payment_date": "11/02/2049",
+   "lender_name_address": "Placeholder Home Lending, 7 Example Court, Denton, TX 76201",
+   "current_fmv": "251500.00",
+   "quick_sale_value": "201200.00",
+   "current_loan_balance": "90310.40",
+   "equity": "110889.60"
+  }
+ ],
+ "s2_3c_property_from_attachment": "18900.33",
+ "s2_3_total_real_estate": "291739.18",
+ "vehicles": [
+  {
+   "asset_class": "vehicle",
+   "make_model": "Example Flatbed F-750",
+   "model_year": "2021",
+   "purchase_date": "06/09/2021",
+   "mileage": "84,120",
+   "license_tag": "TX-EXA-1101",
+   "lease_or_own": "own",
+   "monthly_payment": "1044.75",
+   "lender_name_address": "Example Equipment Finance, 90 Sample Way, Irving, TX 75039",
+   "final_payment_date": "06/09/2027",
+   "current_fmv": "62400.00",
+   "quick_sale_value": "49920.00",
+   "current_loan_balance": "18775.10",
+   "quick_sale_equity": "31144.90"
+  },
+  {
+   "asset_class": "vehicle",
+   "make_model": "Placeholder Cargo Van 250",
+   "model_year": "2023",
+   "purchase_date": "01/20/2023",
+   "mileage": "31,905",
+   "license_tag": "TX-SMP-2202",
+   "lease_or_own": "lease",
+   "monthly_payment": "689.30",
+   "lender_name_address": "Placeholder Fleet Leasing Co, 3 Example Plaza, Dallas, TX 75202",
+   "final_payment_date": "01/20/2028",
+   "current_fmv": "39900.00",
+   "quick_sale_value": "31920.00",
+   "current_loan_balance": "0.00",
+   "quick_sale_equity": "0.00"
+  },
+  {
+   "asset_class": "vehicle",
+   "make_model": "Sample Utility Trailer 16ft",
+   "model_year": "2018",
+   "purchase_date": "08/30/2018",
+   "mileage": "n/a - trailer",
+   "license_tag": "TX-PLC-3303",
+   "lease_or_own": "own",
+   "monthly_payment": "212.18",
+   "lender_name_address": "Fictitious Trailer Credit, 21 Sample Lane, Denton, TX 76205",
+   "final_payment_date": "08/30/2024",
+   "current_fmv": "14250.00",
+   "quick_sale_value": "11400.00",
+   "current_loan_balance": "3120.65",
+   "quick_sale_equity": "8279.35"
+  }
+ ],
+ "s2_4d_vehicles_from_attachment": "2244.19",
+ "s2_4_total_vehicles": "41668.44",
+ "_nothing_is_right_by_coincidence": "Every input money figure in this record is distinct except one, and that one is named: the leased vehicle carries a loan balance of 0.00, which is not a figure chosen for the fixture but the value that row must hold. 23 distinct input money values across the three bank balances, the two investment values and loan balances, the digital asset's USD equivalent, the two property values and loan balances, the three vehicle values and loan balances, the four attachment scalars and the listing price. Every declared total is arithmetic over operands that cannot produce it by accident: (1) is 63656.78 from four terms of which no two agree, (2) is 128381.90 across three different row shapes, (3) is 291739.18 from two X .8 discounts and an attachment line, and (4) is 41668.44 from ONE owned row, ONE leased row entered as 0, ONE more owned row and an attachment line. THESE FOUR FIGURES ARE WRITTEN BY THE GENERATOR FROM THE VALUES ABOVE, not retyped: the first draft of this sentence typed (3) as 465,490.93 and (4) as 33,697.44, both wrong, and samples/ is outside count-sweep's swept set so nothing in the engine would have said so.",
+ "_the_leased_vehicle_is_the_point": "Vehicle 2 is leased and its (4b) total is 0.00 while its current market value is 39,900.00. A fixture that owned all three vehicles would exercise the \"own\" branch of all three predicated lines and leave the printed instruction \"if the vehicle is leased, enter 0 as the total value\" proved nowhere, while the transcript read clean.",
+ "_generated_by": "scratchpad/author-fixture.mjs, then scratchpad/fix-fixture-prose.mjs for the summary sentence. Both are one-shot generators recorded in the commit that produced this file."
+}
