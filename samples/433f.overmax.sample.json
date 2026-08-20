@@ -84,21 +84,24 @@
    "name_of_digital_asset": "Example Exchange (DCE) hot wallet",
    "email_used_to_set_up": "sample.holder@example.invalid",
    "location_of_digital_asset": "Online, exchange-custodied",
-   "amount_and_value_usd": "0.5 BTC $31k"
+   "amount_and_value_usd": "0.5 BTC $31k",
+   "asset_class": "digital_asset"
   },
   {
    "type_of_digital_asset": "Ethereum",
    "name_of_digital_asset": "Example hardware wallet, self-custodied",
    "email_used_to_set_up": "sample.holder@example.invalid",
    "location_of_digital_asset": "External hardware storage",
-   "amount_and_value_usd": "2 ETH $6,400"
+   "amount_and_value_usd": "2 ETH $6,400",
+   "asset_class": "digital_asset"
   },
   {
    "type_of_digital_asset": "OVERMAX-digital_assets-2",
    "name_of_digital_asset": "Example hardware wallet, self-custodied",
    "email_used_to_set_up": "sample.holder@example.invalid",
    "location_of_digital_asset": "External hardware storage",
-   "amount_and_value_usd": "2 ETH $6,400"
+   "amount_and_value_usd": "2 ETH $6,400",
+   "asset_class": "digital_asset"
   }
  ],
  "real_estate": [
@@ -201,17 +204,20 @@
   {
    "name": "Example Wellness Retail LLC",
    "address": "520 Example Ct, Denton TX 76201",
-   "amount_due": "4220"
+   "amount_due": "4220",
+   "asset_class": "receivable"
   },
   {
    "name": "Sample County Grant Office",
    "address": "630 Example Blvd, Denton TX 76205",
-   "amount_due": "6100"
+   "amount_due": "6100",
+   "asset_class": "receivable"
   },
   {
    "name": "OVERMAX-accounts_receivable-2",
    "address": "630 Example Blvd, Denton TX 76205",
-   "amount_due": "6100"
+   "amount_due": "6100",
+   "asset_class": "receivable"
   }
  ],
  "433f_ar_additional_sheets_total": "1500",
@@ -221,22 +227,26 @@
   {
    "credit_card": "Visa",
    "issuing_bank_name_and_address": "First Example Merchant Bank, 700 Example Pkwy, Denton TX 76201",
-   "merchant_account_number": "XXXX-MERCH-0001"
+   "merchant_account_number": "XXXX-MERCH-0001",
+   "asset_class": "credit_cards_accepted"
   },
   {
    "credit_card": "Master Card",
    "issuing_bank_name_and_address": "Second Example Merchant Bank, 710 Example Pkwy, Denton TX 76201",
-   "merchant_account_number": "XXXX-MERCH-0002"
+   "merchant_account_number": "XXXX-MERCH-0002",
+   "asset_class": "credit_cards_accepted"
   },
   {
    "credit_card": "Discover",
    "issuing_bank_name_and_address": "Third Example Merchant Bank, 720 Example Pkwy, Denton TX 76201",
-   "merchant_account_number": "XXXX-MERCH-0003"
+   "merchant_account_number": "XXXX-MERCH-0003",
+   "asset_class": "credit_cards_accepted"
   },
   {
    "credit_card": "OVERMAX-credit_cards_accepted-3",
    "issuing_bank_name_and_address": "Third Example Merchant Bank, 720 Example Pkwy, Denton TX 76201",
-   "merchant_account_number": "XXXX-MERCH-0003"
+   "merchant_account_number": "XXXX-MERCH-0003",
+   "asset_class": "credit_cards_accepted"
   }
  ],
  "433f_emp_name": "Example Corp",

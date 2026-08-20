@@ -26,35 +26,40 @@
    "age": "17",
    "relationship": "Row1 Child",
    "claimed_on_1040": "Yes",
-   "contributes_to_household_income": "Yes"
+   "contributes_to_household_income": "Yes",
+   "asset_class": "household_member"
   },
   {
    "name": "Row 2 Dependent",
    "age": "14",
    "relationship": "Row2 Child",
    "claimed_on_1040": "yes",
-   "contributes_to_household_income": false
+   "contributes_to_household_income": false,
+   "asset_class": "household_member"
   },
   {
    "name": "Row 3 Dependent",
    "age": "71",
    "relationship": "Row3 Parent",
    "claimed_on_1040": "No",
-   "contributes_to_household_income": true
+   "contributes_to_household_income": true,
+   "asset_class": "household_member"
   },
   {
    "name": "Row 4 Dependent",
    "age": "9",
    "relationship": "Row4 Child",
    "claimed_on_1040": false,
-   "contributes_to_household_income": "no"
+   "contributes_to_household_income": "no",
+   "asset_class": "household_member"
   },
   {
    "name": "Row 5 OVERFLOW - must be dropped and logged",
    "age": "44",
    "relationship": "Row5 Cousin",
    "claimed_on_1040": "No",
-   "contributes_to_household_income": "No"
+   "contributes_to_household_income": "No",
+   "asset_class": "household_member"
   }
  ],
  "s2_tp_employer_name": "Testcorp Taxpayer Employer LLC",
