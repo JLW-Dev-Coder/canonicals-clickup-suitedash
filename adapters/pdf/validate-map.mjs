@@ -18,6 +18,8 @@ import { auditRounding, reportRounding } from './rounding.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
+import { runExclusionSweep, reportExclusionSweep } from './exclusion-sweep.mjs';
+import { runSuccessSweep, reportSuccessSweep } from './success-sweep.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
 import { reclassify, report as reportReclassify } from '../hubspot/reclassify-against-backbone.mjs';
 
@@ -189,6 +191,30 @@ if (!existsSync(liesPath)) {
   // two more keys than it ever checked, because `bound_today` was being printed straight out
   // of the file as though it were a result.
   console.log(`name-lie registry: ${liesPath} — ${(lies.entries || []).length} entries; every count it declares is derived and checked by adapters/pdf/count-sweep.mjs [S-11, S-12, S-13].`);
+
+  // AND HERE IS WHERE THE SENTENCE ABOVE WAS PROVED AGAIN, BY THE FILE THAT CONTAINS IT.
+  //
+  // `problems` was filled by seven assertions between here and its declaration — kind is one
+  // of KINDS, path is rooted at the target prefix, path is not declared twice, path exists
+  // verbatim in the PDF, a container path has enumerated descendants, `bound_to` resolves,
+  // `bound_to` resolves to the field the registry NAMES rather than a different one, and a
+  // null `bound_to` says why — AND NOTHING EVER READ IT. The array was accumulated and
+  // discarded, with `OK — every declared path exists …` printed underneath on every run.
+  //
+  // Found by adapters/pdf/success-sweep.mjs on its first run, which is the whole argument for
+  // that file: this is a worse instance than the one it was written for. `derive-names-433aoi.mjs`
+  // at least set a non-zero exit code beside its false sentence. Here there was no signal at
+  // all — seven assertions on the artefact that records where the leaf names LIE, dead from
+  // the commit that wrote them, on the one form carrying 22 active lies.
+  //
+  // Proved dead before it was fixed: pointing entry 0's `path` at a name absent from the PDF
+  // still printed the OK. Proved live after: the same mutation now reports
+  // `path not found verbatim in the PDF field list` and exits 2.
+  if (problems.length) {
+    console.error(`NAME-LIE REGISTRY — ${problems.length} problem(s) in ${liesPath}:`);
+    problems.forEach((p) => console.error(`  ${p}`));
+    process.exit(2);
+  }
   console.log('OK — every declared path exists, no path is declared twice, and every declared binding resolves through the map to exactly the field the registry names.');
 }
 
@@ -254,6 +280,23 @@ if (reportFigureSweep(figures) > 0) process.exit(2);
 // It exists at all because count-sweep [S-21] credited validate-crosswalk.mjs with this check
 // for three slices and validate-crosswalk.mjs never opened the file.
 if (reportRowShapeSpec({ verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (e2) THE EXCLUSION SWEEP. (e) asserts what the spec's lists SAY; this asks what its
+// excusals LEAVE OUT. Three of 433-F's printed tables were invisible to (e) for three slices
+// because a sentence in asset-row-shapes.json said "printed, not currently mapped" while the
+// map had bound all three since they were authored — the instrument intact, its input quietly
+// narrowed. Every predicate that excuses a site from a check is registered here, counted, and
+// compared against reality; an unregistered one is a STOP. Runs on every form, for the same
+// reason (e) does: the exclusions are shared.
+if (reportExclusionSweep(await runExclusionSweep(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (e3) THE SUCCESS SWEEP. A finding count can be right and the sentence printed beside it
+// wrong. `derive-names-433aoi.mjs` printed "all assertions passed." unconditionally beneath its
+// own "STOP - 1 assertion failure(s)"; THIS FILE accumulated seven assertions about the
+// name-lie registry into `problems` and never read the array, printing OK over them on every
+// run since they were written. Every success message in the engine must be tied to a finding
+// count, sit after a jumping failure path, or state what was found rather than that nothing was.
+if (reportSuccessSweep(runSuccessSweep(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // (f) THE BLANKET AUDIT. The sweeps above dispose of every claim site; most sites are disposed
 // by a handful of catch-all reasons, and this asks whether those reasons are true of what they

@@ -730,6 +730,45 @@ const steps = [
       covers.push({ line: g, kind: 'overflow', what: `max ${capDeclared}`, id: `max ${capDeclared}`, fired: fed !== null && fed > capDeclared,
         why: fed === null ? 'the record carries no rows for this group' : `the record fed ${fed} row(s) into ${capDeclared} printed slot(s), so nothing overflowed` });
     }
+    // ROW CLASSES. A group declaring `row_class.accepts` is declaring a RULE — rows of these
+    // classes route here and rows of any other class are refused — and until now that rule was
+    // in no coverage table. `real_property` and `available_credit` carried a class no acceptance
+    // fixture ever stated, so on every run since they were authored the routing was reported and
+    // never exercised: the declaration was present, the refusal path was proved by
+    // assert-row-class-routes.mjs against a synthetic wrong class, and NOTHING had ever driven a
+    // correctly-classed row through it from a fixture.
+    //
+    // That is the same gap as an unexercised floor and it belongs in the same table. A class is
+    // EXERCISED when the record feeds at least one row into the group that accepts it AND the
+    // row states its class; it is UNEXERCISED — named, not failed — when the group is declared
+    // and this fixture sends nothing through it.
+    //
+    // `id` is `accepts <class>` per class rather than per group, because one group accepting two
+    // classes is two rules and a fixture can exercise one without the other.
+    for (const [g, d] of Object.entries(mapDoc.groups || {})) {
+      const accepts = d?.row_class?.accepts;
+      if (!Array.isArray(accepts)) continue;
+      const src = sample?.[d.array || d.source || g];
+      const fedRows = Array.isArray(src) ? src : [];
+      // THE KEY THE ENGINE ACTUALLY READS. `row_class.column` is the discriminator
+      // adapters/pdf/assert-row-class-routes.mjs poisons to prove the refusal path, so it is
+      // the key a row must state for the ACCEPTANCE path to have been exercised too. Reading a
+      // different key here would report coverage of a rule the engine does not consult.
+      const classKey = d.row_class.column;
+      for (const cls of accepts) {
+        // EXERCISED MEANS A ROW STATED THE CLASS. A first draft counted a single-class group
+        // as exercised whenever the record fed it any rows at all — "there is no other class
+        // the row could be" — and that reading is wrong in the way this whole ruling is about:
+        // it reports 14 of 14 covered on 433-A and erases the exact gap the ruling names. The
+        // engine routes on `row_class.column`; a row that does not set that column has not
+        // driven the acceptance rule, whatever a human can infer about which table it landed in.
+        const stated = fedRows.filter((r) => r && typeof r === 'object' && String(r[classKey] ?? '') === cls).length;
+        covers.push({ line: g, kind: 'row_class', what: `accepts ${cls}`, id: `accepts ${cls}`, fired: stated > 0,
+          why: !fedRows.length ? 'the record carries no rows for this group, so no row was routed under this class'
+             : stated ? `the record fed ${stated} row(s) stating ${classKey} = "${cls}"`
+             : `the record fed ${fedRows.length} row(s) and NONE states ${classKey} = "${cls}" — the class is declared and no fixture has driven a row through it` });
+      }
+    }
     // Exclusive sets and not-checkable advisories are declared in the map and the totals file
     // and are exercised by verify-form-coverage (step 10) and render-review respectively;
     // counted here so the coverage table names every declaration KIND, not only the arithmetic ones.

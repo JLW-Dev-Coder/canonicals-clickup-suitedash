@@ -60,6 +60,38 @@
     }
    ],
    "status": "OPEN for 433-B(OIC), 433-B, 433-D and 433-H; SATISFIED for the three forms already mapped."
+  },
+  {
+   "id": "C-23",
+   "form": "all three mapped forms, and 433-B(OIC) inherits it",
+   "raised_in": "Prompt 39 ruling 1 - found by adapters/pdf/exclusion-sweep.mjs [X-03] on its first run",
+   "subject": "row_flag is one key carrying two incompatible definitions, and the maps show neither covers all five flagged columns",
+   "the_two_definitions": {
+    "artefact": "adapters/hubspot/asset-row-shapes.json  meta.how_to_read.row_flag: \"A column whose value prints as a CHECKBOX, not text. The fill engines read these off the same row object the text layer prints, so they belong in the row shape even though no text cell corresponds.\"",
+    "consuming_code": "adapters/pdf/assert-row-shape-spec.mjs, at the line that consumes it: \"// a routing flag, not a printed cell\"",
+    "why_they_are_not_two_phrasings_of_one_rule": "A checkbox IS a printed cell. One sentence says the value is printed in a non-text widget; the other says the value is not printed at all."
+   },
+   "the_split_derived_from_the_maps": {
+    "load_bearing_three": [
+     "bank_account.is_business_account (contributed_by 433f)",
+     "investment.is_business_account (contributed_by 433f)",
+     "real_property.kind (contributed_by 433f)"
+    ],
+    "load_bearing_evidence": "Reachable on NO accepting group across 433a, 433f and 433aoi, and bound as a checkbox on none of them. Removing the flag makes [A2] report MISSING COLUMN for each. These fit the CODE COMMENT and not the artefact: 433-F prints one bank table and one real-estate table, and the flag decides at the record level which printed table a row belongs in. No page has a cell for it.",
+    "inert_two": [
+     "household_member.claimed_on_1040 (contributed_by 433a)",
+     "household_member.contributes_to_household_income (contributed_by 433a)"
+    ],
+    "inert_evidence": "Both are reachable on 433a.household_members AND 433aoi.household_members, as CHECKBOX columns bound to real widgets - 433-A Row1 Dependent CB_06, and the 433-A(OIC) equivalent under Section1.dependentListing. [A2] would pass without the flag. These fit the ARTEFACT and not the code comment."
+   },
+   "why_it_is_not_resolved_here": "row_flag is shared vocabulary across three finished forms and 433-B(OIC) is about to inherit it. Correcting either sentence changes what the OTHER four columns mean, and picking the wrong one narrows [A2] on the next form. The evidence is derived on every run and printed by the exclusion sweep; the decision is Principal's.",
+   "the_three_options": [
+    "SPLIT THE KEY: row_flag keeps the code comment's meaning (routed on, printed nowhere) and a second key - printed_as_checkbox - carries the artefact's. [A2] then excuses only the first and CHECKS the second, which is strictly more checking than today.",
+    "ONE KEY, UNION DEFINITION: row_flag means \"not a printed TEXT cell\", covering both halves, and [A2] excuses on it as now. Cheapest, and it keeps the two household_member columns excused from a check they would pass.",
+    "ONE KEY, CODE COMMENT WINS: drop row_flag from the two household_member columns and let [A2] check them. They pass today. Corrects meta.how_to_read to match. Widens the check, and is the only option under which the two columns stop being latent hiders."
+   ],
+   "what_is_true_under_all_three": "No flagged column is reachable as TEXT on any accepting group. That is the assertion adapters/pdf/exclusion-sweep.mjs [X-03] makes and it holds today; the split above is REPORTED and counted on every run, not failed.",
+   "status": "OPEN"
   }
  ],
  "resolved": [
@@ -83,7 +115,7 @@
   }
  ],
  "_count": {
-  "open": 4,
+  "open": 5,
   "resolved": 1
  }
 }

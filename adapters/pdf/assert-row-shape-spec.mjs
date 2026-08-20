@@ -70,15 +70,20 @@ const FORMS = ['433a', '433f', '433aoi'];
 const mapPath = (f) => `adapters/pdf/maps/${f}.map.json`;
 
 /** Load the spec and every map that exists. */
-const load = () => {
+export const load = () => {
   const spec = JSON.parse(readFileSync(SPEC, 'utf8'));
   const maps = {};
   for (const f of FORMS) if (existsSync(mapPath(f))) maps[f] = JSON.parse(readFileSync(mapPath(f), 'utf8'));
   return { spec, maps };
 };
 
+// EXPORTED SO THE EXCLUSION SWEEP CROSS-CHECKS AGAINST THIS, NOT AGAINST A COPY OF IT.
+// [A3]'s excusals are compared to reality by adapters/pdf/exclusion-sweep.mjs [X-01], and the
+// reality it compares against must be the SAME routing map this file asserts on. guard-sweep's
+// (c) register records what a second implementation costs: a re-derived copy of the marker
+// pairing disagreed 40-to-3 with the original, and the whole disagreement was in the copy.
 /** Every (form, group) that accepts a class, with the columns its slots actually declare. */
-const acceptorsOf = (maps) => {
+export const acceptorsOf = (maps) => {
   const out = new Map();      // class_id -> [{ form, group, cols:Set }]
   for (const [form, map] of Object.entries(maps)) {
     for (const [group, def] of Object.entries(map.groups || {})) {

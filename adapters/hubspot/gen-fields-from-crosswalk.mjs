@@ -27,6 +27,7 @@
 // last. The crosswalk stays the single record of what feeds what.
 
 import { readFileSync, writeFileSync } from 'fs';
+import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 import { execFileSync } from 'node:child_process';
 
 const form = process.argv[2];
@@ -125,6 +126,13 @@ const doc = {
   groups,
   properties,
 };
+
+// THE GENERATOR GUARD - see adapters/hubspot/generator-guard.mjs. This file's output is the
+// one that was overwritten by the wrong tool, so the assertion is not hypothetical here.
+const SELF = selfPath(process.argv[1]);
+const guard = assertGenerator(outPath, SELF, { adopt: process.argv.includes('--adopt') });
+doc.meta = { ...doc.meta, ...generatorMeta(SELF, { generated_from: xwPath }) };
+console.log(`generator guard: ${outPath} -> ${guard.verdict}${guard.declared ? ` (declares ${guard.declared})` : ''}`);
 
 writeFileSync(outPath, JSON.stringify(doc, null, 2) + '\n');
 console.log('');

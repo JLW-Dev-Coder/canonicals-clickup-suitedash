@@ -13,7 +13,8 @@
       "shared": 49,
       "form_specific": 7,
       "pii": 5
-    }
+    },
+    "_generator_rule": "adapters/hubspot/generator-guard.mjs asserts, before every write, that this file already declares THIS tool. A different generator writing here is a STOP, not a warning: these definitions become permanent HubSpot property names and HubSpot does not free a name."
   },
   "groups": [
     {

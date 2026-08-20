@@ -368,6 +368,60 @@ export const VACUOUS = [
     why: 'The geometry-shaped half of the completeness detector. Same disposition as [G-50], and it is the half the canary would notice first: CANARY expects one geometry claim as well as one assert claim, so a detector that lost either half fails the canary and takes the whole run down with an explicit statement that every "0 detected" in it is meaningless.' },
   { id: 'G-54', file: 'render-review.mjs', anchor: 'catch (e) { tripWhy = `${tripwirePath} could not be read', verdict: 'sound',
     why: 'AN UNREADABLE ARITHMETIC RESULT MAKES THE PAGE SAY SO, IN THREE PLACES. `trip` stays null, `tripWhy` carries the exception message, the page prints a red banner naming it above everything a preparer reads, and the Arithmetic column reads "unknown" on every row rather than falling back to the totals DECLARATION. Falling back is the failure this catch exists to prevent: a declaration says a line is checkABLE, and the question the column answers is whether anything checked it on this record. The two other ways the result can be wrong — the file being absent, and the file belonging to a different document — take the same path, and the document binding is by SHA-256 rather than by filename.' },
+
+  // ─── the success sweep ────────────────────────────────────────────────────────────────
+  //
+  // Every `extract` here reads the STRUCTURE OF A SOURCE LINE — is this an `if` head, is that
+  // an `else`, where are the string literals. The whole family shares one disposition and it
+  // is the strongest available: THESE FAIL CLOSED INTO THE PROBLEM STATE. A regex that stops
+  // matching does not skip a site; it removes a witness, and a site with no witness classifies
+  // as UNCONDITIONAL, which is a STOP. The failure mode of a dead extractor in this file is a
+  // sweep that reports 79 unconditional success messages, not a sweep that reports none.
+  //
+  // That is the opposite of the shape [G-01] was written for, and it is deliberate: the
+  // classifier is built so that ignorance is indistinguishable from the defect rather than
+  // from health. The canary then separates the two, by running four synthetic sites of known
+  // class through the same code path on every invocation.
+  { id: 'G-55', file: 'success-sweep.mjs', anchor: 'const inlineElseIf = self.match(', verdict: 'sound', family: true,
+    why: 'Reads an `} else if (…) {` head. No match means "this is not an else-if", the walk continues upward, and a chain it cannot read ends at a null condition — which denies the site its `guarded` witness rather than granting it. Fails closed into UNCONDITIONAL.' },
+  { id: 'G-56', file: 'success-sweep.mjs', anchor: 'const m = head.match(/if\\s*\\((.+)\\)\\s*$/);', verdict: 'sound', family: true,
+    why: 'THE `if` HEAD READER, at both of its sites — the else-chain walker and the enclosing-condition walker. A head this cannot read yields `cond: null`, and a null condition never satisfies FINDING_IDENT, so witness (a) is withheld. Withholding a witness moves a site TOWARDS the problem state and never away from it.' },
+  { id: 'G-57', file: 'success-sweep.mjs', anchor: 'const inline = lines[idx].match(', verdict: 'sound',
+    why: 'The inline `if (…) console.log(…)` form. No match falls through to the brace walk, which is the general case; the inline test is an optimisation over it, not the only path to the answer.' },
+  { id: 'G-58', file: 'success-sweep.mjs', anchor: 'const m = lines[i].match(/^\\s*(?:\\}\\s*else\\s+)?if', verdict: 'sound', family: true,
+    why: 'The failure-guard head reader in witness (b). No match means `continue` — the scan keeps walking upward and, finding no failure accumulation at all, returns null. A null there produces UNCONDITIONAL with the reason "no failure accumulation above it". Fails closed.' },
+  { id: 'G-59', file: 'success-sweep.mjs', anchor: '|| lines[i].match(/^\\s*if\\s*\\((.+?)\\)\\s*(?:process\\.exit|return|STOP|throw|console\\.error)/);', verdict: 'sound',
+    why: 'The single-statement `if (x) process.exit(2);` form of the same head. Same disposition as [G-58]: the alternative to matching is not matching, and not matching withholds the `terminal` witness.' },
+  { id: 'G-60', file: 'success-sweep.mjs', anchor: 'const lits = line.match(STRLIT) || [];', verdict: 'sound',
+    why: 'THE LITERAL EXTRACTOR INSIDE isNarrative. An empty result makes `lits.some(…)` false three times over, so the line opens no verdict, is no table row, carries no notice and interpolates nothing — and isNarrative returns FALSE. A line whose literals cannot be read is therefore NOT excused as narrative; it goes on to the control-flow witnesses and, failing those, to UNCONDITIONAL. This is the site where a `some`-over-empty would have been dangerous in the other direction, and the return is written so that every vacuous `some` pushes towards the problem.' },
+  { id: 'G-61', file: 'success-sweep.mjs', anchor: "const lits = (ln.match(STRLIT) || []).join(' ');", verdict: 'sound',
+    why: 'THE SITE SELECTOR. An empty literal join fails SUCCESS_TOKENS and the line is not collected as a site at all — so a dead extractor here shrinks the swept population silently, which IS the [A3] shape. It is closed by the site count being printed on every run beside the per-directory file count, and by the canary, which classifies from an in-memory array and would still return 4/4 while the count collapsed: the two numbers are read together, and 79 falling to 0 with a live canary is the signature. Recorded here rather than argued away, because "it only shrinks the input" is precisely what a sentence in asset-row-shapes.json did.' },
+  { id: 'G-62', file: 'success-sweep.mjs', anchor: 'return { rows: out, ok: out.every((r) => r.ok) };', verdict: 'guarded',
+    why: 'THE CANARY’S OWN `every`, VACUOUS ON EMPTY AND GUARDED BY AN ARITY CHECK ABOVE IT. `runCanary` returns early with an `arity` problem unless CANARY_EXPECT holds exactly CANARY_CLASSES entries, so `out` cannot be empty by the time this line runs. Without that guard a canary list that lost its entries would report "the classifier still sees every class" by seeing none — [G-01] committed inside the canary written to stop this file going blind.' },
+  // ─── the exclusion sweep ──────────────────────────────────────────────────────────────
+  //
+  // The three `catch` sites this file shipped with on its first draft were the [G-01] shape
+  // INSIDE THE FILE WHOSE SUBJECT IS INSTRUMENTS GOING QUIET: `try { JSON.parse(…) } catch {
+  // return null }` followed by `?? 0`, so a map that would not parse contributed nothing to
+  // the excused total and said nothing about it — a count that could not read its input
+  // reporting the same figure as a count that read an empty one. All three are FIXED, by
+  // separating absence from unreadability: ENOENT returns null and the form is simply not
+  // swept, and a parse failure PROPAGATES to runExclusionSweep, which reports UNREADABLE.
+  { id: 'G-64', file: 'exclusion-sweep.mjs', anchor: "try { raw = readFileSync(p, 'utf8'); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }", verdict: 'FIXED',
+    why: 'WAS `catch { return null }` OVER BOTH FAILURE MODES, WITH `?? 0` DOWNSTREAM. A missing sidecar and an unparseable one produced the same silent zero. Now the catch handles exactly one condition — the file not existing, which is a fact about a form not yet mapped — and re-throws everything else. The parse itself is outside the try, so a malformed map cannot be read as an empty one. The excused total therefore counts only forms whose declarations were actually read.' },
+  { id: 'G-65', file: 'exclusion-sweep.mjs', anchor: 'const m = ln.match(DEF); if (m) out.add(m[1]);', verdict: 'guarded',
+    why: 'THE DEFINITION HARVESTER, AND THE ONE PLACE IN THIS FILE A DEAD REGEX WOULD FAIL OPEN. An empty `DEFINED` set makes [X-90] remove EVERY raw exclusion position, so nothing is registered and nothing is checked — the [A3] shape committed by the file written against it. Closed two ways: [X-90] counts what it removed and prints the figure beside the raw total on every run, so 175 raw / 0 named is visible rather than silent; and the ORPHAN rule then fires for all sixteen registered predicates at once, because none of them appears in an exclusion position any more. A harvester that dies takes the register down with it, loudly.' },
+  { id: 'G-66', file: 'exclusion-sweep.mjs', anchor: 'const m = code.match(re);', verdict: 'sound',
+    why: 'THE POSITION MATCHER. No match means this line is not an exclusion position and the loop tries the next shape; a line matching no shape is not a site. A shape that stopped matching would shrink the swept population — which is why the population size is printed on every run and the ORPHAN rule fires for any registered predicate that stops appearing. Registered rather than argued away, because "it only shrinks the input" is exactly what a sentence in asset-row-shapes.json did.' },
+  { id: 'G-67', file: 'exclusion-sweep.mjs', anchor: 'const calls = [...String(m[1]).matchAll(CALL)].map((x) => x[1]);', verdict: 'sound',
+    why: 'READS THE PREDICATE NAMES OUT OF A CONDITION ALREADY KNOWN TO BE AN EXCLUSION POSITION. An empty result returns early without counting the line as a raw hit, which is correct: `if (i > 3) continue` calls nothing and excuses nothing anybody authored. The names it does find are then filtered against DEFINED, whose failure mode is disposed at [G-65].' },
+  { id: 'G-68', file: 'exclusion-sweep.mjs', anchor: "for (const lit of ln.match(STRLIT) || []) {", verdict: 'sound',
+    why: "[X-11]'s CROSS-CHECK. An unreadable literal list yields no iterations and therefore no contradiction — which would be a silent pass, except that the same extractor runs over the same lines in success-sweep.mjs's site selector, where an empty result drops the site count from 79 to 0. The two figures are printed by two tools in the same gate and cannot disagree quietly." },
+  { id: 'G-69', file: 'exclusion-sweep.mjs', anchor: 'catch (err) {', verdict: 'sound', family: true,
+    why: "THE THREE RUNNER CATCHES, AND THEY ARE THE OPPOSITE OF SWALLOWING. Each wraps one of count(), crosscheck() and observe(), and each turns the exception into an UNREADABLE PROBLEM naming the entry and the message — never a skip, never a zero. This is the atLeast contract at the register level: an exclusion whose size or whose comparison cannot be computed reports that it could not be computed, and the sweep exits 2.",
+  },
+  { id: 'G-63', file: 'success-sweep.mjs', anchor: 'for (const o of OVERRIDES) if (!rows.some(', verdict: 'sound',
+    why: 'THE ORPHAN-OVERRIDE CHECK, AND EMPTY IS THE FAILING CASE. If `rows` is empty the negated `some` is true for every override, so all of them report as ORPHAN — the loudest possible outcome, not a silent pass. An override standing over code that has moved is exactly what this is for.' },
 ];
 
 // ---------------------------------------------------------------------------------------

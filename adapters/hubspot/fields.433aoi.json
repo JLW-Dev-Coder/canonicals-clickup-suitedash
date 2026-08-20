@@ -5,6 +5,9 @@
   "catalog": "55896Q",
   "derived_from": "adapters/hubspot/crosswalk.433aoi.json + adapters/pdf/maps/433aoi.crosswalk-classification.json",
   "deriver": "adapters/hubspot/derive-names-433aoi.mjs",
+  "generator": "adapters/hubspot/derive-names-433aoi.mjs",
+  "generated_from": "adapters/hubspot/crosswalk.433aoi.json + adapters/pdf/maps/433aoi.crosswalk-classification.json",
+  "_generator_rule": "adapters/hubspot/generator-guard.mjs asserts, before every write, that this file already declares THIS tool. A different generator writing here is a STOP, not a warning: these definitions become permanent HubSpot property names and HubSpot does not free a name.",
   "naming_rule": "Ruling 5. exact -> irs433_<fact>; new -> irs433aoi_<fact>; the middle four by a per-entry ruling recorded on each crosswalk row. NOTHING HERE IS TYPED: re-running the deriver rebuilds this file, and a category change changes a name.",
   "counts": {
    "total": 238,

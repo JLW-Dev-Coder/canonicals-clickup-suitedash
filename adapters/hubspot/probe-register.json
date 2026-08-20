@@ -1,0 +1,115 @@
+{
+ "_what_this_is": "Every synthetic HubSpot contact this project has ever seeded, with what it was for, which committed fixture references it, whether it was torn down, and the READ THAT CONFIRMED ITS ABSENCE. adapters/hubspot/hs-preflight.mjs asserts this register against the live portal on every run; a probe with no teardown record is a pre-flight STOP.",
+ "_why_it_exists": "Prompt 38 asserted 'synthetic probe absent'. Read against the portal on 2026-08-20, that was true of the 433-A(OIC) probe only. Prompt 39 then asserted a 433-A probe was still live; the portal returned 404 for all four 433-A ids, so that was wrong too. What WAS live was a 433-F probe neither prompt mentioned - 242795652507, seeded 2026-08-18, carrying a synthetic taxpayer's serialized bank, investment and real-estate rows. Nothing in this repo recorded that it existed. Both claims were made from memory of a run rather than from a read of the portal, and the one that mattered was the probe nobody had a memory of at all.",
+ "_the_rule": "A probe is REGISTERED WHEN IT IS SEEDED, not when it is torn down. The register is the list of things that must be absent; a list written at teardown time can only ever contain what someone remembered to tear down, which is the same set as 'nothing was left behind' and proves nothing.",
+ "_what_absence_evidence_means": "A direct object read - GET /crm/v3/objects/contacts/<id> returning 404 - taken AFTER the delete, from the portal, never from the delete response. HubSpot's search index lags writes by seconds to minutes, so a search-derived absence can be a stale index rather than an empty portal; and a 2xx on the archive call is the request being accepted, which is a different fact from the object being gone. A non-404 error is NOT evidence of absence: an unreadable portal is not an empty one.",
+ "_teardown_status_values": {
+  "torn_down": "Deleted, and a direct object read returned 404 after the delete.",
+  "live": "Present on the portal now. A pre-flight STOP.",
+  "unknown": "Seeded, and no teardown record exists. A pre-flight STOP - the same status as `live`, because the difference between them is exactly what the register cannot tell you and the portal can."
+ },
+ "probes": [
+  {
+   "id": "242636375905",
+   "form": "433a",
+   "purpose": "First 433-A round trip: seed the backbone from samples/433a.sample.json, fetch it back, fill the PDF, compare.",
+   "fixture": "samples/433a.from-hubspot-242636375905.json",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/242636375905 -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes. This probe predates the register; its row is reconstructed from the committed fixture that names its id, and its absence is a live read rather than a record of the teardown itself. What is NOT recoverable is whether it was torn down deliberately or swept up by a portal purge - see _retrospective_rows_are_weaker below."
+  },
+  {
+   "id": "242778403988",
+   "form": "433a",
+   "purpose": "433-A round trip, second pass.",
+   "fixture": "samples/433a.from-hubspot-242778403988.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "242790728273",
+   "form": "433a",
+   "purpose": "433-A round trip, third pass.",
+   "fixture": "samples/433a.from-hubspot-242790728273.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes. Prompt 39 asserted this probe was still live. The portal says otherwise, and the portal is the authority."
+  },
+  {
+   "id": "243137499531",
+   "form": "433a",
+   "purpose": "433-A HubSpot round trip for the D-05 regression - the probe behind adapters/pdf/out/433a_filled_HS-243137499531.tripwires.json.",
+   "fixture": "samples/433a.from-hubspot-243137499531.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "241893083218",
+   "form": "433f",
+   "purpose": "First 433-F round trip.",
+   "fixture": "samples/433f.from-hubspot-241893083218.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "242613414663",
+   "form": "433f",
+   "purpose": "433-F round trip, second pass.",
+   "fixture": "samples/433f.from-hubspot-242613414663.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "242620506733",
+   "form": "433f",
+   "purpose": "433-F round trip, third pass.",
+   "fixture": "samples/433f.from-hubspot-242620506733.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "242791368316",
+   "form": "433f",
+   "purpose": "433-F round trip, fourth pass.",
+   "fixture": "samples/433f.from-hubspot-242791368316.json",
+   "teardown": "torn_down",
+   "absence_read": "GET -> 404, read 2026-08-20 during the Prompt 39 pre-flight.",
+   "registered_retrospectively": "Yes."
+  },
+  {
+   "id": "242795652507",
+   "form": "433f",
+   "purpose": "433-F multi-row round trip - the probe carrying serialized bank, investment and real-estate rows.",
+   "fixture": "samples/433f.from-hubspot-242795652507.json - deleted from the working tree when the probe was torn down. NOT a committed file: .gitignore line 13 excludes samples/433f.from-hubspot-*.json, and the same is true of the 433a and 433aoi patterns. See _no_fixture_was_ever_committed.",
+   "email": "synthetic-433f-roundtrip@example.com",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/242795652507 -> 404, read 2026-08-20 immediately after the DELETE, by adapters/hubspot/hs-teardown-contact.mjs, which reads the object back rather than trusting the delete response.",
+   "found_live_by": "The Prompt 39 pre-flight portal read - 8 contacts, of which exactly one had a synthetic email. It had been live since 2026-08-18 and its fixture sat in the working tree, ignored by git and therefore invisible to any review of the diff. Nothing in this repo recorded that the contact existed, which is the whole reason this file does."
+  },
+  {
+   "id": "243232979075",
+   "form": "433f",
+   "purpose": "REPLACEMENT for 242795652507. Seeded, fetched, gated and torn down inside one run, so the fixture it produced never coexisted with a live contact for longer than that run.",
+   "fixture": "samples/433f.from-hubspot-243232979075.json (gitignored, as every from-hubspot fixture is)",
+   "seeded_from": "samples/433f.multi.sample.json, which declares _synthetic; 97 of 97 bindings populated.",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/243232979075 -> 404, read 2026-08-20 immediately after the DELETE by adapters/hubspot/hs-teardown-contact.mjs, in the same run that seeded it.",
+   "gated": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.from-hubspot-243232979075.json --saturated -> GATE PASSED, all 11 steps, saturated."
+  }
+ ],
+ "_retrospective_rows_are_weaker": "8 of the 10 rows were reconstructed after the fact, from working-tree fixtures that embed a contact id in their filename. Their `absence_read` is a live 404 taken during the Prompt 39 pre-flight, which is real evidence that they are gone NOW. What it is not is evidence of what happened at the time, and it could not have been: a probe seeded and never recorded is invisible to any reconstruction that starts from the fixtures, because such a reconstruction can only find probes that left a fixture behind. A probe seeded for a run that failed before the fetch leaves nothing at all. That gap closes going forward and cannot be closed backwards.",
+ "_count": {
+  "probes": 10,
+  "live": 0,
+  "torn_down": 10,
+  "unknown": 0,
+  "registered_retrospectively": 8,
+  "_derived_by": "python over probes[]; adapters/hubspot/hs-preflight.mjs re-derives all five on every run and a typed figure that disagrees is a STOP."
+ },
+ "_no_fixture_was_ever_committed": "ESTABLISHED, NOT ASSUMED. .gitignore excludes samples/433a.from-hubspot-*.json, samples/433f.from-hubspot-*.json and samples/433aoi.from-hubspot-*.json, and `git ls-files samples/` lists only the eight hand-authored fixtures. So the danger the ruling names - a COMMITTED fixture referencing a live contact - has never been reachable in this repo. The real exposure was different and worse: a live synthetic contact carrying a full serialized 433-F record, on the portal since 2026-08-18, that no artefact in the repo recorded. A gitignore kept the fixture out of history and did nothing about the contact. That is what this register is for."
+}

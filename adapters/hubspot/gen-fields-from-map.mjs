@@ -36,6 +36,7 @@
 // a serialized column cannot be filtered or reported on natively inside HubSpot.
 
 import { readFileSync, writeFileSync } from 'fs';
+import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 
 const form = process.argv[2];
 if (!form) {
@@ -439,6 +440,16 @@ doc.meta.counts = {
   pii: properties.filter((p) => p.pii).length,
   renamed_facts: properties.filter((p) => p.fact !== stripMarker(p.key)).length,
 };
+
+// THE GENERATOR GUARD. This tool takes a FORM ARGUMENT and will happily transform any map
+// into any fields file - which is exactly how fields.433f.json came to be rewritten from a map
+// instead of from its crosswalk, in the wrong vocabulary, with a group dropped, caught only by
+// a person reading a 1,260-line diff. Asserted BEFORE the write, because the write is the last
+// moment the wrong file is still recoverable.
+const SELF = selfPath(process.argv[1]);
+const guard = assertGenerator(outPath, SELF, { adopt: process.argv.includes('--adopt') });
+doc.meta = { ...doc.meta, ...generatorMeta(SELF, { generated_from: doc.meta.generated_from }) };
+console.log(`generator guard: ${outPath} -> ${guard.verdict}${guard.declared ? ` (declares ${guard.declared})` : ''}`);
 
 writeFileSync(outPath, JSON.stringify(doc, null, 2) + '\n');
 console.log(`${form}: ${properties.length} properties -> ${outPath}`);

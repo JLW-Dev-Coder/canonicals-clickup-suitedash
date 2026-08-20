@@ -37,6 +37,7 @@
 // mechanism and not as "nothing to check".
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 
 const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
@@ -346,11 +347,19 @@ if (emit && !stops.length) {
       row_shape: rowShape, entry: d.entry, category: d.category, backbone_key: d.backbone_key,
     };
   });
+  // THE GENERATOR GUARD - see adapters/hubspot/generator-guard.mjs. This file declared its
+  // producer under the key `deriver` while the other two field files used `generator`, and an
+  // assertion cannot find a key by meaning. Both are now written: `generator` is the key the
+  // guard reads, one spelling across all three files.
+  const SELF = selfPath(process.argv[1]);
+  const gguard = assertGenerator('adapters/hubspot/fields.433aoi.json', SELF, { adopt: process.argv.includes('--adopt') });
+  console.log(`generator guard: adapters/hubspot/fields.433aoi.json -> ${gguard.verdict}${gguard.declared ? ` (declares ${gguard.declared})` : ''}`);
   writeFileSync('adapters/hubspot/fields.433aoi.json', JSON.stringify({
     meta: {
       form: '433aoi', form_revision: MAP.form_revision, catalog: MAP.catalog,
       derived_from: 'adapters/hubspot/crosswalk.433aoi.json + adapters/pdf/maps/433aoi.crosswalk-classification.json',
       deriver: 'adapters/hubspot/derive-names-433aoi.mjs',
+      ...generatorMeta(SELF, { generated_from: 'adapters/hubspot/crosswalk.433aoi.json + adapters/pdf/maps/433aoi.crosswalk-classification.json' }),
       naming_rule: 'Ruling 5. exact -> irs433_<fact>; new -> irs433aoi_<fact>; the middle four by a per-entry ruling recorded on each crosswalk row. NOTHING HERE IS TYPED: re-running the deriver rebuilds this file, and a category change changes a name.',
       counts: { total: props.length, shared: props.filter((p) => p.scope === 'shared').length, form_specific: props.filter((p) => p.scope !== 'shared').length, pii: props.filter((p) => p.pii).length },
     },
@@ -374,6 +383,22 @@ if (usePortal) {
   if (before + toCreate.length > 1000) STOP('A12', `this pass would take the portal to ${before + toCreate.length} custom properties, past the 1,000 ceiling. STOPPING before the first create rather than partway through one.`);
 }
 console.log('  report -> adapters/hubspot/433aoi.naming-derivation.md');
+// AND THE SENTENCE UNDERNEATH IT, WHICH USED TO PRINT EITHER WAY.
+//
+// This read, unconditionally, directly below its own "STOP - 1 assertion failure(s)":
+//
+//     console.log('all assertions passed.');
+//
+// The exit code was right on every run. The last line a reader sees was wrong on every
+// failing one. `process.exitCode = 3` is precisely what let it survive: it is an ASSIGNMENT,
+// not a jump, so execution fell straight through — where every other terminal success message
+// in this engine sits after `process.exit()` or `return`, which do jump. That one-character
+// difference between a call and an assignment is the whole defect.
+//
+// It was found by grepping for the phrase for an unrelated reason, which is to say by luck.
+// adapters/pdf/success-sweep.mjs is the check that replaces the luck, and its canary holds
+// this exact arrangement — a jumping guard, then a non-jumping guard, then a bare success
+// line — so a classifier that stops recognising it fails loudly instead of reporting clean.
 if (stops.length) {
   console.error(`\nSTOP - ${stops.length} assertion failure(s):`);
   for (const s of stops) console.error('  ' + s);
@@ -381,5 +406,6 @@ if (stops.length) {
   // open trips a libuv assertion on Windows, and a guard whose FAILURE path crashes is a guard
   // whose failure is easy to mistake for a crash. Setting the code lets node drain and exit 3.
   process.exitCode = 3;
+} else {
+  console.log('all assertions passed.');
 }
-console.log('all assertions passed.');

@@ -8,6 +8,7 @@
 // subscription tier and a plan sized against the wrong number is a plan that runs out of room
 // three forms in, with names that cannot be withdrawn.
 
+import { readFileSync } from 'node:fs';
 import { hs, listAll } from './hs-lib.mjs';
 
 const line = (s) => console.log(s);
@@ -98,3 +99,95 @@ if (contacts) line(`observed: ${contacts.length} contacts present.`);
 line('note: HubSpot publishes the numeric ceiling only in the 400 returned by a create that would');
 line('      cross it. Nothing short of crossing it reads the number, so the plan is sized against');
 line('      the tier above plus the headroom arithmetic in the report.');
+
+// ---------------------------------------------------------------------------------------
+// THE SYNTHETIC-PROBE REGISTER, ASSERTED AGAINST THE LIVE PORTAL.
+//
+// Prompt 38 asserted "synthetic probe absent". It was true of one probe of the three that
+// mattered. Prompt 39 asserted a 433-A probe was still live; all four 433-A ids returned 404.
+// And a 433-F probe neither prompt named had been live for two days carrying a full serialized
+// record, recorded nowhere in this repo.
+//
+// So the claim is never taken from a prompt, a memory, or a delete response. It is READ, here,
+// and compared against adapters/hubspot/probe-register.json — in BOTH directions, because the
+// two failures are different and only one of them is the obvious one:
+//
+//   register says torn_down, portal says present   a teardown that did not happen
+//   portal has a synthetic contact the register     a probe nobody recorded — the 242795652507
+//   does not name                                   shape, and the one that actually bit
+//   register says `unknown`                         seeded with no teardown record; the register
+//                                                   cannot tell live from gone and the portal can
+//
+// Every one of those is a STOP. Nothing downstream of this file should run against a portal
+// holding an unaccounted synthetic record.
+line('');
+line('=== SYNTHETIC-PROBE REGISTER ===');
+const REGISTER = 'adapters/hubspot/probe-register.json';
+const stops = [];
+{
+  const reg = JSON.parse(readFileSync(REGISTER, 'utf8'));
+  const probes = reg.probes || [];
+
+  // NO COUNT IS TYPED. The declared tally is re-derived from probes[] and a disagreement is a
+  // STOP, on the same rule that governs every other count in this repo.
+  const derived = {
+    probes: probes.length,
+    live: probes.filter((p) => p.teardown === 'live').length,
+    torn_down: probes.filter((p) => p.teardown === 'torn_down').length,
+    unknown: probes.filter((p) => p.teardown === 'unknown').length,
+    registered_retrospectively: probes.filter((p) => p.registered_retrospectively).length,
+  };
+  for (const [k, v] of Object.entries(derived)) {
+    const claimed = reg._count?.[k];
+    if (String(claimed) !== String(v)) stops.push(`probe-register.json _count.${k} says ${claimed}; probes[] gives ${v}.`);
+  }
+  line(`register: ${derived.probes} probe(s) — ${derived.torn_down} torn_down, ${derived.live} live, ${derived.unknown} unknown; ${derived.registered_retrospectively} registered retrospectively`);
+
+  // A probe with no teardown record is a STOP whatever the portal says. The register is the
+  // list of things that must be absent, and `unknown` means it cannot vouch for one of them.
+  for (const p of probes) if (p.teardown === 'unknown')
+    stops.push(`probe ${p.id} (${p.form}) has teardown "unknown" — seeded with no teardown record. Read the portal for it and either tear it down or record its absence.`);
+  for (const p of probes) if (p.teardown === 'torn_down' && !p.absence_read)
+    stops.push(`probe ${p.id} (${p.form}) claims torn_down and records no absence_read. A delete response is not evidence of absence.`);
+
+  // DIRECTION 1 — every probe the register calls gone must be gone, read one id at a time.
+  // Pagination would answer "not in the list", which a lagging index can also produce; a direct
+  // object read cannot be satisfied by a stale index.
+  let checked = 0, resurrected = 0;
+  for (const p of probes) {
+    if (p.teardown !== 'torn_down') continue;
+    checked++;
+    let present = false, status = null;
+    try { await hs(`/crm/v3/objects/contacts/${p.id}`); present = true; }
+    catch (e) { status = e.status; }
+    if (present) { resurrected++; stops.push(`probe ${p.id} (${p.form}) is recorded torn_down and IS READABLE from the portal right now. The teardown did not happen, or the record was restored.`); }
+    else if (status !== 404) stops.push(`probe ${p.id} (${p.form}) read back ${status}, which is not a 404 and is therefore not evidence of absence. An error reading the portal is not a confirmation that the record is gone.`);
+  }
+  line(`absence re-read from the portal for ${checked} torn-down probe(s): ${checked - resurrected} confirmed 404, ${resurrected} still readable`);
+
+  // DIRECTION 2 — and this is the one that bit. A synthetic contact on the portal that the
+  // register does not name is a probe nobody recorded.
+  const known = new Set(probes.map((p) => String(p.id)));
+  const synthetic = (contacts || []).filter((c) => {
+    const e = String(c.properties?.email || '').toLowerCase();
+    const n = `${c.properties?.firstname || ''} ${c.properties?.lastname || ''}`.toLowerCase();
+    return e.endsWith('@example.com') || e.includes('synthetic') || n.includes('synthetic') || n.includes('probe');
+  });
+  line(`portal holds ${contacts ? contacts.length : '(unreadable)'} contact(s); ${synthetic.length} look synthetic`);
+  for (const c of synthetic) {
+    const tag = known.has(String(c.id)) ? 'REGISTERED' : 'UNREGISTERED';
+    line(`  ${tag}  ${c.id}  ${c.properties?.email || '(no email)'}`);
+    if (!known.has(String(c.id)))
+      stops.push(`contact ${c.id} (${c.properties?.email || 'no email'}) looks synthetic and appears in no row of ${REGISTER}. A probe nobody recorded is exactly the 242795652507 case. Register it, then tear it down.`);
+  }
+  if (!synthetic.length) line('  none — no contact on this portal matches the synthetic signature.');
+}
+
+if (stops.length) {
+  line('');
+  console.error(`PRE-FLIGHT STOP — ${stops.length} probe-register problem(s):`);
+  for (const s of stops) console.error(`  ${s}`);
+  process.exit(3);
+}
+line('');
+line('probe register: every recorded probe re-read from the portal and confirmed absent, and every synthetic-looking contact on the portal is a registered probe.');
