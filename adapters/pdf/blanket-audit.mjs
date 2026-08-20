@@ -1143,7 +1143,7 @@ export const COMPLETENESS = [
   // total lines in the totals file. A row declared once would leave one branch of the printed
   // conditional unverified on every filled form while the transcript read clean, which is the
   // exact failure the two-line construct exists to prevent.
-  C({ id: 'K-23', match: /Each of the three rows is declared as TWO predicated lines/,
+  C({ id: 'K-23', match: /Each of the three rows is declared as TWO predicated lines|each declared as TWO predicated lines/,
     kind: 'counter',
     universe: { scoped_to: 'form', detail: 'the slots of the 4ac_vehicles group in THIS map',
       // THE INDEX IS TAKEN FROM THE BRACKETS, not by stripping non-digits: the group name
@@ -1166,7 +1166,94 @@ export const COMPLETENESS = [
       return { universe: slots, covered: covered.length, universeList: rows.map((i) => `4ac_vehicles[${i}]`), uncoveredList: rows.filter((i) => byRow.get(i) !== 2).map((i) => `4ac_vehicles[${i}] declares ${byRow.get(i) || 0} predicated line(s), expected 2`) };
     } }),
 
+  // ── 433-B(OIC) slice 3: the pages 4, 5 and 6 completeness claims ─────────────────────
+
+  // "This slice binds 94 fields ... All 94 are bound and none is deferred or never-autofill."
+  // Universe: the widgets the PDF draws on pages 4, 5 and 6. Covered: those the map binds.
+  // It is the [K-18] claim on the pages that close the map, and it is the sentence that makes
+  // partition_unaccounted 0 mean something: the partition is arithmetic over declared figures,
+  // this counts the widgets.
+  C({ id: 'K-25', match: /All \d+ are bound(?: and none is deferred)?/,
+    kind: 'counter',
+    what: 'every widget the PDF draws on pages 4, 5 and 6 is bound by this map',
+    universe: { scoped_to: 'page', detail: 'the widgets the PDF draws on pages 4, 5 and 6 — the three pages slice 3 authored',
+      admits: (m, ctx) => [4, 5, 6].includes(ctx.pageOf.get(m)) },
+    count: (ctx) => {
+      const targets = new Set(walkTargets(ctx.mapDoc).map(t => t.target));
+      const on456 = (ctx.widgets || []).filter(w => w.page >= 4 && w.page <= 6);
+      // AN EMPTY UNIVERSE IS A DEAD COUNTER, NOT A SATISFIED ONE — [K-18]'s lesson, applied.
+      if (!on456.length) return { universe: 0, covered: 0, universeList: [], fail: 'no widget was read on pages 4, 5 or 6, so "all 94 are bound" is unchecked rather than true' };
+      return { universe: on456.length, covered: on456.filter(w => targets.has(w.name)).length,
+        universeList: on456.map(w => w.name),
+        uncoveredList: on456.filter(w => !targets.has(w.name)).map(w => w.name) };
+    } }),
+
+  // "All 9 ticks are bound by RECT, top to bottom" — the page-6 attachment list, whose leaf
+  // numbering is not its printed order. Universe: the checkboxes the PDF draws in the
+  // attachment column, x 47.6, which is where all nine sit and where nothing else does.
+  C({ id: 'K-26', match: /All \d+ ticks are bound(?: by RECT)?/,
+    kind: 'counter',
+    what: 'every attachment tick the PDF draws on page 6 is bound by this map as a check_here target',
+    universe: { scoped_to: 'page', detail: 'the checkbox widgets the PDF draws on page 6 whose left edge is the attachment column x 47.6',
+      admits: (m, ctx) => { const w = (ctx.widgets || []).find(x => x.name === m); return !!w && w.page === 6 && w.type === 'PDFCheckBox' && Math.abs(w.rect[0] - 47.6) < 0.05; } },
+    count: (ctx) => {
+      const ticks = Object.values(ctx.mapDoc.check_here || {}).map(v => v && v.target).filter(Boolean);
+      const bound = new Set(ticks);
+      const col = (ctx.widgets || []).filter(w => w.page === 6 && w.type === 'PDFCheckBox' && w.rect && Math.abs(w.rect[0] - 47.6) < 0.05);
+      if (!col.length) return { universe: 0, covered: 0, universeList: [], fail: 'no checkbox on page 6 starts at x 47.6 — the counter could not see its universe, so "all nine ticks are bound" is unproved rather than true. Either the geometry stopped being read or the form was re-laid out.' };
+      return { universe: col.length, covered: col.filter(w => bound.has(w.name)).length,
+        universeList: col.map(w => w.name),
+        uncoveredList: col.filter(w => !bound.has(w.name)).map(w => w.name) };
+    } }),
+
+  // "EIGHTEEN of page 4's thirty cells are money cells in the marker column and every one is
+  // bound by BAND CONTAINMENT of its printed marker." Two claims in one sentence and the
+  // counter checks the strong one: not that the cells are bound, but that each is bound AND
+  // its rect contains the baseline of a printed marker. A binding that lost its marker would
+  // still be a binding; it would stop being EVIDENCE, which is what this block is.
+  C({ id: 'K-27', match: /every marker-column cell on page 4 is bound/,
+    kind: 'counter',
+    what: 'every widget the PDF draws in page 4\'s marker column is bound by this map AND contains the baseline of a printed line marker',
+    universe: { scoped_to: 'page', detail: 'the widgets the PDF draws on page 4 whose left edge is the marker column x 471.6',
+      admits: (m, ctx) => { const w = (ctx.widgets || []).find(x => x.name === m); return !!w && w.page === 4 && Math.abs(w.rect[0] - 471.6) < 0.05; } },
+    count: (ctx) => {
+      const targets = new Set(walkTargets(ctx.mapDoc).map(t => t.target));
+      const col = (ctx.widgets || []).filter(w => w.page === 4 && w.rect && Math.abs(w.rect[0] - 471.6) < 0.05);
+      if (!col.length) return { universe: 0, covered: 0, universeList: [], fail: 'no widget on page 4 starts at x 471.6 - the counter could not see its universe, so "every one is bound" is unproved rather than true.' };
+      const marks = (ctx.markers || { rows: [] }).rows.filter(r => r.page === 4 && r.kind === 'line');
+      const ok = (w) => targets.has(w.name) && marks.some(r => r.y >= w.rect[1] && r.y <= w.rect[3] && w.rect[0] >= r.x2);
+      return { universe: col.length, covered: col.filter(ok).length,
+        universeList: col.map(w => w.name),
+        uncoveredList: col.filter(w => !ok(w)).map(w => `${w.name} (${targets.has(w.name) ? 'bound, no marker in its band' : 'not bound'})`) };
+    } }),
+
+  // "Six pairs ... Each pair is bound to the question printed ABOVE it with nothing between."
+  // Universe: the checkboxes the PDF draws in page 6's Yes/No column - x 36.0 and x 72.0, which
+  // is where all twelve sit and where the nine attachment ticks (x 47.6) do not.
+  C({ id: 'K-28', match: /every Yes\/No-column checkbox on page 6 is bound/,
+    kind: 'counter',
+    what: 'every checkbox the PDF draws in page 6\'s Yes/No column is bound by this map as one half of a declared pair',
+    universe: { scoped_to: 'page', detail: 'the checkbox widgets the PDF draws on page 6 whose left edge is x 36.0 or x 72.0 - the Yes/No column, which the attachment ticks at x 47.6 are not in',
+      admits: (m, ctx) => { const w = (ctx.widgets || []).find(x => x.name === m); return !!w && w.page === 6 && w.type === 'PDFCheckBox' && (Math.abs(w.rect[0] - 36.0) < 0.3 || Math.abs(w.rect[0] - 72.0) < 0.3); } },
+    count: (ctx) => {
+      const paired = new Set();
+      for (const [k, v] of Object.entries(ctx.mapDoc.checkboxes || {})) {
+        if (k.startsWith('_') || !v || typeof v !== 'object') continue;
+        for (const [ok2, t] of Object.entries(v)) if (!ok2.startsWith('_') && typeof t === 'string') paired.add(t);
+      }
+      const col = (ctx.widgets || []).filter(w => w.page === 6 && w.type === 'PDFCheckBox' && w.rect
+        && (Math.abs(w.rect[0] - 36.0) < 0.3 || Math.abs(w.rect[0] - 72.0) < 0.3));
+      if (!col.length) return { universe: 0, covered: 0, universeList: [], fail: 'no checkbox on page 6 sits in the Yes/No column at x 36.0 or x 72.0 - the counter could not see its universe.' };
+      return { universe: col.length, covered: col.filter(w => paired.has(w.name)).length,
+        universeList: col.map(w => w.name),
+        uncoveredList: col.filter(w => !paired.has(w.name)).map(w => w.name) };
+    } }),
+
   // ── the families that are NOT coverage claims ──────────────────────────────────────────
+  C({ id: 'K-93', match: /every page-5 binding rests on a caption plus a second witness/,
+    kind: 'not-coverage',
+    reason: 'A NEGATIVE CLAIM ABOUT WHAT THE PAGE DRAWS, not that a set has been covered. "Page 5 draws no line marker at all, so nothing here is bound by a number" says there is nothing of a kind - and a set of size zero has no covered half to count, only an existence to check. What checks it is count-sweep [S-32], which derives the marker count for page 5 from line-markers.mjs on every run and requires the block\'s own sentence - "finds 3 markers on page 5 and every one of them is a BOX marker" - to agree with the instrument. The POSITIVE half of the same paragraph, that every page-5 binding names two witnesses, is enumerated in the paragraph itself: nine keys, nine captions, nine second witnesses, each named.' }),
+
   C({ id: 'K-90', match: null, kind: 'not-coverage', appliesTo: 'geometry',
     reason: 'A QUANTIFIER OVER GEOMETRY, NOT OVER COVERAGE. "all sit under y 668", "each holds exactly one cell", "every printed instance sits in the same block" — these describe where the page draws things. They assert nothing about a set having been checked, so there is no covered set to count and a counter would be counting the wrong thing. What DOES check them is the coordinate half of the forward-reference register: align-block.mjs and verify-headings.mjs re-measure every coordinate these phrases quote, and that proof runs above.' }),
 

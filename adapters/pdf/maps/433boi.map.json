@@ -4,7 +4,7 @@
  "catalog": "55897B",
  "pdf": "adapters/pdf/forms/f433boi.pdf",
  "fields_source": "adapters/pdf/maps/433boi.fields.json",
- "slice": "SLICE 2 - pages 1, 2 and 3. Pages 4 through 6 are unauthored and counted as unaccounted in _partition.",
+ "slice": "Slices 1, 2 and 3 — pages 1 to 6. THE MAP IS CLOSED.",
  "map_version": 2,
  "authored_from": "THE PRINTED PAGE, read with adapters/pdf/align-block.mjs 433boi 1. Not one binding on this page was taken from an AcroForm leaf name, and on this form that is not a formality: adapters/pdf/maps/433boi.lineage-433aoi.json found three leaf names that are honest on one page of this document and false on another page of the same document. Slice 2 adds pages 2 and 3, where the FIRST admissible basis - a determinate marker pairing - IS available: adapters/pdf/line-markers.mjs draws 10 markers on page 2 and 9 on page 3, (1a) through (2) and (3a) through (4). Every money total on these pages is bound against its printed marker by RECTANGLE CONTAINMENT, and every non-money cell against a printed caption whose x1 equals the widget x0. Four cells on these pages are bound AGAINST their leaf names; each is named in _the_four_names_that_lie_on_pages_2_and_3.",
  "_the_condition_that_governs_page_1": {
@@ -62,7 +62,61 @@
   "s2_3c_property_from_attachment": "topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Value_Property_Attached[0]",
   "s2_3_total_real_estate": "topmostSubform[0].F433-B-OIC_Page3[0].TotalRealEstate[0].Total_Real_Estate[0]",
   "s2_4d_vehicles_from_attachment": "topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles_Attached[0]",
-  "s2_4_total_vehicles": "topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles[0]"
+  "s2_4_total_vehicles": "topmostSubform[0].F433-B-OIC_Page3[0].Total_Value_Vehicles[0]",
+  "s3_equipment_from_attachment": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_Equipment_Attached[0]",
+  "s3_total_all_business_equipment": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_All_Business_Equipment[0]",
+  "s3_box_a_available_equity_in_assets": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Available_Equity_In_Assets[0]",
+  "s3_income_period_beginning": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].PeriodProvidedBegining[0]",
+  "s3_income_period_through": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Through[0]",
+  "s3_6_gross_receipts": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Gross_Receipts[0]",
+  "s3_7_gross_rental_income": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Gross_Rental_Income[0]",
+  "s3_8_interest_income": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Interest_Income[0]",
+  "s3_9_dividends": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Dividends[0]",
+  "s3_10_other_income": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Other_Income[0]",
+  "s3_box_b_total_business_income": "topmostSubform[0].F433-B-OIC_Page4[0].Section3[0].Total_Business_Income[0]",
+  "s4_expense_period_beginning": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].PeriodProvidedBegining[0]",
+  "s4_expense_period_through": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Through[0]",
+  "s4_11_materials_purchased": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Materials_Purchased[0]",
+  "s4_12_inventory_purchased": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Inventory_Purchased[0]",
+  "s4_13_gross_wages_and_salaries": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Gross_Wages_Salaries[0]",
+  "s4_14_rent": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Rent[0]",
+  "s4_15_supplies": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Supplies[0]",
+  "s4_16_utilities_telephones": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Utilities_Telephones[0]",
+  "s4_17_vehicle_costs": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Vehicle_Costs[0]",
+  "s4_18_insurance": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Insurance[0]",
+  "s4_19_current_taxes": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Current_Taxes[0]",
+  "s4_20_other_expenses": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Other_Expenses[0]",
+  "s4_box_c_total_business_expenses": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Total_Business_Expenses[0]",
+  "s4_box_d_remaining_monthly_income": "topmostSubform[0].F433-B-OIC_Page4[0].Section4[0].Remaining_Monthly_Income[0]",
+  "s5_box_d_for_12_month_multiplier": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].BoxD1[0].Total_Box_D_1[0]",
+  "s5_box_e_future_remaining_income": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].Box_E_Future_Remaining_Income[0]",
+  "s5_box_d_for_24_month_multiplier": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].BoxD2[0].Total_Box_D_2[0]",
+  "s5_box_f_future_remaining_income": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].Box_H_Future_Remaining_Income[0]",
+  "s5_amount_from_box_a": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].BoxA[0].Amount_Box_A[0]",
+  "s5_amount_from_box_e_or_box_f": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].BoxEF[0].Amount_Box_E_or_Box_F[0]",
+  "s5_offer_amount": "topmostSubform[0].F433-B-OIC_Page5[0].Section5[0].Offer_Amount[0]",
+  "s6_bankruptcy_date_filed": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Date_Filed[0]",
+  "s6_bankruptcy_date_dismissed_or_discharged": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Date_Dismissed_Discharged[0]",
+  "s6_bankruptcy_petition_no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Petition_No[0]",
+  "s6_bankruptcy_location_filed": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Location_Filed[0]",
+  "s6_affiliations_name_and_ein": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].List_Name_EIN[0]",
+  "s6_litigation_location_of_filing": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Name_Creditor[0]",
+  "s6_litigation_represented_by": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Name_Creditor[1]",
+  "s6_litigation_docket_case_number": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Date_Final_Payment[0]",
+  "s6_litigation_possible_completion_date": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Name_Creditor[2]",
+  "s6_litigation_subject": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Name_Creditor[3]",
+  "s6_litigation_amount_in_dispute": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].tab_order[1].Gross_Receipts[0]",
+  "s6_irs_litigation_tax_types_and_periods": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].Date_Type_Asset_Transferred[0]",
+  "s6_asset_transfer_date_value_and_type": "topmostSubform[0].F433-B-OIC_Page6[0].Date_Type_Asset_Transferred[0]",
+  "s6_real_property_transfer_type_value_date": "topmostSubform[0].F433-B-OIC_Page6[0].ifyes[0]",
+  "s6_assets_outside_us_description_location_value": "topmostSubform[0].F433-B-OIC_Page6[0].ifyes[1]",
+  "s6_funds_held_in_trust_amount": "topmostSubform[0].F433-B-OIC_Page6[0].Funds_Held_Trust[0]",
+  "s6_funds_held_in_trust_where": "topmostSubform[0].F433-B-OIC_Page6[0].Where_Funds_Held[0]",
+  "s6_line_of_credit_limit": "topmostSubform[0].F433-B-OIC_Page6[0].Credit_Limit[0]",
+  "s6_line_of_credit_amount_owed": "topmostSubform[0].F433-B-OIC_Page6[0].Amount_Owed[0]",
+  "s6_line_of_credit_property_securing": "topmostSubform[0].F433-B-OIC_Page6[0].Property_Secure_Line_Credit[0]",
+  "s7_signer_title": "topmostSubform[0].F433-B-OIC_Page6[0].Title[0]",
+  "s7_date_signed": "topmostSubform[0].F433-B-OIC_Page6[0].Date_Signed[0]"
  },
  "_map_evidence": {
   "_why": "The printed caption and the widget rectangle that justify each scalar above, so a binding can be re-checked against the page without re-deriving it. Coordinates are PDF user space from adapters/pdf/page-geometry.mjs; y ascends up the page. `caption` is drawn text quoted verbatim. `witness` names WHY the pairing is determinate, because page 1 offers no line marker to pair against.",
@@ -202,6 +256,86 @@
    "_printed": "Question \"Is your real property currently for sale or do you anticipate selling your real property to fund the offer amount\" y 692.5 x 36.0..417.5. \"Yes\" y 678.1 x 50.4..64.2 with its box at y 675.9 x 36.0..45.0; \"No\" y 678.1 x 208.8..219.0 with its box at y 675.9 x 194.4..203.4, and the listing-price cell between them.",
    "_witness": "BOX LEFT OF WORD BY 5.4pt BOTH TIMES (45.0 -> 50.4, and 203.4 -> 208.8). The subform is named ForSale and the printed question does ask whether the property is for sale, so the name agrees with the page here - checked, not assumed, and recorded as agreement rather than relied on.",
    "_the_leaf_names_are_page_2_style_on_page_3": "CB2_15 and CB2_16 are drawn on PAGE 3 and numbered in the CB2_ series. Page 2's own boxes run CB2_01..CB2_06 then C2_07..C2_28, so CB2_15/CB2_16 collide numerically with page 2's C2_15/C2_16 while living under a different page subform. Recorded because a reader scanning leaf names for \"which page is this box on\" would place these two on page 2. Their full paths differ - F433-B-OIC_Page3[0] against F433-B-OIC_Page2[0] - and every target in this map is a full path, so nothing here is ambiguous; it is the reading of the name that is."
+  },
+  "s6_currently_in_bankruptcy": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_01[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_02[0]",
+   "_printed": "Question \"Is the business currently in bankruptcy\" y 397.3, x 36.0..172.1. \"Yes\" y 379.3, x 50.4..64.2 with its box at rect [36.0, 377.1, 45.0, 386.1]; \"No\" y 379.3, x 86.4..96.6 with its box at rect [72.0, 377.1, 81.0, 386.1].",
+   "_witness": "BOX LEFT OF WORD BY 5.4pt BOTH TIMES (45.0 -> 50.4 and 81.0 -> 86.4). The same convention slice 1 established on this form, measured per pair rather than carried across."
+  },
+  "s6_filed_bankruptcy_past_10_years": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_03[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_04[0]",
+   "_printed": "Question \"Has the business filed bankruptcy in the past 10 years\" y 364.9, x 36.0..227.6. \"Yes\" y 350.5, x 50.4..64.2 with its box at rect [36.0, 348.3, 45.0, 357.3]; \"No\" y 350.5, x 87.0..97.2 with its box at rect [72.0, 348.3, 81.0, 357.3].",
+   "_witness": "Box left of word by 5.4pt on the Yes and 6.0pt on the No - the ONLY pair on these three pages where the two gaps differ, because the printed \"No\" on this line starts at 87.0 rather than 86.4. Stated because a constant-gap rule would have to explain it; the pairing rests on the boxes being the only two below y 364.9 and above y 336.4, and on each sitting on its word's own baseline band."
+  },
+  "s6_other_business_affiliations": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_05[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_06[0]",
+   "_printed": "Question \"Does this business have other business affiliations\" y 292.9, x 36.0..214.7 with \"(e.g., subsidiary or parent companies)\" x 217.0..334.5. \"Yes\" y 278.5, x 50.4..64.2 with its box at rect [36.0, 276.3, 45.0, 285.3]; \"No\" y 278.5, x 86.4..96.6 with its box at rect [72.0, 276.3, 81.0, 285.3].",
+   "_witness": "Box left of word by 5.4pt both times."
+  },
+  "s6_related_parties_owe_money": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_07[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_08[0]",
+   "_printed": "Question \"Do any related parties\" y 238.9, x 36.0..114.3, \"(e.g., partners, officers, employees)\" x 116.5..242.3, \"owe money to the business\" x 244.5..341.5. \"Yes\" y 224.5, x 50.4..64.2 with its box at rect [36.0, 222.3, 45.0, 231.3]; \"No\" y 224.5, x 86.4..96.7 with its box at rect [72.0, 222.3, 81.0, 231.3].",
+   "_witness": "Box left of word by 5.4pt both times. The question is drawn as THREE runs on one baseline and the middle one is the parenthetical, so the question reads around it - recorded because a nearest-neighbour reading would offer \"(e.g., partners, officers, employees)\" as the caption."
+  },
+  "s6_party_to_litigation": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_09[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_10[0]",
+   "_printed": "Question \"Is the business currently, or in the past, party to litigation\" y 210.1, x 36.0..235.6. \"Yes\" y 195.7, x 50.4..64.2 with its box at rect [36.0, 193.5, 45.0, 202.5]; \"No\" y 195.7, x 86.4..96.6 with its box at rect [72.0, 193.5, 81.0, 202.5].",
+   "_witness": "Box left of word by 5.4pt both times. This is the question the whole litigation block below it is conditional on - see _computed."
+  },
+  "s6_litigation_role": {
+   "plaintiff": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].tab_order[0].CB3_05[0]",
+   "defendant": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].tab_order[0].CB3_06[0]",
+   "_printed": "\"If yes,\" y 181.3, x 36.0..58.7 with \"answer the following\" x 60.9..133.4. \"Plaintiff\" y 166.9, x 50.4..76.6 with its box at rect [36.0, 164.7, 45.0, 173.7]; \"Defendant\" y 152.5, x 50.4..87.3 with its box at rect [36.0, 150.3, 45.0, 159.3].",
+   "_witness": "BAND CONTAINMENT, NOT THE BOX-LEFT-OF-WORD GAP. These two boxes are stacked vertically, one word each, so the gap rule that pairs a Yes with a No side by side says nothing here. Each word's baseline lies strictly inside its box's rect span: 166.9 in [164.7, 173.7] and 152.5 in [150.3, 159.3]. The two are also the only two checkboxes on the page below y 181.3 and above y 109.3.",
+   "_not_a_yes_no_pair": "It is a two-option ROLE set, and 433-A(OIC) holds the identical construct at s9_litigation_role on the same leaf names under the same tab_order[0] subform. Declared exclusive for the same reason: the block describes one litigation and the page offers two roles for it."
+  },
+  "s6_party_to_irs_litigation": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_11[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_12[0]",
+   "_printed": "Question \"Are you or have you been party to litigation involving the IRS/United States\" y 109.3, x 36.0..300.6 with \"(including any tax litigation)\" x 302.8..387.2. \"Yes\" y 94.9, x 49.5..63.3 with its box at rect [36.0, 92.7, 45.0, 101.7]; \"No\" y 94.9, x 86.4..96.6 with its box at rect [72.0, 92.7, 81.0, 101.7].",
+   "_witness": "Box left of word by 4.5pt on the Yes and 5.4pt on the No. The Yes on this line is drawn at 49.5 where every other Yes on the page is at 50.4, which is why the gap is measured per pair on this form and never carried.",
+   "_same_leaf_names_on_page_6": "C5_11 and C5_12 are ALSO drawn on page 6, on the asset-transfer question. Different page subform, different question, and both are bound by full path. See _the_names_that_lie_on_pages_4_to_6.C5_11_and_C5_12_appear_on_both_pages."
+  },
+  "s6_transferred_asset_under_value_past_10_years": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].C5_11[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].C5_12[0]",
+   "_printed": "Question \"In the past 10 years, has the business transferred any asset with a fair market value of more than $10,000, including real property, for less than its full\" y 733.3, x 36.0..564.7 wrapping to \"value\" y 723.7, x 36.0..55.1. \"Yes\" y 710.5, x 50.4..64.2 with its box at rect [36.0, 708.3, 45.0, 717.3]; \"No\" y 710.5, x 86.4..96.6 with its box at rect [72.0, 708.3, 81.0, 717.3].",
+   "_witness": "Box left of word by 5.4pt both times."
+  },
+  "s6_transferred_real_property_past_3_years": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].CB7_yes[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].CB7_no[0]",
+   "_printed": "Question \"In the past 3 years have you transferred any real property\" y 670.9, x 36.0..239.7 with \"(land, house, etc.)\" x 241.9..297.9. \"Yes\" y 656.5, x 50.6..64.4 with its box at rect [36.2, 654.3, 45.2, 663.3]; \"No\" y 656.5, x 86.4..96.6 with its box at rect [72.0, 654.3, 81.0, 663.3].",
+   "_witness": "Box left of word by 5.4pt both times. This pair and the one at rect y 571.5..580.5 are the SAME FIELD drawn twice - CB7_yes[0] and CB7_yes[1] - and the widget index runs in printed order here, which is checked rather than assumed."
+  },
+  "s6_located_outside_us_6_months": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].C5_13[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].C5_14[0]",
+   "_printed": "Question \"Has the business been located outside the U.S. for 6 months or longer in the past 10 years\" y 616.9, x 36.0..357.1. \"Yes\" y 602.5, x 50.4..64.2 with its box at rect [36.0, 600.3, 45.0, 609.3]; \"No\" y 602.5, x 86.4..96.6 with its box at rect [72.0, 600.3, 81.0, 609.3].",
+   "_witness": "Box left of word by 5.4pt both times. THIS QUESTION HAS NO FOLLOW-UP CELL: the page prints no \"If yes\" line beneath it, and the next thing drawn is the next question at y 588.1. Stated because every other Yes/No on page 6 except the lines-of-credit pair does have one."
+  },
+  "s6_assets_or_real_property_outside_us": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].CB7_yes[1]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].CB7_no[1]",
+   "_printed": "Question \"Do you have any assets or own any real property outside the U.S.\" y 588.1, x 36.0..269.0. \"Yes\" y 573.7, x 50.4..64.2 with its box at rect [36.0, 571.5, 45.0, 580.5]; \"No\" y 573.7, x 86.4..96.6 with its box at rect [72.0, 571.5, 81.0, 580.5].",
+   "_witness": "Box left of word by 5.4pt both times. The second widget of the CB7 pair; its follow-up cell is ifyes[1] at rect [36.0, 543.6, 576.0, 557.3] under \"If yes, please provide description, location, and value\" y 560.3."
+  },
+  "s6_funds_held_in_trust": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].C5_15[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].C5_16[0]",
+   "_printed": "Question \"Does the business have any funds being held in trust by a third party\" y 534.1, x 36.0..278.8. \"Yes\" y 519.5, x 50.4..64.2 with its box at rect [36.0, 517.5, 45.0, 526.5]; \"No\" y 519.5, x 86.4..96.6 with its box at rect [72.0, 517.5, 81.0, 526.5].",
+   "_witness": "Box left of word by 5.4pt both times. THE FOLLOW-UP IS ON THE SAME BASELINE AS THE Yes/No, not below it: \"If yes, how much $\" y 519.6, x 111.6..178.3 and \"Where\" y 519.6, x 248.4..272.0, with their cells at rect [183.6, 517.0, 244.8, 529.2] and [277.2, 517.0, 576.0, 529.2]. Each cell is paired by NEAREST-LEFT ON ITS OWN ROW - the caption ends at 178.3 and the cell starts at 183.6; the second ends at 272.0 and its cell starts at 277.2 - a 5.2pt and a 5.2pt gap, and no other run lies between."
+  },
+  "s6_lines_of_credit": {
+   "yes": "topmostSubform[0].F433-B-OIC_Page6[0].C5_17[0]",
+   "no": "topmostSubform[0].F433-B-OIC_Page6[0].C5_18[0]",
+   "_printed": "Question \"Does the business have any lines of credit\" y 505.3, x 36.0..185.8. \"Yes\" y 490.7, x 50.4..64.2 with its box at rect [36.0, 488.7, 45.0, 497.7]; \"No\" y 490.7, x 86.4..96.6 with its box at rect [72.0, 488.7, 81.0, 497.7].",
+   "_witness": "Box left of word by 5.4pt both times. Same same-baseline follow-up shape as the trust question: \"If yes, credit limit $\" y 490.8, x 111.6..177.8 over a cell at rect [183.6, 488.2, 244.8, 500.4]; \"Amount owed $\" y 490.8, x 248.4..304.0 over a cell at rect [306.0, 488.2, 396.0, 500.4]. Then a THIRD cell on the row below: \"What property secures the line of credit\" y 476.4, x 111.6..250.8 with its cell at rect [259.2, 473.8, 576.0, 486.0], paired by nearest-left on that row."
   }
  },
  "check_here": {
@@ -210,7 +344,54 @@
    "_printed": "\"Check here if you are the only employee\" y 416.1, x 162.0..305.2, with its box at y 415.4, x 147.6..157.6.",
    "_witness": "Box drawn to the LEFT of its caption by 4.4pt (157.6 -> 162.0), the same convention as both Yes/No pairs above. It sits inside the subform EmployeesNumber[0] alongside Total_Number_Employees[0], and the two are told apart by left edge: the text cell shares x 126.0 with the caption ABOVE it, this box sits 4.4pt LEFT of the caption BESIDE it. Two different conventions on one row, both read from the page.",
    "_why_check_here_and_not_a_checkbox_pair": "The form prints no companion box. There is no \"not the only employee\" cell, so the construct is a single self-describing tick and belongs in check_here, which is the class this repo uses for exactly that."
-  }
+  },
+  "s7_attach_profit_and_loss": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_01[0]",
+   "_printed": "A current Profit and Loss statement covering at least the most recent 6-12 month period, if appropriate.",
+   "_at": "bullet baseline y 356.5, x 64.8..476.0; tick rect [47.6, 355.0, 57.6, 365.0]"
+  },
+  "s7_attach_bank_and_investment_statements": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_02[0]",
+   "_printed": "Copies of the six most recent complete bank statements for each business account and copies of the three most recent statements for each investment account.",
+   "_at": "bullet baselines y 342.1, x 64.8..539.0 and y 331.3, x 64.8..226.4; tick rect [47.6, 340.6, 57.6, 350.6]"
+  },
+  "s7_attach_collateral_loan_statements": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_03[0]",
+   "_printed": "If an asset is used as collateral on a loan, include copies of the most recent statement from lender(s) on loans, monthly payments, loan payoffs, and balances.",
+   "_at": "bullet baselines y 316.9, x 64.8..537.5 and y 306.1, x 64.8..218.4; tick rect [47.6, 315.4, 57.6, 325.4]"
+  },
+  "s7_attach_accounts_and_notes_receivable": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_04[0]",
+   "_printed": "Copies of the most recent statement of outstanding accounts and notes receivable.",
+   "_at": "bullet baseline y 291.7, x 64.8..395.0; tick rect [47.6, 290.2, 57.6, 300.2]"
+  },
+  "s7_attach_digital_asset_records": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].heldDigitalAssets[0]",
+   "_printed": "Copies of all documents and records showing currently held digital assets.",
+   "_at": "bullet baseline y 277.3, x 64.8..359.9; tick rect [47.6, 275.8, 57.6, 285.8]"
+  },
+  "s7_attach_lender_and_mortgage_statements": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_05[0]",
+   "_printed": "Copies of the most recent statements from lenders on loans, mortgages (including second mortgages), monthly payments, loan payoffs, and balances.",
+   "_at": "bullet baselines y 262.9, x 64.8..571.0 and y 252.1, x 64.8..154.9; tick rect [47.6, 261.4, 57.6, 271.4]"
+  },
+  "s7_attach_special_circumstances": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_06[0]",
+   "_printed": "Copies of relevant supporting documentation of special circumstances described in the Section 3 on Form 656, if applicable.",
+   "_at": "bullet baseline y 237.7, x 64.8..558.5; tick rect [47.6, 236.2, 57.6, 246.2]"
+  },
+  "s7_attach_form_2848": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_09[0]",
+   "_printed": "Attach a Form 2848, Power of Attorney and Declaration of Representative, if you would like your attorney, CPA, or enrolled agent to represent you and you do not have a current form on file with the IRS. Ensure all years and forms involved in your offer are listed on Form 2848 and include the current tax year.",
+   "_at": "bullet baselines y 223.3 (two runs, x 64.8..146.3 and x 148.8..553.5), y 212.5 and y 201.7; tick rect [47.6, 221.8, 57.6, 231.8]"
+  },
+  "s7_attach_form_656": {
+   "target": "topmostSubform[0].F433-B-OIC_Page6[0].CB8_08[0]",
+   "_printed": "Completed and current signed Form 656.",
+   "_at": "bullet baseline y 187.3, x 64.8..228.9; tick rect [47.6, 185.8, 57.6, 195.8]"
+  },
+  "_the_nine_attachment_ticks_are_bound_by_rect_not_by_number": "THE LEAF NUMBERING IS NOT THE PRINTED ORDER. Top to bottom the nine are CB8_01, CB8_02, CB8_03, CB8_04, heldDigitalAssets, CB8_05, CB8_06, CB8_09, CB8_08 - no CB8_07 exists on this form, the digital-asset tick is named rather than numbered and sits fifth, and CB8_09 is drawn ABOVE CB8_08. Each is paired with the bullet whose FIRST baseline lies inside the tick's rect span, and every one of the nine pairs that way with no tie-break: 356.5 in [355.0, 365.0], 342.1 in [340.6, 350.6], 316.9 in [315.4, 325.4], 291.7 in [290.2, 300.2], 277.3 in [275.8, 285.8], 262.9 in [261.4, 271.4], 237.7 in [236.2, 246.2], 223.3 in [221.8, 231.8], 187.3 in [185.8, 195.8]. Every tick shares one left edge, x 47.6, and every bullet one, x 64.8, so x settles nothing here and the y band settles all nine.",
+  "_why_nine_ticks_and_not_one_set": "Each is a lone tick with no companion box: the page offers no \"not attached\" cell. Same class as s1_only_employee on page 1, and the same class as the fourteen attachment ticks on 433-A(OIC) page 8."
  },
  "exclusive": {
   "s1_federal_contractor": [
@@ -233,13 +414,150 @@
   "s2_real_property_for_sale": [
    "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_15[0]",
    "topmostSubform[0].F433-B-OIC_Page3[0].ForSale[0].CB2_16[0]"
-  ]
+  ],
+  "s6_currently_in_bankruptcy": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_01[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_02[0]"
+  ],
+  "s6_filed_bankruptcy_past_10_years": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_03[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_04[0]"
+  ],
+  "s6_other_business_affiliations": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_05[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_06[0]"
+  ],
+  "s6_related_parties_owe_money": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_07[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_08[0]"
+  ],
+  "s6_party_to_litigation": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_09[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_10[0]"
+  ],
+  "s6_litigation_role": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].tab_order[0].CB3_05[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].tab_order[0].CB3_06[0]"
+  ],
+  "s6_party_to_irs_litigation": [
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_11[0]",
+   "topmostSubform[0].F433-B-OIC_Page5[0].section_6[0].C5_12[0]"
+  ],
+  "s6_transferred_asset_under_value_past_10_years": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_11[0]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_12[0]"
+  ],
+  "s6_transferred_real_property_past_3_years": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].CB7_yes[0]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].CB7_no[0]"
+  ],
+  "s6_located_outside_us_6_months": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_13[0]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_14[0]"
+  ],
+  "s6_assets_or_real_property_outside_us": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].CB7_yes[1]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].CB7_no[1]"
+  ],
+  "s6_funds_held_in_trust": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_15[0]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_16[0]"
+  ],
+  "s6_lines_of_credit": [
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_17[0]",
+   "topmostSubform[0].F433-B-OIC_Page6[0].C5_18[0]"
+  ],
+  "_why_slice_3_adds_thirteen": "THIRTEEN SETS: 12 Yes/No pairs and 1 two-option role set. Each pair is one printed question with two printed boxes - 6 on page 5 and 6 on page 6. s6_litigation_role is the thirteenth and is exclusive for a different reason, which is stated: the block describes ONE litigation and the page offers two roles for it, the construct 433-A(OIC) already holds at s9_litigation_role on the same leaf names under the same tab_order[0] subform. The 9 attachment ticks on page 6 are NOT here - each is a lone tick with no companion box, so there is no set for it to be exclusive within, which is slice 1's reason for s1_only_employee."
  },
  "_computed": {
   "s1_payroll_provider_name_and_address": {
    "conditional_on": "s1_payroll_outsourced = \"yes\"",
    "printed_basis": "\"If yes, list provider name and address in box below\" y 438.4, x 396.2..575.8",
    "_why": "Declared rather than left to the caption. The cell is writable on the blank whatever the Yes/No pair says, so nothing in the PDF enforces the dependency; recording it here is what lets a record carrying a provider name with the answer set to \"no\" be visible as a contradiction rather than printed silently."
+  },
+  "s6_litigation_block": {
+   "conditional_on": "s6_party_to_litigation = \"yes\"",
+   "printed_basis": "\"If yes,\" y 181.3, x 36.0..58.7 with \"answer the following\" x 60.9..133.4, drawn between the Yes/No pair at y 195.7 and the first litigation header row at y 167.9.",
+   "governs": [
+    "s6_litigation_role",
+    "s6_litigation_location_of_filing",
+    "s6_litigation_represented_by",
+    "s6_litigation_docket_case_number",
+    "s6_litigation_possible_completion_date",
+    "s6_litigation_subject",
+    "s6_litigation_amount_in_dispute"
+   ],
+   "_why": "Seven cells and one exclusive set under one printed \"If yes\". Nothing in the PDF enforces the dependency - every one of them is writable on the blank whatever the pair says - so recording it here is what lets a record carrying a docket number with the answer set to \"no\" read as a contradiction rather than print silently."
+  },
+  "s6_bankruptcy_block": {
+   "conditional_on": "s6_filed_bankruptcy_past_10_years = \"yes\"",
+   "printed_basis": "\"If yes,\" y 336.4, x 36.0..58.7 with \"provide\" x 60.9..87.1, drawn between the Yes/No pair at y 350.5 and the date row at y 321.6.",
+   "governs": [
+    "s6_bankruptcy_date_filed",
+    "s6_bankruptcy_date_dismissed_or_discharged",
+    "s6_bankruptcy_petition_no",
+    "s6_bankruptcy_location_filed"
+   ],
+   "_why": "THE \"If yes\" BELONGS TO THE SECOND BANKRUPTCY QUESTION AND NOT THE FIRST. Two questions are printed above it - \"Is the business currently in bankruptcy\" y 397.3 and \"Has the business filed bankruptcy in the past 10 years\" y 364.9 - and the \"If yes\" at y 336.4 sits BELOW both, immediately under the second pair. Assigning it to the first would make a currently-bankrupt business supply a dismissal date, which the form does not ask for; the printed order settles it and is quoted rather than assumed."
+  },
+  "s6_affiliations_detail": {
+   "conditional_on": "s6_other_business_affiliations = \"yes\"",
+   "printed_basis": "\"If yes,\" y 265.1, x 36.0..58.7 with \"list the name and Employer Identification Number\" x 60.9..235.6.",
+   "governs": [
+    "s6_affiliations_name_and_ein"
+   ],
+   "_why": "One cell under one printed \"If yes\"."
+  },
+  "s6_irs_litigation_detail": {
+   "conditional_on": "s6_party_to_irs_litigation = \"yes\"",
+   "printed_basis": "\"If yes\" y 80.8, x 36.0..56.5 with \"and the litigation included tax debt, provide the types of tax and periods involved.\" x 58.7..344.6.",
+   "governs": [
+    "s6_irs_litigation_tax_types_and_periods"
+   ],
+   "_why": "The caption carries a SECOND condition of its own - \"and the litigation included tax debt\" - which the form records nowhere. Declared as one conditional on the Yes/No pair, with the second limb noted here and not invented as a field."
+  },
+  "s6_asset_transfer_detail": {
+   "conditional_on": "s6_transferred_asset_under_value_past_10_years = \"yes\"",
+   "printed_basis": "\"If yes, provide date, value, and type of asset transferred\" y 696.4, x 36.0..233.4.",
+   "governs": [
+    "s6_asset_transfer_date_value_and_type"
+   ],
+   "_why": "One cell under one printed \"If yes\"."
+  },
+  "s6_real_property_transfer_detail": {
+   "conditional_on": "s6_transferred_real_property_past_3_years = \"yes\"",
+   "printed_basis": "\"If yes, list the type of property, value, and date of the transfer\" y 643.1, x 36.0..251.2.",
+   "governs": [
+    "s6_real_property_transfer_type_value_date"
+   ],
+   "_why": "One cell under one printed \"If yes\"."
+  },
+  "s6_assets_outside_us_detail": {
+   "conditional_on": "s6_assets_or_real_property_outside_us = \"yes\"",
+   "printed_basis": "\"If yes, please provide description, location, and value\" y 560.3, x 36.0..223.6.",
+   "governs": [
+    "s6_assets_outside_us_description_location_value"
+   ],
+   "_why": "One cell under one printed \"If yes\". It belongs to the SECOND of the two outside-the-U.S. questions: the question at y 616.9 has no follow-up cell at all and the next thing drawn below its Yes/No is the next question."
+  },
+  "s6_funds_in_trust_detail": {
+   "conditional_on": "s6_funds_held_in_trust = \"yes\"",
+   "printed_basis": "\"If yes, how much $\" y 519.6, x 111.6..178.3 and \"Where\" y 519.6, x 248.4..272.0 - both on the SAME baseline as the Yes/No pair rather than below it.",
+   "governs": [
+    "s6_funds_held_in_trust_amount",
+    "s6_funds_held_in_trust_where"
+   ],
+   "_why": "Two cells under one printed \"If yes\", drawn to the right of the boxes rather than beneath them."
+  },
+  "s6_line_of_credit_detail": {
+   "conditional_on": "s6_lines_of_credit = \"yes\"",
+   "printed_basis": "\"If yes, credit limit $\" y 490.8, x 111.6..177.8, \"Amount owed $\" y 490.8, x 248.4..304.0, and \"What property secures the line of credit\" y 476.4, x 111.6..250.8.",
+   "governs": [
+    "s6_line_of_credit_limit",
+    "s6_line_of_credit_amount_owed",
+    "s6_line_of_credit_property_securing"
+   ],
+   "_why": "Three cells under one printed \"If yes\", two on the pair's own baseline and one on the row below."
   }
  },
  "groups": {
@@ -599,10 +917,41 @@
      }
     }
    ]
+  },
+  "5_business_equipment": {
+   "source": "business_equipment",
+   "max": 1,
+   "overflow": "log",
+   "row_class": {
+    "column": "asset_class",
+    "accepts": [
+     "business_property"
+    ],
+    "_why": "The shared row-shape specification has no class for business EQUIPMENT and business_property is the nearest one it holds - description, current_fmv, current_loan_balance, equity are the four columns this row prints, and all four are its. Routed here rather than left unrouted so [A2] and [A3] have something to hold this group to. Whether the specification should grow a business_equipment class, and what 433-B(OIC) contributes to it, is crosswalk work and is not decided in a slice."
+   },
+   "_printed_heading": "Other business equipment",
+   "_heading_at": "y 731.5, x 36.0..136.9, under the Section 2 (Continued) banner at y 745.9.",
+   "_printed_markers": "The single row totals to printed (5a) at y 656.5, x 444.9..468.0, whose baseline lies inside the total cell rect span 651.6..666.0.",
+   "_ONE_ROW_AND_THE_FORM_SAYS_SO_IN_WORDS": "max is 1 because the page draws one equipment row and the instruction beneath the heading says what to do with a second: \"[If you have more than one piece of equipment, please list on a separate attachment and put the total of all equipment in box (5b)]\" y 721.9, x 36.0..494.5. A record carrying two pieces of equipment overflows here and the drop is logged, which is the form's own answer and not a mapping gap.",
+   "_row_order": "One row over two baselines. The description cell spans the full width at rect [36.0, 687.6, 435.6, 703.8]; the three money cells sit at rect y 653.0..673.2 at x 43.2, 147.6 and 241.2; the total sits at rect y 651.6..666.0 in the marker column at x 471.6.",
+   "_columns_by_x": "FOUR CELLS, FOUR WITNESSES, and three of the four are settled by a printed operator INSIDE the cell's own vertical band rather than by a heading above it. \"Type of equipment\" y 707.9, x 36.0..102.3 sits 4.1pt above a cell starting at x 36.0 - left-edge identity. \"Current market value\" y 678.1, x 36.0..110.7 is the heading above the first money cell, and a bare \"$\" at y 656.7, x 37.0..41.4 lies inside that cell's span 653.0..673.2 immediately to its left (41.4 against 43.2). \"X .8 = $\" y 656.7, x 115.1..145.1 lies inside the second cell's span immediately to its left (145.1 against 147.6) and is the printed multiplier as well as the label. \"Minus loan balance\" y 678.1, x 219.6..288.5 is the heading above the third cell, and \"- $\" y 656.7, x 220.6..233.9 lies inside its span to its left (233.9 against 241.2).",
+   "_the_total_carries_a_printed_conditional_and_no_cell_records_it": "The caption over the total reads \"Total value of equipment\" y 672.7, x 348.0..435.6, then \"(if leased or used in the production of\" y 663.9, x 320.4..435.6, then \"income enter 0 as the total value) =\" y 654.7, x 325.5..435.6. That is a CONDITIONAL, and page 4 draws no checkbox anywhere - all thirty of its widgets are text fields - so nothing on this form records whether the equipment is leased or income-producing. The vehicles on page 3 print a Lease/Own pair and are therefore declared as two predicated lines; this row cannot be, and its total is declared not checkable with the reason. See adapters/pdf/maps/433boi.totals.json and _arguable_pages_4_to_6[0].",
+   "_no_row_flag": "No column of this group prints as a checkbox and none is a routing flag, so nothing here uses row_flag. The key is contested across two documents in this repo - see exclusion-sweep [EX-03] and cross-form [C-23] - and no group added by this slice uses it.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Type_Equipment[0]",
+      "current_fmv": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].CurrentMarket[0].Current_Market_Value[0]",
+      "quick_sale_value": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].CurrentMarket[0].Times_8[0]",
+      "current_loan_balance": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].LessLoan[0].Less_Loan_Balance[0]",
+      "equity": "topmostSubform[0].F433-B-OIC_Page4[0].Section2[0].Total_Value_Equipment[0]"
+     }
+    }
+   ]
   }
  },
  "_never_autofill": {
-  "_why": "EMPTY ACROSS PAGES 1, 2 AND 3, AND THAT IS STILL A FINDING RATHER THAN AN OMISSION. All 173 fields on these three pages are business data a record can supply. There is no signature block, no preparer-use box and no IRS-use cell on any of them - the form's signature block is on page 6, which this slice has not read. Checked against the enumeration: all 173 widgets are bound. 433-A(OIC) declares 5 never-autofill fields and 433-A declares 14, so an empty block here would otherwise read as a step someone forgot.",
+  "_why": "EMPTY ACROSS ALL SIX PAGES, AND AT THE CLOSE OF THE MAP THAT IS A FINDING RATHER THAN AN OMISSION. All 267 fields on this form are business data a record can supply. There is no IRS-use column, no preparer-use box and no examiner cell anywhere on it, and the one place a signature block appears - Section 7 on page 6 - draws NO widget on the signature line itself: the row carries only Title and Date_Signed, both of which a record can supply. 433-A declares 14 never-autofill fields, all of them the IRS-use column on its expense grid, and 433-A(OIC) declares 5, three of them PDFButtons over printed links. This form has neither construct. Checked against the enumeration: all 267 widgets are bound.",
   "entries": []
  },
  "_not_checkable": {
@@ -613,14 +962,14 @@
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 267,
-  "in_this_slice": 173,
-  "bound_writable": 173,
+  "in_this_slice": 267,
+  "bound_writable": 267,
   "excluded_never_autofill": 0,
   "deferred": 0,
-  "unaccounted": 94,
-  "_check": "173 + 0 + 0 = 173 — bound writable, never-autofill, deferred, and their sum is every unique target this map references, which is every field on pages 1, 2 and 3 (43 + 130). Then 267 - 173 = 94 unaccounted: pages 4, 5 and 6. page-geometry reports 30 for p4, 33 for p5 and 31 for p6, which sum to 94. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03] against the field list and the widget geometry; none is typed.",
+  "unaccounted": 0,
+  "_check": "267 + 0 + 0 = 267 - bound writable, never-autofill, deferred, and their sum is every unique target this map references, which is every field the PDF draws: 43 on page 1, 61 on page 2, 69 on page 3, 30 on page 4, 33 on page 5 and 31 on page 6. Then 267 - 267 = 0 unaccounted, and the map is closed. EVERY FIGURE IN THIS BLOCK IS DERIVED AND RE-DERIVED ON EVERY GATE RUN by adapters/pdf/count-sweep.mjs [S-01, S-02, S-03] against the field list and the widget geometry; none is typed.",
   "_why_unaccounted_is_the_word_and_not_deferred": "A FIRST DRAFT OF THIS BLOCK CALLED PAGES 2-6 `deferred` AND THE COUNT SWEEP REFUSED IT. The two words are not synonyms in this engine and the distinction is the point. `deferred` is derived by classifyMapTargets from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration. Slice 1 has read one page and says so. This map is therefore NOT CLOSED, which is worth stating because the other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; the figure falls to zero when slice 4 lands and not before.",
-  "_still_not_closed": "THE MAP IS STILL NOT CLOSED. Slice 2 has read three of six pages. The other three maps in this repo all say THE MAP IS CLOSED and a reader who skims will expect it here; `unaccounted` falls to zero when slice 4 lands and not before."
+  "_THE_MAP_IS_CLOSED": "THE MAP IS CLOSED. Slice 1 read page 1, slice 2 read pages 2 and 3, slice 3 read pages 4, 5 and 6, and `unaccounted` is 0 for the first time. The other three maps in this repo all say THE MAP IS CLOSED and this one now says it on the same terms: every field the PDF draws is bound, none is deferred, and none is declared never-autofill - which is itself unusual and is stated in _never_autofill._why rather than left to read as an omission."
  },
  "_deferred_pages": "Pages 4-6, 94 fields. Slice 3 takes pages 4 and 5 (63 fields, including the Section 6 litigation block on page 5 where Name_Creditor, Date_Final_Payment and Gross_Receipts all carry the inherited lies - see 433boi.lineage-433aoi.json and _the_four_names_that_lie_on_pages_2_and_3._the_BOTH_names_this_slice_touches). Slice 4 takes page 6, 31 fields. Nothing on those pages is bound, referenced or partly authored by this slice.",
  "_arguable_page1": [
@@ -707,7 +1056,9 @@
     "id": "B11",
     "raised": "slice 2",
     "what": "The intake lineage report reads page-3 captions downward and places two of them one row low; its verdict that RealEstate Name_Creditor is honest is wrong. Corrected in the map, not in the report. See _arguable_pages_2_and_3[1].",
-    "status": "OPEN"
+    "status": "OPEN",
+    "the_root_cause_was_found_in_prompt_41": "IT WAS NOT A READING ERROR. The lineage report quotes printed runs at their RUN TOPS - \"y=97.5\", \"y=80.2\" - where the map and the totals file quote BASELINES: 89.5 and 71.2 for the same two runs. It was authored off align-block.mjs, which printed t.y2 under a bare \"y=\" until prompt 41 commit 1. The gap is the run's own height, 8.0pt for the 8pt runs it quoted, and eight points is a row on these forms. Two instruments described the same run in two conventions and neither said which. page-geometry.mjs now declares one convention and adapters/pdf/assert-y-convention.mjs holds every tool that reports a y to it - 2,653 objects cross-checked across four forms with zero disagreements. Derived rather than asserted: of the 43 distinct y values the lineage report quotes, 19 are values the page draws only as a run top and 1 only as a baseline.",
+    "why_it_is_still_open": "The convention is fixed in the ENGINE and the correction is recorded in the MAP. What is not fixed is the lineage report itself, which is deliberate - it is the intake record and correcting it in place would erase what intake concluded - and the slice-1 and slice-2 evidence prose, which quotes coordinates in both conventions. That is [B18]."
    },
    {
     "id": "B12",
@@ -726,11 +1077,41 @@
     "raised": "slice 2",
     "what": "The digital-asset row's six column keys are caption-derived and only one matches the declared digital_asset class. See _arguable_pages_2_and_3[4].",
     "status": "OPEN"
+   },
+   {
+    "id": "B15",
+    "raised": "slice 3",
+    "what": "Line (5a) prints a conditional the form records nowhere. Declared not checkable; see _arguable_pages_4_to_6[0].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B16",
+    "raised": "slice 3",
+    "what": "The Box A copy on page 5 permits an exclusion the form records nowhere, and the one-sided check that WOULD catch an overstatement has no construct in this engine. See _arguable_pages_4_to_6[1].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B17",
+    "raised": "slice 3",
+    "what": "Sections 3 and 4 each print a note offering a route that empties the operands of Box B and Box C. Both boxes are still checked. See _arguable_pages_4_to_6[2].",
+    "status": "OPEN"
+   },
+   {
+    "id": "B18",
+    "raised": "slice 3",
+    "what": "The slice-1 and slice-2 evidence prose in this file and in 433boi.headings.json quotes coordinates in BOTH y conventions - roughly half baselines and half run tops - and nothing refuses either, because blanket-audit [K-12] checks a quoted coordinate against a set holding both. Slice 3's prose is entirely in the declared convention and _the_y_convention_in_this_file says so. Rewriting the older blocks is a change to landed evidence and gets its own commit and its own check.",
+    "status": "OPEN"
+   },
+   {
+    "id": "B19",
+    "raised": "slice 3",
+    "what": "The shared row-shape specification has no class for business EQUIPMENT. 5_business_equipment routes business_property, which is the nearest class it holds - description, current_fmv, current_loan_balance and equity are all its columns - but business_property also declares location, title_holders, purchase_date, monthly_payment, final_payment_date, lender_name_address and lender_phone, none of which this row prints. Whether the specification should grow a business_equipment class, and what 433-B(OIC) contributes to it, is crosswalk work.",
+    "status": "OPEN"
    }
   ],
   "resolved": [],
   "_count": {
-   "open": 14,
+   "open": 19,
    "resolved": 0
   }
  },
@@ -959,6 +1340,181 @@
    "the_evidence": "asset-row-shapes.json digital_asset declares type_of_digital_asset, name_of_digital_asset, email_used_to_set_up, location_of_digital_asset, amount_and_value_usd. This form prints Description of digital asset, Number of units, Location of digital asset, Account number for assets held by a custodian or broker, US dollar equivalent as of today, and a self-hosted wallet address - six facts, of which only location_of_digital_asset lands on a declared key.",
    "why_it_is_arguable": "The keys were taken from THIS FORM'S printed captions rather than bent onto the declared ones, because number_of_units and account_number_custodian_or_broker are facts the declared row has no column for and email_used_to_set_up is a fact this form does not ask. Naming them after the nearest declared key would assert a sameness the pages do not support.",
    "what_this_slice_did": "Used caption-derived keys and left the class alone. Reconciling them is crosswalk work and belongs in the classification pass, where every new key is classified against the backbone with compared_against.",
+   "status": "OPEN"
+  }
+ ],
+ "_the_condition_that_governs_pages_4_to_6": {
+  "_what": "Pages 4, 5 and 6 carry the OFFER CALCULATION. Box A is drawn on page 4 and everything from there to the Offer Amount cell on page 5 is the number a taxpayer offers the IRS. A wrong operand on these pages is not a mis-filed cell; it is a wrong offer.",
+  "_the_three_pages": "This slice binds 94 fields: 30 on page 4, 33 on page 5 and 31 on page 6. All 94 are bound and none is deferred or never-autofill.",
+  "_no_checkbox_on_page_4": "PAGE 4 DRAWS 30 WIDGETS AND EVERY ONE IS A TextField - 0 checkboxes on the page. That matters for line (5a): the caption over its total prints a conditional, \"(if leased or used in the production of income enter 0 as the total value)\", and the page draws no cell that records whether either limb holds. Pages 5 and 6 are the other way round - 14 of page 5's 33 widgets are checkboxes and 21 of page 6's 31 are. See not_checkable in adapters/pdf/maps/433boi.totals.json and _arguable_pages_4_to_6[0].",
+  "_six_boxes_and_this_form_prints_six": "THIS FORM DRAWS 6 BOX MARKERS: A, B, C and D on page 4 and E and F on page 5. 433-A(OIC) draws 8, A through H, and ITS Boxes G and H are the x12 and x24 future-remaining-income cells that this form calls E and F. One field name on this form still says Box H; see _the_names_that_lie_on_pages_4_to_6.",
+  "_the_signature_is_not_a_field": "Page 6 prints \"Signature of Taxpayer\" at y 415.5, x 36.0..130.5 and draws NO widget on that line. The signature row carries 2 widgets, both to the right of it - Title at rect [295.2, 388.8, 478.8, 411.8] and Date_Signed at rect [486.0, 388.8, 576.0, 411.8] - and a record can supply both. So this form has no signature cell to declare never-autofill, which is why _never_autofill is still empty at the close of the map."
+ },
+ "_printed_headings_and_markers_pages_4_to_6": {
+  "_y_is_a_baseline": "Every y below is the BASELINE of the run named, which is page-geometry.mjs Y_CONVENTION. A widget position is given as a rect [x1, y1, x2, y2] and is called one.",
+  "page_4_banners": "Page 4 draws 3 section banners, one per section, each set as several runs on one baseline. \"Section 2\" y 745.9 x 36.0..80.5 + \"(Continued)\" x 83.2..133.7 + \"Business Asset Information\" x 144.0..276.3 + \"(Domestic and Foreign)\" x 279.0..390.7. \"Section 3\" y 562.3 x 36.0..80.5 + \"Business Income Information\" x 144.0..284.0. \"Section 4\" y 358.9 x 36.0..80.5 + \"Business Expense Information\" x 144.0..290.2.",
+  "page_4_markers": "line-markers.mjs finds 22 markers on page 4: 18 line markers and 4 box markers. The 18 are (5a) y 656.5 x 444.9..468.0, (5b) y 642.1 x 444.9..468.0, (5) y 616.7 x 449.3..468.0, (6) y 471.1, (7) y 456.7, (8) y 442.3, (9) y 427.9, (10) y 413.5, (11) y 273.1, (12) y 258.7, (13) y 244.3, (14) y 229.9, (15) y 204.5, (16) y 190.3, (17) y 175.9, (18) y 161.5, (19) y 136.1 and (20) y 121.9, every one in the same x column as the (1a)..(4d) markers on pages 2 and 3. The 4 are \"Box A\" y 601.7, \"Box B\" y 398.3, \"Box C\" y 108.9 and \"Box D\" y 72.9, all at x 446.4..469.5.",
+  "page_4_pairing_is_determinate": "EVERY money cell on page 4 is paired by BAND CONTAINMENT and not by distance: the marker baseline lies strictly inside the widget rect vertical span, and the widget left edge is at or right of the marker right edge. (5a) 656.5 in [651.6, 666.0], x 471.6 against 468.0. (5) 616.7 in [612.0, 637.2]. Box A takes its bare \"$\" at y 579.1, which is in [572.4, 590.4] with x 453.6 against 448.6. Box D takes its \"$\" at y 51.7, in [45.0, 63.0]. 18 line markers and 4 box cells, 22 money cells, and no tie-break is used anywhere on the page.",
+  "page_5_banners": "\"Section 5\" y 745.9 x 36.0..80.5 + \"Calculate Your Minimum Offer Amount\" y 745.7 x 144.0..327.9 (the two baselines differ by 0.2pt and are one banner). \"Section 6\" y 439.9 x 36.0..80.5 + \"Other Information\" x 144.0..228.4.",
+  "page_5_has_no_line_markers": "NONE. Page 5 prints no \"(NN)\" marker of any kind. Its money cells are identified by their CAPTIONS and by the printed equation operators between them - \"X 12 =\" y 632.5 x 294.2..326.2, \"X 24 =\" y 582.1 x 294.2..326.2, \"+\" y 485.9 x 195.1..200.9, \"=\" y 485.9 x 375.1..380.9 - which is a different evidence shape from pages 2 to 4 and is stated rather than assumed.",
+  "page_5_box_markers": "TWO, and both are drawn as one run with their caption: \"Box E Future Remaining Income\" y 642.3 x 370.8..509.3 and \"Box F Future Remaining Income\" y 591.9 x 370.8..508.8. line-markers.mjs anchors its Box pattern at the START of a run for exactly this reason - an exact-match pattern would find neither.",
+  "page_6_banners": "\"Section 6\" y 745.9 x 36.0..80.5 + \"(Continued)\" x 83.2..133.7 + \"Other Information\" x 144.0..228.4. \"Section 7\" y 458.2 x 36.0..80.5 + \"Signatures\" x 144.0..195.7.",
+  "page_6_has_no_money_and_no_markers": "Page 6 prints no line marker and no box marker. Its two money-shaped cells - Funds_Held_Trust and Credit_Limit/Amount_Owed - carry their printed \"$\" INSIDE the caption run (\"If yes, how much $\" y 519.6 x 111.6..178.3; \"If yes, credit limit $\" y 490.8 x 111.6..177.8; \"Amount owed $\" y 490.8 x 248.4..304.0), so the dollar sign is part of the label rather than a separate marker run.",
+  "page_5_markers": "line-markers.mjs finds 3 markers on page 5 and every one of them is a BOX marker; the page prints no \"(NN)\" line marker at all. Two are the box captions - \"Box E Future Remaining Income\" y 642.3 x 370.8..509.3 and \"Box F Future Remaining Income\" y 591.9 x 370.8..508.8 - and the third is the operand instruction \"Box E or Box F\" y 529.3 x 219.6..284.1, which numbers no cell and pairs with none. Page 6 draws 0 markers of either kind."
+ },
+ "_the_names_that_lie_on_pages_4_to_6": {
+  "_the_standing_rule": "A LINEAGE VERDICT IS PER OCCURRENCE AND NEVER PER NAME. Every entry below names a FULL PATH and says what THAT cell prints. In this slice 2 leaf names have occurrences that disagree WITH EACH OTHER INSIDE IT - Gross_Receipts, honest on page 4 and lying on page 5, and Date_Type_Asset_Transferred, lying on page 5 and honest on page 6 - and 2 more, Name_Creditor and Date_Final_Payment, lie at every occurrence here while being bound honestly at occurrences slice 2 read on page 3.",
+  "Box_H_Future_Remaining_Income": {
+   "the_name_says": "Box H.",
+   "the_page_says": "Box F. The caption directly above the cell is \"Box F Future Remaining Income\" at y 591.9, x 370.8..508.8, and the cell rect is [381.6, 578.2, 572.4, 590.4] - the caption is 1.5pt above the rect top and shares its column.",
+   "why_the_name_is_wrong_and_where_it_came_from": "433-A(OIC) draws 8 box markers, A through H, and ITS x24 future-remaining-income box IS Box H. This form draws 6 and calls the same cell Box F. The leaf name is inherited from the sibling form, where it was correct. The ROLE transferred exactly - future remaining income, Box D times 24, floor zero - and only the LETTER is wrong, which is the most dangerous kind of inherited name because everything else about it checks out.",
+   "the_sibling_is_named": "ON 433-A(OIC) IT IS BOX H AND THAT IS WHERE THE NAME COMES FROM. Its totals file declares total_key box_h_future_remaining_income with the caption \"multiply Remaining Monthly Income (Box F) by 24 to get Future Remaining Income (Box H)\" - the same role, the same multiplier, the same floor, and a letter this form does not print. See adapters/pdf/maps/433aoi.totals.json, line \"Box H\".",
+   "bound_to": "s5_box_f_future_remaining_income",
+   "cell": "Page5.Section5.Box_H_Future_Remaining_Income[0]"
+  },
+  "Name_Creditor_page_5": {
+   "the_name_says": "The name of a creditor.",
+   "the_page_says": "NOTHING ABOUT CREDITORS. Its 4 page-5 occurrences are cells of the LITIGATION table in Section 6, and each sits under a different printed column heading.",
+   "occurrences": [
+    {
+     "rect": "[129.6, 147.6, 266.4, 163.4]",
+     "printed_heading": "\"Location of filing\" y 167.9, x 129.6..187.4",
+     "witness": "LEFT-EDGE IDENTITY: the heading x1 is 129.6 and the cell x1 is 129.6, exact. The heading is the nearest run above the rect in that column.",
+     "verdict": "LIES",
+     "bound_to": "s6_litigation_location_of_filing",
+     "cell": "Page5.section_6.Name_Creditor[0]"
+    },
+    {
+     "rect": "[273.6, 147.6, 478.8, 163.4]",
+     "printed_heading": "\"Represented by\" y 167.9, x 273.6..330.1",
+     "witness": "Same left-edge identity: 273.6 and 273.6.",
+     "verdict": "LIES",
+     "bound_to": "s6_litigation_represented_by",
+     "cell": "Page5.section_6.Name_Creditor[1]"
+    },
+    {
+     "rect": "[129.6, 118.8, 266.4, 134.6]",
+     "printed_heading": "\"Possible completion date\" y 139.1, x 129.6..218.5, with \"(mmddyyyy)\" beside it at x 220.8..258.9",
+     "witness": "Left-edge identity 129.6, on the SECOND header row of the same table.",
+     "verdict": "LIES",
+     "bound_to": "s6_litigation_possible_completion_date",
+     "cell": "Page5.section_6.Name_Creditor[2]"
+    },
+    {
+     "rect": "[273.6, 118.8, 576.0, 134.6]",
+     "printed_heading": "\"Subject of litigation\" y 139.1, x 273.6..340.7",
+     "witness": "Left-edge identity 273.6.",
+     "verdict": "LIES",
+     "bound_to": "s6_litigation_subject",
+     "cell": "Page5.section_6.Name_Creditor[3]"
+    }
+   ],
+   "the_headline_this_corrects": "The intake report generalised three observations into \"the 433-A(OIC) lies did not transfer\". They did transfer here: 4 occurrences on one page, all lying. Per occurrence, and nothing in this entry is a claim about the name Name_Creditor anywhere else on this form - it is bound HONESTLY at 3 page-3 occurrences, where the printed column is \"Monthly payment / Name of Creditor\". See _the_four_names_that_lie_on_pages_2_and_3."
+  },
+  "Date_Final_Payment_page_5": {
+   "rect": "[486.0, 147.6, 576.0, 163.4]",
+   "the_name_says": "The date of a final payment.",
+   "the_page_says": "\"Docket/Case number\" y 167.9, x 486.0..561.1. Left-edge identity 486.0 and 486.0, third column of the same litigation header row.",
+   "verdict": "LIES",
+   "and_it_is_honest_on_page_3": "The same leaf name is bound at 3ab_real_estate[0..1].final_payment_date and 4ac_vehicles[0..2].final_payment_date, where the printed column IS \"Date of final payment\". Per occurrence, and this is the occurrence that lies.",
+   "bound_to": "s6_litigation_docket_case_number",
+   "cell": "Page5.section_6.Date_Final_Payment[0]"
+  },
+  "Gross_Receipts_two_occurrences_and_they_disagree": {
+   "_this_is_the_one_the_standing_rule_was_written_for": "ONE LEAF NAME, 2 OCCURRENCES, OPPOSITE VERDICTS, AND BOTH ARE IN THIS SLICE. Slice 2 recorded that Gross_Receipts has no occurrence on pages 2 or 3 and named it anyway so its absence read as checked rather than forgotten. Page 4 is the honest one and page 5 is the lying one.",
+   "honest": {
+    "rect": "[471.6, 466.2, 576.0, 480.6]",
+    "the_page_says": "\"Gross receipts\" y 471.1, x 36.0..87.6, with the marker \"(6) $\" y 471.1, x 449.3..468.0 whose baseline lies inside the rect span 466.2..480.6.",
+    "verdict": "HONEST. Printed line (6) of Section 3 is gross receipts and the cell is named for it.",
+    "bound_to": "s3_6_gross_receipts",
+    "cell": "Page4.Section3.Gross_Receipts[0]"
+   },
+   "lying": {
+    "rect": "[43.2, 118.8, 122.4, 133.2]",
+    "the_page_says": "\"Amount in dispute\" y 138.1, x 36.0..100.0, with a bare \"$\" at y 123.7, x 36.0..40.4 drawn INSIDE the rect span 118.8..133.2 and immediately to its left (40.4 against a cell starting at 43.2).",
+    "verdict": "LIES. It is the money cell of the LITIGATION block in Section 6 and has nothing to do with business income. It sits under a different subform from the Section 3 cell as well - tab_order[1] against Section3[0] - which is a second thing the name does not tell you.",
+    "two_witnesses": "The caption above (nearest run, same column, 4.9pt above the rect top) and the \"$\" inside the band to the left. Neither alone would settle it; the \"$\" says the cell is money and the caption says which money.",
+    "bound_to": "s6_litigation_amount_in_dispute",
+    "cell": "Page5.section_6.tab_order[1].Gross_Receipts[0]"
+   }
+  },
+  "Date_Type_Asset_Transferred_two_occurrences_and_they_disagree": {
+   "lying": {
+    "rect": "[36.0, 64.8, 576.0, 77.8]",
+    "the_page_says": "\"If yes\" y 80.8, x 36.0..56.5 continuing \"and the litigation included tax debt, provide the types of tax and periods involved.\" x 58.7..344.6.",
+    "verdict": "LIES. It is the follow-up to the IRS-litigation question, and it asks for tax types and periods - not a date, not a value, not a type of asset.",
+    "bound_to": "s6_irs_litigation_tax_types_and_periods",
+    "cell": "Page5.section_6.Date_Type_Asset_Transferred[0]"
+   },
+   "honest": {
+    "rect": "[36.0, 680.4, 576.0, 693.4]",
+    "the_page_says": "\"If yes, provide date, value, and type of asset transferred\" y 696.4, x 36.0..233.4.",
+    "verdict": "HONEST. Date, value and type of asset transferred is exactly what the caption asks for.",
+    "bound_to": "s6_asset_transfer_date_value_and_type",
+    "cell": "Page6.Date_Type_Asset_Transferred[0]"
+   },
+   "why_this_pair_matters": "THE 2 CELLS ARE ONE LEAF NAME UNDER 2 PAGE SUBFORMS, and the questions above them are the closest thing on this form to each other in shape: both are \"If yes, provide...\" follow-ups to a Yes/No pair, both span the full width, both are the last text cell in their block. A reader who resolved this name once and carried the answer would bind the IRS-litigation answer into the asset-transfer cell on a filed form, and nothing about the result would look wrong."
+  },
+  "C5_11_and_C5_12_appear_on_both_pages": {
+   "_not_a_lie_but_the_same_trap": "C5_11 and C5_12 are each drawn twice - once on page 5 and once on page 6, under different page subforms, on unrelated questions. Page 5: \"Are you or have you been party to litigation involving the IRS/United States (including any tax litigation)\" y 109.3, boxes at rect y 92.7..101.7. Page 6: \"In the past 10 years, has the business transferred any asset with a fair market value of more than $10,000 ... for less than its full value\" y 733.3 and y 723.7, boxes at rect y 708.3..717.3. Neither name LIES - C5_NN names nothing - but a map keyed on leaf names rather than full paths would bind one question onto the other. Every target in this map is a full path."
+  },
+  "CB7_yes_and_CB7_no_are_each_drawn_twice_on_page_6": {
+   "_the_index_is_the_only_difference": "ON PAGE 6, CB7_yes[0] and CB7_no[0] (rect y 654.3..663.3) answer \"In the past 3 years have you transferred any real property (land, house, etc.)\" y 670.9; CB7_yes[1] and CB7_no[1] (rect y 571.5..580.5) answer \"Do you have any assets or own any real property outside the U.S.\" y 588.1. One field drawn twice, 2 unrelated questions, and the printed order matches the widget index here - checked, not assumed. Their companion text cells follow the same order: ifyes[0] rect y 626.4..640.1 under \"If yes, list the type of property, value, and date of the transfer\" y 643.1, and ifyes[1] rect y 543.6..557.3 under \"If yes, please provide description, location, and value\" y 560.3. Both pairs and both cells are bound by FULL PATH in the blocks above; they are written here in short form deliberately, because a full path in prose is read by validate-map.mjs as a second binding."
+  },
+  "CB8_numbering_is_not_printed_order": {
+   "_what": "The nine attachment ticks on page 6 run, TOP TO BOTTOM: CB8_01, CB8_02, CB8_03, CB8_04, heldDigitalAssets, CB8_05, CB8_06, CB8_09, CB8_08. There is no CB8_07 on the form, heldDigitalAssets sits between CB8_04 and CB8_05, and CB8_09 is drawn ABOVE CB8_08.",
+   "_why_it_is_recorded": "This is the 433-B(OIC) page-6 instance of the recorded shape that AcroForm slot order is not printed order, and it is the 3rd on this form after C1_01..C1_04 on page 1 and the Vehicle1 mileage/tag inversion on page 3. All 9 ticks are bound by RECT, top to bottom, against the bullet line whose first baseline lies inside the tick's rect span."
+  },
+  "_why_no_full_path_appears_in_this_block": "A CELL IS NAMED HERE BY ITS PAGE-AND-LEAF FORM AND BY THE MAP KEY THAT BINDS IT, NEVER BY ITS FULL PATH. validate-map.mjs walks every string in this file and treats one that opens with topmostSubform[0] as a BINDING, so a full path quoted in evidence is a second write of the same cell and gate step 4 refuses it as a duplicate write. That is not a quirk to route around: the rule is that a cell is written once, and prose that names it the same way a binding does is indistinguishable from one. Slice 2 reached the same conclusion at _the_four_names_that_lie_on_pages_2_and_3, which names cells by leaf and carries bound_to. Every  below resolves through  to a key in map{}, and that key holds the one full path."
+ },
+ "_the_y_convention_in_this_file": {
+  "_what": "page-geometry.mjs declares one convention: a y reported for a printed run is that run's BASELINE. Every block this slice authored - _the_condition_that_governs_pages_4_to_6, _printed_headings_and_markers_pages_4_to_6, _the_names_that_lie_on_pages_4_to_6, _map_evidence_pages_4_to_6, _arguable_pages_4_to_6, and the group 5_business_equipment - is written in it, and a widget is given as a rect and called one.",
+  "_the_slice_1_and_slice_2_blocks_are_mixed": "THEY ARE NOT, AND THIS IS SAID RATHER THAN QUIETLY CORRECTED. Of the distinct y values quoted in this file, roughly half are values the page draws only as a BASELINE and roughly half only as a RUN TOP, because the slice-1 and slice-2 evidence was authored off align-block.mjs while it printed run tops under a bare \"y=\". Nothing downstream refuses either: blanket-audit [K-12] checks every quoted coordinate against a set holding BOTH the baselines and the run tops the page draws, so a coordinate in either convention satisfies it. That is the blanket the mixture hid behind and it is carried as [B15].",
+  "_why_the_old_blocks_are_not_rewritten_here": "A slice that closes a map is not the place to retype forty-three coordinates in landed evidence. The numbers are correct measurements of the runs they name; what was missing was the statement of which measurement they are. This block is that statement. Rewriting them is a change to evidence and gets its own commit and its own check."
+ },
+ "_map_evidence_pages_4_to_6": {
+  "_how_to_read_this": "ONE ENTRY PER BINDING, LED BY THE PRINTED THING THAT IDENTIFIES THE CELL. Where a printed marker exists it leads, because a marker is the strongest witness this form offers - it is drawn for no other purpose than to number the cell beside it. Where none exists the entry names the caption and a SECOND witness: a printed operator inside the cell rect band, an exact left-edge identity with a column heading, or the cell being the only one of its kind in a band. No binding on these three pages rests on proximity alone.",
+  "_page_4_money_column": "Eighteen of page 4's thirty cells are money cells in the marker column, and every marker-column cell on page 4 is bound by BAND CONTAINMENT of its printed marker: the marker baseline lies inside the cell rect span and the cell left edge is at or right of the marker right edge. s3_6_gross_receipts <- \"(6) $\" y 471.1 in rect [471.6, 466.2, 576.0, 480.6]; s3_7_gross_rental_income <- \"(7) $\" y 456.7 in [471.6, 451.8, 576.0, 466.2]; s3_8_interest_income <- \"(8) $\" y 442.3 in [471.6, 437.4, 576.0, 451.8]; s3_9_dividends <- \"(9) $\" y 427.9 in [471.6, 423.0, 576.0, 437.4]; s3_10_other_income <- \"(10) $\" y 413.5 in [471.6, 408.6, 576.0, 423.0]; s4_11_materials_purchased <- \"(11) $\" y 273.1 in [471.6, 268.2, 576.0, 282.6]; s4_12_inventory_purchased <- \"(12) $\" y 258.7; s4_13_gross_wages_and_salaries <- \"(13) $\" y 244.3; s4_14_rent <- \"(14) $\" y 229.9; s4_15_supplies <- \"(15) $\" y 204.5 in [471.6, 199.8, 576.0, 225.0]; s4_16_utilities_telephones <- \"(16) $\" y 190.3; s4_17_vehicle_costs <- \"(17) $\" y 175.9; s4_18_insurance <- \"(18) $\" y 161.5; s4_19_current_taxes <- \"(19) $\" y 136.1 in [471.6, 131.4, 576.0, 156.6]; s4_20_other_expenses <- \"(20) $\" y 121.9. Plus the three equipment totals: s3_total_all_business_equipment <- \"(5) $\" y 616.7 in [471.6, 612.0, 576.0, 637.2] and s3_equipment_from_attachment <- \"(5b) $\" y 642.1 in [471.6, 637.2, 576.0, 651.6], with the group total taking \"(5a) $\" y 656.5 in [471.6, 651.6, 576.0, 666.0].",
+  "_page_4_the_two_tall_cells": "SUPPLIES AND CURRENT TAXES ARE TALLER THAN THE OTHER SIXTEEN, and both for the same printed reason: their captions wrap onto a second line. Supplies spans rect 199.8..225.0 against the usual 14.4pt and Current taxes spans 131.4..156.6. Each still contains exactly one marker baseline - 204.5 and 136.1 - and neither contains its neighbour's, so band containment is unambiguous. It is worth stating because a cell 25.2pt tall in a column of 14.4pt cells is what an off-by-one row error looks like from the outside.",
+  "_page_4_four_box_cells": "The four boxes sit in a DIFFERENT column - rect x1 453.6 rather than 471.6 - and each takes a bare \"$\" rather than a numbered marker. s3_box_a_available_equity_in_assets <- \"$\" y 579.1 x 444.2..448.6 in rect [453.6, 572.4, 576.0, 590.4]; s3_box_b_total_business_income <- \"$\" y 375.7 in [453.6, 369.0, 576.0, 387.0]; s4_box_c_total_business_expenses <- \"$\" y 87.7 in [453.6, 81.0, 576.0, 99.0]; s4_box_d_remaining_monthly_income <- \"$\" y 51.7 in [453.6, 45.0, 576.0, 63.0]. The SECOND witness for each is its box marker above it in the same column: \"Box A\" y 601.7, \"Box B\" y 398.3, \"Box C\" y 108.9, \"Box D\" y 72.9, all at x 446.4..469.5, and each is the nearest box marker above its own cell with no other between.",
+  "_page_4_four_period_cells": "Sections 3 and 4 each print a period row, and the two are IDENTICAL in wording and in x: \"Period provided beginning\" x 36.0..128.9 with a cell at rect x 144.0..234.0, and \"through\" x 237.6..264.7 with a cell at rect x 280.8..367.2. They are told apart by y and by nothing else: Section 3's pair is at rect y 480.6..495.0 under a caption baseline y 485.5, Section 4's at rect y 282.6..297.0 under y 287.5. The leaf names are identical too - both are PeriodProvidedBegining[0] and Through[0] - and differ only in their Section subform. Bound by full path, and this is the fourth construct on this form where the leaf name alone would bind the wrong cell.",
+  "_page_4_the_equipment_row": "See groups.5_business_equipment._columns_by_x. Four cells, four witnesses, three of them a printed operator inside the cell's own rect band.",
+  "_page_5_has_no_markers_so_every_binding_names_two_witnesses": "Page 5 draws zero line markers, so every page-5 binding rests on a caption plus a second witness rather than on a number. s5_box_d_for_12_month_multiplier <- caption \"Enter the total from Box D\" y 642.3 x 39.6..151.1 directly above rect [50.4, 628.6, 241.2, 640.8], SECOND WITNESS the printed \"$\" y 632.4 x 41.0..45.4 inside that rect span and 5.0pt to its left. s5_box_e_future_remaining_income <- caption \"Box E Future Remaining Income\" y 642.3 x 370.8..509.3 above rect [381.6, 628.6, 572.4, 640.8], SECOND WITNESS the printed \"X 12 =\" y 632.5 x 294.2..326.2 drawn between the two cells and the \"$\" y 632.4 x 372.2..376.6 inside its own rect span. s5_box_d_for_24_month_multiplier and s5_box_f_future_remaining_income repeat the identical construct 50.4pt lower with \"X 24 =\". s5_amount_from_box_a <- caption \"Enter the amount from Box A*\" y 540.1 x 39.6..168.1, SECOND WITNESS the \"$\" y 485.8 x 41.0..45.4 inside rect [50.4, 479.5, 176.4, 496.8]. s5_amount_from_box_e_or_box_f <- caption \"Enter the amount from either\" y 540.1 x 219.6..343.1 and \"Box E or Box F\" y 529.3 x 219.6..284.1, SECOND WITNESS the \"$\" y 485.8 x 221.0..225.4 inside rect [230.4, 479.5, 356.4, 496.8] and the \"+\" y 485.9 x 195.1..200.9 drawn between it and the cell to its left. s5_offer_amount <- caption \"Offer Amount\" y 538.5 x 403.2..474.1, LEFT-EDGE IDENTITY with rect [403.2, 478.8, 572.4, 496.8], SECOND WITNESS the \"=\" y 485.9 x 375.1..380.9 immediately to its left.",
+  "_page_5_the_bankruptcy_row": "s6_bankruptcy_date_filed <- \"Date filed\" y 321.6 x 36.0..69.8 with \"(mm/dd/yyyy)\" x 72.0..114.0, over rect [117.8, 319.0, 172.8, 331.2] - NEAREST-LEFT ON ITS OWN ROW, the caption ending at 114.0 and the cell starting at 117.8, with nothing between. s6_bankruptcy_date_dismissed_or_discharged <- \"Date dismissed or discharged\" y 322.1 x 180.0..285.4 with \"(mm/dd/yyyy)\" x 288.2..330.2, over rect [333.7, 319.0, 396.0, 331.2], same construct and a 3.5pt gap. s6_bankruptcy_petition_no <- \"Petition no.\" y 307.2 x 82.4..122.4 over rect [126.0, 304.6, 172.8, 316.8], 3.6pt. s6_bankruptcy_location_filed <- \"Location filed\" y 307.2 x 180.0..227.1 over rect [234.0, 304.6, 576.0, 316.8], 6.9pt. Four captions, four cells, four nearest-left pairings on two rows, and no caption is nearer to a cell it does not label.",
+  "_page_5_the_litigation_table": "Two header rows and two data rows, every pairing an EXACT LEFT-EDGE IDENTITY. Header row y 167.9: \"Location of filing\" x 129.6, \"Represented by\" x 273.6, \"Docket/Case number\" x 486.0. Data row rect y 147.6..163.4: cells at x1 129.6, 273.6, 486.0. Header row y 139.1: \"Possible completion date\" x 129.6, \"Subject of litigation\" x 273.6. Data row rect y 118.8..134.6: cells at x1 129.6, 273.6. Five headings, five cells, five exact matches, and the x positions are 129.6 / 273.6 / 486.0 in both lists. The sixth cell on the block, s6_litigation_amount_in_dispute, is in the LEFT margin at rect [43.2, 118.8, 122.4, 133.2] under \"Amount in dispute\" y 138.1 x 36.0..100.0, with the bare \"$\" y 123.7 x 36.0..40.4 inside its rect band as the second witness.",
+  "_page_5_plaintiff_and_defendant": "Bound by BAND CONTAINMENT rather than by the box-left-of-word gap, because the two are stacked vertically with one word each: \"Plaintiff\" y 166.9 inside rect [36.0, 164.7, 45.0, 173.7] and \"Defendant\" y 152.5 inside [36.0, 150.3, 45.0, 159.3]. They are also the only two checkboxes on the page between y 181.3 and y 109.3.",
+  "_page_5_the_two_full_width_cells": "s6_affiliations_name_and_ein <- rect [36.0, 248.4, 576.0, 262.1] under \"If yes,\" y 265.1 x 36.0..58.7 with \"list the name and Employer Identification Number\" x 60.9..235.6 - the nearest run above, 3.0pt up, sharing x1 36.0. s6_irs_litigation_tax_types_and_periods <- rect [36.0, 64.8, 576.0, 77.8] under \"If yes\" y 80.8 x 36.0..56.5 with the rest of the sentence to its right - same construct, 3.0pt, same x1.",
+  "_page_6_the_yes_no_column": "Six pairs, every box at x1 36.0 or 72.0 and every word 5.4pt to its right, each pair on its own baseline: y 710.5, 656.5, 602.5, 573.7, 519.5, 490.7. every Yes/No-column checkbox on page 6 is bound as half of a pair, and each pair takes the question printed ABOVE it with nothing between - 733.3/723.7, 670.9, 616.9, 588.1, 534.1, 505.3 - and no two questions share a band.",
+  "_page_6_the_three_same_baseline_follow_ups": "THE TRUST AND CREDIT ROWS PUT THEIR FOLLOW-UP CELLS ON THE Yes/No BASELINE rather than below it, which no other block on this form does. s6_funds_held_in_trust_amount <- \"If yes, how much $\" y 519.6 x 111.6..178.3 over rect [183.6, 517.0, 244.8, 529.2], nearest-left, 5.3pt. s6_funds_held_in_trust_where <- \"Where\" y 519.6 x 248.4..272.0 over rect [277.2, 517.0, 576.0, 529.2], 5.2pt. s6_line_of_credit_limit <- \"If yes, credit limit $\" y 490.8 x 111.6..177.8 over rect [183.6, 488.2, 244.8, 500.4], 5.8pt. s6_line_of_credit_amount_owed <- \"Amount owed $\" y 490.8 x 248.4..304.0 over rect [306.0, 488.2, 396.0, 500.4], 2.0pt. s6_line_of_credit_property_securing <- \"What property secures the line of credit\" y 476.4 x 111.6..250.8 over rect [259.2, 473.8, 576.0, 486.0], 8.4pt on the row below. Five captions, five cells, five nearest-left pairings and no caption nearer to a cell it does not label.",
+  "_page_6_the_signature_row": "s7_signer_title <- \"Title\" y 415.5 x 295.2..312.2 over rect [295.2, 388.8, 478.8, 411.8] - LEFT-EDGE IDENTITY, x1 295.2 in both. s7_date_signed <- \"Date\" y 415.5 x 486.0..505.0 with \"(mm/dd/yyyy)\" x 507.5..549.5 over rect [486.0, 388.8, 576.0, 411.8] - left-edge identity, x1 486.0 in both. The third caption on that baseline, \"Signature of Taxpayer\" x 36.0..130.5, has NO cell beneath it: the leftmost widget on the row starts at x 295.2.",
+  "_page_6_the_attachment_list": "See check_here._the_nine_attachment_ticks_are_bound_by_rect_not_by_number. Nine ticks, nine bullets, nine band containments, no tie-break."
+ },
+ "_arguable_pages_4_to_6": [
+  {
+   "id": "B15",
+   "subject": "Line (5a) prints a conditional the form records nowhere, and the vehicles two pages earlier print the same conditional WITH a control that records it.",
+   "the_evidence": "The caption over the equipment total reads \"Total value of equipment (if leased or used in the production of income enter 0 as the total value) =\", drawn across baselines y 672.7, y 663.9 and y 654.7. Page 4 draws 30 widgets and 0 of them are checkboxes. The vehicle rows on page 3 carry the same shape - \"Total value of vehicle (if the vehicle is leased, enter 0 as the total value)\" - and each prints a Lease/Own checkbox pair, which is why 4a, 4b and 4c are each declared as TWO predicated lines and are checked.",
+   "why_it_is_arguable": "Three readings are available and the map takes the third. FIRST: declare the arithmetic and check it, which fails a correctly filed form whose equipment is leased. SECOND: declare two predicated lines keyed on a record field the page does not print, which makes the tripwire check the engine against its own input - the predicate would come from the record, the value would come from the record, and the page would witness neither. THIRD: declare the cell not checkable with the printed reason, which is what this map does. The third is honest and it is also the weakest: (5a) feeds (5) and (5) feeds Box A, so an unchecked cell sits two levels below the offer.",
+   "what_this_slice_did": "Declared it in not_checkable.entries with the printed caption, the reason, and a review-page advisory naming both limbs of the condition. (5) and Box A are still checked, and they are checked against what (5a) actually holds on the filled form, which is read back out of the PDF rather than recomputed.",
+   "what_would_settle_it": "A record-level field marking equipment as leased or income-producing, plus a decision that a predicate the page does not print may govern a tripwire. That is a change to what a tripwire is allowed to read and belongs with the crosswalk, not in a slice.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B16",
+   "subject": "The Box A copy on page 5 carries an asterisk that permits an exclusion the form records nowhere, so the one operand of the offer that could be checked is not.",
+   "the_evidence": "\"Enter the amount from Box A*\" y 540.1, x 39.6..168.1, and the footnote \"*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.\" y 461.1, x 36.0..452.1. Section 2 prints no column marking an asset as income-producing and no cell anywhere holds the excluded amount.",
+   "why_it_is_arguable": "The cell can never legitimately EXCEED Box A - the footnote permits a reduction and nothing on the page permits an addition - so a ONE-SIDED constraint is available and would refuse a real class of error: a copy that overstates Box A. This engine has no construct for one. Every declared line in a totals file is an equality with an optional floor, and step 11 compares a recomputed figure against a read one. Adding a comparison kind is a change to the gate.",
+   "what_this_slice_did": "Declared the cell not checkable with the printed caption, the footnote quoted verbatim, and a review-page advisory. The one-sided check is recorded in the not_checkable entry itself rather than only here, so a reader of the totals file meets it too.",
+   "the_sibling_form_settles_nothing": "433-A(OIC) prints the analogous cell as \"Enter the amount from Box A plus Box B (if applicable)\" with NO exclusion footnote, and that cell IS checked. The difference between a checked operand and an unchecked one on the two forms is one asterisk.",
+   "status": "OPEN"
+  },
+  {
+   "id": "B17",
+   "subject": "Sections 3 and 4 each print a note offering a way to skip their ten lines, and a record that takes it makes both tripwires read zero operands against a non-zero box.",
+   "the_evidence": "Section 3: \"Note: If you provide a current profit and loss statement for the information below, enter the total gross monthly income in Box B below. Do not complete lines (6) - (10).\" y 511.2 and y 502.2. Section 4: the same sentence for Box C and lines (11) - (20), y 312.5 and y 302.9.",
+   "why_it_is_arguable": "The Box B and Box C tripwires sum their printed operands. A record supplying a profit and loss statement writes Box B directly and leaves (6) through (10) empty, so the tripwire computes 0 and reads a non-zero box and fails a correctly filed form. Two readings: declare the boxes not checkable, which loses the check on every record that does NOT take the note; or declare the tripwire conditional on the operands being present, which is a rule that says \"check this unless the answer would be inconvenient\" and would pass a record that simply forgot to fill the lines.",
+   "what_this_slice_did": "Neither. Both boxes are declared as checked totals with their operand lists, and the note is recorded on the Box B entry as _the_note_above_this_section_offers_a_way_to_skip_it. The fixture in commit 3 completes lines (6) through (20), so the tripwires are exercised on the path the form treats as ordinary. A profit-and-loss record would fail this gate today and that is stated rather than discovered later.",
+   "what_would_settle_it": "A third tripwire state - checked, not checkable, or CONDITIONAL ON A PRINTED ROUTE - and a cell that records which route the record took. This form prints no such cell either; the route is visible only in whether the lines are filled, which is the thing being checked.",
    "status": "OPEN"
   }
  ]

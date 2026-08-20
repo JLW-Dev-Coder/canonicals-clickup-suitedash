@@ -782,6 +782,114 @@ export const MANIFEST = [
     at: /^(_the_condition_that_governs_pages_2_and_3\.|_printed_headings_and_markers_pages_2_and_3\.|_the_four_names_that_lie_on_pages_2_and_3\.|_Vehicle1_Mileage_1_AND_LicenseTagNumber_1_DRAW_ON_VEHICLE_ROW_2\.|_map_evidence_pages_2_and_3\.|_arguable_pages_2_and_3\[\d+\]\.|_partition\._still_not_closed$)/,
     kind: 'underivable',
     reason: 'A TRANSCRIPTION OF THE DRAWN PAGE AND OF A PRIOR ARTEFACT, taking [S-27]\'s disposition for [S-27]\'s reason. The numbers in these blocks are COORDINATES - a caption\'s baseline y, the x range it spans, a widget rectangle, the gap in points between a caption and the cell beneath it - together with printed line markers and references to entries in adapters/pdf/maps/433boi.lineage-433aoi.json and adapters/pdf/maps/433aoi.name-lies.json quoted by id. None of them is a count of anything this repo holds a list of, so there is no set to re-derive them from; what re-checks them is re-reading the page, which is what adapters/pdf/align-block.mjs does and what every _at in 433boi.headings.json is re-measured against on every run. The two claims in these blocks that ARE counts over artefacts - the /MaxLen figure and the per-field widget count - are pulled out and DERIVED by [S-29] and [S-30], which is why this reason can be honest about the rest.' }),
+  // ═══ 433-B(OIC) SLICE 3 — pages 4, 5 and 6 ═══════════════════════════════════════════
+  //
+  // [S-32] DERIVES, [S-33] DOES NOT, AND THE SPLIT IS THE POINT. Slice 3's prose states two
+  // kinds of number: figures about the PAGE that the PDF settles - how many widgets a page
+  // draws, how many of them are checkboxes, how many markers line-markers.mjs finds, how many
+  // box markers each of two forms draws - and figures about the MAP's own reading, which are
+  // coordinates and per-occurrence verdicts. The first kind is derived here against the PDF.
+  // The second falls to [S-33], which is [S-27]'s reason applied to three more blocks.
+  //
+  // THIS ENTRY CAUGHT ITS OWN AUTHOR ON THE FIRST RUN. The page-4 marker block was written as
+  // "FOURTEEN money markers" beside a list of eighteen. line-markers.mjs finds 22 on that page,
+  // 18 line and 4 box. Nothing but a derivation would have said so - the enumeration and the
+  // count sat in the same sentence and disagreed, which is [S-26]'s shape exactly.
+  D({ id: 'S-32', file: /433boi\.map\.json$/,
+    at: /^(_the_condition_that_governs_pages_4_to_6\.|_printed_headings_and_markers_pages_4_to_6\.)/,
+    kind: 'derived',
+    derive: async (ctx, v) => {
+      const out = [];
+      const { widgets } = await readWidgetGeometry(readFileSync('adapters/pdf/forms/f433boi.pdf'));
+      const on = (p2) => widgets.filter((w) => w.page === p2);
+      const num = (x) => (word(x) ?? Number(x));
+      let m2;
+
+      // "This slice binds 94 fields: 30 on page 4, 33 on page 5 and 31 on page 6."
+      if ((m2 = /binds (\d+) fields/.exec(v))) {
+        out.push({ what: 'fields on pages 4, 5 and 6', claimed: Number(m2[1]), derived: on(4).length + on(5).length + on(6).length, from: 'widget geometry' });
+        for (const pm of v.matchAll(/(\d+) on page ([456])/g))
+          out.push({ what: `widgets the PDF draws on page ${pm[2]}`, claimed: Number(pm[1]), derived: on(Number(pm[2])).length, from: 'widget geometry' });
+      }
+
+      // "PAGE 4 DRAWS 30 WIDGETS ... 0 checkboxes ... 14 of page 5's 33 ... 21 of page 6's 31"
+      if (/DRAWS (\d+) WIDGETS/.test(v)) {
+        out.push({ what: 'widgets on page 4', claimed: Number(/DRAWS (\d+) WIDGETS/.exec(v)[1]), derived: on(4).length, from: 'widget geometry' });
+        if ((m2 = /(\d+) checkboxes on the page/.exec(v)))
+          out.push({ what: 'checkboxes on page 4', claimed: Number(m2[1]), derived: on(4).filter((w) => w.type === 'PDFCheckBox').length, from: 'widget geometry' });
+        for (const pm of v.matchAll(/(\d+) of page (\d)'s (\d+) widgets are checkboxes|(\d+) of page (\d)'s (\d+) are/g)) {
+          const cb = Number(pm[1] ?? pm[4]), pg = Number(pm[2] ?? pm[5]), tot = Number(pm[3] ?? pm[6]);
+          out.push({ what: `checkboxes on page ${pg}`, claimed: cb, derived: on(pg).filter((w) => w.type === 'PDFCheckBox').length, from: 'widget geometry' });
+          out.push({ what: `widgets on page ${pg}`, claimed: tot, derived: on(pg).length, from: 'widget geometry' });
+        }
+      }
+
+      // "THIS FORM DRAWS 6 BOX MARKERS ... 433-A(OIC) draws 8"
+      if (/DRAWS (\d+) BOX MARKERS/.test(v)) {
+        const boi = await markerPairing('433boi'), aoi = await markerPairing('433aoi');
+        const distinctBoxes = (r) => new Set(r.rows.filter((x) => x.kind === 'box').map((x) => x.marker)).size;
+        out.push({ what: 'distinct box markers on 433-B(OIC)', claimed: Number(/DRAWS (\d+) BOX MARKERS/.exec(v)[1]), derived: distinctBoxes(boi), from: 'line-markers.mjs markerPairing' });
+        if ((m2 = /433-A\(OIC\) draws (\d+)/.exec(v)))
+          out.push({ what: 'distinct box markers on 433-A(OIC)', claimed: Number(m2[1]), derived: distinctBoxes(aoi), from: 'line-markers.mjs markerPairing — the SIBLING form, read by the same instrument' });
+      }
+
+      // "The signature row carries 2 widgets"
+      if ((m2 = /signature row carries (\d+) widgets/.exec(v))) {
+        // The row is the band the two printed captions "Title" and "Date" sit on, rect y 388.8..411.8.
+        const row = on(6).filter((w) => w.rect && w.rect[1] >= 388.0 && w.rect[3] <= 412.5);
+        out.push({ what: 'widgets on the page-6 signature row (rect band 388.8..411.8)', claimed: Number(m2[1]), derived: row.length, from: 'widget geometry' });
+      }
+
+      // "Page 4 draws 3 section banners"
+      if ((m2 = /draws (\d+) section banners/.exec(v))) {
+        const pages = await printedPages('433boi');
+        const banners = (pages[3].items || []).filter((t) => /^Section \d$/.test(t.str.trim()));
+        out.push({ what: 'runs reading "Section N" on page 4', claimed: Number(m2[1]), derived: banners.length, from: 'page-geometry readPrintedText, page 4' });
+      }
+
+      // "line-markers.mjs finds 22 markers on page 4: 18 line markers and 4 box markers"
+      // and the page-5 / page-6 versions of the same sentence.
+      if (/line-markers\.mjs finds (\d+) markers on page (\d)/.test(v)) {
+        const { rows: mk } = await markerPairing('433boi');
+        m2 = /line-markers\.mjs finds (\d+) markers on page (\d)/.exec(v);
+        const pg = Number(m2[2]);
+        out.push({ what: `markers drawn on page ${pg}`, claimed: Number(m2[1]), derived: mk.filter((r) => r.page === pg).length, from: 'line-markers.mjs markerPairing' });
+        let k;
+        if ((k = /(\d+) line markers and (\d+) box markers/.exec(v))) {
+          out.push({ what: `line markers on page ${pg}`, claimed: Number(k[1]), derived: mk.filter((r) => r.page === pg && r.kind === 'line').length, from: 'line-markers.mjs markerPairing' });
+          out.push({ what: `box markers on page ${pg}`, claimed: Number(k[2]), derived: mk.filter((r) => r.page === pg && r.kind === 'box').length, from: 'line-markers.mjs markerPairing' });
+        }
+        if ((k = /Page 6 draws (\d+) markers/.exec(v)))
+          out.push({ what: 'markers drawn on page 6', claimed: Number(k[1]), derived: mk.filter((r) => r.page === 6).length, from: 'line-markers.mjs markerPairing' });
+      }
+
+      // "18 line markers and 4 box cells, 22 money cells"
+      if ((m2 = /(\d+) line markers and (\d+) box cells, (\d+) money cells/.exec(v))) {
+        const { rows: mk } = await markerPairing('433boi');
+        const p4 = mk.filter((r) => r.page === 4);
+        out.push({ what: 'line markers on page 4', claimed: Number(m2[1]), derived: p4.filter((r) => r.kind === 'line').length, from: 'line-markers.mjs markerPairing' });
+        out.push({ what: 'box markers on page 4', claimed: Number(m2[2]), derived: p4.filter((r) => r.kind === 'box').length, from: 'line-markers.mjs markerPairing' });
+        out.push({ what: 'money cells on page 4 — the money column plus the four box cells', claimed: Number(m2[3]),
+          derived: on(4).filter((w) => w.rect && (Math.abs(w.rect[0] - 471.6) < 0.05 || Math.abs(w.rect[0] - 453.6) < 0.05)).length,
+          from: 'widget geometry — the two money columns page 4 draws, x 471.6 for the line cells and x 453.6 for the four box cells' });
+      }
+
+      // A SITE THAT STATES A COUNT THIS ENTRY DOES NOT RECOGNISE IS REPORTED, NEVER PASSED.
+      // Same rule [S-26] holds: the blanket over this region is what let a wrong 14 sit beside
+      // a list of 18 for the length of one commit.
+      if (!out.length) return [{ unrecognised: true }];
+      return out;
+    },
+    fallback: {
+      kind: 'underivable',
+      reason: 'A SITE IN THESE TWO BLOCKS THAT STATES A COUNT IN A PHRASING [S-32] DOES NOT RECOGNISE. The recognised phrasings are the ones written into the derivation above and nowhere else - there is no second list of them to drift from it. Anything reaching this fallback is coordinates and printed transcription, which is [S-33]\'s subject: a caption quoted verbatim, its baseline y, the x range it spans, a widget rectangle, and the printed operator that makes a pairing determinate. Those are re-measured against the drawn page by adapters/pdf/align-block.mjs and by blanket-audit [K-12], not by counting.',
+    } }),
+
+  D({ id: 'S-33', file: /433boi\.map\.json$/,
+    at: /^(_the_names_that_lie_on_pages_4_to_6\.|_the_y_convention_in_this_file\.|_map_evidence_pages_4_to_6\.|_arguable_pages_4_to_6\[)/,
+    kind: 'underivable',
+    reason: 'THE PER-OCCURRENCE LINEAGE RECORD AND THE EVIDENCE BLOCKS BEHIND IT, taking [S-27]\'s disposition for [S-27]\'s reason. The numbers in these blocks are COORDINATES - a caption\'s baseline, the x range it spans, a widget rectangle, the gap in points between a caption and the cell beside it - together with per-occurrence VERDICTS, which are not counts of a set but statements about individual cells, each naming the full path it is about. What re-checks a verdict is re-reading the page at the coordinates it quotes, which is what align-block.mjs does and what blanket-audit [K-12] holds every quoted coordinate to. The claims in this region that ARE counts over something this repo holds are stated as small integers inside a sentence whose subject is a single named cell, with the enumeration in the same sentence. The two that quantify over a set of widgets - the page-6 attachment ticks and the pages 4-to-6 binding claim - are counted by the completeness counters [K-25] and [K-26], each of which enumerates the widgets the PDF draws on the page it is scoped to and compares them against the targets the map binds. The full AcroForm paths in this region live in the `target` keys of the lineage entries and NOT in these count-stating prose strings, which is why this reason cites no instrument that reads paths: there are none here to read.' }),
+
   D({ id: 'S-27', file: /433boi\.map\.json$/,
     at: /^(_the_condition_that_governs_page_1\.|_printed_headings_and_markers_first\.|_no_lettered_box_on_this_page$|_map_evidence\.|_nesting_note$|checkboxes\.|check_here\.|exclusive\._why$|_computed\.|groups\.|_never_autofill\.|_not_checkable\.|_deferred_pages$|_arguable_page1\[|_carried$|authored_from$|slice$|_partition\._why_unaccounted_is_the_word_and_not_deferred$)/,
     kind: 'underivable',

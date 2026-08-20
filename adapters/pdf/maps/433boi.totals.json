@@ -4,7 +4,7 @@
  "catalog": "55897B",
  "_why": "Every printed total on pages 2 and 3, with the printed operands that feed it, so gate step 11 can recompute each one from what the PAGE draws rather than from what the record says. Authored from the printed captions, quoted verbatim.",
  "authored_from": "THE PRINTED PAGE, read with adapters/pdf/page-geometry.mjs. Every `caption` below is drawn text quoted verbatim; every operand list is the one the caption itself names.",
- "_slice": "SLICE 2 - the nineteen markers on pages 2 and 3. Pages 4, 5 and 6 print lines (5) through (20) and Boxes A through H and are NOT declared here; step 11 checks what this file declares and reports the rest as unauthored, which is what a partial slice should read as.",
+ "_slice": "Slices 1, 2 and 3. Pages 1 to 6. The map is closed.",
  "_notes": [
   "THE FLOOR IS PRINTED AND IT IS PRINTED ONCE. \"Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\".\" is drawn at y 670.9 x 165.2..576.0 on page 2, above the first total on the form. It is quoted as floor_caption on all four Add-lines totals rather than on the first only, because a floor declared on one line and not its siblings would read as a difference between the lines that the page does not draw.",
   "THE MULTIPLIER IS 0.8 AND IT IS READ OFF THE PAGE. \"X .8 = $\" is drawn six times on page 3 - twice in the real-estate block at x 125.9..155.9 and four times in the vehicle block at x 115.1..145.1 (three rows plus the (4d) attachment caption). The leaf name is Times_8 and it agrees, which is recorded as agreement and not relied on: 433-A(OIC) carries a cell named Times_7 that the page multiplies by .8, and that is registry entry C02 and the reason this declaration reads the factor off the drawn text.",
@@ -452,6 +452,246 @@
      ]
     }
    ]
+  },
+  {
+   "line": "5a QSV",
+   "caption": "X .8 = $",
+   "caption_at": "the printed operator \"X .8 = $\" at y 656.7, x 115.1..145.1, lying inside the quick-sale cell rect span 653.0..673.2 and ending 2.5pt to its left (145.1 against a cell starting at 147.6).",
+   "total_cell": {
+    "group": "5_business_equipment",
+    "column": "quick_sale_value",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "5_business_equipment",
+     "column": "current_fmv",
+     "row": 0,
+     "factor": 0.8,
+     "factor_caption": "X .8 ="
+    }
+   ],
+   "_printed_operand_list_verbatim": "ONE operand and ONE printed multiplier. The row draws \"$\" y 656.7 x 37.0..41.4 [current market value cell] \"X .8 = $\" y 656.7 x 115.1..145.1 [quick sale cell] \"- $\" y 656.7 x 220.6..233.9 [loan balance cell], under the headings \"Current market value\" y 678.1 x 36.0..110.7 and \"Minus loan balance\" y 678.1 x 219.6..288.5. The .8 is DRAWN ON THE PAGE, on the same footing as the X .8 on the real-estate and vehicle rows.",
+   "_no_floor": "The row prints no floor sentence of its own. The only floor-shaped sentence on this page belongs to the Box A block below it and is quoted there."
+  },
+  {
+   "line": "5",
+   "caption": "Add lines (5a) and (5b) =",
+   "caption_at": "y 615.9, x 328.8..435.6, with \"Total value of all business equipment\" above it at y 626.3, x 304.0..435.6 and the marker \"(5) $\" at y 616.7, x 449.3..468.0 whose baseline lies inside the total cell rect span 612.0..637.2.",
+   "total_key": "s3_total_all_business_equipment",
+   "feeders": [
+    {
+     "cells": [
+      {
+       "group": "5_business_equipment",
+       "column": "equity",
+       "row": 0
+      }
+     ]
+    },
+    {
+     "keys": [
+      "s3_equipment_from_attachment"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Add lines (5a) and (5b) =\". TWO operands, named in the caption: (5a) is the one printed equipment row's total and (5b) is the attachment scalar. There is no (5c) or (5d) on this form - unlike lines (1) through (4), which each name a range through a lettered attachment line - and the caption says \"and\" rather than \"through\" because there are exactly two.",
+   "_no_floor": "The caption states none, and neither operand can be negative: (5a) is floored at 0 by its own printed conditional and (5b) is a total from an attachment. Declaring a floor here would be inventing one.",
+   "_it_sums_a_cell_this_repo_does_not_check": "(5a) is declared not checkable - see not_checkable.entries - and this line sums it anyway. That is sound and it is the same shape as (4), which sums three vehicle totals each carrying a printed lease conditional: step 11 reads (5a) BACK OUT OF THE FILLED PDF and adds what is actually there. What cannot be checked is how (5a) was decided; what can be checked is that (5) is the sum of what was written."
+  },
+  {
+   "line": "Box A",
+   "caption": "Add lines (1) through (5) and enter the amount in Box A =",
+   "caption_at": "y 579.4, x 190.8..435.6, with the bare \"$\" at y 579.1, x 444.2..448.6 lying inside the cell rect span 572.4..590.4 and ending 5.0pt to its left (448.6 against a cell starting at 453.6). The box marker \"Box A\" is at y 601.7, x 446.4..469.5 and the caption \"Available Equity in Assets\" at y 592.1, x 446.4..538.0.",
+   "total_key": "s3_box_a_available_equity_in_assets",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative number, enter \"0\" on that line.",
+   "feeders": [
+    {
+     "keys": [
+      "s2_1_total_bank_accounts",
+      "s2_2_total_investment_accounts",
+      "s2_3_total_real_estate",
+      "s2_4_total_vehicles",
+      "s3_total_all_business_equipment"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Add lines (1) through (5) and enter the amount in Box A =\". FIVE operands, named as a range: (1) total bank accounts and (2) total investment accounts on page 2, (3) total real estate and (4) total vehicles on page 3, (5) total business equipment on page 4. The lettered sub-lines - (1a)..(1d), (2a)..(2d), (3a)..(3c), (4a)..(4d), (5a) and (5b) - are EXCLUDED by the sentence printed above the equation: \"Do not include amount on the lines with a letter beside the number.\" y 600.6, x 97.6..435.6. That sentence is why the feeder list holds five keys and not twenty-two, and it is the only place on this form that says so.",
+   "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 590.2, x 112.0..435.6, drawn between the \"Available Equity in Assets\" caption and the Add-lines equation. It floors the LINE ITEMS rather than the box, and every one of the five operands already carries floor 0 of its own; the box is declared with the same floor because a sum of five non-negative numbers cannot be negative and a declaration that says so is checkable.",
+   "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 600.6 as the second half of the do-not-include sentence, and nothing else. Rounding is not a multiplier.",
+   "_this_is_the_first_of_the_six_boxes": "Box A is where the offer calculation starts. Everything from here to the Offer Amount cell on page 5 is arithmetic on this figure."
+  },
+  {
+   "line": "Box B",
+   "caption": "Add lines (6) through (10) and enter the amount in Box B =",
+   "caption_at": "y 376.6, x 185.8..435.6, with the bare \"$\" at y 375.7, x 444.2..448.6 inside the cell rect span 369.0..387.0. The box marker \"Box B\" is at y 398.3, x 446.4..469.5 and the caption \"Total Business Income\" at y 388.7, x 446.4..527.3.",
+   "total_key": "s3_box_b_total_business_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative number, enter \"0\" on that line.",
+   "feeders": [
+    {
+     "keys": [
+      "s3_6_gross_receipts",
+      "s3_7_gross_rental_income",
+      "s3_8_interest_income",
+      "s3_9_dividends",
+      "s3_10_other_income"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Add lines (6) through (10) and enter the amount in Box B =\". FIVE operands, named as a range and printed one per row: (6) Gross receipts y 471.1, (7) Gross rental income y 456.7, (8) Interest income y 442.3, (9) Dividends y 427.9, (10) Other income y 413.5 with \"(specify on attachment)\" beside it at x 86.2..169.4. No lettered sub-line exists anywhere in Section 3, so no exclusion sentence is needed and none is printed.",
+   "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 387.0, x 112.0..435.6.",
+   "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 396.6, x 336.9..435.6 and nothing else.",
+   "_the_note_above_this_section_offers_a_way_to_skip_it": "Section 3 prints \"Note: If you provide a current profit and loss statement for the information below, enter the total gross monthly income in Box B below. Do not complete lines (6) - (10).\" at y 511.2 and y 502.2. A record taking that route writes Box B directly and leaves (6) through (10) empty, which this tripwire would read as 0 + 0 + 0 + 0 + 0 against a non-zero Box B. Declared as an arguable item rather than silently excused - see _arguable_pages_4_to_6 in adapters/pdf/maps/433boi.map.json."
+  },
+  {
+   "line": "Box C",
+   "caption": "Add lines (11) through (20) and enter the amount in Box C =",
+   "caption_at": "y 86.8, x 180.8..435.6, with the bare \"$\" at y 87.7, x 444.2..448.6 inside the cell rect span 81.0..99.0. The box marker \"Box C\" is at y 108.9, x 446.4..469.5 and the caption \"Total Business Expenses\" at y 100.9, x 446.4..536.2.",
+   "total_key": "s4_box_c_total_business_expenses",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative number, enter \"0\" on that line.",
+   "feeders": [
+    {
+     "keys": [
+      "s4_11_materials_purchased",
+      "s4_12_inventory_purchased",
+      "s4_13_gross_wages_and_salaries",
+      "s4_14_rent",
+      "s4_15_supplies",
+      "s4_16_utilities_telephones",
+      "s4_17_vehicle_costs",
+      "s4_18_insurance",
+      "s4_19_current_taxes",
+      "s4_20_other_expenses"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Add lines (11) through (20) and enter the amount in Box C =\". TEN operands, named as a range and printed one per row: (11) Materials purchased y 273.1, (12) Inventory purchased y 258.7, (13) Gross wages and salaries y 244.3, (14) Rent y 229.9, (15) Supplies y 204.5, (16) Utilities/telephones y 190.3, (17) Vehicle costs y 175.9, (18) Insurance y 161.5, (19) Current taxes y 136.1, (20) Other expenses y 121.9. Six of the ten carry a parenthetical example beside or below them; none of the parentheticals is a second cell.",
+   "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 97.2, x 112.0..435.6.",
+   "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 106.8, x 336.9..435.6 and nothing else.",
+   "_one_expense_is_forbidden_and_the_form_says_so": "Section 4 prints \"Deductions for non-cash expenses (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes.\" at y 334.7 and y 325.1. That is a constraint on what may go INTO the ten lines, not arithmetic, and no tripwire can express it: a depreciation figure inside (20) is indistinguishable from any other number. Carried as a review-page advisory on this total.",
+   "review_page_advisory": "Section 4 forbids non-cash expenses - depreciation, depletion and the like - as an offer expense, and forbids credit card payments in line (20). The arithmetic here is checked; what went into each line is not. Check lines (11) through (20) against those two exclusions before filing."
+  },
+  {
+   "line": "Box D",
+   "caption": "Subtract Box C from Box B and enter the amount in Box D =",
+   "caption_at": "y 50.8, x 178.8..435.6, with the bare \"$\" at y 51.7, x 444.2..448.6 inside the cell rect span 45.0..63.0. The box marker \"Box D\" is at y 72.9, x 446.4..469.5 and the caption \"Remaining Monthly Income\" at y 64.9, x 446.4..543.3.",
+   "total_key": "s4_box_d_remaining_monthly_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a negative number. If any line item is a negative number, enter \"0\" on that line.",
+   "feeders": [
+    {
+     "keys": [
+      "s3_box_b_total_business_income"
+     ]
+    },
+    {
+     "keys": [
+      "s4_box_c_total_business_expenses"
+     ],
+     "sign": -1
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Subtract Box C from Box B and enter the amount in Box D =\". TWO operands and the ORDER IS PRINTED: Box B minus Box C, not the other way round. It is the only box on this form whose equation is a subtraction, and the only one where reading the caption backwards produces a number of the same magnitude with the opposite sign - which the floor would then clamp to 0 and hide.",
+   "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 61.2, x 112.0..435.6. HERE THE FLOOR IS LOAD-BEARING in a way it is not for Boxes A, B and C: a business whose expenses exceed its income has a genuinely negative remaining monthly income, and the form refuses to print it. Box D is the one box on this form whose unfloored value can be negative on a correctly filled record.",
+   "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 70.8, x 336.9..435.6 and nothing else. The multipliers that act on Box D are printed on PAGE 5, not here."
+  },
+  {
+   "line": "Box D -> page 5 (12-month row)",
+   "caption": "Enter the total from Box D",
+   "caption_at": "y 642.3, x 39.6..151.1, directly above the cell at rect [50.4, 628.6, 241.2, 640.8] with its printed \"$\" at y 632.4, x 41.0..45.4.",
+   "total_key": "s5_box_d_for_12_month_multiplier",
+   "feeders": [
+    {
+     "keys": [
+      "s4_box_d_remaining_monthly_income"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Enter the total from Box D\". ONE operand, named in the caption: Box D, which this form prints on page 4 at y 72.9.",
+   "_why_this_is_a_tripwire_and_not_an_input": "The caption is an instruction to COPY a figure this form prints elsewhere. A carry-forward between two printed cells on the same form is exactly the shape a tripwire checks: both sides are on the page, so a mistyped copy is visible without leaving the document. It is the first cross-page tripwire on this form.",
+   "_no_floor_and_no_multiplier": "The copy carries neither. The floor and the multiplier belong to Box E, on the same row, and are declared there."
+  },
+  {
+   "line": "Box E",
+   "caption": "If you will pay your offer in 5 or fewer payments within 5 months or less, multiply \"Remaining Monthly Income\" (Box D) by 12 to get \"Future Remaining Income.\" Do not enter a number less than zero.",
+   "caption_at": "the instruction at y 673.3, x 36.0..565.2 wrapping to y 663.7, x 36.0..203.8. The row beneath draws \"Enter the total from Box D\" [cell] \"X 12 =\" at y 632.5, x 294.2..326.2 [Box E cell], and the box caption \"Box E Future Remaining Income\" at y 642.3, x 370.8..509.3 above a cell at rect [381.6, 628.6, 572.4, 640.8] with its printed \"$\" at y 632.4, x 372.2..376.6.",
+   "total_key": "s5_box_e_future_remaining_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a number less than zero.",
+   "multiplier": 12,
+   "feeders": [
+    {
+     "keys": [
+      "s5_box_d_for_12_month_multiplier"
+     ],
+     "factor": 12,
+     "factor_caption": "X 12 ="
+    }
+   ],
+   "_printed_operand_list_verbatim": "ONE operand and ONE printed multiplier: the page-5 Box D copy, times 12. The 12 is DRAWN ON THE PAGE TWICE - in the instruction and again as \"X 12 =\" between the two cells - on the same footing as the X .8 quick-sale multipliers on pages 3 and 4. It is a printed constant, not a policy this repo holds.",
+   "_the_floor_is_in_this_lines_own_instruction": "Not inherited from a block sentence. \"Do not enter a number less than zero.\" is the last sentence of Box E's own paragraph, at y 663.7. It is load-bearing because Box D is itself floored at 0 only by the page-4 sentence; twelve times a floored zero is zero, and the floor here catches the case where a record supplies a negative Box D copy.",
+   "_the_multiplier_does_not_apply_in_every_case": "The page prints, above both branches: \"Note: The multipliers below (12 and 24) and the calculated offer amount do not apply if IRS determines you have the ability to pay your tax debt in full within the legal period to collect.\" at y 709.1 and y 699.5. That is a statement about what the IRS may decide, not about what goes in the cell, and it is carried as a review-page advisory on the Offer Amount rather than as a condition on this line."
+  },
+  {
+   "line": "Box D -> page 5 (24-month row)",
+   "caption": "Enter the total from Box D",
+   "caption_at": "y 591.9, x 39.6..151.1, directly above the cell at rect [50.4, 578.2, 241.2, 590.4] with its printed \"$\" at y 582.0, x 41.0..45.4.",
+   "total_key": "s5_box_d_for_24_month_multiplier",
+   "feeders": [
+    {
+     "keys": [
+      "s4_box_d_remaining_monthly_income"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "\"Enter the total from Box D\". ONE operand: Box D.",
+   "_the_form_prints_box_d_twice_and_this_is_the_second": "Two separate cells, one per payment-term branch, each with its own printed caption. They are bound as two map keys and checked as two tripwires rather than as one cell written twice, because the page draws two. 433-A(OIC) prints its Box F the same way for the same reason."
+  },
+  {
+   "line": "Box F",
+   "caption": "If you will pay your offer in 6 to 24 months, multiply \"Remaining Monthly Income\" (Box D) by 24 to get \"Future Remaining Income\". Do not enter a number less than zero.",
+   "caption_at": "the instruction at y 616.3, x 36.0..548.5 wrapping to y 606.7, x 36.0..117.4. The row beneath draws \"Enter the total from Box D\" [cell] \"X 24 =\" at y 582.1, x 294.2..326.2 [Box F cell], and the box caption \"Box F Future Remaining Income\" at y 591.9, x 370.8..508.8 above a cell at rect [381.6, 578.2, 572.4, 590.4] with its printed \"$\" at y 582.0, x 372.2..376.6.",
+   "total_key": "s5_box_f_future_remaining_income",
+   "floor": 0,
+   "floor_caption": "Do not enter a number less than zero.",
+   "multiplier": 24,
+   "feeders": [
+    {
+     "keys": [
+      "s5_box_d_for_24_month_multiplier"
+     ],
+     "factor": 24,
+     "factor_caption": "X 24 ="
+    }
+   ],
+   "_printed_operand_list_verbatim": "ONE operand and ONE printed multiplier: the page-5 Box D copy, times 24. The 24 is drawn twice, in the instruction and as \"X 24 =\" between the cells.",
+   "_THE_FIELD_BEHIND_THIS_LINE_IS_NAMED_BOX_H": "The AcroForm field is Box_H_Future_Remaining_Income and the page prints \"Box F\". The name is inherited from 433-A(OIC), where the x24 future-remaining-income box IS Box H because that form prints eight boxes. The role transferred exactly and only the letter is wrong. Recorded per occurrence in 433boi.map.json _the_names_that_lie_on_pages_4_to_6, and this line is bound from the printed caption."
+  },
+  {
+   "line": "Offer Amount",
+   "caption": "Determine your minimum offer amount by adding the total available assets from Box A to the amount in either Box E or Box F. Your offer amount must be more than zero.",
+   "caption_at": "the instruction at y 565.9, x 36.0..566.9 wrapping to y 556.3, x 36.0..103.1. The row beneath draws it as an equation: \"$\" y 485.8 x 41.0..45.4 [Box A amount cell, rect x 50.4..176.4] \"+\" y 485.9 x 195.1..200.9 \"$\" y 485.8 x 221.0..225.4 [Box E or Box F cell, rect x 230.4..356.4] \"=\" y 485.9 x 375.1..380.9 \"$\" y 485.2 x 399.6..404.6 [Offer Amount cell, rect x 403.2..572.4].",
+   "total_key": "s5_offer_amount",
+   "feeders": [
+    {
+     "keys": [
+      "s5_amount_from_box_a"
+     ]
+    },
+    {
+     "keys": [
+      "s5_amount_from_box_e_or_box_f"
+     ]
+    }
+   ],
+   "_printed_operand_list_verbatim": "TWO operands, both printed on this page, joined by a printed \"+\" and separated from the result by a printed \"=\". The captions above them are \"Enter the amount from Box A*\" y 540.1, x 39.6..168.1 and \"Enter the amount from either\" y 540.1, x 219.6..343.1 continuing \"Box E or Box F\" y 529.3, x 219.6..284.1.",
+   "_this_is_the_offer": "THE FIGURE THIS ENTIRE FORM EXISTS TO PRODUCE. A wrong operand here is the amount the business offers the IRS. It is bound from the printed equation - the \"+\" and the \"=\" between the three cells - and from nothing else.",
+   "_why_no_floor_and_what_the_page_says_instead": "\"Your offer must be more than zero ($0).\" at y 527.7, x 403.2..552.6, with \"Do not leave blank. Use whole dollars only.\" at y 518.1. That is a constraint on the value and not a floor: a floor clamps a negative sum UP to a value, and this sentence forbids the value zero outright, so declaring floor 0 would make the engine write the one figure the page says must not appear. Carried as a review-page advisory on this total, which is the channel 433-A(OIC) opened for exactly this cell.",
+   "_no_multiplier": "None on this line. The multipliers are on the two rows above and act on Box D, not here.",
+   "review_page_advisory": "THE ARITHMETIC IS CHECKED AND THREE THINGS BESIDE IT ARE NOT. Gate step 11 recomputes this cell from the two printed cells to its left and fails on any disagreement. What no tripwire can check: (1) \"Your offer must be more than zero ($0). Do not leave blank. Use whole dollars only.\" - a value of exactly 0 satisfies the arithmetic whenever both operands are 0 and violates the page; (2) which of Box E and Box F the middle operand copied, which is the payment term and is set on Form 656, Section 4, a form this repo does not hold; (3) the note printed above the whole section: \"The multipliers below (12 and 24) and the calculated offer amount do not apply if IRS determines you have the ability to pay your tax debt in full within the legal period to collect.\" Place the figure on Form 656, Section 4, Payment Terms."
   }
  ],
  "not_checkable": {
@@ -486,6 +726,35 @@
     "printed_caption": "(listing price)",
     "why_not_checkable": "NOT A TOTAL AT ALL AND DECLARED HERE ANYWAY. It is a money-shaped cell on pages this slice authors that no line adds up and no line adds it into - the only such cell on either page. Listing it makes \"no total checks this\" a stated fact rather than an absence; leaving it out would put it in neither list, which is the state this block exists to prevent.",
     "review_page_advisory": "The listing price is what the property is currently offered at, not its market value. It feeds no total on this form."
+   },
+   {
+    "cell": {
+     "group": "5_business_equipment",
+     "column": "equity",
+     "row": 0
+    },
+    "printed_caption": "Total value of equipment (if leased or used in the production of income enter 0 as the total value) =",
+    "why_not_checkable": "THE PAGE PRINTS A CONDITIONAL AND PRINTS NO CELL THAT RECORDS ITS PREDICATE. The caption at y 672.7, y 663.9 and y 654.7 says the total is quick-sale value minus loan balance UNLESS the equipment is leased or used in the production of income, in which case it is 0. Page 4 draws 30 widgets and every one is a TextField - there is not a single checkbox on the page - so nothing on this form says whether either limb holds. The vehicles on page 3 carry the same shape and ARE checked, as two predicated lines, precisely because that row prints a Lease/Own checkbox pair the predicate can read. This row prints nothing to read, so a tripwire would have to accept a disjunction: either the arithmetic OR zero, which passes on every value the arithmetic can produce and on zero, and therefore refuses nothing. Declared not checkable rather than checked against a disjunction.",
+    "review_page_advisory": "Line (5a) must be 0 if the equipment is leased or used in the production of income, and quick-sale value minus loan balance otherwise. This form records neither condition anywhere, so nothing here can check which case applies. Confirm it before filing; (5) and Box A both sum this cell."
+   },
+   {
+    "map_key": "s3_equipment_from_attachment",
+    "printed_caption": "Total value of equipment listed from attachment [current market value X .8 minus any loan balance(s)]",
+    "why_not_checkable": "Same shape as (1d), (2d), (3c) and (4d). Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. The bracketed part of the caption states arithmetic the preparer does on the attachment, not arithmetic this form prints operands for. It is nevertheless an operand of (5), which IS checkable.",
+    "review_page_advisory": "Line (5b) must already have the X .8 quick-sale discount applied to the attached equipment, net of loan balances, and any leased or income-producing item on the attachment must be entered as 0. Nothing on this form verifies it."
+   },
+   {
+    "map_key": "s5_amount_from_box_a",
+    "printed_caption": "Enter the amount from Box A*",
+    "why_not_checkable": "THE ASTERISK. The footnote at y 461.1, x 36.0..452.1 reads \"*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.\" So this cell is Box A MINUS an optional exclusion the taxpayer chooses and the form records nowhere: Section 2 prints no column marking an asset as income-producing, and no cell anywhere holds the excluded amount. A tripwire asserting equality with Box A would fail a correctly filed form that took the exclusion; one accepting anything at or below Box A would refuse almost nothing. 433-A(OIC) prints the analogous cell as \"Enter the amount from Box A plus Box B (if applicable)\" with NO exclusion footnote, and that one IS checked - the difference is one asterisk and it is the whole difference.",
+    "review_page_advisory": "This cell is Box A, optionally reduced by the equity in income-producing assets other than real estate that you listed in Section 2. The form records no such marking, so nothing here can check the reduction. If you took the exclusion, keep the working with the return.",
+    "_the_one_sided_check_that_was_considered_and_not_declared": "This cell can never legitimately EXCEED Box A: the footnote permits an exclusion and nothing on the page permits an addition. A one-sided tripwire is a real constraint and this engine has no construct for one - every declared line is an equality with an optional floor - so declaring it would mean adding a comparison kind to step 11 in a slice. Recorded as an arguable item rather than silently dropped; see _arguable_pages_4_to_6 in the map."
+   },
+   {
+    "map_key": "s5_amount_from_box_e_or_box_f",
+    "printed_caption": "Enter the amount from either Box E or Box F",
+    "why_not_checkable": "THE PAGE DOES NOT SAY WHICH. Box E is Box D times 12 and applies when the offer is paid in 5 or fewer payments within 5 months or less; Box F is Box D times 24 and applies when it is paid in 6 to 24 months. Which of the two governs is the PAYMENT TERM, and 433-B(OIC) prints no cell anywhere that records it - the term is chosen on Form 656, Section 4, which this form names on page 5 and which this repo does not hold. So the cell equals one of two printed figures and nothing printed on this page decides which; a tripwire that accepted either would pass on a form where the wrong one was copied. Declared not checkable rather than checked against a disjunction. 433-A(OIC) reached the identical conclusion at s8_box_g_or_box_h.",
+    "review_page_advisory": "This cell must equal Box E (the X 12 row) if the offer will be paid in 5 or fewer payments within 5 months or less, or Box F (the X 24 row) if it will be paid in 6 to 24 months. The form gives no cell for the payment term, so nothing here can check which one you copied - it is set on Form 656, Section 4, Payment Terms."
    }
   ]
  }

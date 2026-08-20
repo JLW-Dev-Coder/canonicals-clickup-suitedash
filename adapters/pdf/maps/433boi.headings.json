@@ -5,7 +5,7 @@
  "_what": "The printed banners this form draws, and which group's rows print under which banner. adapters/pdf/verify-headings.mjs re-measures every `_at` out of the PDF and asserts that each group's slots fall inside its heading's band and run in printed order.",
  "_why": "A group whose slots are correct individually can still be routed under the wrong heading, and the result prints cleanly and is wrong. On this form the risk is concrete rather than theoretical: Section 1 contains a block of business scalars AND a three-row table of people, one after the other under a single banner, and the fourteen scalars must never be reachable as rows of that table nor the rows as scalars.",
  "_band_rule": "A group's band runs from its declared heading's baseline down to the next printed structure below it — here the page's lowest drawn run. Slots must fall strictly inside; a slot on the boundary is a slot whose heading is arguable, and this file declares none.",
- "_slice": "SLICE 2 - pages 1, 2 and 3. Pages 4 through 6 declare no heading here yet and no group; their banners are read when their slices are authored, from the page, not by extrapolating these.",
+ "_slice": "Slices 1, 2 and 3. Pages 1 to 6.",
  "headings": [
   {
    "id": "SECTION_1_BUSINESS",
@@ -41,6 +41,13 @@
    "text": "Business vehicles",
    "_at": "y 396.7, x 36.0..105.4, continuing x 107.6..573.3 and \"attachment.\" at y 387.1 x 36.0..77.8.",
    "_the_banner_is_more_than_one_drawn_run": "Three drawn runs across two baselines: \"Business vehicles\" y 396.7 x 36.0..105.4, the long qualifier x 107.6..573.3, and \"attachment.\" y 387.1 x 36.0..77.8. Same convention."
+  },
+  {
+   "id": "BUSINESS_EQUIPMENT",
+   "page": 4,
+   "text": "Other business equipment",
+   "_at": "y 731.5 (baseline), x 36.0..136.9, drawn directly under the Section 2 (Continued) banner at y 745.9. The instruction beneath it - \"[If you have more than one piece of equipment, please list on a separate attachment and put the total of all equipment in box (5b)]\" at y 721.9, x 36.0..494.5 - is NOT declared as the heading: it is a rule about overflow rather than a name for the table, and slice 1 declared a sentence as a heading only where the sentence was the only thing separating two structures. Here the short banner does that job.",
+   "_why_it_is_the_only_heading_on_page_4": "Sections 3 and 4 hold no repeatable table - every one of their cells is a scalar in map{} - so no group needs a band on the lower two thirds of the page. The band this heading opens therefore runs from y 731.5 to the foot of the page and contains exactly one group's slots, which is checked rather than assumed."
   }
  ],
  "groups": {
@@ -67,8 +74,13 @@
   "4ac_vehicles": {
    "heading": "BUSINESS_VEHICLES",
    "_why": "Three rows at y 368.6..288.0, y 275.0..194.4 and y 181.4..100.8, all below the banner at y 396.7 and above the footer at y 24.7. The (4d) and (4) scalars at y 100.8..64.8 are scalars, not slots."
+  },
+  "5_business_equipment": {
+   "heading": "BUSINESS_EQUIPMENT",
+   "_why": "The one printed equipment row sits between the heading at y 731.5 and the Section 3 banner at y 562.3. Its four cells are at rect y 687.6..703.8 (description, full width), rect y 653.0..673.2 (the three money cells) and rect y 651.6..666.0 (the total), every one strictly below the heading baseline and strictly above the Section 3 banner. Nothing else on page 4 is a group row: Sections 3 and 4 are scalars."
   }
  },
  "_no_other_group_on_page_1": "Page 1 draws one repeatable table and one only. The fourteen scalars above the partners block are not a table: each has its own caption at its own y, no caption repeats among them, and no two share a row shape. By contrast every one of the partner block's eight captions is drawn three times at identical x and differing y, which is what a repeated row looks like on this form. Stated so that 'only one group' is a reading of the page rather than an absence of effort.",
- "_no_other_group_on_pages_2_and_3": "Pages 2 and 3 draw five repeatable tables and five only, and every one is declared above. The nine scalars bound on these pages - (1d), (1), (2d), (2), (3c), (3), (4d), (4) and the listing price - are not tables: each has its own caption at its own y, none of those captions repeats, and eight of the nine are the only widget on their baseline. By contrast every caption in each of the five tables is drawn once per row at identical x and differing y, which is what a repeated row looks like on this form."
+ "_no_other_group_on_pages_2_and_3": "Pages 2 and 3 draw five repeatable tables and five only, and every one is declared above. The nine scalars bound on these pages - (1d), (1), (2d), (2), (3c), (3), (4d), (4) and the listing price - are not tables: each has its own caption at its own y, none of those captions repeats, and eight of the nine are the only widget on their baseline. By contrast every caption in each of the five tables is drawn once per row at identical x and differing y, which is what a repeated row looks like on this form.",
+ "_no_other_group_on_pages_4_to_6": "ONE GROUP ACROSS THE THREE PAGES, AND THAT IS A FINDING. Page 4 prints one equipment row; page 5 prints the offer calculation, which is seven scalars in a fixed layout and not a table; page 6 prints Section 6 continued, the signature block and the attachment list, and the attachment list is nine LONE TICKS rather than rows - each tick is a check_here target with no companion cell, so there is no row for a group to hold. Checked against the enumeration: 94 widgets across the three pages, 4 of them in the one group, 90 bound as scalars, checkbox pairs or check_here ticks."
 }
