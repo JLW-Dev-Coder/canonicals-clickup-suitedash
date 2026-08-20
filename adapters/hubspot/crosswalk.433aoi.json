@@ -1,0 +1,3221 @@
+{
+ "meta": {
+  "form": "433aoi",
+  "form_revision": "4-2026",
+  "catalog": "55896Q",
+  "map": "adapters/pdf/maps/433aoi.map.json",
+  "classification": "adapters/pdf/maps/433aoi.crosswalk-classification.json",
+  "backbone": "adapters/hubspot/fields.433a.json",
+  "pdf": "adapters/pdf/forms/f433aoi.pdf",
+  "what_this_is": "THE KEY-TO-ENTRY BINDING, AND NOTHING ELSE IS BOUND HERE. One row per input key the 433-A(OIC) fill engine can consume, saying which crosswalk-classification entry covers it and which FACT it names. It does NOT carry the HubSpot property name: that is DERIVED by derive-names-433aoi.mjs from the entry CATEGORY, read out of the classification file, so that a category and a name can never disagree.",
+  "the_naming_rule": "Ruling 5. exact -> irs433_<fact>, shared across the series. new -> irs433aoi_<fact>, form-specific. The middle four - superset, different-arithmetic-same-name, different-shape, same-fact-different-decomposition - are exactly the categories where the wrong call creates a permanent duplicate or a permanent collision, so each row in them MUST declare `scope` and `scope_reason` and the deriver STOPs on a row that does not. asymmetric-the-other-way binds no OIC key by definition, and a row claiming one is a STOP.",
+  "the_governing_question": "Not \"is this the same fact\" but \"WOULD ONE PROPERTY SERVING BOTH FORMS EVER HAVE TO HOLD TWO DIFFERENT VALUES FOR ONE TAXPAYER AT ONE MOMENT.\" If yes, they are two properties whatever the label says. Every scope_reason below answers it in those terms, and the answer is what put the asset TABLES on the shared side and their TOTALS on the form-specific side - the discount lives in the total, not in the row.",
+  "fact_naming": "Mechanical where it can be: the input key with this form printed section or line marker stripped (s1_tp_last_name -> tp_last_name, 12_gross_receipts -> the backbone fact bizinc_gross_receipts). Two deliberate deviations, both because the mechanical strip would have produced a name too vague to survive: the (7b) residual block takes a remaining_furniture_ prefix rather than yielding irs433aoi_current_market_value, and the (8c) business digital-asset block takes a business_ prefix rather than colliding with the (2c) personal block. Both are recorded here rather than applied silently.",
+  "backbone_key_meaning": "The 433-A (or, for one row, 433-F) INPUT KEY whose fact this row reuses, or null. It is a reviewable claim, not a lookup: null means \"no existing property holds this fact\", and the deriver reports every exact-classified row whose derived shared name does not already exist on the portal, because `exact` is the category that invites reuse and a new name under it deserves to be looked at.",
+  "types_are_stated_not_inferred": "gen-fields-from-map.mjs types 433-A money cells STRUCTURALLY, from the printed line number each key carries as its own prefix. This form numbers its own lines 1-51 plus seven boxes plus nine section prefixes, so that rule has nothing it can read here and would type box_a_ and s9_ cells wrongly. Each row therefore states type, fieldType and a basis, the same way crosswalk.433f.json does."
+ },
+ "bindings": [
+  {
+   "key": "s1_tp_last_name",
+   "entry": "X-01",
+   "fact": "tp_last_name",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_tp_first_name",
+   "entry": "X-01",
+   "fact": "tp_first_name",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_tp_dob",
+   "entry": "X-01",
+   "fact": "tp_dob",
+   "backbone_key": "2_tp_dob",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": true
+  },
+  {
+   "key": "s1_tp_ssn_itin",
+   "entry": "X-01",
+   "fact": "tp_ssn_itin",
+   "backbone_key": "2_tp_ssn_itin",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_home_physical_address",
+   "entry": "X-02",
+   "fact": "address",
+   "backbone_key": "1b_address",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": true
+  },
+  {
+   "key": "s1_date_of_marriage",
+   "entry": "X-60",
+   "fact": "date_of_marriage",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": true
+  },
+  {
+   "key": "s1_housing_other_specify",
+   "entry": "X-62",
+   "fact": "housing_other_specify",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s1_county_of_residence",
+   "entry": "X-02",
+   "fact": "county_of_residence",
+   "backbone_key": "1c_county_of_residence",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_primary_phone",
+   "entry": "X-02",
+   "fact": "primary_phone",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_secondary_phone",
+   "entry": "X-02",
+   "fact": "secondary_phone",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_fax_number",
+   "entry": "X-02",
+   "fact": "fax_number",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_home_mailing_address",
+   "entry": "X-02",
+   "fact": "home_mailing_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": true
+  },
+  {
+   "key": "s1_sp_last_name",
+   "entry": "X-01",
+   "fact": "sp_last_name",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_sp_first_name",
+   "entry": "X-01",
+   "fact": "sp_first_name",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s1_sp_dob",
+   "entry": "X-01",
+   "fact": "sp_dob",
+   "backbone_key": "2_sp_dob",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": true
+  },
+  {
+   "key": "s1_sp_ssn",
+   "entry": "X-01",
+   "fact": "sp_ssn_itin",
+   "backbone_key": "2_sp_ssn_itin",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s2_tp_employer_name",
+   "entry": "X-04",
+   "fact": "tp_employer_name",
+   "backbone_key": "4a_tp_employer_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s2_tp_employer_address",
+   "entry": "X-04",
+   "fact": "tp_employer_address",
+   "backbone_key": "4b_tp_employer_address",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s2_tp_occupation",
+   "entry": "X-04",
+   "fact": "tp_occupation",
+   "backbone_key": "4f_tp_occupation",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s2_tp_tenure_years",
+   "entry": "X-04",
+   "fact": "tp_tenure_years",
+   "backbone_key": "4e_tp_tenure_years",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "whole-number count",
+   "pii": false
+  },
+  {
+   "key": "s2_tp_tenure_months",
+   "entry": "X-04",
+   "fact": "tp_tenure_months",
+   "backbone_key": "4e_tp_tenure_months",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "whole-number count",
+   "pii": false
+  },
+  {
+   "key": "s2_sp_employer_name",
+   "entry": "X-04",
+   "fact": "sp_employer_name",
+   "backbone_key": "5a_sp_employer_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s2_sp_employer_address",
+   "entry": "X-04",
+   "fact": "sp_employer_address",
+   "backbone_key": "5b_sp_employer_address",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s2_sp_occupation",
+   "entry": "X-04",
+   "fact": "sp_occupation",
+   "backbone_key": "5f_sp_occupation",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s2_sp_tenure_years",
+   "entry": "X-04",
+   "fact": "sp_tenure_years",
+   "backbone_key": "5e_sp_tenure_years",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "whole-number count",
+   "pii": false
+  },
+  {
+   "key": "s2_sp_tenure_months",
+   "entry": "X-04",
+   "fact": "sp_tenure_months",
+   "backbone_key": "5e_sp_tenure_months",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "whole-number count",
+   "pii": false
+  },
+  {
+   "key": "1c_bank_accounts_from_attachment",
+   "entry": "X-05",
+   "fact": "bank_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "An attachment roll-up cell. 433-A folds attachment amounts into its 13e total caption and prints no cell for them, so there is no 433-A value this could ever equal and no shared fact to name. One property serving both forms would hold a figure on this form and nothing at all on the other."
+  },
+  {
+   "key": "1_total_bank_and_cash",
+   "entry": "X-66",
+   "fact": "total_bank_and_cash",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one property hold both this and 433-A 13e for one taxpayer at one moment? No - this line subtracts a printed $1,000 and 13e subtracts nothing, so for any taxpayer with a bank balance the two figures differ by exactly $1,000 at the same instant. Two properties."
+  },
+  {
+   "key": "2c_description_of_digital_asset",
+   "entry": "X-09",
+   "fact": "description_of_digital_asset",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "2c_number_of_units",
+   "entry": "X-09",
+   "fact": "number_of_units",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "unit count printed as free text - a fractional token quantity is not a money cell and must not be rounded",
+   "pii": false
+  },
+  {
+   "key": "2c_location_of_digital_asset",
+   "entry": "X-09",
+   "fact": "location_of_digital_asset",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "2c_custodian_account_number",
+   "entry": "X-09",
+   "fact": "custodian_account_number",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "2c_self_hosted_asset_address",
+   "entry": "X-09",
+   "fact": "self_hosted_asset_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": true
+  },
+  {
+   "key": "2c_us_dollar_equivalent_today",
+   "entry": "X-09",
+   "fact": "us_dollar_equivalent_today",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "2c_total_digital_assets",
+   "entry": "X-67",
+   "fact": "total_digital_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "2d_investment_accounts_from_attachment",
+   "entry": "X-06",
+   "fact": "investment_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "Same reasoning as 1c: 433-A prints no investment attachment cell, so there is no shared fact. Nothing on 433-A could ever hold this number."
+  },
+  {
+   "key": "2_total_investment_accounts",
+   "entry": "X-68",
+   "fact": "total_investment_accounts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "3b_retirement_accounts_from_attachment",
+   "entry": "X-07",
+   "fact": "retirement_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The attachment roll-up carries the quick-sale discount in its own printed caption. 433-A prints neither a retirement attachment cell nor a discount anywhere, so no 433-A value can equal this one."
+  },
+  {
+   "key": "3_total_retirement_accounts",
+   "entry": "X-07",
+   "fact": "total_retirement_accounts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: a taxpayer with a $100,000 IRA has a market value of $100,000 on 433-A and a quick-sale figure of $80,000 here, at the same moment, and both are correct on their own form. One property cannot hold both. Note the TABLE goes the other way - see the retirement_accounts row."
+  },
+  {
+   "key": "4b_life_insurance_from_attachment",
+   "entry": "X-08",
+   "fact": "life_insurance_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: this cell is the cash value of the ATTACHED policies only, the ones that did not fit the single printed row. 433-A itemises three policies and folds any remainder into its 17f total without printing a cell for it, so no 433-A property holds this quantity and none ever could."
+  },
+  {
+   "key": "4b_minus_loan_balances",
+   "entry": "X-08",
+   "fact": "life_insurance_attachment_minus_loan_balances",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The loan balance against the ATTACHED policies only. 433-A prints one loan-balance figure per printed policy row and none for attachments, so this quantity exists on no 433-A cell."
+  },
+  {
+   "key": "4b_total_life_insurance_from_attachment",
+   "entry": "X-69",
+   "fact": "total_life_insurance_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The (4b) sub-total. 433-A folds attachment amounts into 17f without printing a cell, so no 433-A property could hold it."
+  },
+  {
+   "key": "4_total_life_insurance",
+   "entry": "X-69",
+   "fact": "total_life_insurance_equity",
+   "backbone_key": "17f_total_life_insurance_equity",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: could one property ever hold two different numbers here? No. Both totals are cash value minus loan balance over EVERY policy the taxpayer holds, and neither form prints a discount on life insurance. The container differs - one printed row plus an attachment here, three printed rows there - and the SUM does not. This is where the test separates a container difference from an arithmetic one: the four quick-sale totals beside it are form-specific for exactly the reason this one is not."
+  },
+  {
+   "key": "5_real_property_listing_price",
+   "entry": "X-13",
+   "fact": "real_property_listing_price",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "5c_property_from_attachment",
+   "entry": "X-10",
+   "fact": "property_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "Attachment roll-up carrying the quick-sale discount; 433-A prints neither."
+  },
+  {
+   "key": "5_total_real_estate",
+   "entry": "X-10",
+   "fact": "total_real_estate",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A 18d totals market equity and this totals QUICK-SALE equity. A taxpayer with $100,000 of real-property equity has $100,000 on 433-A and roughly $60,000 here at the same instant. Two properties, on the largest numbers on the form."
+  },
+  {
+   "key": "6b_vehicle_1_less_allowance",
+   "entry": "X-12",
+   "fact": "vehicle_1_less_allowance",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "6d_vehicle_2_less_allowance",
+   "entry": "X-12",
+   "fact": "vehicle_2_less_allowance",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "6e_vehicles_from_attachment",
+   "entry": "X-70",
+   "fact": "vehicles_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "6_total_vehicles",
+   "entry": "X-11",
+   "fact": "total_vehicles",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A 19d totals market equity; this totals quick-sale equity, less $3,450 per vehicle, with a leased vehicle forced to zero. Three separate reasons the two figures differ for one taxpayer at one moment."
+  },
+  {
+   "key": "7b_description_of_asset",
+   "entry": "X-14",
+   "fact": "remaining_furniture_description_of_asset",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The (7b) block is the RESIDUAL \"value of remaining furniture and personal effects\", not an itemised row. 433-A has no residual line: it itemises personal property at line 20 and stops. Nothing on 433-A holds a residual, so no shared fact exists."
+  },
+  {
+   "key": "7b_current_market_value",
+   "entry": "X-14",
+   "fact": "remaining_furniture_current_market_value",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the market value of the taxpayer RESIDUAL furniture and personal effects - what is left after the (7a) itemisation. 433-A itemises everything at line 20 and computes no residual, so for one taxpayer at one moment irs433_other_personal_property holds itemised rows and this cell holds the value of what was never itemised. Two different quantities, two properties."
+  },
+  {
+   "key": "7b_quick_sale_value",
+   "entry": "X-14",
+   "fact": "remaining_furniture_quick_sale_value",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The residual block again, and this cell also carries the quick-sale discount 433-A prints nowhere. Both reasons stand alone: even if 433-A had a residual line, its figure would be market value and this one is market value times .8, which are two different numbers at one moment."
+  },
+  {
+   "key": "7b_minus_loan_balance",
+   "entry": "X-14",
+   "fact": "remaining_furniture_minus_loan_balance",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the loan balance secured against the residual furniture and personal effects. 433-A prints a loan balance per itemised row and none against a residual it does not compute, so there is no 433-A value this could ever equal."
+  },
+  {
+   "key": "7b_total_remaining_furniture",
+   "entry": "X-14",
+   "fact": "total_remaining_furniture",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the (7b) row total - quick-sale value less loan balance, over the residual. 433-A computes no residual and therefore no residual total, so nothing on 433-A holds it at any moment."
+  },
+  {
+   "key": "7c_valuable_items_from_attachment",
+   "entry": "X-14",
+   "fact": "valuable_items_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the discounted equity of the valuable items that did not fit the single printed (7a) row. 433-A prints two personal-property rows and gives its attachment no cell of its own, so no 433-A property could ever hold this figure - and this one carries the quick-sale discount besides."
+  },
+  {
+   "key": "7_total_other_valuable_items",
+   "entry": "X-71",
+   "fact": "total_other_valuable_items",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: this total subtracts a printed $11,980 and sums quick-sale equity; 433-A 20c subtracts nothing and sums market equity. Two different numbers for one taxpayer at one moment, twice over."
+  },
+  {
+   "key": "box_a_available_individual_equity_in_assets",
+   "entry": "X-15",
+   "fact": "box_a_available_individual_equity_in_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s4_business_name",
+   "entry": "X-16",
+   "fact": "self_employment_business_name",
+   "backbone_key": "433f_biz_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s4_business_address",
+   "entry": "X-16",
+   "fact": "self_employment_business_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": true
+  },
+  {
+   "key": "s4_business_telephone",
+   "entry": "X-16",
+   "fact": "business_phone",
+   "backbone_key": "53b_business_phone",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_business_ein",
+   "entry": "X-16",
+   "fact": "employer_identification_number",
+   "backbone_key": "54_employer_identification_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s4_business_website",
+   "entry": "X-17",
+   "fact": "business_website",
+   "backbone_key": "57_business_website",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_trade_name_or_dba",
+   "entry": "X-16",
+   "fact": "trade_name_or_dba",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_description_of_business",
+   "entry": "X-16",
+   "fact": "type_of_business",
+   "backbone_key": "55_type_of_business",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_total_number_of_employees",
+   "entry": "X-16",
+   "fact": "total_number_of_employees",
+   "backbone_key": "58_total_number_of_employees",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "whole-number count",
+   "pii": false
+  },
+  {
+   "key": "s4_frequency_of_tax_deposits",
+   "entry": "X-16",
+   "fact": "frequency_of_tax_deposits",
+   "backbone_key": "60_frequency_of_tax_deposits",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_average_gross_monthly_payroll",
+   "entry": "X-72",
+   "fact": "average_gross_monthly_payroll",
+   "backbone_key": "59_average_gross_monthly_payroll",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_percentage_ownership",
+   "entry": "X-73",
+   "fact": "pct_ownership",
+   "backbone_key": "3a_pct_ownership",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "percentage",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_title",
+   "entry": "X-73",
+   "fact": "title",
+   "backbone_key": "3a_title",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_name",
+   "entry": "X-73",
+   "fact": "business_name",
+   "backbone_key": "3b_business_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_address",
+   "entry": "X-74",
+   "fact": "other_business_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_telephone",
+   "entry": "X-74",
+   "fact": "other_business_telephone",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s4_other_business_ein",
+   "entry": "X-74",
+   "fact": "other_business_ein",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s4_other_business_type_other",
+   "entry": "X-73",
+   "fact": "business_type_other_desc",
+   "backbone_key": "3c_business_type_other_desc",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "8c_description_of_digital_asset",
+   "entry": "X-18",
+   "fact": "business_description_of_digital_asset",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The BUSINESS digital-asset block. 433-A asks for business digital assets nowhere - its line 15 is personal - so no shared fact exists. And it cannot share the personal (2c) property: a taxpayer with a personal wallet and a business wallet has two different descriptions at one moment, one per printed block."
+  },
+  {
+   "key": "8c_number_of_units",
+   "entry": "X-18",
+   "fact": "business_number_of_units",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "unit count printed as free text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the quantity of units of the BUSINESS digital asset. 433-A asks for business digital assets nowhere, and its personal line-15 table has no unit-count column at all - it asks amount and value together. Nor can this share the personal (2c) cell: a taxpayer holding 2 BTC personally and 40 ETH in the business has two different unit counts at one moment."
+  },
+  {
+   "key": "8c_location_of_digital_asset",
+   "entry": "X-18",
+   "fact": "business_location_of_digital_asset",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: where the BUSINESS digital asset is held. 433-A asks this only for personal assets, and a taxpayer whose personal wallet sits at one custodian and whose business wallet sits at another has two different locations at the same moment."
+  },
+  {
+   "key": "8c_custodian_account_number",
+   "entry": "X-18",
+   "fact": "business_custodian_account_number",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the custodian account number for the BUSINESS digital asset. 433-A has no business digital-asset block, and the personal (2c) number and the business one are two different account numbers held at the same moment."
+  },
+  {
+   "key": "8c_self_hosted_asset_address",
+   "entry": "X-18",
+   "fact": "business_self_hosted_asset_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": true,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the self-hosted wallet address for the BUSINESS digital asset. A taxpayer with both a personal and a business self-hosted wallet has two different addresses at one moment, and writing one into the other block is a false statement about where an asset is."
+  },
+  {
+   "key": "8c_us_dollar_equivalent_today",
+   "entry": "X-18",
+   "fact": "business_us_dollar_equivalent_today",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the dollar equivalent of the BUSINESS digital asset today. 433-A books every digital asset - business or personal - at line 15, and this form splits them across two blocks feeding two different totals, so the personal and business figures are two numbers at one moment and neither can stand for the other."
+  },
+  {
+   "key": "8c_total_digital_assets",
+   "entry": "X-18",
+   "fact": "business_total_digital_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the (8c) identity total. It feeds the (8) business bank total where the personal (2c) total feeds (2) - two totals over two different assets at one moment. 433-A has neither, having no business digital-asset block to total."
+  },
+  {
+   "key": "8d_bank_accounts_from_attachment",
+   "entry": "X-18",
+   "fact": "business_bank_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the business bank balances that did not fit the two printed rows. 433-A prints two business bank rows too and gives its attachment no cell of its own, folding it into the 65c caption, so there is no 433-A property that ever holds this number."
+  },
+  {
+   "key": "8_total_business_bank_accounts",
+   "entry": "X-76",
+   "fact": "total_business_bank_accounts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: this total adds the business DIGITAL ASSET figure at (8c); 433-A 65c adds business bank balances only and books every digital asset at line 15. A taxpayer with a business wallet has two different numbers at one moment."
+  },
+  {
+   "key": "9c_business_assets_from_attachment",
+   "entry": "X-19",
+   "fact": "business_assets_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "Attachment roll-up carrying the quick-sale discount; 433-A prints neither."
+  },
+  {
+   "key": "9_total_business_assets",
+   "entry": "X-19",
+   "fact": "total_business_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A 67c totals market equity, this totals quick-sale equity, and this one also zeroes a leased or income-producing asset the 433-A total does not. Different numbers at one moment."
+  },
+  {
+   "key": "10_irs_allowed_deduction_books_and_tools",
+   "entry": "X-20",
+   "fact": "irs_allowed_deduction_books_and_tools",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "11_business_assets_less_deduction",
+   "entry": "X-20",
+   "fact": "business_assets_less_deduction",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "box_b_available_business_equity_in_assets",
+   "entry": "X-21",
+   "fact": "box_b_available_business_equity_in_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s6_period_provided_beginning",
+   "entry": "X-77",
+   "fact": "period_from",
+   "backbone_key": "S7_period_from",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s6_period_provided_through",
+   "entry": "X-77",
+   "fact": "period_to",
+   "backbone_key": "S7_period_to",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "12_gross_receipts",
+   "entry": "X-22",
+   "fact": "bizinc_gross_receipts",
+   "backbone_key": "68_bizinc_gross_receipts",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "13_gross_rental_income",
+   "entry": "X-22",
+   "fact": "bizinc_gross_rental_income",
+   "backbone_key": "69_bizinc_gross_rental_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "14_interest_income",
+   "entry": "X-22",
+   "fact": "bizinc_interest",
+   "backbone_key": "70_bizinc_interest",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "15_dividends",
+   "entry": "X-22",
+   "fact": "bizinc_dividends",
+   "backbone_key": "71_bizinc_dividends",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "16_other_income",
+   "entry": "X-80",
+   "fact": "bizinc_other_income_all_sources",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A carries this quantity across FIVE cells - line 72 plus four Other Income amount cells - and this form carries it in one. For a taxpayer with two other-income sources, irs433_bizinc_cash_receipts_not_otherwise_listed holds one of them and this cell holds their sum, at the same moment. Reusing any single 433-A cell here understates a business income figure on a signed statement, and the (17) total still reconciles."
+  },
+  {
+   "key": "17_total_business_income",
+   "entry": "X-22",
+   "fact": "bizinc_total_income",
+   "backbone_key": "77_bizinc_total_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "18_materials_purchased",
+   "entry": "X-23",
+   "fact": "bizexp_materials_purchased",
+   "backbone_key": "78_bizexp_materials_purchased",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "19_inventory_purchased",
+   "entry": "X-23",
+   "fact": "bizexp_inventory_purchased",
+   "backbone_key": "79_bizexp_inventory_purchased",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "20_gross_wages_and_salaries",
+   "entry": "X-23",
+   "fact": "bizexp_gross_wages_and_salaries",
+   "backbone_key": "80_bizexp_gross_wages_and_salaries",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "21_rent",
+   "entry": "X-23",
+   "fact": "bizexp_rent",
+   "backbone_key": "81_bizexp_rent",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "22_supplies",
+   "entry": "X-23",
+   "fact": "bizexp_supplies",
+   "backbone_key": "82_bizexp_supplies",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "23_utilities_telephones",
+   "entry": "X-23",
+   "fact": "bizexp_utilities_telephone",
+   "backbone_key": "83_bizexp_utilities_telephone",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "24_vehicle_costs",
+   "entry": "X-78",
+   "fact": "bizexp_vehicle_costs_all_in",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A splits this into line 84 gasoline/oil and line 85 repairs and maintenance. A taxpayer spending $200 on fuel and $150 on repairs holds $200 in irs433_bizexp_vehicle_gasoline_oil and needs $350 here, at the same moment. Binding to 84 would drop $150 from a business expense figure and line (29) would still reconcile."
+  },
+  {
+   "key": "25_business_insurance",
+   "entry": "X-23",
+   "fact": "bizexp_insurance",
+   "backbone_key": "86_bizexp_insurance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "26_current_business_taxes",
+   "entry": "X-23",
+   "fact": "bizexp_current_taxes",
+   "backbone_key": "87_bizexp_current_taxes",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "27_secured_debts_not_credit_cards",
+   "entry": "X-79",
+   "fact": "bizexp_secured_debts_not_credit_cards",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "28_other_business_expenses",
+   "entry": "X-23",
+   "fact": "bizexp_other_expenses",
+   "backbone_key": "88_bizexp_other_expenses",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "29_total_business_expenses",
+   "entry": "X-81",
+   "fact": "total_business_expenses",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: this total includes the (27) secured-debts line and 433-A line 89 has no such line to include. For any taxpayer with a business secured debt the two totals differ at one moment. Two properties."
+  },
+  {
+   "key": "box_c_net_business_income",
+   "entry": "X-24",
+   "fact": "box_c_net_business_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "30_primary_taxpayer_gross_wages",
+   "entry": "X-26",
+   "fact": "income_wages_taxpayer",
+   "backbone_key": "21_income_wages_taxpayer",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the taxpayer gross wage figure is one number. 433-A prints it on line 21 and this form prints it in the first cell of the (30) row, and no taxpayer has two of them at one moment. The transposition is a LAYOUT difference and the fact underneath is single-valued."
+  },
+  {
+   "key": "30_primary_taxpayer_social_security",
+   "entry": "X-26",
+   "fact": "income_social_security_taxpayer",
+   "backbone_key": "29_income_social_security_taxpayer",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the taxpayer social security income is one number. 433-A prints it on line 29 and this form prints it in the (30) row, and no taxpayer has two of them at one moment. Grouping by PERSON here and by income TYPE there is a layout difference over a single-valued fact."
+  },
+  {
+   "key": "30_primary_taxpayer_pensions",
+   "entry": "X-26",
+   "fact": "income_pension_taxpayer",
+   "backbone_key": "27_income_pension_taxpayer",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the taxpayer pension income is one number, on 433-A line 27 and in the (30) row here. Single-valued, so one property serves both forms."
+  },
+  {
+   "key": "30_primary_taxpayer_other_income",
+   "entry": "X-26",
+   "fact": "primary_taxpayer_other_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A prints TWO other-income lines (33, 34) and attributes neither to a PERSON. This cell is the taxpayer own other income. For a household where the spouse has other income and the taxpayer does not, irs433_income_other_1_amount is non-zero and this cell is zero, at the same moment. Neither 433-A line can serve it."
+  },
+  {
+   "key": "30_total_primary_taxpayer_income",
+   "entry": "X-26",
+   "fact": "total_primary_taxpayer_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "433-A computes no per-person income total anywhere. There is no 433-A property this could share and no 433-A value that equals it."
+  },
+  {
+   "key": "31_spouse_gross_wages",
+   "entry": "X-26",
+   "fact": "income_wages_spouse",
+   "backbone_key": "22_income_wages_spouse",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the spouse gross wage figure is one number, on 433-A line 22 and in the (31) row here. No household has two of them at one moment."
+  },
+  {
+   "key": "31_spouse_social_security",
+   "entry": "X-26",
+   "fact": "income_social_security_spouse",
+   "backbone_key": "30_income_social_security_spouse",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the spouse social security income is one number, on 433-A line 30 and in the (31) row here. Single-valued, so one property serves both forms."
+  },
+  {
+   "key": "31_spouse_pensions",
+   "entry": "X-26",
+   "fact": "income_pension_spouse",
+   "backbone_key": "28_income_pension_spouse",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST: the spouse pension income is one number, on 433-A line 28 and in the (31) row here. Single-valued, so one property serves both forms."
+  },
+  {
+   "key": "31_spouse_other_income",
+   "entry": "X-26",
+   "fact": "spouse_other_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, on the spouse side: 433-A prints two other-income lines and attributes neither to a person. For a household where the taxpayer has other income and the spouse does not, the 433-A cell is non-zero and this one is zero, at the same moment."
+  },
+  {
+   "key": "31_total_spouse_income",
+   "entry": "X-26",
+   "fact": "total_spouse_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "433-A computes no per-person income total anywhere - it totals the household at line 35 and stops. There is no 433-A property this could share and no 433-A value that equals it."
+  },
+  {
+   "key": "32_additional_sources_of_income",
+   "entry": "X-33",
+   "fact": "additional_sources_of_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "32_list_sources",
+   "entry": "X-33",
+   "fact": "additional_sources_of_income_list",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "33_interest_dividends_and_royalties",
+   "entry": "X-27",
+   "fact": "income_interest_dividends",
+   "backbone_key": "23_income_interest_dividends",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "34_distributions",
+   "entry": "X-28",
+   "fact": "income_distributions",
+   "backbone_key": "26_income_distributions",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "35_net_rental_income",
+   "entry": "X-29",
+   "fact": "income_net_rental_income",
+   "backbone_key": "25_income_net_rental_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "36_net_business_income_from_box_c",
+   "entry": "X-30",
+   "fact": "net_business_income_from_box_c",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: the printed caption instructs the preparer to ADD BACK non-cash Schedule C deductions that 433-A line 24 leaves deducted. A taxpayer claiming $500 of depreciation holds one net business income on 433-A and a figure $500 higher here, at the same moment. That is the definition of two properties."
+  },
+  {
+   "key": "37_child_support_received",
+   "entry": "X-31",
+   "fact": "income_child_support",
+   "backbone_key": "31_income_child_support",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "38_alimony_received",
+   "entry": "X-32",
+   "fact": "income_alimony",
+   "backbone_key": "32_income_alimony",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "box_d_total_household_income",
+   "entry": "X-34",
+   "fact": "box_d_total_household_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "39_food_clothing_and_miscellaneous",
+   "entry": "X-35",
+   "fact": "exp_food_clothing_misc",
+   "backbone_key": "36_exp_food_clothing_misc",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "40_housing_and_utilities",
+   "entry": "X-35",
+   "fact": "exp_housing_and_utilities",
+   "backbone_key": "37_exp_housing_and_utilities",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "40_monthly_rent_payment",
+   "entry": "X-40",
+   "fact": "monthly_rent_payment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "41_vehicle_loan_or_lease_payments",
+   "entry": "X-36",
+   "fact": "vehicle_loan_or_lease_payments",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A asks Vehicle Ownership Costs and this line asks the loan or lease PAYMENT specifically. A taxpayer whose ownership costs include anything beyond the payment holds a larger number on 433-A than belongs here, at the same moment. The OIC caption is the narrower one, so reuse would overstate an allowable expense."
+  },
+  {
+   "key": "42_vehicle_operating_costs",
+   "entry": "X-35",
+   "fact": "exp_vehicle_operating_costs",
+   "backbone_key": "39_exp_vehicle_operating_costs",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "43_public_transportation_costs",
+   "entry": "X-35",
+   "fact": "exp_public_transportation",
+   "backbone_key": "40_exp_public_transportation",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "44_health_insurance_premiums",
+   "entry": "X-35",
+   "fact": "exp_health_insurance",
+   "backbone_key": "41_exp_health_insurance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "45_out_of_pocket_health_care_costs",
+   "entry": "X-35",
+   "fact": "exp_out_of_pocket_health_care",
+   "backbone_key": "42_exp_out_of_pocket_health_care",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "46_court_ordered_payments",
+   "entry": "X-35",
+   "fact": "exp_court_ordered_payments",
+   "backbone_key": "43_exp_court_ordered_payments",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "47_child_dependent_care_payments",
+   "entry": "X-35",
+   "fact": "exp_child_dependent_care",
+   "backbone_key": "44_exp_child_dependent_care",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "48_life_insurance_premiums",
+   "entry": "X-35",
+   "fact": "exp_life_insurance",
+   "backbone_key": "45_exp_life_insurance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "48_life_insurance_policy_amount",
+   "entry": "X-40",
+   "fact": "life_insurance_policy_face_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "49_current_monthly_taxes",
+   "entry": "X-37",
+   "fact": "current_monthly_taxes",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A asks Current year taxes (Income/FICA) and this line asks current MONTHLY taxes including state, local and personal property tax. A taxpayer paying personal property tax holds a smaller number on 433-A than belongs here, at the same moment. This is the one superset entry on the form, and the direction matters: reusing the 433-A value understates a deduction the taxpayer is entitled to, which lowers the offer the calculation produces."
+  },
+  {
+   "key": "50_secured_debts_other",
+   "entry": "X-38",
+   "fact": "secured_debts_other",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: two 433-A lines - 47 Secured Debts and 49 Other Expenses - land on this one line. A taxpayer with $300 secured and $100 other holds $300 in irs433_exp_secured_debts and needs $400 here, at the same moment. Adding the two is arithmetic the taxpayer signs for, and no existing property holds the sum."
+  },
+  {
+   "key": "50_list_debts_expenses",
+   "entry": "X-38",
+   "fact": "secured_debts_other_list",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "The write-in list beside (50). 433-A says \"(Attach list)\" on lines 47 and 49 and prints no list cell for either, so there is no 433-A property to share."
+  },
+  {
+   "key": "51_delinquent_state_local_tax_payment",
+   "entry": "X-39",
+   "fact": "exp_delinquent_state_local_taxes",
+   "backbone_key": "48_exp_delinquent_state_local_taxes",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "51_total_tax_owed",
+   "entry": "X-40",
+   "fact": "delinquent_state_local_total_tax_owed",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "box_e_total_household_expenses",
+   "entry": "X-41",
+   "fact": "box_e_total_household_expenses",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A line 50 adds fourteen lines including a separate Other Expenses; Box E adds thirteen, with no other-expenses line and with the two X-38 lines merged. The two are over different partitions of the same expenses, so they can legitimately agree and legitimately differ - and \"can differ\" is what decides it. Two properties."
+  },
+  {
+   "key": "box_f_remaining_monthly_income",
+   "entry": "X-42",
+   "fact": "box_f_remaining_monthly_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s8_box_f_for_12_month_multiplier",
+   "entry": "X-45",
+   "fact": "box_f_for_12_month_multiplier",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "box_g_future_remaining_income",
+   "entry": "X-45",
+   "fact": "box_g_future_remaining_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s8_box_f_for_24_month_multiplier",
+   "entry": "X-45",
+   "fact": "box_f_for_24_month_multiplier",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "box_h_future_remaining_income",
+   "entry": "X-45",
+   "fact": "box_h_future_remaining_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s8_box_a_plus_box_b",
+   "entry": "X-45",
+   "fact": "box_a_plus_box_b",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s8_box_g_or_box_h",
+   "entry": "X-45",
+   "fact": "box_g_or_box_h",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s8_offer_amount",
+   "entry": "X-45",
+   "fact": "offer_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_inmate_number",
+   "entry": "X-48",
+   "fact": "inmate_number",
+   "backbone_key": "9a_inmate_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s9_litigation_location_of_filing",
+   "entry": "X-47",
+   "fact": "suit_location_of_filing",
+   "backbone_key": "7_suit_location_of_filing",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_litigation_represented_by",
+   "entry": "X-47",
+   "fact": "suit_represented_by",
+   "backbone_key": "7_suit_represented_by",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_litigation_docket_case_number",
+   "entry": "X-47",
+   "fact": "suit_docket_case_no",
+   "backbone_key": "7_suit_docket_case_no",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_litigation_possible_completion_date",
+   "entry": "X-47",
+   "fact": "suit_possible_completion_date",
+   "backbone_key": "7_suit_possible_completion_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_litigation_subject",
+   "entry": "X-47",
+   "fact": "suit_subject",
+   "backbone_key": "7_suit_subject",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_litigation_amount_of_dispute",
+   "entry": "X-47",
+   "fact": "suit_amount",
+   "backbone_key": "7_suit_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_bankruptcy_date_filed",
+   "entry": "X-46",
+   "fact": "bk_date_filed",
+   "backbone_key": "8_bk_date_filed",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_bankruptcy_date_dismissed",
+   "entry": "X-46",
+   "fact": "bk_date_dismissed",
+   "backbone_key": "8_bk_date_dismissed",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_bankruptcy_date_discharged",
+   "entry": "X-46",
+   "fact": "bk_date_discharged",
+   "backbone_key": "8_bk_date_discharged",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_bankruptcy_petition_number",
+   "entry": "X-46",
+   "fact": "bk_petition_no",
+   "backbone_key": "8_bk_petition_no",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_bankruptcy_location_filed",
+   "entry": "X-46",
+   "fact": "bk_location_filed",
+   "backbone_key": "8_bk_location_filed",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_lived_abroad_from",
+   "entry": "X-53",
+   "fact": "lived_abroad_from",
+   "backbone_key": "8b_lived_abroad_from",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_lived_abroad_to",
+   "entry": "X-53",
+   "fact": "lived_abroad_to",
+   "backbone_key": "8b_lived_abroad_to",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_irs_litigation_tax_types_and_periods",
+   "entry": "X-54",
+   "fact": "irs_litigation_tax_types_and_periods",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_beneficiary_place_where_recorded",
+   "entry": "X-49",
+   "fact": "place_where_recorded",
+   "backbone_key": "9b_place_where_recorded",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_beneficiary_ein",
+   "entry": "X-49",
+   "fact": "trust_ein",
+   "backbone_key": "9b_trust_ein",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s9_beneficiary_name_of_trust_estate_or_policy",
+   "entry": "X-49",
+   "fact": "trust_name",
+   "backbone_key": "9b_trust_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_beneficiary_anticipated_amount",
+   "entry": "X-49",
+   "fact": "trust_anticipated_amount",
+   "backbone_key": "9b_trust_anticipated_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_beneficiary_when_received",
+   "entry": "X-49",
+   "fact": "trust_when_received",
+   "backbone_key": "9b_trust_when_received",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_trustee_name_of_trust",
+   "entry": "X-50",
+   "fact": "trustee_trust_name",
+   "backbone_key": "9c_trust_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s9_trustee_ein",
+   "entry": "X-50",
+   "fact": "trustee_ein",
+   "backbone_key": "9c_trustee_ein",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true
+  },
+  {
+   "key": "s9_safe_deposit_location",
+   "entry": "X-51",
+   "fact": "sdb_location",
+   "backbone_key": "10_sdb_location",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_safe_deposit_contents",
+   "entry": "X-51",
+   "fact": "sdb_contents",
+   "backbone_key": "10_sdb_contents",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_safe_deposit_value",
+   "entry": "X-51",
+   "fact": "sdb_value",
+   "backbone_key": "10_sdb_value",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_transfer_list_assets",
+   "entry": "X-52",
+   "fact": "transfer_assets",
+   "backbone_key": "11_transfer_assets",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_transfer_value_at_time",
+   "entry": "X-52",
+   "fact": "transfer_value_at_transfer",
+   "backbone_key": "11_transfer_value_at_transfer",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_transfer_date",
+   "entry": "X-52",
+   "fact": "transfer_date",
+   "backbone_key": "11_transfer_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s9_transfer_to_whom_or_where",
+   "entry": "X-52",
+   "fact": "transfer_to_whom_or_where",
+   "backbone_key": "11_transfer_to_whom_or_where",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_assets_outside_us_description",
+   "entry": "X-55",
+   "fact": "assets_outside_us_description",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s9_funds_held_in_trust_amount",
+   "entry": "X-56",
+   "fact": "funds_held_in_trust_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - printed with a $ on its own row",
+   "pii": false
+  },
+  {
+   "key": "s9_funds_held_in_trust_where",
+   "entry": "X-56",
+   "fact": "funds_held_in_trust_where",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "prose cell",
+   "pii": false
+  },
+  {
+   "key": "s1_marital_status",
+   "entry": "X-61",
+   "fact": "marital_status",
+   "backbone_key": "marital_status",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Married",
+     "value": "married",
+     "displayOrder": 0
+    },
+    {
+     "label": "Unmarried",
+     "value": "unmarried",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "married": "married",
+    "unmarried": "unmarried"
+   }
+  },
+  {
+   "key": "s1_housing_status",
+   "entry": "X-62",
+   "fact": "housing_status",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (3 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Own",
+     "value": "own",
+     "displayOrder": 0
+    },
+    {
+     "label": "Rent",
+     "value": "rent",
+     "displayOrder": 1
+    },
+    {
+     "label": "Other",
+     "value": "other",
+     "displayOrder": 2
+    }
+   ],
+   "map_option_by_value": {
+    "own": "own",
+    "rent": "rent",
+    "other": "other"
+   }
+  },
+  {
+   "key": "s2_tp_pay_period",
+   "entry": "X-64",
+   "fact": "tp_pay_period",
+   "backbone_key": "4h_tp_pay_period",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (4 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Weekly",
+     "value": "weekly",
+     "displayOrder": 0
+    },
+    {
+     "label": "Bi weekly",
+     "value": "bi-weekly",
+     "displayOrder": 1
+    },
+    {
+     "label": "Monthly",
+     "value": "monthly",
+     "displayOrder": 2
+    },
+    {
+     "label": "Other",
+     "value": "other",
+     "displayOrder": 3
+    }
+   ],
+   "map_option_by_value": {
+    "weekly": "weekly",
+    "bi-weekly": "bi-weekly",
+    "monthly": "monthly",
+    "other": "other"
+   }
+  },
+  {
+   "key": "s2_sp_pay_period",
+   "entry": "X-64",
+   "fact": "sp_pay_period",
+   "backbone_key": "5h_sp_pay_period",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (4 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Weekly",
+     "value": "weekly",
+     "displayOrder": 0
+    },
+    {
+     "label": "Bi weekly",
+     "value": "bi-weekly",
+     "displayOrder": 1
+    },
+    {
+     "label": "Monthly",
+     "value": "monthly",
+     "displayOrder": 2
+    },
+    {
+     "label": "Other",
+     "value": "other",
+     "displayOrder": 3
+    }
+   ],
+   "map_option_by_value": {
+    "weekly": "weekly",
+    "bi-weekly": "bi-weekly",
+    "monthly": "monthly",
+    "other": "other"
+   }
+  },
+  {
+   "key": "s2_tp_business_ownership_interest",
+   "entry": "X-65",
+   "fact": "tp_business_ownership_interest",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s2_sp_business_ownership_interest",
+   "entry": "X-65",
+   "fact": "sp_business_ownership_interest",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "5_real_property_for_sale",
+   "entry": "X-13",
+   "fact": "real_property_for_sale",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s4_business_is_sole_proprietorship",
+   "entry": "X-75",
+   "fact": "sole_proprietorship_schedule_c",
+   "backbone_key": "52_sole_proprietorship_schedule_c",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s4_other_business_interests",
+   "entry": "X-73",
+   "fact": "business_interest",
+   "backbone_key": "3a_business_interest",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s4_other_business_type",
+   "entry": "X-73",
+   "fact": "business_type",
+   "backbone_key": "3c_business_type",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (4 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Partnership",
+     "value": "partnership",
+     "displayOrder": 0
+    },
+    {
+     "label": "Llc",
+     "value": "llc",
+     "displayOrder": 1
+    },
+    {
+     "label": "Corporation",
+     "value": "corporation",
+     "displayOrder": 2
+    },
+    {
+     "label": "Other",
+     "value": "other",
+     "displayOrder": 3
+    }
+   ],
+   "map_option_by_value": {
+    "partnership": "partnership",
+    "llc": "llc",
+    "corporation": "corporation",
+    "other": "other"
+   }
+  },
+  {
+   "key": "s5_has_notes_receivable",
+   "entry": "X-25",
+   "fact": "has_notes_receivable",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: 433-A itemises notes and accounts receivable in one five-row table and asks no yes/no question. A boolean derived from \"the table is non-empty\" is not the taxpayer answer - a taxpayer may hold receivables they did not itemise - and the backbone table cannot tell a NOTE from an ACCOUNT, which is the distinction these two boxes draw. Neither box can share irs433_accounts_notes_receivable and the two cannot share each other."
+  },
+  {
+   "key": "s5_has_accounts_receivable",
+   "entry": "X-25",
+   "fact": "has_accounts_receivable",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "scope": "form-specific",
+   "scope_reason": "Same reasoning as s5_has_notes_receivable, on the accounts side. The printed caption is broader too - \"including e-payment, factoring companies, and any bartering or online auction accounts\"."
+  },
+  {
+   "key": "s9_currently_incarcerated",
+   "entry": "X-48",
+   "fact": "incarcerated",
+   "backbone_key": "9a_incarcerated",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_party_to_litigation",
+   "entry": "X-47",
+   "fact": "party_to_litigation",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_litigation_role",
+   "entry": "X-47",
+   "fact": "lawsuit_role",
+   "backbone_key": "7_lawsuit_role",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Plaintiff",
+     "value": "plaintiff",
+     "displayOrder": 0
+    },
+    {
+     "label": "Defendant",
+     "value": "defendant",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "plaintiff": "plaintiff",
+    "defendant": "defendant"
+   }
+  },
+  {
+   "key": "s9_filed_bankruptcy_past_7_years",
+   "entry": "X-46",
+   "fact": "bankruptcy",
+   "backbone_key": "8_bankruptcy",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_lived_outside_us_6_months_past_10_years",
+   "entry": "X-53",
+   "fact": "lived_abroad_6mo",
+   "backbone_key": "8b_lived_abroad_6mo",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_party_to_irs_litigation",
+   "entry": "X-54",
+   "fact": "party_to_irs_litigation",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_beneficiary_of_trust_estate_or_policy",
+   "entry": "X-49",
+   "fact": "beneficiary_of_trust_estate_policy",
+   "backbone_key": "9b_beneficiary_of_trust_estate_policy",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_trustee_fiduciary_or_contributor",
+   "entry": "X-50",
+   "fact": "trustee_fiduciary_contributor",
+   "backbone_key": "9c_trustee_fiduciary_contributor",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_safe_deposit_box",
+   "entry": "X-51",
+   "fact": "safe_deposit_box",
+   "backbone_key": "10_safe_deposit_box",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_transferred_asset_below_value_past_10_years",
+   "entry": "X-52",
+   "fact": "transferred_assets",
+   "backbone_key": "11_transferred_assets",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_assets_or_real_property_outside_us",
+   "entry": "X-55",
+   "fact": "assets_or_real_property_outside_us",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s9_funds_held_in_trust_by_third_party",
+   "entry": "X-56",
+   "fact": "funds_held_in_trust_by_third_party",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s1_community_property_state_last_10_years",
+   "entry": "X-63",
+   "fact": "community_property_state_last_10_years",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box - the negative answer is the box left blank",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "2c_digital_asset_held",
+   "entry": "X-67",
+   "fact": "digital_asset_held",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "8c_digital_asset_held",
+   "entry": "X-18",
+   "fact": "business_digital_asset_held",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   },
+   "scope": "form-specific",
+   "scope_reason": "The business half of the digital-asset question. Same reasoning as the other 8c_* cells: 433-A asks nothing about business digital assets, and this box cannot share the personal (2c) box because a taxpayer can hold one kind and not the other at the same moment."
+  },
+  {
+   "key": "s10_attached_pay_stubs",
+   "entry": "X-57",
+   "fact": "attached_pay_stubs",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_investment_statements",
+   "entry": "X-57",
+   "fact": "attached_investment_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_digital_asset_records",
+   "entry": "X-57",
+   "fact": "attached_digital_asset_records",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_other_income_statements",
+   "entry": "X-57",
+   "fact": "attached_other_income_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_bank_statements",
+   "entry": "X-57",
+   "fact": "attached_bank_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_form_433b",
+   "entry": "X-57",
+   "fact": "attached_form_433b",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_lender_statements",
+   "entry": "X-57",
+   "fact": "attached_lender_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_receivables_list",
+   "entry": "X-57",
+   "fact": "attached_receivables_list",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_delinquent_tax_verification",
+   "entry": "X-57",
+   "fact": "attached_delinquent_tax_verification",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_court_orders",
+   "entry": "X-57",
+   "fact": "attached_court_orders",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_trust_documents",
+   "entry": "X-57",
+   "fact": "attached_trust_documents",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_special_circumstances",
+   "entry": "X-57",
+   "fact": "attached_special_circumstances",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_form_2848",
+   "entry": "X-57",
+   "fact": "attached_form_2848",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "s10_attached_form_656",
+   "entry": "X-57",
+   "fact": "attached_form_656",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "true",
+    "false": "false"
+   }
+  },
+  {
+   "key": "household_members",
+   "entry": "X-03",
+   "fact": "household_members",
+   "backbone_key": "household_members",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one taxpayer at one moment? No. The five per-dependent facts are identical on both forms; only the printed SLOT COUNT differs, four here against five, and a slot count is a property of the FORM, not of the household. The overflow is already declared and logged by the fill engine."
+  },
+  {
+   "key": "bank_accounts",
+   "entry": "X-05",
+   "fact": "bank_accounts",
+   "backbone_key": "bank_accounts",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "THE TEST: a bank account row holds the same four facts on both forms and no column is discounted or recomputed. Two printed rows here against four, plus an attachment roll-up bound separately - a container difference. The is_business_account discriminator the map already declares is what keeps a business account out of this printed table."
+  },
+  {
+   "key": "investment_accounts",
+   "entry": "X-06",
+   "fact": "investments",
+   "backbone_key": "investments",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "Same reasoning as bank_accounts: same row facts, two printed slots against four, attachment bound separately. The map row_class already declares these rows are class investment, which is the backbone table this binds to."
+  },
+  {
+   "key": "retirement_accounts",
+   "entry": "X-07",
+   "fact": "retirement_accounts",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "THE TABLE IS SHARED AND ITS TOTAL IS NOT, AND THAT SPLIT IS THE WHOLE RULING. A retirement account row carries current_value AND quick_sale_value as separate columns; the quick-sale column is an ADDITIONAL column, computed from the other, so no single column ever holds two values at one moment. The arithmetic difference X-07 names lives in the (3) TOTAL, which is bound form-specific for exactly that reason. Named shared and not form-specific because retirement_account is a new ASSET CLASS for the series - asset-row-shapes.json declares twelve classes and none of them is retirement - and 433-B(OIC) prints a retirement table too. It is deliberately NOT folded into irs433_investments: a row whose class is investment and a row whose class is retirement_account print in two different tables under two different arithmetics on this form, and one property could not tell check-row-shape.mjs which is which."
+  },
+  {
+   "key": "life_insurance_policies",
+   "entry": "X-08",
+   "fact": "life_insurance_policies",
+   "backbone_key": "life_insurance_policies",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "Same row facts on both forms - company, policy number, cash value, loan balance, equity - one printed slot here against three, with the remainder rolled to the attachment cells bound separately. No discount on either form. Container difference."
+  },
+  {
+   "key": "real_property",
+   "entry": "X-10",
+   "fact": "real_property",
+   "backbone_key": "real_property",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "THE TEST, AND IT SEPARATES THE ROW FROM THE TOTAL. current_fmv is one number for one property at one moment and both forms want it. quick_sale_value and quick_sale_equity are ADDITIONAL columns derived from it, not competing values for the same column. So the table is shared and the (5) TOTAL is form-specific, because a total of market equity and a total of quick-sale equity are two different numbers at one moment."
+  },
+  {
+   "key": "vehicles",
+   "entry": "X-11",
+   "fact": "vehicles",
+   "backbone_key": "vehicles",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "Same reasoning as real_property. The lease_or_own column this form prints is a new column, not a conflicting one - 433-A prints lease and ownership facts too and simply never zeroes an equity figure on them. The zeroing happens in quick_sale_equity, a column 433-A does not have. The (6) total stays form-specific."
+  },
+  {
+   "key": "other_valuable_items",
+   "entry": "X-14",
+   "fact": "other_personal_property",
+   "backbone_key": "property_line_20",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "THE (7a) ROWS ARE 433-A LINE 20, AND X-44 SAYS OTHERWISE. The map declares row_class accepts personal_property, asset-row-shapes.json declares personal_property is printed by 433-A 20a/20b, and fields.433a.json binds that table to irs433_other_personal_property. Same facts, one printed slot here against two. Bound shared on that evidence; the contradiction with X-44 is reported and carried as C-22, not resolved here. The residual (7b) block is a different question and is bound form-specific."
+  },
+  {
+   "key": "business_bank_accounts",
+   "entry": "X-18",
+   "fact": "business_bank_accounts",
+   "backbone_key": "business_bank_accounts",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "Two printed rows on both forms and the same four row facts, with the is_business_account discriminator set true. Container identical; only the attachment roll-up and the digital-asset block beside it are new, and both are bound separately and form-specific."
+  },
+  {
+   "key": "business_assets",
+   "entry": "X-19",
+   "fact": "business_property",
+   "backbone_key": "business_property",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "scope": "shared",
+   "scope_reason": "Same reasoning as real_property: quick_sale_value and quick_sale_equity are additional columns over the backbone business_property row, not competing values, and the printed conditional that zeroes a leased asset acts on quick_sale_equity. Two printed rows on both forms. The (9) total is form-specific."
+  }
+ ]
+}

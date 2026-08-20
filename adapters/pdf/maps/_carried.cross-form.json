@@ -1,0 +1,56 @@
+{
+ "_what_this_is": "CARRIED ITEMS AND STANDING RULINGS THAT BELONG TO NO ONE FORM'S MAP. Every map carries its own `_carried` list and every form's gate reports that list's length, which works exactly as long as the item belongs to a form that HAS a map. A ruling made about 433-D before 433-D has a map has nowhere to live, and a ruling with nowhere to live is a ruling that evaporates - which is the failure this construct exists to prevent, one level up from the per-map lists.",
+ "_the_rule": "Unresolved is fine. Evaporating is not. An item leaves this file in exactly two ways: it is RESOLVED, with what resolved it, or it is WITHDRAWN, with why it was not a question after all.",
+ "_how_an_item_leaves_for_a_map": "When the form it names gets a map, the item is COPIED into that map's `_carried.open` in the first commit of that form's track and marked `migrated_to` here. It is not deleted: a cross-form ruling that shaped a form's first prompt should still be readable from outside that form.",
+ "_authored": "Prompt 36, the 433-A(OIC) naming and provisioning pass.",
+
+ "open": [
+  {
+   "id": "D-01",
+   "form": "433-D",
+   "raised_in": "Prompt 36 ruling 3",
+   "subject": "433-D's duplicate pages need a declared `mirror`, and a mirror is a declaration and not an exemption",
+   "the_shape": "Page 3 of 433-D is the taxpayer's copy of page 1. Every leaf stem appears exactly TWICE across the two pages, and the same value must reach both copies.",
+   "why_it_is_a_problem_today": "That is INTENTIONAL double-binding, and the duplicate-write guard has correctly forbidden double-binding since Prompt 4. A map that binds one key to two targets is the exact shape of the defect that guard exists to catch, so 433-D cannot be mapped under the current rules without either breaking the guard or declaring the mirror.",
+   "the_ruling": "Declare it. A `mirror` block names the mirrored pairs, and the declaration is CHECKED: every stem in a mirrored pair appears exactly twice, both copies receive the same value, and a stem bound to only one copy is a STOP. An exemption would be a hiding place - it would let any second binding through under the word 'mirror'. A checked declaration is not.",
+   "built_when": "433-D's FIRST prompt, not before. Recorded here so the ruling survives the seven or more prompts between the two OIC forms and 433-D.",
+   "status": "OPEN - recorded, not built. No 433-D map exists."
+  },
+  {
+   "id": "D-02",
+   "form": "433-H",
+   "raised_in": "Prompt 36 ruling 1",
+   "subject": "433-H is out of this engine's scope, and the revision pin cannot mean there what it means everywhere else",
+   "the_shape": "433-H is XFA-only and dynamic: ZERO AcroForm fields, one static page carrying the Adobe Reader placeholder. Nothing this engine does - enumerate fields, correlate labels by rectangle, fill, read back - has an input.",
+   "the_sharper_half": "Its revision and catalog number came from the INFLATED XFA PACKET and not from drawn page bytes. Every other form in this repo pins its revision against text drawn on the page, and confirm-form-revision-from-page-bytes is a standing rule. A pin read from an XFA packet is not evidence of the same kind, and treating the two as interchangeable would quietly weaken the rule for every form.",
+   "the_ruling": "Do not attempt it, and do not fold it into any prompt for the other forms. It becomes a SEPARATE FEASIBILITY TRACK after 433-A(OIC), 433-B(OIC), 433-B and 433-D, and the first question that track must answer is whether we fill an XFA form at all or author a static replica.",
+   "status": "OPEN - scope change recorded rather than absorbed."
+  },
+  {
+   "id": "D-03",
+   "form": "433-B(OIC)",
+   "raised_in": "Prompt 36 ruling 2",
+   "subject": "433-B(OIC) is next, and the reason is inheritance rather than size",
+   "the_shape": "86 of 433-B(OIC)'s 178 distinct leaf names are shared with 433-A(OIC) and 1 with 433-A. 433-B shares 11 with 433-A and ZERO with 433-A(OIC).",
+   "the_ruling": "433-B(OIC) is next, not 433-B. The registry, the row-class assertion and the trap list inherit down the OIC line and essentially not across it, so 433-B(OIC) banks that inheritance while it is warm, at 267 fields against 447. The OIC pair is also the useful pair: an individual OIC and a business OIC together are a FILING, where 433-B alone is not.",
+   "what_it_inherits_that_must_be_re_checked_not_assumed": "The safe-deposit suffix inversion [L21] is present on 433-A too, so it is inherited from the shared source rather than being an OIC quirk - and 433-B and 433-B(OIC) must be READ for it before their safe-deposit rows are bound, not assumed to have it or to lack it.",
+   "status": "OPEN - sequencing ruling, acted on when 433-A(OIC) closes."
+  },
+  {
+   "id": "D-04",
+   "form": "all remaining",
+   "raised_in": "Prompt 36 ruling 4",
+   "subject": "blank source PDFs are version-controlled, and one of them has a filename that looks like a network failure",
+   "the_ruling": "Each remaining form's blank PDF goes into adapters/pdf/forms/ in the FIRST COMMIT of that form's track, with its SHA-256 recorded, so the revision pin has an artefact to pin against instead of a download that may not be the same file next week.",
+   "the_filename_trap": "f433boic.pdf 404s. The IRS filename for Form 433-B(OIC) is f433boi.pdf. A wrong filename in a future prompt would present as a network failure and be retried rather than corrected.",
+   "in_forms_today": [
+    { "form": "433-A", "file": "adapters/pdf/forms/f433a.pdf", "sha256": "SEE forms.sha256 - recorded by this same commit" },
+    { "form": "433-F", "file": "adapters/pdf/forms/f433f.pdf", "sha256": "SEE forms.sha256" },
+    { "form": "433-A(OIC)", "file": "adapters/pdf/forms/f433aoi.pdf", "sha256": "SEE forms.sha256" }
+   ],
+   "status": "OPEN for 433-B(OIC), 433-B, 433-D and 433-H; SATISFIED for the three forms already mapped."
+  }
+ ],
+ "resolved": [],
+ "_count": { "open": 4, "resolved": 0 }
+}

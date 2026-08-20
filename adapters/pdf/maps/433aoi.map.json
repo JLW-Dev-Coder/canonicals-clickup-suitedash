@@ -1927,6 +1927,33 @@
     "the_question": "Same question as C-19, on adjacency rather than order.",
     "what_was_done": "Recorded as a lie, bound by the printed sentence sharing each box's y band.",
     "why_still_open": "Decided together with C-19."
+   },
+   {
+    "id": "C-21",
+    "raised_in_slice": 8,
+    "subject": "one entry globs a block and its twin enumerates one, so two identical constructs get two categories",
+    "where": "crosswalk-classification X-09 (the (2c) personal digital-asset block) against X-18 (the (8c) business one)",
+    "the_question": "X-18 names its block as \"8c_* digital-asset block\", a prefix glob that sweeps in the lone check-here box and the identity total along with the six text cells. X-09 ENUMERATES six cells by name and sweeps in neither. So 8c_digital_asset_held and 8c_total_digital_assets are classified different-shape and 2c_digital_asset_held and 2c_total_digital_assets are classified new, for two constructs the page draws identically.",
+    "what_was_done": "The (2c) pair was given its own entry, X-67, whose why records the disagreement. Both pairs derive a form-specific name, so nothing created differs.",
+    "why_still_open": "It is a question about what a glob in an entry is allowed to claim, not about these four cells. A prefix glob is exactly enumerable and therefore checkable, which is why the deriver accepts one; but an entry that globs covers cells its author may never have looked at, and an entry that enumerates does not. Deciding which is the standard is a rule for the classification format, not a call this form gets to make."
+   },
+   {
+    "id": "C-22",
+    "raised_in_slice": 8,
+    "subject": "X-44 says 433-A groups.property_line_20 has no OIC counterpart and X-14 says (7a) is its counterpart",
+    "where": "crosswalk-classification X-44 (asymmetric-the-other-way) against X-14 (different-shape), and groups.7a_other_valuable_items.row_class",
+    "the_question": "X-44 lists groups.property_line_20 among four 433-A tables with \"no OIC counterpart anywhere on pages 1-6\". X-14 says the (7a) rows correspond to \"433-A's other-valuable-items rows\". The map itself decides it: 7a_other_valuable_items declares row_class accepts personal_property, asset-row-shapes.json declares personal_property is printed by 433-A 20a/20b, and fields.433a.json binds property_line_20 to irs433_other_personal_property. Three artefacts against one sentence.",
+    "what_was_done": "The group is bound SHARED to irs433_other_personal_property on that evidence, and the binding row records why. X-44 was left as written.",
+    "why_still_open": "The consequence if X-44 were believed is a filed one - a preparer reading it would drop the taxpayer's personal property from an OIC filing - so it is not a documentation nit. But correcting X-44 means re-reading its other three tables (available_credit, payment_processors, credit_cards_accepted) against pages 7-8, which slice 7 authored after X-44 was written, and that is a re-read of the whole asymmetric direction rather than a one-line fix."
+   },
+   {
+    "id": "C-23",
+    "raised_in_slice": 8,
+    "subject": "the crosswalk is against 433-A only, so a shared fact 433-F contributed is invisible to it",
+    "where": "X-40 / 40_monthly_rent_payment against the live property irs433_exp_rent, and the same shape wherever 433-F named a shared fact 433-A does not print",
+    "the_question": "The classification is authored against 433-A. irs433_exp_rent exists because 433-F prints a Rent line and 433-A does not, so no entry in this file can see it. 40_monthly_rent_payment - the rent COMPONENT inside the OIC housing figure - derives irs433aoi_monthly_rent_payment, and whether that is the same fact as 433-F's rent expense is a question the crosswalk was not built to ask.",
+    "what_was_done": "Bound form-specific, as X-40's category new requires. The deriver's A8 assertion catches an exact NAME duplicate and cannot catch a same-fact-different-name one, which is what this is.",
+    "why_still_open": "Answering it needs a crosswalk against the SERIES rather than against 433-A - the thing asset-row-shapes.json is for the asset tables and nothing is for the scalars. That is a backbone artefact, not a form slice. Recorded now because 433-B(OIC) inherits the same blind spot and will hit it harder: it shares 86 leaf names with this form and 1 with 433-A."
    }
   ],
   "resolved": [
@@ -1981,7 +2008,7 @@
    }
   ],
   "_count": {
-   "open": 16,
+   "open": 19,
    "resolved": 5
   },
   "_every_arguable_item_now_has_an_id_here": "ARGUABLE ITEMS AND CARRIED ITEMS ARE THE SAME LIST, and until slice 6 they were two. P5-1 through P5-4 were recorded in _arguable_page5 and only one of the four (P5-2, as C-06) ever reached this ledger; page 4 was worse, with one of its four linked. So seven open or closed questions existed in per-page arrays that nothing reports and nothing counts, which is precisely the disappearing act this ledger exists to prevent, committed by the file that prevents it. C-08 through C-16 are those items, each carrying a `raised_as` naming the array entry it came from. THE LINKAGE IS NOW ASSERTED, not described: adapters/pdf/count-sweep.mjs [S-07b] requires every id in every _arguable_page{N} array to be named by some entry in this ledger, and fails the gate when one is not. Unresolved is fine. Living in only one of two places is not."
