@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433f",
+  "role": "acceptance",
+  "why": "The saturated 433-F record: both taxpayers, every table carrying rows, all five printed Section H totals supplied so the tripwires have something to disagree with."
+ },
   "intake_id": "INT-SAMPLE-433F-MULTI",
   "_synthetic": "Fabricated fixture. ACME Holdings LLC / John Q. Sample at 123 Example St, Denton TX; account numbers are XXXX-masked placeholders, every telephone is in the 555-01XX block reserved for fiction, and every figure is invented. No real taxpayer, institution or account is referenced.",
   "_no_wellformed_ssn": "The two SSN cells carry 000-00-0000 and 000-00-0001. The SSA has never issued and will never issue an area number of 000, and never issues a group number of 00, so both fail SSN validity on two independent counts and cannot collide with a living person the way a plausible-looking test value can. The EIN is 00-0000000, whose 00 prefix is likewise never assigned. The PII rule covers intermediates: no fixture, fetched-record file, log or review page may carry a real SSN, and no fixture may contain a well-formed one.",

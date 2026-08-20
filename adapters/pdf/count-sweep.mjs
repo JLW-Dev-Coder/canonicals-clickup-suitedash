@@ -39,7 +39,7 @@
 // is exactly as unchecked as a claim nobody wrote a check for, and it is reported the same way.
 
 import { readFileSync, existsSync } from 'node:fs';
-import { readWidgetGeometry, readPrintedText } from './page-geometry.mjs';
+import { readWidgetGeometry, readPrintedText, baselineOfRun } from './page-geometry.mjs';
 import { markerPairing } from './line-markers.mjs';
 // Printed pages, read once per form and memoised: S-24 asks three questions of page 1 and
 // re-inflating six pages of content streams for each of them is the same measurement thrice.
@@ -648,7 +648,12 @@ export const MANIFEST = [
       if ((m = new RegExp(String.raw`(${WORD_NUM}|\d+) separately drawn runs on one baseline`, 'i').exec(v))) {
         recognised = true;
         const pages = await printedPages('433boi');
-        const n = (pages[0].items || []).filter((t) => Math.abs(t.y2 - 620.9) < 0.6).length;
+        // THE BASELINE, AND THE CLAIM SAYS BASELINE. The map's sentence is "three separately
+        // drawn runs on one baseline" and this comparison was against t.y2 - the run TOP, 10.0pt
+        // above it, because Section 1's banner is set in 10pt. Converted to page-geometry.mjs's
+        // declared convention with the constant moved by the same 10.0: the derived figure is 3
+        // before and after, which is the no-op this line owes.
+        const n = (pages[0].items || []).filter((t) => Math.abs(baselineOfRun(t) - 610.9) < 0.6).length;
         rows.push({ what: 'runs drawn on the Section 1 heading baseline y 620.9', claimed: word(m[1]) ?? Number(m[1]), derived: n, from: 'page-geometry readPrintedText, page 1' });
       }
 
@@ -657,7 +662,9 @@ export const MANIFEST = [
       if (/bullets are drawn glyphs/.test(v)) {
         recognised = true;
         const pages = await printedPages('433boi');
-        const bullets = (pages[0].items || []).filter((t) => t.str.trim() === '●' && (Math.abs(t.y2 - 696.9) < 0.6 || Math.abs(t.y2 - 682.5) < 0.6));
+        // Same conversion, same reason: the two bullet rows are 8pt runs, so the run tops 696.9
+        // and 682.5 are the baselines 688.9 and 674.5. Four bullets before and after.
+        const bullets = (pages[0].items || []).filter((t) => t.str.trim() === '●' && (Math.abs(baselineOfRun(t) - 688.9) < 0.6 || Math.abs(baselineOfRun(t) - 674.5) < 0.6));
         if ((m = new RegExp(String.raw`All (${WORD_NUM}|\d+) bullets are drawn glyphs`, 'i').exec(v)))
           rows.push({ what: 'eligibility bullets drawn on page 1', claimed: word(m[1]) ?? Number(m[1]), derived: bullets.length, from: 'page-geometry readPrintedText, page 1, the two bullet baselines' });
         if ((m = new RegExp(String.raw`page 1's (${WORD_NUM}|\d+) checkboxes`, 'i').exec(v))) {
@@ -665,8 +672,11 @@ export const MANIFEST = [
           const cb = widgets.filter((w) => w.page === 1 && w.type === 'PDFCheckBox');
           rows.push({ what: 'checkboxes on page 1', claimed: word(m[1]) ?? Number(m[1]), derived: cb.length, from: 'widget geometry' });
           // THE CLAIM THAT MATTERS: no widget of any kind sits on the bullet rows.
+          // A WIDGET BAND, not a text one: 670..710 are rect edges and are labelled as such in
+          // the row below, because a reader comparing them against a caption baseline would be
+          // comparing two different kinds of number.
           const onBullets = widgets.filter((w) => w.page === 1 && w.rect && w.rect[3] > 670 && w.rect[1] < 710).length;
-          rows.push({ what: 'widgets of any type on the eligibility-bullet rows (y 670..710)', claimed: 0, derived: onBullets, from: 'widget geometry — the reason no entity-type field set is mapped' });
+          rows.push({ what: 'widgets of any type on the eligibility-bullet rows (widget-rect band 670..710)', claimed: 0, derived: onBullets, from: 'widget geometry — the reason no entity-type field set is mapped' });
         }
       }
 
@@ -1106,7 +1116,10 @@ export const runCountSweep = async (form) => {
   const text = await readPrintedText(readFileSync(`adapters/pdf/forms/f${form}.pdf`));
   ctx.printedRounding = text.flatMap((pg, i) => (pg.items || [])
     .filter(t => /round to the nearest/i.test(t.str))
-    .map(t => ({ page: i + 1, y: t.y2, str: t.str })));
+    // y IS THE DECLARED CONVENTION. Nothing compares this field against a coordinate - S-10
+    // counts these sentences and lists their pages - but a `y` on a record a person can read
+    // is a reported y, and reporting the run top under that letter is what this commit is about.
+    .map(t => ({ page: i + 1, y: baselineOfRun(t), y_convention: 'text-baseline', str: t.str })));
 
   const rows = [], problems = [];
   const files = sweptFiles(form);

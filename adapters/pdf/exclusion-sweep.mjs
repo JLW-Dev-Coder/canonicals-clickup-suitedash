@@ -91,21 +91,112 @@ export const POSITIONS = [
   ['filter-pred',   /\.filter\(\s*(?:\(?\s*\w+\s*\)?\s*=>\s*)?([A-Za-z_$][\w$]*)\s*\(/],
 ];
 
-/** Every predicate the engine defines. The universe [EX-90] narrows the raw hits down to. */
-export const enginePredicates = () => {
-  const out = new Set();
-  for (const f of sweptFiles()) for (const ln of readFileSync(f, 'utf8').split('\n')) {
-    const m = ln.match(DEF); if (m) out.add(m[1]);
+// A PREDICATE IS KEYED ON THE MODULE THAT DEFINES IT, NOT ON ITS NAME.  [D-08].
+//
+// This scanner used to collect every `const|let|function NAME = (` across the swept files into
+// ONE FLAT SET OF STRINGS and then attribute an exclusion site to any called name in that set.
+// Neither step asked WHERE the name was defined or whether the calling file could reach it,
+// and that is unsound in both directions:
+//
+//   SILENTLY, FOR THREE SLICES. [EX-16] disposed of `if (!field.isChecked()) continue;` in
+//   verify-appearances.mjs. isChecked is PDFCheckBox.prototype.isChecked - a pdf-lib method,
+//   and pdf-lib is not swept. It was in the universe ONLY because run-form-gate.mjs happened
+//   to declare an unrelated local `const isChecked = (target) =>` in a different file. A
+//   register entry disposing of a library call, load-bearing on a name collision.
+//
+//   LOUDLY, ONE COMMIT LATER. assert-completeness-counters.mjs was added with a local
+//   `const get = (id) =>`, and the next run reported UNREGISTERED for `catOf.get(b.entry)` in
+//   adapters/hubspot/reclassify-against-backbone.mjs - a Map.prototype.get call in a file with
+//   no connection to the new one. One local in one file took the gate down.
+//
+// REACHABILITY IS THE DISCRIMINATOR, and it is enough for both directions. A call site in file
+// F counts against a definition D only if F CAN REACH D: D is defined in F itself, or F
+// imports that name from the module D lives in. Full resolution - scope analysis, shadowing,
+// re-exports - is not attempted and is not needed: `isChecked` is not defined in and not
+// imported into verify-appearances.mjs, and `get` is not defined in and not imported into
+// reclassify-against-backbone.mjs, so both accidents die on reachability alone.
+//
+// WHAT THIS DOES NOT DO. It does not tell a bare call from a method call, so `x.norm(...)`
+// still matches a local `norm` in the SAME file. That is the weak direction of the same
+// unsoundness and it is left standing deliberately, because the strong one - a disposition
+// standing over a call the file cannot even see - is the one that hides a real site behind a
+// false verdict. Carried, not closed silently.
+
+/** `import { a, b as c } from './x.mjs'` -> the local names and the module each came from. */
+const IMPORT = /^\s*import\s*\{([^}]*)\}\s*from\s*['\"]([^'\"]+)['\"]/;
+
+const dirOf = (f) => f.slice(0, f.lastIndexOf('/'));
+const resolveSpec = (fromFile, spec) => {
+  if (!spec.startsWith('.')) return spec;                 // a package, never a swept file
+  const parts = `${dirOf(fromFile)}/${spec}`.split('/');
+  const out = [];
+  for (const q of parts) { if (q === '.' || q === '') continue; if (q === '..') out.pop(); else out.push(q); }
+  return out.join('/');
+};
+
+/**
+ * Every predicate definition in the engine, as name -> the swept files that define it.
+ * A name defined in two files is TWO definitions, and a site can only ever be about one.
+ */
+export const predicateDefinitions = (files = sweptFiles(), read = (f) => readFileSync(f, 'utf8')) => {
+  const out = new Map();
+  for (const f of files) for (const ln of read(f).split('\n')) {
+    const m = ln.match(DEF);
+    if (!m) continue;
+    if (!out.has(m[1])) out.set(m[1], new Set());
+    out.get(m[1]).add(f);
   }
   return out;
 };
 
+/**
+ * The predicate names file `f` can actually reach, as name -> the file that defines it.
+ * Own definitions first; an import of the same name from elsewhere does not displace one.
+ */
+export const reachableIn = (f, defs, read = (x) => readFileSync(x, 'utf8')) => {
+  const src = read(f);
+  const out = new Map();
+  for (const ln of src.split('\n')) {
+    const own = ln.match(DEF);   // named `own` so its guard disposition is distinguishable from the harvester's
+    if (own) out.set(own[1], f);
+  }
+  for (const ln of src.split('\n')) {
+    const m = ln.match(IMPORT);
+    if (!m) continue;
+    const mod = resolveSpec(f, m[2]);
+    for (const raw of m[1].split(',')) {
+      const t = raw.trim();
+      if (!t) continue;
+      const as = /^(\S+)\s+as\s+(\S+)$/.exec(t);
+      const local = as ? as[2] : t;
+      const orig = as ? as[1] : t;
+      if (out.has(local)) continue;                        // a local definition wins
+      // The import must name a predicate the target module actually DEFINES. An import of a
+      // constant or a class is not a predicate and must not enter the universe by being spelled
+      // the same as one somewhere else - which is the whole defect.
+      const where = defs.get(orig);
+      if (where && where.has(mod)) out.set(local, mod);
+    }
+  }
+  return out;
+};
+
+/**
+ * Every predicate the engine defines, as a flat set of NAMES.
+ * KEPT, AND NARROWED IN MEANING. [EX-90] still asks "is this name defined anywhere in a swept
+ * file", because that is the question its own excusal is about. What no longer happens is a
+ * SITE being attributed on the strength of that answer.
+ */
+export const enginePredicates = () => new Set(predicateDefinitions().keys());
+
 /** Every exclusion site, with the predicate governing it. `raw` counts hits before [EX-90]. */
 export const exclusionSites = () => {
-  const defined = enginePredicates();
+  const defs = predicateDefinitions();
+  const reach = new Map(sweptFiles().map((f) => [f, reachableIn(f, defs)]));
   const rows = [];
   let raw = 0;
   for (const f of sweptFiles()) {
+    const here = reach.get(f);
     readFileSync(f, 'utf8').split('\n').forEach((ln, i) => {
       if (isProse(ln)) return;
       const code = ln.replace(STRLIT, '""');
@@ -115,13 +206,30 @@ export const exclusionSites = () => {
         const calls = [...String(m[1]).matchAll(CALL)].map((x) => x[1]);
         if (!calls.length) return;
         raw++;
-        const named = [...new Set(calls.filter((c) => defined.has(c)))];
-        for (const p of named) rows.push({ at: `${f}:${i + 1}`, file: f, pred: p, pos, text: ln.trim().slice(0, 110) });
+        const named = [...new Set(calls.filter((c) => here.has(c)))];
+        for (const q of named)
+          rows.push({ at: `${f}:${i + 1}`, file: f, pred: q, definedIn: here.get(q), pos, text: ln.trim().slice(0, 110) });
         return;
       }
     });
   }
-  return { rows, raw, predicates: [...new Set(rows.map((r) => r.pred))].sort() };
+  return { rows, raw, predicates: [...new Set(rows.map((r) => r.pred))].sort(), defs, reach };
+};
+
+/**
+ * The sites one register entry disposes of: same NAME and one of the DEFINING MODULES it names.
+ *
+ * `definedIn` may be a list, and a list is a real claim rather than a convenience: `isProse` is
+ * declared four times across the swept files as four separate one-line copies, so an entry
+ * covering all four is saying that all four are the same predicate and stands or falls on each
+ * of them still existing. An entry with NO definedIn matches on the name alone — the pre-[D-08]
+ * behaviour, kept only so a new entry can be written before its module is decided, and the
+ * sweep names every such entry on every run.
+ */
+export const sitesFor = (sites, entry) => {
+  const name = entry.pred || entry.key;
+  const mods = [].concat(entry.definedIn || []);
+  return sites.rows.filter((r) => r.pred === name && (!mods.length || mods.includes(r.definedIn)));
 };
 
 // ---------------------------------------------------------------------------------------
@@ -130,7 +238,7 @@ export const exclusionSites = () => {
 export const PREDICATES = [
 
   // ─── the archetype ────────────────────────────────────────────────────────────────────
-  { id: 'EX-01', pred: 'claimsNothing', kind: 'claiming',
+  { id: 'EX-01', pred: 'claimsNothing', definedIn: 'adapters/pdf/assert-row-shape-spec.mjs', kind: 'claiming',
     what: 'Removes a printed_tables entry from [A3]\'s routing assertion when its text opens with "none" or contains "not currently mapped".',
     count: () => excusedClaims().length,
     // THE CROSS-CHECK THE DEFECT WOULD HAVE FAILED. "not currently mapped" is a statement about
@@ -277,7 +385,7 @@ export const PREDICATES = [
     } },
 
   // ─── the source predicates ────────────────────────────────────────────────────────────
-  { id: 'EX-10', pred: 'isProse', kind: 'structural',
+  { id: 'EX-10', pred: 'isProse', definedIn: ['adapters/pdf/exclusion-sweep.mjs', 'adapters/pdf/guard-sweep.mjs', 'adapters/pdf/success-sweep.mjs', 'adapters/hubspot/gen-fields-from-map.mjs'], kind: 'structural',
     what: 'Excuses a comment line from the source scanners in guard-sweep.mjs, success-sweep.mjs and gen-fields-from-map.mjs.',
     structural_because: 'A shape inside a comment is PROSE ABOUT the defect, not an instance of it — guard-sweep\'s own header contains a dozen written-out vacuous guards. It separates code from commentary and makes no claim about the world. Its failure mode is also the safe one: a comment misread as code adds a site that must then be disposed, which is noise, never silence.' },
 
@@ -315,15 +423,15 @@ export const PREDICATES = [
       return out;
     } },
 
-  { id: 'EX-12', pred: 'absent', kind: 'scoped',
+  { id: 'EX-12', pred: 'absent', definedIn: ['adapters/pdf/fill-433a.mjs', 'adapters/pdf/fill-433aoi.mjs'], kind: 'scoped',
     what: 'Excuses an undefined, null or whitespace-only value from being written to a PDF cell, in fill-433a.mjs and fill-433aoi.mjs.',
     assertedBy: 'check-row-shape.mjs counts every absent and blank cell per group and the gate prints the figures; adapters/pdf/verify-form-coverage.mjs then asserts the WHOLE-FORM partition closes — form_fields_total = in_this_slice + excluded_never_autofill + deferred + unaccounted, each side derived from widget geometry by count-sweep [S-01]. A cell this predicate skips is still counted as a cell, so the exclusion cannot shrink the denominator.' },
 
-  { id: 'EX-13', pred: 'blank', kind: 'scoped',
+  { id: 'EX-13', pred: 'blank', definedIn: 'adapters/pdf/render-review.mjs', kind: 'scoped',
     what: 'The same absence test in render-review.mjs, deciding which bound cells the review page reports as "both empty".',
     assertedBy: 'The review page prints the four-way tally — match / MISMATCH / both empty / pdf-only — and every bound cell lands in exactly one bucket. Nothing is removed from the denominator, so a widened `blank` moves cells between reported buckets rather than out of the report.' },
 
-  { id: 'EX-14', pred: 'isDescriptive', kind: 'claiming',
+  { id: 'EX-14', pred: 'isDescriptive', definedIn: 'adapters/pdf/correlate-labels.mjs', kind: 'claiming',
     what: 'Excuses a drawn text run from becoming a widget LABEL in correlate-labels.mjs, on the claim that a bare line marker "(13a)" or a format hint "mm/dd/yyyy" is not a description of the cell.',
     assertedBy: 'guard-sweep.mjs [FIG-01]/[FIG-02] — 26 labels and 4 markers moved when the truncation order was fixed, and the register records the mutation procedure that measured it.',
     count: () => {
@@ -343,7 +451,7 @@ export const PREDICATES = [
     // the count moving without anyone noticing, which is what [FIG-01] was written for.
     crosscheck: () => [] },
 
-  { id: 'EX-15', pred: 'isNarrative', kind: 'claiming',
+  { id: 'EX-15', pred: 'isNarrative', definedIn: 'adapters/pdf/success-sweep.mjs', kind: 'claiming',
     what: 'Excuses a success-message site from success-sweep.mjs\'s control-flow witnesses, on the claim that the message states what was FOUND rather than that nothing was.',
     count: () => 0,   // replaced below by the live figure; see runExclusionSweep
     crosscheck: async () => {
@@ -361,45 +469,65 @@ export const PREDICATES = [
       return out;
     } },
 
-  { id: 'EX-26', pred: 'hit', kind: 'structural',
+  { id: 'EX-26', pred: 'hit', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Tests, in blanket-audit [K-12], whether a coordinate quoted in the map or headings file is a value the page actually draws.',
     structural_because: 'IT IS THE CHECK, NOT AN EXCUSAL FROM ONE. It partitions the quoted coordinates into covered and uncovered and BOTH halves are reported: the covered count becomes the numerator of the counter, and every uncovered coordinate is listed by name in the coverage-gap message. Nothing leaves the assertion by failing it. Registered because the sweep found it on its first run over new code, which is the outcome the completeness rule is for.' },
 
-  { id: 'EX-17', pred: 'under', kind: 'structural',
+  { id: 'EX-17', pred: 'under', definedIn: 'adapters/pdf/verify-form-coverage.mjs', kind: 'structural',
     what: 'Tests whether a field path lies under a declared root in verify-form-coverage.mjs — `path === root`, or the root followed by `.` or `[`.',
     structural_because: 'A path-prefix relation, not a claim about the form. It ROUTES fields into partition categories rather than removing them from the partition; the accounting then has to close against the form\'s own field count, so a field this misroutes shows up as an unaccounted field, not as an absent one.' },
 
-  { id: 'EX-18', pred: 'inMoneyBand', kind: 'scoped',
+  { id: 'EX-18', pred: 'inMoneyBand', definedIn: 'adapters/hubspot/gen-fields-from-map.mjs', kind: 'scoped',
     what: 'Decides in gen-fields-from-map.mjs whether a derived HubSpot property takes the money type.',
     assertedBy: 'adapters/hubspot/hs-verify-provision.mjs reads every property back FROM THE PORTAL and compares type, fieldType, options and group against the definition file, exiting 3 on any mismatch. A misclassified band is caught against the live portal, not against the file that made the classification.' },
 
-  { id: 'EX-19', pred: 'fileMatches', kind: 'structural',
+  { id: 'EX-19', pred: 'fileMatches', definedIn: 'adapters/pdf/guard-sweep.mjs', kind: 'structural',
     what: 'Matches a guard-sweep register entry\'s `file` spec — a string or a RegExp — against a filename.',
     structural_because: 'A dispatch test binding a disposition to its file. A non-match does not excuse a site: it leaves the site UNDISPOSED, which guard-sweep reports as a STOP. Failing to match moves a site towards the problem state.' },
 
-  { id: 'EX-20', pred: 'covers', kind: 'structural',
+  { id: 'EX-20', pred: 'covers', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Blanket-audit\'s test for whether a demanded atom is present in a published scope.',
     structural_because: 'The forward-reference prover. A `covers` that returns false does not skip the reference; it reports it UNPROVED. Fails closed.' },
 
-  { id: 'EX-21', pred: 'drawnOn', kind: 'structural',
+  { id: 'EX-21', pred: 'drawnOn', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Blanket-audit\'s page test for a geometry claim.',
     structural_because: 'Selects which page a claimed coordinate is checked against. A wrong answer produces a failed geometry claim, not a skipped one.' },
 
-  { id: 'EX-22', pred: 'norm', kind: 'structural',
+  { id: 'EX-22', pred: 'norm', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Normalises a claim string before comparison in blanket-audit.mjs.',
     structural_because: 'A comparison normaliser — case and whitespace. It changes what counts as equal, not what counts as present, and both sides of every comparison go through it.' },
 
-  { id: 'EX-23', pred: 'ok', kind: 'structural',
+  { id: 'EX-23', pred: 'ok', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Blanket-audit\'s per-claim verdict accessor, used to select the FAILING claims for the report.',
     structural_because: 'Selects failures for printing out of a set every member of which has already been judged. It excuses nothing from judgement; it decides what gets printed after.' },
 
-  { id: 'EX-24', pred: 'body', kind: 'structural',
+  { id: 'EX-24', pred: 'body', definedIn: 'adapters/pdf/success-sweep.mjs', kind: 'structural',
     what: 'Strips the quote characters off a string literal in success-sweep.mjs before testing its text.',
     structural_because: 'A string accessor, not a predicate. `\'OK — …\'` and `OK — …` must compare the same way whichever quote style the source used.' },
 
-  { id: 'EX-25', pred: 'DETECTOR_SIG', kind: 'structural',
+  { id: 'EX-25', pred: 'DETECTOR_SIG', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Blanket-audit\'s completeness-detector signature test.',
     structural_because: 'Recognises the shape of a completeness claim. A signature that stops matching detects fewer claims — which is the [A3] shape — and that is precisely why the detector carries CANARY, a fixed synthetic string expecting one assert claim and one geometry claim, whose failure declares every "0 detected" in the same run meaningless.' },
+
+  // ─── the sweep-boundary register ─────────────────────────────────────────────────────
+  //
+  // A SECOND `covered`, AND [D-08] IS WHY IT HAS ITS OWN ENTRY. blanket-audit.mjs defines one
+  // too and [EX-20] disposes of THAT one. Before predicates were keyed on their defining
+  // module, this site would have been absorbed by [EX-20] in silence - a disposition written
+  // about a forward-reference filter, standing over a gitignore test in an unrelated file,
+  // sound only for as long as the two names stayed the same.
+  { id: 'EX-29', pred: 'covered', definedIn: 'adapters/pdf/sweep-boundary.mjs', kind: 'structural',
+    what: 'Separates a subdirectory of a swept directory that is covered by a .gitignore rule from one that is not, in [SB-90].',
+    structural_because: 'BOTH BRANCHES ARE REPORTED AND NEITHER LEAVES THE ASSERTION. A covered subdirectory is a directory git is already keeping out of the tree, which is the state [SB-91] asserts and prints the size of; an uncovered one that is also not a declared asset directory is an UNREGISTERED SUBDIRECTORY stop naming the path. Nothing is excused: the two branches partition the subdirectory list, the list is derived from the tree on every run, and its size is printed beside the entry. An empty .gitignore would make EVERY subdirectory uncovered, which is the loud direction.' },
+
+  // ─── the y-convention audit ───────────────────────────────────────────────────────────
+  { id: 'EX-27', pred: 'agreesWithSomeBaseline', definedIn: 'adapters/pdf/assert-y-convention.mjs', kind: 'structural',
+    what: 'Separates the readings where a reporter agrees with one of the baselines the page draws for an object from the readings where it agrees with none.',
+    structural_because: 'IT IS THE ASSERTION, NOT AN EXCUSAL. Both branches are reported: an agreeing reading is counted into `checked`, a disagreeing one becomes a DISAGREEMENT problem naming the tool, the object, both numbers and the gap. Nothing leaves the audit through this predicate — the two branches sum to the judged population, which is printed per form on every run. It is also the predicate the CANARY is judged by, so a version of it that stopped separating anything would report the run-top reporter as agreeing and take the run down before any real reading is trusted.' },
+
+  { id: 'EX-28', pred: 'REPORTER_SIG', definedIn: 'adapters/pdf/assert-y-convention.mjs', kind: 'structural',
+    what: 'The y-reporter signature: an engine file that names a y-bearing quantity and emits it.',
+    structural_because: 'Recognises the shape of a y reporter, in the same way [EX-25] recognises the shape of a completeness detector. A signature that stopped matching would find fewer reporters — the [A3] shape — and it is closed the same way: the derived candidate set is compared against page-geometry.Y_REPORTERS IN BOTH DIRECTIONS, so a candidate with no entry is a STOP and an entry the signature no longer finds is a STALE REPORTER ENTRY. Its first draft was in fact too narrow and the second direction is what said so: it demanded console.log or writeFileSync and therefore missed page-geometry.mjs, the module that defines the convention, which came back as a stale entry rather than as silence.' },
 
   // ─── the exclusion inside the completeness check ──────────────────────────────────────
   { id: 'EX-90', pred: '(meta) engine-defined only', kind: 'claiming',
@@ -413,9 +541,16 @@ export const PREDICATES = [
       const defined = enginePredicates();
       const out = [];
       const { rows } = exclusionSites();
-      const registered = new Set(PREDICATES.map((p) => p.pred));
-      for (const r of rows) if (defined.has(r.pred) && !registered.has(r.pred))
-        out.push(`[EX-90] ${r.pred} at ${r.at} is defined in a swept file and excuses a site, and no register entry names it.`);
+      // PER (NAME, DEFINING MODULE), for the same reason the completeness check is. A register
+      // entry naming assert-row-shape-spec.mjs does not dispose of an identically named local
+      // in a file that has never heard of it.
+      const registered = new Set(PREDICATES.flatMap((q) => [].concat(q.definedIn || []).map((d) => `${q.pred}@${d}`)));
+      const bare = new Set(PREDICATES.filter((q) => !q.definedIn).map((q) => q.pred));
+      for (const r of rows) {
+        if (!defined.has(r.pred)) continue;
+        if (registered.has(`${r.pred}@${r.definedIn}`) || bare.has(r.pred)) continue;
+        out.push(`[EX-90] ${r.pred} at ${r.at}, defined in ${r.definedIn}, excuses a site and no register entry names that definition.`);
+      }
       return out;
     } },
 ];
@@ -512,10 +647,54 @@ export const runCanary = () => {
 };
 
 // ---------------------------------------------------------------------------------------
+// THE SECOND CANARY — THE REACHABILITY RULE, ON A TREE THAT IS NOT THIS ONE.
+//
+// [D-08] in miniature, both directions, in memory. Three synthetic files:
+//
+//   a.mjs   defines `isChecked` and never calls it        (the run-form-gate.mjs local)
+//   b.mjs   calls `field.isChecked()` in an exclusion position, imports nothing
+//                                                          (the verify-appearances.mjs site)
+//   c.mjs   imports isChecked from a.mjs and calls it in an exclusion position
+//
+// The rule must attribute NOTHING to b.mjs — that site is a library method call, in a file
+// that cannot see a.mjs, and every version of this sweep before this commit counted it — and
+// exactly one site to c.mjs, which genuinely can. A canary that only checked the first half
+// would pass on a rule that attributes nothing to anybody, which is the silent direction of
+// the same defect one level out.
+//
+// NOT DRAWN FROM THE TREE, per the standing rule: a canary built from the real files cannot
+// tell a broken reachability rule from a tree that happens to have no accidents left in it.
+// ---------------------------------------------------------------------------------------
+export const REACH_CANARY_SRC = {
+  'x/a.mjs': "const isChecked = (t) => !!t;\nexport { isChecked };\n",
+  'x/b.mjs': "import { PDFCheckBox } from 'pdf-lib';\nfor (const field of fields) {\n  if (!field.isChecked()) continue;\n}\n",
+  'x/c.mjs': "import { isChecked } from './a.mjs';\nfor (const t of all) {\n  if (!isChecked(t)) continue;\n}\n",
+};
+
+export const runReachCanary = () => {
+  const files = Object.keys(REACH_CANARY_SRC);
+  const read = (f) => REACH_CANARY_SRC[f];
+  const defs = predicateDefinitions(files, read);
+  const reach = new Map(files.map((f) => [f, reachableIn(f, defs, read)]));
+  const inB = reach.get('x/b.mjs').has('isChecked');
+  const inC = reach.get('x/c.mjs').has('isChecked');
+  const fromC = reach.get('x/c.mjs').get('isChecked');
+  return {
+    ok: inB === false && inC === true && fromC === 'x/a.mjs',
+    inB, inC, fromC,
+    why: 'a local in a.mjs must NOT be reachable from b.mjs, which imports nothing, and MUST be reachable from c.mjs, which imports it — resolved back to a.mjs and not merely to the name',
+  };
+};
+
+// ---------------------------------------------------------------------------------------
 export const runExclusionSweep = async () => {
   const problems = [];
   const rows = [];
   const sites = exclusionSites();
+
+  const reach = runReachCanary();
+  if (!reach.ok)
+    problems.push(`CANARY DEAD  the reachability rule attributed a local in x/a.mjs to x/b.mjs (${reach.inB}, expected false) and to x/c.mjs (${reach.inC} from ${reach.fromC}, expected true from x/a.mjs).\n      ${reach.why}.\n      Every predicate-to-site attribution in this run is therefore unchecked: this is [D-08] with the guard against it broken. STOP.`);
 
   const canary = runCanary();
   if (!canary.ok)
@@ -568,14 +747,21 @@ export const runExclusionSweep = async () => {
         continue;
       }
     }
-    rows.push({ id, name, kind: e.kind, count: n, sites: sites.rows.filter((r) => r.pred === name).length, verdict: found.length ? 'CONTRADICTED' : (typeof e.crosscheck === 'function' ? 'cross-checked' : (e.kind === 'scoped' ? 'asserted elsewhere' : e.kind)), assertedBy: e.assertedBy, observed });
+    rows.push({ id, name, kind: e.kind, count: n, sites: sitesFor(sites, e).length, definedIn: e.definedIn, verdict: found.length ? 'CONTRADICTED' : (typeof e.crosscheck === 'function' ? 'cross-checked' : (e.kind === 'scoped' ? 'asserted elsewhere' : e.kind)), assertedBy: e.assertedBy, observed });
   }
 
-  // COMPLETENESS: an engine-defined predicate excusing a site with no register entry is a STOP.
-  const registered = new Set(PREDICATES.map((p) => p.pred));
-  for (const p of sites.predicates) if (!registered.has(p)) {
-    const at = sites.rows.filter((r) => r.pred === p).map((r) => r.at);
-    problems.push(`UNREGISTERED  ${p}  (${at.length} site(s): ${at.slice(0, 4).join(', ')}${at.length > 4 ? ', …' : ''})\n      excuses a site from a check and appears in no entry of PREDICATES.\n      Register it as structural, scoped or claiming — and if claiming, give it a crosscheck().\n      There is no fourth state.`);
+  // COMPLETENESS: a REACHABLE predicate excusing a site with no register entry is a STOP,
+  // and the unit is now (name, defining module) rather than the bare name. Two files defining
+  // the same one-line predicate are two predicates, and a register entry naming one of them
+  // says nothing about the other — which is [D-08] in the direction that stays quiet.
+  const registered = new Set(PREDICATES.flatMap((p) => [].concat(p.definedIn || []).map((d) => `${p.pred}@${d}`)));
+  const bareRegistered = new Set(PREDICATES.filter((p) => !p.definedIn).map((p) => p.pred));
+  const seenPairs = new Set(sites.rows.map((r) => `${r.pred}@${r.definedIn}`));
+  for (const pair of [...seenPairs].sort()) {
+    const [nm, mod] = pair.split('@');
+    if (registered.has(pair) || bareRegistered.has(nm)) continue;
+    const at = sites.rows.filter((r) => `${r.pred}@${r.definedIn}` === pair).map((r) => r.at);
+    problems.push(`UNREGISTERED  ${nm}  defined in ${mod}  (${at.length} site(s): ${at.slice(0, 4).join(', ')}${at.length > 4 ? ', …' : ''})\n      excuses a site from a check and appears in no entry of PREDICATES for that module.\n      Register it as structural, scoped or claiming — and if claiming, give it a crosscheck().\n      There is no fourth state.`);
   }
   // RETIRED ENTRIES, AND THE GUARD RUNS THE OTHER WAY. An entry leaves PREDICATES because
   // its predicate left the engine-defined universe; if the name comes BACK into that
@@ -598,11 +784,23 @@ export const runExclusionSweep = async () => {
         problems.push(`ORPHAN  [${e.id}]  ${e.pred}\n      is registered as an exclusion and ${e.viaConst} no longer defines it.\n      The exclusion it disposes of has been removed or renamed; re-read it and re-write the entry.`);
       continue;
     }
-    if (!sites.predicates.includes(e.pred))
-      problems.push(`ORPHAN  [${e.id}]  ${e.pred}\n      is registered as an exclusion predicate and appears in no exclusion position in the swept files.\n      The predicate it disposes of has been removed or repurposed; re-read it and re-write the entry.`);
+    // AN ENTRY IS ORPHANED PER DEFINING MODULE. Before this commit the test was "does this
+    // NAME appear anywhere", so an entry could keep looking alive on somebody else's identically
+    // named local — which is precisely how [EX-16] survived three slices.
+    const mine = sitesFor(sites, e);
+    if (!mine.length) {
+      const elsewhere = sites.rows.filter((r) => r.pred === e.pred).map((r) => r.definedIn);
+      problems.push(`ORPHAN  [${e.id}]  ${e.pred}${e.definedIn ? ` (declared in ${[].concat(e.definedIn).join(', ')})` : ''}\n      is registered as an exclusion predicate and excuses no site reachable from the module(s) it names.\n      ${elsewhere.length ? `A predicate of that NAME does excuse ${elsewhere.length} site(s), defined in ${[...new Set(elsewhere)].join(', ')} — a different definition, which this entry says nothing about.` : 'No predicate of that name excuses anything anywhere.'}\n      The predicate it disposes of has been removed or repurposed; re-read it and re-write the entry.`);
+    }
+    // A DECLARED MODULE THAT DEFINES NOTHING OF THAT NAME is a stale half of the entry, and it
+    // is a STOP on its own: the entry would go on looking sound on its other modules.
+    for (const d of [].concat(e.definedIn || [])) {
+      if (!sites.defs.get(e.pred)?.has(d))
+        problems.push(`STALE MODULE  [${e.id}]  ${e.pred}\n      names ${d} as a defining module and that file no longer defines it.\n      Either the predicate moved or the entry was written against a file it was never in.`);
+    }
   }
 
-  return { rows, problems, sites, canary };
+  return { rows, problems, sites, canary, reach };
 };
 
 export const reportExclusionSweep = (s, { verbose = false } = {}) => {
@@ -612,6 +810,7 @@ export const reportExclusionSweep = (s, { verbose = false } = {}) => {
   console.log(`                 ${s.sites.rows.length} source site(s) governed by ${s.sites.predicates.length} engine-defined predicate(s), out of ${s.sites.raw} raw exclusion position(s) [EX-90 removes ${s.sites.raw - s.sites.rows.length}]`);
   console.log(`                 ${excused} site(s) excused in total across every counted exclusion`);
   console.log(`                 canary: ${s.canary.ok ? 'holds' : 'DEAD'} (${s.canary.contradicted}/${s.canary.excused} synthetic excusal(s) contradicted)`);
+  console.log(`                 reachability canary: ${s.reach.ok ? 'holds' : 'DEAD'} (a local in x/a.mjs reaches x/b.mjs: ${s.reach.inB}; reaches x/c.mjs: ${s.reach.inC} via ${s.reach.fromC})`);
   for (const r of s.rows) {
     console.log(`    ${String(r.id).padEnd(6)} ${String(r.kind).padEnd(11)} ${String(r.count).padStart(4)} excused  ${String(r.sites ?? '-').padStart(2)} site(s)  ${r.verdict.padEnd(18)} ${r.name}`);
     // An observation is printed on EVERY run, not behind --verbose. The whole finding this

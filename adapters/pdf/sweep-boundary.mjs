@@ -1,0 +1,433 @@
+// THE SEVENTH SWEEP — WHAT THE SWEEPS DO NOT SWEEP, AND WHY.
+//
+//   node adapters/pdf/sweep-boundary.mjs [--verbose]
+//
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// WHY IT EXISTS — RULING 1 OF PROMPT 39, POINTED AT THE SWEEPS THEMSELVES
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// exclusion-sweep.mjs was written on one rule: AN EXCLUSION IS A CLAIM, AND EVERY CLAIM GETS
+// A COUNTER. It registers every predicate in the engine that excuses a call site from a check.
+// What it never registered is the exclusion that decides which FILES those checks look at.
+//
+// Two wrong typed counts sat in `samples/` and nothing in this repo would ever have said so,
+// because `samples/` is outside count-sweep's swept set. Not excused by a predicate, not
+// declared anywhere, not counted — just not looked at. The sweep that exists to find the
+// narrowing of an assertion's input had its OWN input narrowed by a list of eight paths that
+// nobody had ever compared to the tree.
+//
+// So the boundary is registered, in the same three kinds and with the same standard of proof:
+//
+//   structural  removes nothing that could carry a claim. The reason says why.
+//   scoped      genuinely removes claims, and something else covers them BY NAME.
+//   claiming    removes claims on the strength of a statement about reality, and MUST carry a
+//               crosscheck(). One without is a STOP.
+//
+// AND ONE THING THIS FILE ADDS TO THAT SHAPE. Every sweep in this engine reads its directories
+// with a non-recursive readdirSync, so every SUBDIRECTORY of every swept directory is silently
+// outside every sweep. That is not an entry anybody wrote; it is a property of the reading, and
+// it is the shape `samples/` had. [SB-90] derives the subdirectory list from the tree on every
+// run and requires each one to be covered by a registered entry — so a directory that appears
+// is a STOP, not a gap.
+//
+// WHAT AN HONEST BOUNDARY LOOKS LIKE. [SB-10] does NOT claim that `samples/` holds no counts.
+// It holds 130 of them and the entry says so, enumerated on every run. What it claims is the
+// narrower thing that is true and checkable: no tool reads a fixture's prose, and every count
+// in that prose which states a figure THIS TREE CAN DERIVE is compared against the derivation.
+// That comparison is the one the two wrong counts were in.
+
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { statesACount, sweptFiles as countSweptFiles } from './count-sweep.mjs';
+import { SWEPT_DIRS } from './exclusion-sweep.mjs';
+import { sweptFiles as guardSweptFiles } from './guard-sweep.mjs';
+
+const r = (p) => readFileSync(p, 'utf8');
+const isDir = (p) => { try { return statSync(p).isDirectory(); } catch { return false; } };
+export const MAPPED_FORMS = () =>
+  readdirSync('adapters/pdf/maps').filter((f) => f.endsWith('.map.json')).map((f) => f.replace('.map.json', '')).sort();
+
+/** Every `_`-prefixed prose string in a JSON document, with its path. */
+const proseIn = (doc, at = '') => {
+  const out = [];
+  const walk = (o, p) => {
+    if (typeof o === 'string') { out.push({ at: p, value: o }); return; }
+    if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) walk(v, p ? `${p}.${k}` : k);
+  };
+  walk(doc, at);
+  return out;
+};
+
+/** Every count-stating string in samples/, by file. The size of what [SB-10] removes. */
+export const sampleClaims = () => {
+  const out = [];
+  for (const f of readdirSync('samples').filter((x) => x.endsWith('.json')).sort()) {
+    let doc;
+    try { doc = JSON.parse(r(`samples/${f}`)); }
+    catch (e) { out.push({ file: `samples/${f}`, unreadable: e.message }); continue; }
+    for (const p of proseIn(doc)) if (statesACount(p.value)) out.push({ file: `samples/${f}`, at: p.at, value: p.value });
+  }
+  return out;
+};
+
+// The two shapes a fixture's prose uses to state a figure about the FORM rather than about
+// itself. These are the ones the tree can derive, and they are the class the two wrong counts
+// were in — "all 515 form fields", "74 of this form's 425 fields". The apostrophe is matched in
+// both the ASCII and the typographic spelling, because 433aoi.sample.json uses both.
+const FORM_TOTAL = [
+  /all (\d+) form fields/gi,
+  /\d+ of this form['’]s (\d+) fields/gi,
+];
+
+/** A fixture's stated form-field total against the enumerated field list for that form. */
+export const sampleFormTotals = () => {
+  const out = [];
+  for (const f of readdirSync('samples').filter((x) => x.endsWith('.json')).sort()) {
+    const form = MAPPED_FORMS().find((m) => f.startsWith(`${m}.`));
+    if (!form) { out.push({ file: `samples/${f}`, noForm: true }); continue; }
+    const fieldsPath = `adapters/pdf/maps/${form}.fields.json`;
+    if (!existsSync(fieldsPath)) { out.push({ file: `samples/${f}`, form, unreadable: `${fieldsPath} is absent` }); continue; }
+    const derived = JSON.parse(r(fieldsPath)).fields.length;
+    const src = r(`samples/${f}`);
+    for (const re of FORM_TOTAL) for (const m of src.matchAll(re))
+      out.push({ file: `samples/${f}`, form, phrase: m[0], claimed: Number(m[1]), derived });
+  }
+  return out;
+};
+
+// ---------------------------------------------------------------------------------------
+// THE REGISTER.
+// ---------------------------------------------------------------------------------------
+export const BOUNDARIES = [
+
+  // ═══ THE SWEPT SETS THEMSELVES, ENUMERATED ═══════════════════════════════════════════
+  { id: 'SB-01', sweep: 'count-sweep.mjs', kind: 'scoped',
+    what: 'Sweeps EIGHT named artefact paths per form and nothing else: the map, totals, headings and name-lies files for that form, the crosswalk classification for that form, and the three shared files irs-standards-2026.json, asset-row-shapes.json and crosswalk.433f.json.',
+    assertedBy: 'count-sweep.mjs sweptFiles(form), which is the enumeration itself and is filtered by existsSync so a form missing a sidecar is not swept for it. Every file it DOES sweep has every scalar number in it disposed as derived or underivable by the MANIFEST, which is the strongest coverage in this repo. What it does not sweep is the subject of every entry below.',
+    size: () => MAPPED_FORMS().reduce((n, f) => n + countSweptFiles(f).length, 0) },
+
+  { id: 'SB-02', sweep: 'guard-sweep.mjs', kind: 'scoped',
+    what: 'Sweeps adapters/pdf/*.mjs non-recursively minus guard-sweep.mjs itself, PLUS every adapters/hubspot/*.mjs that is a local-set instrument — one that can stop a run and never talks to the portal.',
+    assertedBy: 'guard-sweep.mjs sweptFiles(), which is the enumeration, and runGuardSweep, which reports the file and site counts on every run. The HubSpot half was added in this commit BECAUSE [SB-22] contradicted the reason it had been left out: four files there decide from local sets, which is the vacuous-guard shape exactly, and nine sites in them were outside every sweep. Its self-exclusion is disposed at [SB-21]; the portal-talking HubSpot tools at [SB-22]; subdirectories at [SB-90].',
+    size: () => guardSweptFiles().length },
+
+  { id: 'SB-03', sweep: 'exclusion-sweep.mjs / success-sweep.mjs', kind: 'scoped',
+    what: 'Both sweep adapters/pdf/*.mjs and adapters/hubspot/*.mjs, non-recursively. Neither excludes itself.',
+    assertedBy: 'Both print the file and site counts they read on every run, and exclusion-sweep additionally registers its own narrowing of the predicate universe as [EX-90] and cross-checks it. Their exclusion of subdirectories is [SB-90].',
+    size: () => SWEPT_DIRS.reduce((n, d) => n + readdirSync(d).filter((f) => f.endsWith('.mjs')).length, 0) },
+
+  { id: 'SB-04', sweep: 'blanket-audit.mjs / assert-y-convention.mjs', kind: 'scoped',
+    what: 'Both derive a candidate set from adapters/pdf/*.mjs, non-recursively — blanket-audit for the detector signature, assert-y-convention for the y-reporter signature.',
+    assertedBy: 'Each compares its derived candidate set against a typed register IN BOTH DIRECTIONS: a candidate with no entry is a STOP, and an entry the signature no longer finds is a STALE entry. The second direction is what caught assert-y-convention’s first signature being too narrow to see page-geometry.mjs.',
+    size: () => readdirSync('adapters/pdf').filter((f) => f.endsWith('.mjs')).length },
+
+  // ═══ THE FILE CLASSES THE SWEEPS REMOVE ══════════════════════════════════════════════
+
+  // ─── the one the ruling is about ──────────────────────────────────────────────────────
+  { id: 'SB-10', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'samples/',
+    what: 'Removes every count stated in a FIXTURE’S PROSE from the manifest’s disposition. This is the boundary two wrong typed counts sat behind, and it is registered here rather than justified: the directory is full of counts and the entry says how many.',
+    claim: 'No tool reads a fixture’s prose — the fill engines read the data keys and nothing parses an underscore-prefixed key — AND every count in that prose which states a figure THIS TREE CAN DERIVE agrees with the derivation.',
+    count: () => sampleClaims().length,
+    // THE COMPARISON THE TWO WRONG COUNTS WERE IN. A fixture that says "all 515 form fields"
+    // or "74 of this form's 425 fields" is stating the size of the FORM, which the enumerated
+    // field list settles. Every such phrase is compared. What is NOT compared is a fixture
+    // describing itself — "carries SIX records against five slots" — and the size of that
+    // undisposed remainder is printed on every run rather than left as a silence.
+    crosscheck: () => {
+      const out = [];
+      for (const t of sampleFormTotals()) {
+        if (t.unreadable) { out.push(`[SB-10] UNREADABLE — ${t.file}: ${t.unreadable}`); continue; }
+        if (t.noForm || t.claimed === undefined) continue;
+        if (t.claimed !== t.derived)
+          out.push(`[SB-10] CONTRADICTED — ${t.file} states ${JSON.stringify(t.phrase)} and ${t.form} enumerates ${t.derived} field(s). A fixture stating the size of the form is stating something the field list settles, and this one disagrees with it.`);
+      }
+      for (const c of sampleClaims()) if (c.unreadable)
+        out.push(`[SB-10] UNREADABLE — ${c.file} will not parse: ${c.unreadable}. A boundary whose size cannot be read reports that it could not be read.`);
+      return out;
+    },
+    observe: () => {
+      const all = sampleClaims().filter((c) => !c.unreadable);
+      const totals = sampleFormTotals().filter((t) => t.claimed !== undefined);
+      const byFile = new Map();
+      for (const c of all) byFile.set(c.file, (byFile.get(c.file) || 0) + 1);
+      return [
+        `[SB-10] ${all.length} count-stating string(s) across ${byFile.size} fixture(s) are outside count-sweep’s disposition.`,
+        `[SB-10] ${totals.length} of them state a form-field total this tree derives, and all ${totals.length} are compared above.`,
+        `[SB-10] the remaining ${all.length - totals.length} describe the fixture itself — row counts against slot counts, which values are distinct. Carried as [B16]; NOT disposed here, because disposing them means bringing samples/ into the manifest and that is a change to what count-sweep sweeps rather than to what it declares.`,
+      ];
+    } },
+
+  { id: 'SB-11', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/pdf/maps/*.labels.json, *.labels.txt',
+    what: 'Removes the correlate-labels output from the manifest.',
+    claim: 'These files are MECHANICAL EXTRACTIONS and declare their generator, so every number in them is derived from the PDF by construction and there is nothing for a person to have typed wrong.',
+    count: () => readdirSync('adapters/pdf/maps').filter((f) => /\.labels\.(json|txt)$/.test(f)).length,
+    // A GENERATED ARTEFACT DECLARES ITS GENERATOR. That is the whole ground for this exclusion,
+    // so it is the thing checked: a labels.json without a `generator` key is a file claiming to
+    // be mechanical with nothing saying it is.
+    crosscheck: () => {
+      const out = [];
+      for (const f of readdirSync('adapters/pdf/maps').filter((x) => x.endsWith('.labels.json'))) {
+        let doc;
+        try { doc = JSON.parse(r(`adapters/pdf/maps/${f}`)); }
+        catch (e) { out.push(`[SB-11] UNREADABLE — adapters/pdf/maps/${f}: ${e.message}`); continue; }
+        if (!doc.generator) out.push(`[SB-11] CONTRADICTED — adapters/pdf/maps/${f} declares no generator, and "it is mechanical" is the entire reason it is not swept.`);
+      }
+      return out;
+    } },
+
+  { id: 'SB-12', sweep: 'count-sweep.mjs', kind: 'scoped', path: 'adapters/pdf/maps/*.fields.json',
+    what: 'Removes the enumerated field list of each form.',
+    assertedBy: 'IT IS THE DENOMINATOR, NOT A CLAIM ABOUT ONE. run-form-gate.mjs step 3 requires every map target to exist verbatim in it, step 5 requires every entry in it to be referenced by the map, and step 6 requires the six partition categories to sum to its length. A wrong field list fails all three at once. It is also compared against the PDF itself by count-sweep [S-01], which derives the same figure from widget geometry.',
+    count: () => readdirSync('adapters/pdf/maps').filter((f) => f.endsWith('.fields.json')).length },
+
+  { id: 'SB-13', sweep: 'count-sweep.mjs', kind: 'claiming',
+    path: 'adapters/pdf/maps/*.intake.json, *.lineage-*.json, *.line-markers.txt, *.checkboxes.txt, *.alignment.txt, *.crosswalk-read.md',
+    what: 'Removes the INTAKE RECORD of each form — what reading the blank concluded, before any map existed.',
+    claim: 'An intake record is a statement about one moment and is superseded by the map rather than maintained alongside it, so a figure in it is history and not a live claim.',
+    count: () => readdirSync('adapters/pdf/maps').filter((f) => /\.(intake\.json|line-markers\.txt|checkboxes\.txt|alignment\.txt|crosswalk-read\.md)$/.test(f) || /\.lineage-/.test(f)).length,
+    // THE CLAIM IS TRUE AND IT IS ALSO WHERE [B11] LIVED. 433boi.lineage-433aoi.json quotes
+    // nineteen printed-run positions in a convention no other artefact in this repo uses, and
+    // it concluded the wrong caption for one binding on that difference. History is not the
+    // same as harmless. What is checked here is the part of the claim that IS checkable: an
+    // intake record must be superseded, meaning a map for that form exists.
+    crosscheck: () => {
+      const out = [];
+      for (const f of readdirSync('adapters/pdf/maps')) {
+        const m = /^([0-9a-z]+)\.(intake\.json|lineage-)/.exec(f);
+        if (!m) continue;
+        if (!existsSync(`adapters/pdf/maps/${m[1]}.map.json`))
+          out.push(`[SB-13] CONTRADICTED — adapters/pdf/maps/${f} is excused as a superseded intake record and ${m[1]} has no map. Nothing has superseded it, so its figures are the only statement this repo holds about that form.`);
+      }
+      return out;
+    },
+    observe: () => ['[SB-13] 433boi.lineage-433aoi.json is the file [B11] came out of: it quotes printed runs at their RUN TOPS where every map in this repo quotes baselines. It is left unedited on purpose — it is the intake record, and correcting it in place would erase what intake concluded. The correction belongs in the map and is carried as [B11].'] },
+
+  { id: 'SB-14', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.md, adapters/pdf/**/*.md',
+    what: 'Removes every markdown document under adapters/ — naming derivations, provisioning dry-runs and read-backs, style notes.',
+    claim: 'These are RUN REPORTS: each describes one execution against a live external system and is not re-derivable from this tree, because the tree does not hold the state the run was against.',
+    count: () => ['adapters/hubspot', 'adapters/pdf', 'adapters/pdf/maps'].filter(isDir).reduce((n, d) => n + readdirSync(d).filter((f) => f.endsWith('.md')).length, 0),
+    // A RUN REPORT IS ABOUT A RUN, so the checkable half is that a run happened: every one of
+    // these names the tool that produced it. A .md under adapters/ naming no producing tool is
+    // not a run report, and the exclusion does not cover it.
+    crosscheck: () => {
+      const out = [];
+      for (const d of ['adapters/hubspot', 'adapters/pdf', 'adapters/pdf/maps'].filter(isDir))
+        for (const f of readdirSync(d).filter((x) => x.endsWith('.md'))) {
+          const src = r(`${d}/${f}`);
+          if (!/\.mjs|\.ts\b|npm run/.test(src))
+            out.push(`[SB-14] CONTRADICTED — ${d}/${f} is excused as a run report and names no tool that produced it. Either it is not a run report, or the run it describes cannot be repeated.`);
+        }
+      return out;
+    } },
+
+  { id: 'SB-16', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/fields.registry.json',
+    what: 'Removes the shared HubSpot property registry — the pre-per-form backbone of property names, read by reclassify-against-backbone.mjs, render-review.mjs and named in hs-fetch-433f.mjs.',
+    _why_it_has_its_own_entry: 'It failed [SB-15] on the first run of this register, and correctly: it is neither generated nor read back. It is HAND-MAINTAINED, it carries a count of its own contents in meta.property_count, and three tools read it. Splitting it out is the honest move — the alternative was widening [SB-15] until it covered a file its reason is false of, which is the sentence-softening this whole file exists to refuse.',
+    claim: 'Its one count is a count OF ITSELF and is checkable against itself: meta.property_count is the length of its own properties array.',
+    count: () => 1,
+    crosscheck: () => {
+      let doc;
+      try { doc = JSON.parse(r('adapters/hubspot/fields.registry.json')); }
+      catch (e) { return [`[SB-16] UNREADABLE — adapters/hubspot/fields.registry.json: ${e.message}`]; }
+      const declared = doc?.meta?.property_count;
+      const actual = (doc?.properties || []).length;
+      if (typeof declared !== 'number')
+        return [`[SB-16] CONTRADICTED — fields.registry.json declares no meta.property_count, and "its one count checks itself" is the entire reason it is not swept.`];
+      if (declared !== actual)
+        return [`[SB-16] CONTRADICTED — fields.registry.json declares meta.property_count ${declared} and holds ${actual} propert(ies). A hand-maintained registry that has drifted from its own tally is exactly the typed count nothing was reading.`];
+      return [];
+    } },
+
+  { id: 'SB-15', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.json not named in sweptFiles(), other than fields.registry.json',
+    what: 'Removes the HubSpot side of the tree — the field files, the crosswalks other than 433-F, the probe register and the classification files for forms other than the one being swept.',
+    claim: 'Each is either a GENERATED artefact declaring its generator, or a live read-back from HubSpot that this tree cannot re-derive.',
+    count: () => readdirSync('adapters/hubspot').filter((f) => f.endsWith('.json')).length,
+    crosscheck: () => {
+      const named = new Set(MAPPED_FORMS().flatMap((f) => countSweptFiles(f)));
+      const out = [];
+      for (const f of readdirSync('adapters/hubspot').filter((x) => x.endsWith('.json'))) {
+        const p = `adapters/hubspot/${f}`;
+        if (named.has(p)) continue;
+        if (f === 'fields.registry.json') continue;              // [SB-16] carries it, with its own check
+        let doc;
+        try { doc = JSON.parse(r(p)); } catch (e) { out.push(`[SB-15] UNREADABLE — ${p}: ${e.message}`); continue; }
+        const s = JSON.stringify(doc);
+        if (!/generat|_derived|read.?back|probe|fetched|_source/i.test(s))
+          out.push(`[SB-15] CONTRADICTED — ${p} is excused as generated or read back and says neither. A JSON file under adapters/ that is neither swept nor generated is a hand-typed artefact nothing checks.`);
+      }
+      return out;
+    } },
+
+  // ─── the self-exclusions ──────────────────────────────────────────────────────────────
+  { id: 'SB-21', sweep: 'guard-sweep.mjs', kind: 'scoped', path: 'guard-sweep.mjs (itself)',
+    what: 'guard-sweep.mjs does not sweep its own source for vacuous-guard sites.',
+    assertedBy: 'exclusion-sweep.mjs and success-sweep.mjs, which BOTH sweep adapters/pdf/*.mjs with no self-exclusion and therefore both read guard-sweep.mjs. Its own `isProse` and `fileMatches` are registered exclusion predicates ([EX-10], [EX-19]) and its success messages are classified by success-sweep. It is the only self-exclusion in the engine and it is covered by the two sweeps that have none.' },
+
+  { id: 'SB-22', sweep: 'guard-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.mjs that TALK TO THE PORTAL',
+    what: 'guard-sweep reads the HubSpot tools that decide from LOCAL SETS and not the ones that decide from the portal.',
+    _this_entry_was_contradicted_and_the_sweep_moved: 'It used to read "guard-sweep reads only adapters/pdf; the HubSpot tools are outside it", on the ground that the HubSpot tools write to a live system and read the result back. That reason is true of most of them and FALSE OF FOUR — gen-fields-from-crosswalk.mjs, gen-fields-from-map.mjs, reclassify-against-backbone.mjs and validate-crosswalk.mjs never touch the portal, decide from local sets and can stop a run. Nine guard sites, outside every sweep, behind a sentence nobody had compared to the files. The remedy was to move the sweep rather than to soften the sentence: guard-sweep now derives its HubSpot half from the SAME predicate this entry cross-checks with, so the sweep and the register cannot drift into disagreeing about which file is which.',
+    claim: 'Every HubSpot tool this sweep does NOT read talks to the portal, so its outcome is what the portal says and not what a local set contains — which is not the vacuous-guard shape.',
+    count: () => readdirSync('adapters/hubspot').filter((f) => f.endsWith('.mjs')).length,
+    // THE HALF THAT IS CHECKABLE: a HubSpot tool that reports on a LOCAL set rather than on a
+    // portal read is exactly the shape guard-sweep exists for, and is not covered by this
+    // reason. The discriminator is mechanical — does the file talk to the portal at all.
+    crosscheck: () => {
+      const out = [];
+      const swept = new Set(guardSweptFiles());
+      for (const f of readdirSync('adapters/hubspot').filter((x) => x.endsWith('.mjs'))) {
+        if (swept.has(`../hubspot/${f}`)) continue;              // read by the sweep; not excluded
+        const src = r(`adapters/hubspot/${f}`);
+        const portal = /fetch\(|hs-lib|hubapi/.test(src);
+        const stops = /process\.exit|exitCode/.test(src);
+        if (!portal && stops)
+          out.push(`[SB-22] CONTRADICTED — adapters/hubspot/${f} is excluded from guard-sweep, can stop a run, and never talks to the portal, so its verdict comes from a local set. That is the vacuous-guard shape and this exclusion does not cover it.`);
+      }
+      return out;
+    } },
+
+  // ─── the class nobody wrote an entry for ──────────────────────────────────────────────
+  { id: 'SB-90', sweep: 'every sweep', kind: 'claiming', path: 'every SUBDIRECTORY of every swept directory',
+    what: 'EVERY sweep in this engine reads its directories with a NON-RECURSIVE readdirSync, so every subdirectory of every swept directory is outside every sweep. Nobody wrote this exclusion; it is a property of the reading, and it is the exact shape `samples/` had.',
+    claim: 'Every such subdirectory is either gitignored scratch, or a binary/asset directory that carries no prose claim.',
+    count: () => ['adapters/pdf', 'adapters/hubspot'].reduce((n, d) => n + readdirSync(d).filter((x) => isDir(`${d}/${x}`)).length, 0),
+    // DERIVED FROM THE TREE ON EVERY RUN, never typed. A directory that appears under a swept
+    // one is a STOP until somebody says which of the two states it is in — which is the whole
+    // remedy for the class, as opposed to the remedy for the instance.
+    crosscheck: () => {
+      const ignored = existsSync('.gitignore') ? r('.gitignore').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#')) : [];
+      const covered = (p) => ignored.some((g) => p === g.replace(/\/$/, '') || p.startsWith(g.replace(/\/$/, '') + '/'));
+      const ASSET_DIRS = { 'adapters/pdf/forms': 'the blank PDFs and their SHA pin file — bytes and one checksum list, no prose', 'adapters/pdf/maps': 'the map artefacts, which count-sweep sweeps BY NAME rather than by directory: sweptFiles() lists four per form plus the shared three' };
+      const out = [];
+      for (const d of ['adapters/pdf', 'adapters/hubspot'])
+        for (const sub of readdirSync(d).filter((x) => isDir(`${d}/${x}`))) {
+          const p = `${d}/${sub}`;
+          if (covered(p) || ASSET_DIRS[p]) continue;
+          out.push(`[SB-90] UNREGISTERED SUBDIRECTORY — ${p} sits under a swept directory and no sweep reads it, because every sweep in this engine reads non-recursively. It is not gitignored and it is not a declared asset directory. Say which it is, or bring it into a sweep. This is how samples/ came to hold two wrong counts nothing would ever have read.`);
+        }
+      return out;
+    } },
+
+  { id: 'SB-91', sweep: 'every sweep', kind: 'scoped', path: 'gitignored scratch: adapters/pdf/tmp/, adapters/pdf/out/, adapters/hubspot/backup/, samples/*.from-hubspot-*.json',
+    what: 'Removes build output, negative-test harnesses, regression baselines, parked copies of the tools, and live HubSpot records containing customer PII.',
+    assertedBy: 'git itself. Every path here is in .gitignore AND untracked, which is checked below — an exclusion resting on "it is scratch" is contradicted the moment a file in it is committed, because a committed file is one somebody is relying on.',
+    count: () => ['adapters/pdf/tmp', 'adapters/pdf/out', 'adapters/hubspot/backup'].filter(isDir).length },
+];
+
+// ---------------------------------------------------------------------------------------
+// THE CANARY.
+//
+// A synthetic swept set and a synthetic tree, in memory, in which a fixture claims a form-field
+// total that the synthetic field list contradicts. [SB-10]'s comparison must find exactly one
+// contradiction. It is the two-wrong-counts defect in miniature, and it runs before any real
+// boundary is trusted — a comparison that stops comparing reports a clean tree, which is the
+// failure this whole file is about.
+// ---------------------------------------------------------------------------------------
+export const runCanary = () => {
+  const synthetic = '{"_what_this_covers":"canary form slice - all 999 form fields are bound"}';
+  const derived = 267;
+  const found = [];
+  for (const re of FORM_TOTAL) for (const m of synthetic.matchAll(re))
+    if (Number(m[1]) !== derived) found.push(m[0]);
+  // AND THE OTHER DIRECTION, or a pattern matching nothing would pass the line above.
+  const agreeing = `{"_x":"all ${derived} form fields are bound"}`;
+  const agreed = [];
+  for (const re of FORM_TOTAL) for (const m of agreeing.matchAll(re)) agreed.push(m[0]);
+  return {
+    ok: found.length === 1 && agreed.length === 1,
+    contradicted: found.length, matched: agreed.length,
+    why: 'one synthetic fixture claiming 999 fields against a derived 267 must yield exactly one contradiction, and one claiming the derived figure must still be MATCHED — otherwise a dead pattern would pass the first test by finding nothing',
+  };
+};
+
+// ---------------------------------------------------------------------------------------
+export const runSweepBoundary = async () => {
+  const problems = [];
+  const rows = [];
+  const canary = runCanary();
+  if (!canary.ok)
+    problems.push(`CANARY DEAD  the form-total comparison found ${canary.contradicted} contradiction(s) in a synthetic fixture claiming 999 against 267, and matched ${canary.matched} in one claiming 267; expected 1 and 1.\n      It can no longer tell a wrong typed count from a right one. Every "0 contradicted" below is meaningless. STOP.`);
+
+  for (const e of BOUNDARIES) {
+    if (e.kind === 'claiming' && typeof e.crosscheck !== 'function') {
+      problems.push(`NO CROSS-CHECK  [${e.id}]  ${e.path || e.sweep}\n      is registered \`claiming\` — it removes files from a sweep on a statement about reality — and carries no crosscheck().\n      A boundary nothing compares to the world is how samples/ held two wrong counts.`);
+      rows.push({ id: e.id, sweep: e.sweep, kind: e.kind, size: '?', verdict: 'NO CROSS-CHECK' });
+      continue;
+    }
+    if (e.kind === 'scoped' && !e.assertedBy) {
+      problems.push(`NO NAMED ASSERTION  [${e.id}]  ${e.path || e.sweep}\n      is registered \`scoped\` and names nothing that covers what it removes.`);
+      rows.push({ id: e.id, sweep: e.sweep, kind: e.kind, size: '?', verdict: 'NO NAMED ASSERTION' });
+      continue;
+    }
+    if (e.kind === 'structural' && !e.structural_because) {
+      problems.push(`NO REASON  [${e.id}]  ${e.path || e.sweep}\n      is registered \`structural\` and does not say why it removes nothing that could carry a claim.`);
+      rows.push({ id: e.id, sweep: e.sweep, kind: e.kind, size: '?', verdict: 'NO REASON' });
+      continue;
+    }
+
+    let size = '-';
+    if (typeof e.count === 'function' || typeof e.size === 'function') {
+      const fn = e.count || e.size;
+      try { size = await fn(); }
+      catch (err) {
+        problems.push(`UNREADABLE  [${e.id}]  ${e.path || e.sweep}\n      its size could not be read: ${err.message}\n      A boundary whose size cannot be read reports that it could not be read. Never a pass.`);
+        rows.push({ id: e.id, sweep: e.sweep, kind: e.kind, size: 'UNREADABLE', verdict: 'UNREADABLE' });
+        continue;
+      }
+    }
+    let found = [];
+    if (typeof e.crosscheck === 'function') {
+      try { found = (await e.crosscheck()) || []; }
+      catch (err) {
+        problems.push(`UNREADABLE  [${e.id}]  ${e.path || e.sweep}\n      its crosscheck() threw: ${err.message}`);
+        rows.push({ id: e.id, sweep: e.sweep, kind: e.kind, size, verdict: 'UNREADABLE' });
+        continue;
+      }
+    }
+    problems.push(...found);
+    let observed = null;
+    if (typeof e.observe === 'function') {
+      try { observed = await e.observe(); } catch (err) { problems.push(`UNREADABLE  [${e.id}] observe() threw: ${err.message}`); }
+    }
+    rows.push({
+      id: e.id, sweep: e.sweep, kind: e.kind, path: e.path, size,
+      verdict: found.length ? 'CONTRADICTED' : (typeof e.crosscheck === 'function' ? 'cross-checked' : (e.kind === 'scoped' ? 'asserted elsewhere' : e.kind)),
+      assertedBy: e.assertedBy, observed,
+    });
+  }
+
+  // git tracks nothing under a directory [SB-91] calls scratch.
+  const tracked = (() => {
+    try {
+      return execFileSync('git', ['ls-files', 'adapters/pdf/tmp', 'adapters/pdf/out', 'adapters/hubspot/backup'], { encoding: 'utf8' }).split('\n').filter(Boolean);
+    } catch { return null; }
+  })();
+  if (tracked === null) problems.push('UNREADABLE  [SB-91] git ls-files could not be run, so "these directories are untracked scratch" is unchecked rather than true.');
+  else if (tracked.length) problems.push(`[SB-91] CONTRADICTED — ${tracked.length} file(s) under the scratch directories ARE tracked by git: ${tracked.slice(0, 5).join(', ')}${tracked.length > 5 ? ', …' : ''}.\n      A committed file is one somebody is relying on, and "it is reproducible scratch" no longer covers it.`);
+
+  return { rows, problems, canary, tracked };
+};
+
+export const reportSweepBoundary = (s, { verbose = false } = {}) => {
+  const tally = s.rows.reduce((a, r2) => { a[r2.verdict] = (a[r2.verdict] || 0) + 1; return a; }, {});
+  console.log(`sweep-boundary register: ${s.rows.length} registered boundary/boundaries — ${Object.entries(tally).map(([k, v]) => `${v} ${k}`).join(', ')}`);
+  console.log(`                         canary: ${s.canary.ok ? 'holds' : 'DEAD'} (${s.canary.contradicted} synthetic contradiction(s), ${s.canary.matched} synthetic match(es))`);
+  console.log(`                         git tracks ${s.tracked === null ? 'UNREADABLE' : s.tracked.length} file(s) under the declared scratch directories`);
+  for (const r2 of s.rows) {
+    console.log(`    ${String(r2.id).padEnd(6)} ${String(r2.kind).padEnd(11)} ${String(r2.size).padStart(4)} file(s)  ${r2.verdict.padEnd(18)} ${r2.path || r2.sweep}`);
+    if (r2.observed) for (const o of r2.observed) console.log(`             ${o}`);
+  }
+  if (verbose) for (const r2 of s.rows) if (r2.assertedBy) console.log(`      [${r2.id}] asserted by: ${r2.assertedBy}`);
+  if (!s.problems.length) {
+    console.log('OK — every directory and file class the sweeps exclude is registered, its size is counted, and every boundary that states something about the world has been compared against the world.');
+    return 0;
+  }
+  console.error(`SWEEP BOUNDARY — ${s.problems.length} problem(s):`);
+  s.problems.forEach((p) => console.error(`  ${p}`));
+  return s.problems.length;
+};
+
+// CLI
+if (process.argv[1] && /sweep-boundary\.mjs$/.test(process.argv[1].replace(/\\/g, '/'))) {
+  const s = await runSweepBoundary();
+  process.exit(reportSweepBoundary(s, { verbose: process.argv.includes('--verbose') }) ? 2 : 0);
+}

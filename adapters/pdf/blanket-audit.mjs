@@ -635,6 +635,7 @@ export const DETECTORS = {
   'count-sweep.mjs': { canary: 'THE atLeast CONTRACT, which is the same idea per claim site: a detector declares the minimum it must find in an input it was handed, and finding fewer is a STOP rather than a clean sweep. It is the construct the canary generalises.' },
   'guard-sweep.mjs': { canary: 'THE ORPHAN CHECK. Every register entry carries an `anchor` that must match a real line in the file it disposes of; an anchor matching nothing is a STOP. That is a canary per entry rather than one per run - the register cannot go quiet without saying so.' },
   'assert-row-class-routes.mjs': { canary: '`__canary_not_a_class__`, poisoned into every declaring group with an asserted expected yield of one refusal each. Proved by breaking it: with the poison write removed the harness reported 64 DID NOT STOP, CANARY 0 of 32, and exited 2.' },
+  'sweep-boundary.mjs': { canary: 'runCanary(), a synthetic fixture claiming "all 999 form fields" against a derived 267, run through [SB-10]\'s own FORM_TOTAL patterns. Expected yield: exactly ONE contradiction — and, in the same call and asserted in the same conjunction, exactly ONE MATCH against a second synthetic fixture claiming the derived figure. The second half is the one a dead pattern fails: a regex matching nothing produces zero contradictions, which the first half alone would read as a clean tree. It is the two-wrong-typed-counts defect in miniature and it is not drawn from the artefacts.' },
   'exclusion-sweep.mjs': { canary: 'runCanary() builds a synthetic spec whose one class claims a printed table "not currently mapped" AND a synthetic map that routes that class, then runs [EX-01]\'s comparison over the pair. Expected yield: exactly one excusal and exactly one contradiction. It is the [A3] defect in miniature — an excusal whose sentence the map disproves — so a cross-check that stops comparing reports 1 excused and 0 contradicted and takes the run down, rather than reporting nothing to contradict. The map half goes through the SAME acceptorsOf() the real assertion uses, imported rather than copied, so the canary cannot pass against a second implementation of the routing.' },
   'success-sweep.mjs': { canary: 'CANARY_SRC, fourteen lines of synthetic source holding one site of each of the four classes, classified in memory by the same classify() the sweep uses. Line 13 is the defect verbatim — `process.exitCode = 3` inside a failure guard, then a bare `all assertions passed.` — arranged BELOW an earlier guard that does jump, because a witness accepting any jump above would certify the very line the file was written for. Expected yield: guarded, terminal, UNCONDITIONAL, narrative, in that order. CANARY_EXPECT\'s length is asserted against CANARY_CLASSES before the loop, so a shortened list cannot make `every` vacuously true.' },
   'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
@@ -681,6 +682,35 @@ export const completenessClaimsIn = (text, where) => {
 // holds only when covered === universe. That is the whole rule of §2 made executable: the
 // completeness blanket said "every bound key is covered by an entry" and what was missing was
 // a thing that counts BOUND KEYS. Every counter below names its universe explicitly.
+//
+// ── EVERY COUNTER DECLARES THE SCOPE OF ITS UNIVERSE AND THE SCOPE IS ASSERTED ──────────
+//
+// [K-19] reported 14 of 23 and named nine live bindings as uncovered scalars. Nothing had
+// moved and nothing was wrong with the covered set: the counter took `Object.values(map)`,
+// which WAS the fourteen page-1 scalars while 433-B(OIC) had one authored page and became
+// twenty-three the moment slice 2 landed. Its universe widened underneath it and its
+// declaration did not change, because it had no declaration.
+//
+// [K-18] is the same failure with the opposite sign: it read a ctx key that did not exist, so
+// its universe was EMPTY, and a counter proving that every widget is bound reported success by
+// seeing no widgets at all.
+//
+// So a counter now carries THREE things and a missing one is a STOP:
+//
+//   universe.scoped_to   'page' | 'form' | 'artefact' | 'tree' — how wide this is allowed to be
+//   universe.detail      what the universe IS, in words, for a person reading the transcript
+//   universe.admits      a PREDICATE over one member. Not a second derivation of the universe:
+//                        a re-derivation would be a parallel list and would agree with the
+//                        first one by construction. A predicate can only ever say that a
+//                        member the counter took in is outside the scope the counter declared.
+//
+//   count() returns      universeList — the members, ENUMERATED. `universe` must equal its
+//                        length, and every member must be admitted. A universe that grows past
+//                        its declared scope is a STOP, not a coverage finding.
+//
+// [K-19] under this rule: scope 'page', admits = the widget for this target is on page 1. The
+// nine page-2 and page-3 totals slice 2 added are refused BY THE SCOPE and the run stops
+// saying the universe widened — instead of reporting nine defects that were not defects.
 const C = (o) => o;
 export const COMPLETENESS = [
 
@@ -688,12 +718,21 @@ export const COMPLETENESS = [
   C({ id: 'K-01', match: /every bound key on the form is covered by an entry|every bound/i,
     kind: 'counter',
     what: 'the classification covers the map\'s input key space',
+    universe: { scoped_to: 'form', detail: 'every input key the map for THIS form declares, as adapters/hubspot/classification-coverage.mjs reads them',
+      admits: (m, ctx) => typeof m === 'string' && !!ctx.form },
     // IMPORTED FROM adapters/hubspot/classification-coverage.mjs, which is also what
     // derive-names-433aoi.mjs assertion A1 now uses. The first draft of this counter read
     // coverage as verbatim-plus-naive-glob and answered 232 of 238 against A1's 238 of 238,
     // naming six keys as uncovered that X-04 covers by counterpart substitution. A
     // reimplementation is a new instrument and is not evidence about the old one.
-    count: (ctx) => coverageCount(ctx.form) }),
+    count: (ctx) => {
+      const c = coverageCount(ctx.form);
+      // coverageCount is IMPORTED and returns {universe, covered, uncoveredList}. Its
+      // uncovered half is enumerated there; the universe list is reconstructed from the two
+      // halves so this counter can be held to the same enumeration standard as the rest.
+      const un = c.uncoveredList || [];
+      return { ...c, universeList: [...un, ...Array.from({ length: c.universe - un.length }, (_, i) => `covered_key_${i}`)] };
+    } }),
 
   // ── 433-B(OIC) slice 1: the page-1 completeness claims ────────────────────────────────
   //
@@ -708,6 +747,8 @@ export const COMPLETENESS = [
   C({ id: 'K-18', match: /all \d+ widgets are (?:bound|accounted)|every widget on this page is accounted|all \d+ fields/i,
     kind: 'counter',
     what: 'every widget the PDF draws on the authored pages of this map is bound by it',
+    universe: { scoped_to: 'page', detail: 'the widgets the PDF draws on the pages this map declares it has authored',
+      admits: (m, ctx) => new Set(ctx.authoredPages || [1]).has(ctx.pageOf.get(m)) },
     count: (ctx) => {
       const targets = new Set(walkTargets(ctx.mapDoc).map(t => t.target));
       const pages = new Set(ctx.authoredPages || [1]);
@@ -721,10 +762,11 @@ export const COMPLETENESS = [
       // widgets at all: [G-01] committed inside the instrument built to prevent it, on its
       // first run. `ctx.widgets` is now exposed and the empty case is a STOP as well, because
       // the next person to move that key would otherwise get the same silent pass.
-      if (!onPage.length) return { universe: 0, covered: 0, fail: `no widgets read on page(s) ${[...pages].join(', ')} — the counter could not see its universe, so "every widget is bound" is unchecked rather than true` };
+      if (!onPage.length) return { universe: 0, covered: 0, universeList: [], fail: `no widgets read on page(s) ${[...pages].join(', ')} — the counter could not see its universe, so "every widget is bound" is unchecked rather than true` };
       return {
         universe: onPage.length,
         covered: covered.length,
+        universeList: onPage.map(w => w.name),
         uncoveredList: onPage.filter(w => !targets.has(w.name)).map(w => w.name),
       };
     } }),
@@ -736,9 +778,21 @@ export const COMPLETENESS = [
   // scalar below the heading would be reachable as a row of the partners table.
   C({ id: 'K-19', match: /all fourteen scalars|ALL above the sentence and are bound/i,
     kind: 'counter',
+    // THE COUNTER THIS WHOLE RULE CAME OUT OF. Scope 'page', and the predicate is the
+    // sentence the claim is actually about: a target whose widget is not on page 1 is not one
+    // of the fourteen scalars, whatever `map{}` grows to hold.
+    universe: { scoped_to: 'page', detail: 'the scalars this map binds whose widget the PDF draws on PAGE 1 — not every value of map{}, which is a form-wide set and was 14 for exactly as long as this form had one authored page',
+      admits: (m, ctx) => ctx.pageOf.get(m) === 1 },
     what: 'every scalar the map binds on page 1 prints ABOVE the partners heading, so none is reachable as a table row',
     count: (ctx) => {
-      const HEADING_Y = 370.5;
+      // THE PARTNERS HEADING'S BASELINE, and it used to be the heading's RUN TOP.
+      // verify-headings.mjs locates PARTNERS_AND_OFFICERS at y 362.5 - the baseline, which is
+      // page-geometry.mjs's declared convention - and this counter carried 370.5, the same run's
+      // box top 8.0pt higher. Two instruments, one heading, two numbers, and the one that
+      // decides whether a scalar is above or below it was the undeclared one.
+      // THE NO-OP IS PROVED, not assumed: no widget on page 1 has rect[1] in (362.5, 370.5], so
+      // the partition is the same set. 14 of 14 scalars above the heading before and after.
+      const HEADING_Y = 362.5;
       // SCOPED TO PAGE 1, AND IT HAS TO BE. The claim is about the fourteen scalars printed
       // ABOVE the partners heading ON PAGE 1; the heading is a page-1 baseline and comparing a
       // page-3 widget's y against it is comparing two different pages' coordinate spaces. The
@@ -752,8 +806,8 @@ export const COMPLETENESS = [
       const scalars = Object.values(ctx.mapDoc.map || {}).filter((t) => onPage1.has(t));
       const byName = new Map((ctx.widgets || []).map(w => [w.name, w]));
       const above = scalars.filter((t) => { const w = byName.get(t); return w && w.page === 1 && w.rect && w.rect[1] > HEADING_Y; });
-      if (!byName.size) return { universe: scalars.length, covered: 0, fail: 'no widget geometry available, so no scalar could be placed above or below the heading' };
-      return { universe: scalars.length, covered: above.length, uncoveredList: scalars.filter((t) => !above.includes(t)) };
+      if (!byName.size) return { universe: scalars.length, covered: 0, universeList: scalars, fail: 'no widget geometry available, so no scalar could be placed above or below the heading' };
+      return { universe: scalars.length, covered: above.length, universeList: scalars, uncoveredList: scalars.filter((t) => !above.includes(t)) };
     } }),
 
   // [S-25]'s own completeness claim, counted rather than asserted.
@@ -766,30 +820,36 @@ export const COMPLETENESS = [
   // evidence is written at.
   C({ id: 'K-12', match: /Every coordinate in the covered/i,
     kind: 'counter',
+    universe: { scoped_to: 'artefact', detail: 'every `y NNN.N` and every `x A..B` run quoted anywhere in THIS form\'s map file and headings file',
+      admits: (m) => /^[xy] \d/.test(String(m)) },
     what: 'every coordinate quoted in the map and headings files is a value the page actually draws',
     count: (ctx) => {
       const text = [JSON.stringify(ctx.mapDoc || {}), JSON.stringify(ctx.headingsDoc || {})].join(' ');
       const ys = [...text.matchAll(/y (\d+(?:\.\d+)?)/g)].map(m => Number(m[1]));
       const xs = [...text.matchAll(/x (\d+(?:\.\d+)?)\.\.(\d+(?:\.\d+)?)/g)].flatMap(m => [Number(m[1]), Number(m[2])]);
       const all = [...ys.map(v => ['y', v]), ...xs.map(v => ['x', v])];
-      if (!all.length) return { universe: 0, covered: 0, fail: 'no coordinate was read out of the map or headings file, so the claim that every one of them is drawn is unchecked rather than true' };
+      if (!all.length) return { universe: 0, covered: 0, universeList: [], fail: 'no coordinate was read out of the map or headings file, so the claim that every one of them is drawn is unchecked rather than true' };
       const hit = ([axis, v]) => (axis === 'y' ? ctx.drawnY : ctx.drawnX).has(Math.round(v * 10) / 10);
       const covered = all.filter(hit);
-      return { universe: all.length, covered: covered.length, uncoveredList: all.filter(c => !hit(c)).map(([a, v]) => `${a} ${v}`) };
+      return { universe: all.length, covered: covered.length, universeList: all.map(([a, v]) => `${a} ${v}`), uncoveredList: all.filter(c => !hit(c)).map(([a, v]) => `${a} ${v}`) };
     } }),
 
   C({ id: 'K-02', match: /every declared path exists|every `?path`? exists/i,
     kind: 'counter',
     what: 'every target the map declares exists verbatim in the fields file',
+    universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names, under any construct',
+      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
     count: (ctx) => {
       const targets = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
       const covered = targets.filter(t => ctx.names.has(t));
-      return { universe: targets.length, covered: covered.length, uncoveredList: targets.filter(t => !ctx.names.has(t)) };
+      return { universe: targets.length, covered: covered.length, universeList: targets, uncoveredList: targets.filter(t => !ctx.names.has(t)) };
     } }),
 
   C({ id: 'K-03', match: /every declared binding resolves|every non-null `?bound_to`? resolves|every declared `?bound_to`? resolves/i,
     kind: 'counter',
     what: 'every `bound_to` in the lie registry resolves through the map to a real target',
+    universe: { scoped_to: 'artefact', detail: 'every non-null `bound_to` in THIS form\'s name-lies registry',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     count: (ctx) => {
       const bound = (ctx.liesDoc?.entries || []).map(e => e.bound_to).filter(Boolean);
       // A `bound_to` is written in the map's own address vocabulary, and that vocabulary has
@@ -812,28 +872,38 @@ export const COMPLETENESS = [
         return walkTargets(ctx.mapDoc).some(t => t.path === str || t.path.startsWith(`${str}.`) || t.path.startsWith(`${str}[`));
       };
       const covered = bound.filter(ok);
-      return { universe: bound.length, covered: covered.length, uncoveredList: bound.filter(b => !ok(b)) };
+      return { universe: bound.length, covered: covered.length, universeList: bound.map(String), uncoveredList: bound.filter(b => !ok(b)) };
     } }),
 
   C({ id: 'K-04', match: /Every one of the \d+ fields is bound|All \d+ fields on page \d is bound|All \d+ fields on page \d+ are bound/i,
     kind: 'counter',
     what: 'the per-page binding claims: every field the PDF draws on that page is bound, excluded or deferred',
+    // SCOPED TO THE FORM, DELIBERATELY WIDER THAN THE SENTENCES THAT MATCH IT. The claims are
+    // written per page ("all 43 fields on page 1"); the universe is the whole field list,
+    // because a per-page count that closed while the form-wide one did not would be a page
+    // reported complete inside a form that is not.
+    universe: { scoped_to: 'form', detail: 'every field name in THIS form\'s enumerated field list',
+      admits: (m, ctx) => ctx.names.has(m) },
     count: (ctx) => {
       const { deferred, never, writable } = classifyMapTargets(ctx.mapDoc);
       const accounted = new Set([...deferred, ...never, ...writable.keys()]);
       const all = [...ctx.names];
       const covered = all.filter(n => accounted.has(n));
-      return { universe: all.length, covered: covered.length, uncoveredList: all.filter(n => !accounted.has(n)) };
+      return { universe: all.length, covered: covered.length, universeList: all, uncoveredList: all.filter(n => !accounted.has(n)) };
     } }),
 
   C({ id: 'K-05', match: /every one is checked|each declared total from the filled PDF and reports checked/i,
     kind: 'counter',
     what: 'every declared total is either checked by step 11 or declared not checkable with a reason',
+    universe: { scoped_to: 'artefact', detail: 'every entry in THIS form\'s totals file — totals[] plus not_checkable.entries[]',
+      admits: (m) => typeof m === 'string' && (m.startsWith('totals ') || m.startsWith('not_checkable ')) },
     count: (ctx) => {
       const T = ctx.totalsDoc?.totals || [];
       const nc = ctx.totalsDoc?.not_checkable?.entries || [];
       const covered = T.filter(e => e.total_key || e.total_cell).length + nc.filter(e => e.why_not_checkable).length;
-      return { universe: T.length + nc.length, covered, uncoveredList: [
+      return { universe: T.length + nc.length, covered,
+        universeList: [...T.map(e => `totals ${e.line}`), ...nc.map(e => `not_checkable ${e.map_key || JSON.stringify(e.cell)}`)],
+        uncoveredList: [
         ...T.filter(e => !e.total_key && !e.total_cell).map(e => `totals ${e.line}`),
         ...nc.filter(e => !e.why_not_checkable).map(e => `not_checkable ${e.map_key || JSON.stringify(e.cell)}`)] };
     } }),
@@ -841,16 +911,20 @@ export const COMPLETENESS = [
   C({ id: 'K-06', match: /every entry uses a declared and tallied category is asserted|every entry uses a declared/i,
     kind: 'counter',
     what: 'every classification entry\'s category is declared in _the_categories and tallied in _tally',
+    universe: { scoped_to: 'artefact', detail: 'every entry in THIS form\'s crosswalk-classification file',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     count: (ctx) => {
       const E = ctx.classDoc?.entries || [];
       const ok = (e) => Object.prototype.hasOwnProperty.call(ctx.classDoc._the_categories || {}, e.category)
                      && Object.prototype.hasOwnProperty.call(ctx.classDoc._tally || {}, e.category);
-      return { universe: E.length, covered: E.filter(ok).length, uncoveredList: E.filter(e => !ok(e)).map(e => e.id) };
+      return { universe: E.length, covered: E.filter(ok).length, universeList: E.map(e => String(e.id)), uncoveredList: E.filter(e => !ok(e)).map(e => e.id) };
     } }),
 
   C({ id: 'K-07', match: /every money cell here to sit|every printed instance sits/i,
     kind: 'counter',
     what: 'every declared money cell sits in exactly one rounding block',
+    universe: { scoped_to: 'form', detail: 'every money cell THIS form\'s totals file declares — a total_key, a group.column total cell, or a not_checkable cell. EMPTY BY DECLARATION on a form that prints no rounding instruction, which is stated in the row rather than left as a zero',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     count: (ctx) => {
       // ROUNDING IS A PER-FORM DECLARATION AND TWO OF THE THREE FORMS DECLARE NONE. 433-A(OIC)
       // prints rounding instructions, in more than one wording, over less than the whole form;
@@ -860,7 +934,7 @@ export const COMPLETENESS = [
       // form does not have. THE STAND-DOWN IS STATED, not silent: universe 0 with the reason.
       const decl = ctx.mapDoc.rounding;
       if (!decl || !Array.isArray(decl.blocks) || !decl.blocks.length)
-        return { universe: 0, covered: 0, uncoveredList: [],
+        return { universe: 0, covered: 0, universeList: [], uncoveredList: [],
           note: `${ctx.form} declares no rounding blocks — this form prints no rounding instruction, so there is no block for a money cell to sit in and nothing here to count. rounding.mjs reports the same absence as declared:false.` };
       const blocks = decl.blocks;
       // A money cell is declared by a block either as a scalar `keys` entry or as a
@@ -879,22 +953,32 @@ export const COMPLETENESS = [
         ...(ctx.totalsDoc?.not_checkable?.entries || []).filter(e => e.cell?.group && e.cell?.column).map(e => `${e.cell.group}.${e.cell.column}`),
       ])];
       const covered = cells.filter(k => declaredKeys.get(k) === 1);
-      return { universe: cells.length, covered: covered.length,
+      return { universe: cells.length, covered: covered.length, universeList: cells,
         uncoveredList: cells.filter(k => declaredKeys.get(k) !== 1).map(k => `${k} (in ${declaredKeys.get(k) || 0} block(s))`) };
     } }),
 
   C({ id: 'K-08', match: /every declared column to exist|every declared column/i,
     kind: 'counter',
     what: 'every canonical column a row class declares is reachable on every printed table it claims — the check assert-row-shape-spec.mjs performs',
+    // SCOPED TO THE TREE AND IT HAS TO BE: asset-row-shapes.json is one shared specification
+    // across every mapped form, so this counter is the SAME on all four runs. A per-form scope
+    // would be a claim the spec does not make.
+    universe: { scoped_to: 'tree', detail: 'every unit assert-row-shape-spec.mjs declares in scope across the whole shared row-shape specification — classes, columns and claimed tables',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     count: () => {
       const scope = rowShapeSpecScope();
       const problems = rowShapeSpecProblems();
-      return { universe: scope.units.length, covered: scope.units.length - problems.length, uncoveredList: problems };
+      return { universe: scope.units.length, covered: scope.units.length - problems.length, universeList: scope.units, uncoveredList: problems };
     } }),
 
   C({ id: 'K-09', match: /every binding names a map key that exists|Every one of those is bound|All three tables are bound/i,
     kind: 'counter',
     what: 'every 433-F crosswalk binding names a key the 433-F fill engine can consume',
+    // FIXED TO 433-F AND NOT TO THE FORM BEING AUDITED. The claim is about crosswalk.433f.json,
+    // which is swept on every form's run; scoping it to ctx.form would make it a different
+    // universe on every run and the same sentence would be four different claims.
+    universe: { scoped_to: 'tree', detail: 'every binding in adapters/hubspot/crosswalk.433f.json, whichever form is being audited',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     count: () => {
       const xw = JSON.parse(readFileSync('adapters/hubspot/crosswalk.433f.json', 'utf8'));
       const m = JSON.parse(readFileSync('adapters/pdf/maps/433f.map.json', 'utf8'));
@@ -912,17 +996,20 @@ export const COMPLETENESS = [
         ...(ENGINE_EXTRA_INPUTS['433f'] || []),
       ]);
       const B = (xw.bindings || []).map(b => b.key).filter(Boolean);
-      return { universe: B.length, covered: B.filter(k => inputs.has(k)).length, uncoveredList: B.filter(k => !inputs.has(k)) };
+      return { universe: B.length, covered: B.filter(k => inputs.has(k)).length, universeList: B, uncoveredList: B.filter(k => !inputs.has(k)) };
     } }),
 
   C({ id: 'K-10', match: /Every figure the block states about a shape this repo HOLDS|Every note that DOES state a count about this file|all derived|Each is checked/i,
     kind: 'counter',
     what: 'the claim that every in-scope figure is derived above: count-sweep\'s own derived-versus-unrecognised split for this artefact family',
+    universe: { scoped_to: 'form', detail: 'the count-sweep rows of THIS run whose manifest id is in the S-01b / S-14 / S-17 / S-18 / S-24 family — the artefact family the sentence is about',
+      admits: (m) => /^S-(01b|14|17|18|24)f? /.test(String(m)) },
     count: (ctx) => {
       const rows = ctx.sweep.rows;
       const inFam = rows.filter(r => /^S-(01b|14|17|18|24)f?$/.test(String(r.id)));
       const derived = inFam.filter(r => r.disposition === 'derived');
       return { universe: inFam.length, covered: inFam.filter(r => r.disposition === 'derived' || r.disposition === 'underivable').length,
+        universeList: inFam.map(r => `${r.id} ${r.file} ${r.at}`),
         uncoveredList: inFam.filter(r => r.disposition !== 'derived' && r.disposition !== 'underivable').map(r => `${r.file} ${r.at}`),
         note: `${derived.length} of ${inFam.length} derive; the rest carry the family reason` };
     } }),
@@ -930,27 +1017,33 @@ export const COMPLETENESS = [
   C({ id: 'K-11', match: /Every binding on both pages rests on a named second witness|Every binding on both pages/i,
     kind: 'counter',
     what: 'every binding on pages 7 and 8 has a named second witness in _map_evidence',
+    universe: { scoped_to: 'page', detail: 'the map{} bindings whose widget the PDF draws on page 7 or later',
+      admits: (m, ctx) => (ctx.pageOf.get(ctx.mapDoc.map?.[m]) || 0) >= 7 },
     count: (ctx) => {
       const ev = { ...(ctx.mapDoc._map_evidence_page7 || {}), ...(ctx.mapDoc._map_evidence_page8 || {}) };
       const p78 = walkTargets(ctx.mapDoc).filter(t => (ctx.pageOf.get(t.target) || 0) >= 7 && t.path.startsWith('map.'));
       const keyOf = (p) => p.path.replace(/^map\./, '');
       const covered = p78.filter(t => ev[keyOf(t)] !== undefined);
-      return { universe: p78.length, covered: covered.length, uncoveredList: p78.filter(t => ev[keyOf(t)] === undefined).map(keyOf) };
+      return { universe: p78.length, covered: covered.length, universeList: p78.map(keyOf), uncoveredList: p78.filter(t => ev[keyOf(t)] === undefined).map(keyOf) };
     } }),
 
   C({ id: 'K-20', match: /each box is bound|each is bound|all bound|all three now bound|all three are now bound|all resolve|all three agree with what is bound|each, validated|all 22 cases — checked|every leaf under it is/i,
     kind: 'counter',
     what: 'the local binding claims: every target the map declares is classified as writable, excluded or deferred by classifyMapTargets — the partition the gate\'s step 6 closes',
+    universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names, under any construct',
+      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
     count: (ctx) => {
       const { deferred, never, writable } = classifyMapTargets(ctx.mapDoc);
       const all = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
       const accounted = new Set([...deferred, ...never, ...writable.keys()]);
-      return { universe: all.length, covered: all.filter(t => accounted.has(t)).length, uncoveredList: all.filter(t => !accounted.has(t)) };
+      return { universe: all.length, covered: all.filter(t => accounted.has(t)).length, universeList: all, uncoveredList: all.filter(t => !accounted.has(t)) };
     } }),
 
   C({ id: 'K-13', match: /every money cell - \d+ of them, listed/i,
     kind: 'counter',
     what: 'the money cells on the page named by the note are the money cells the map declares there',
+    universe: { scoped_to: 'page', detail: 'the money keys THIS map declares whose widget the PDF draws on PAGE 3 — the page the note names',
+      admits: (m, ctx) => ctx.pageOf.get(ctx.mapDoc.map?.[m]) === 3 },
     count: (ctx) => {
       // The note says page 3 holds ten money cells and lists them. The countable set is the
       // declared money cells on that page: every totals operand and every not_checkable cell
@@ -961,32 +1054,38 @@ export const COMPLETENESS = [
         return all.filter(k => ctx.pageOf.get(ctx.mapDoc.map?.[k]) === page);
       };
       const cells = keysOn(3);
-      return { universe: cells.length, covered: cells.length, uncoveredList: [],
+      return { universe: cells.length, covered: cells.length, universeList: cells, uncoveredList: [],
         note: `page 3 declares ${cells.length} money cell(s): ${cells.join(', ')}` };
     } }),
 
   C({ id: 'K-14', match: /every target exists verbatim|every target exists/i,
     kind: 'counter',
     what: '[S-18] cites validate-map.mjs proving every target exists verbatim — the same universe [K-02] counts, asserted here against the blanket that cites it',
+    universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names — DELIBERATELY the same universe as [K-02], because the point is that the blanket citing validate-map.mjs is held to the same set the direct counter uses',
+      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
     count: (ctx) => {
       const targets = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
       return { universe: targets.length, covered: targets.filter(t => ctx.names.has(t)).length,
-        uncoveredList: targets.filter(t => !ctx.names.has(t)) };
+        universeList: targets, uncoveredList: targets.filter(t => !ctx.names.has(t)) };
     } }),
 
   C({ id: 'K-15', match: /every column a class says a form contributes to be reachable/i,
     kind: 'counter',
     what: '[S-20f]\'s corrected reason: every contributed column is reachable on the accepting group — counted by the instrument it now names',
+    universe: { scoped_to: 'tree', detail: 'the COLUMN units of the shared row-shape specification, across every mapped form — a strict subset of [K-08]\'s universe, and the subset [A2] is about',
+      admits: (m) => String(m).startsWith('column:') || /^A2 /.test(String(m)) },
     count: () => {
       const scope = rowShapeSpecScope();
       const problems = rowShapeSpecProblems().filter(p => /^A2 /.test(p));
       const cols = scope.units.filter(u => u.startsWith('column:'));
-      return { universe: cols.length, covered: cols.length - problems.length, uncoveredList: problems };
+      return { universe: cols.length, covered: cols.length - problems.length, universeList: cols, uncoveredList: problems };
     } }),
 
   C({ id: 'K-17', match: /EVERY ENTRY CARRIES `granularity`, DERIVED|Every entry carries a derived|every classification entry now carries `compared_against`, derived/i,
     kind: 'counter',
     what: 'every classification entry carries the two derived declarations ruling 2 and ruling 4 require: `compared_against` and `granularity`',
+    universe: { scoped_to: 'artefact', detail: 'every entry in THIS form\'s crosswalk-classification file — the same universe as [K-06], asked a different question',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
     // THE CLAIM THIS PROMPT ADDED, AND THEREFORE THE CLAIM THIS PROMPT OWES A COUNTER. Both
     // fields are written by reclassify-against-backbone.mjs --emit and re-derived on every run,
     // so a stale one shows as a mismatch there; what is counted HERE is that no entry is
@@ -994,7 +1093,7 @@ export const COMPLETENESS = [
     count: (ctx) => {
       const E = ctx.classDoc?.entries || [];
       const ok = (e) => Array.isArray(e.compared_against) && typeof e.granularity === 'string' && e.granularity.length > 0;
-      return { universe: E.length, covered: E.filter(ok).length, uncoveredList: E.filter(e => !ok(e)).map(e => e.id) };
+      return { universe: E.length, covered: E.filter(ok).length, universeList: E.map(e => String(e.id)), uncoveredList: E.filter(e => !ok(e)).map(e => e.id) };
     } }),
 
   C({ id: 'K-16', match: /Every number in it is a printed line marker, a HubSpot property count/i,
@@ -1011,14 +1110,16 @@ export const COMPLETENESS = [
   // and either a widget starts on it or it does not.
   C({ id: 'K-21', match: /[Ee]very money total (?:on these pages|below) is bound/,
     kind: 'counter',
+    universe: { scoped_to: 'page', detail: 'the widgets the PDF draws on pages 2 and 3 whose left edge is the marker column x 471.6',
+      admits: (m, ctx) => { const w = (ctx.widgets || []).find((x) => x.name === m); return !!w && (w.page === 2 || w.page === 3) && Math.abs(w.rect[0] - 471.6) < 0.05; } },
     what: 'every money total the PDF draws in the marker column on pages 2 and 3 is bound by this map',
     count: (ctx) => {
       const targets = new Set(walkTargets(ctx.mapDoc).map((t) => t.target));
       const col = (ctx.widgets || []).filter((w) => (w.page === 2 || w.page === 3) && Math.abs(w.rect[0] - 471.6) < 0.05);
       // AN EMPTY UNIVERSE IS A DEAD COUNTER, NOT A SATISFIED ONE - [K-18]'s lesson, applied.
-      if (!col.length) return { universe: 0, covered: 0, fail: 'no widget on pages 2 or 3 starts at x 471.6 - the counter could not see its universe, so "every money total is bound" is unproved rather than true. Either the geometry stopped being read or the form was re-laid out.' };
+      if (!col.length) return { universe: 0, covered: 0, universeList: [], fail: 'no widget on pages 2 or 3 starts at x 471.6 - the counter could not see its universe, so "every money total is bound" is unproved rather than true. Either the geometry stopped being read or the form was re-laid out.' };
       const covered = col.filter((w) => targets.has(w.name));
-      return { universe: col.length, covered: covered.length, uncoveredList: col.filter((w) => !targets.has(w.name)).map((w) => w.name) };
+      return { universe: col.length, covered: covered.length, universeList: col.map((w) => w.name), uncoveredList: col.filter((w) => !targets.has(w.name)).map((w) => w.name) };
     } }),
 
   // "No /MaxLen on any of the 130 fields on pages 2 and 3". Universe: the widgets on those two
@@ -1027,12 +1128,14 @@ export const COMPLETENESS = [
   // matters, because [B10] is carried on the assumption that none has one.
   C({ id: 'K-22', match: /any of the \d+ fields on pages 2 and 3, so no printed cell carries a limit/,
     kind: 'counter',
+    universe: { scoped_to: 'page', detail: 'every widget the PDF draws on pages 2 and 3',
+      admits: (m, ctx) => { const p2 = ctx.pageOf.get(m); return p2 === 2 || p2 === 3; } },
     what: 'every widget on pages 2 and 3 declares no /MaxLen',
     count: (ctx) => {
       const on23 = (ctx.widgets || []).filter((w) => w.page === 2 || w.page === 3);
-      if (!on23.length) return { universe: 0, covered: 0, fail: 'no widgets read on pages 2 or 3 - the counter could not see its universe.' };
+      if (!on23.length) return { universe: 0, covered: 0, universeList: [], fail: 'no widgets read on pages 2 or 3 - the counter could not see its universe.' };
       const none = on23.filter((w) => w.maxLen === null || w.maxLen === undefined);
-      return { universe: on23.length, covered: none.length, uncoveredList: on23.filter((w) => w.maxLen !== null && w.maxLen !== undefined).map((w) => `${w.name} (/MaxLen ${w.maxLen})`) };
+      return { universe: on23.length, covered: none.length, universeList: on23.map((w) => w.name), uncoveredList: on23.filter((w) => w.maxLen !== null && w.maxLen !== undefined).map((w) => `${w.name} (/MaxLen ${w.maxLen})`) };
     } }),
 
   // "Each of the three rows is declared as TWO predicated lines." Universe: the slots of
@@ -1042,11 +1145,17 @@ export const COMPLETENESS = [
   // exact failure the two-line construct exists to prevent.
   C({ id: 'K-23', match: /Each of the three rows is declared as TWO predicated lines/,
     kind: 'counter',
+    universe: { scoped_to: 'form', detail: 'the slots of the 4ac_vehicles group in THIS map',
+      // THE INDEX IS TAKEN FROM THE BRACKETS, not by stripping non-digits: the group name
+      // itself opens with "4", so a strip turns 4ac_vehicles[0] into 40 and every real slot
+      // falls outside its own declared scope. Caught by this assertion on its first run, which
+      // is the argument for the assertion.
+      admits: (m, ctx) => { const g = /^4ac_vehicles\[(\d+)\]$/.exec(String(m)); return !!g && Number(g[1]) < (ctx.mapDoc.groups?.['4ac_vehicles']?.slots?.length ?? 0); } },
     what: 'every vehicle slot declares both branches of the printed lease/own conditional',
     count: (ctx) => {
       const g = ctx.mapDoc.groups?.['4ac_vehicles'];
       const slots = g?.slots?.length ?? 0;
-      if (!slots) return { universe: 0, covered: 0, fail: 'the map declares no 4ac_vehicles group with slots - the counter could not see its universe.' };
+      if (!slots) return { universe: 0, covered: 0, universeList: [], fail: 'the map declares no 4ac_vehicles group with slots - the counter could not see its universe.' };
       const byRow = new Map();
       for (const t of (ctx.totalsDoc?.totals || [])) {
         if (t.total_cell?.group !== '4ac_vehicles' || t.total_cell?.column !== 'quick_sale_equity') continue;
@@ -1054,7 +1163,7 @@ export const COMPLETENESS = [
       }
       const rows = [...Array(slots).keys()];
       const covered = rows.filter((i) => byRow.get(i) === 2);
-      return { universe: slots, covered: covered.length, uncoveredList: rows.filter((i) => byRow.get(i) !== 2).map((i) => `4ac_vehicles[${i}] declares ${byRow.get(i) || 0} predicated line(s), expected 2`) };
+      return { universe: slots, covered: covered.length, universeList: rows.map((i) => `4ac_vehicles[${i}]`), uncoveredList: rows.filter((i) => byRow.get(i) !== 2).map((i) => `4ac_vehicles[${i}] declares ${byRow.get(i) || 0} predicated line(s), expected 2`) };
     } }),
 
   // ── the families that are NOT coverage claims ──────────────────────────────────────────
@@ -1232,10 +1341,42 @@ export const runBlanketAudit = async (form) => {
              || (cl.kind === 'geometry' ? COMPLETENESS.find(k => k.appliesTo === 'geometry') : null);
     if (!hit) { disposed.push({ ...cl, undisposed: true }); continue; }
     if (hit.kind === 'not-coverage') { disposed.push({ ...cl, id: hit.id, kind2: 'not-coverage', reason: hit.reason }); continue; }
+    // EVERY COUNTER DECLARES THE SCOPE OF ITS UNIVERSE, AND A MISSING DECLARATION IS A STOP.
+    // A counter with no scope cannot be wrong about one, which is how [K-19] came to report a
+    // universe of 23 against a claim about 14 and call nine live bindings uncovered.
+    if (!hit.universe || typeof hit.universe.admits !== 'function' || !hit.universe.scoped_to || !hit.universe.detail) {
+      disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed: 'declares no universe scope. A counter states what its universe is scoped to — a page, a form, an artefact, the tree — names it in words, and carries a predicate that admits a member of it. There is no state in which a counter is exempt from saying how wide it is.' });
+      continue;
+    }
     let out;
     try { out = hit.count(ctx); }
     catch (e) { disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed: `the counter threw: ${e.message}` }); continue; }
-    disposed.push({ ...cl, id: hit.id, kind2: 'counter', what: hit.what, ...out, holds: out.covered === out.universe });
+    // THE UNIVERSE IS ENUMERATED, NOT ASSERTED. Enumerated is the granularity standard here as
+    // everywhere else: a counter that reports a size without being able to name its members
+    // cannot be asked whether those members are in scope.
+    if (!Array.isArray(out.universeList)) {
+      disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed: `returned a universe of ${out.universe} and did not enumerate it. universeList is required: the scope assertion is over MEMBERS, and a size is not a member.` });
+      continue;
+    }
+    if (out.universeList.length !== out.universe) {
+      disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed: `reports a universe of ${out.universe} and enumerates ${out.universeList.length} member(s). The size and the list are two readings of the same set and they disagree.` });
+      continue;
+    }
+    // AND THE SCOPE IS ASSERTED, MEMBER BY MEMBER. A universe that has grown past what the
+    // counter declared is a STOP and never a coverage finding — the members outside the scope
+    // are not uncovered, they were never in the claim.
+    let strayed = [];
+    try { strayed = out.universeList.filter(m => !hit.universe.admits(m, ctx)); }
+    catch (scopeErr) {
+      disposed.push({ ...cl, id: hit.id, kind2: 'counter', failed: `its scope predicate threw on a member: ${scopeErr.message}. A scope that cannot be evaluated has not been asserted.` });
+      continue;
+    }
+    if (strayed.length) {
+      disposed.push({ ...cl, id: hit.id, kind2: 'counter',
+        universeStrayed: `its universe holds ${strayed.length} of ${out.universe} member(s) OUTSIDE the scope it declares — ${hit.universe.scoped_to}: ${hit.universe.detail}.\n      ${strayed.slice(0, 8).map(String).join(', ')}${strayed.length > 8 ? ` … +${strayed.length - 8}` : ''}\n      The universe has changed size without the declaration changing. Those members are not uncovered; they were never in this claim.` });
+      continue;
+    }
+    disposed.push({ ...cl, id: hit.id, kind2: 'counter', what: hit.what, scope: `${hit.universe.scoped_to}: ${hit.universe.detail}`, ...out, holds: out.covered === out.universe });
   }
 
   // ── STOP conditions ────────────────────────────────────────────────────────────────────
@@ -1259,6 +1400,7 @@ export const runBlanketAudit = async (form) => {
   for (const d of disposed) {
     if (d.undisposed) problems.push(`UNDISPOSED   completeness claim at ${d.where}\n      "${d.phrase}"\n      Register a counter for the covered set, or declare it not-coverage with a reason. There is no third state.`);
     else if (d.failed) problems.push(`COUNTER DEAD [${d.id}] ${d.where}\n      ${d.failed}`);
+    else if (d.universeStrayed) problems.push(`UNIVERSE MOVED [${d.id}] ${d.where}\n      "${d.phrase}"\n      ${d.universeStrayed}`);
     else if (d.kind2 === 'counter' && !d.holds) problems.push(
       `COVERAGE GAP [${d.id}] ${d.where}\n      "${d.phrase}"\n      ${d.what}: ${d.covered} of ${d.universe} covered.\n      uncovered: ${(d.uncoveredList || []).slice(0, 12).join(', ')}${(d.uncoveredList || []).length > 12 ? ` … +${d.uncoveredList.length - 12}` : ''}`);
   }

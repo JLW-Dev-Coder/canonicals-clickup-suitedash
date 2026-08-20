@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433f",
+  "role": "stress",
+  "why": "One row more than printed in every repeatable group, for the overflow assertion."
+ },
  "intake_id": "433f-overmax",
  "_synthetic": "SYNTHETIC OVER-MAX FIXTURE. Blank government form, invented taxpayer, every value an obvious placeholder. Derived from samples/433f.multi.sample.json: every group declared in 433f.map.json carries at least one record beyond its printed slot count. Rows past the last printed slot are dropped by the fill engine BY DESIGN and this fixture exists to prove that the drop is logged and that the dropped row reaches no cell on the page. It changes no printed figure, because a dropped row feeds no total.",
  "_no_wellformed_ssn": "The two SSN cells carry 000-00-0000 and 000-00-0001. The SSA has never issued and will never issue an area number of 000, and never issues a group number of 00, so both fail SSN validity on two independent counts and cannot collide with a living person the way a plausible-looking test value can. The EIN is 00-0000000, whose 00 prefix is likewise never assigned. The PII rule covers intermediates: no fixture, fetched-record file, log or review page may carry a real SSN, and no fixture may contain a well-formed one.",

@@ -48,11 +48,25 @@
 import { spawnSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField } from 'pdf-lib';
+import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
 
-const [form, fixturePath] = process.argv.slice(2);
-if (!form || !fixturePath) {
-  console.error('usage: node adapters/pdf/assert-overflow.mjs <form> <over-max fixture.json>');
+// THE OVER-MAX FIXTURE IS RESOLVED FROM THE FORM ID, exactly as the gate's is: a path in an
+// npm script is a fact nobody re-derives, and `npm run gate:433boi` naming a one-page record
+// against a three-page map is what that costs. A path may still be given and is then reported
+// as NAMED rather than resolved.
+const _argv = process.argv.slice(2);
+const [form, namedFixture] = _argv.filter((a, i) => !a.startsWith('--') && _argv[i - 1] !== '--role');
+if (!form) {
+  console.error('usage: node adapters/pdf/assert-overflow.mjs <form> [over-max fixture.json]');
+  console.error('  With no path, the fixture declaring _fixture.role "stress" is resolved from samples/.');
   process.exit(2);
+}
+let fixturePath = namedFixture;
+if (!fixturePath) {
+  const res = resolveFixture(form, 'stress');
+  if (!res.path) { reportResolution(res); process.exit(2); }
+  fixturePath = res.path;
+  console.log(`assert-overflow: resolved the stress fixture for ${form} -> ${fixturePath}`);
 }
 
 const mapPath = `adapters/pdf/maps/${form}.map.json`;

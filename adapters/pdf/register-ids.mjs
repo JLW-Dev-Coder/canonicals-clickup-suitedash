@@ -51,6 +51,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { VACUOUS, SELECTIONS, PARALLEL, FIGURES } from './guard-sweep.mjs';
 import { MANIFEST } from './count-sweep.mjs';
 import { PREDICATES, DECLARED, RETIRED } from './exclusion-sweep.mjs';
+import { BOUNDARIES } from './sweep-boundary.mjs';
 import { COMPLETENESS } from './blanket-audit.mjs';
 import { OVERRIDES } from './success-sweep.mjs';
 
@@ -99,6 +100,7 @@ export const REGISTERS = () => {
   add('exclusion-sweep.mjs:RETIRED',    'engine', idsOf('RETIRED', RETIRED));
   add('blanket-audit.mjs:COMPLETENESS', 'engine', idsOf('COMPLETENESS', COMPLETENESS));
   add('success-sweep.mjs:OVERRIDES',    'engine', idsOf('OVERRIDES', OVERRIDES));
+  add('sweep-boundary.mjs:BOUNDARIES',  'engine', idsOf('BOUNDARIES', BOUNDARIES));
 
   // --- engine-wide JSON registers, enumerated --------------------------------------------
   const cross = json(`${MAPS}/_carried.cross-form.json`);

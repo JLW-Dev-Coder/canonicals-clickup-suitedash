@@ -116,7 +116,13 @@ export const probeMoneyCells = async (form, pages = []) => {
     const gap    = near ? r1(x1 - near.x2) : null;
     const money  = !!near;
     const blocked = !!near && left[0] && left[0] !== near ? left[0].str : null;
-    rows.push({ key: e.key, target: e.target, page: w.page, x: r1(x1), y: r1(y2), gap, left: near ? near.str : (left[0] ? left[0].str : null), money, blocked });
+    // THE y ON A PROBE ROW IS A WIDGET'S RECT TOP AND IS NAMED AS ONE.
+    // A probe row is about a widget, not about a printed run, so its y is `rect[3]` and does
+    // not convert to a caption baseline - 666.0 and 656.5 on 433-B(OIC) page 4 are the same
+    // row of the form and different kinds of number. It was called `y` until this commit,
+    // which is the bare letter every map in this repo uses for a text baseline. Renamed
+    // rather than converted: see page-geometry.mjs Y_CONVENTIONS['widget-rect-top'].
+    rows.push({ key: e.key, target: e.target, page: w.page, x: r1(x1), y_rect_top: r1(y2), gap, left: near ? near.str : (left[0] ? left[0].str : null), money, blocked });
     if (!byPage.has(w.page)) byPage.set(w.page, { seen: 0, money: 0 });
     const c = byPage.get(w.page); c.seen++; if (money) c.money++;
   }
@@ -177,7 +183,7 @@ if (process.argv[1] && /money-probe\.mjs$/.test(process.argv[1].replace(/\\/g, '
   const p = await probeMoneyCells(form, pages);
   for (const k of p.noWidget) console.log(`  ??     ${k}  (target names no widget)`);
   for (const r of p.rows)
-    console.log(`  ${r.money ? 'MONEY$' : '  .   '} p${r.page} y=${String(r.y).padStart(6)} x=${String(r.x).padStart(6)}  ${r.key.padEnd(50)} left=${r.gap === null ? '    -' : String(r.gap).padStart(5)}pt  ${JSON.stringify(r.left ? r.left.slice(-44) : '')}`);
+    console.log(`  ${r.money ? 'MONEY$' : '  .   '} p${r.page} yTop=${String(r.y_rect_top).padStart(6)} x=${String(r.x).padStart(6)}  ${r.key.padEnd(50)} left=${r.gap === null ? '    -' : String(r.gap).padStart(5)}pt  ${JSON.stringify(r.left ? r.left.slice(-44) : '')}`);
   console.log('');
   for (const [pg, c] of [...p.byPage].sort((a, b) => a[0] - b[0]))
     console.log(`  page ${pg}: ${c.money} of ${c.seen} mapped text cell(s) carry a printed "$"`);

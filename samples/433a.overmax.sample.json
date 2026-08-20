@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433a",
+  "role": "stress",
+  "why": "Every repeatable group carries one row more than the form prints. Run saturated, then through assert-overflow.mjs, to prove the extra row is dropped and logged rather than truncated onto the page."
+ },
  "_synthetic": "SYNTHETIC OVER-MAX FIXTURE. Blank government form, invented taxpayer, every value an obvious placeholder. Derived from samples/433a.sample.json: every group declared in 433a.map.json carries at least one record beyond its printed slot count. Rows past the last printed slot are dropped by the fill engine BY DESIGN and this fixture exists to prove that the drop is logged and that the dropped row reaches no cell on the page. It changes no printed figure, because a dropped row feeds no total.",
  "_coverage_notes": [
   "SECTION 5 (map v5). All 31 grid values are DISTINCT across both panels - not merely distinct within a panel. On sheet 6 every internal field-name suffix lags its printed line by one, so a one-row shift would land plausible money in the wrong printed category; only a grid with no repeated figure makes that shift visible in the read-back.",

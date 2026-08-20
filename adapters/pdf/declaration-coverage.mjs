@@ -42,11 +42,42 @@
 
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { resolveFixture } from './resolve-fixture.mjs';
 
-const [form, ...fixtures] = process.argv.slice(2);
-if (!form || !fixtures.length) {
-  console.error('usage: node adapters/pdf/declaration-coverage.mjs <form> <fixture.json> [<fixture.json> ...]');
+// THE FIXTURE LIST IS DERIVED, NOT TYPED.
+//
+// It used to be three paths on an npm command line, which is a parallel list of the fixtures
+// that exist - and a parallel list drifts. A fixture added for a new slice contributed nothing
+// to the union until somebody remembered to extend the script, and the union would go on
+// reporting a coverage figure that was true of a smaller set of runs than the tree holds.
+//
+// The union is over every fixture that EXERCISES the form: acceptance, stress and negative.
+// `production` is excluded because a real record is a portrait of one taxpayer and says
+// nothing about which declared behaviours a gate run reached; `superseded` is excluded because
+// its run is history and re-running it would put a retired record's coverage into a live
+// figure. Both exclusions are registered in adapters/pdf/sweep-boundary.mjs and printed here.
+const EXERCISING_ROLES = ['acceptance', 'stress', 'negative'];
+const [form, ...named] = process.argv.slice(2);
+if (!form) {
+  console.error('usage: node adapters/pdf/declaration-coverage.mjs <form> [<fixture.json> ...]');
+  console.error(`  With no paths, every fixture declaring a role in {${EXERCISING_ROLES.join(', ')}} is resolved from samples/.`);
   process.exit(2);
+}
+let fixtures = named;
+if (!fixtures.length) {
+  const { rows, problems } = resolveFixture(form, 'acceptance');
+  if (problems.length) { problems.forEach(p2 => console.error(`  ${p2}`)); process.exit(2); }
+  fixtures = rows.filter(r => EXERCISING_ROLES.includes(r.role)).map(r => r.path);
+  const skipped = rows.filter(r => !EXERCISING_ROLES.includes(r.role));
+  console.log(`declaration-coverage: ${form} — ${fixtures.length} exercising fixture(s) resolved from samples/`);
+  for (const f of fixtures) console.log(`    union: ${f}`);
+  for (const r of skipped) console.log(`    not in the union: ${r.path} (${r.role || 'no _fixture.role'})`);
+  // A UNION OVER NOTHING IS NOT A UNION. Every declared behaviour would come back unexercised
+  // and the tool would report the worst possible answer as if it had measured it.
+  if (!fixtures.length) {
+    console.error(`STOP — no fixture for ${form} declares any of ${EXERCISING_ROLES.join(', ')}, so there is nothing to union. That is not zero coverage; it is no measurement.`);
+    process.exit(2);
+  }
 }
 for (const f of fixtures) if (!existsSync(f)) { console.error(`STOP — ${f} does not exist.`); process.exit(2); }
 

@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433boi",
+  "role": "acceptance",
+  "why": "Pages 1, 2 and 3, all 173 mapped fields, saturated."
+ },
  "_synthetic": "Fabricated fixture. ACME Holdings LLC / Sample Partners at 400 Example Plaza, Denton TX; the EIN and every Social Security Number are XXXX-masked placeholders in ranges the IRS does not issue, every telephone is in the 555 range reserved for fiction, and the web and FAX values point at example.com (RFC 2606). No part of this record came from a real taxpayer. Slice 2 adds asset rows for the same fabricated business: bank and brokerage names are Example-* placeholders, every account number is a masked XXXX form, the wallet address is a non-checksummed 0xEXAMPLE string, and every property and vehicle is at an Example address with a fictitious tag.",
  "_what_this_covers": "433-B(OIC) slice 2 — pages 1, 2 and 3, all 173 mapped fields. Saturated: every mapped text cell carries a value, all five Yes/No pairs are answered, the lone check-here tick is set, every option set on every row names an option, and all five repeatable tables are fed to their printed maximum — three bank rows, two investment rows, one digital asset, two properties, three vehicles — so each group is exercised at capacity without overflowing.",
  "s1_business_name": "ACME Holdings LLC",

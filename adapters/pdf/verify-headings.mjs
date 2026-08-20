@@ -155,12 +155,25 @@ for (const h of decl.headings || []) {
   }
   const t = pick[0];
   if (byId.has(h.id)) { err(`heading id "${h.id}" is declared more than once.`); continue; }
+  // y IS THE RUN'S BASELINE - page-geometry.mjs Y_CONVENTION, the one convention this engine
+  // reports a printed run at. Conforming since this file was written; declared now because a
+  // convention nobody stated is what let 433boi.lineage-433aoi.json quote run tops instead.
   const rec = { id: h.id, page: h.page, y: t.y1, x1: t.x1, x2: t.x2, text: t.str };
   byId.set(h.id, rec);
   if (!bands.has(h.page)) bands.set(h.page, []);
   bands.get(h.page).push(rec);
 }
 for (const list of bands.values()) list.sort((a, b) => b.y - a.y);
+
+// MACHINE-READABLE HEADING POSITIONS, for adapters/pdf/assert-y-convention.mjs.
+// The cross-tool assertion has to read what THIS tool believes a heading's y is, and reading
+// it out of the source text would be asserting the convention against a copy of the code
+// rather than against the instrument. One line per heading, the convention named on it, and
+// emitted only when asked for so the ordinary transcript is unchanged.
+if (process.argv.includes('--emit-heading-ys')) {
+  for (const r of byId.values())
+    console.log(`HEADING-Y ${r.id} page=${r.page} convention=text-baseline y=${r.y} x1=${r.x1} x2=${r.x2} text=${JSON.stringify(r.text)}`);
+}
 
 if (errors.length) {
   console.error('');

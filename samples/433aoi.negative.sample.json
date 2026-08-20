@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433aoi",
+  "role": "negative",
+  "why": "Drives the declared floors and the refusals: negative line items that must floor to zero, and the box arithmetic that must not go below it."
+ },
  "_synthetic": "SYNTHETIC NEGATIVE-DRIVING FIXTURE. Blank government form, invented taxpayer, every value an obvious placeholder. Derived from samples/433aoi.sample.json by the deltas listed in _drives below and by nothing else: every cell not named there is the acceptance fixture value. Its only job is to push each DRIVABLE declared floor below zero so the printed 0 - and not a negative number - is what the tripwire reads back.",
  "intake_id": "433aoi-negative-floors",
  "s1_tp_last_name": "Sample-Taxpayer-LastName",

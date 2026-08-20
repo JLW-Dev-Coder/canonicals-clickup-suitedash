@@ -19,7 +19,26 @@
 // form printing neither reports zero rather than inventing a pattern that fits.
 
 import { readFileSync } from 'node:fs';
-import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
+import { readPrintedText, readWidgetGeometry, baselineOfRun, runTopOf, Y_CONVENTION } from './page-geometry.mjs';
+
+// THE y THIS TOOL REPORTS IS A BASELINE, and it did not used to be.
+//
+// Until this commit a marker row carried ONE y field holding `t.y2` - the top of the marker's
+// box - under the same bare name every other tool in this engine uses for a baseline. The
+// pairing arithmetic below WANTS the box, because it compares the marker against a widget
+// RECTANGLE and a box is the honest operand there; the CLI listing and anything reading a row
+// wants the baseline, because that is the convention page-geometry.mjs declares and the maps
+// are authored against. One field cannot be both, so a row now carries both, named:
+//
+//   y           the declared convention, page-geometry.Y_CONVENTION === 'text-baseline'
+//   y_run_top   baseline + the run's height, used ONLY by attachIn's band containment
+//
+// THE PAIRING IS UNCHANGED. attachIn reads `y_run_top`, which is the same expression the old
+// `m.y` held, so every marker->widget pairing this tool produces is identical to the one it
+// produced before. adapters/pdf/assert-y-convention.mjs PROVES that no-op in the same run
+// rather than asserting it: it recomputes the whole pairing from the OLD expression and
+// requires the two answers to agree marker for marker, on every mapped form.
+export const Y_REPORTED = Y_CONVENTION;
 
 // EXPORTED SO THERE IS ONE PAIRING AND NOT TWO. guard-sweep.mjs [F-03..F-06] derives its
 // under-determination figures from THIS function. Re-implementing the filter there to check a
@@ -57,7 +76,8 @@ for (let p = 0; p < pageCount; p++) {
       page: p + 1,
       marker: box ? `Box ${box.toUpperCase()}` : line,
       kind: box ? 'box' : 'line',
-      y: r1(t.y2),
+      y: r1(baselineOfRun(t)),          // REPORTED - the declared convention
+      y_run_top: r1(runTopOf(t)),       // GEOMETRY - the operand attachIn's band test needs
       x1: r1(t.x1),
       x2: r1(t.x2),
       text: t.str,
@@ -92,9 +112,9 @@ const attachIn = (widgets) => (m) => {
   const mid = (w) => (w.rect[1] + w.rect[3]) / 2;
   const cands = widgets
     .filter((w) => w.page === m.page && w.rect
-      && m.y >= w.rect[1] - TOL_Y && m.y <= w.rect[3] + TOL_Y
+      && m.y_run_top >= w.rect[1] - TOL_Y && m.y_run_top <= w.rect[3] + TOL_Y
       && w.rect[0] >= m.x2 - TOL_Y)
-    .sort((a, b) => Math.abs(mid(a) - m.y) - Math.abs(mid(b) - m.y) || a.rect[0] - b.rect[0]);
+    .sort((a, b) => Math.abs(mid(a) - m.y_run_top) - Math.abs(mid(b) - m.y_run_top) || a.rect[0] - b.rect[0]);
   // The alternative ordering is carried alongside so the exposure can be MEASURED rather than
   // asserted: leftmost-first is the other reading a person would reach for, and the number of
   // markers where the two disagree is how load-bearing the tie-break actually is.
@@ -132,7 +152,7 @@ if (process.argv[1] && process.argv[1].endsWith('line-markers.mjs')) {
   let attached = 0, underDetermined = 0;
   for (let p = 1; p <= pageCount; p++) {
     const onPage = rows.filter((r) => r.page === p).sort((a, b) => b.y - a.y || a.x1 - b.x1);
-    console.log(`\n--- page ${p}: ${onPage.length} marker(s) ---`);
+    console.log(`\n--- page ${p}: ${onPage.length} marker(s) --- (y is ${Y_CONVENTION}; see page-geometry.mjs Y_CONVENTIONS)`);
     for (const m of onPage) {
       const a = attach(m);
       const w = a.winner;

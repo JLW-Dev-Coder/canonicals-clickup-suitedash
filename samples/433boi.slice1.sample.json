@@ -1,4 +1,10 @@
 {
+ "_fixture": {
+  "form": "433boi",
+  "role": "superseded",
+  "superseded_by": "samples/433boi.slice2.sample.json",
+  "why": "Page 1 only, 43 fields. It was the acceptance fixture for exactly one slice, and running the current map against it fails at step 10 with unsettled exclusive sets - which is what a stale fixture path looks like from inside the gate."
+ },
  "_synthetic": "Fabricated fixture. ACME Holdings LLC / Sample Partners at 400 Example Plaza, Denton TX; the EIN and every Social Security Number are XXXX-masked placeholders in ranges the IRS does not issue, every telephone is in the 555 range reserved for fiction, and the web and FAX values point at example.com (RFC 2606). No part of this record came from a real taxpayer.",
  "_what_this_covers": "433-B(OIC) slice 1 — page 1 only, all 43 fields. Saturated: every mapped text cell carries a value, both Yes/No pairs are answered, the lone check-here tick is set, and the partners table is fed to its printed maximum of three rows so the group is exercised at capacity without overflowing.",
 

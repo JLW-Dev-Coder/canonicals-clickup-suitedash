@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433aoi",
+  "role": "acceptance",
+  "why": "The saturated record the 433-A(OIC) gate runs, covering all eight pages."
+ },
  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433aoi.map.json map_version 4 - printed pages 1 through 8, the whole form - and nothing else. The only fields it does not reach are the two signature-date cells on page 8, which are declared NEVER AUTO-FILLED and which no fixture may reach.",
  "_coverage_notes": [
   "SCOPE. 74 of this form's 425 fields are on page 1; 72 of those are bound and 2 are the never-autofill push buttons. This fixture reaches all 72. The other 351 fields are on pages 2-8 and are deliberately untouched - the read-back is a statement about the slice, not about the form.",

@@ -28,9 +28,25 @@
 // COORDINATES are PDF user space from page-geometry.mjs — the same source correlate-labels.mjs
 // and verify-headings.mjs read, so those three can never disagree about where anything is.
 // y ASCENDS up the page, so a band is given as [yMin, yMax] and the output reads top-down.
+//
+// THE y THIS TOOL PRINTS, AND THE ONE IT USED TO PRINT.
+// -----------------------------------------------------
+// THIS IS THE INSTRUMENT 433boi.lineage-433aoi.json WAS AUTHORED OFF, and until this commit
+// its PRINTED listing put `t.y2` - the top of a run's box - under a bare `y=`. Every other
+// tool in this engine, and every map and totals file in this repo, means the BASELINE by that
+// letter. The two differ by the run's own height, 8.0pt on the 8pt runs and 9.0pt on the 9pt
+// ones, and eight points is a row on these forms: the lineage file concluded the wrong caption
+// for one binding on exactly that gap. Nothing had moved and neither number was wrong; two
+// instruments described the same run and only one of them said which number it was reporting.
+//
+// So the PRINTED block now prints page-geometry.mjs's declared convention - the baseline - and
+// the WIDGET block prints a rect top, which is a different kind of object and is labelled as
+// one in its own column header. Both headers name the convention on every run. A reader
+// quoting a number off this listing into a map is quoting the same number the map is checked
+// against.
 
 import { readFileSync } from 'node:fs';
-import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
+import { readPrintedText, readWidgetGeometry, baselineOfRun, Y_CONVENTION } from './page-geometry.mjs';
 
 const [form, pageArg, yMinArg, yMaxArg] = process.argv.slice(2);
 if (!form || !pageArg) {
@@ -64,12 +80,12 @@ if (ws.length > items.length) {
   console.log('       one-per-widget, which is the condition this tool exists for.');
 }
 
-console.log('\n--- PRINTED (y descending, then x) ---');
+console.log(`\n--- PRINTED (y descending, then x) --- y is ${Y_CONVENTION}: the run's BASELINE ---`);
 for (const t of [...items].sort((a, b) => byRow(a.y2, a.x1, b.y2, b.x1))) {
-  console.log(`  y=${pad(r1(t.y2), 6)}  x=${pad(r1(t.x1), 6)}..${pad(r1(t.x2), 6)}  ${JSON.stringify(t.str)}`);
+  console.log(`  y=${pad(r1(baselineOfRun(t)), 6)}  x=${pad(r1(t.x1), 6)}..${pad(r1(t.x2), 6)}  ${JSON.stringify(t.str)}`);
 }
 
-console.log('\n--- WIDGETS (y descending, then x) ---');
+console.log(`\n--- WIDGETS (y descending, then x) --- y is widget-rect-top: rect[3], NOT a text baseline ---`);
 for (const w of [...ws].sort((a, b) => byRow(a.rect[3], a.rect[0], b.rect[3], b.rect[0]))) {
   const len = w.maxLen === undefined || w.maxLen === null ? '   -' : pad(w.maxLen, 4);
   console.log(`  y=${pad(r1(w.rect[3]), 6)}  x=${pad(r1(w.rect[0]), 6)}..${pad(r1(w.rect[2]), 6)}  /MaxLen=${len}  ${w.name}`);

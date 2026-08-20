@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433aoi",
+  "role": "stress",
+  "why": "One row more than printed in every repeatable group, for the overflow assertion."
+ },
  "_synthetic": "SYNTHETIC OVER-MAX FIXTURE. Blank government form, invented taxpayer, every value an obvious placeholder. Derived from samples/433aoi.sample.json: every group declared in 433aoi.map.json carries at least one record beyond its printed slot count. Rows past the last printed slot are dropped by the fill engine BY DESIGN and this fixture exists to prove that the drop is logged and that the dropped row reaches no cell on the page. It changes no printed figure, because a dropped row feeds no total.",
  "_coverage_notes": [
   "SCOPE. 74 of this form's 425 fields are on page 1; 72 of those are bound and 2 are the never-autofill push buttons. This fixture reaches all 72. The other 351 fields are on pages 2-8 and are deliberately untouched - the read-back is a statement about the slice, not about the form.",

@@ -1,4 +1,10 @@
 {
+ "_fixture": {
+  "form": "433f",
+  "role": "superseded",
+  "superseded_by": "samples/433f.multi.sample.json",
+  "why": "The single-taxpayer record the 433-F gate ran before the map bound the spouse block and the split tables. Kept because the run it proved is in the history; it reaches neither."
+ },
   "intake_id": "INT-SAMPLE-433F-001",
   "433f_tp_name": "ACME Holdings LLC — John Q. Sample",
   "433f_tp_address": "123 Example St, Denton, TX 76201",

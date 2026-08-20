@@ -72,6 +72,7 @@ import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
 import { parseMoney, loadRounding, blockFor, applyRounding, modeRounds } from './rounding.mjs';
+import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -83,14 +84,48 @@ const saturated = argv.includes('--saturated');
 // only when asked for, and declaration-coverage.mjs asks. Its absence is a STOP there, naming
 // this flag, rather than a silently empty union.
 const emitDeclarationIds = argv.includes('--declaration-ids');
-const [form, samplePath] = argv.filter(a => !a.startsWith('--'));
-if (!form || !samplePath) {
-  console.error('usage: node adapters/pdf/run-form-gate.mjs <form> <sample.json> [--saturated]');
+// POSITIONALS ARE WHAT IS LEFT AFTER THE FLAGS AND THE FLAGS' VALUES. `--role stress` puts a
+// bare word on the command line that is not a positional, and a filter that only drops things
+// beginning with `--` reads "stress" as a fixture path and opens a file called ./stress.
+const FLAGS_WITH_VALUES = ['--role'];
+const positionals = argv.filter((a, i) => !a.startsWith('--') && !FLAGS_WITH_VALUES.includes(argv[i - 1]));
+const [form, namedPath] = positionals;
+if (!form) {
+  console.error('usage: node adapters/pdf/run-form-gate.mjs <form> [sample.json] [--saturated] [--role <role>]');
+  console.error('  With no path the gate RESOLVES the form\'s fixture from samples/ by the role');
+  console.error('  each fixture declares in its own _fixture block. See adapters/pdf/resolve-fixture.mjs.');
   console.error('  --saturated  the sample is an ACCEPTANCE sample: step 10 fails on any mapped');
   console.error('               text cell it left empty.');
   console.error('  (default)    the input is a PRODUCTION record: empty mapped cells are');
   console.error('               reported by step 10, not failed.');
+  console.error('  --role R     resolve the fixture declaring role R (default: acceptance).');
   process.exit(2);
+}
+
+// ---------------------------------------------------------------------------------------
+// THE FIXTURE IS RESOLVED FROM THE FORM ID, NOT NAMED.
+//
+// `npm run gate:433boi` used to carry `samples/433boi.slice1.sample.json` in its command line.
+// Slice 2 landed, bound 130 more fields, and the script went on pointing at the one-page
+// record — so the gate ran a three-page map against it and failed at step 10 with three
+// unsettled exclusive sets. Nothing was wrong with the map, the fixture or the gate; the PATH
+// was stale, and a path written into a script is a fact nobody re-derives.
+//
+// So the gate now DISCOVERS. A path may still be given — a production record has no declared
+// role and must be named — and when one is, the transcript says it was NAMED rather than
+// resolved, because those are two different degrees of evidence about what was just run.
+const roleAt = argv.indexOf('--role');
+const wantRole = roleAt >= 0 ? argv[roleAt + 1] : 'acceptance';
+let samplePath = namedPath;
+let fixtureSource;
+if (samplePath) {
+  fixtureSource = `NAMED on the command line (not resolved). If this is an acceptance run, prefer \`node adapters/pdf/run-form-gate.mjs ${form} --saturated\` and let the tree say which fixture that is.`;
+} else {
+  const res = resolveFixture(form, wantRole);
+  if (!res.path) { reportResolution(res); process.exit(2); }
+  samplePath = res.path;
+  fixtureSource = `RESOLVED from samples/ by declared role "${wantRole}" — ${res.rows.length} candidate(s) swept, ${res.rows.filter(r => r.role === wantRole).length} declaring it`;
+  reportResolution(res);
 }
 
 const mapPath    = `adapters/pdf/maps/${form}.map.json`;
@@ -1001,6 +1036,9 @@ const steps = [
 console.log(`form gate: ${form}`);
 console.log(`  map:    ${mapPath}`);
 console.log(`  sample: ${samplePath}`);
+// RESOLVED AND NAMED ARE TWO DIFFERENT DEGREES OF EVIDENCE about what was just run, and a
+// transcript that does not say which is a transcript a stale path can hide in.
+console.log(`  fixture: ${fixtureSource}`);
 console.log(`  out:    ${outPath}`);
 console.log(`  mode:   ${saturated
   ? 'SATURATED — the sample must reach every mapped text cell (step 10 fails on any it misses)'

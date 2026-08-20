@@ -77,6 +77,32 @@ import { underDetermination, markerPairing } from './line-markers.mjs';
 
 const DIR = 'adapters/pdf';
 
+// WHAT THIS SWEEP READS, AND THE HALF IT USED TO MISS.
+//
+// It read adapters/pdf/*.mjs and nothing else, and adapters/pdf/sweep-boundary.mjs [SB-22]
+// asked why. The reason on record was that the HubSpot tools are not instruments in the
+// vacuous-guard sense - they write to a live portal and read the result back, so their verdict
+// is what the portal says and not what a local set contains. That reason is TRUE OF MOST OF
+// THEM AND FALSE OF FOUR: gen-fields-from-crosswalk.mjs, gen-fields-from-map.mjs,
+// reclassify-against-backbone.mjs and validate-crosswalk.mjs never touch the portal, decide
+// from local sets, and can stop a run. Nine guard sites across the four, outside every sweep.
+//
+// THE DISCRIMINATOR IS DERIVED, NOT TYPED, and it is the same predicate [SB-22] cross-checks
+// with - so the sweep and the boundary register cannot drift into disagreeing about which
+// files are which. A typed list of four names is how the exclusion got its wrong reason in the
+// first place.
+const LOCAL_SET_INSTRUMENT = (src) => !/fetch\(|hs-lib|hubapi/.test(src) && /process\.exit|exitCode/.test(src);
+
+/** Every file this sweep reads, as a path relative to DIR. */
+export const sweptFiles = () => [
+  ...readdirSync(DIR).filter(f => f.endsWith('.mjs') && f !== 'guard-sweep.mjs').sort(),
+  ...readdirSync('adapters/hubspot')
+    .filter(f => f.endsWith('.mjs'))
+    .filter(f => LOCAL_SET_INSTRUMENT(readFileSync(`adapters/hubspot/${f}`, 'utf8')))
+    .sort()
+    .map(f => `../hubspot/${f}`),
+];
+
 // ---------------------------------------------------------------------------------------
 // WHAT COUNTS AS A SITE.
 //
@@ -307,6 +333,103 @@ export const VACUOUS = [
   { id: 'G-78', file: 'assert-row-shape-spec.mjs', anchor: 'if (real.length && !routed && !un[form])', verdict: 'guarded',
     why: 'THE `length &&` SHAPE, AND THE ONE PLACE IN THIS FILE IT COULD HAVE GONE WRONG. `real` is what survives `claimsNothing()`, so a filter that quietly widened would empty `real` and switch the routing assertion off with no output at all. Two things close it. The empty case is disposed by the NEXT check in the same loop — an `unrouted` declaration for a form with no routable claim is reported as ORPHAN UNROUTED, so a class whose claims all vanished cannot keep a silent declaration standing over nothing. And `excusedClaims()` enumerates every entry the filter removed, with its class and its text, and reportRowShapeSpec prints the count on every run. An assertion that stops asserting here cannot do it without saying how many claims it excused.' },
 
+  // ─── the reachability scan [D-08] added to exclusion-sweep ───────────────────────────
+  { id: 'G-101', file: 'exclusion-sweep.mjs', anchor: "const own = ln.match(DEF);", verdict: 'guarded',
+    why: 'THE OWN-DEFINITION HALF OF REACHABILITY. Reading nothing here makes a file appear to define no predicates, so every exclusion site in it goes unattributed and every register entry naming it ORPHANS — which is loud rather than silent, and is the same closure [G-65] rests on. It is additionally closed by the reachability canary: a synthetic tree in which x/a.mjs defines a predicate and x/c.mjs imports it must resolve to x/a.mjs, and a dead own-definition scan cannot produce that resolution. Renamed from `m` to `own` in the same commit so this disposition and [G-65] anchor on different lines; two identical lines in one file cannot carry two different verdicts.' },
+
+  { id: 'G-102', file: 'exclusion-sweep.mjs', anchor: 'const m = ln.match(IMPORT);', verdict: 'guarded',
+    why: 'THE IMPORT HALF, AND ITS EMPTY CASE IS THE SAFE DIRECTION. Reading no imports makes reachability strictly NARROWER — a file reaches only what it defines itself — so a site legitimately governed by an imported predicate goes unattributed and its register entry ORPHANS. It cannot make a site LOOK disposed that is not, which is the direction [D-08] is about. The canary demands the positive direction as well: x/c.mjs must reach isChecked THROUGH its import and resolve it back to x/a.mjs, so an import scan that reads nothing takes the sweep down before any real attribution is trusted.' },
+
+  { id: 'G-103', file: 'exclusion-sweep.mjs', anchor: "const as = /^(\\S+)\\s+as\\s+(\\S+)$/.exec(t);", verdict: 'sound',
+    why: 'NO MATCH IS THE COMMON CASE AND THE CORRECT ANSWER. `import { a }` has no `as`, and the else branch takes the local name and the original name to be the same, which they are. A dead regex would treat `import { a as b }` as importing a name called "a as b", which resolves against no definition and therefore attributes nothing — narrower again, and ORPHAN-visible. There is no renaming import in the swept files today, so this line is exercised only in its no-match direction; the canary exercises neither and that is stated rather than implied.' },
+
+  // ─── the four HubSpot local-set instruments ──────────────────────────────────────────
+  //
+  // These four came into this sweep when adapters/pdf/sweep-boundary.mjs [SB-22] contradicted
+  // the reason they had been left out of it. They never touch the portal, they decide from
+  // local sets and they can stop a run, which is the vacuous-guard shape exactly.
+  { id: 'G-93', file: '../hubspot/gen-fields-from-crosswalk.mjs', anchor: '} catch {', verdict: 'sound',
+    why: 'THE CATCH IS THE STOP. It wraps an execFileSync of validate-crosswalk.mjs and its body prints "nothing written" and exits 2. There is no empty input that reaches this branch and produces success — the branch IS the failure path, and the success path is the one where the validator exited 0. A generator that refused to transcribe an unvalidated crosswalk is the point of the call.' },
+
+  { id: 'G-94', file: '../hubspot/gen-fields-from-map.mjs', anchor: 'const m = /^(S?\\d+[a-z]?)_/i.exec(key);', verdict: 'sound',
+    why: 'NO MATCH IS THE ANSWER, NOT A FAILURE TO ANSWER. lineRef returns null for a key naming a concept the form does not number — marital_status, the allowable inputs — and null is written into the output as line_ref: null rather than dropped. A reviewer sees "this key carries no printed marker", which is a fact about the key. A dead regex would make EVERY key report null, and that is caught one level out: adapters/hubspot/validate-crosswalk.mjs compares the generated file against the crosswalk, whose bindings carry the printed markers independently.' },
+
+  { id: 'G-95', file: '../hubspot/gen-fields-from-map.mjs', anchor: 'const m = /^(\\d+)/.exec(key);', verdict: 'sound',
+    why: 'SAME SHAPE, AND THE FAIL-OPEN DIRECTION IS THE SAFE ONE HERE. printedLineNo returns null when a key does not open with a printed line number, and inMoneyBand then returns FALSE — so a key this pattern cannot read is treated as NOT money, which means it is not given a money fieldType it might not deserve. A dead regex makes every key non-money, and that shows immediately as a generated file with no currency properties in it, against a crosswalk that names them.' },
+
+  { id: 'G-96', file: '../hubspot/gen-fields-from-map.mjs', anchor: 'const yesno = values.length === 2 && values.every', verdict: 'sound',
+    why: 'THE `length === 2 &&` GUARDS THE `every`, WHICH IS THE WHOLE POINT. An empty options object gives values.length 0, the conjunction is false before every() is reached, and the set is emitted as a named-option select rather than as a booleancheckbox — the wider of the two shapes, which loses no value. The vacuous case the shape is dangerous in — every() over an empty array returning true — cannot arise, because the length test runs first and demands exactly two.' },
+
+  { id: 'G-97', file: '../hubspot/reclassify-against-backbone.mjs', anchor: 'let doc; try { doc = R(`adapters/hubspot/${file}`); } catch { continue; }', verdict: 'guarded', family: true,
+    why: 'TWO SITES, ONE DISPOSITION, AND THEY ARE THE [G-01] SHAPE HELD OPEN DELIBERATELY. A per-form fields file or crosswalk that is absent contributes nothing to the backbone and the loop moves on — which is right, because a form whose file has not been generated yet genuinely contributes no names. What makes it not a silent zero is that the backbone this builds is REPORTED with its contributor set per name, so a form that contributed nothing appears as a form no name is attributed to, and the coverage figures downstream are per form. The dangerous version of this catch would be one that swallowed a PARSE error on a file that exists; it does, and that is the half this entry does not cover — carried, not claimed closed.' },
+
+  { id: 'G-98', file: '../hubspot/reclassify-against-backbone.mjs', anchor: "try { for (const p of (R('adapters/hubspot/fields.registry.json').properties || []))", verdict: 'sound',
+    why: 'ABSENCE IS A DECLARED STATE AND THE REPORT SAYS SO. The shared registry carries names contributed before the per-form files existed, and every name it supplies is attributed to the contributor `registry` rather than to a form — so a run in which the registry is missing produces a backbone with no `registry` contributor at all, which is visible in the contributor tally the report prints. The comment on the catch says exactly this, and it is the difference between a swallowed read and a declared one.' },
+
+  { id: 'G-99', file: '../hubspot/reclassify-against-backbone.mjs', anchor: "for (const m of String(e.a433 || '').matchAll(/groups\\.([A-Za-z0-9_]+)/g))", verdict: 'guarded',
+    why: 'AN EXTRACT WHOSE EMPTY CASE WOULD SKIP AN ASSERTION, CLOSED BY THE CHECK ABOVE IT. It pulls group names out of an `asymmetric-the-other-way` entry so the C-22 clash test can run on them; reading none means that entry is asserted against nothing. What closes it is the NO ROW CLASS problem pushed immediately above: every 433-A group is required to declare a row_class first, and the assertion is over entries whose text names groups in the `groups.NAME` spelling the classification file is written in. An entry that stopped yielding group names would be an entry whose text stopped naming groups, which the classification’s own schema check refuses.' },
+
+  { id: 'G-100', file: '../hubspot/reclassify-against-backbone.mjs', anchor: 'const m = /^([A-Za-z0-9]+_)(.+)$/.exec(k);', verdict: 'sound',
+    why: 'NO MATCH IS SKIPPED AND THAT IS THE CORRECT READING. blocksOf splits a covered key into prefix and suffix so two entries can be compared for whether one swept up more than the other; a key with no underscore prefix belongs to no block and contributes to neither side of that comparison. A dead regex empties every block map, which makes every granularity comparison find NO difference — and that is the direction this file was rewritten to stop reporting as agreement: the granularity check states the size of both blocks it compared, so two empty ones read as two empty ones rather than as a match.' },
+
+  // ─── the counter universe assertion and the fixture resolver ─────────────────────────
+  { id: 'G-115', file: 'blanket-audit.mjs', anchor: 'exec(String(m)); return !!g &&', verdict: 'sound',
+    why: 'NO MATCH IS "OUT OF SCOPE", WHICH IS THE STOP AND NOT THE PASS. This is the [K-23] scope predicate: a member it cannot parse is refused, the counter is reported as UNIVERSE MOVED and the run fails naming the member. A dead pattern therefore makes every member stray and takes the audit down loudly; it cannot make a universe look in-scope. Its first draft stripped non-digits instead of reading the brackets, so 4ac_vehicles[0] became 40 and every real slot fell outside its own scope - which this assertion reported on its first run, before the map could be edited to fit it.' },
+
+  { id: 'G-116', file: 'blanket-audit.mjs', anchor: 'catch (scopeErr) {', verdict: 'sound',
+    _named_scopeErr_on_purpose: 'It was `catch (e) {` for one run, and a bare `catch (e) {` is a substring of the anchors [G-52] and [G-53] already stand on — so this entry matched their lines first and ORPHANED both. A register keyed on a line needs its lines to be distinguishable, which is the same lesson as [D-08] with a catch variable in place of a predicate name.',
+    why: 'THE SCOPE PREDICATE THROWING IS A COUNTER DEAD, not a member quietly admitted. A predicate that cannot be evaluated has not asserted anything, and the disposed row records the throw with the counter id so the transcript names which counter stopped being checkable.' },
+
+  { id: 'G-117', file: 'resolve-fixture.mjs', anchor: 'catch (e) { return { path, unreadable: e.message }; }', verdict: 'sound',
+    why: 'A FIXTURE THAT WILL NOT PARSE IS UNREADABLE, NOT ABSENT, and resolveFixture turns that flag into a problem naming the file and the parse error. If it were dropped, a form whose ONLY acceptance fixture is corrupt would resolve to "no acceptance fixture" - a different and much more misleading message - or, worse, to a second candidate. The whole point of this file is that resolution never returns a guess, and a file it could not read is the case where guessing is most tempting.' },
+
+  // ─── the sweep-boundary register ─────────────────────────────────────────────────────
+  { id: 'G-104', file: 'sweep-boundary.mjs', anchor: 'const isDir = (p) => { try { return statSync(p).isDirectory(); } catch { return false; } };', verdict: 'sound',
+    why: 'A PATH THAT CANNOT BE STATTED IS NOT A DIRECTORY, which is what the caller needs to know. Both callers enumerate directories that exist because readdirSync just listed them, so the catch covers a race and not a state. Its false direction removes a directory from [SB-90]\'s subdirectory check — narrower — and the one thing that could hide is a subdirectory that exists and cannot be statted, which readdirSync would have thrown on first.' },
+
+  { id: 'G-105', file: 'sweep-boundary.mjs', anchor: 'catch (e) { out.push({ file: `samples/${f}`, unreadable: e.message }); continue; }', verdict: 'sound',
+    why: 'UNREADABLE IS RECORDED, NOT SKIPPED, and [SB-10]\'s crosscheck turns exactly that flag into a problem naming the file. A fixture that will not parse contributes no claims AND says that it could not be read — the two are separated, which is the whole of [G-01] and the reason the catch writes a row instead of continuing empty-handed.' },
+
+  { id: 'G-106', file: 'sweep-boundary.mjs', anchor: 'for (const re of FORM_TOTAL) for (const m of src.matchAll(re))', verdict: 'guarded', family: true,
+    why: 'THE COMPARISON THE TWO WRONG COUNTS WERE IN, and a pattern that stopped matching would report zero contradictions over zero comparisons. Closed by the CANARY, which is the only thing that separates a dead pattern from a clean tree: a synthetic fixture claiming 999 fields against a derived 267 must yield exactly one contradiction, AND a synthetic fixture claiming the derived figure must still MATCH — the second half is what a pattern matching nothing fails. The number of phrases compared is also printed on every run, so thirteen becoming zero is visible in the transcript.' },
+
+  { id: 'G-107', file: 'sweep-boundary.mjs', anchor: "catch (e) { out.push(`[SB-11] UNREADABLE", verdict: 'sound',
+    why: 'A labels.json that will not parse becomes an UNREADABLE problem naming the file, not a file that quietly declares no generator and not a file that quietly declares one. [SB-11]\'s whole ground is that these artefacts are mechanical and say so; a file nobody could read has not said so.' },
+
+  { id: 'G-108', file: 'sweep-boundary.mjs', anchor: "const m = /^([0-9a-z]+)\\.(intake\\.json|lineage-)/.exec(f);", verdict: 'sound',
+    why: 'NO MATCH MEANS THIS FILE IS NOT AN INTAKE RECORD, and the loop moves to the next one. The set being walked is the maps directory, so a dead pattern makes [SB-13] find no intake records to check — which is visible as a size of 0 beside an entry whose count() reads the same directory by a different pattern. The two would have to die together for this to go quiet, and they are different regexes over different filename shapes.' },
+
+  { id: 'G-109', file: 'sweep-boundary.mjs', anchor: "try { doc = JSON.parse(r(p)); } catch (e) { out.push(`[SB-15] UNREADABLE", verdict: 'sound',
+    why: 'Same shape as [G-107] on the HubSpot side: unparseable becomes a named problem. [SB-15] excuses these files on the claim that each is generated or read back, and a file nobody could parse has made no such declaration.' },
+
+  { id: 'G-110', file: 'sweep-boundary.mjs', anchor: 'for (const re of FORM_TOTAL) for (const m of synthetic.matchAll(re))', verdict: 'sound', family: true,
+    why: 'THIS IS THE CANARY ITSELF, and both directions of it are asserted. The disagreeing string must yield exactly one contradiction and the agreeing string must yield exactly one match; ok is the conjunction. A pattern that matched nothing would pass the first clause on its own — zero contradictions is not one — which is why the second clause exists and why it counts matches rather than contradictions.' },
+
+  { id: 'G-114', file: 'sweep-boundary.mjs', anchor: 'catch (e) { return [`[SB-16] UNREADABLE', verdict: 'sound',
+    why: 'THE CATCH RETURNS A PROBLEM, NOT AN EMPTY LIST. A crosscheck returning [] means "compared, nothing contradicted"; this one returns a one-element list naming the file it could not read. The registry is hand-maintained and its ONLY protection is that its declared count matches its own contents, so a run that could not open it has checked nothing and says so. Returning [] here would make an unparseable registry indistinguishable from a consistent one, which is the exact substitution [SB-16] exists to prevent.' },
+
+  { id: 'G-113', file: 'sweep-boundary.mjs', anchor: 'for (const re of FORM_TOTAL) for (const m of agreeing.matchAll(re)) agreed.push(m[0]);', verdict: 'sound',
+    why: 'THE HALF OF THE CANARY THAT A DEAD PATTERN FAILS. The line above it counts contradictions in a fixture claiming 999 fields; this one counts MATCHES in a fixture claiming the derived figure. A regex that matched nothing would produce zero contradictions — which the first clause reads as "no defect found" — and zero matches, which this clause refuses. Reading nothing here cannot make the canary report success; it is the only line in the file where an empty read is the failure condition rather than a state to report.' },
+
+  { id: 'G-111', file: 'sweep-boundary.mjs', anchor: 'catch (err) {', verdict: 'sound', family: true,
+    why: 'THE THREE CATCHES IN THE RUNNER, ONE DISPOSITION. A size that throws, a crosscheck that throws and an observe that throws each push an UNREADABLE problem naming the boundary and give the row the verdict UNREADABLE, which is not counted as cross-checked and is not counted as a pass. There is no path on which a boundary this file could not evaluate contributes silence. That is the rule the whole register implements, applied to the register.' },
+
+  { id: 'G-112', file: 'sweep-boundary.mjs', anchor: '} catch { return null; }', verdict: 'sound',
+    why: 'git ls-files returning null is a distinct state from returning an empty list, and the caller reports it as UNREADABLE: "these directories are untracked scratch is unchecked rather than true". An empty list means git ran and found nothing tracked, which IS the claim holding. Collapsing the two would let a machine without git report the strongest possible pass.' },
+
+  // ─── the y-convention audit ───────────────────────────────────────────────────────────
+  { id: 'G-89', file: 'assert-y-convention.mjs', anchor: 'catch { out.push({ file: f, unreadable: true }); continue; }', verdict: 'sound',
+    why: 'AN UNREADABLE FILE BECOMES A PROBLEM, NOT A SKIP. The catch records `unreadable: true` and runYConventionAudit turns exactly that flag into a REPORTER UNREADABLE stop with the file named. There is no path on which a reporter this loop could not open contributes nothing and says nothing — which is the whole of [G-01], and the reason the flag is set rather than the file being dropped.' },
+
+  { id: 'G-90', file: 'assert-y-convention.mjs', anchor: 'const m = /^HEADING-Y (\\S+) page=(\\d+) convention=(\\S+) y=([\\d.]+)', verdict: 'guarded',
+    why: 'THE EXTRACT THAT COULD GO QUIET, AND THE TWO THINGS THAT STOP IT. A pattern that stopped matching would return no heading readings and the tool would report 0 checked and 0 disagreements for verify-headings.mjs on every form — a clean sweep over an instrument nobody asked. Closed twice. FIRST: the reading is refused before the loop when a form has a headings.json and the spawned tool emitted no HEADING-Y line at all, which is an UNREADABLE stop naming the form and the exit code, not a zero. SECOND: a line that IS present and does not parse pushes its own row with `missing` set, so an individual malformed line is reported rather than filtered away. The remaining case — every line present, every line parsing, none matching a printed run — is reported per row for the same reason.' },
+
+  { id: 'G-91', file: 'assert-y-convention.mjs', anchor: 'const m = /^\\s*y=\\s*([\\d.]+)\\s+x=\\s*([\\d.]+)\\.\\.\\s*([\\d.]+)\\s+(.*)$/.exec(l);', verdict: 'guarded',
+    why: 'THE SAME SHAPE ON align-block.mjs, closed by the block delimiters rather than by the line pattern. A listing that printed no PRINTED/WIDGETS pair at all is an UNREADABLE row naming the band and the exit code, so the seeded sample cannot silently become zero bands. Within a block that IS found, a line this pattern skips is a line align-block did not print as a run — the header, the NOTE, blanks — and skipping those is correct. What is NOT silent is a run it printed that page-geometry.mjs does not hold: that is a `missing` row and a stop. The number of runs compared is printed per form on every run, so a sample that shrank shows as a smaller number rather than as agreement.' },
+
+  { id: 'G-92', file: 'assert-y-convention.mjs', anchor: 'catch (e) {', verdict: 'sound',
+    why: 'THE CATCH IS THE REPORT. A reading that throws pushes a problem and a row whose `checked` is the string UNREADABLE, which is not summed into the checked total and is not counted as agreement. The alternative — swallowing the throw and moving to the next reporter — would make a broken import indistinguishable from a reporter with nothing to say, and this file exists because two instruments that were both answering confidently were answering different questions.' },
+
   // ─── the blanket audit ────────────────────────────────────────────────────────────────
   { id: 'G-42', file: 'blanket-audit.mjs', anchor: 'for (const m of String(v).matchAll(new RegExp(String.raw`(?<![\\w-])(${N})(?![\\w-])`', verdict: 'guarded',
     why: 'THE PROBE’S NUMBER EXTRACTOR, GUARDED BY A CANARY RATHER THAN BY A PER-SITE TEST. An empty read here yields no findings for that site, and if the regex ever died every sampled site would come back clean and the audit would print a green sample over an instrument that reads nothing. A PER-SITE heuristic was tried first — "the site has a digit and I read no number" — and it is WRONG: `entries[30].id` is "L30" and `_at` is "y 668.1", and reading no standalone number out of either is the correct answer, which is what the boundary rule exists to produce. It reported ten live sites as unreadable. `PROBE_CANARY` asks the only question that separates a dead extractor from a site with nothing in it: a fixed string, not drawn from the artefacts, carrying two register phrases and one entry id, expected to yield exactly two. A canary that does not come back is a STOP and every "0 findings" in the same run is declared meaningless.' },
@@ -427,8 +550,9 @@ export const VACUOUS = [
   // swept, and a parse failure PROPAGATES to runExclusionSweep, which reports UNREADABLE.
   { id: 'G-64', file: 'exclusion-sweep.mjs', anchor: "try { raw = readFileSync(p, 'utf8'); } catch (e) { if (e.code === 'ENOENT') return null; throw e; }", verdict: 'FIXED',
     why: 'WAS `catch { return null }` OVER BOTH FAILURE MODES, WITH `?? 0` DOWNSTREAM. A missing sidecar and an unparseable one produced the same silent zero. Now the catch handles exactly one condition — the file not existing, which is a fact about a form not yet mapped — and re-throws everything else. The parse itself is outside the try, so a malformed map cannot be read as an empty one. The excused total therefore counts only forms whose declarations were actually read.' },
-  { id: 'G-65', file: 'exclusion-sweep.mjs', anchor: 'const m = ln.match(DEF); if (m) out.add(m[1]);', verdict: 'guarded',
-    why: 'THE DEFINITION HARVESTER, AND THE ONE PLACE IN THIS FILE A DEAD REGEX WOULD FAIL OPEN. An empty `DEFINED` set makes [EX-90] remove EVERY raw exclusion position, so nothing is registered and nothing is checked — the [A3] shape committed by the file written against it. Closed two ways: [EX-90] counts what it removed and prints the figure beside the raw total on every run, so 175 raw / 0 named is visible rather than silent; and the ORPHAN rule then fires for all sixteen registered predicates at once, because none of them appears in an exclusion position any more. A harvester that dies takes the register down with it, loudly.' },
+  { id: 'G-65', file: 'exclusion-sweep.mjs', anchor: 'const m = ln.match(DEF);', verdict: 'guarded',
+    _anchor_moved: 'The harvester was rewritten for [D-08] — it now builds name -> Set(defining file) instead of a flat Set of names — and the old anchor `const m = ln.match(DEF); if (m) out.add(m[1]);` stopped matching. The ORPHAN rule reported it on the next run, which is the whole reason an anchor is required: the disposition below is about a line, and a line that has been rewritten needs the disposition re-read rather than carried forward. Re-read; the reasoning holds and is now stronger, because the harvester feeds reachability as well as membership.',
+    why: 'THE DEFINITION HARVESTER, AND THE ONE PLACE IN THIS FILE A DEAD REGEX WOULD FAIL OPEN. An empty definition map makes [EX-90] remove EVERY raw exclusion position, so nothing is registered and nothing is checked — the [A3] shape committed by the file written against it. Closed three ways now. [EX-90] counts what it removed and prints the figure beside the raw total on every run, so 199 raw / 0 named is visible rather than silent. The ORPHAN rule then fires for all eighteen registered predicates at once, because none of them appears in an exclusion position any more. And since [D-08] the same map also decides REACHABILITY, so a dead harvester additionally kills the reachability canary — a synthetic import in a synthetic tree that must resolve — which is a STOP before any real attribution is read.' },
   { id: 'G-66', file: 'exclusion-sweep.mjs', anchor: 'const m = code.match(re);', verdict: 'sound',
     why: 'THE POSITION MATCHER. No match means this line is not an exclusion position and the loop tries the next shape; a line matching no shape is not a site. A shape that stopped matching would shrink the swept population — which is why the population size is printed on every run and the ORPHAN rule fires for any registered predicate that stops appearing. Registered rather than argued away, because "it only shrinks the input" is exactly what a sentence in asset-row-shapes.json did.' },
   { id: 'G-67', file: 'exclusion-sweep.mjs', anchor: 'const calls = [...String(m[1]).matchAll(CALL)].map((x) => x[1]);', verdict: 'sound',
@@ -680,7 +804,12 @@ export const FIGURES = [
       const w = attach(m).winner;
       // STRICT containment, no tolerance: the claim in `what` is about the rectangle, not
       // about the filter's 2pt skirt, and a comparison this register makes carries no slack.
-      return !!w && w.rect && m.y >= w.rect[1] && m.y <= w.rect[3];
+      // THE MARKER'S y HERE IS ITS RUN TOP, and it is now named as one. line-markers.mjs used
+      // to carry that value in a bare `y`; this derivation read it and would have gone on
+      // reading a field of the same name after that field became the BASELINE - silently
+      // deriving a different figure from the same sentence. The value is unchanged and the
+      // no-op is proved by this register itself: FIG-09 states 22 and must still derive 22.
+      return !!w && w.rect && m.y_run_top >= w.rect[1] && m.y_run_top <= w.rect[3];
     }).length; } },
 
   { id: 'FIG-09b', register: 'N-05', what: '433-A(OIC) page-6 markers drawn in total', stated: 25,
@@ -751,7 +880,7 @@ export const reportFigureSweep = (s) => {
  */
 export const runGuardSweep = (form) => {
   const problems = [], rows = [];
-  const files = readdirSync(DIR).filter(f => f.endsWith('.mjs') && f !== 'guard-sweep.mjs').sort();
+  const files = sweptFiles();
 
   // ─── (a) every source site of a named shape is disposed ────────────────────────────────
   const hitBy = new Map(VACUOUS.map(e => [e.id, 0]));

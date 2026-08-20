@@ -1,4 +1,9 @@
 {
+ "_fixture": {
+  "form": "433a",
+  "role": "acceptance",
+  "why": "The saturated record the 433-A gate runs. Every mapped text cell carries a value and every group carries at least one row, so step 10 can fail on an empty mapped cell rather than reporting one."
+ },
  "_synthetic": "SYNTHETIC COVERAGE SAMPLE. Blank government form, invented taxpayer. Every value is an obvious placeholder (Testcorp, 000-00-0000, 555-01xx). No real PII. Its job is to exercise every MAPPED path in 433a.map.json sections 1-3, the whole of section 4, the section 5 income/expense grid, and the section 6/7 business blocks (printed 65-90) - it is not a realistic return.",
  "_coverage_notes": [
   "SECTION 5 (map v5). All 31 grid values are DISTINCT across both panels - not merely distinct within a panel. On sheet 6 every internal field-name suffix lags its printed line by one, so a one-row shift would land plausible money in the wrong printed category; only a grid with no repeated figure makes that shift visible in the read-back.",
