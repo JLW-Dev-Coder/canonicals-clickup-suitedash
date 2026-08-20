@@ -1415,13 +1415,16 @@
   },
   {
    "key": "40_monthly_rent_payment",
-   "entry": "X-40",
-   "fact": "monthly_rent_payment",
-   "backbone_key": null,
+   "entry": "X-82",
+   "fact": "exp_rent",
+   "backbone_key": "433f_exp_rent",
    "type": "number",
    "fieldType": "number",
    "type_basis": "money cell - printed with a $ on its own row",
-   "pii": false
+   "pii": false,
+   "scope": "shared",
+   "scope_reason": "THE TEST, ASKED AND ANSWERED: could one property ever have to hold two different values for one taxpayer at one moment? No. Both cells hold the taxpayer's monthly rent payment - 433-F prints it as the first of five Housing & Utilities rows and the OIC form prints it as the component disclosed beside the (40) housing figure - and a taxpayer preparing both filings has ONE monthly rent. A second property could only ever diverge from the first, and a divergence between two properties holding one fact is invisible on both filed forms because each prints its own and neither prints the other. The two forms decompose housing differently and that is a question about which LINES exist, not about how many rents the taxpayer pays.",
+   "rebound_from": "irs433aoi_monthly_rent_payment, created by the 433-A(OIC) provisioning pass under X-40's `new` category and now deprecated in its portal description. Rebound while ZERO LIVE RECORDS held it: the only record that ever carried the value was the synthetic probe, deleted at the end of Prompt 37. Which property a filed cell reads from is permanent state, so this was the last moment it could be changed without a migration."
   },
   {
    "key": "41_vehicle_loan_or_lease_payments",

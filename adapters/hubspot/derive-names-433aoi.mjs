@@ -316,6 +316,14 @@ if (emit && !stops.length) {
     const def = MAP.groups[g[0]];
     const cols = new Set();
     for (const s of def.slots || []) { for (const c of Object.keys(s.text || {})) cols.add(c); for (const c of Object.keys(s.checkboxes || {})) cols.add(c); }
+    // And the class the row states, wherever the map declares one. THE TWO DERIVERS MUST AGREE:
+    // gen-fields-from-map.mjs already publishes `row_class.column` in the row shape it writes,
+    // and `irs433_household_members` is ONE property with a definition file on each side. A
+    // property with two definition files follows whichever provisioner ran last, so a row shape
+    // naming the class column on one side and not the other would make the intake contract for
+    // that property depend on run order. Added when D-05 gave the last twelve groups a
+    // row_class; before that no 433-A(OIC) class column reached this file at all.
+    if (def.row_class?.column) cols.add(def.row_class.column);
     return [...cols];
   };
   const props = derived.map((d) => {

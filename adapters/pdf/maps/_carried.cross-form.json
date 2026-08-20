@@ -3,7 +3,6 @@
  "_the_rule": "Unresolved is fine. Evaporating is not. An item leaves this file in exactly two ways: it is RESOLVED, with what resolved it, or it is WITHDRAWN, with why it was not a question after all.",
  "_how_an_item_leaves_for_a_map": "When the form it names gets a map, the item is COPIED into that map's `_carried.open` in the first commit of that form's track and marked `migrated_to` here. It is not deleted: a cross-form ruling that shaped a form's first prompt should still be readable from outside that form.",
  "_authored": "Prompt 36, the 433-A(OIC) naming and provisioning pass.",
-
  "open": [
   {
    "id": "D-01",
@@ -44,12 +43,26 @@
    "the_ruling": "Each remaining form's blank PDF goes into adapters/pdf/forms/ in the FIRST COMMIT of that form's track, with its SHA-256 recorded, so the revision pin has an artefact to pin against instead of a download that may not be the same file next week.",
    "the_filename_trap": "f433boic.pdf 404s. The IRS filename for Form 433-B(OIC) is f433boi.pdf. A wrong filename in a future prompt would present as a network failure and be retried rather than corrected.",
    "in_forms_today": [
-    { "form": "433-A", "file": "adapters/pdf/forms/f433a.pdf", "sha256": "SEE forms.sha256 - recorded by this same commit" },
-    { "form": "433-F", "file": "adapters/pdf/forms/f433f.pdf", "sha256": "SEE forms.sha256" },
-    { "form": "433-A(OIC)", "file": "adapters/pdf/forms/f433aoi.pdf", "sha256": "SEE forms.sha256" }
+    {
+     "form": "433-A",
+     "file": "adapters/pdf/forms/f433a.pdf",
+     "sha256": "SEE forms.sha256 - recorded by this same commit"
+    },
+    {
+     "form": "433-F",
+     "file": "adapters/pdf/forms/f433f.pdf",
+     "sha256": "SEE forms.sha256"
+    },
+    {
+     "form": "433-A(OIC)",
+     "file": "adapters/pdf/forms/f433aoi.pdf",
+     "sha256": "SEE forms.sha256"
+    }
    ],
    "status": "OPEN for 433-B(OIC), 433-B, 433-D and 433-H; SATISFIED for the three forms already mapped."
-  },
+  }
+ ],
+ "resolved": [
   {
    "id": "D-05",
    "form": "433-A",
@@ -60,9 +73,17 @@
    "what_was_done": "DECLARED, not fixed. Each of the eight now carries an `unrouted` block in asset-row-shapes.json naming the 433-A group, the printed table and this consequence, and adapters/pdf/assert-row-shape-spec.mjs [A3] reports all eight on every run and STOPS if one loses its declaration or if a declaration goes stale because the gap closed.",
    "why_it_is_not_resolved_here": "Giving those groups a `row_class` is a routing change to the fill engine for a filed form, on a form whose track this prompt is not on. It also needs a per-group decision this audit is not the place to take: `personal_property` on 433-A is the very binding C-22 turned on, and adding a class to `property_line_20` would settle part of that question by side effect rather than on its evidence.",
    "built_when": "433-A's next track, before any further 433-A crosswalk work. It is cheap - eight `row_class` blocks and no printed cell moves - and check-row-shape.mjs reports rather than fails a row that states no class, so it cannot break a passing gate.",
-   "status": "OPEN - declared, reported on every run, not fixed."
+   "status": "RESOLVED.",
+   "resolved_in": "Prompt 38, the D-05 track.",
+   "what_resolved_it": "TWELVE row_class declarations, not the eight this item was filed for. The item named 433-A's eight; enumerating every group on every mapped form gives twelve - 433-A 8, 433-F 3, 433-A(OIC) 1 - and all twelve are declared. Each class is settled from the PRINTED PAGE, with the heading text and its drawn coordinates quoted in the group's row_class._why, and each is proved to route by adapters/pdf/assert-row-class-routes.mjs, which poisons every declaring group with a class it does not accept and requires the fill engine to STOP and name the row. 64 poisoned runs across 32 declaring groups, 64 refusals.",
+   "the_set_was_derived_rather_than_taken": "THE ITEM'S OWN FIGURE WAS RIGHT FOR THE FORM IT NAMED AND WRONG FOR THE REPO. Eight was correct for 433-A. The defect - a group routing rows by group name alone - stood in twelve places, and the four beyond 433-A sat on two other FINISHED forms. Fixing the filed eight and reporting D-05 closed would have left the original defect standing on a form JLW has filled and tested, under a commit message saying it was fixed.",
+   "and_the_instrument_had_been_switched_off_over_three_of_them": "The three on 433-F were invisible to adapters/pdf/assert-row-shape-spec.mjs [A3], which is the check written to find exactly this. asset-row-shapes.json declared 433-F's DIGITAL ASSETS, E1 and E2 tables \"printed, not currently mapped\"; claimsNothing() excuses that phrase from the routing assertion; and 433f.map.json has bound all three since they were authored, each group's own _why saying in terms that the shared row class binds. A stale sentence in the spec turned the assertion off over three tables, and excusedClaims() printed all three on every run with nothing comparing them to the map. Claims corrected in the same commit; excused claims fall from 7 to 4 and declared routing gaps from 8 to 0.",
+   "no_row_moved": "PROVED, NOT ASSERTED. Every 433-A group was snapshotted cell by cell from the filled PDF before and after - 290 cells across 14 groups, same target and same printed value in every one. verify-headings reports 0 findings on all three forms both sides. A row_class declares what a row must SAY it is; it moves no cell.",
+   "what_it_cost": "Twelve row_class blocks, eight retired unrouted declarations, three corrected printed-table claims, asset_class on 82 fixture rows, and one derived-scope routing assertion. No printed cell moved on any form."
   }
  ],
- "resolved": [],
- "_count": { "open": 5, "resolved": 0 }
+ "_count": {
+  "open": 4,
+  "resolved": 1
+ }
 }

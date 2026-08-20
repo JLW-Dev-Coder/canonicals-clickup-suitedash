@@ -51,6 +51,37 @@ import { hs } from './hs-lib.mjs';
 // it — a refactor for tidiness, on the one command in this repo whose whole point is not to
 // delete something by accident. Caught before it ran. A dry run now RETURNS, and there is no
 // path from the dry-run branch to the request.
+//
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// STANDING RULE: A REFACTOR OF A GUARD IS A CHANGE TO THE GUARD
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// The near-miss above, verbatim as it was reported, because the wording is the rule's evidence:
+//
+//     "Replacing a dry run's `process.exit(0)` with a flag, and leaving the dry-run branch
+//      falling through into the DELETE, on the one command whose entire purpose is not to
+//      delete something by accident. You caught it, re-ran the dry run, and confirmed the
+//      contact survived before the real delete."
+//
+// Nothing about that edit looked like a change in behaviour. It changed an exit into a flag —
+// the kind of edit a person makes without re-reading what is below it, and the kind a reviewer
+// skims. What caught it was a person looking, and a person looking is not a mechanism.
+//
+// SO: ANY CODE PATH WHOSE PURPOSE IS *NOT* TO DO SOMETHING MUST BE PROVED NOT TO DO IT, IN THE
+// SAME RUN, IMMEDIATELY BEFORE THE REAL ONE.
+//
+// Not in a test suite that ran last week against a different revision of the file, and not by
+// reading the branch. In the same process, against the same live object, seconds before the
+// irreversible call — because the only claim worth anything is "this path did not delete THIS
+// object just now", and that is a claim only the run itself can make.
+//
+// Implemented below: `--confirm-delete` executes the dry-run path FIRST and then re-reads the
+// contact. If the contact is gone after the dry run, the dry run deleted it and the real delete
+// never starts. The proof costs one GET. The alternative cost, once, is a record nobody meant
+// to remove, on a command whose entire purpose was not to remove one.
+//
+// The same rule is implemented in adapters/hubspot/hs-deprecate-property.mjs, whose no-op path
+// is proved byte-for-byte no-op against the live property before the PATCH.
 
 const args = process.argv.slice(2);
 const id = args.find(a => /^\d+$/.test(a));
@@ -85,11 +116,31 @@ const main = async () => {
   console.log(`  email   ${p.email || '(none)'}`);
   console.log(`  created ${p.createdate || '(unknown)'}`);
 
-  if (dryRun) {
+  // The dry-run branch is a FUNCTION so the proof below runs the same code rather than a copy
+  // of it. A proof that exercises a second copy proves the copy.
+  const dryRunPath = () => {
     console.log('');
     console.log('--dry-run: nothing was deleted. Re-run with --confirm-delete to archive it.');
+  };
+
+  if (dryRun) {
+    dryRunPath();
     return;                          // RETURNS. There is no path from here to the request below.
   }
+
+  // --- THE NO-OP PATH, PROVED NO-OP, IMMEDIATELY BEFORE THE REAL ONE -------------------------
+  // The dry-run path is executed, then the contact is re-read. If it removed the object, the
+  // delete never starts. See the standing rule at the top of this file.
+  console.log('');
+  console.log('proving the dry-run path is a no-op before deleting...');
+  dryRunPath();
+  let stillThere = null;
+  try { stillThere = await hs(`/crm/v3/objects/contacts/${id}`); }
+  catch (e) { stillThere = null; if (e.status !== 404) STOP(`STOP - could not re-read contact ${id} after the dry-run path (${e.message}). An unreadable portal is not evidence that the dry run was harmless, and the delete is not starting on a guess.`); }
+  if (!stillThere) STOP(
+    `STOP - contact ${id} is GONE after the dry-run path, which is the one path that must never remove anything.`,
+    '  The dry run is not a no-op. Nothing further is being deleted; fix the branch first.');
+  console.log(`  dry-run path proved no-op: contact ${id} still present immediately before the delete.`);
 
   // --- DELETE -------------------------------------------------------------------------------
   await hs(`/crm/v3/objects/contacts/${id}`, { method: 'DELETE' });

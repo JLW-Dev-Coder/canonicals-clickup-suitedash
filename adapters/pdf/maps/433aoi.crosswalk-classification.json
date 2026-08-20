@@ -250,13 +250,13 @@
    "slice": 4,
    "page": 4,
    "category": "different-shape",
-   "oic": "groups.8ab_business_bank_accounts (2 slots) + 8d_bank_accounts_from_attachment + 8c_* digital-asset block",
+   "oic": "groups.8ab_business_bank_accounts (2 slots) + 8d_bank_accounts_from_attachment + 8c_description_of_digital_asset, 8c_number_of_units, 8c_location_of_digital_asset, 8c_custodian_account_number, 8c_self_hosted_asset_address, 8c_us_dollar_equivalent_today, 8c_total_digital_assets, 8c_digital_asset_held",
    "a433": "groups.business_bank_accounts (2 slots)",
-   "why": "Two printed rows on both forms, but the OIC form adds an attachment roll-up and a full business DIGITAL-ASSET block - the same six facts as the personal block at (2c), asked again for the business. 433-A asks for business digital assets nowhere.",
+   "why": "Two printed rows on both forms, but the OIC form adds an attachment roll-up and a full business DIGITAL-ASSET block - the same six facts as the personal block at (2c), asked again for the business. 433-A asks for business digital assets nowhere. THE GLOB IS GONE AND WHAT IT SWEPT IS ON THE RECORD. This entry wrote `8c_* digital-asset block` and its own prose named SIX facts; the prefix matched EIGHT keys. The two nobody named are 8c_total_digital_assets, which is a TOTAL rather than a fact of the block, and 8c_digital_asset_held, which is the CHECKBOX that gates the block - neither is one of the \"same six facts as the personal block at (2c)\" the prose claimed, and neither was ever looked at as a classified cell. Both are now spelled out and are classified different-shape along with the rest of this entry, which is a claim about them somebody can now disagree with. A glob is a blanket: it makes a claim over a set its author never enumerated, and the two cells it quietly carried are exactly what that costs.",
    "compared_against": [
     "433a"
    ],
-   "granularity": "enumerated+glob"
+   "granularity": "enumerated"
   },
   {
    "id": "X-19",
@@ -548,11 +548,12 @@
    "slice": 6,
    "page": 6,
    "category": "new",
-   "oic": "40_monthly_rent_payment, 48_life_insurance_policy_amount, 51_total_tax_owed",
+   "oic": "48_life_insurance_policy_amount, 51_total_tax_owed",
    "a433": null,
-   "why": "THREE COMPONENT DISCLOSURES THE OIC FORM ASKS FOR BESIDE A LINE AND 433-A DOES NOT ASK AT ALL. The monthly rent inside the (40) housing figure; the FACE AMOUNT of the life insurance policy whose PREMIUM is at (48), two quantities on one printed row differing by three orders of magnitude; and the total state or local tax OWED beside the monthly payment at (51). None is a total, none is an operand of any box, and each is a cell a reader scanning for money cells will find - which is why all three are declared not-checkable rather than left out.",
+   "why": "TWO COMPONENT DISCLOSURES THE OIC FORM ASKS FOR BESIDE A LINE AND 433-A DOES NOT ASK AT ALL. The FACE AMOUNT of the life insurance policy whose PREMIUM is at (48), two quantities on one printed row differing by three orders of magnitude; and the total state or local tax OWED beside the monthly payment at (51). Neither is a total, neither is an operand of any box, and each is a cell a reader scanning for money cells will find - which is why both are declared not-checkable rather than left out. THIS ENTRY CARRIED A THIRD KEY UNTIL THE RENT REBIND: 40_monthly_rent_payment was classified `new` here, and `new` means \"433-A prints nothing like it\", which was false - 433-A prints line 37 Housing and Utilities and the OIC rent cell is a component of that same quantity. The false half of a three-key entry derived a form-specific property name for a fact the backbone already held. Split out as X-82.",
    "compared_against": [],
-   "granularity": "enumerated"
+   "granularity": "enumerated",
+   "_split_note": "Three keys became two here and one at X-82 (the rent rebind). The category is a property of the ENTRY and the deriver reads it off the entry, so an entry covering keys of two different categories cannot name both correctly - which is why the granularity ruling and the rebind are the same commit."
   },
   {
    "id": "X-41",
@@ -1074,16 +1075,30 @@
     "433a"
    ],
    "granularity": "enumerated"
+  },
+  {
+   "id": "X-82",
+   "slice": 6,
+   "page": 6,
+   "category": "same-fact-different-decomposition",
+   "oic": "40_monthly_rent_payment",
+   "a433": "37_exp_housing_and_utilities",
+   "why": "THE RENT COMPONENT INSIDE THE OIC HOUSING FIGURE, AND THE FACT THE BACKBONE ALREADY HELD. 433-A prints ONE line 37, \"Housing and Utilities\", and X-35 already classifies the OIC's own (40) housing total as `exact` against it. Beside that total the OIC form prints a monthly rent cell - one PART of the same quantity, which is precisely same-fact-different-decomposition and not `new`. 433-F decomposes the same quantity further still, into five printed rows of which Rent is the first, and holds that row as the live backbone property `irs433_exp_rent`. THIS IS C-23'S OWN INSTANCE: the classification vocabulary is defined relative to 433-A, `irs433_exp_rent` was contributed by 433-F, and no entry in a 433-A-relative file could see it. The mechanical surfacing came from adapters/hubspot/reclassify-against-backbone.mjs, whose widened target compares against every irs433_ property rather than against one predecessor form, and which ruled this pair same-fact and declined to rebind because which property a filed cell reads from is permanent state. It is rebound HERE, and the reason it can be is that there is no cheaper moment and there never will be one again: the only record that ever held either value was the synthetic probe, which was deleted, so ZERO LIVE RECORDS carry the orphaned property. Leaving it would mean one taxpayer's rent living in two properties that can diverge - the exact failure a shared backbone exists to prevent - and it would cost a slot against a ceiling that cannot be walked back.",
+   "compared_against": [
+    "433a",
+    "433f"
+   ],
+   "granularity": "enumerated"
   }
  ],
  "_tally": {
   "_why": "Derived from entries[] by adapters/pdf/count-sweep.mjs [S-25], never retyped. A hand-kept tally beside a list is how 'eleven' survived three slices when the honest figure was ten.",
-  "entries": 81,
+  "entries": 82,
   "exact": 29,
   "superset": 1,
   "different-arithmetic-same-name": 11,
   "different-shape": 8,
-  "same-fact-different-decomposition": 4,
+  "same-fact-different-decomposition": 5,
   "new": 25,
   "asymmetric-the-other-way": 3,
   "_the_typed_tally_was_wrong_on_three_categories": "AUTHORED BY HAND AS 16 exact / 8 different-shape / 8 new, DERIVED AS 14 / 7 / 11. Corrected to the derived figures before this file was ever committed. Left recorded because it is the fourth time in this repo a hand-kept count beside its own list has drifted, and the first time the drift was caught in the same minute it was written - by [S-25], which existed before the file did.",

@@ -93,11 +93,21 @@ export const MECHANISMS = {
     // what a prefix cannot express. The first draft of this table used the prefix, and the
     // count check is what caught it.
     'X-04': { kind: 'counterpart_substitution', phrase: 'and the five spouse counterparts', from: 's2_tp_', to: 's2_sp_', expect: 5 },
-    'X-14': { kind: 'prefix_glob', phrase: '7b_* as five scalars', prefix: '7b_', expect: 5 },
-    'X-18': { kind: 'prefix_glob', phrase: '8c_* digital-asset block', prefix: '8c_', expect: 8 },
+    // A GLOB IS A STOP UNLESS IT DECLARES WHAT IT SWEEPS. `expect: N` says how many and never
+    // which, and X-18 is what that costs: it wrote `8c_*`, its prose named SIX facts of a
+    // digital-asset block, and the prefix matched EIGHT keys - the extra two being a TOTAL and
+    // the CHECKBOX that gates the block, neither of them a fact of the block and neither ever
+    // looked at. X-18 is now enumerated and has no mechanism at all. The two globs that remain
+    // each declare `sweeps`, the exact key list, and the check below refuses a set that differs
+    // from it in either direction. A count can be satisfied by the wrong keys; a list cannot.
+    'X-14': {
+      kind: 'prefix_glob', phrase: '7b_* as five scalars', prefix: '7b_', expect: 5,
+      sweeps: ['7b_description_of_asset', '7b_current_market_value', '7b_quick_sale_value', '7b_minus_loan_balance', '7b_total_remaining_furniture'],
+    },
     'X-26': {
       kind: 'prefix_glob', phrase: 'and the five 31_spouse_* counterparts', prefix: '31_', expect: 5,
-      note: 'THE PHRASE AND ITS OWN GLOB DISAGREE. Four keys match 31_spouse_* literally; the fifth counterpart is 31_total_spouse_income, which does not. The COUNT of five is right and the glob is one short, so the mechanism is read as the glob over the 31_ prefix, which yields exactly the five the phrase claims. Reported rather than silently widened.',
+      sweeps: ['31_spouse_gross_wages', '31_spouse_social_security', '31_spouse_pensions', '31_spouse_other_income', '31_total_spouse_income'],
+      note: 'THE PHRASE AND ITS OWN GLOB DISAGREE. Four keys match 31_spouse_* literally; the fifth counterpart is 31_total_spouse_income, which does not. The COUNT of five is right and the glob is one short, so the mechanism is read as the glob over the 31_ prefix, which yields exactly the five the phrase claims. Reported rather than silently widened, and now enumerated in `sweeps` so the widening is a list somebody can disagree with rather than a prefix nobody read.',
     },
   },
 };
@@ -146,6 +156,20 @@ export const coverageOf = (classDoc, mapDoc, form) => {
       else if (m.kind === 'counterpart_substitution') { for (const v of [...got.keys()]) { const c = v.replace(m.from, m.to); if (c !== v && keySpace.has(c) && !got.has(c)) added.push(c); } }
       if (!String(e.oic || '').includes(m.phrase)) problems.push({ id: 'A2', msg: `${e.id} was expected to carry the phrase "${m.phrase}" in its oic field and does not. The mechanism cannot read its own input, which is not the same as there being nothing to check.` });
       if (added.length !== m.expect) problems.push({ id: 'A2', msg: `${e.id} mechanism ${m.kind} expected to add ${m.expect} key(s) and added ${added.length}: [${added.join(', ')}]. A mechanism whose count does not hold is covering the wrong keys.` });
+      // A GLOB IS A STOP UNLESS IT DECLARES WHAT IT SWEEPS. The count above is satisfiable by
+      // the wrong keys; this is not. Both directions are failures: a key swept that the list
+      // does not name is a cell nobody classified, and a key the list names that the glob no
+      // longer matches is a claim about a cell that has moved out from under it.
+      if (m.kind === 'prefix_glob') {
+        if (!Array.isArray(m.sweeps)) problems.push({ id: 'A2', msg: `${e.id} declares a prefix_glob over "${m.prefix}" and no \`sweeps\` list. A glob makes a claim over a set its author never enumerated; declaring how MANY keys it takes is not declaring WHICH.` });
+        else {
+          const declared = new Set(m.sweeps);
+          const undeclared = added.filter(k => !declared.has(k));
+          const missing = m.sweeps.filter(k => !added.includes(k));
+          if (undeclared.length) problems.push({ id: 'A2', msg: `${e.id} glob "${m.prefix}" swept ${undeclared.length} key(s) its \`sweeps\` list does not name: [${undeclared.join(', ')}]. That is a cell carried into a category nobody looked at it for.` });
+          if (missing.length) problems.push({ id: 'A2', msg: `${e.id} glob "${m.prefix}" declares ${missing.length} key(s) it did not sweep: [${missing.join(', ')}]. A declaration for a key the glob no longer reaches is a claim about a cell that has moved out from under it.` });
+        }
+      }
       for (const k of added) got.set(k, m.kind);
       if (m.note) notes.push(`${e.id}: ${m.note}`);
     }

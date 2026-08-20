@@ -104,7 +104,7 @@
 // silent; only one of those two announces itself, so the detector is deliberately wide and
 // the register carries family entries for the wide part.
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { MANIFEST, sweptFiles, claimsIn, runCountSweep } from './count-sweep.mjs';
 import { markerPairing } from './line-markers.mjs';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
@@ -518,14 +518,90 @@ const ASSERTS = String.raw`(?:covered|checked|asserted|derived|re-?measured|veri
 const GEOMS = String.raw`(?:sits?|holds?|falls?|lands?|appears?|reach(?:es)?)`;
 const clause = (verbs) => new RegExp(String.raw`\b${QUANT}\b((?:(?!\b${QUANT}\b)[^.;])*?)\b${verbs}\b`, 'gi');
 
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// STANDING RULE: EVERY DETECTOR CARRIES A CANARY
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// A DETECTOR is any instrument whose output is "how many did I find", where finding NOTHING is
+// a reportable outcome. That shape has one failure mode and it is silent: the detector stops
+// reading — a regex reaches disk with its backslashes eaten, an input path moves, a filter
+// quietly widens — and it reports zero findings, which is indistinguishable from a clean tree.
+// The loudest possible failure printed as the quietest possible success.
+//
+// This project has now met that shape at FIVE levels: the vacuous `nums.length &&` guard [G-01];
+// the sampling probe that read ten live sites as unreadable; the completeness detector; the
+// heading assertion that examined zero rows and exited 0 [G-28]; and the row-class check that
+// reported every row correct over zero rows examined [G-30]. Five instruments, one shape.
+//
+// SO EVERY DETECTOR THIS PROJECT WRITES CARRIES A CANARY:
+//
+//   1. A FIXED INPUT, NOT DRAWN FROM THE ARTEFACTS. A canary taken from the input it guards
+//      dies with it — if the tree is what went missing, a canary read from the tree goes
+//      missing too and confirms the silence.
+//   2. A KNOWN EXPECTED YIELD, stated as a number or a shape, not as "some".
+//   3. THE YIELD IS ASSERTED, NOT PRINTED. Printing a figure a reader could have noticed is
+//      what verify-headings did before [G-28]: it printed the zero and exited 0 anyway. The
+//      run must FAIL when the canary does not come back.
+//   4. THE CANARY IS PROVED BY BREAKING THE DETECTOR. A canary that has never been seen to die
+//      is itself an unproved instrument, and a new instrument is the least trustworthy object
+//      in the repo at the moment it is written.
+//
+// The register below enumerates every detector in the engine and names its canary, so a
+// detector added without one is a STOP rather than something a reader has to notice.
+//
 // THE DETECTOR'S CANARY. A regex detector that stops matching reports "0 claims detected, 0
-// undisposed" and reads as a clean tree — the loudest possible failure printed as the quietest
-// possible success. So the detector is run against a fixed string with a known answer before it
-// is trusted with the tree, and a canary that does not come back is a STOP. It is deliberately
-// NOT drawn from the artefacts: a canary taken from the input it guards dies with it.
+// undisposed" and reads as a clean tree. So the detector is run against a fixed string with a
+// known answer before it is trusted with the tree, and a canary that does not come back is a
+// STOP. It is deliberately NOT drawn from the artefacts, per rule 1 above.
 export const CANARY = {
   text: 'Every declared path exists in the fields file; each row sits below y 668.1.',
   expect: { assert: 1, geometry: 1 },
+};
+
+// ── THE CANARY REGISTER ─────────────────────────────────────────────────────────────────
+//
+// The rule above is only a rule if a detector added without a canary STOPS a run. So the
+// CANDIDATE SET IS DERIVED, never typed: an engine file that SEARCHES BY PATTERN over text it
+// did not enumerate (`matchAll`, `new RegExp`, `.match`) and can STOP a run (`process.exit(2)`
+// or `process.exitCode`). That is the detector shape - a pattern applied to an open input,
+// where "found nothing" is a reportable outcome and an unreadable input produces the same
+// output as a clean one.
+//
+// A typed list is exactly how D-05 stayed at eight when the real number was twelve. Every
+// candidate the derivation finds must be disposed here, and a candidate with no entry is a STOP.
+const DETECTOR_DIR = 'adapters/pdf';
+// THE SECOND HALF OF THIS SIGNATURE WAS TOO NARROW ON ITS FIRST RUN, AND THE REGISTER CAUGHT
+// IT. It demanded a literal `process.exit(2)`, which the three instruments that actually carry
+// canaries do not write - they write `process.exit(report(...) ? 2 : 0)`. So the derivation
+// missed exactly the files the rule is modelled on, and it was the STALE DETECTOR ENTRY check
+// that said so rather than a reader noticing. Any exit at all now qualifies: an instrument that
+// cannot stop a run is not a detector in this sense, and one that can is.
+const DETECTOR_SIG = (src) => /\.matchAll\(|new RegExp\(|\.match\(/.test(src) && /process\.exit(Code)?\b/.test(src);
+
+export const DETECTORS = {
+  'blanket-audit.mjs': { canary: 'CANARY + PROBE_CANARY, both asserted in auditBlankets and both reported on every run.' },
+  'count-sweep.mjs': { canary: 'THE atLeast CONTRACT, which is the same idea per claim site: a detector declares the minimum it must find in an input it was handed, and finding fewer is a STOP rather than a clean sweep. It is the construct the canary generalises.' },
+  'guard-sweep.mjs': { canary: 'THE ORPHAN CHECK. Every register entry carries an `anchor` that must match a real line in the file it disposes of; an anchor matching nothing is a STOP. That is a canary per entry rather than one per run - the register cannot go quiet without saying so.' },
+  'assert-row-class-routes.mjs': { canary: '`__canary_not_a_class__`, poisoned into every declaring group with an asserted expected yield of one refusal each. Proved by breaking it: with the poison write removed the harness reported 64 DID NOT STOP, CANARY 0 of 32, and exited 2.' },
+  'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
+  'fill-433a.mjs': { not_a_detector: 'A FILL ENGINE. Its universe is the targets of the map, enumerated and partitioned, and the partition is asserted to account for every field in the PDF. Its regexes parse known values, not search open text.' },
+  'fill-433f.mjs': { not_a_detector: 'Same as fill-433a.mjs.' },
+  'line-markers.mjs': { not_a_detector: 'IT REPORTS ITS OWN TOTAL AND ZERO PRINTS AS ZERO. See guard-sweep [G-32]: a pattern that matched nothing prints "0 printed marker(s)" rather than an empty success, and the form-specific spellings are declared rather than guessed.' },
+  'read-form-revision.mjs': { not_a_detector: 'AN UNREADABLE PIN IS A MISMATCH, WHICH IS A STOP. See guard-sweep [G-33]: every extraction returns null when the drawn text does not carry the string, and validate-map.mjs compares against the pinned value, so a revision that could not be read fails exactly as a wrong one does.' },
+  'render-review.mjs': { not_a_detector: 'A RENDERER. It produces an HTML page from bound cells; it makes no completeness claim and reports no finding count that a zero could satisfy.' },
+  'run-form-gate.mjs': { not_a_detector: 'AN ORCHESTRATOR. It runs eleven steps and reports how many ran and how many were SKIPPED, and a skipped step is named rather than absorbed - which is the own version of that file of the same protection.' },
+};
+
+/** Every candidate the signature finds, and whether the register disposes of it. */
+export const detectorCandidates = () => {
+  const out = [];
+  for (const f of readdirSync(DETECTOR_DIR).filter(x => x.endsWith('.mjs')).sort()) {
+    let src; try { src = readFileSync(`${DETECTOR_DIR}/${f}`, 'utf8'); } catch { out.push({ file: f, unreadable: true }); continue; }
+    if (!DETECTOR_SIG(src)) continue;
+    const d = DETECTORS[f];
+    out.push({ file: f, disposed: !!d, canary: d?.canary ?? null, not_a_detector: d?.not_a_detector ?? null });
+  }
+  return out;
 };
 
 export const canaryHolds = () => {
@@ -982,7 +1058,23 @@ export const runBlanketAudit = async (form) => {
       `COVERAGE GAP [${d.id}] ${d.where}\n      "${d.phrase}"\n      ${d.what}: ${d.covered} of ${d.universe} covered.\n      uncovered: ${(d.uncoveredList || []).slice(0, 12).join(', ')}${(d.uncoveredList || []).length > 12 ? ` … +${d.uncoveredList.length - 12}` : ''}`);
   }
 
-  return { form, seed: SEED, blankets, forward, disposed, canary, probeCanary, problems, ctx };
+  // EVERY DETECTOR CARRIES A CANARY - the register, over a derived candidate set.
+  const detectors = detectorCandidates();
+  for (const d of detectors) {
+    if (d.unreadable) { problems.push(`DETECTOR UNREADABLE  ${d.file} could not be read, so the canary register could not be checked against it. An unreadable input is a STOP, not a skip.`); continue; }
+    if (!d.disposed) problems.push(
+      `DETECTOR WITH NO CANARY  ${DETECTOR_DIR}/${d.file} searches by pattern over text it did not enumerate and can stop a run, which is the detector shape.
+` +
+      `      Give it a canary - a fixed input not drawn from the artefacts, with an asserted expected yield - or declare in DETECTORS why it is not a detector in that sense.
+` +
+      `      A detector that silently stops reading reports a clean sweep, which is the defect this project has now met at five levels.`);
+  }
+  // A register entry for a file the signature no longer finds is a decision for a divergence
+  // that has gone away, which is a STOP by the same standing rule.
+  const found = new Set(detectors.map(d => d.file));
+  for (const f of Object.keys(DETECTORS)) if (!found.has(f)) problems.push(`STALE DETECTOR ENTRY  DETECTORS declares ${f} and the derived signature no longer finds it. Either the file changed shape or it is gone; re-read it and re-write the disposition.`);
+
+  return { form, seed: SEED, blankets, forward, disposed, canary, probeCanary, detectors, problems, ctx };
 };
 
 /** Print the audit. Returns the number of problems (0 = it holds). */
@@ -994,6 +1086,7 @@ export const reportBlanketAudit = (a, { verbose = false } = {}) => {
   console.log(`blanket audit: ${a.blankets.length} blanket(s) over ${totalSites} site(s); seed "${a.seed}"; ${sampled} site(s) sampled`);
   console.log(`  probe: ${a.blankets.reduce((s, b) => s + b.findings.length, 0)} finding(s); ${stood} number(s) stood down as a stated PAST figure, which is what the blanket reasons already cover`);
   console.log(`  forward references: ${a.forward.length} pair(s), ${a.forward.filter(f => f.unproved).length} unproved, ${a.forward.filter(f => f.uncovered?.length).length} with a gap`);
+  console.log(`  detectors: ${a.detectors.length} candidate(s) by the derived signature - ${a.detectors.filter(d => d.canary).length} carry a canary, ${a.detectors.filter(d => d.not_a_detector).length} declared not a detector, ${a.detectors.filter(d => !d.disposed).length} undisposed`);
   console.log(`  canaries: probe ${a.probeCanary.ok ? 'holds' : 'DEAD'} (${a.probeCanary.got}/${a.probeCanary.expect}), completeness detector ${a.canary.ok ? 'holds' : 'DEAD'} (${JSON.stringify(a.canary.got)} vs ${JSON.stringify(a.canary.expect)})`);
   console.log(`  completeness claims: ${a.disposed.length} detected, ${counters.length} with a counter, ${a.disposed.filter(d => d.kind2 === 'not-coverage').length} declared not-coverage, ${a.disposed.filter(d => d.undisposed).length} undisposed`);
   if (verbose) {

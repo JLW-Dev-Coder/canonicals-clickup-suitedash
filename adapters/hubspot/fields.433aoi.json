@@ -8,8 +8,8 @@
   "naming_rule": "Ruling 5. exact -> irs433_<fact>; new -> irs433aoi_<fact>; the middle four by a per-entry ruling recorded on each crosswalk row. NOTHING HERE IS TYPED: re-running the deriver rebuilds this file, and a category change changes a name.",
   "counts": {
    "total": 238,
-   "shared": 135,
-   "form_specific": 103,
+   "shared": 136,
+   "form_specific": 102,
    "pii": 35
   }
  },
@@ -3041,14 +3041,14 @@
   },
   {
    "key": "40_monthly_rent_payment",
-   "fact": "monthly_rent_payment",
-   "scope": "form-specific",
-   "hs_name": "irs433aoi_monthly_rent_payment",
+   "fact": "exp_rent",
+   "scope": "shared",
+   "hs_name": "irs433_exp_rent",
    "form": "433aoi",
    "field": "40_monthly_rent_payment",
-   "label": "[433-A(OIC)] Monthly rent payment",
-   "description": "433-A(OIC) (input key: 40_monthly_rent_payment). Specific to Form 433-A(OIC). Crosswalk X-40, classified new.",
-   "group": "irs433aoic",
+   "label": "[433] Exp rent",
+   "description": "433-A(OIC) (input key: 40_monthly_rent_payment). Shared across the 433 series - named for the fact, not the form. Crosswalk X-82, classified same-fact-different-decomposition.",
+   "group": "irs433",
    "type": "number",
    "fieldType": "number",
    "options": null,
@@ -3058,9 +3058,9 @@
    "source": "map",
    "type_basis": "money cell - printed with a $ on its own row",
    "row_shape": null,
-   "entry": "X-40",
-   "category": "new",
-   "backbone_key": null
+   "entry": "X-82",
+   "category": "same-fact-different-decomposition",
+   "backbone_key": "433f_exp_rent"
   },
   {
    "key": "41_vehicle_loan_or_lease_payments",
@@ -5894,7 +5894,7 @@
    "form": "433aoi",
    "field": "household_members",
    "label": "[433] Household members",
-   "description": "433-A(OIC) (input key: household_members). Shared across the 433 series - named for the fact, not the form. Crosswalk X-03, classified different-shape. JSON array of row objects with keys: name, age, relationship, claimed_on_1040, contributes_to_household_income. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: household_members). Shared across the 433 series - named for the fact, not the form. Crosswalk X-03, classified different-shape. JSON array of row objects with keys: name, age, relationship, claimed_on_1040, contributes_to_household_income, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -5909,7 +5909,8 @@
     "age",
     "relationship",
     "claimed_on_1040",
-    "contributes_to_household_income"
+    "contributes_to_household_income",
+    "asset_class"
    ],
    "entry": "X-03",
    "category": "different-shape",
@@ -5923,7 +5924,7 @@
    "form": "433aoi",
    "field": "bank_accounts",
    "label": "[433] Bank accounts",
-   "description": "433-A(OIC) (input key: bank_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-05, classified different-shape. JSON array of row objects with keys: institution_name_and_address, account_number, account_balance, type_of_account. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: bank_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-05, classified different-shape. JSON array of row objects with keys: institution_name_and_address, account_number, account_balance, type_of_account, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -5937,7 +5938,8 @@
     "institution_name_and_address",
     "account_number",
     "account_balance",
-    "type_of_account"
+    "type_of_account",
+    "asset_class"
    ],
    "entry": "X-05",
    "category": "different-shape",
@@ -5951,7 +5953,7 @@
    "form": "433aoi",
    "field": "investment_accounts",
    "label": "[433] Investments",
-   "description": "433-A(OIC) (input key: investment_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-06, classified different-shape. JSON array of row objects with keys: type_of_investment_other, institution_name_and_address, account_number, current_value, loan_balance, equity, type_of_investment. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: investment_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-06, classified different-shape. JSON array of row objects with keys: type_of_investment_other, institution_name_and_address, account_number, current_value, loan_balance, equity, type_of_investment, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -5968,7 +5970,8 @@
     "current_value",
     "loan_balance",
     "equity",
-    "type_of_investment"
+    "type_of_investment",
+    "asset_class"
    ],
    "entry": "X-06",
    "category": "different-shape",
@@ -5982,7 +5985,7 @@
    "form": "433aoi",
    "field": "retirement_accounts",
    "label": "[433] Retirement accounts",
-   "description": "433-A(OIC) (input key: retirement_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-07, classified different-arithmetic-same-name. JSON array of row objects with keys: type_of_retirement_account_other, institution_name_and_address, account_number, current_value, quick_sale_value, loan_balance, quick_sale_equity, type_of_retirement_account. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: retirement_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-07, classified different-arithmetic-same-name. JSON array of row objects with keys: type_of_retirement_account_other, institution_name_and_address, account_number, current_value, quick_sale_value, loan_balance, quick_sale_equity, type_of_retirement_account, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6000,7 +6003,8 @@
     "quick_sale_value",
     "loan_balance",
     "quick_sale_equity",
-    "type_of_retirement_account"
+    "type_of_retirement_account",
+    "asset_class"
    ],
    "entry": "X-07",
    "category": "different-arithmetic-same-name",
@@ -6014,7 +6018,7 @@
    "form": "433aoi",
    "field": "life_insurance_policies",
    "label": "[433] Life insurance policies",
-   "description": "433-A(OIC) (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. Crosswalk X-08, classified different-shape. JSON array of row objects with keys: company_name_and_address, policy_number, current_cash_value, outstanding_loan_balance, equity. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: life_insurance_policies). Shared across the 433 series - named for the fact, not the form. Crosswalk X-08, classified different-shape. JSON array of row objects with keys: company_name_and_address, policy_number, current_cash_value, outstanding_loan_balance, equity, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6029,7 +6033,8 @@
     "policy_number",
     "current_cash_value",
     "outstanding_loan_balance",
-    "equity"
+    "equity",
+    "asset_class"
    ],
    "entry": "X-08",
    "category": "different-shape",
@@ -6043,7 +6048,7 @@
    "form": "433aoi",
    "field": "real_property",
    "label": "[433] Real property",
-   "description": "433-A(OIC) (input key: real_property). Shared across the 433 series - named for the fact, not the form. Crosswalk X-10, classified different-arithmetic-same-name. JSON array of row objects with keys: description, purchase_date, monthly_payment, final_payment_date, title_holders, location, lender_name_address, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: real_property). Shared across the 433 series - named for the fact, not the form. Crosswalk X-10, classified different-arithmetic-same-name. JSON array of row objects with keys: description, purchase_date, monthly_payment, final_payment_date, title_holders, location, lender_name_address, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6064,7 +6069,8 @@
     "current_fmv",
     "quick_sale_value",
     "current_loan_balance",
-    "quick_sale_equity"
+    "quick_sale_equity",
+    "asset_class"
    ],
    "entry": "X-10",
    "category": "different-arithmetic-same-name",
@@ -6078,7 +6084,7 @@
    "form": "433aoi",
    "field": "vehicles",
    "label": "[433] Vehicles",
-   "description": "433-A(OIC) (input key: vehicles). Shared across the 433 series - named for the fact, not the form. Crosswalk X-11, classified different-arithmetic-same-name. JSON array of row objects with keys: make_model, model_year, purchase_date, mileage, license_tag, lender_name_address, final_payment_date, monthly_payment, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity, lease_or_own. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: vehicles). Shared across the 433 series - named for the fact, not the form. Crosswalk X-11, classified different-arithmetic-same-name. JSON array of row objects with keys: make_model, model_year, purchase_date, mileage, license_tag, lender_name_address, final_payment_date, monthly_payment, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity, lease_or_own, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6101,7 +6107,8 @@
     "quick_sale_value",
     "current_loan_balance",
     "quick_sale_equity",
-    "lease_or_own"
+    "lease_or_own",
+    "asset_class"
    ],
    "entry": "X-11",
    "category": "different-arithmetic-same-name",
@@ -6115,7 +6122,7 @@
    "form": "433aoi",
    "field": "other_valuable_items",
    "label": "[433] Other personal property",
-   "description": "433-A(OIC) (input key: other_valuable_items). Shared across the 433 series - named for the fact, not the form. Crosswalk X-14, classified different-shape. JSON array of row objects with keys: description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: other_valuable_items). Shared across the 433 series - named for the fact, not the form. Crosswalk X-14, classified different-shape. JSON array of row objects with keys: description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6130,7 +6137,8 @@
     "current_fmv",
     "quick_sale_value",
     "current_loan_balance",
-    "quick_sale_equity"
+    "quick_sale_equity",
+    "asset_class"
    ],
    "entry": "X-14",
    "category": "different-shape",
@@ -6144,7 +6152,7 @@
    "form": "433aoi",
    "field": "business_bank_accounts",
    "label": "[433] Business bank accounts",
-   "description": "433-A(OIC) (input key: business_bank_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-18, classified different-shape. JSON array of row objects with keys: institution_name_and_address, account_number, account_balance, type_of_account. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: business_bank_accounts). Shared across the 433 series - named for the fact, not the form. Crosswalk X-18, classified different-shape. JSON array of row objects with keys: institution_name_and_address, account_number, account_balance, type_of_account, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6158,7 +6166,8 @@
     "institution_name_and_address",
     "account_number",
     "account_balance",
-    "type_of_account"
+    "type_of_account",
+    "asset_class"
    ],
    "entry": "X-18",
    "category": "different-shape",
@@ -6172,7 +6181,7 @@
    "form": "433aoi",
    "field": "business_assets",
    "label": "[433] Business property",
-   "description": "433-A(OIC) (input key: business_assets). Shared across the 433 series - named for the fact, not the form. Crosswalk X-19, classified different-arithmetic-same-name. JSON array of row objects with keys: description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity. PII - handle per VLP PII rule.",
+   "description": "433-A(OIC) (input key: business_assets). Shared across the 433 series - named for the fact, not the form. Crosswalk X-19, classified different-arithmetic-same-name. JSON array of row objects with keys: description, current_fmv, quick_sale_value, current_loan_balance, quick_sale_equity, asset_class. PII - handle per VLP PII rule.",
    "group": "irs433",
    "type": "string",
    "fieldType": "textarea",
@@ -6187,7 +6196,8 @@
     "current_fmv",
     "quick_sale_value",
     "current_loan_balance",
-    "quick_sale_equity"
+    "quick_sale_equity",
+    "asset_class"
    ],
    "entry": "X-19",
    "category": "different-arithmetic-same-name",
