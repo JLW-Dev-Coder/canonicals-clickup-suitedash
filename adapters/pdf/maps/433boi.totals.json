@@ -481,13 +481,9 @@
    "total_key": "s3_total_all_business_equipment",
    "feeders": [
     {
-     "cells": [
-      {
-       "group": "5_business_equipment",
-       "column": "equity",
-       "row": 0
-      }
-     ]
+     "group": "5_business_equipment",
+     "column": "equity",
+     "row": 0
     },
     {
      "keys": [
@@ -497,7 +493,8 @@
    ],
    "_printed_operand_list_verbatim": "\"Add lines (5a) and (5b) =\". TWO operands, named in the caption: (5a) is the one printed equipment row's total and (5b) is the attachment scalar. There is no (5c) or (5d) on this form - unlike lines (1) through (4), which each name a range through a lettered attachment line - and the caption says \"and\" rather than \"through\" because there are exactly two.",
    "_no_floor": "The caption states none, and neither operand can be negative: (5a) is floored at 0 by its own printed conditional and (5b) is a total from an attachment. Declaring a floor here would be inventing one.",
-   "_it_sums_a_cell_this_repo_does_not_check": "(5a) is declared not checkable - see not_checkable.entries - and this line sums it anyway. That is sound and it is the same shape as (4), which sums three vehicle totals each carrying a printed lease conditional: step 11 reads (5a) BACK OUT OF THE FILLED PDF and adds what is actually there. What cannot be checked is how (5a) was decided; what can be checked is that (5) is the sum of what was written."
+   "_it_sums_a_cell_this_repo_does_not_check": "(5a) is declared not checkable - see not_checkable.entries - and this line sums it anyway. That is sound and it is the same shape as (4), which sums three vehicle totals each carrying a printed lease conditional: step 11 reads (5a) BACK OUT OF THE FILLED PDF and adds what is actually there. What cannot be checked is how (5a) was decided; what can be checked is that (5) is the sum of what was written.",
+   "_the_feeder_shape_was_wrong_and_the_line_never_ran": "FOUND BY THE ROUNDING WORK, NOT BY THE ROUNDING WORK'S OWN CHECKS. This feeder was authored as `{ cells: [{ group, column, row }] }`. Gate step 11 accepts `keys`, `group` or `constant` and nothing else, so it reported \"feeder declares none of `keys`, `group` or `constant`\" and line (5) came out NOT CHECKABLE on every run since it was written — while `_it_sums_a_cell_this_repo_does_not_check` beneath it asserted that step 11 \"reads (5a) BACK OUT OF THE FILLED PDF and adds what is actually there\". The transcript was honest and the declaration was not: a NOT CHECKABLE line sitting under prose describing the check it was not running. Re-authored as `{ group, column, row }`, the spelling every other per-row feeder in this file uses, and the line now runs."
   },
   {
    "line": "Box A",

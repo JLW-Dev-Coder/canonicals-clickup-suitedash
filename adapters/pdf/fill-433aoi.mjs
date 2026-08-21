@@ -59,7 +59,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { formPath } from './read-form-revision.mjs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses, checkRowClassCollisions, reportRowClassCollisions } from './check-row-shape.mjs';
-import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
+import { loadRounding, roundForOutput, auditRounding, reportRounding, miskeyedCells, reportCellSpelling } from './rounding.mjs';
 
 const argv      = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -96,7 +96,9 @@ const rounding = loadRounding(mapDoc);
 const rounded = [];           // cells this run rounded, named in the report
 const moneyNotNumeric = [];   // a money cell holding text that is not a number
 
+const cellKeysUsed = new Set();
 const setText = (name, val, key) => {
+  cellKeysUsed.add(key ?? name);
   if (absent(val)) return;
   const rd = roundForOutput(rounding, key ?? name, val);
   if (rd.notNumeric) moneyNotNumeric.push({ key: key ?? name, block: rd.block.id, value: String(val) });
@@ -318,6 +320,20 @@ const outPath = `adapters/pdf/out/433aoi_filled_${data.intake_id || 'sample'}.pd
 // a default is not a guarantee: a version bump — or anyone adding an unrelated save option
 // here, which drops it — produces a file with a complete, correct set of /V values that
 // PRINTS BLANK, because a viewer draws the appearance stream, not /V.
+
+// ─── THE CELL SPELLING, ASSERTED ────────────────────────────────────────────────────────
+//
+// Every key this engine looked a rounding block up by must be in a shape blockFor can
+// resolve. A group cell keyed `groups.G.slots[i].col` comes back with NO block and is written
+// unrounded, and on a form that declares no rounding that is indistinguishable from correct —
+// which is exactly how it survived on two engines until 433-B(OIC) declared its blocks and one
+// printed figure came out with cents against rounded neighbours. Asserted here whether or not
+// this form declares a block, so a form with none proves the no-op instead of skipping.
+if (reportCellSpelling(miskeyedCells(cellKeysUsed), 'fill-433aoi.mjs', cellKeysUsed.size) > 0) {
+  console.error('  No PDF written. Re-key the group cells as "group[row].column" — the one cell spelling in this repo.');
+  process.exit(2);
+}
+
 writeFileSync(outPath, await pdf.save({ updateFieldAppearances: true }));
 
 // Pinning the flag states the intent; this proves the outcome.

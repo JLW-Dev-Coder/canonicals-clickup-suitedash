@@ -407,6 +407,9 @@ export const EMPTY_DEMAND = [
   { blanket: 'S-27', instrument: 'align-block.mjs', forms: ['433a', '433f', '433aoi'],
     why: 'This disposition covers sites in 433boi.map.json, whose coordinates are drawn on 433-B(OIC). An audit run for a different form measures against a different PDF, so there is nothing here for it to extract — and extracting something WOULD be the finding, because it would mean one form evidence was being proved against another form page. The citation is measured, non-empty and proved on the 433boi run.' },
 
+  { blanket: 'S-13c', instrument: 'validate-map.mjs', forms: ['433boi'],
+    why: 'THE COVERED SITES ARE THE REGISTRY HEADER, AND A HEADER QUOTES NO PATH. [S-13c] stands over _what_this_file_is, _what_is_machine_checked_and_what_is_not and the _kinds descriptions — prose about what the file is for and what each kind means. The paths this registry is ABOUT live in entries[].path, one per entry, and validate-map.mjs proves every one of them exists verbatim in the fields file and that every bound_to resolves through the map to exactly it; that is counted by [K-29]. A non-empty demand here would mean the header had started quoting cell paths, which is the duplicated-evidence shape guard-sweep (c) forbids.' },
+
   { blanket: 'S-17f', instrument: 'align-block.mjs', forms: ['433a', '433f'],
     why: 'The change log on these two maps records what a slice decided in field-name terms and quotes no coordinate. Same measurement as the [S-18] entry above.' },
   { blanket: 'S-17f', instrument: 'line-markers.mjs', forms: ['433f'],
@@ -1258,6 +1261,66 @@ export const COMPLETENESS = [
       return { universe: col.length, covered: col.filter(w => paired.has(w.name)).length,
         universeList: col.map(w => w.name),
         uncoveredList: col.filter(w => !paired.has(w.name)).map(w => w.name) };
+    } }),
+
+  // ── 433-B(OIC): the name-lie registry's two claims about itself ───────────────────────
+  //
+  // A registry that says "every path in it was resolved through the map" is making a coverage
+  // claim about its own entries, and it is the claim that makes a SECOND COPY OF A LIST
+  // admissible at all: this file is generated from the map's lineage blocks, and a generated
+  // copy is only safe while something asserts it against the original. So the covered set is
+  // counted rather than asserted, on every run, per entry.
+  C({ id: 'K-29', match: /every `path` and `bound_to` in it was RESOLVED/i,
+    kind: 'counter',
+    what: 'the registry paths and bindings all resolve through the map',
+    universe: { scoped_to: 'form', detail: 'every entry in the name-lie registry of THIS form',
+      admits: (m, ctx) => typeof m === 'string' && !!ctx.liesDoc },
+    count: (ctx) => {
+      const E = ctx.liesDoc?.entries || [];
+      const nodes = ctx.nodes;
+      const resolves = (e) => {
+        if (typeof e.path !== 'string') return false;
+        const pathOk = e.kind === 'container' ? [...nodes].some(n => n === e.path || n.startsWith(e.path + '.')) : ctx.names.has(e.path);
+        if (!pathOk) return false;
+        if (e.bound_to === null || e.bound_to === undefined) return !!e.not_bound_because || e.kind === 'container';
+        const b = e.bound_to;
+        const scalar = ctx.mapDoc.map?.[b];
+        if (typeof scalar === 'string') return scalar === e.path;
+        // "group[row].column" — the one cell spelling. THIS REGEX REACHED DISK ONCE WITH ITS
+        // BACKSLASHES EATEN by the patch script that wrote it, which is the same accident that
+        // killed an `_unaccounted_by_page` check two slices ago. It fails LOUD rather than
+        // quiet: a regex that matches nothing makes every group-bound entry read as UNCOVERED
+        // and the counter reports a coverage gap naming each one, which is what caught it.
+        const m2 = /^([A-Za-z0-9_]+)\[(\d+)\]\.(.+)$/.exec(b);
+        if (m2) { const slot = ctx.mapDoc.groups?.[m2[1]]?.slots?.[Number(m2[2])]; const t = slot?.text?.[m2[3]] ?? slot?.[m2[3]]; return t === e.path; }
+        return false;
+      };
+      return { universe: E.length, covered: E.filter(resolves).length,
+        universeList: E.map(e => String(e.id)), uncoveredList: E.filter(e => !resolves(e)).map(e => String(e.id)) };
+    } }),
+
+  C({ id: 'K-30', match: /every figure `_tally` and `_counting` state, derived/i,
+    kind: 'counter',
+    what: 'every numeric figure the registry states about itself is one count-sweep derives',
+    universe: { scoped_to: 'form', detail: 'every non-prose key of the _tally on THIS registry, plus the active-lie figure in _counting',
+      admits: (m, ctx) => typeof m === 'string' && !!ctx.liesDoc },
+    count: (ctx) => {
+      // The keys [S-11] derives, named here so a _tally key nobody derives shows up as
+      // uncovered rather than as a number that looks checked.
+      const DERIVED = new Set(['active_lies', 'of_which_leaf', 'of_which_container', 'inherited_not_counted',
+        'controls_verified_true', 'page_imprecise_not_counted', 'total_entries', 'bound_today', 'unbound']);
+      const t = ctx.liesDoc?._tally || {};
+      const keys = Object.keys(t).filter(k => !k.startsWith('_'));
+      const universeList = [...keys.map(k => `_tally.${k}`), '_counting.active_lies'];
+      const uncoveredList = [
+        ...keys.filter(k => !DERIVED.has(k)).map(k => `_tally.${k}`),
+        // The figure [S-12] pulls out of `_counting`. If the sentence stops stating one in a
+        // shape that derivation can read, this reports `_counting.active_lies` UNCOVERED — the
+        // same answer [S-12] itself gives, reached independently, rather than a silent pass on
+        // a claim nobody could parse.
+        ...(/\b(?:\d+|[a-z]+)\s+ACTIVE LIES/i.test(String(ctx.liesDoc?._counting || '')) ? [] : ['_counting.active_lies']),
+      ];
+      return { universe: universeList.length, covered: universeList.length - uncoveredList.length, universeList, uncoveredList };
     } }),
 
   // ── the families that are NOT coverage claims ──────────────────────────────────────────

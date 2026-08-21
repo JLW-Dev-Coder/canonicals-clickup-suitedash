@@ -614,6 +614,290 @@
    }
   ]
  },
+ "rounding": {
+  "_what": "Which printed BAND of 433-B(OIC) each money cell sits in, what rounding instruction (if any) is drawn over that band, and where that instruction is drawn. Read by adapters/pdf/rounding.mjs and applied in two places: the value written into a money cell, and the recomputation gate step 11 compares it against.",
+  "_why_per_block_and_not_per_form": "This form does not print one rounding instruction. It prints 6 across pages 2, 4 and 5. Page 3, which carries more money cells than any other page of this form, prints none at all, and a seventh run beside the Offer Amount says \"Use whole dollars only\" in a third wording. A per-form declaration would have to pick one of those and assert a scope the page does not draw. A per-block declaration says exactly what is printed and where, and makes the page-3 absence a recorded finding instead of an inherited assumption.",
+  "_the_count_that_was_carried_was_wrong_in_two_ways": "[B20] carried that this form \"prints \\\"Round to the nearest dollar\\\" over every money block on pages 2, 3 and 4, \\\"Round to the nearest whole dollar\\\" on page 5, and \\\"Use whole dollars only\\\" beside the Offer Amount\", and called that six printed instructions. Enumerated against every printed run on all six pages: the instruction is drawn 6 times, and PAGE 3 CARRIES 0 of them. So the carried sentence was wrong about the pages — page 3 prints nothing — and its total of six is right only if the \"Use whole dollars only\" run beside the Offer Amount is left out, which the carried sentence names as one of the six. Both halves are now derived on every run rather than retyped.",
+  "_why_money_is_declared_and_never_inferred": "A cell is money because this declaration SAYS it is money, never because it parses as a number. 2c_digital_asset[0].number_of_units holds the QUANTITY of a digital asset — a holding of 1.2345 units rounded to 1 is a false statement about the business's property on a document signed under penalty of perjury — and it is deliberately in no block. So are s1_total_number_of_employees and every date, phone number and account number on the form. money-probe.mjs flags 79 of 190 mapped text cells as carrying a printed \"$\" within 14pt; that narrows the reading and does not make it.",
+  "_order": "ROUND FIRST, THEN FLOOR — the order the printed sentences appear in on this form. Page 2 y 670.9 draws them in one run: \"Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\".\" Every Box on page 4 draws the same two sentences one above the other, rounding first: y 600.6 then y 590.2 for Box A, y 396.6 then y 387.0 for Box B, y 106.8 then y 97.2 for Box C, y 70.8 then y 61.2 for Box D. Four independent instances of the same ordering, on one page.",
+  "_wording_variants_are_recorded_not_tested": "THREE wordings on this form. \"Round to the nearest dollar\" on pages 2 and 4, \"Round to the nearest whole dollar\" on page 5, and \"Use whole dollars only\" beside the Offer Amount. A string-exact check for any one of them would read the other bands as uninstructed. The mode names the variant — nearest_dollar vs nearest_whole_dollar — and both do the same arithmetic; the third is not a mode, because it is a SECOND instruction over a cell already inside a band, and it is recorded on that band rather than given one of its own.",
+  "_the_mixed_scope_this_form_has_and_where_it_bites": "THE BOX INSTRUCTIONS ARE DRAWN IN THE BOX COLUMN, BELOW THE OPERANDS THEY TOTAL. On page 4, \"Round to the nearest dollar.\" at y 396.6 x 336.9..435.6 sits between line (10) at y 413.5 and the \"Total Business Income\" caption at y 388.7 — so it is drawn over BOX B and not over lines (6) through (10), which print no instruction at all. The same is true of Box C over its ten operands, and of Box A over (1) through (5). Each of those Boxes therefore rounds while its operands are drawn under no rule, which is a rounding boundary the page itself crosses. It is DECLARED as what is printed rather than as what was probably meant, and gate step 11 names every total that crosses a boundary on every run, with the total's mode and its operands' modes beside it.",
+  "_slice": "PRINTED PAGES 1 THROUGH 6 — the whole form. Page 1 carries exactly one money cell and money-probe.mjs flags 1 of its 38 mapped text cells, so the page-1 block is a real block with one key rather than an absence. Every other page declares at least one block, every money cell on the form is in exactly one of them, and the totals cross-check in validate-map.mjs is the STOP that proves the second: a money cell the totals declaration names and no block claims halts the run.",
+  "blocks": [
+   {
+    "id": "P1_SECTION_1",
+    "page": 1,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Every printed run on page 1 was read for /round|whole dollar|nearest/i and there is none. Page 1 is Section 1 — business identification — and carries exactly ONE money cell: the \"Average gross monthly payroll\" figure whose caption is drawn at y 394.7, x 191.0..298.6 with a bare \"$\" beneath it at y 380.3, x 191.0..195.4. It feeds no total on this form and appears in no totals declaration entry.",
+    "keys": [
+     "s1_average_gross_monthly_payroll"
+    ]
+   },
+   {
+    "id": "P2_SECTION_2_CASH_AND_INVESTMENTS",
+    "page": 2,
+    "mode": "nearest_dollar",
+    "printed": "Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \"0\".",
+    "printed_at": {
+     "page": 2,
+     "y": 670.9,
+     "x": [
+      165.2,
+      576
+     ]
+    },
+    "_band": "Opens at y 670.9, below the Section 2 preamble (which ends \"…please include attachments).\" at y 691.3) and ABOVE the \"Cash and investments (domestic and foreign)\" heading at y 651.1. Closes at the foot of page 2. Every money cell on the page is below it.",
+    "_wording": "The page-2 and page-4 instances say \"nearest dollar\"; page 5 says \"nearest whole dollar\". Recorded as its own mode for that reason and for no other — the arithmetic is identical.",
+    "keys": [
+     "s2_1d_bank_accounts_from_attachment",
+     "s2_1_total_bank_accounts",
+     "s2_2d_investment_accounts_from_attachment",
+     "s2_2_total_investment_accounts"
+    ],
+    "_keys_deliberately_absent": "2c_digital_asset[0].number_of_units is a QUANTITY of digital-asset units, not a dollar figure: the \"$\" on that row is drawn at y 257.8 x 224.2..228.6 against usd_equivalent_today, not against the units cell at x 140.4. description_of_digital_asset, location_of_digital_asset, account_number_custodian_or_broker and self_hosted_wallet_address are text; every bank_name / account_number pair is text.",
+    "cells": [
+     {
+      "group": "1ac_bank_accounts",
+      "columns": [
+       "account_balance"
+      ]
+     },
+     {
+      "group": "2ab_investment_accounts",
+      "columns": [
+       "current_value",
+       "loan_balance",
+       "equity"
+      ]
+     },
+     {
+      "group": "2c_digital_asset",
+      "columns": [
+       "usd_equivalent_today",
+       "equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P3_SECTION_2_REAL_ESTATE_AND_VEHICLES",
+    "page": 3,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "EVERY printed run on page 3 was read for /round|whole dollar|nearest/i and there is NONE. The page draws 27 money cells — more than any other page of this form — across two real-estate rows and three vehicle rows, and its totals (3) and (4) feed Box A, which IS drawn under a rounding instruction. The instruction that would cover this page is on page 2, above a \"(Continued)\" banner and a different table.",
+    "_can_the_omission_be_read": "NOT DECIDABLE FROM THE PAGE, and that is the answer rather than a missing one. FOR a drafting gap: the sentence appears five times elsewhere on this form; page 3's two totals feed a Box drawn under it; and 433-A(OIC) omits it on ITS page 3, which is also a \"(Continued)\" asset page and also entirely money — the same omission on the same page number of the sibling form reads more like a shared template than like two independent decisions. FOR a deliberate scope: every printed instance on this form sits directly above the cell or the Box it governs, page 3 carries only a \"(Continued)\" banner and one line of instruction about attachments, and the IRS prints the sentence where it means it. Recorded, not resolved.",
+    "keys": [
+     "s2_3c_property_from_attachment",
+     "s2_3_total_real_estate",
+     "s2_4d_vehicles_from_attachment",
+     "s2_4_total_vehicles",
+     "s2_real_property_listing_price"
+    ],
+    "cells": [
+     {
+      "group": "3ab_real_estate",
+      "columns": [
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "equity"
+      ]
+     },
+     {
+      "group": "4ac_vehicles",
+      "columns": [
+       "monthly_payment",
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "quick_sale_equity"
+      ]
+     }
+    ],
+    "_money_without_a_printed_dollar_sign": "ONE CELL ON THIS FORM, AND IT IS ON THIS PAGE. s2_real_property_listing_price is the asking price the form invites when real property is for sale: \"Is your real property currently for sale or do you anticipate selling your real property to fund the offer amount\" y 692.5, with \"Yes\" y 678.1 x 50.4..64.2 followed by \"(listing price)\" y 678.1 x 80.2..119.9 over the cell. The page draws NO currency symbol against it - money-probe.mjs flags 0 for it and is right to - and it is money by its printed caption, which is the reading the probe narrows and does not make. It is declared not checkable in the totals file (nothing on the form states what a listing price should equal), and a not_checkable entry is money too: it is written, it is a dollar figure on the page, and \"not checkable\" says only that nothing printed can verify it."
+   },
+   {
+    "id": "P4_SECTION_2_EQUIPMENT",
+    "page": 4,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "The equipment block runs from the \"Other business equipment\" heading at y 731.5 down to the (5) total at y 616.7. The nearest rounding run on the page is \"Do not include amount on the lines with a letter beside the number. Round to the nearest dollar.\" at y 600.6, which is drawn BELOW the (5) total and directly above the Box A equation at y 579.4 — so it is not drawn over this block. No other run between y 731.5 and y 616.7 matches /round|whole dollar|nearest/i.",
+    "_this_is_the_page_3_finding_continuing": "The equipment block is the last of the Section 2 asset tables and it is ungoverned for the same reason all of page 3 is: this form draws the instruction over the BOX, not over the rows that feed it.",
+    "keys": [
+     "s3_equipment_from_attachment",
+     "s3_total_all_business_equipment"
+    ],
+    "cells": [
+     {
+      "group": "5_business_equipment",
+      "columns": [
+       "current_fmv",
+       "quick_sale_value",
+       "current_loan_balance",
+       "equity"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "P4_BOX_A",
+    "page": 4,
+    "mode": "nearest_dollar",
+    "printed": "Do not include amount on the lines with a letter beside the number. Round to the nearest dollar.",
+    "printed_at": {
+     "page": 4,
+     "y": 600.6,
+     "x": [
+      97.6,
+      435.6
+     ]
+    },
+    "_band": "One cell. The run is drawn between the (5) total at y 616.7 and the \"Add lines (1) through (5) and enter the amount in Box A =\" equation at y 579.4, in the column that carries the Box A marker at y 601.7. Its first sentence is what makes the Box A feeder list five keys and not twenty-two, and its second is the rounding.",
+    "_it_crosses_a_boundary_and_the_gate_says_so": "ALL FIVE of Box A's operands are in none_printed blocks — (1) and (2) are on page 2 and ARE in a rounded block, so two of five share the rule; (3) and (4) are page 3 and (5) is P4_SECTION_2_EQUIPMENT, and all three are ungoverned. Gate step 11 reports every total that crosses a rounding boundary on every run, with the total's mode and its operands' modes named.",
+    "keys": [
+     "s3_box_a_available_equity_in_assets"
+    ]
+   },
+   {
+    "id": "P4_SECTION_3_INCOME_LINES",
+    "page": 4,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Lines (6) through (10) run from y 471.1 down to y 413.5. Every run between the Section 3 banner at y 562.3 and the Box B marker at y 398.3 was read: the preamble (y 549.2, 540.2, 531.2, 522.2), the P&L route note (y 511.2, 502.2), the period-provided row (y 485.5) and the five line captions. None matches /round|whole dollar|nearest/i. The only rounding run in Section 3 is at y 396.6, which is drawn below line (10) and above the \"Total Business Income\" caption — over Box B.",
+    "keys": [
+     "s3_6_gross_receipts",
+     "s3_7_gross_rental_income",
+     "s3_8_interest_income",
+     "s3_9_dividends",
+     "s3_10_other_income"
+    ]
+   },
+   {
+    "id": "P4_BOX_B",
+    "page": 4,
+    "mode": "nearest_dollar",
+    "printed": "Round to the nearest dollar.",
+    "printed_at": {
+     "page": 4,
+     "y": 396.6,
+     "x": [
+      336.9,
+      435.6
+     ]
+    },
+    "_band": "One cell. Drawn between line (10) at y 413.5 and the \"Total Business Income\" caption at y 388.7, in the column carrying the Box B marker at y 398.3, with the floor sentence beneath it at y 387.0.",
+    "keys": [
+     "s3_box_b_total_business_income"
+    ]
+   },
+   {
+    "id": "P4_SECTION_4_EXPENSE_LINES",
+    "page": 4,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Lines (11) through (20) run from y 273.1 down to y 121.9. Every run between the Section 4 banner at y 358.9 and the Box C marker at y 108.9 was read: the preamble (y 344.3, 334.7, 325.1), the P&L route note (y 312.5, 302.9), the period-provided row (y 287.5) and the ten line captions with their parentheticals. None matches /round|whole dollar|nearest/i.",
+    "keys": [
+     "s4_11_materials_purchased",
+     "s4_12_inventory_purchased",
+     "s4_13_gross_wages_and_salaries",
+     "s4_14_rent",
+     "s4_15_supplies",
+     "s4_16_utilities_telephones",
+     "s4_17_vehicle_costs",
+     "s4_18_insurance",
+     "s4_19_current_taxes",
+     "s4_20_other_expenses"
+    ]
+   },
+   {
+    "id": "P4_BOX_C",
+    "page": 4,
+    "mode": "nearest_dollar",
+    "printed": "Round to the nearest dollar.",
+    "printed_at": {
+     "page": 4,
+     "y": 106.8,
+     "x": [
+      336.9,
+      435.6
+     ]
+    },
+    "_band": "One cell. Drawn between line (20) at y 121.9 and the \"Total Business Expenses\" caption at y 100.9, in the column carrying the Box C marker at y 108.9, with the floor sentence beneath it at y 97.2.",
+    "keys": [
+     "s4_box_c_total_business_expenses"
+    ]
+   },
+   {
+    "id": "P4_BOX_D",
+    "page": 4,
+    "mode": "nearest_dollar",
+    "printed": "Round to the nearest dollar.",
+    "printed_at": {
+     "page": 4,
+     "y": 70.8,
+     "x": [
+      336.9,
+      435.6
+     ]
+    },
+    "_band": "One cell, and the only Box on this form whose operands are BOTH in rounded blocks: Box D subtracts Box C from Box B and all three are nearest_dollar. It is the one Box on page 4 that crosses no boundary.",
+    "keys": [
+     "s4_box_d_remaining_monthly_income"
+    ]
+   },
+   {
+    "id": "P5_SECTION_5_OFFER",
+    "page": 5,
+    "mode": "nearest_whole_dollar",
+    "printed": "Round to the nearest whole dollar.",
+    "printed_at": {
+     "page": 5,
+     "y": 686.9,
+     "x": [
+      444.9,
+      576
+     ]
+    },
+    "_band": "Opens at y 686.9, below the Section 5 preamble and the multiplier note (which ends at y 699.5) and ABOVE the first of the two multiplier rows at y 673.3. Closes at the Section 6 banner at y 439.9. Every money cell of the offer calculation is inside it: both Box D copies, Box E, Box F, the Box A copy, the Box E-or-F copy and the Offer Amount.",
+    "_a_second_instruction_over_one_cell_in_this_band": "THE OFFER AMOUNT CARRIES TWO. \"Do not leave blank. Use whole dollars only.\" is drawn at y 518.1, x 403.2..567.3, in the advisory column beside the Offer Amount cell, together with \"Your offer must be more than zero ($0).\" at y 527.7 and the Form 656 instruction at y 508.5 and y 498.9. It is recorded here and NOT given a block of its own: one cell belongs to one block — two blocks could name two instructions and the later one would silently win — and this sentence says the same thing about precision that the band already says. What it says BEYOND precision, that the cell must not be blank and must exceed zero, is not a rounding rule and is carried as the review-page advisory on the Offer Amount line of the totals declaration.",
+    "_the_whole_band_crosses_a_boundary_at_its_first_operand": "Box D is drawn on page 4 in P4_BOX_D (nearest_dollar) and both page-5 copies of it are here (nearest_whole_dollar). The two modes do identical arithmetic, so nothing moves; the crossing is real and is reported, and it is a wording difference rather than a rule difference. The Box A copy is the crossing that could move a figure: Box A is nearest_dollar on page 4 and its copy here is nearest_whole_dollar — again identical arithmetic.",
+    "keys": [
+     "s5_box_d_for_12_month_multiplier",
+     "s5_box_e_future_remaining_income",
+     "s5_box_d_for_24_month_multiplier",
+     "s5_box_f_future_remaining_income",
+     "s5_amount_from_box_a",
+     "s5_amount_from_box_e_or_box_f",
+     "s5_offer_amount"
+    ]
+   },
+   {
+    "id": "P5_SECTION_6_LITIGATION",
+    "page": 5,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Section 6 opens at its banner y 439.9, BELOW which the page-5 rounding run at y 686.9 does not reach. Every run from y 439.9 to the foot of the page was read for /round|whole dollar|nearest/i and there is none. The one money cell in it is the litigation \"Amount in dispute\", caption y 138.1 x 36.0..100.0 with a bare \"$\" at y 123.7 x 36.0..40.4.",
+    "keys": [
+     "s6_litigation_amount_in_dispute"
+    ]
+   },
+   {
+    "id": "P6_SECTION_6_CONTINUED",
+    "page": 6,
+    "mode": "none_printed",
+    "printed": null,
+    "_absence_checked": "Every printed run on page 6 was read for /round|whole dollar|nearest/i and there is none. Page 6 is Section 6 continued, Section 7 signatures and the attachment checklist; its three money cells are the funds-held-in-trust amount and the line-of-credit limit and balance.",
+    "keys": [
+     "s6_funds_held_in_trust_amount",
+     "s6_line_of_credit_limit",
+     "s6_line_of_credit_amount_owed"
+    ]
+   }
+  ],
+  "_can_the_page_3_omission_be_read": "NOT DECIDABLE FROM THE PAGE, and that is the answer rather than a missing one. FOR a drafting gap: the sentence appears 6 times on this form and is absent from the one page that is almost entirely money; page 3's totals (3) and (4) feed Box A, which is drawn under it; and 433-A(OIC) omits it on ITS page 3, which is also a \"(Continued)\" asset page and also entirely money — the same omission on the same page number of the sibling form reads more like a shared template than like two independent decisions. FOR a deliberate scope: every printed instance on this form sits directly above the cell or the Box it governs, page 3 carries only a \"(Continued)\" banner and one line about attachments, and the IRS knows how to print the sentence where it means it. Recorded here rather than resolved, and the block declares none_printed with the absence stated as a thing that was looked for.",
+  "_how_the_money_lists_were_built": "FROM THE PRINTED PAGE, AND THE ARITHMETIC IS DERIVED RATHER THAN TRANSCRIBED. adapters/pdf/money-probe.mjs reports, for every mapped text target, the nearest printed run to its left that ENDS in a \"$\" within 14pt, and flags the cell when it finds one. It finds 1 money cells on page 1, 15 on page 2, 27 on page 3, 25 on page 4, 8 on page 5 and 3 on page 6 — 79 in all. This declaration holds 80 money cells once its group COLUMNS are expanded across their slots: 1 on page 1, 15 on page 2, 28 on page 3, 25 on page 4, 8 on page 5 and 3 on page 6. The single difference falls where the real-property block is drawn, and it is 28 - 27 = 1; every other page agrees exactly, of which 15 - 15 = 0 is one. So 1 + 0 = 1 cells enumerated in a _money_without_a_printed_dollar_sign note — the real-property listing price, which is money by its printed caption and carries no drawn currency symbol. The direction that matters is declared at least probed everywhere, and it holds; probed exceeding declared would be a money cell the form draws a \"$\" against and this declaration does not govern, which is a silently unrounded cell and a STOP."
+ },
  "groups": {
   "partners": {
    "source": "partners",
@@ -1142,24 +1426,15 @@
     "id": "B18",
     "raised": "slice 3",
     "what": "The slice-1 and slice-2 evidence prose in this file and in 433boi.headings.json quotes coordinates in BOTH y conventions - roughly half baselines and half run tops - and nothing refuses either, because blanket-audit [K-12] checks a quoted coordinate against a set holding both. Slice 3's prose is entirely in the declared convention and _the_y_convention_in_this_file says so. Rewriting the older blocks is a change to landed evidence and gets its own commit and its own check.",
-    "status": "OPEN"
+    "status": "OPEN",
+    "the_size_of_what_is_unconverted_derived": "DERIVED BY scratchpad/derive-b18-counts.mjs, WHICH DECLARES ITS UNIVERSE. Regions: the 12 slice-1 and slice-2 evidence blocks of this map, named individually there; slice 3's blocks are excluded because they are already in the declared convention. Sites: every \"y N, x N\" quotation in those regions — the shape this repo uses for a printed TEXT RUN — which is 107 quotations over 71 distinct y values. Of those 71: 31 are drawn ONLY as a text baseline, 26 ONLY as a run top, 10 as BOTH (one run's baseline is another's top, so geometry alone gives no verdict), and 4 are WIDGET EDGES quoted in the run syntax rather than text coordinates at all. 0 unaccounted.",
+    "the_derivation_stopped_before_it_reported_and_that_is_why_the_last_number_is_zero": "Its first run reported 4 UNACCOUNTED — 476.6, 417.6, 390.2 and 386.6 — and exited 2 rather than reporting them as \"not a convention error\". They turned out to be widget rect edges: \"y 390.2, x 36.2..183.8\" names the top of the field beneath \"Frequency of tax deposits\", whose caption baseline is 394.7. A widget edge is not in the wrong convention; it is a different kind of coordinate, so it is classified as its own category rather than folded into either text verdict. Had the derivation treated an input it could not account for as agreement, those four would have been counted as correct baselines.",
+    "what_this_does_not_settle": "The 10 BOTH values. A y that is drawn as some run's baseline AND as some other run's top cannot be assigned a convention from geometry alone — the reading that settles it is which run the sentence was describing, which is a per-sentence question and is exactly the work the conversion commit has to do. Recorded so the conversion is scoped against a number rather than against an impression, and so nobody reads \"31 already correct\" as \"31 of 71 is most of it\"."
    },
    {
     "id": "B19",
     "raised": "slice 3",
     "what": "The shared row-shape specification has no class for business EQUIPMENT. 5_business_equipment routes business_property, which is the nearest class it holds - description, current_fmv, current_loan_balance and equity are all its columns - but business_property also declares location, title_holders, purchase_date, monthly_payment, final_payment_date, lender_name_address and lender_phone, none of which this row prints. Whether the specification should grow a business_equipment class, and what 433-B(OIC) contributes to it, is crosswalk work.",
-    "status": "OPEN"
-   },
-   {
-    "id": "B20",
-    "raised": "slice 3",
-    "what": "This form prints \"Round to the nearest dollar\" over every money block on pages 2, 3 and 4, \"Round to the nearest whole dollar\" on page 5, and \"Use whole dollars only\" beside the Offer Amount - and the map declares NO rounding block, so every tripwire is exact arithmetic. Pages 2 and 3 are bound with cents and pages 4 and 5 with whole dollars, which makes Box A carry cents and its page-5 copy not. The copy is only writable that way because that cell is declared not checkable; if it were checked, the printed instruction and the tripwire would disagree. blanket-audit [K-07] reports the absent rounding declaration with its reason on every run.",
-    "status": "OPEN"
-   },
-   {
-    "id": "B21",
-    "raised": "slice 3",
-    "what": "433-B(OIC) has no name-lies.json registry. Its lineage is recorded inside the map, in _the_four_names_that_lie_on_pages_2_and_3 and _the_names_that_lie_on_pages_4_to_6, which between them hold ten lying occurrences and four honest ones on names that lie elsewhere. 433-A(OIC) carries a sidecar registry with 31 entries and the gate reports its figures; this form reports \"no 433boi.name-lies.json in this tree\", which is now accurate and was \"none declared\" until this commit. Whether to materialise the sidecar from the map blocks is crosswalk work: generating it would be a second copy of a list, and this repo requires a second copy to be asserted against the first.",
     "status": "OPEN"
    }
   ],
@@ -1184,11 +1459,33 @@
     "how": "THE DECLARED RECORD SHAPE. adapters/pdf/record-shape.mjs, and `record_shape` on this map declaring one route input over both printed notes. Box B and Box C each carry a `record_shape` clause naming one check per declared state: `grid` runs the equality AND requires at least one operand to be completed; `profit_and_loss_statement` requires EVERY operand to be blank on the filed page and the total to be present. Neither is a skip, no predicate reads a cell the form does not print, and no tolerance is admitted anywhere.",
     "the_two_fixes_that_were_refused_and_why_this_is_not_either": "A predicate over an unprinted cell would have made the tripwire check the engine against its own input. A conditional skip would have said \"check this unless the answer would be inconvenient\" and would have passed a record that forgot the lines. This asks the operator one question the page cannot answer, and then holds the filed page to the answer in BOTH directions.",
     "one_input_and_not_two": "Both notes open with the identical antecedent — \"If you provide a current profit and loss statement\" — and a P&L is one document covering income and expenses, so the two conditions cannot take different values. Two inputs could express a state no reading of the printed sentences permits."
+   },
+   {
+    "id": "B20",
+    "raised": "slice 3",
+    "what": "This form prints \"Round to the nearest dollar\" over every money block on pages 2, 3 and 4, \"Round to the nearest whole dollar\" on page 5, and \"Use whole dollars only\" beside the Offer Amount - and the map declares NO rounding block, so every tripwire is exact arithmetic. Pages 2 and 3 are bound with cents and pages 4 and 5 with whole dollars, which makes Box A carry cents and its page-5 copy not. The copy is only writable that way because that cell is declared not checkable; if it were checked, the printed instruction and the tripwire would disagree. blanket-audit [K-07] reports the absent rounding declaration with its reason on every run.",
+    "status": "RESOLVED",
+    "resolved_in": "Prompt 42, commit 2 — ruling 4",
+    "how": "THIRTEEN ROUNDING BLOCKS, one per printed BAND, each carrying the instruction verbatim with its page, text baseline and x span, or declaring `none_printed` with `_absence_checked` saying where the absence was looked for. Five bands round to the nearest dollar (page 2 and the four page-4 Boxes), one to the nearest whole dollar (the whole of Section 5 on page 5), and seven print nothing. Every money cell the totals declaration touches is in exactly one block and validate-map.mjs STOPS if one is not.",
+    "what_the_carried_sentence_got_right": "That the map declared no rounding block while the form prints the instruction repeatedly, that blanket-audit [K-07] was reporting the absence with its reason on every run, and that the consequence was Box A carrying cents while its page-5 copy could not. All of that was true and all of it is now closed.",
+    "what_the_carried_sentence_got_wrong": "TWO THINGS, BOTH NOW DERIVED RATHER THAN RETYPED. It said the instruction is printed \"over every money block on pages 2, 3 and 4\" — PAGE 3 PRINTS NONE, and page 3 carries 27 money cells, more than any other page of this form. And it called the total six printed instructions, which is right only if the \"Use whole dollars only\" run beside the Offer Amount is excluded — while the same sentence names that run as one of the six. count-sweep [S-35] now derives both figures from the drawn page on every run.",
+    "and_the_declaration_found_a_defect_the_carried_item_did_not_predict": "Declaring the blocks made a live defect visible in one printed figure. adapters/pdf/fill-433boi.mjs and adapters/pdf/fill-433f.mjs keyed group cells `groups.G.slots[i].col`, a spelling adapters/pdf/rounding.mjs cannot resolve, so EVERY group money cell on both forms came back with no block and was written unrounded. It was harmless for exactly as long as neither form declared a block. Both engines now use the one spelling, and rounding.mjs asserts the shape on every fill of every form — including the two that declare no rounding, so their no-op is proved rather than assumed."
+   },
+   {
+    "id": "B21",
+    "raised": "slice 3",
+    "what": "433-B(OIC) has no name-lies.json registry. Its lineage is recorded inside the map, in _the_four_names_that_lie_on_pages_2_and_3 and _the_names_that_lie_on_pages_4_to_6, which between them hold ten lying occurrences and four honest ones on names that lie elsewhere. 433-A(OIC) carries a sidecar registry with 31 entries and the gate reports its figures; this form reports \"no 433boi.name-lies.json in this tree\", which is now accurate and was \"none declared\" until this commit. Whether to materialise the sidecar from the map blocks is crosswalk work: generating it would be a second copy of a list, and this repo requires a second copy to be asserted against the first.",
+    "status": "RESOLVED",
+    "resolved_in": "Prompt 42, commit 2 — ruling 5",
+    "how": "adapters/pdf/maps/433boi.name-lies.json, 37 entries: 14 active lies (13 leaf names and 1 container), 7 inherited children of that container which are NOT counted, 16 controls verified true, and 0 page-imprecise with the class stated as looked-for and the two candidates that were considered named. Verdicts are PER OCCURRENCE throughout: four leaf names on this form carry both verdicts, and Name_Creditor alone has 3 honest and 6 lying occurrences.",
+    "the_second_copy_problem_the_carried_item_raised": "IT WAS THE RIGHT OBJECTION AND IT IS ANSWERED BY ASSERTION, NOT BY ARGUMENT. The registry IS a second copy of a list the map already holds. It is admissible because every `path` and every `bound_to` in it is RESOLVED THROUGH THE MAP at generation time rather than typed, and because validate-map.mjs then proves each path exists verbatim in the fields file and each binding resolves through the map to exactly that path — so the copy cannot drift from the original without the gate stopping. blanket-audit [K-29] counts that coverage per entry, and [S-11], [S-12], [S-13] and [S-36] derive every figure the file states about itself.",
+    "what_the_registry_makes_possible_that_prose_could_not": "A DIFF AGAINST THE SIBLING FORM. 433-B(OIC) shares 83 leaf names with 433-A(OIC) — derived by [S-36] on every run — and the crosswalk between the two is the next piece of work. A machine-checked sidecar can be compared against 433aoi.name-lies.json entry for entry; prose spread across two map blocks cannot.",
+    "the_control_family": "Six cells sit under an identical printed \"X .8 = $\" on this form and all six are named Times_8. On 433-A(OIC) the same family runs nine cells and ONE is named Times_7, which is entry C02 there. Six agreeing names do not make the name a witness; they make a disagreeing one invisible to anyone who trusts names — which is why the controls are recorded and counted separately."
    }
   ],
   "_count": {
-   "open": 19,
-   "resolved": 2
+   "open": 17,
+   "resolved": 4
   }
  },
  "_the_condition_that_governs_pages_2_and_3": {

@@ -524,6 +524,11 @@ export const PREDICATES = [
     what: 'Separates a subdirectory of a swept directory that is covered by a .gitignore rule from one that is not, in [SB-90].',
     structural_because: 'BOTH BRANCHES ARE REPORTED AND NEITHER LEAVES THE ASSERTION. A covered subdirectory is a directory git is already keeping out of the tree, which is the state [SB-91] asserts and prints the size of; an uncovered one that is also not a declared asset directory is an UNREGISTERED SUBDIRECTORY stop naming the path. Nothing is excused: the two branches partition the subdirectory list, the list is derived from the tree on every run, and its size is printed beside the entry. An empty .gitignore would make EVERY subdirectory uncovered, which is the loud direction.' },
 
+  // ─── the name-lie registry's own coverage counter ─────────────────────────────────────
+  { id: 'EX-34', pred: 'resolves', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
+    what: 'Separates a name-lie registry entry whose `path` exists and whose `bound_to` resolves through the map to exactly that path from one where either fails, inside [K-29].',
+    structural_because: 'IT IS THE COUNTER ITSELF AND BOTH BRANCHES ARE REPORTED. `resolves` is called twice over the same enumerated array: once to build `covered` and once to build `uncoveredList`. Nothing is excused — the two branches partition the registry entries, `universe` is the entry count and `universeList` names every id, and an entry the predicate rejects becomes a COVERAGE GAP naming it. A version of it that stopped separating anything would report every entry uncovered, which is the loud direction, and validate-map.mjs asserts the same two facts independently and exits 2 on either.' },
+
   // ─── the declared record shape ────────────────────────────────────────────────────────
   { id: 'EX-33', pred: 'parseMoney', definedIn: 'adapters/pdf/rounding.mjs', kind: 'structural',
     what: 'Separates a printed money cell that carries a value from one that is blank, inside the two record-shape comparators in adapters/pdf/record-shape.mjs.',

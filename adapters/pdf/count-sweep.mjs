@@ -467,6 +467,25 @@ export const MANIFEST = [
       ];
     } }),
 
+  // THE CARRIED COUNT, DERIVED AGAINST THE PAGE THAT CARRIED IT.
+  // [B20] stated how many rounding instructions this form prints and over which pages, and
+  // both halves were wrong — the pages included one that prints none, and the total only
+  // reaches six by counting a run in a wording the sentence itself lists separately. A
+  // correction that is retyped is the same object as the figure it corrects, so both numbers
+  // are derived here from the drawn page on every run.
+  D({ id: 'S-35', file: /\.map\.json$/, at: /^rounding\._the_count_that_was_carried_was_wrong_in_two_ways$/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const rows = [];
+      const drawn = pull(v, /the instruction is drawn (\d+) times/, 1, 'the enumerated instruction count');
+      if (drawn.fail) rows.push({ what: 'enumerated rounding instructions', fail: drawn.fail });
+      else rows.push({ what: 'printed rounding sentences on this form', claimed: n(drawn.ms[0]), derived: ctx.printedRounding?.length ?? null, from: 'every printed run matching /round to the nearest/i' });
+      const p3 = pull(v, /PAGE 3 CARRIES (\d+) of them/, 1, 'the page-3 count');
+      if (p3.fail) rows.push({ what: 'page-3 rounding instructions', fail: p3.fail });
+      else rows.push({ what: 'printed rounding sentences on page 3', claimed: n(p3.ms[0]), derived: (ctx.printedRounding || []).filter(s => s.page === 3).length, from: 'page-geometry.mjs' });
+      return rows;
+    } }),
+
   D({ id: 'S-10b', file: /\.map\.json$/, at: /^rounding\._can_the_page_3_omission_be_read$/,
     kind: 'derived',
     derive: (ctx, v) => {
@@ -534,6 +553,26 @@ export const MANIFEST = [
         { what: 'standing rule: named Times_8 / times_8', claimed: word(r2.ms[0][1]) ?? Number(r2.ms[0][1]), derived: q.times8, from: 'leaf names of those cells' },
         { what: 'standing rule: named Times_7', claimed: word(r2.ms[0][2]) ?? Number(r2.ms[0][2]), derived: q.times7, from: 'leaf names of those cells' });
       return rows;
+    } }),
+
+  // THE SHARED-LEAF-NAME COUNT, DERIVED ACROSS TWO FORMS.
+  // 433-B(OIC) exists in this repo because of what it inherits from 433-A(OIC), and the size
+  // of that inheritance is the reason its registry is a file rather than prose. A figure that
+  // states it must be derived from both field lists: it is the one number in this file that is
+  // about a set the repo holds rather than about the drawn page.
+  D({ id: 'S-36', file: /\.name-lies\.json$/, at: /^_why_a_file_and_not_prose_in_the_map$/,
+    kind: 'derived',
+    derive: (ctx, v) => {
+      const r = pull(v, /shares (\d+) leaf names with ([0-9a-z]+)/i, 1, 'the shared-leaf-name count');
+      if (r.fail) return [{ what: 'shared leaf names', fail: r.fail }];
+      const other = r.ms[0][2];
+      let otherDoc;
+      try { otherDoc = JSON.parse(readFileSync(`adapters/pdf/maps/${other}.fields.json`, 'utf8')); }
+      catch (e) { return [{ what: 'shared leaf names', fail: `the sentence names form "${other}" and adapters/pdf/maps/${other}.fields.json could not be read: ${e.message}. An unreadable comparison is a STOP, not a zero.` }]; }
+      const leaf = (n) => String(n).split('.').pop().replace(/\[\d+\]$/, '');
+      const mine = new Set(ctx.fieldsDoc.fields.map(f => leaf(f.name)));
+      const theirs = new Set(otherDoc.fields.map(f => leaf(f.name)));
+      return [{ what: `leaf names shared with ${other}`, claimed: n(r.ms[0]), derived: [...mine].filter(x => theirs.has(x)).length, from: 'distinct leaf names of both fields files, intersected' }];
     } }),
 
   D({ id: 'S-13b', file: /\.name-lies\.json$/, at: /^entries\[\d+\]\./,

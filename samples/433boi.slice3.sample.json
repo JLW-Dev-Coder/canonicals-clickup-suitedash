@@ -66,25 +66,25 @@
    "type_of_account": "checking",
    "institution_name_and_address": "Example National Bank, 1 Example Way, Denton, TX 76201, USA",
    "account_number": "XXXX-XXXX-3311",
-   "account_balance": "41283.17"
+   "account_balance": "41283"
   },
   {
    "asset_class": "bank_account",
    "type_of_account": "savings",
    "institution_name_and_address": "Placeholder Savings & Loan, 27 Sample Road, Plano, TX 75023, USA",
    "account_number": "XXXX-XXXX-7742",
-   "account_balance": "12907.44"
+   "account_balance": "12907"
   },
   {
    "asset_class": "bank_account",
    "type_of_account": "money_market_or_cd",
    "institution_name_and_address": "Fictitious Credit Union, 903 Example Blvd, Frisco, TX 75034, USA",
    "account_number": "XXXX-XXXX-5168",
-   "account_balance": "6055.29"
+   "account_balance": "6055"
   }
  ],
- "s2_1d_bank_accounts_from_attachment": "3410.88",
- "s2_1_total_bank_accounts": "63656.78",
+ "s2_1d_bank_accounts_from_attachment": "3411",
+ "s2_1_total_bank_accounts": "63656",
  "investment_accounts": [
   {
    "asset_class": "investment",
@@ -92,9 +92,9 @@
    "type_of_investment_other": "Common equities, non-retirement",
    "institution_name_and_address": "Example Brokerage LLC, 500 Sample Tower, Dallas, TX 75201, USA",
    "account_number": "XXXX-9021",
-   "current_value": "88400.00",
-   "loan_balance": "15250.00",
-   "equity": "73150.00"
+   "current_value": "88400",
+   "loan_balance": "15250",
+   "equity": "73150"
   },
   {
    "asset_class": "investment",
@@ -102,9 +102,9 @@
    "type_of_investment_other": "Municipal bond ladder",
    "institution_name_and_address": "Placeholder Securities Inc, 12 Example Circle, Austin, TX 78701, USA",
    "account_number": "XXXX-4477",
-   "current_value": "31775.50",
-   "loan_balance": "2300.25",
-   "equity": "29475.25"
+   "current_value": "31776",
+   "loan_balance": "2300",
+   "equity": "29476"
   }
  ],
  "digital_assets": [
@@ -116,12 +116,12 @@
    "location_of_digital_asset": "Example Exchange Ltd (custodial account)",
    "account_number_custodian_or_broker": "XXXX-EX-6630",
    "self_hosted_wallet_address": "0xEXAMPLE00000000000000000000000000009f21",
-   "usd_equivalent_today": "18644.60",
-   "equity": "18644.60"
+   "usd_equivalent_today": "18645",
+   "equity": "18645"
   }
  ],
- "s2_2d_investment_accounts_from_attachment": "7112.05",
- "s2_2_total_investment_accounts": "128381.90",
+ "s2_2d_investment_accounts_from_attachment": "7112",
+ "s2_2_total_investment_accounts": "128383",
  "s2_notes_receivable": "yes",
  "s2_accounts_receivable": "no",
  "s2_real_property_for_sale": "yes",
@@ -224,7 +224,7 @@
  ],
  "s3_equipment_from_attachment": "7810.25",
  "s3_total_all_business_equipment": "64251.70",
- "s3_box_a_available_equity_in_assets": "589698.00",
+ "s3_box_a_available_equity_in_assets": "589698",
  "s3_income_period_beginning": "01/01/2025",
  "s3_income_period_through": "12/31/2025",
  "s3_6_gross_receipts": "148920.00",
@@ -251,9 +251,9 @@
  "s5_box_e_future_remaining_income": "317880.00",
  "s5_box_d_for_24_month_multiplier": "26490.00",
  "s5_box_f_future_remaining_income": "635760.00",
- "s5_amount_from_box_a": "589698.00",
+ "s5_amount_from_box_a": "589698",
  "s5_amount_from_box_e_or_box_f": "317880.00",
- "s5_offer_amount": "907578.00",
+ "s5_offer_amount": "907578",
  "s6_currently_in_bankruptcy": "no",
  "s6_filed_bankruptcy_past_10_years": "yes",
  "s6_bankruptcy_date_filed": "04/17/2018",
@@ -301,5 +301,6 @@
  "_every_total_is_computed": "NOT ONE TOTAL IN THIS FILE IS TYPED. (5a) is the quick-sale value minus the loan balance, and the quick-sale value is the market value times the printed .8. (5) is (5a) plus the attachment line. Box A is the five page-2, page-3 and page-4 totals added. Box B is lines (6) through (10), Box C is (11) through (20), Box D is Box B minus Box C in that printed order. Box E is Box D times 12 and Box F is Box D times 24. The Offer Amount is the Box A copy plus the Box E copy. A total that agrees with a tripwire because the author made it agree proves that the author can add.",
  "_the_two_money_conventions_on_this_form": "PAGES 2 AND 3 CARRY CENTS AND PAGES 4 AND 5 DO NOT, and that is deliberate. Every money caption on pages 2, 3 and 4 prints \"Round to the nearest dollar\", and page 5 prints \"Round to the nearest whole dollar\" and, beside the Offer Amount, \"Use whole dollars only.\" The map declares no `rounding` block - blanket-audit [K-07] reports the stand-down with its reason on every run - so the tripwires are exact arithmetic and a fixture mixing cents into a whole-dollar sum would fail them for a reason that has nothing to do with the map. So this record keeps slice 2's cents on pages 2 and 3, which makes Box A carry cents, and uses whole dollars from line (6) down. The Box A COPY on page 5 is Box A rounded to the nearest dollar, which the printed whole-dollar instruction requires and which the tripwires permit because that cell is declared not checkable. Carried as [B20].",
  "_what_the_offer_calculation_says_here": "Box D is Box B minus Box C, both positive, so the declared floor of 0 is NOT exercised by this record - it is one of the floors the gate reports as unexercised, and a negative fixture would be the instrument that reaches it. The Box E or Box F cell copies BOX E, the five-or-fewer-payments branch. Nothing on the form records that choice, which is why the cell is declared not checkable; the record makes it explicitly so a reader of the filled form knows which branch produced the offer.",
- "_what_this_record_does_not_take": "THE INCOME-PRODUCING-ASSET EXCLUSION. The asterisk beside \"Enter the amount from Box A\" permits excluding equity in income-producing assets other than real estate, and this record excludes nothing - the page-5 copy is the whole of Box A, rounded. A record that DID take the exclusion would write a smaller figure and no tripwire on this form could tell the two apart, which is the finding carried as [B16]."
+ "_what_this_record_does_not_take": "THE INCOME-PRODUCING-ASSET EXCLUSION. The asterisk beside \"Enter the amount from Box A\" permits excluding equity in income-producing assets other than real estate, and this record excludes nothing - the page-5 copy is the whole of Box A, rounded. A record that DID take the exclusion would write a smaller figure and no tripwire on this form could tell the two apart, which is the finding carried as [B16].",
+ "_page_2_is_whole_dollars_because_the_page_says_so": "Page 2 draws \"Round to the nearest dollar. Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\".\" at y 670.9, and the map declares that band as the rounding block P2_SECTION_2_CASH_AND_INVESTMENTS. This fixture was authored before that declaration existed and carried cents there; a record filed on that page carries whole dollars, so it does now. Pages 3 and 4 keep their cents deliberately — their bands print NO instruction and are declared none_printed — which is what makes Box A a real rounding-boundary crossing on this fixture rather than a hypothetical one: it sums two whole-dollar operands and three cents operands and rounds its own total, and gate step 11 names the crossing on every run."
 }

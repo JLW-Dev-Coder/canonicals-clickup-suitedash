@@ -287,3 +287,48 @@ export const reportRounding = (audit, mapPath) => {
   audit.problems.forEach(p => console.error(`  ${p}`));
   return audit.problems.length;
 };
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE CELL SPELLING A FILL ENGINE LOOKS A BLOCK UP BY
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// `blockFor` resolves a group cell written "group[row].column" — the ONE spelling this repo
+// uses, the one `exclusive`, the totals predicate, the name-lie registry's `bound_to` and the
+// gate's addressing all use. adapters/pdf/fill-433a.mjs and adapters/pdf/fill-433aoi.mjs pass
+// `${gName}[${i}].${sub}`. adapters/pdf/fill-433boi.mjs and adapters/pdf/fill-433f.mjs passed
+// `groups.${g}.slots[${i}].${sub}`, which `blockFor` cannot resolve — so EVERY group money
+// cell on those two forms came back with no block and was written unrounded.
+//
+// It was invisible for as long as it was harmless: neither of those two forms declared any
+// rounding, so every lookup returned nothing anyway and nothing about the transcript was
+// wrong. Declaring 433-B(OIC)'s blocks made it visible in one line — the (2b) investment
+// equity cell printed 29,475.25 against a recomputation of 29,475.00, because the operands
+// beside it were rounded and it was not.
+//
+// A defect that is dormant until a declaration is added is a defect that arrives WITH the
+// declaration, in the commit that has the most other things going on. So the spelling is now
+// asserted rather than assumed: a key in the wrong shape is reported by the engine that used
+// it and is a STOP, whether or not that form declares a rounding block. A form declaring none
+// yields an empty list, which is a proved no-op and not an unrun check.
+export const MISKEYED_CELL = /^groups\.[A-Za-z0-9_]+\.slots\[\d+\]\./;
+
+/**
+ * Every key an engine looked a block up by that is in a shape `blockFor` cannot resolve.
+ * `keys` is the set of keys the engine actually used. Returns the offending ones, with the
+ * spelling they should have had, so the message names the fix and not just the fault.
+ */
+export const miskeyedCells = (keys) => [...keys].filter((k) => MISKEYED_CELL.test(String(k))).map((k) => {
+  const m = /^groups\.([A-Za-z0-9_]+)\.slots\[(\d+)\]\.(?:text\.)?(.+)$/.exec(String(k));
+  return { used: k, should_be: m ? `${m[1]}[${m[2]}].${m[3]}` : '(unparseable)' };
+});
+
+/** Print the spelling audit and return the number of problems (0 = holds). */
+export const reportCellSpelling = (bad, where, total) => {
+  if (!bad.length) {
+    console.log(`cell spelling: ${total} key(s) looked up by ${where}, 0 in a shape blockFor cannot resolve — every group cell is addressed "group[row].column", the one spelling in this repo.`);
+    return 0;
+  }
+  console.error(`CELL SPELLING — ${bad.length} key(s) in ${where} are in a shape adapters/pdf/rounding.mjs cannot resolve, so any rounding block declared over them would silently never apply:`);
+  bad.forEach((b) => console.error(`  ${b.used}\n      should be: ${b.should_be}`));
+  return bad.length;
+};

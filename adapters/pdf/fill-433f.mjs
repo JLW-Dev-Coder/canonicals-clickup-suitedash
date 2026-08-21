@@ -2,7 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses, checkRowClassCollisions, reportRowClassCollisions } from './check-row-shape.mjs';
-import { loadRounding, roundForOutput, auditRounding, reportRounding } from './rounding.mjs';
+import { loadRounding, roundForOutput, auditRounding, reportRounding, miskeyedCells, reportCellSpelling } from './rounding.mjs';
 
 // --saturated is an assertion about the INPUT, not about the form — the same one the gate
 // makes at step 9. Here it decides whether a group row that carries no key for a column its
@@ -44,7 +44,9 @@ const capacityErrors = [];
 const rounding = loadRounding(mapDoc);
 const rounded = [], moneyNotNumeric = [];
 
+const cellKeysUsed = new Set();
 const setText = (name, val, key) => {
+  cellKeysUsed.add(key ?? name);
   if (val === undefined || val === null || val === '') return;
   const rd = roundForOutput(rounding, key ?? name, val);
   if (rd.notNumeric) moneyNotNumeric.push({ key: key ?? name, block: rd.block.id, value: String(val) });
@@ -152,7 +154,13 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
   groupSource[g] = { rows, fromArray };
   rows.forEach((row, i) => {
     if (i >= def.slots.length) { overflow.push(`${g}[${i}]`); return; }
-    for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub], `groups.${g}.slots[${i}].${sub}`);
+    // ONE CELL SPELLING. `groups.${g}.slots[${i}].${sub}` is what this line used to pass, and
+    // adapters/pdf/rounding.mjs cannot resolve it: blockFor reads "group[row].column", the spelling
+    // `exclusive`, the totals predicate, the name-lie registry's `bound_to` and the gate's own
+    // addressing all use. Every group money cell on this form therefore came back with no block and
+    // was written unrounded — invisible while this map declared no rounding, and one wrong printed
+    // figure the moment it did. See rounding.mjs MISKEYED_CELL, which asserts the shape on every run.
+    for (const [sub, name] of Object.entries(def.slots[i])) setText(name, row[sub], `${g}[${i}].${sub}`);
   });
 }
 
@@ -315,6 +323,20 @@ const outPath = `adapters/pdf/out/433f_filled_${data.intake_id || 'sample'}.pdf`
 // but a file whose appearance streams were never regenerated carries every correct /V
 // value and PRINTS BLANK. Pinning it means a change of default cannot silently produce
 // one. See verify-appearances.mjs, including why /NeedAppearances was declined.
+
+// ─── THE CELL SPELLING, ASSERTED ────────────────────────────────────────────────────────
+//
+// Every key this engine looked a rounding block up by must be in a shape blockFor can
+// resolve. A group cell keyed `groups.G.slots[i].col` comes back with NO block and is written
+// unrounded, and on a form that declares no rounding that is indistinguishable from correct —
+// which is exactly how it survived on two engines until 433-B(OIC) declared its blocks and one
+// printed figure came out with cents against rounded neighbours. Asserted here whether or not
+// this form declares a block, so a form with none proves the no-op instead of skipping.
+if (reportCellSpelling(miskeyedCells(cellKeysUsed), 'fill-433f.mjs', cellKeysUsed.size) > 0) {
+  console.error('  No PDF written. Re-key the group cells as "group[row].column" — the one cell spelling in this repo.');
+  process.exit(2);
+}
+
 writeFileSync(outPath, await pdf.save({ updateFieldAppearances: true }));
 
 // And prove it, rather than trusting the flag: every stored value must be drawn.
