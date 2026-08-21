@@ -110,6 +110,7 @@ import { markerPairing } from './line-markers.mjs';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
 import { walkTargets, classifyMapTargets } from './verify-form-coverage.mjs';
 import { slotColumnsOf } from './check-row-shape.mjs';
+import { verifyPrintedEvidence } from './record-shape.mjs';
 import { readFormRevision } from './read-form-revision.mjs';
 import { rowShapeSpecProblems, rowShapeSpecScope } from './assert-row-shape-spec.mjs';
 import { coverageCount, ENGINE_EXTRA_INPUTS } from '../hubspot/classification-coverage.mjs';
@@ -448,6 +449,15 @@ export const FORWARD = [
       return { demanded, supplied: ys.size + xs.size, uncovered };
     } }),
 
+  P({ instrument: 'record-shape.mjs',
+    how: 'Every route sentence a record-shape declaration quotes must be DRAWN on the page it names, at the baseline and x span it states, opening the sentence it quotes — measured with `verifyPrintedEvidence`, the function record-shape.mjs itself proves its evidence with, over `readPrintedText` from page-geometry.mjs. Tolerance 0.75pt, the rounding align-block prints at.',
+    prove: (ctx) => {
+      // Read off the MAP rather than off the covered sites: the coordinates are structured
+      // numbers, not prose, which is the whole reason the prose extractor finds nothing here.
+      const r = verifyPrintedEvidence(ctx.mapDoc, ctx.printedText);
+      return { demanded: r.demanded, supplied: ctx.drawnY.size, uncovered: r.uncovered };
+    } }),
+
   P({ instrument: 'check-row-shape.mjs',
     how: 'Every group named in the covered sites must be a group `slotColumnsOf` can resolve columns for — the function check-row-shape.mjs derives every row shape from, imported.',
     prove: (ctx, sites) => {
@@ -638,6 +648,7 @@ export const DETECTORS = {
   'sweep-boundary.mjs': { canary: 'runCanary(), a synthetic fixture claiming "all 999 form fields" against a derived 267, run through [SB-10]\'s own FORM_TOTAL patterns. Expected yield: exactly ONE contradiction — and, in the same call and asserted in the same conjunction, exactly ONE MATCH against a second synthetic fixture claiming the derived figure. The second half is the one a dead pattern fails: a regex matching nothing produces zero contradictions, which the first half alone would read as a clean tree. It is the two-wrong-typed-counts defect in miniature and it is not drawn from the artefacts.' },
   'exclusion-sweep.mjs': { canary: 'runCanary() builds a synthetic spec whose one class claims a printed table "not currently mapped" AND a synthetic map that routes that class, then runs [EX-01]\'s comparison over the pair. Expected yield: exactly one excusal and exactly one contradiction. It is the [A3] defect in miniature — an excusal whose sentence the map disproves — so a cross-check that stops comparing reports 1 excused and 0 contradicted and takes the run down, rather than reporting nothing to contradict. The map half goes through the SAME acceptorsOf() the real assertion uses, imported rather than copied, so the canary cannot pass against a second implementation of the routing.' },
   'success-sweep.mjs': { canary: 'CANARY_SRC, fourteen lines of synthetic source holding one site of each of the four classes, classified in memory by the same classify() the sweep uses. Line 13 is the defect verbatim — `process.exitCode = 3` inside a failure guard, then a bare `all assertions passed.` — arranged BELOW an earlier guard that does jump, because a witness accepting any jump above would certify the very line the file was written for. Expected yield: guarded, terminal, UNCONDITIONAL, narrative, in that order. CANARY_EXPECT\'s length is asserted against CANARY_CLASSES before the loop, so a shortened list cannot make `every` vacuously true.' },
+  'enumerate-shadowing.mjs': { canary: 'canary(), seven synthetic condition strings run through the same classify() the enumeration uses, with an expected verdict asserted for each: a plain call reads BARE, a method call reads METHOD, a mixed site reads BARE and counts both occurrences, a predicate absent from the text reads ABSENT, a LONGER name is not matched by a shorter one, an optional-chained method reads METHOD, and null text reads ABSENT rather than zero. Not drawn from the artefacts. It is the canary this file most needs, because the expected answer over the real tree is ZERO and a broken classifier and a clean tree print the same number — so the count is not printed at all unless the canary bites first. Proved beyond the synthetic strings as well: a real same-file `bag.norm(xs)` planted in a swept file was found and named, and the enumeration returned to 0 when it was removed.' },
   'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
   'fill-433a.mjs': { not_a_detector: 'A FILL ENGINE. Its universe is the targets of the map, enumerated and partitioned, and the partition is asserted to account for every field in the PDF. Its regexes parse known values, not search open text.' },
   'fill-433f.mjs': { not_a_detector: 'Same as fill-433a.mjs.' },

@@ -15,10 +15,14 @@
 import { readFileSync, existsSync } from 'fs';
 import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { auditRounding, reportRounding } from './rounding.mjs';
+import { auditRecordShape, reportRecordShape, verifyPrintedEvidence } from './record-shape.mjs';
+import { readPrintedText } from './page-geometry.mjs';
+import { auditComparisons, reportComparisons } from './comparisons.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
 import { runExclusionSweep, reportExclusionSweep } from './exclusion-sweep.mjs';
+import { runShadowingEnumeration, reportShadowing } from './enumerate-shadowing.mjs';
 import { runRegisterIdSweep, reportRegisterIdSweep } from './register-ids.mjs';
 import { runSuccessSweep, reportSuccessSweep } from './success-sweep.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
@@ -291,6 +295,16 @@ if (reportRowShapeSpec({ verbose: process.argv.includes('--sweep') }) > 0) proce
 // reason (e) does: the exclusions are shared.
 if (reportExclusionSweep(await runExclusionSweep(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
+// (e2b) [D-09] ENUMERATED. The exclusion sweep asks whether every predicate that excuses a site
+// is registered. This asks whether every registered predicate is the one being CALLED: a site
+// written `x.norm(...)` is attributed to a same-file `norm` by exclusionSites(), and a register
+// entry then stands over a call it is not about. [D-09] carried "zero known instances - stated
+// as an observation, not a proof, since nothing enumerates it", which is the shape this repo
+// exists to remove. Enumerated now, over the exclusion register's own site set, with a canary
+// that fires every verdict and an UNREADABLE row treated as a STOP rather than as a zero. Runs
+// on every form for the same reason the exclusion sweep does: the attributions are engine-wide.
+if (reportShadowing(runShadowingEnumeration(), { verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
 // (e3) THE SUCCESS SWEEP. A finding count can be right and the sentence printed beside it
 // wrong. `derive-names-433aoi.mjs` printed "all assertions passed." unconditionally beneath its
 // own "STOP - 1 assertion failure(s)"; THIS FILE accumulated seven assertions about the
@@ -348,3 +362,37 @@ const totalsDoc  = existsSync(totalsPath) ? JSON.parse(readFileSync(totalsPath, 
 if (mapDoc.rounding && !totalsDoc)
   console.log(`rounding: NOTE — ${totalsPath} does not exist, so the money-cell cross-check cannot run. Reported, not passed.`);
 if (reportRounding(auditRounding(mapDoc, totalsDoc), mapPath) > 0) process.exit(2);
+
+// ---------------------------------------------------------------------------------------
+// THE DECLARED RECORD SHAPE, and THE DECLARED COMPARISONS.
+//
+// Both are statements the map and its totals file make about themselves, so both are checked
+// here, beside the rounding declaration, for the same reason it is.
+//
+// The record shape is asserted in BOTH directions — every line carrying one names a declared
+// route and gives exactly one check per declared state, and every line a route says it governs
+// actually carries that route. One direction alone is the shape [D-08] and [EX-16] both had:
+// an assertion sound only while nobody edited the other side.
+if (reportRecordShape(auditRecordShape(mapDoc, totalsDoc), mapPath) > 0) process.exit(2);
+{
+  // THE QUOTED SENTENCE, RE-MEASURED. A route declaration rests entirely on a printed sentence,
+  // and a transcription nothing re-measures drifts: 433aoi.totals.json's own P&L note quotes the
+  // Section 6 preamble at y 429.3, which is its RUN TOP; the baseline is 421.3. That landed prose
+  // is kept verbatim and carried as [C-21]; what is asserted here is that every coordinate a
+  // record-shape declaration states lands on a run actually drawn on the declared page.
+  const rsMap = JSON.parse(readFileSync(mapPath, 'utf8')).record_shape;
+  if (rsMap) {
+    const pages = await readPrintedText(readFileSync(`adapters/pdf/forms/f${form}.pdf`));
+    const ev = verifyPrintedEvidence(mapDoc, pages);
+    console.log(`record shape, printed evidence: ${ev.demanded.length} quoted sentence(s) re-measured against the drawn page at 0.75pt`);
+    for (const a2 of ev.demanded) console.log(`  ${a2.what.padEnd(46)} p${a2.page} y ${a2.y} x ${a2.x?.[0]}..${a2.x?.[1]}  ${JSON.stringify(a2.quoted)}`);
+    if (ev.uncovered.length) {
+      console.error(`RECORD-SHAPE PRINTED EVIDENCE — ${ev.uncovered.length} quoted sentence(s) are not drawn where the declaration says:`);
+      ev.uncovered.forEach(u => console.error(`  ${u.what}: ${u.why}`));
+      process.exit(2);
+    }
+    console.log(`  OK — all ${ev.demanded.length} land on a drawn run whose text opens the quoted sentence.`);
+  }
+}
+if (totalsDoc && reportComparisons(auditComparisons(totalsDoc), totalsPath) > 0) process.exit(2);
+if (!totalsDoc) console.log(`comparisons: ${totalsPath} does not exist, so no line declares one. Reported, not passed.`);

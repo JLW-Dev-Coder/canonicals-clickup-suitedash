@@ -657,6 +657,15 @@
     "id": "F-01",
     "raised": "v6, recorded in special.notes[10]",
     "what": "The serialized input array key `accounts` (HubSpot irs433f_accounts, recorded in adapters/hubspot/crosswalk.433f.json as consumed_by groups.accounts.array) is bound by no group since defect D1 split `accounts` into `bank_accounts` and `investments`. Its rows carry no asset class, so nothing in this map can decide which of the two printed tables a given row belongs in — which is exactly the decision D1 was made of. A record supplying only that key binds nothing."
+   },
+   {
+    "id": "F-03",
+    "raised_in": "Prompt 42, commit 1 — found by the sweep for inequality-permitting printed language that [B16] required",
+    "subject": "433-F prints a CAP on the Miscellaneous allowance and no declared line carries it",
+    "the_evidence": "\"The amount claimed for Miscellaneous cannot exceed the standard amount for the number of people in your family. The miscellaneous allowance is for expenses incurred that are not...\" — page 4, baselines y 639.3 x 36.0..266.1, y 628.5 x 36.0..280.1, y 617.7 x 36.0..281.6.",
+    "why_it_was_not_converted_to_an_at_most_line": "TWO REASONS, EITHER OF WHICH IS ENOUGH. (1) The Miscellaneous cell is not a declared line in 433f.totals.json, so there is nothing to change the comparison ON — declaring it would be authoring a new tripwire, not converting one. (2) Its bound is \"the standard amount for the number of people in your family\", which is NOT printed anywhere on 433-F: it comes from the IRS National Standards table in adapters/pdf/maps/irs-standards-2026.json. Every feeder in this engine is a printed cell on the form being checked, and an at_most line whose right-hand side comes from a sidecar is a different construct from the one ruling 2 admitted.",
+    "what_would_settle_it": "A decision that a declared line may take a feeder from the standards sidecar, and the allowable-household-size input that line would have to be computed against — which is the same input 433-A already carries. That is crosswalk and provisioning work, not a comparison-kind change.",
+    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -667,7 +676,7 @@
    }
   ],
   "_count": {
-   "open": 1,
+   "open": 2,
    "resolved": 1
   }
  }

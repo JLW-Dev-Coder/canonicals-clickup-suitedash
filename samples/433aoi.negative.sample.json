@@ -5,6 +5,8 @@
   "why": "Drives the declared floors and the refusals: negative line items that must floor to zero, and the box arithmetic that must not go below it."
  },
  "_synthetic": "SYNTHETIC NEGATIVE-DRIVING FIXTURE. Blank government form, invented taxpayer, every value an obvious placeholder. Derived from samples/433aoi.sample.json by the deltas listed in _drives below and by nothing else: every cell not named there is the acceptance fixture value. Its only job is to push each DRIVABLE declared floor below zero so the printed 0 - and not a negative number - is what the tripwire reads back.",
+ "_business_income_expense_route": "OPERATOR INPUT, declared per adapters/pdf/record-shape.mjs. This form prints a route that attaches a profit and loss statement, enters the section total directly and leaves the operand lines EMPTY; the filed page records nowhere which route was taken. \"grid\" says this record completed the printed lines, and gate step 11 then requires the operands to sum to the total AND at least one of them to be completed. Absent, the gate STOPS - there is no default.",
+ "business_income_expense_route": "grid",
  "intake_id": "433aoi-negative-floors",
  "s1_tp_last_name": "Sample-Taxpayer-LastName",
  "s1_tp_first_name": "SampleFirstName",

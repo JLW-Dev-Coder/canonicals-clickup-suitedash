@@ -96,14 +96,13 @@
    "_why_renumbered": "Filed as C-23 while the C- family is 433-A(OIC)'s own per-form carried register, which ALREADY held a resolved C-23. Two registers, one id string, two different items — the same collision this register's [D-07] is about, one level out. Cross-form items are D- prefixed."
   },
   {
-   "id": "D-09",
+   "id": "D-10",
    "form": "engine-wide",
-   "raised_in": "Prompt 41, commit 1 — split off [D-08] when reachability closed the half that mattered",
-   "subject": "exclusion-sweep.mjs still does not distinguish a bare call from a method call, so `x.norm(...)` matches a `norm` defined in the SAME file",
-   "the_mechanism": "CALL is /\\b([A-Za-z_$][\\w$]*)\\s*\\(/g over the text of an exclusion position, which matches the identifier before a \"(\" whether or not a \".\" precedes it. Reachability now requires the name to be defined in or imported into the calling file, so the cross-file accident is gone. What survives is the same-file case: a file that defines `const norm = ...` and elsewhere calls `someMap.norm(...)` in an exclusion position attributes that site to its own predicate.",
-   "why_it_is_smaller_than_D_08": "The dangerous direction of [D-08] was a register entry standing over a call the file could not even see — a disposition sound only while a name collision held, in a file nobody would think to check. This one is confined to a single file, where the definition and the call are both in front of whoever reads the disposition, and the entry names the file. It can still be wrong; it can no longer be wrong invisibly.",
-   "what_would_close_it": "Read the character before the identifier and refuse a site where it is a \".\". That is a change to exclusionSites(), which every entry in PREDICATES is measured by, so its no-op path has to be proved across all twenty-eight entries and every site they cover in the same run — the same standard the reachability change was held to, and the reason it is not being done in the same commit as slice work.",
-   "the_current_exposure": "Zero sites in this tree are known to be in this state. That is an observation and not a proof: nothing enumerates it, which is itself part of what would close this.",
+   "raised_in": "Prompt 42, commit 1 — split off [D-09] when the enumeration closed the half that could be measured",
+   "subject": "exclusionSites() still attributes a method call to a same-file predicate; the exposure is now measured, the mechanism is not fixed",
+   "the_mechanism": "CALL is /\\b([A-Za-z_$][\\w$]*)\\s*\\(/g and \\b matches after a \".\", so `someMap.norm(...)` in an exclusion position is attributed to a same-file `const norm`. Reachability killed the cross-file case; this is what is left.",
+   "what_is_different_now": "The exposure is a DERIVED 0 rather than an observation, re-derived on every validate-map run and every sweeps run by adapters/pdf/enumerate-shadowing.mjs, with a canary that fires every verdict and an unreadable row treated as a STOP. The day the number stops being 0 is a reported finding with the file, the line, the predicate and its defining module named.",
+   "what_would_close_it": "Read the character before the identifier inside exclusionSites() and refuse a site where it is a \".\". That is a change to the function every entry in PREDICATES is measured by, so its no-op path has to be proved across all twenty-eight entries and every site they cover in the same run — the standard the reachability change was held to. The enumerator above is what that proof would be run against: it already names, per site, whether the attribution rests on a bare call.",
    "status": "OPEN"
   }
  ],
@@ -175,10 +174,25 @@
    "how_it_was_closed": "predicateDefinitions() returns name -> the set of swept files defining it; reachableIn(file) returns the names that file can actually reach, from its own definitions and from the named imports it declares, each resolved back to the module that defines it. An exclusion site carries `definedIn`. Every PREDICATES entry names its defining module (one, or a list where the same one-line predicate is genuinely declared in several files), and sitesFor() matches on the pair. The orphan check, the completeness check and [EX-90] all moved to the pair.",
    "proved_by": "runReachCanary(), a three-file synthetic tree held in memory: x/a.mjs defines a predicate, x/b.mjs calls a same-named METHOD and imports nothing, x/c.mjs imports the predicate from x/a.mjs and calls it. The rule must attribute NOTHING to x/b.mjs and exactly one reachable name to x/c.mjs, RESOLVED BACK TO x/a.mjs. Both directions are asserted, because a rule that attributed nothing to anybody would pass the first half alone. Printed on every run of the sweep.",
    "what_it_cost_to_find": "The rescoping found a live instance on its first run: `covered` is defined in blanket-audit.mjs and, this commit, also in the new sweep-boundary.mjs. Under the old rule [EX-20] — a disposition written about a forward-reference filter — would have silently absorbed a gitignore test in an unrelated file. It is now [EX-29], with its own reason."
+  },
+  {
+   "id": "D-09",
+   "form": "engine-wide",
+   "raised_in": "Prompt 41, commit 1 — split off [D-08] when reachability closed the half that mattered",
+   "subject": "exclusion-sweep.mjs still does not distinguish a bare call from a method call, so `x.norm(...)` matches a `norm` defined in the SAME file",
+   "the_mechanism": "CALL is /\\b([A-Za-z_$][\\w$]*)\\s*\\(/g over the text of an exclusion position, which matches the identifier before a \"(\" whether or not a \".\" precedes it. Reachability now requires the name to be defined in or imported into the calling file, so the cross-file accident is gone. What survives is the same-file case: a file that defines `const norm = ...` and elsewhere calls `someMap.norm(...)` in an exclusion position attributes that site to its own predicate.",
+   "why_it_is_smaller_than_D_08": "The dangerous direction of [D-08] was a register entry standing over a call the file could not even see — a disposition sound only while a name collision held, in a file nobody would think to check. This one is confined to a single file, where the definition and the call are both in front of whoever reads the disposition, and the entry names the file. It can still be wrong; it can no longer be wrong invisibly.",
+   "what_would_close_it": "Read the character before the identifier and refuse a site where it is a \".\". That is a change to exclusionSites(), which every entry in PREDICATES is measured by, so its no-op path has to be proved across all twenty-eight entries and every site they cover in the same run — the same standard the reachability change was held to, and the reason it is not being done in the same commit as slice work.",
+   "the_current_exposure": "Zero sites in this tree are known to be in this state. That is an observation and not a proof: nothing enumerates it, which is itself part of what would close this.",
+   "status": "RESOLVED",
+   "resolved_in": "Prompt 42, commit 1 — ruling 3",
+   "what_was_actually_asked_for_and_what_was_delivered": "The ruling asked for [D-09]'s exposure to be ENUMERATED or declared underivable with a reason. It is enumerated. adapters/pdf/enumerate-shadowing.mjs classifies every attribution `exclusionSites()` makes — imported, so it counts that instrument's own output and not a copy — by whether the attributed predicate appears in the site's captured text as a plain call (BARE, sound), only ever as a method call (METHOD, a [D-09] instance) or not at all (ABSENT, an UNREADABLE STOP rather than a zero). 51 attributions across 14 files: 51 sound, 0 instances, 0 unreadable. The sentence \"zero known instances - stated as an observation, not a proof\" is replaced by a number derived on every validate-map run and every `npm run sweeps`.",
+   "the_canary_because_the_expected_answer_is_zero": "An enumerator whose answer is zero is the easiest object in a repo to get wrong, because a broken one and a clean tree print the same number. Seven synthetic classifier behaviours fire on every run and the count is not printed at all if any fails — including that a longer name is not matched by a shorter one, that an optional-chained method reads METHOD, and that null text reads ABSENT rather than 0. Proved beyond the synthetic strings too: a real `bag.norm(xs)` planted in a swept file was found and named with its file, line and defining module, and the enumeration returned to 0 when the plant was removed.",
+   "what_this_does_NOT_do_and_what_is_still_open": "IT DOES NOT CLOSE THE MECHANISM. exclusionSites() still does not read the character before the identifier, so a `x.norm(...)` written into an exclusion position tomorrow would be attributed tomorrow. What has changed is that it would be REPORTED tomorrow instead of discovered later. Closing the mechanism is a change to the function every one of the twenty-eight register entries is measured by, and its no-op path has to be proved across all of them in the same run — carried on as [D-10] so the remaining work is not read as done."
   }
  ],
  "_count": {
   "open": 6,
-  "resolved": 3
+  "resolved": 4
  }
 }

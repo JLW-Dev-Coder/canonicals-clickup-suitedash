@@ -895,6 +895,19 @@ export const MANIFEST = [
     kind: 'underivable',
     reason: 'A transcription of the DRAWN PAGE: a caption quoted verbatim, the y of its baseline, the x range it spans, and the printed convention that makes a pairing determinate. The numbers are COORDINATES and printed-line references, not counts of anything this map holds, and re-deriving them here would be one instrument measuring the page and then comparing the answer with itself. Every coordinate in the covered sites is checked by adapters/pdf/align-block.mjs, whose prover compares quoted y and x runs against the geometry actually drawn on the page. The claims that DO state a count about the page - how many markers it draws, how many runs form the heading, how many bullets carry no widget - are derived by [S-24], and a count-stating site [S-24] does not recognise is reported UNDISPOSED rather than falling here.' }),
 
+  // ═══ the declared record shape ═══════════════════════════════════════════════════════
+  // The one thing in this block that IS a count of a set this repo holds — which printed
+  // sentences govern which declared lines — is derived and asserted by
+  // adapters/pdf/record-shape.mjs, in both directions, on every validate-map run: `governs` on
+  // the declaration must equal the union of `governs` across the quoted sentences, and every
+  // governed line must be found in the totals file carrying exactly that declaration. So the
+  // numbers left here are coordinates, and they fall for the same reason [S-18] and [S-27]'s
+  // do. Named as its own entry rather than folded into either of those, because a blanket
+  // widened to swallow a new construct is how [S-26] happened.
+  D({ id: 'S-34', file: /\.map\.json$/, at: /^record_shape(\.|$)/,
+    kind: 'underivable',
+    reason: 'THE DECLARED RECORD SHAPE. Every number in it is a PRINTED COORDINATE — the page, the text baseline and the x span of a route sentence quoted verbatim off the drawn page — plus printed line numbers inside the quotations themselves ("Do not complete lines (6) - (10)"). None counts a set this repo holds, and a coordinate retyped in prose beside them would be a second copy of the same fact. They are NOT left unchecked: adapters/pdf/record-shape.mjs re-measures every one of them against the drawn page on every validate-map run — the quoted sentence must be a run actually drawn on the declared page, its baseline within 0.75pt of the declared y and its span within 0.75pt of the declared x, which is the same tolerance align-block prints at. The one claim in this block that IS about a set — which sentence governs which declared line — is DERIVED AND ASSERTED IN BOTH DIRECTIONS by adapters/pdf/record-shape.mjs on every validate-map run, and a declaration whose `governs` disagreed with its quoted sentences, or whose governed line lost its clause, is a STOP there rather than a mismatch here.' }),
+
   D({ id: 'S-15', file: /\.totals\.json$/, at: /^(totals\[\d+\]|not_checkable(\.|$)|_why$|_slice$|authored_from)/,
     kind: 'underivable',
     reason: 'The body of the totals declaration: a printed caption quoted verbatim, the operands that caption names, and the reason a printed total-shaped cell is not checkable. Every number in it is a PRINTED LINE MARKER or a figure the page draws. It is checked — but by step 11 of the gate, which recomputes each declared total from the filled PDF and reports checked/skipped/failed, and by validate-map.mjs, which requires every money cell here to sit in exactly one rounding block. Counting is the wrong instrument for it.' }),

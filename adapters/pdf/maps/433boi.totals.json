@@ -543,7 +543,15 @@
    "_printed_operand_list_verbatim": "\"Add lines (6) through (10) and enter the amount in Box B =\". FIVE operands, named as a range and printed one per row: (6) Gross receipts y 471.1, (7) Gross rental income y 456.7, (8) Interest income y 442.3, (9) Dividends y 427.9, (10) Other income y 413.5 with \"(specify on attachment)\" beside it at x 86.2..169.4. No lettered sub-line exists anywhere in Section 3, so no exclusion sentence is needed and none is printed.",
    "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 387.0, x 112.0..435.6.",
    "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 396.6, x 336.9..435.6 and nothing else.",
-   "_the_note_above_this_section_offers_a_way_to_skip_it": "Section 3 prints \"Note: If you provide a current profit and loss statement for the information below, enter the total gross monthly income in Box B below. Do not complete lines (6) - (10).\" at y 511.2 and y 502.2. A record taking that route writes Box B directly and leaves (6) through (10) empty, which this tripwire would read as 0 + 0 + 0 + 0 + 0 against a non-zero Box B. Declared as an arguable item rather than silently excused - see _arguable_pages_4_to_6 in adapters/pdf/maps/433boi.map.json."
+   "_the_note_above_this_section_offers_a_way_to_skip_it": "Section 3 prints \"Note: If you provide a current profit and loss statement for the information below, enter the total gross monthly income in Box B below. Do not complete lines (6) - (10).\" at y 511.2 and y 502.2. A record taking that route writes Box B directly and leaves (6) through (10) empty, which this tripwire would read as 0 + 0 + 0 + 0 + 0 against a non-zero Box B. Declared as an arguable item rather than silently excused - see _arguable_pages_4_to_6 in adapters/pdf/maps/433boi.map.json.",
+   "record_shape": {
+    "declaration": "business_income_expense_route",
+    "checks": {
+     "grid": "operands_sum_to_total",
+     "profit_and_loss_statement": "operands_empty_and_total_present"
+    },
+    "_why": "The Section 3 note authorises a filing on which (6) through (10) are all blank and this box is entered from a profit and loss statement. Under the grid route the five operands must sum to this box AND at least one of them must be completed; under the P&L route all five must be EMPTY and this box must be PRESENT. Both are checks. Neither was available before adapters/pdf/record-shape.mjs, and the second refuses a class of misfiled return - a P&L record that also completed the lines - that nothing here could refuse."
+   }
   },
   {
    "line": "Box C",
@@ -572,7 +580,15 @@
    "_the_floor_is_printed_in_this_block": "\"Do not enter a negative number. If any line item is a negative number, enter \\\"0\\\" on that line.\" at y 97.2, x 112.0..435.6.",
    "_no_multiplier": "The block prints \"Round to the nearest dollar.\" at y 106.8, x 336.9..435.6 and nothing else.",
    "_one_expense_is_forbidden_and_the_form_says_so": "Section 4 prints \"Deductions for non-cash expenses (e.g., depreciation, depletion, etc.) are not permitted as an expense for offer purposes.\" at y 334.7 and y 325.1. That is a constraint on what may go INTO the ten lines, not arithmetic, and no tripwire can express it: a depreciation figure inside (20) is indistinguishable from any other number. Carried as a review-page advisory on this total.",
-   "review_page_advisory": "Section 4 forbids non-cash expenses - depreciation, depletion and the like - as an offer expense, and forbids credit card payments in line (20). The arithmetic here is checked; what went into each line is not. Check lines (11) through (20) against those two exclusions before filing."
+   "review_page_advisory": "Section 4 forbids non-cash expenses - depreciation, depletion and the like - as an offer expense, and forbids credit card payments in line (20). The arithmetic here is checked; what went into each line is not. Check lines (11) through (20) against those two exclusions before filing.",
+   "record_shape": {
+    "declaration": "business_income_expense_route",
+    "checks": {
+     "grid": "operands_sum_to_total",
+     "profit_and_loss_statement": "operands_empty_and_total_present"
+    },
+    "_why": "The Section 4 note, identical in condition and different in wording, over the ten operands (11) through (20). Same two checks."
+   }
   },
   {
    "line": "Box D",
@@ -671,6 +687,40 @@
    "_THE_FIELD_BEHIND_THIS_LINE_IS_NAMED_BOX_H": "The AcroForm field is Box_H_Future_Remaining_Income and the page prints \"Box F\". The name is inherited from 433-A(OIC), where the x24 future-remaining-income box IS Box H because that form prints eight boxes. The role transferred exactly and only the letter is wrong. Recorded per occurrence in 433boi.map.json _the_names_that_lie_on_pages_4_to_6, and this line is bound from the printed caption."
   },
   {
+   "line": "Box A -> page 5 (offer row)",
+   "caption": "Enter the amount from Box A*",
+   "caption_at": "y 540.1, x 39.6..168.1, over the cell rect x 50.4..176.4 on the offer equation row, whose bare \"$\" is drawn at y 485.8, x 41.0..45.4.",
+   "total_key": "s5_amount_from_box_a",
+   "comparison": "at_most",
+   "at_most_printed": "*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.",
+   "at_most_printed_at": {
+    "page": 5,
+    "y": 461.1,
+    "x": [
+     36,
+     452.1
+    ]
+   },
+   "feeders": [
+    {
+     "keys": [
+      "s3_box_a_available_equity_in_assets"
+     ]
+    }
+   ],
+   "_why_one_sided_and_not_an_equality": "THE ASTERISK. The footnote permits a REDUCTION of Box A by the equity in income-producing assets other than real estate, and Section 2 prints no column marking an asset as income-producing and no cell anywhere holds the excluded amount - so a correct filing can print less than Box A by an amount the form records nowhere, and an equality would fail it. Nothing printed anywhere on this form permits an ADDITION, so the other half of the constraint is sound and is now declared. See adapters/pdf/comparisons.mjs.",
+   "_what_it_refuses": "A page-5 copy that OVERSTATES Box A. That inflates the minimum offer amount on a filed offer in compromise - the taxpayer offers the IRS more than the form computes - and until this line was declared nothing in this engine looked at the cell at all.",
+   "_the_sibling_form_settles_nothing_and_the_difference_is_one_asterisk": "433-A(OIC) prints the analogous cell as \"Enter the amount from Box A\" y 532.9, x 39.6..164.6 continuing \"plus Box B\" / \"(if applicable)\" at y 522.1, with NO asterisk and NO exclusion footnote anywhere on its page 7 - checked against every printed run on that page. That cell is declared as an EQUALITY on that form and stays one. The whole difference between a checked operand and a one-sided one across the two forms is the asterisk.",
+   "_superseded_declaration_kept_verbatim": {
+    "_what_this_is": "This cell was declared NOT CHECKABLE through slice 3, and that declaration is kept here verbatim rather than deleted. It got the printed evidence right and the disposition wrong: the reason it gave for declining - that the engine had no construct for a one-sided line - was true when it was written and is the thing this commit changed.",
+    "printed_caption": "Enter the amount from Box A*",
+    "why_not_checkable": "THE ASTERISK. The footnote at y 461.1, x 36.0..452.1 reads \"*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.\" So this cell is Box A MINUS an optional exclusion the taxpayer chooses and the form records nowhere: Section 2 prints no column marking an asset as income-producing, and no cell anywhere holds the excluded amount. A tripwire asserting equality with Box A would fail a correctly filed form that took the exclusion; one accepting anything at or below Box A would refuse almost nothing. 433-A(OIC) prints the analogous cell as \"Enter the amount from Box A plus Box B (if applicable)\" with NO exclusion footnote, and that one IS checked - the difference is one asterisk and it is the whole difference.",
+    "review_page_advisory": "This cell is Box A, optionally reduced by the equity in income-producing assets other than real estate that you listed in Section 2. The form records no such marking, so nothing here can check the reduction. If you took the exclusion, keep the working with the return.",
+    "_the_one_sided_check_that_was_considered_and_not_declared": "This cell can never legitimately EXCEED Box A: the footnote permits an exclusion and nothing on the page permits an addition. A one-sided tripwire is a real constraint and this engine has no construct for one - every declared line is an equality with an optional floor - so declaring it would mean adding a comparison kind to step 11 in a slice. Recorded as an arguable item rather than silently dropped; see _arguable_pages_4_to_6 in the map."
+   },
+   "review_page_advisory": "This cell is Box A, optionally reduced by the equity in income-producing assets other than real estate that you listed in Section 2. The form records no such marking, so nothing here can check the reduction. If you took the exclusion, keep the working with the return."
+  },
+  {
    "line": "Offer Amount",
    "caption": "Determine your minimum offer amount by adding the total available assets from Box A to the amount in either Box E or Box F. Your offer amount must be more than zero.",
    "caption_at": "the instruction at y 565.9, x 36.0..566.9 wrapping to y 556.3, x 36.0..103.1. The row beneath draws it as an equation: \"$\" y 485.8 x 41.0..45.4 [Box A amount cell, rect x 50.4..176.4] \"+\" y 485.9 x 195.1..200.9 \"$\" y 485.8 x 221.0..225.4 [Box E or Box F cell, rect x 230.4..356.4] \"=\" y 485.9 x 375.1..380.9 \"$\" y 485.2 x 399.6..404.6 [Offer Amount cell, rect x 403.2..572.4].",
@@ -742,13 +792,6 @@
     "printed_caption": "Total value of equipment listed from attachment [current market value X .8 minus any loan balance(s)]",
     "why_not_checkable": "Same shape as (1d), (2d), (3c) and (4d). Everything it sums is on an attachment and not on this form, so nothing printed on the page could verify it. The bracketed part of the caption states arithmetic the preparer does on the attachment, not arithmetic this form prints operands for. It is nevertheless an operand of (5), which IS checkable.",
     "review_page_advisory": "Line (5b) must already have the X .8 quick-sale discount applied to the attached equipment, net of loan balances, and any leased or income-producing item on the attachment must be entered as 0. Nothing on this form verifies it."
-   },
-   {
-    "map_key": "s5_amount_from_box_a",
-    "printed_caption": "Enter the amount from Box A*",
-    "why_not_checkable": "THE ASTERISK. The footnote at y 461.1, x 36.0..452.1 reads \"*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.\" So this cell is Box A MINUS an optional exclusion the taxpayer chooses and the form records nowhere: Section 2 prints no column marking an asset as income-producing, and no cell anywhere holds the excluded amount. A tripwire asserting equality with Box A would fail a correctly filed form that took the exclusion; one accepting anything at or below Box A would refuse almost nothing. 433-A(OIC) prints the analogous cell as \"Enter the amount from Box A plus Box B (if applicable)\" with NO exclusion footnote, and that one IS checked - the difference is one asterisk and it is the whole difference.",
-    "review_page_advisory": "This cell is Box A, optionally reduced by the equity in income-producing assets other than real estate that you listed in Section 2. The form records no such marking, so nothing here can check the reduction. If you took the exclusion, keep the working with the return.",
-    "_the_one_sided_check_that_was_considered_and_not_declared": "This cell can never legitimately EXCEED Box A: the footnote permits an exclusion and nothing on the page permits an addition. A one-sided tripwire is a real constraint and this engine has no construct for one - every declared line is an equality with an optional floor - so declaring it would mean adding a comparison kind to step 11 in a slice. Recorded as an arguable item rather than silently dropped; see _arguable_pages_4_to_6 in the map."
    },
    {
     "map_key": "s5_amount_from_box_e_or_box_f",

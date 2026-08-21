@@ -73,6 +73,8 @@ import { readFormRevisionWithPages } from './read-form-revision.mjs';
 import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mjs';
 import { parseMoney, loadRounding, blockFor, applyRounding, modeRounds } from './rounding.mjs';
 import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
+import { loadRecordShape, statesOf, stateFromRecord, checkOperandsEmptyTotalPresent, checkOperandsPresent, canary as recordShapeCanary } from './record-shape.mjs';
+import { compare as compareLine, canary as comparisonCanary } from './comparisons.mjs';
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -286,6 +288,26 @@ export const computeDeclarationCoverage = ({ live, rows, declined, declTotals, m
       for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
       for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
       for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`, `${p.key} = ${JSON.stringify(String(p.equals))}`);
+      // THE DECLARED RECORD SHAPE. ONE ENTRY PER DECLARED STATE OF THE ROUTE, not one per
+      // line, because the construct's whole claim is that BOTH routes are checked and a single
+      // entry would report the line as covered the moment either was. A record can only ever
+      // take one route, so a form with two states needs two fixtures before this table is
+      // clean — which is the point: until both exist, one of the two checks has never run.
+      // The identity carries the STATE and not the outcome, for the reason the predicate
+      // entries carry theirs.
+      if (r.recordShape) {
+        for (const st of (r.recordShapeStates || []))
+          ctx0('record_shape', `${r.recordShape.input} = ${JSON.stringify(st)}`, st === r.recordShape.state && r.recordShape.holds === true,
+            st === r.recordShape.state ? 'the route was declared and its check did not hold on this fixture' : `this fixture declared the ${JSON.stringify(r.recordShape.state)} route, so the ${JSON.stringify(st)} check did not run`,
+            `${r.recordShape.input} = ${JSON.stringify(st)}`);
+      }
+      // A ONE-SIDED LINE IS EXERCISED WHEN THE INEQUALITY BITES, not when it holds. Equality
+      // is the ordinary case of an `at_most` line — a record that excluded nothing prints the
+      // total exactly — so a run where printed equalled recomputed proves only that the line
+      // was compared, never that the printed permission is real. `strict` is the discriminator.
+      if (r.comparison === 'at_most')
+        ctx0('at_most', 'printed < recomputed', !!r.strict,
+          r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : 'the printed figure equalled the recomputed one, so the declared exclusion was not taken on this record');
     }
     // Overflow drops: a group whose printed slots ran out. Read from the map's declared max
     // against the rows the record actually carried, not from the fill engine's log — the
@@ -674,6 +696,38 @@ const steps = [
       ? entry.total_key
       : (entry.total_cell?.group ? `${entry.total_cell.group}[${entry.total_cell.row ?? 0}].${entry.total_cell.column}` : null);
 
+    // ─── THE DECLARED RECORD SHAPE ───────────────────────────────────────────────────────
+    //
+    // Which printed ROUTE this record took through a section that prints two of them, and the
+    // check each route earns. See adapters/pdf/record-shape.mjs for why this is an operator
+    // input rather than a predicate over a cell the form does not print, and why BOTH routes
+    // are checkable rather than one being a skip.
+    //
+    // Resolved ONCE, before any line runs, and a record that names no state on a form whose
+    // map declares one is a STOP here — not a default, not a skip. The comparators' canary
+    // fires first: a comparator that cannot say NO would let every line below report a
+    // checked route over a form nothing was checked on.
+    const recordShape = loadRecordShape(mapDoc);
+    const shapeStops  = [];
+    const shapeState  = new Map();                  // declaration id -> the state this record declares
+    {
+      const bird = recordShapeCanary();
+      if (bird.failed.length) shapeStops.push(`the record-shape comparators' canary did not bite: ${bird.failed.join('; ')}`);
+      const cbird = comparisonCanary();
+      if (cbird.failed.length) shapeStops.push(`the comparison canary did not bite: ${cbird.failed.join('; ')}`);
+    }
+    if (recordShape.declared) {
+      for (const d of recordShape.declarations) {
+        const r = stateFromRecord(d, sample);
+        if (r.stop) shapeStops.push(`${d.id}: ${r.stop}`);
+        else shapeState.set(d.id, r.state);
+      }
+      console.log('');
+      console.log(`  RECORD SHAPE — ${recordShape.declarations.length} printed route(s) this form draws, and what ${samplePath} declares:`);
+      for (const d of recordShape.declarations)
+        console.log(`    ${d.id}: "${d.input}" = ${shapeState.has(d.id) ? JSON.stringify(shapeState.get(d.id)) : '(NOT DECLARED — STOP)'}  [states: ${statesOf(d).join(' | ')}]`);
+    }
+
     const rows = [];
     for (const entry of decl.totals) {
       const spelling = totalSpelling(entry);
@@ -695,6 +749,17 @@ const steps = [
                         ? `cell:${entry.total_cell.group}.${entry.total_cell.column}${typeof entry.total_cell.row === 'number' ? `#${entry.total_cell.row}` : ''}`
                       : null,
                   floor: (typeof entry.floor === 'number') ? entry.floor : null, floored: false,
+                  // WHICH COMPARISON THIS LINE DECLARES, and — for a one-sided line — whether
+                  // the inequality actually bit on this record. See comparisons.mjs: equality
+                  // is the ORDINARY case of an `at_most` line, so "held" alone cannot tell a
+                  // run that exercised the printed exclusion from one that did not.
+                  comparison: entry.comparison ?? 'equals', strict: false,
+                  // EVERY DECLARED OPERAND CELL, BLANK ONES INCLUDED. The sum below drops
+                  // blanks because a blank contributes nothing to it; the record-shape
+                  // comparator's whole subject is which cells are blank, and a list that had
+                  // dropped them could not tell an empty operand from one the map never named.
+                  operandCells: [],
+                  recordShape: null,
                   // DECLARATION COVERAGE. What this line DECLARES, and what actually FIRED on
                   // this fixture. A declared behaviour no fixture exercises is a rule nothing
                   // has ever proved — Box F's floor was one, and C-16 records the same gap on
@@ -711,6 +776,10 @@ const steps = [
       const tv = parseMoney(tp.text);
       if (tv.n === null) { r.checkable = false; r.why = `the printed total "${tv.raw}" is not a number`; rows.push(r); continue; }
       r.printed = tv.n;
+      // The RAW total text, kept beside the parsed number. "" and "0" both parse to 0 and the
+      // record-shape comparator has to tell them apart: an empty total under a declared P&L
+      // route is the route declared and not taken, and a printed 0 is an answer.
+      r.printedRaw = tp.text;
 
       for (const fd of entry.feeders) {
         // The predicate is asked BEFORE the cells are read, because a false predicate means
@@ -762,6 +831,7 @@ const steps = [
             if (!m) { r.checkable = false; r.why = `the extract pattern read no amount out of a non-empty cell: ${JSON.stringify(String(raw).slice(0, 60))}`; break; }
             raw = m[1];
           }
+          r.operandCells.push({ target: t, raw: p.text });
           const v = parseMoney(raw);
           if (v.n === null) { r.checkable = false; r.why = `a feeder cell is not a number: ${JSON.stringify(v.raw.slice(0, 60))}`; break; }
           if (!v.blank) { cellSum += v.n; cells.push({ target: t, n: v.n }); }
@@ -815,7 +885,60 @@ const steps = [
       // them in, and recorded when it bites so a match that depended on it can never read as
       // an unconditional match.
       if (r.checkable && !r.skipped && r.floor !== null && r.sum < r.floor) { r.sum = r.floor; r.floored = true; }
-      r.match = r.checkable && !r.skipped && cents(r.printed) === cents(r.sum);
+
+      // ─── THE DECLARED RECORD SHAPE, APPLIED ────────────────────────────────────────────
+      //
+      // A line carrying a `record_shape` clause is checked by the rule its DECLARED STATE
+      // earns, and there is no state that earns a skip. The grid route runs the ordinary
+      // comparison AND asserts at least one operand was completed; the profit-and-loss route
+      // asserts every operand is blank and the total is present. Both can say NO, and the
+      // reason is carried on the row so the failure print-out states which route was declared
+      // and what the page did instead.
+      if (r.checkable && !r.skipped && entry.record_shape) {
+        const dId  = entry.record_shape.declaration;
+        const d    = recordShape.byId.get(dId);
+        const st   = shapeState.get(dId);
+        if (!d || st === undefined) {
+          // Already a STOP collected above; the line is marked not checkable rather than
+          // silently compared, because comparing it would put a verdict in the transcript for
+          // a route nobody declared.
+          r.checkable = false;
+          r.why = `record shape "${dId}" could not be resolved for this record — see the RECORD SHAPE STOP above.`;
+        } else {
+          const check = entry.record_shape.checks?.[st];
+          r.recordShape = { declaration: dId, input: d.input, state: st, check, holds: null, why: null };
+          // EVERY state the route declares, carried on the row so the coverage table can name
+          // the ones this fixture did NOT take. A table built from the taken state alone would
+          // report a two-route line as fully covered on the first fixture that ran either.
+          r.recordShapeStates = statesOf(d);
+          if (check === 'operands_empty_and_total_present') {
+            const v = checkOperandsEmptyTotalPresent(r.printedRaw, r.operandCells);
+            r.recordShape.holds = v.holds; r.recordShape.why = v.why;
+            r.recordShape.operands = v.operands; r.recordShape.filled = v.filled;
+          } else {
+            const v = checkOperandsPresent(r.operandCells);
+            r.recordShape.holds = v.holds; r.recordShape.why = v.why;
+            r.recordShape.operands = v.operands; r.recordShape.filled = v.filled;
+          }
+        }
+      }
+
+      // ─── THE COMPARISON ────────────────────────────────────────────────────────────────
+      //
+      // `equals` for every line that declares nothing; `at_most` for the one printed sentence
+      // on this series that permits a checked figure to be less than the sum of its operands.
+      // A P&L-route line makes NO arithmetic claim — the page prints no operands to sum — so
+      // its verdict IS the record-shape verdict, and folding an equality in beside it would be
+      // comparing a total against a zero the form never printed.
+      const arithmeticApplies = !(r.recordShape && r.recordShape.check === 'operands_empty_and_total_present');
+      if (r.checkable && !r.skipped) {
+        const v = arithmeticApplies ? compareLine(r.comparison, r.printed, r.sum) : { holds: true, strict: false };
+        r.strict = v.strict;
+        r.match = v.holds && (r.recordShape ? r.recordShape.holds === true : true);
+      } else {
+        r.match = false;
+      }
+      r.arithmeticApplies = arithmeticApplies;
       rows.push(r);
     }
 
@@ -840,8 +963,18 @@ const steps = [
         ...(r.wasRounded ? [`rounded, ${r.roundingMode}`] : []),
         ...(r.floored ? [`floored at ${money(r.floor)}`] : []),
       ];
+      // The DECLARED ROUTE and the DECLARED COMPARISON are named on the line too, for the same
+      // reason: an at_most line that held at equality and one that held strictly below produce
+      // the same "yes", and a P&L-route line makes no arithmetic claim at all — a column
+      // reading 0.00 beside it would look like a recomputation that came out empty.
+      if (r.recordShape) applied.push(`route ${r.recordShape.state}`);
+      if (r.comparison === 'at_most') applied.push(r.strict ? 'at_most, strictly below' : 'at_most, held at equality');
       const cellCount = r.feeders.filter(f => !String(f.target).startsWith('(printed constant')).length;
-      console.log(`  ${r.line.padEnd(w)} | ${money(r.printed).padStart(15)} | ${money(r.sum).padStart(19)} | ${r.match ? 'yes' : 'NO'}  (${cellCount} feeder cell${cellCount === 1 ? '' : 's'}${applied.length ? `, ${applied.join(', ')}` : ''})`);
+      const sumCol = r.arithmeticApplies === false
+        ? `${r.recordShape.filled}/${r.recordShape.operands} operands filled`
+        : money(r.sum);
+      console.log(`  ${r.line.padEnd(w)} | ${money(r.printed).padStart(15)} | ${sumCol.padStart(19)} | ${r.match ? 'yes' : 'NO'}  (${cellCount} feeder cell${cellCount === 1 ? '' : 's'}${applied.length ? `, ${applied.join(', ')}` : ''})`);
+      if (r.recordShape && r.recordShape.holds === false) console.log(`  ${' '.repeat(w)} | RECORD SHAPE: ${r.recordShape.why}`);
     }
 
     const unchecked = rows.filter(r => !r.checkable);
@@ -939,8 +1072,14 @@ const steps = [
         line: r.line, addr: r.addr, caption: r.caption,
         verdict: !r.checkable ? 'not-checkable-at-runtime' : r.skipped ? 'skipped' : r.match ? 'verified' : 'failed',
         why: r.why ?? r.skipWhy ?? null,
-        printed: r.printed ?? null, recomputed: r.checkable && !r.skipped ? r.sum : null,
+        printed: r.printed ?? null, recomputed: r.checkable && !r.skipped && r.arithmeticApplies !== false ? r.sum : null,
         rounding_mode: r.roundingMode ?? null, floored: !!r.floored,
+        comparison: r.comparison, at_most_strict: r.comparison === 'at_most' ? !!r.strict : null,
+        record_shape: r.recordShape
+          ? { declaration: r.recordShape.declaration, input: r.recordShape.input, state: r.recordShape.state,
+              check: r.recordShape.check, holds: r.recordShape.holds,
+              operands: r.recordShape.operands ?? null, operands_filled: r.recordShape.filled ?? null }
+          : null,
       })),
       declared_not_checkable: declined.map(e => ({
         addr: e.map_key ? `key:${e.map_key}` : (e.cell?.group && e.cell?.column) ? `cell:${e.cell.group}.${e.cell.column}` : null,
@@ -979,6 +1118,16 @@ const steps = [
       return fail(`${doubled.length} cell(s) carry two contradictory declared states — remove the not_checkable entry that a tripwire now covers`);
     }
 
+    // A RECORD SHAPE THAT COULD NOT BE RESOLVED IS A STOP, NOT A DEFAULT. Reported before the
+    // arithmetic failures because every line it governs was left unchecked, and a run that
+    // printed only the arithmetic would be reporting a form whose route nobody stated.
+    if (shapeStops.length) {
+      console.error('');
+      console.error(`RECORD SHAPE STOP — ${shapeStops.length} declared route(s) could not be resolved for ${samplePath}:`);
+      shapeStops.forEach(m => console.error(`    ${m}`));
+      return fail(`${shapeStops.length} declared record shape(s) unresolved. This form prints more than one route to a total and the filed page cannot tell them apart, so the record must say which one it took. There is no default — a default would declare a route on the filer's behalf`);
+    }
+
     if (predicateStops.length) {
       console.error('');
       console.error(`PREDICATE STOP — ${predicateStops.length} feeder \`when\` clause(s) could not be evaluated:`);
@@ -990,6 +1139,16 @@ const steps = [
     console.error(`ARITHMETIC TRIPWIRE — ${bad.length} printed total(s) disagree with the printed rows that feed them.`);
     for (const r of bad) {
       console.error(`  line ${r.line} — ${r.caption}`);
+      // A RECORD-SHAPE FAILURE IS NOT AN ARITHMETIC ONE and must not be printed as one. The
+      // route the record declared and what the filed page actually shows are the whole of the
+      // finding; a "difference" line under it would invite the reader to reconcile two figures
+      // that were never claimed to be equal.
+      if (r.recordShape && r.recordShape.holds === false) {
+        console.error(`    declared route:      "${r.recordShape.input}" = ${JSON.stringify(r.recordShape.state)}  (check: ${r.recordShape.check})`);
+        console.error(`    what the page shows: ${r.recordShape.why}`);
+        if (!r.arithmeticApplies) continue;
+      }
+      if (r.comparison === 'at_most') console.error(`    comparison:          at_most — the printed figure may be LESS than the recomputed one, never more`);
       console.error(`    printed total:       ${money(r.printed)}`);
       console.error(`    sum of printed rows: ${money(r.sum)}${r.wasRounded ? `  (rounded, ${r.roundingMode}, per block ${r.roundingBlock})` : ''}${r.floored ? `  (floored at ${money(r.floor)})` : ''}`);
       console.error(`    difference:          ${money(r.printed - r.sum)}`);

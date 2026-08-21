@@ -785,6 +785,44 @@
    }
   ]
  },
+ "record_shape": {
+  "_what": "WHICH PRINTED ROUTE THE RECORD TOOK through Section 6. Same construct, same input name and same two states as 433-B(OIC); see adapters/pdf/record-shape.mjs and the _why blocks on that form’s declaration.",
+  "_why_this_form_declares_ONE_where_433boi_declares_the_same_input_over_two_sentences": "This form prints ONE sentence and it names both totals - \"enter the total gross monthly income on line 17 and your monthly expenses on line 29 below. Do not complete lines (12) - (16) and (18) - (28).\" A per-section input here would have to invent a split the page does not draw, which is the second half of the argument for one input across the series.",
+  "_the_coordinate_correction": "THE LANDED PROSE QUOTES THIS PREAMBLE AT y 429.3 AND THAT IS A RUN TOP, NOT A BASELINE. 433aoi.totals.json lines (17) and (29) and _carried C-06 all say \"the Section 6 preamble at y 429.3\"; the drawn baseline is y 421.3 and 421.3 + 8.0 = 429.3, the same off-by-one-run-height shape [B11] found on 433-B(OIC) and [B18] carries across the older slices. The landed prose is NOT rewritten - that is a change to landed evidence and gets its own commit - and this declaration quotes the BASELINE, which is the one declared convention. Carried as [C-21].",
+  "declarations": [
+   {
+    "id": "business_income_expense_route",
+    "input": "business_income_expense_route",
+    "states": {
+     "grid": "The printed lines are completed one per row and the total is their sum. This is the route the form treats as ordinary: the note offering the other one is printed as a Note, above lines that are otherwise unconditional.",
+     "profit_and_loss_statement": "A current profit and loss statement is provided with the offer. The total is entered directly from that statement and the printed operand lines are left EMPTY, which is what the note instructs in so many words: \"Do not complete lines ...\"."
+    },
+    "governs": [
+     "17",
+     "29"
+    ],
+    "printed_evidence": [
+     {
+      "printed": "If you provide a current profit and loss (P&L) statement for the information below, enter the total gross monthly income on line 17 and your monthly expenses on line 29 below. Do not complete lines (12) - (16) and (18) - (28). You may use the amounts claimed for income and expenses on your most recent Schedule C; however, if the amount has changed significantly within the past year, a current P&L should be submitted to substantiate the claim.",
+      "printed_at": {
+       "page": 5,
+       "y": 421.3,
+       "x": [
+        36,
+        553.6
+       ]
+      },
+      "_wraps_to": "Three baselines: y 421.3 x 36.0..553.6, y 411.7 x 36.0..572.2, y 402.1 x 36.0..570.0. Text baselines, the declared convention.",
+      "_it_is_a_preamble_and_not_a_Note": "Unlike 433-B(OIC), which prefixes both of its sentences with \"Note:\", this form runs the route straight into the section preamble under the Section 6 banner at y 436.3. Same fact, different typography, and the difference is recorded rather than smoothed over.",
+      "governs": [
+       "17",
+       "29"
+      ]
+     }
+    ]
+   }
+  ]
+ },
  "_not_checkable": {
   "_why": "ONE LIST, AND IT IS NOT THIS ONE. Printed money cells this map writes and deliberately does not verify are declared in adapters/pdf/maps/433aoi.totals.json under not_checkable.entries[], each with the printed caption that makes it unverifiable and, where one is warranted, the review-page advisory. STILL WRITTEN - not checkable is not the same as not filled.",
   "_this_block_used_to_hold_a_second_copy": "It held 15 entries while the totals file held 18, and the two had drifted in BOTH directions. This copy never learned 9c_business_assets_from_attachment, 10_irs_allowed_deduction_books_and_tools or the 9ab_business_assets.quick_sale_equity group cell, and 17 FIELDS differed across the 15 entries the two shared - including on (3b), (6e) and (7c), where the X .8 warning had been rewritten into a review_page_advisory in the totals copy and left in why_not_checkable here. Each copy’s _why claimed to mirror the other and nothing checked either claim. The asymmetry settled which was the fossil: the totals list is read by render-review.mjs, by rounding.mjs and by run-form-gate.mjs, and THIS block was read by no code at all - fill-433aoi.mjs says so in its own header. The gate’s \"18 declared not checkable\" was counting the live list while these 15 were the list nothing counts, which is _arguable/_carried in a different key. The two facts this copy held alone - the mechanism clause on (1c) and checked_by_hand_before_declaring on (6d) - were moved into the totals entries before it was retired; the rest was prose the totals copy had already evolved past.",
@@ -1823,15 +1861,6 @@
     "partially_answered_in_slice_4": "HALF OF IT IS ANSWERED, AND BY THE PAGE. Section 4's 'Type of business' list prints '(select one)' at y 298.1, x 98.7..135.3 - the only such instruction anywhere on 433-A(OIC) - and is declared exclusive on those words. That settles the METHOD question this item was really about: the map may declare exclusivity when the page states it, and declines to when the page does not. What remains open is unchanged and is now narrower: the (1a)/(1b), (2a)/(2b), (3a) and (8a)/(8b) option lists print no such instruction and are still not declared exclusive, even though a bank account being simultaneously Cash and Money Market/CD is not a thing. The contrast is now on ONE PAGE - Section 4 prints 'select one' and Section 5, eight printed lines below it, does not."
    },
    {
-    "id": "C-06",
-    "raised_in_slice": 5,
-    "subject": "the Section 6 P&L route makes (17) and (29) legitimately unfed, and both tripwires would fail a correctly filed form",
-    "where": "433aoi.map.json._map_evidence_page5.section_6_income_and_expenses and _arguable_page5 P5-2",
-    "the_question": "The printed preamble at page 5 y 429.3 says: enter the total gross monthly income on line 17 and your monthly expenses on line 29, and DO NOT COMPLETE lines (12)-(16) and (18)-(28). A form filed that way prints (17) and (29) with every operand blank. The tripwires for (17) and (29) sum blanks to zero and would report a failure against a filing the page itself authorises.",
-    "what_was_done": "Both tripwires declared and left EXACT. Not weakened, not given a tolerance, not turned into a skip. The acceptance fixture supplies every operand so both check.",
-    "why_still_open": "The only two fixes available are a feeder predicate over a cell this page does not print - there is no P&L-route indicator anywhere on page 5 - and a tolerance, which standing rule refuses. A third option exists and is not a slice decision: declare (17) and (29) not checkable, which would give up two real checks to accommodate a route no record has yet taken. Principal rules."
-   },
-   {
     "id": "C-07",
     "raised_in_slice": 5,
     "subject": "Section 5 and Section 3 both continue across a page break and neither reprints its rounding instruction",
@@ -1934,6 +1963,15 @@
     "the_question": "Same question as C-19, on adjacency rather than order.",
     "what_was_done": "Recorded as a lie, bound by the printed sentence sharing each box's y band.",
     "why_still_open": "Decided together with C-19."
+   },
+   {
+    "id": "C-24",
+    "raised_in": "Prompt 42, commit 1 — found while quoting the Section 6 preamble for the record-shape declaration",
+    "subject": "the landed P&L prose on this form quotes the Section 6 preamble at a RUN TOP, not a text baseline",
+    "the_shape": "433aoi.totals.json line \"17\" says \"The Section 6 preamble at y 429.3\", line \"29\" refers to it, and _carried C-06 said \"The printed preamble at page 5 y 429.3\". The drawn baseline is y 421.3, x 36.0..553.6, and 421.3 + 8.0 = 429.3 — the run height. It is the same off-by-one-run-height reading [B11] found on 433-B(OIC)'s lineage report and [B18] carries across 433-B(OIC)'s slice-1 and slice-2 prose.",
+    "why_it_is_not_fixed_here": "LANDED EVIDENCE IS NOT REWRITTEN TO MATCH A LATER CONVENTION. Editing the quoted coordinate in place would erase what that slice concluded and would be a change to landed evidence in a commit about something else. The NEW declaration quotes the baseline, and adapters/pdf/record-shape.mjs re-measures it against the drawn page on every validate-map run, so the two now sit side by side with one of them proved.",
+    "what_would_close_it": "The same commit that closes [B18]: a single pass over the un-converted coordinate prose on both OIC forms, with the derived count of what moved, and its own check.",
+    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -2025,11 +2063,25 @@
     "the_orphan": "`irs433aoi_monthly_rent_payment` remains LIVE and is marked deprecated in its portal description, naming `irs433_exp_rent` as what replaced it, written by adapters/hubspot/hs-deprecate-property.mjs and read back from the portal rather than from the response. STATED PLAINLY: HubSpot will not free a property name, so the slot is NOT recovered - the portal still holds 663 custom contact properties and the headroom is still 337. What the rebind buys is that the fact stops being held in two places that can diverge, and that no future pass picks the orphan up.",
     "the_assertion": "NO TWO LIVE PROPERTIES HOLD THE SAME FACT. adapters/hubspot/reclassify-against-backbone.mjs now asserts that every `same-fact` ruling is acted on: the key must bind the candidate property, and the orphaned name must appear in no definition file. It reads the RULINGS rather than the live candidate set, because rebinding moves an entry out of the `new` category the candidate test draws from - so a check that watched only candidates would report nothing the moment it succeeded. Proved by restoring the duplicate on purpose: TWO LIVE PROPERTIES, ONE FACT and ORPHAN STILL DEFINED, exit 2.",
     "the_test_it_answers": "Would one property serving both forms ever have to hold two different values for one taxpayer at one moment? No. A taxpayer preparing both filings has ONE monthly rent. The two forms decompose housing differently, which is a question about which LINES exist, not about how many rents are paid."
+   },
+   {
+    "id": "C-06",
+    "raised_in_slice": 5,
+    "subject": "the Section 6 P&L route makes (17) and (29) legitimately unfed, and both tripwires would fail a correctly filed form",
+    "where": "433aoi.map.json._map_evidence_page5.section_6_income_and_expenses and _arguable_page5 P5-2",
+    "the_question": "The printed preamble at page 5 y 429.3 says: enter the total gross monthly income on line 17 and your monthly expenses on line 29, and DO NOT COMPLETE lines (12)-(16) and (18)-(28). A form filed that way prints (17) and (29) with every operand blank. The tripwires for (17) and (29) sum blanks to zero and would report a failure against a filing the page itself authorises.",
+    "what_was_done": "Both tripwires declared and left EXACT. Not weakened, not given a tolerance, not turned into a skip. The acceptance fixture supplies every operand so both check.",
+    "why_still_open": "The only two fixes available are a feeder predicate over a cell this page does not print - there is no P&L-route indicator anywhere on page 5 - and a tolerance, which standing rule refuses. A third option exists and is not a slice decision: declare (17) and (29) not checkable, which would give up two real checks to accommodate a route no record has yet taken. Principal rules.",
+    "status": "RESOLVED",
+    "resolved_in": "Prompt 42, commit 1 — ruling 1",
+    "how": "THE SAME CONSTRUCT AS [B17], WHICH IS THE POINT: this was one defect on two forms. `record_shape` on this map declares the SAME input, business_income_expense_route, over this form's one printed sentence, and lines (17) and (29) each carry a `record_shape` clause with a check per state. The P&L route now requires (12)-(16) and (18)-(28) to be blank on the filed page and the totals to be present; the grid route requires the sum AND at least one completed operand.",
+    "why_this_form_needs_no_second_declaration": "Its one preamble names line 17 and line 29 in the same sentence. A per-section input would have invented a split this page does not draw — which is half the argument for one input across the series; the other half is that 433-B(OIC)'s two notes share one antecedent.",
+    "what_the_original_finding_got_right": "All of it. The two fixes it named as the only ones available were the only ones available IN THIS ENGINE AT THE TIME, and it declined both and said so rather than weakening the tripwires. What it could not see was a third that required a new kind of input."
    }
   ],
   "_count": {
    "open": 16,
-   "resolved": 8
+   "resolved": 9
   },
   "_every_arguable_item_now_has_an_id_here": "ARGUABLE ITEMS AND CARRIED ITEMS ARE THE SAME LIST, and until slice 6 they were two. P5-1 through P5-4 were recorded in _arguable_page5 and only one of the four (P5-2, as C-06) ever reached this ledger; page 4 was worse, with one of its four linked. So seven open or closed questions existed in per-page arrays that nothing reports and nothing counts, which is precisely the disappearing act this ledger exists to prevent, committed by the file that prevents it. C-08 through C-16 are those items, each carrying a `raised_as` naming the array entry it came from. THE LINKAGE IS NOW ASSERTED, not described: adapters/pdf/count-sweep.mjs [S-07b] requires every id in every _arguable_page{N} array to be named by some entry in this ledger, and fails the gate when one is not. Unresolved is fine. Living in only one of two places is not."
  },

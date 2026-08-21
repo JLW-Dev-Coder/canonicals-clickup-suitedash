@@ -560,6 +560,60 @@
    "_why": "Three cells under one printed \"If yes\", two on the pair's own baseline and one on the row below."
   }
  },
+ "record_shape": {
+  "_what": "WHICH PRINTED ROUTE THE RECORD TOOK through a section this form draws two routes to. Read by adapters/pdf/record-shape.mjs and applied at gate step 11, where a declared route selects the check its state earns. Neither state is a skip.",
+  "_why_it_is_an_input_and_not_a_predicate": "Section 3 and Section 4 each print a Note offering a route that leaves every operand of a checked box empty. Nothing on this form records which route was taken: no checkbox, no cell, no marking anywhere on pages 4 or 5. The only thing on the page that differs between the two routes is whether the operand lines are filled, which is the thing being checked - so a predicate over a printed cell is not available, and a predicate over the record alone would make the tripwire check the engine against its own input with the page witnessing neither side. It is an OPERATOR INPUT, of the same kind as allowable_household_size on 433-A: a fact the printed page cannot supply, stated once and then held to.",
+  "_why_one_input_for_two_printed_notes": "BOTH NOTES OPEN WITH THE IDENTICAL ANTECEDENT - \"If you provide a current profit and loss statement\". The consequents differ (Box B and lines (6)-(10); Box C and lines (11)-(20)); the CONDITION does not, and it is about one document. A profit and loss statement is a statement of income AND expenses, so the same document satisfies both antecedents or neither, and there is no filing in which a current P&L exists for Section 3 and not for Section 4. Two inputs could express that state, and an input that can hold a value the page permits no reading of is an input a record can be wrong in silently. 433-A(OIC) prints one sentence over both of its lines and settles the same question from the other side.",
+  "_the_input_name_is_permanent": "business_income_expense_route becomes a HubSpot property name and HubSpot property names are immutable once created. Named for the FACT and not for either form, the rule adapters/hubspot/fields.433a.json states for allowable_household_size, because 433-A(OIC) holds this fact too and 433-B will.",
+  "_absence_is_a_stop": "A record that names no state is a STOP at gate step 11, naming the input, the states and the printed sentence. It is not defaulted to `grid`: a default would declare a route on the filer’s behalf, silently, on the two boxes that set the offer amount.",
+  "declarations": [
+   {
+    "id": "business_income_expense_route",
+    "input": "business_income_expense_route",
+    "states": {
+     "grid": "The printed lines are completed one per row and the total is their sum. This is the route the form treats as ordinary: the note offering the other one is printed as a Note, above lines that are otherwise unconditional.",
+     "profit_and_loss_statement": "A current profit and loss statement is provided with the offer. The total is entered directly from that statement and the printed operand lines are left EMPTY, which is what the note instructs in so many words: \"Do not complete lines ...\"."
+    },
+    "governs": [
+     "Box B",
+     "Box C"
+    ],
+    "printed_evidence": [
+     {
+      "printed": "Note: If you provide a current profit and loss statement for the information below, enter the total gross monthly income in Box B below. Do not complete lines (6) - (10).",
+      "printed_at": {
+       "page": 4,
+       "y": 511.2,
+       "x": [
+        36,
+        543.6
+       ]
+      },
+      "_wraps_to": "y 502.2, x 36.0..121.4 carries \"complete lines (6) - (10).\" The quotation above is the whole sentence; both baselines are given so it can be re-measured. Text baselines, the declared convention.",
+      "governs": [
+       "Box B"
+      ]
+     },
+     {
+      "printed": "Note: If you provide a current profit and loss statement for the information below, enter the total monthly expenses in Box C below. Do not complete lines (11) - (20).",
+      "printed_at": {
+       "page": 4,
+       "y": 312.5,
+       "x": [
+        36,
+        561.9
+       ]
+      },
+      "_wraps_to": "y 302.9, x 36.0..131.6 carries \"complete lines (11) - (20).\"",
+      "_it_is_not_the_same_string": "Word for word this differs from the Section 3 note in two places - \"the total monthly expenses\" for \"the total gross monthly income\", and \"Box C\" for \"Box B\". Quoted separately rather than described as \"the same sentence\" because they are not the same sentence, and an inherited name that checked out everywhere except the letter is exactly what Box_H_Future_Remaining_Income turned out to be on this form.",
+      "governs": [
+       "Box C"
+      ]
+     }
+    ]
+   }
+  ]
+ },
  "groups": {
   "partners": {
    "source": "partners",
@@ -1085,18 +1139,6 @@
     "status": "OPEN"
    },
    {
-    "id": "B16",
-    "raised": "slice 3",
-    "what": "The Box A copy on page 5 permits an exclusion the form records nowhere, and the one-sided check that WOULD catch an overstatement has no construct in this engine. See _arguable_pages_4_to_6[1].",
-    "status": "OPEN"
-   },
-   {
-    "id": "B17",
-    "raised": "slice 3",
-    "what": "Sections 3 and 4 each print a note offering a route that empties the operands of Box B and Box C. Both boxes are still checked. See _arguable_pages_4_to_6[2].",
-    "status": "OPEN"
-   },
-   {
     "id": "B18",
     "raised": "slice 3",
     "what": "The slice-1 and slice-2 evidence prose in this file and in 433boi.headings.json quotes coordinates in BOTH y conventions - roughly half baselines and half run tops - and nothing refuses either, because blanket-audit [K-12] checks a quoted coordinate against a set holding both. Slice 3's prose is entirely in the declared convention and _the_y_convention_in_this_file says so. Rewriting the older blocks is a change to landed evidence and gets its own commit and its own check.",
@@ -1121,10 +1163,32 @@
     "status": "OPEN"
    }
   ],
-  "resolved": [],
+  "resolved": [
+   {
+    "id": "B16",
+    "raised": "slice 3",
+    "what": "The Box A copy on page 5 permits an exclusion the form records nowhere, and the one-sided check that WOULD catch an overstatement has no construct in this engine. See _arguable_pages_4_to_6[1].",
+    "status": "RESOLVED",
+    "resolved_in": "Prompt 42, commit 1 — ruling 2",
+    "how": "A DECLARED LINE MAY NOW BE ONE-SIDED, AND MUST QUOTE THE SENTENCE THAT PERMITS IT. adapters/pdf/comparisons.mjs adds exactly one comparison kind beside `equals`: `at_most`, printed <= recomputed, with `at_most_printed` and `at_most_printed_at` mandatory and a line declaring `equals` while carrying either of them refused. s5_amount_from_box_a leaves not_checkable and becomes the declared line \"Box A -> page 5 (offer row)\", quoting \"*You may exclude any equity in income producing assets (except real estate) shown in Section 2 of this form.\" at p5 y 461.1 x 36.0..452.1. The superseded not_checkable declaration is kept verbatim on the new line.",
+    "what_it_now_refuses": "A page-5 copy that OVERSTATES Box A — which inflates the offer this business makes the IRS, and which nothing in this engine looked at before.",
+    "what_is_still_true_of_the_old_finding": "Everything except the disposition. The exclusion is still recorded nowhere on the form, the reduction is still uncheckable, and the review-page advisory still carries it to the preparer. What changed is that the half of the constraint the page DOES settle is now checked.",
+    "the_sweep_that_says_this_is_the_only_one": "Every printed run on all four mapped forms was read for language permitting an inequality — \"you may exclude\", \"no more than\", \"not exceed\", \"less than\", \"up to\", \"reduce\", \"deduct\". One sentence on one form permits a declared line to print LESS than its operands: this footnote. Every other hit is a floor already declared as one, a printed subtraction already declared as a feeder, or a rule about what may go INTO a figure. 433-F page 4 prints \"The amount claimed for Miscellaneous cannot exceed the standard amount for the number of people in your family\" — reported and NOT converted, and carried as [F-03]: that cell is not a declared line, and its bound comes from the IRS standards table rather than from anything 433-F prints. THE ID IN THIS SENTENCE WAS [F-02] WHEN IT WAS WRITTEN AND THAT ID WAS ALREADY TAKEN ON 433-F. adapters/pdf/register-ids.mjs caught it, along with a [C-21] collision raised in the same patch — the second time in two cycles that a fix reproduced the defect class it fixes, and the first time the check that exists for it was already standing."
+   },
+   {
+    "id": "B17",
+    "raised": "slice 3",
+    "what": "Sections 3 and 4 each print a note offering a route that empties the operands of Box B and Box C. Both boxes are still checked. See _arguable_pages_4_to_6[2].",
+    "status": "RESOLVED",
+    "resolved_in": "Prompt 42, commit 1 — ruling 1",
+    "how": "THE DECLARED RECORD SHAPE. adapters/pdf/record-shape.mjs, and `record_shape` on this map declaring one route input over both printed notes. Box B and Box C each carry a `record_shape` clause naming one check per declared state: `grid` runs the equality AND requires at least one operand to be completed; `profit_and_loss_statement` requires EVERY operand to be blank on the filed page and the total to be present. Neither is a skip, no predicate reads a cell the form does not print, and no tolerance is admitted anywhere.",
+    "the_two_fixes_that_were_refused_and_why_this_is_not_either": "A predicate over an unprinted cell would have made the tripwire check the engine against its own input. A conditional skip would have said \"check this unless the answer would be inconvenient\" and would have passed a record that forgot the lines. This asks the operator one question the page cannot answer, and then holds the filed page to the answer in BOTH directions.",
+    "one_input_and_not_two": "Both notes open with the identical antecedent — \"If you provide a current profit and loss statement\" — and a P&L is one document covering income and expenses, so the two conditions cannot take different values. Two inputs could express a state no reading of the printed sentences permits."
+   }
+  ],
   "_count": {
-   "open": 21,
-   "resolved": 0
+   "open": 19,
+   "resolved": 2
   }
  },
  "_the_condition_that_governs_pages_2_and_3": {

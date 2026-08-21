@@ -785,7 +785,15 @@
       "16_other_income"
      ]
     }
-   ]
+   ],
+   "record_shape": {
+    "declaration": "business_income_expense_route",
+    "checks": {
+     "grid": "operands_sum_to_total",
+     "profit_and_loss_statement": "operands_empty_and_total_present"
+    },
+    "_why": "The Section 6 preamble authorises a filing on which (12) through (16) are all blank and this line is entered from a profit and loss statement. That is [C-06], and the preamble names line 17 by number. Grid route: the five operands sum to it and at least one is completed. P&L route: all five EMPTY and this line PRESENT."
+   }
   },
   {
    "line": "29",
@@ -809,7 +817,15 @@
       "28_other_business_expenses"
      ]
     }
-   ]
+   ],
+   "record_shape": {
+    "declaration": "business_income_expense_route",
+    "checks": {
+     "grid": "operands_sum_to_total",
+     "profit_and_loss_statement": "operands_empty_and_total_present"
+    },
+    "_why": "The same one printed sentence, which names line 29 by number in the same breath as line 17 - which is why this form declares ONE route input covering both and not two."
+   }
   },
   {
    "line": "Box C",
