@@ -1436,6 +1436,14 @@
     "raised": "slice 3",
     "what": "The shared row-shape specification has no class for business EQUIPMENT. 5_business_equipment routes business_property, which is the nearest class it holds - description, current_fmv, current_loan_balance and equity are all its columns - but business_property also declares location, title_holders, purchase_date, monthly_payment, final_payment_date, lender_name_address and lender_phone, none of which this row prints. Whether the specification should grow a business_equipment class, and what 433-B(OIC) contributes to it, is crosswalk work.",
     "status": "OPEN"
+   },
+   {
+    "id": "B22",
+    "raised": "Prompt 42, commit 3 — by the declaration-coverage table, which is where it belongs",
+    "what": "THE ONE-SIDED LINE HOLDS AT EQUALITY ON EVERY FIXTURE, SO THE INEQUALITY HAS NEVER BITTEN. \"Box A -> page 5 (offer row)\" is declared `at_most` and the gate reports `at_most 0/1` on every run: printed equalled recomputed on the acceptance record and on both record-shape records, so what has been proved is that the line is COMPARED, not that the printed permission is real. `strict` is the discriminator and it has never been true.",
+    "why_no_fixture_exercises_it": "A fixture that took the exclusion would have to state an equity figure for income-producing assets other than real estate, and Section 2 of this form PRINTS NO COLUMN marking an asset as income-producing and no cell holds the excluded amount. So the record would carry a number that appears nowhere on the page, chosen by this repo, and the line would then check the engine against a figure the engine invented. That is the same objection that kept the cell out of the totals file for three slices, and it is why the coverage entry is a NAMED GAP rather than a fixture.",
+    "what_would_settle_it": "The crosswalk decision about whether a record may carry an operator-declared exclusion amount — a second operator input of the same kind as business_income_expense_route, with the printed footnote as its authority. If it may, the fixture writes itself and this closes; if it may not, the at_most line is permanently exercised only at equality and the entry says so rather than sitting in the table as an unexplained zero.",
+    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -1484,7 +1492,7 @@
    }
   ],
   "_count": {
-   "open": 17,
+   "open": 18,
    "resolved": 4
   }
  },

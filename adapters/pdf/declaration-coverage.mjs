@@ -51,12 +51,22 @@ import { resolveFixture } from './resolve-fixture.mjs';
 // to the union until somebody remembered to extend the script, and the union would go on
 // reporting a coverage figure that was true of a smaller set of runs than the tree holds.
 //
-// The union is over every fixture that EXERCISES the form: acceptance, stress and negative.
-// `production` is excluded because a real record is a portrait of one taxpayer and says
-// nothing about which declared behaviours a gate run reached; `superseded` is excluded because
-// its run is history and re-running it would put a retired record's coverage into a live
-// figure. Both exclusions are registered in adapters/pdf/sweep-boundary.mjs and printed here.
-const EXERCISING_ROLES = ['acceptance', 'stress', 'negative'];
+// The union is over every fixture that EXERCISES the form: acceptance, stress, negative and
+// record_shape. `production` is excluded because a real record is a portrait of one taxpayer
+// and says nothing about which declared behaviours a gate run reached; `superseded` is excluded
+// because its run is history and re-running it would put a retired record's coverage into a
+// live figure. Both exclusions are registered in adapters/pdf/sweep-boundary.mjs and printed here.
+//
+// record_shape WAS ADDED THE MOMENT THE ROLE EXISTED, AND THAT IS THE POINT OF DERIVING THIS
+// LIST. A record declares one printed route, so the profit-and-loss state of a declared record
+// shape is unreachable from the acceptance fixture and is exercised only by a fixture in that
+// set. Left out, this union would have gone on reporting those states as proved nowhere while
+// adapters/pdf/assert-record-shape.mjs was proving them on every run — a coverage figure true
+// of a smaller set of runs than the tree holds, which is the exact defect the derived list
+// replaced. The two "stops" fixtures in that set are included too: a fixture whose gate run
+// FAILS still reaches every declaration up to the point it failed, and the union is over what
+// was exercised rather than over what passed.
+const EXERCISING_ROLES = ['acceptance', 'stress', 'negative', 'record_shape'];
 const [form, ...named] = process.argv.slice(2);
 if (!form) {
   console.error('usage: node adapters/pdf/declaration-coverage.mjs <form> [<fixture.json> ...]');
@@ -64,14 +74,34 @@ if (!form) {
   process.exit(2);
 }
 let fixtures = named;
+// A record-shape fixture runs in PRODUCTION mode; see the note at the spawn below. Collected
+// from the fixture's own `_fixture.role`, never from its filename.
+const shapePaths = new Set();
 if (!fixtures.length) {
   const { rows, problems } = resolveFixture(form, 'acceptance');
   if (problems.length) { problems.forEach(p2 => console.error(`  ${p2}`)); process.exit(2); }
-  fixtures = rows.filter(r => EXERCISING_ROLES.includes(r.role)).map(r => r.path);
-  const skipped = rows.filter(r => !EXERCISING_ROLES.includes(r.role));
+  // A "stops" RECORD-SHAPE FIXTURE IS NOT AN EXERCISING FIXTURE. It exists to be REFUSED, and
+  // its gate run ends non-zero by design; unioning it here would either take this tool down or
+  // force it to accept a failing gate, and a coverage figure that tolerates a failing gate is
+  // the thing this tool refuses to produce. Its coverage is asserted where it belongs, in
+  // adapters/pdf/assert-record-shape.mjs, which requires it to fail AND to fail for the right
+  // reason. Only the "holds" fixture of each declared state enters the union.
+  // NO SECOND READ AND NO CATCH. `recordShape` comes out of the one parse candidatesFor()
+  // already did. The first draft re-read each fixture behind a try/catch, `readFileSync` was
+  // not imported in this module, and the catch turned that ReferenceError into `null` — so
+  // every record-shape fixture reported as expecting a STOP and the union silently lost the
+  // one fixture that proves the profit-and-loss state. That is the guard-that-skips-when-it-
+  // cannot-read defect, in the commit that added it.
+  const exercises = (r) => EXERCISING_ROLES.includes(r.role) && (r.role !== 'record_shape' || r.recordShape?.expect === 'holds');
+  fixtures = rows.filter(exercises).map(r => r.path);
+  // The paths that run in PRODUCTION mode, collected here from the same rows rather than
+  // recognised from a filename later. A path pattern would be a second classifier beside the
+  // fixture's own declaration, which is the thing resolve-fixture.mjs exists to forbid.
+  for (const r of rows) if (r.role === 'record_shape') shapePaths.add(r.path);
+  const skipped = rows.filter(r => !exercises(r));
   console.log(`declaration-coverage: ${form} — ${fixtures.length} exercising fixture(s) resolved from samples/`);
   for (const f of fixtures) console.log(`    union: ${f}`);
-  for (const r of skipped) console.log(`    not in the union: ${r.path} (${r.role || 'no _fixture.role'})`);
+  for (const r of skipped) console.log(`    not in the union: ${r.path} (${r.role || 'no _fixture.role'}${r.role === 'record_shape' ? ', expects a STOP — asserted by assert-record-shape.mjs instead' : ''})`);
   // A UNION OVER NOTHING IS NOT A UNION. Every declared behaviour would come back unexercised
   // and the tool would report the worst possible answer as if it had measured it.
   if (!fixtures.length) {
@@ -83,7 +113,16 @@ for (const f of fixtures) if (!existsSync(f)) { console.error(`STOP — ${f} doe
 
 const runs = [];
 for (const fx of fixtures) {
-  const r = spawnSync(process.execPath, ['adapters/pdf/run-form-gate.mjs', form, fx, '--saturated', '--declaration-ids'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  // THE MODE IS PER FIXTURE AND IT IS NOT A CHOICE. --saturated asserts that the record reaches
+  // every mapped text cell, and a record-shape fixture on the profit-and-loss route leaves the
+  // governed operand cells EMPTY because the printed note tells it to. Running it saturated
+  // would fail it at step 10 for doing exactly what the form instructs. So a record_shape
+  // fixture runs in PRODUCTION mode, where an empty mapped cell is reported rather than failed,
+  // and the emptiness it is actually about is asserted per line by assert-record-shape.mjs
+  // against the filled PDF. Every other role runs saturated, unchanged.
+  const isShape = shapePaths.has(fx);
+  const mode = isShape ? [] : ['--saturated'];
+  const r = spawnSync(process.execPath, ['adapters/pdf/run-form-gate.mjs', form, fx, ...mode, '--declaration-ids'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   const out = `${r.stdout || ''}${r.stderr || ''}`;
   if (r.status !== 0) {
     console.error(`STOP — the gate FAILED for ${form} on ${fx} (exit ${r.status}). Coverage across a form whose gate does not pass would be a number about a form that cannot be filed.`);

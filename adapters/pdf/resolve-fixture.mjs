@@ -36,7 +36,17 @@
 // which is the same object as a stale path. A candidate carrying no declaration is REPORTED as
 // undeclared and is never silently promoted.
 //
-// FIVE ROLES, and a sixth is a STOP:
+// SIX ROLES, and a seventh is a STOP. The sixth was added deliberately and the sentence that
+// used to read "FIVE ROLES, and a sixth is a STOP" is corrected rather than quietly widened:
+// what that sentence meant, and still means, is that a fixture declaring a role this file does
+// not know is refused. Adding one is a change to this list, in a commit that says so.
+//
+// FIVE OF THE SIX ARE SINGLETONS. `record_shape` is a SET, for a structural reason given in
+// full at `resolveFixtureSet` below: a record declares exactly one printed route, so one
+// fixture can exercise exactly one state, and the construct's whole claim is that both states
+// are checked. Its contract is a COVERAGE contract — one "holds" fixture per declared state,
+// plus a "stops" fixture in each guard direction — which is stronger than exactly-one, not
+// looser, and adapters/pdf/assert-record-shape.mjs is what holds it to that against the map.
 //
 //   acceptance   the record the gate runs saturated. EXACTLY ONE per form.
 //   stress       an over-max record: more rows than the form prints, run with --saturated to
@@ -54,7 +64,11 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 
 export const DIR = 'samples';
-export const ROLES = ['acceptance', 'stress', 'negative', 'production', 'superseded'];
+export const ROLES = ['acceptance', 'stress', 'negative', 'production', 'superseded', 'record_shape'];
+
+// THE ONE ROLE THAT IS A SET AND NOT A SINGLETON. See `resolveFixtureSet` at the foot of this
+// file for its contract and for why the other five are untouched by it.
+export const SET_ROLES = new Set(['record_shape']);
 
 /** Every mapped form, from the maps directory. Derived so a new form needs no edit here. */
 export const MAPPED_FORMS = () =>
@@ -77,7 +91,12 @@ export const candidatesFor = (form) => {
     catch (e) { return { path, unreadable: e.message }; }
     const fx = doc._fixture;
     if (!fx || typeof fx !== 'object') return { path, undeclared: true };
-    return { path, role: fx.role, why: fx.why, supersededBy: fx.superseded_by, declaresForm: fx.form };
+    // `recordShape` is carried out of the parse that already happened. Every consumer that
+    // needs it — declaration-coverage.mjs and assert-record-shape.mjs — would otherwise re-read
+    // and re-parse the same file behind its own try/catch, and one of those catches turned a
+    // missing import into `null` and reported every record-shape fixture as expecting a STOP.
+    // One read, one parse, one place a malformed fixture is reported.
+    return { path, role: fx.role, why: fx.why, supersededBy: fx.superseded_by, declaresForm: fx.form, recordShape: fx.record_shape };
   });
   return { swept, files: files.map((f) => `${DIR}/${f}`), rows };
 };
@@ -118,6 +137,43 @@ export const resolveFixture = (form, role = 'acceptance') => {
   }
 
   return { form, role, path: hits.length === 1 ? hits[0].path : null, rows, swept, files, problems };
+};
+
+/**
+ * THE SIXTH ROLE, AND IT IS A SET.
+ *
+ * The five roles above are singletons and stay singletons: exactly one acceptance fixture, one
+ * stress fixture, one negative fixture per form, and TWO is a STOP naming both. That rule is
+ * what makes "the gate resolves its fixture from the form id" mean anything.
+ *
+ * `record_shape` cannot be a singleton and the reason is structural rather than convenient. A
+ * record declares exactly ONE printed route, so one fixture can exercise exactly one state of
+ * one declaration — and the whole claim of adapters/pdf/record-shape.mjs is that BOTH states
+ * are checked. A form declaring two states therefore needs at least two fixtures before either
+ * check has ever run, plus one per guard direction that must STOP. One fixture could only ever
+ * prove half of it, and a role that admitted only one would enforce exactly that.
+ *
+ * SO THE CONTRACT IS A COVERAGE CONTRACT, WHICH IS STRONGER THAN "EXACTLY ONE", NOT WEAKER:
+ * every fixture in the set declares `_fixture.record_shape` naming the declaration id, the
+ * state, and the expectation ("holds" or "stops"); the set must hold exactly one "holds"
+ * fixture per declared state of every declaration the map makes, and at least one "stops"
+ * fixture in each direction. adapters/pdf/assert-record-shape.mjs is what checks that against
+ * the map, and a gap there is a STOP.
+ *
+ * Returns { form, role, paths, rows, swept, files, problems }. `problems` non-empty means STOP.
+ */
+export const resolveFixtureSet = (form, role = 'record_shape') => {
+  const problems = [];
+  const { swept, files, rows } = candidatesFor(form);
+  for (const r of rows) if (r.unreadable)
+    problems.push(`UNREADABLE   ${r.path} will not parse: ${r.unreadable}
+      A fixture that cannot be read is not a fixture that is absent.`);
+  for (const r of rows) if (r.role && !ROLES.includes(r.role))
+    problems.push(`UNKNOWN ROLE ${r.path} declares _fixture.role "${r.role}", which is not one of: ${ROLES.join(', ')}.`);
+  const hits = rows.filter((r) => r.role === role);
+  if (!hits.length)
+    problems.push(`NO ${role.toUpperCase()} FIXTURE for ${form}. ${files.length} candidate(s) swept from ${DIR}/ (${swept.filter}). A set of size zero proves nothing and is reported as a gap, never as a set that happened to be empty.`);
+  return { form, role, paths: hits.map((h) => h.path), rows, swept, files, problems };
 };
 
 /** One line per candidate, for a transcript. */

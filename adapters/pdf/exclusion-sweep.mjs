@@ -69,6 +69,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { load, acceptorsOf, excusedClaims } from './assert-row-shape-spec.mjs';
 import { slotColumnsOf } from './check-row-shape.mjs';
+import { MAPPED_FORMS as FIXTURE_FORMS, candidatesFor } from './resolve-fixture.mjs';
 
 export const SWEPT_DIRS = ['adapters/pdf', 'adapters/hubspot'];
 const SPEC = 'adapters/hubspot/asset-row-shapes.json';
@@ -524,6 +525,30 @@ export const PREDICATES = [
     what: 'Separates a subdirectory of a swept directory that is covered by a .gitignore rule from one that is not, in [SB-90].',
     structural_because: 'BOTH BRANCHES ARE REPORTED AND NEITHER LEAVES THE ASSERTION. A covered subdirectory is a directory git is already keeping out of the tree, which is the state [SB-91] asserts and prints the size of; an uncovered one that is also not a declared asset directory is an UNREGISTERED SUBDIRECTORY stop naming the path. Nothing is excused: the two branches partition the subdirectory list, the list is derived from the tree on every run, and its size is printed beside the entry. An empty .gitignore would make EVERY subdirectory uncovered, which is the loud direction.' },
 
+  // ─── the declaration-coverage union ───────────────────────────────────────────────────
+  { id: 'EX-35', pred: 'exercises', definedIn: 'adapters/pdf/declaration-coverage.mjs', kind: 'claiming',
+    what: 'Separates a fixture that EXERCISES the form — acceptance, stress, negative, and the "holds" half of the record_shape set — from one that does not: production, superseded, and the "stops" half of the record_shape set.',
+    count: () => FIXTURE_FORMS().reduce((n, f) => n + candidatesFor(f).rows.filter((r) => !r.unreadable && !r.undeclared && !['acceptance', 'stress', 'negative'].includes(r.role) && !(r.role === 'record_shape' && r.recordShape?.expect === 'holds')).length, 0),
+    // THE CROSS-CHECK. Every fixture this predicate keeps out of the coverage union must be out
+    // for one of three stated reasons: `production` is a portrait of one taxpayer and says
+    // nothing about which declared behaviours a run reached; `superseded` is history; a
+    // record_shape fixture expecting a STOP ends its gate run non-zero BY DESIGN and is
+    // asserted by adapters/pdf/assert-record-shape.mjs, which requires it to fail AND to fail
+    // with the record shape named in the run's own per-line result. A fixture excluded for none
+    // of those three is one this engine measures NOWHERE, and that is what this refuses.
+    crosscheck: () => {
+      const out = [];
+      for (const f of FIXTURE_FORMS()) for (const r of candidatesFor(f).rows) {
+        if (r.unreadable || r.undeclared) continue;
+        if (['acceptance', 'stress', 'negative'].includes(r.role)) continue;
+        if (r.role === 'record_shape' && r.recordShape?.expect === 'holds') continue;
+        if (['production', 'superseded'].includes(r.role)) continue;
+        if (r.role === 'record_shape' && r.recordShape?.expect === 'stops') continue;
+        out.push(`[EX-35] UNMEASURED — ${r.path} declares role ${JSON.stringify(r.role)} and is kept out of the declaration-coverage union, and none of the three stated reasons applies to it. Its coverage is measured by nothing. Give it an exercising role, or state why it is out.`);
+      }
+      return out;
+    } },
+
   // ─── the name-lie registry's own coverage counter ─────────────────────────────────────
   { id: 'EX-34', pred: 'resolves', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
     what: 'Separates a name-lie registry entry whose `path` exists and whose `bound_to` resolves through the map to exactly that path from one where either fails, inside [K-29].',
@@ -624,17 +649,17 @@ export const DECLARED = [
   { id: 'EX-30', key: '_partition.excluded_never_autofill', kind: 'scoped',
     what: 'Removes a form field from the set that must be bound — a signature block, a preparer-use box, a field the engine will never fill.',
     assertedBy: 'count-sweep.mjs [S-01], which derives the figure from widget geometry via classifyMapTargets and compares it against the declaration; and verify-form-coverage.mjs, which requires the six partition categories to sum to the form\'s own field count.',
-    count: () => MAPPED_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.excluded_never_autofill ?? 0), 0) },
+    count: () => FIXTURE_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.excluded_never_autofill ?? 0), 0) },
 
   { id: 'EX-31', key: '_partition.deferred', kind: 'scoped',
     what: 'Removes a form field from the current slice\'s binding obligation, deferring it to a later one.',
     assertedBy: 'The same [S-01] derivation and the same closing partition. A deferred field is still counted in form_fields_total, so deferring cannot shrink the denominator.',
-    count: () => MAPPED_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.deferred ?? 0), 0) },
+    count: () => FIXTURE_FORMS().reduce((n, f) => n + (mapDoc(f)?._partition?.deferred ?? 0), 0) },
 
   { id: 'EX-32', key: 'not_checkable.entries', kind: 'scoped',
     what: 'Removes a printed total-shaped cell from the tripwire arithmetic — a total whose printed constraint arithmetic cannot express.',
     assertedBy: 'run-form-gate.mjs step 11, which is a STOP when a cell is BOTH checked by a tripwire and declared not checkable; blanket-audit.mjs\'s completeness counter over `not_checkable.entries[]`, which requires every entry to carry `why_not_checkable`; and the gate summary, which prints tripwires_declared_not_checkable on every run.',
-    count: () => MAPPED_FORMS().reduce((n, f) => n + ((totalsDoc(f)?.not_checkable?.entries || []).length), 0) },
+    count: () => FIXTURE_FORMS().reduce((n, f) => n + ((totalsDoc(f)?.not_checkable?.entries || []).length), 0) },
 ];
 
 // ---------------------------------------------------------------------------------------
