@@ -1130,10 +1130,17 @@ if (skipped.length) {
   L.push(`declarations_unexercised_kinds: ${dc ? dc.unexercised_kinds : 'n/a'}`);
   if (emitDeclarationIds) L.push(`declarations_in_class_ids: ${dc ? dc.in_class_ids : 'n/a'}`);
   L.push(`declarations_unexercised_ids: ${dc ? dc.unexercised_ids : 'n/a'}`);
-  L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : 'none declared'}`);
-  L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : 'none declared'}`);
-  L.push(`registry_page_imprecise: ${lies ? kindCount('page_imprecise') : 'none declared'}`);
-  L.push(`registry_total_entries: ${lies ? ents.length : 'none declared'}`);
+  // "none declared" USED TO STAND WHERE THERE IS NO REGISTRY FILE, and on a form that records
+  // its lies inside the map instead of in a sidecar that reads as "this form has no lies".
+  // 433-B(OIC) records ten lying occurrences across pages 2 to 5 in the map's own
+  // _the_names_that_lie_* blocks and has no name-lies.json, so the old wording said the
+  // opposite of what the map holds. The line now names what is absent rather than what is
+  // zero: those are different facts and only one of them was true.
+  const noReg = `no ${form}.name-lies.json in this tree`;
+  L.push(`registry_active_lies: ${lies ? kindCount('lie') + kindCount('container') : noReg}`);
+  L.push(`registry_controls_verified_true: ${lies ? kindCount('control') : noReg}`);
+  L.push(`registry_page_imprecise: ${lies ? kindCount('page_imprecise') : noReg}`);
+  L.push(`registry_total_entries: ${lies ? ents.length : noReg}`);
   L.push(`carried_open: ${(carried.open || []).length}`);
   L.push(`carried_resolved: ${(carried.resolved || []).length}`);
   L.push(`carried_open_ids: ${(carried.open || []).map(o => o.id).join(',') || 'none'}`);

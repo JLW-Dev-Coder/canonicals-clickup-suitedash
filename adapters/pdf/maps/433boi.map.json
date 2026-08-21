@@ -1107,11 +1107,23 @@
     "raised": "slice 3",
     "what": "The shared row-shape specification has no class for business EQUIPMENT. 5_business_equipment routes business_property, which is the nearest class it holds - description, current_fmv, current_loan_balance and equity are all its columns - but business_property also declares location, title_holders, purchase_date, monthly_payment, final_payment_date, lender_name_address and lender_phone, none of which this row prints. Whether the specification should grow a business_equipment class, and what 433-B(OIC) contributes to it, is crosswalk work.",
     "status": "OPEN"
+   },
+   {
+    "id": "B20",
+    "raised": "slice 3",
+    "what": "This form prints \"Round to the nearest dollar\" over every money block on pages 2, 3 and 4, \"Round to the nearest whole dollar\" on page 5, and \"Use whole dollars only\" beside the Offer Amount - and the map declares NO rounding block, so every tripwire is exact arithmetic. Pages 2 and 3 are bound with cents and pages 4 and 5 with whole dollars, which makes Box A carry cents and its page-5 copy not. The copy is only writable that way because that cell is declared not checkable; if it were checked, the printed instruction and the tripwire would disagree. blanket-audit [K-07] reports the absent rounding declaration with its reason on every run.",
+    "status": "OPEN"
+   },
+   {
+    "id": "B21",
+    "raised": "slice 3",
+    "what": "433-B(OIC) has no name-lies.json registry. Its lineage is recorded inside the map, in _the_four_names_that_lie_on_pages_2_and_3 and _the_names_that_lie_on_pages_4_to_6, which between them hold ten lying occurrences and four honest ones on names that lie elsewhere. 433-A(OIC) carries a sidecar registry with 31 entries and the gate reports its figures; this form reports \"no 433boi.name-lies.json in this tree\", which is now accurate and was \"none declared\" until this commit. Whether to materialise the sidecar from the map blocks is crosswalk work: generating it would be a second copy of a list, and this repo requires a second copy to be asserted against the first.",
+    "status": "OPEN"
    }
   ],
   "resolved": [],
   "_count": {
-   "open": 19,
+   "open": 21,
    "resolved": 0
   }
  },

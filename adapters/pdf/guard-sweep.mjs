@@ -391,6 +391,15 @@ export const VACUOUS = [
     why: 'A FIXTURE THAT WILL NOT PARSE IS UNREADABLE, NOT ABSENT, and resolveFixture turns that flag into a problem naming the file and the parse error. If it were dropped, a form whose ONLY acceptance fixture is corrupt would resolve to "no acceptance fixture" - a different and much more misleading message - or, worse, to a second candidate. The whole point of this file is that resolution never returns a guess, and a file it could not read is the case where guessing is most tempting.' },
 
   // ─── the sweep-boundary register ─────────────────────────────────────────────────────
+  { id: 'G-120', file: 'sweep-boundary.mjs', anchor: 'catch { return false; } }).length,', verdict: 'sound',
+    why: 'IT COUNTS THE POPULATION AND THE COUNT IS NOT THE CHECK. A fixture that will not parse is not counted as declaring a generator, which is right - it has declared nothing readable. The crosscheck below walks the SAME directory and reports that file as UNREADABLE by name, so an unparseable fixture shrinks this size by one AND produces a problem. Size and verdict are computed separately and the verdict is the one that stops a run.' },
+
+  { id: 'G-121', file: 'sweep-boundary.mjs', anchor: 'catch (e) { out.push(`[SB-17] UNREADABLE', verdict: 'sound',
+    why: 'UNREADABLE IS A PROBLEM NAMING THE FILE, not a skip. [SB-17] compares the provenance sentence of each fixture against the tree; a fixture nobody could parse has had no sentence compared, and returning nothing for it would make it indistinguishable from one whose generator is present.' },
+
+  { id: 'G-122', file: 'sweep-boundary.mjs', anchor: 'for (const m of g.matchAll(', verdict: 'guarded',
+    why: 'THE EXTRACT THAT COULD GO QUIET, AND IT IS THE ONE THAT FOUND THE DEFECT. It pulls script paths out of a _generated_by sentence; matching nothing means the sentence names no path, which is a real and common state - "authored by hand" makes no claim this can check. So an empty read here is CORRECT for most fixtures and would be silent for all of them if the pattern died. What closes it is that the population size is printed on every run beside the entry, and that the entry fired on its first run against samples/433boi.slice2.sample.json, which cited two generators that had never been in the tree. A pattern that stopped matching would drop that count to zero against a printed population of two, which is visible in the transcript rather than in a verdict.' },
+
   { id: 'G-104', file: 'sweep-boundary.mjs', anchor: 'const isDir = (p) => { try { return statSync(p).isDirectory(); } catch { return false; } };', verdict: 'sound',
     why: 'A PATH THAT CANNOT BE STATTED IS NOT A DIRECTORY, which is what the caller needs to know. Both callers enumerate directories that exist because readdirSync just listed them, so the catch covers a race and not a state. Its false direction removes a directory from [SB-90]\'s subdirectory check — narrower — and the one thing that could hide is a subdirectory that exists and cannot be statted, which readdirSync would have thrown on first.' },
 
