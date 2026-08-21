@@ -391,6 +391,9 @@ export const VACUOUS = [
     why: 'A FIXTURE THAT WILL NOT PARSE IS UNREADABLE, NOT ABSENT, and resolveFixture turns that flag into a problem naming the file and the parse error. If it were dropped, a form whose ONLY acceptance fixture is corrupt would resolve to "no acceptance fixture" - a different and much more misleading message - or, worse, to a second candidate. The whole point of this file is that resolution never returns a guess, and a file it could not read is the case where guessing is most tempting.' },
 
   // ─── the sweep-boundary register ─────────────────────────────────────────────────────
+  { id: 'G-123', file: 'sweep-boundary.mjs', anchor: 'let doc; try { doc = JSON.parse(r(`samples/${f}`)); } catch { continue; }', verdict: 'sound',
+    why: 'IT IS INSIDE AN observe(), NOT A CROSSCHECK, and an observation is a printed line rather than a verdict. The loop counts how many scratchpad scripts a fixture names; a fixture that will not parse names none, which is the correct contribution from an unreadable file to a tally of citations. The SAME directory is walked by [SB-17], whose crosscheck reports every unparseable fixture by name and turns it into a problem - so an unreadable fixture is never silent in this run, it is simply not silent HERE.' },
+
   { id: 'G-120', file: 'sweep-boundary.mjs', anchor: 'catch { return false; } }).length,', verdict: 'sound',
     why: 'IT COUNTS THE POPULATION AND THE COUNT IS NOT THE CHECK. A fixture that will not parse is not counted as declaring a generator, which is right - it has declared nothing readable. The crosscheck below walks the SAME directory and reports that file as UNREADABLE by name, so an unparseable fixture shrinks this size by one AND produces a problem. Size and verdict are computed separately and the verdict is the one that stops a run.' },
 

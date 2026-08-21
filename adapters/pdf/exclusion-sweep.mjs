@@ -516,6 +516,10 @@ export const PREDICATES = [
   // module, this site would have been absorbed by [EX-20] in silence - a disposition written
   // about a forward-reference filter, standing over a gitignore test in an unrelated file,
   // sound only for as long as the two names stayed the same.
+  { id: 'EX-31b', pred: 'isDir', definedIn: 'adapters/pdf/sweep-boundary.mjs', kind: 'structural',
+    what: 'Separates a path that is a directory from one that is not, in [SB-18] and [SB-90].',
+    structural_because: 'A TYPE TEST ON A PATH, NOT AN EXCUSAL, AND BOTH BRANCHES ARE REPORTED. In [SB-90] it partitions the entries of a swept directory into subdirectories, which are checked against the registered exclusions, and files, which are the sweeps own input; the subdirectory list is derived from the tree on every run and its size is printed beside the entry. In [SB-18] it answers whether scratchpad/ exists at all, and the false branch prints "scratchpad/ does not exist in this tree" rather than an empty tally. Its own failure direction is disposed at [G-104]: a path that cannot be statted reports as not-a-directory, which NARROWS the subdirectory check, and readdirSync would have thrown on such a path before this predicate saw it.' },
+
   { id: 'EX-29', pred: 'covered', definedIn: 'adapters/pdf/sweep-boundary.mjs', kind: 'structural',
     what: 'Separates a subdirectory of a swept directory that is covered by a .gitignore rule from one that is not, in [SB-90].',
     structural_because: 'BOTH BRANCHES ARE REPORTED AND NEITHER LEAVES THE ASSERTION. A covered subdirectory is a directory git is already keeping out of the tree, which is the state [SB-91] asserts and prints the size of; an uncovered one that is also not a declared asset directory is an UNREGISTERED SUBDIRECTORY stop naming the path. Nothing is excused: the two branches partition the subdirectory list, the list is derived from the tree on every run, and its size is printed beside the entry. An empty .gitignore would make EVERY subdirectory uncovered, which is the loud direction.' },

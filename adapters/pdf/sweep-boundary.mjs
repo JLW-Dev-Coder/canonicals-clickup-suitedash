@@ -335,6 +335,41 @@ export const BOUNDARIES = [
       return out;
     } },
 
+  { id: 'SB-18', sweep: 'every sweep', kind: 'claiming', path: 'scratchpad/',
+    what: 'A TOP-LEVEL DIRECTORY OF .mjs FILES THAT NO SWEEP READS, and it entered the tree in the same commit as this entry. Every sweep in this engine reads adapters/pdf and adapters/hubspot; scratchpad/ is beside them, not under them, so [SB-90] - which derives the SUBDIRECTORIES of the swept directories - does not see it either. Registering it is the point: the boundary was opened deliberately and would otherwise be exactly the shape samples/ had.',
+    _why_the_files_are_there_at_all: 'A GENERATED ARTEFACT DECLARES ITS GENERATOR, and until this commit two fixtures declared generators that had never been committed - see [SB-17], which fired on precisely that. Committing the one-shot generator that produced a fixture is what makes the declaration true. The alternative, deleting the generators and softening the sentence, is the move this whole file exists to refuse.',
+    claim: 'Nothing in the swept tree depends on anything in scratchpad/. These are one-shot generators and read-back probes: they READ the engine and the artefacts, and no engine file imports them, so they cannot change what any sweep or gate decides.',
+    count: () => (isDir('scratchpad') ? readdirSync('scratchpad').filter((f) => f.endsWith('.mjs')).length : 0),
+    // THE DIRECTION THAT MATTERS IS INWARD. A scratch script importing the engine is fine and
+    // is what these do. An ENGINE file importing a scratch script would put unswept code on the
+    // path of a gate decision, which is the thing this claim forbids and the thing that would
+    // make the exclusion unsound.
+    crosscheck: () => {
+      const out = [];
+      if (!isDir('scratchpad')) return out;
+      for (const d of ['adapters/pdf', 'adapters/hubspot'])
+        for (const f of readdirSync(d).filter((x) => x.endsWith('.mjs'))) {
+          const src = r(`${d}/${f}`);
+          if (/from\s+['"][^'"]*scratchpad\//.test(src) || /require\(['"][^'"]*scratchpad\//.test(src))
+            out.push(`[SB-18] CONTRADICTED — ${d}/${f} imports from scratchpad/, which no sweep reads. An engine file depending on unswept code puts it on the path of a gate decision, and "these are one-shot scripts nothing depends on" stops being true.`);
+        }
+      return out;
+    },
+    observe: () => {
+      if (!isDir('scratchpad')) return ['[SB-18] scratchpad/ does not exist in this tree.'];
+      const files = readdirSync('scratchpad').filter((f) => f.endsWith('.mjs')).sort();
+      const cited = new Set();
+      for (const f of readdirSync('samples').filter((x) => x.endsWith('.json'))) {
+        let doc; try { doc = JSON.parse(r(`samples/${f}`)); } catch { continue; }
+        const g = doc._generated_by;
+        if (typeof g === 'string') for (const m of g.matchAll(/scratchpad\/([\w.-]+\.mjs)/g)) cited.add(m[1]);
+      }
+      return [
+        `[SB-18] ${files.length} script(s) in scratchpad/: ${files.join(', ')}.`,
+        `[SB-18] ${files.filter((f) => cited.has(f)).length} of them is named by a fixture's _generated_by, which [SB-17] checks the other way round; the rest are read-back probes, which make no artefact and are cited from the commit that ran them.`,
+      ];
+    } },
+
   { id: 'SB-91', sweep: 'every sweep', kind: 'scoped', path: 'gitignored scratch: adapters/pdf/tmp/, adapters/pdf/out/, adapters/hubspot/backup/, samples/*.from-hubspot-*.json',
     what: 'Removes build output, negative-test harnesses, regression baselines, parked copies of the tools, and live HubSpot records containing customer PII.',
     assertedBy: 'git itself. Every path here is in .gitignore AND untracked, which is checked below — an exclusion resting on "it is scratch" is contradicted the moment a file in it is committed, because a committed file is one somebody is relying on.',
