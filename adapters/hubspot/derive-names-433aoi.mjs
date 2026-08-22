@@ -43,7 +43,7 @@ const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
 const emit = argv.includes('--emit');
 
-import { keySpaceOf, coverageOf } from './classification-coverage.mjs';
+import { keySpaceOf, coverageOf, ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 
 const R = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const MAP = R('adapters/pdf/maps/433aoi.map.json');
@@ -64,6 +64,13 @@ const STOP = (id, msg) => stops.push(`[${id}] ${msg}`);
 // counts the same thing and a second copy there answered 232 of 238 against this file's 238 of
 // 238 - two instruments, two answers, one claim. See that module's header.
 const { keySpace, groupSource: groupSourceByName } = keySpaceOf(MAP);
+// [B24]. THE ENGINE'S OWN INPUTS, WHICH THE MAP NAMES NO CELL FOR. `business_income_expense_route`
+// is declared in this map's `record_shape` block and read straight off the record by
+// adapters/pdf/record-shape.mjs; `keySpaceOf` reads the map's map/checkboxes/check_here/groups
+// constructs and cannot see it. Left out, a 433-A(OIC) record fetched from HubSpot could not carry
+// the route at all and the gate STOPped on it — a finished form whose records cannot carry an
+// input its engine requires. Same line as derive-names-433boi.mjs, reading the same table.
+for (const k of (ENGINE_EXTRA_INPUTS['433aoi'] || [])) if (!keySpace.has(k)) keySpace.set(k, 'engine');
 
 if (keySpace.size < 200) STOP('A0', `the key space read only ${keySpace.size} keys out of 433aoi.map.json, which cannot be right for a form with ${MAP._partition?.bound_writable} bound fields. Refusing to derive names against an input this file could not read.`);
 

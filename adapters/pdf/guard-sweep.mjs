@@ -152,6 +152,10 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── the construct-vocabulary boundary, ruling 8 ──────────────────────────────────────
+  { id: 'G-142', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { problems.push(`UNREADABLE DEFINITIONS', verdict: 'sound',
+    why: 'THE MODEL CATCH, on the third boundary this file asserts. A definitions file that will not parse, or a missing import, cannot yield a construct list — and an empty construct list is exactly the state in which the vocabulary comparison finds nothing to disagree with and the form reports clean. So the throw becomes an UNREADABLE DEFINITIONS problem and the run exits 2, with the sentence saying which of the two it is: "The construct vocabulary could not be compared, which is not the same as it agreeing." It fired for real on its first run, on a ReferenceError from an import that had not been added yet, and reported it rather than passing.' },
+
   // ─── [D-06]'s split, and the catch this sweep refused on its first run ────────────────
   { id: 'G-141', file: 'assert-row-shape-spec.mjs', anchor: 'catch (e) { kindsError =', verdict: 'sound',
     why: 'THE SITE THIS SWEEP CORRECTED. Its first draft was `catch { kinds stays empty }` with the comment "left empty, reported by A2" — and A2 would NOT have reported it. Two empty column sets are exactly the state in which every `row_flag` excusal is confirmed, because the excusal is asserted by the ABSENCE of a contradicting binding: no columns, no contradiction, success. A success message guarded by the failure to read. It now records `kindsError` on the acceptor, and A2 pushes A2 UNREADABLE GROUP and `continue`s before judging a single column of that group. `slotColumnKinds` returning null (the group resolved to nothing) takes the same path, so the two ways of failing to read are one report.' },

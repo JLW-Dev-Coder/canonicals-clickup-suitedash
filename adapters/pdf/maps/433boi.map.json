@@ -1439,15 +1439,6 @@
     "the_question": "Whether a floor that no record can reach should be DECLARED at all, or declared with a mark saying it is unreachable so a coverage table can count it separately from a floor nobody has got round to. Declaring it is defensible: the page prints the instruction over the block, and a declaration that mirrors the printed page is the standard this engine holds every other line to. Marking it is also defensible: an unexercisable rule sitting in the same column as an unexercised one makes the column mean two things.",
     "why_it_is_not_decided_here": "It is a rule for the declaration format, binding every form after this one, and 433-B(OIC) does not get to make it alone — the same reason C-21 was carried rather than settled inside a slice.",
     "status": "OPEN"
-   },
-   {
-    "id": "B24",
-    "raised": "Prompt 43, commit 2 — found while building this form's key space",
-    "what": "433-A(OIC) DECLARES THE SAME RECORD-SHAPE INPUT AND HAS NO PROPERTY FOR IT. adapters/pdf/maps/433aoi.map.json declares `business_income_expense_route` over its lines (17) and (29), and adapters/pdf/record-shape.mjs reads it straight off the record. It is in neither that map's `map` block, nor `checkboxes`, nor `check_here`, nor any group source, so adapters/hubspot/classification-coverage.mjs cannot see it, crosswalk.433aoi.json has no row for it and fields.433aoi.json defines no property. A 433-A(OIC) record fetched from HubSpot therefore cannot carry the route, and gate step 11 STOPs on a record that declares none — so the 433-A(OIC) round trip is broken for any record that goes through the portal.",
-    "how_433boi_avoids_it": "The key is declared in ENGINE_EXTRA_INPUTS['433boi'], which puts it in this form's key space, gives it a crosswalk row under Y-44, and derives irs433boi_business_income_expense_route like any other input.",
-    "why_it_is_not_fixed_here": "Adding the 433-A(OIC) row to ENGINE_EXTRA_INPUTS would put the key in that form's key space, where assertion A1 of derive-names-433aoi.mjs would correctly STOP for the absent binding — and clearing that STOP means creating irs433aoi_business_income_expense_route, a PERMANENT name on a form this prompt's scope line excludes. A permanent name is not something to create as a side effect of another form's pass.",
-    "the_ruling_it_needs_and_the_one_it_already_has": "Ruling 6's test was applied to this input for 433-B(OIC) and answered TWO FORM-SPECIFIC PROPERTIES: a filer can attach a current profit and loss statement for the corporation and complete the grid for their Schedule C, or the reverse, so one property would have to hold two values at one moment. The same answer holds from the 433-A(OIC) side, so the name it needs is already decided; only the creating is deferred.",
-    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -1516,11 +1507,29 @@
      "what_the_slice_argued_and_where_it_landed": "The slice argued that every row this form writes is a business row, so the flag would be a constant — \"the strongest evidence yet that it is routing metadata and not a printed cell\", reading as [D-06] option 1. Option 1 is what landed. The one correction is that a constant is not the same as a discriminator: on 433-B(OIC) there is only one table and nothing to route between, so `row_flag[\"433boi\"]` records that state in its own words rather than calling it routing. Smoothing it into \"routing\" is how a key comes to mean two things, which is the item it was blocked on.",
      "the_groups": "1ac_bank_accounts (bank_account.is_business_account), 2ab_investment_accounts (investment.is_business_account), 3ab_real_estate (real_property.kind)."
     }
+   },
+   {
+    "id": "B24",
+    "raised": "Prompt 43, commit 2 — found while building this form's key space",
+    "what": "433-A(OIC) DECLARES THE SAME RECORD-SHAPE INPUT AND HAS NO PROPERTY FOR IT. adapters/pdf/maps/433aoi.map.json declares `business_income_expense_route` over its lines (17) and (29), and adapters/pdf/record-shape.mjs reads it straight off the record. It is in neither that map's `map` block, nor `checkboxes`, nor `check_here`, nor any group source, so adapters/hubspot/classification-coverage.mjs cannot see it, crosswalk.433aoi.json has no row for it and fields.433aoi.json defines no property. A 433-A(OIC) record fetched from HubSpot therefore cannot carry the route, and gate step 11 STOPs on a record that declares none — so the 433-A(OIC) round trip is broken for any record that goes through the portal.",
+    "how_433boi_avoids_it": "The key is declared in ENGINE_EXTRA_INPUTS['433boi'], which puts it in this form's key space, gives it a crosswalk row under Y-44, and derives irs433boi_business_income_expense_route like any other input.",
+    "why_it_is_not_fixed_here": "Adding the 433-A(OIC) row to ENGINE_EXTRA_INPUTS would put the key in that form's key space, where assertion A1 of derive-names-433aoi.mjs would correctly STOP for the absent binding — and clearing that STOP means creating irs433aoi_business_income_expense_route, a PERMANENT name on a form this prompt's scope line excludes. A permanent name is not something to create as a side effect of another form's pass.",
+    "the_ruling_it_needs_and_the_one_it_already_has": "Ruling 6's test was applied to this input for 433-B(OIC) and answered TWO FORM-SPECIFIC PROPERTIES: a filer can attach a current profit and loss statement for the corporation and complete the grid for their Schedule C, or the reverse, so one property would have to hold two values at one moment. The same answer holds from the 433-A(OIC) side, so the name it needs is already decided; only the creating is deferred.",
+    "status": "RESOLVED — Prompt 44 commit 2.",
+    "_resolution": {
+     "the_property": "irs433aoi_business_income_expense_route — enumeration/select, group irs433aoic, options grid | profit_and_loss_statement.",
+     "derived_not_typed": "The name appears in no authoring script. ENGINE_EXTRA_INPUTS[\"433aoi\"] puts the key in the form's key space, classification entry X-83 names it, crosswalk.433aoi.json binds it, and derive-names-433aoi.mjs derives prefix + fact. The option VALUES are read out of the map's own record_shape declaration rather than retyped, and A13 asserts the property offers exactly the states the engine accepts.",
+     "the_category": "X-83 is `new`, not `same-question-different-subject`. That category belongs to 433-B(OIC), whose classification is relative to the backbone and whose subject is the business entity; the subject register landed in commit 1 records 433-A and 433-A(OIC) as COINCIDING, so subject is not what separates them here. What separates them is the printed instruction: 433-A page 8 y 451.0 prints only a RECONCILIATION note, \"(lines 68 through 88 should reconcile with business Profit and Loss Statement)\", while 433-A(OIC) page 5 y 421.3 and y 411.7 print an ALTERNATIVE — \"If you provide a current profit and loss (P&L) statement ... Do not complete lines (12) - (16) and (18) - (28).\" Only the second is a route a record must declare. `new` derives the form-scoped prefix, which is the same name this item predicted from the other direction.",
+     "the_assertions": "Six, before any create: the name matches prefix+fact; the portal does not hold it (checked against 1,181 contact properties); its near neighbours are listed rather than assumed absent; it echoes no stem of the 22 active entries in the 433-A(OIC) lie registry; its option set equals the map's declared states; and the headroom is read from the portal on the run rather than from the report.",
+     "the_dry_run": "239 definitions — 236 exist and match, 2 exist and DIFFER with recorded decisions, 1 new. Headroom 776 before, 777 after, 223 left against the documented 1,000-custom ceiling.",
+     "the_create_and_the_read_back": "Created through node fetch by hs-provision.mjs, which skips the 238 already present. Read back from the portal on a separate request: name, type, fieldType, groupName, label, options and description all match the derived definition exactly; hubspotDefined false, archived false.",
+     "what_it_unblocks": "A 433-A(OIC) record fetched from HubSpot can now carry the route, so gate step 11 no longer STOPs on a record that came through the portal. The form was not finished before this."
+    }
    }
   ],
   "_count": {
-   "open": 18,
-   "resolved": 6
+   "open": 17,
+   "resolved": 7
   }
  },
  "_the_condition_that_governs_pages_2_and_3": {

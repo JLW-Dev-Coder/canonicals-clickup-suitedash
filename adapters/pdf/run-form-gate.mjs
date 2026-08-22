@@ -74,7 +74,7 @@ import { classifyMapTargets, mapClaimsComplete } from './verify-form-coverage.mj
 import { parseMoney, loadRounding, blockFor, applyRounding, modeRounds } from './rounding.mjs';
 import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
 import { loadRecordShape, statesOf, stateFromRecord, checkOperandsEmptyTotalPresent, checkOperandsPresent, canary as recordShapeCanary } from './record-shape.mjs';
-import { compare as compareLine, canary as comparisonCanary } from './comparisons.mjs';
+import { compare as compareLine, canary as comparisonCanary, money } from './comparisons.mjs';
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
@@ -183,7 +183,8 @@ const list = (label, items, cap = 12) => {
 // at OUTPUT and recomputing it at COMPARISON must read the same string as the same number. Two
 // copies of a money parser that drift by one character is a defect nothing on the page shows.
 const cents = (n) => Math.round(n * 100);
-const money = (n) => (n < 0 ? '-' : '') + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+// `money` IS IMPORTED, not defined here: it is half of a declaration identity and
+// declaration-coverage.mjs builds the other half of the same string. See comparisons.mjs.
 
 // ---------------------------------------------------------------------------------------
 
@@ -280,13 +281,20 @@ export const computeDeclarationCoverage = ({ live, rows, declined, declTotals, m
     // the same string.
     const covers = [];
     for (const r of rows) {
-      const ctx0 = (kind, what, fired, why, id) => covers.push({ line: r.line, kind, what, fired, why, id: id ?? what });
+      // `observable` is carried alongside `fired` and never merged into it. [D-11]: coverage
+      // asks whether the declaration was APPLIED; observability asks whether the application
+      // is visible in the printed total. Two facts, two lists, two reported figures.
+      const ctx0 = (kind, what, fired, why, id, observable) => covers.push({ line: r.line, kind, what, fired, why, id: id ?? what, observable });
       if (r.floor !== null)
         ctx0('floor', `floor ${r.floor}`, !!r.floored,
           r.skipped ? 'the line was skipped on this fixture' : !r.checkable ? 'the line is not checkable' : `the sum was ${money(r.sum)}, at or above the floor, so it never clamped`);
-      for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'every cell it multiplies was blank or zero');
-      for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the declared constant is zero on this branch');
-      for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the subtracted cells were all blank or zero');
+      // The `why` on these three is now the reason a declaration could be UNAPPLIED, which is
+      // the only way `fired` is false for them: the line never got as far as applying it. The
+      // old reasons — "every cell it multiplies was blank or zero" — described the value not
+      // moving, which is `observable` and is reported in its own block below.
+      for (const f of r.cov.factors)   ctx0('factor', `x ${f.factor}`, f.fired, 'the line was skipped or unreadable before this factor was applied', undefined, f.observable);
+      for (const c of r.cov.constants) ctx0('constant', money(c.constant), c.fired, 'the line was skipped or unreadable before this constant was added', undefined, c.observable);
+      for (const s of r.cov.signs)     ctx0('sign', `minus ${s.on}`, s.fired, 'the line was skipped or unreadable before this subtraction was applied', undefined, s.observable);
       for (const p of r.cov.predicates) ctx0('predicate', `${p.key} = ${JSON.stringify(String(p.equals))} -> ${p.branch}`, p.branch === 'held', `this fixture took the ${p.branch} branch`, `${p.key} = ${JSON.stringify(String(p.equals))}`);
       // THE DECLARED RECORD SHAPE. ONE ENTRY PER DECLARED STATE OF THE ROUTE, not one per
       // line, because the construct's whole claim is that BOTH routes are checked and a single
@@ -421,6 +429,18 @@ export const computeDeclarationCoverage = ({ live, rows, declined, declTotals, m
       console.log('    NOT EXERCISED BY THIS FIXTURE — each is a declared rule no fixture has proved. Named, not failed:');
       for (const d of unex) console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}\n                  ${d.why}`);
     }
+    // ── [D-11] THE SECOND FACT, KEPT APART FROM COVERAGE ─────────────────────────────────
+    // A declaration that WAS applied and whose application does not move the printed total.
+    // Exercised — the branch was taken and the value was added — and not PROVED at its own
+    // magnitude: a .8 applied only to zeros has never been shown to be .8 rather than .7, and
+    // a printed constant of 0 contributes what not applying it would have contributed. That is
+    // a real gap and a different one, so it has its own list and its own identities instead of
+    // sitting in the coverage residue where it could never be closed.
+    const unobs = covers.filter(d => d.fired && d.observable === false);
+    const obsPop = covers.filter(d => d.observable !== undefined);
+    console.log(`    ${obsPop.length} applied declaration(s) carry an observability test; ${unobs.length} contribute nothing the printed total distinguishes from not applying them.`);
+    if (unobs.length) for (const d of unobs)
+      console.log(`      ${String(d.kind).padEnd(9)} ${String(d.line).padEnd(26)} ${d.what}  — applied, and the total is the same either way`);
     SUMMARY.declarations = { total: covers.length, exercised: covers.length - unex.length, unexercised: unex.length,
       unexercised_kinds: Object.entries(byKind).filter(([, v]) => v.un).map(([k, v]) => `${k}:${v.un}`).join(',') || 'none',
       // THE IDENTITIES, NOT ONLY THE TALLY. A form is now exercised by SEVERAL fixtures - an
@@ -440,7 +460,12 @@ export const computeDeclarationCoverage = ({ live, rows, declined, declTotals, m
       // truth is that two zero constants were never in class together. So the in-class set is
       // named too, and the union subtracts one from the other.
       in_class_ids: covers.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none',
-      unexercised_ids: unex.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none' };
+      unexercised_ids: unex.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none',
+      // [D-11]'s second figure, carried into the block so declaration-coverage.mjs can union
+      // it the same way it unions the first. A tally cannot be unioned; identities can.
+      observability_population: obsPop.length,
+      applied_unobservable: unobs.length,
+      applied_unobservable_ids: unobs.map(d => `${d.kind}|${d.line}|${d.id}`).join('; ') || 'none' };
   return { covers, unex, byKind, noAdvisory, declarations: SUMMARY.declarations };
 };
 
@@ -844,16 +869,40 @@ const steps = [
         // enter 0 as the total value)" is a printed zero, not an absent operand, and a line
         // that showed no feeder at all would look like a line nothing feeds.
         if (typeof fd.constant === 'number') r.feeders.push({ target: `(printed constant ${money(konst)})`, sign, n: konst, factor: 1, contributes: sign * konst });
-        // WHAT THIS FEEDER'S DECLARATIONS ACTUALLY DID. `fired` is the discriminator: a factor
-        // declared over cells that are all zero multiplies nothing, and a `.8` that has never
-        // been applied to a non-zero figure has never been proved to be .8 rather than .7 —
-        // which is exactly the shape of the 0.7 quick-sale cell in the name-lie registry.
+        // WHAT THIS FEEDER'S DECLARATIONS ACTUALLY DID — AND [D-11]'s CORRECTION.
+        //
+        // COVERAGE ASKS WHETHER A DECLARATION WAS APPLIED, NOT WHETHER IT CHANGED THE VALUE.
+        // All three of these used to be `fired: <the sum moved>`, and for a printed constant of
+        // ZERO that can never be true: `konst !== 0` is false on every record, including the
+        // records that take the leased branch correctly and print the 0 the caption instructs.
+        // Five live instances across two forms — 433-A(OIC) 6a/6c leased and 433-B(OIC)
+        // 4a/4b/4c leased — sat in the coverage union as "in class somewhere and proved
+        // nowhere", beside floors and predicates that genuinely have never been driven. A list
+        // with permanently uncloseable rows on it stops being a list anyone works down, and a
+        // guard tuned to fire constantly is a guard that gets turned off.
+        //
+        // The same conflation was in `factor` (a factor applied to zero cannot be told from a
+        // factor not applied) and in `sign`. All three are corrected together.
+        //
+        // REACHING THIS LINE IS THE PROOF. The feeder's `when` predicate held or it declared
+        // none; every target resolved through the map; every cell was read off the filled PDF
+        // and parsed as money. The declaration WAS applied to r.sum, two lines below. So
+        // `fired` is true, and it is true BECAUSE of what the code above it did rather than
+        // being written true.
+        //
+        // AND NOTHING IS LOST. The old predicate said something real and different: a `.8` that
+        // has never been applied to a non-zero figure has never been proved to be .8 rather
+        // than .7, which is exactly the shape of the 0.7 quick-sale cell in the name-lie
+        // registry. That fact is kept, under the name it actually has — `observable`, whether
+        // the application is visible in the printed total — and reported in its own list with
+        // its own identities rather than folded into coverage.
+        const applied = true;
         if (typeof fd.factor === 'number' && fd.factor !== 1)
-          r.cov.factors.push({ factor: fd.factor, caption: fd.factor_caption ?? null, fired: cellSum !== 0 });
+          r.cov.factors.push({ factor: fd.factor, caption: fd.factor_caption ?? null, fired: applied, observable: cellSum !== 0 });
         if (typeof fd.constant === 'number')
-          r.cov.constants.push({ constant: fd.constant, caption: fd.constant_caption ?? null, fired: konst !== 0 });
+          r.cov.constants.push({ constant: fd.constant, caption: fd.constant_caption ?? null, fired: applied, observable: konst !== 0 });
         if (fd.sign === -1)
-          r.cov.signs.push({ on: fd.keys ? fd.keys.join(', ') : `${fd.group}.${fd.column}`, fired: cellSum !== 0 });
+          r.cov.signs.push({ on: fd.keys ? fd.keys.join(', ') : `${fd.group}.${fd.column}`, fired: applied, observable: cellSum !== 0 });
         r.sum += sign * (factor * cellSum + konst);
       }
       // ROUND FIRST, THEN FLOOR — the order 433-A(OIC) page 2 y 668.1 prints the two sentences
@@ -1289,6 +1338,13 @@ if (skipped.length) {
   L.push(`declarations_unexercised_kinds: ${dc ? dc.unexercised_kinds : 'n/a'}`);
   if (emitDeclarationIds) L.push(`declarations_in_class_ids: ${dc ? dc.in_class_ids : 'n/a'}`);
   L.push(`declarations_unexercised_ids: ${dc ? dc.unexercised_ids : 'n/a'}`);
+  // [D-11]'s observability half. UNCONDITIONAL, not behind --declaration-ids: the id list here
+  // is the applied-and-unobservable set, which is small by construction and is the whole point
+  // of the figure beside it. Gating it would put a figure in the block whose identities the
+  // block does not carry, which is the shape the in-class list was added to end.
+  L.push(`observability_population: ${dc ? dc.observability_population : 'n/a'}`);
+  L.push(`applied_unobservable: ${dc ? dc.applied_unobservable : 'n/a'}`);
+  L.push(`applied_unobservable_ids: ${dc ? dc.applied_unobservable_ids : 'n/a'}`);
   // "none declared" USED TO STAND WHERE THERE IS NO REGISTRY FILE, and on a form that records
   // its lies inside the map instead of in a sidecar that reads as "this form has no lies".
   // 433-B(OIC) records ten lying occurrences across pages 2 to 5 in the map's own

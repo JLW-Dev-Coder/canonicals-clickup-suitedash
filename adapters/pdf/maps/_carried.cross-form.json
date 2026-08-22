@@ -72,15 +72,16 @@
    "status": "OPEN"
   },
   {
-   "id": "D-11",
-   "form": "engine-wide; live on 433-A(OIC) and 433-B(OIC) today",
-   "raised_in": "Prompt 43 commit 1, by the 433-B(OIC) declaration-coverage union",
-   "subject": "a declared printed constant of ZERO can never be reported as exercised, because the coverage test is `constant !== 0`",
-   "the_shape": "run-form-gate.mjs step 11 records a declared constant as `{ constant, fired: konst !== 0 }`. Every printed constant in this repo so far is the SAME one — \"if the vehicle is leased, enter 0 as the total value\", drawn on the page in words — and its value is 0. So `fired` is false on every record that takes the leased branch, INCLUDING the records that take it correctly and print the 0 the caption instructs. Five instances are live: 433-A(OIC) `6a leased` and `6c leased`, and 433-B(OIC) `4a leased`, `4b leased` and `4c leased`.",
-   "why_it_is_a_problem_today": "The coverage union names all five as \"in class somewhere and proved nowhere\", beside floors and predicates that genuinely have never been driven. Those are different facts. A reader closing gaps works down that list and cannot close these, and a list with permanently uncloseable rows on it stops being a list anyone works down.",
-   "what_it_is_NOT": "It is NOT a defect in the forms and NOT a gap in the fixtures. samples/433boi.overmax.sample.json parks two vehicles on `lease` and samples/433boi.slice3.sample.json parks a third there; all three branches HELD, the constant WAS applied, and the printed cell carries the 0 the caption asks for. The gate proves the branch. What it cannot report is the application of a value whose contribution is indistinguishable from not applying it.",
-   "the_candidate_ruling": "`fired` for a constant should mean THE BRANCH THAT CARRIES IT WAS TAKEN AND THE CONSTANT WAS ADDED, not `the constant moved the sum`. That is a change to a guard's own coverage rule, so it needs its own commit, its own canary, and a re-read of every other `fired` predicate in that table for the same conflation — `factor` has it too (`fired: cellSum !== 0` cannot distinguish a factor applied to zero from a factor not applied) and `sign` has it (`fired: cellSum !== 0`).",
-   "why_it_is_not_fixed_here": "A refactor of a guard is a change to the guard. Prompt 43 §4 asks for 433-B(OIC) fixtures, crosswalk, provisioning and round trip; rewriting the coverage predicate for three declaration kinds across four forms mid-provisioning is exactly the kind of adjacent change that has twice now reproduced the defect class it was meant to close. Recorded with its instances counted so it cannot evaporate.",
+   "id": "D-13",
+   "form": "433-F, and any form that later moves to the derived path",
+   "raised_in": "Prompt 44 commit 2, by the construct-vocabulary assertion on its first run",
+   "subject": "adapters/hubspot/fields.433f.json writes a FILE PATH where every other definitions file writes a MAP CONSTRUCT, and nothing reads it",
+   "the_shape": "Two of its 56 rows — `433f_age_band` and `433f_address_differs` — carry `source: \"fill-433f.mjs\"`. Every other definitions file writes one of `map`, `split`, `allowed`, `engine`, `groups`, `checkboxes`, `check_here`: the name of the map construct the property came from. A file path is not a construct; it is the name of the thing that READS the input.",
+   "why_it_is_inert_today": "bindings.mjs `bindingSourceOf(\"433f\")` is \"crosswalk\", so 433-F's `kind` comes from its crosswalk row's own `row_shape` and `map_option_by_value` and this file's `source` is read by nothing. No value is mis-shaped and no cell prints empty.",
+   "why_it_is_recorded_anyway": "It is the writer-resolver divergence the ruling is about, sitting in the tree and harmless only by accident of which path the form takes. The day 433-F moves to the derived path — which is the direction every form after 433-A has taken — those two rows resolve to no construct and `kindOf` returns null, which is now a STOP. Better a STOP than the silent scalar it would have been before this commit; better still to fix the writer.",
+   "what_it_is_NOT": "NOT a defect in the 433-F round trip and NOT a wrong property. Both properties are correct, provisioned and live; only the provenance field disagrees with the vocabulary.",
+   "the_remedy": "Decide what those two rows should say. `engine` is the honest construct — an input the engine reads that the map names no cell for — and it is exactly what ENGINE_EXTRA_INPUTS[\"433f\"] already declares both keys as. Rewriting them means re-running gen-fields-from-crosswalk.mjs, which is 433-F's generator and outside this prompt's scope line.",
+   "reported_where": "adapters/hubspot/assert-intake-keys.mjs prints it on every run under DIVERGENCE, inert and reported every run.",
    "status": "OPEN - recorded, not built."
   }
  ],
@@ -227,10 +228,31 @@
     "canary_added": "signatureCanary() — eight synthetic sources with the verdict the selector must reach on each, including the two shapes the backspaces suppressed. Wired into the audit as a STOP and printed on every run beside the comparator canary.",
     "reporters_declared_and_READ": "record-shape.mjs, gen-subject-register.mjs and assert-subject-register.mjs are declared in Y_REPORTERS AND given readings in the same commit, because a Y_REPORTERS entry with no reading beside it is a claim nobody checks — which would trade one silence for another. They now contribute 3, 35 and 4 cross-checked objects respectively."
    }
+  },
+  {
+   "id": "D-11",
+   "form": "engine-wide; live on 433-A(OIC) and 433-B(OIC) today",
+   "raised_in": "Prompt 43 commit 1, by the 433-B(OIC) declaration-coverage union",
+   "subject": "a declared printed constant of ZERO can never be reported as exercised, because the coverage test is `constant !== 0`",
+   "the_shape": "run-form-gate.mjs step 11 records a declared constant as `{ constant, fired: konst !== 0 }`. Every printed constant in this repo so far is the SAME one — \"if the vehicle is leased, enter 0 as the total value\", drawn on the page in words — and its value is 0. So `fired` is false on every record that takes the leased branch, INCLUDING the records that take it correctly and print the 0 the caption instructs. Five instances are live: 433-A(OIC) `6a leased` and `6c leased`, and 433-B(OIC) `4a leased`, `4b leased` and `4c leased`.",
+   "why_it_is_a_problem_today": "The coverage union names all five as \"in class somewhere and proved nowhere\", beside floors and predicates that genuinely have never been driven. Those are different facts. A reader closing gaps works down that list and cannot close these, and a list with permanently uncloseable rows on it stops being a list anyone works down.",
+   "what_it_is_NOT": "It is NOT a defect in the forms and NOT a gap in the fixtures. samples/433boi.overmax.sample.json parks two vehicles on `lease` and samples/433boi.slice3.sample.json parks a third there; all three branches HELD, the constant WAS applied, and the printed cell carries the 0 the caption asks for. The gate proves the branch. What it cannot report is the application of a value whose contribution is indistinguishable from not applying it.",
+   "the_candidate_ruling": "`fired` for a constant should mean THE BRANCH THAT CARRIES IT WAS TAKEN AND THE CONSTANT WAS ADDED, not `the constant moved the sum`. That is a change to a guard's own coverage rule, so it needs its own commit, its own canary, and a re-read of every other `fired` predicate in that table for the same conflation — `factor` has it too (`fired: cellSum !== 0` cannot distinguish a factor applied to zero from a factor not applied) and `sign` has it (`fired: cellSum !== 0`).",
+   "why_it_is_not_fixed_here": "A refactor of a guard is a change to the guard. Prompt 43 §4 asks for 433-B(OIC) fixtures, crosswalk, provisioning and round trip; rewriting the coverage predicate for three declaration kinds across four forms mid-provisioning is exactly the kind of adjacent change that has twice now reproduced the defect class it was meant to close. Recorded with its instances counted so it cannot evaporate.",
+   "status": "RESOLVED — Prompt 44 commit 2.",
+   "_resolution": {
+    "ruling": "THE CANDIDATE RULING, TAKEN. `fired` for a constant, a factor and a sign now means THE BRANCH THAT CARRIES IT WAS TAKEN AND THE DECLARATION WAS APPLIED — not \"the declaration moved the sum\".",
+    "why_reaching_the_line_is_the_proof": "The three pushes sit after the feeder's `when` predicate has held (or declared none), after every target has resolved through the map, and after every cell has been read off the filled PDF and parsed as money. Any of those failing breaks out before the push. So `fired: true` is true BECAUSE of what the code above it did, rather than being written true.",
+    "all_three_kinds": "constant, factor and sign were all `<the sum moved>`. All three are corrected in one edit, because the conflation is one conflation and fixing the constant alone would have left the same sentence meaning two things in the same table.",
+    "nothing_was_lost": "The old predicate said something real: a .8 applied only to zero cells has never been proved to be .8 rather than .7 — the shape of the 0.7 quick-sale cell in the name-lie registry. That fact is KEPT under the name it actually has. Each entry now carries `observable` beside `fired`, the gate reports the applied-but-unobservable set with its identities, and declaration-coverage.mjs unions those identities across a form's fixtures exactly as it unions coverage.",
+    "and_what_the_fix_would_have_lost_if_it_had_stopped_there": "With `fired` = applied, a factor, constant or sign can no longer appear in the coverage residue at all — and a residue a kind cannot enter is a residue that has stopped watching it. Two lists were added in the same commit to take that over: APPLIED-BUT-NOT-OBSERVABLE, and DECLARED-BUT-NEVER-IN-CLASS — a declaration the totals file declares that no fixture in the set ever reached. The second is derived from the totals file, which is the DECLARING artefact, because the runs cannot report a declaration none of them saw.",
+    "what_moved": "Reported in full in the run: five zero constants across two forms left the \"in class somewhere and proved nowhere\" list, which is what made that list uncloseable, and reappeared in the observability list where they CAN be closed by a fixture that parks a non-zero figure on the leased branch.",
+    "the_defect_this_fix_committed_and_the_sweep_that_caught_it": "The DECLARED-BUT-NEVER-IN-CLASS check builds a declaration identity from the totals file and compares it against the identities the gate builds. Its first draft formatted the constant with `toFixed(2)` where the gate uses a grouping formatter — agreeing on 0.00 and disagreeing on every figure above a thousand — and reported three real 433-A(OIC) constants (-1,000.00, -3,450.00, -11,980.00) as reached by no fixture when all three are reached on every run. A re-implementation of an identity is a second answer to the question the identity exists to make one answer to, committed by the tool reporting on that class. The formatter now lives once, in adapters/pdf/comparisons.mjs, and both sides import it."
+   }
   }
  ],
  "_count": {
   "open": 6,
-  "resolved": 6
+  "resolved": 7
  }
 }

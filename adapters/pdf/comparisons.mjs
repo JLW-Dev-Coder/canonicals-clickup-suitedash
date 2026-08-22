@@ -49,6 +49,22 @@
 // coverage counts the strict case as the thing a fixture has to exercise.
 
 /** The comparison kinds a declared line may name. */
+/**
+ * THE ONE MONEY FORMATTER, because it is half of a DECLARATION IDENTITY.
+ *
+ * run-form-gate.mjs builds a constant declaration's identity as `constant|<line>|<money(n)>`,
+ * and adapters/pdf/declaration-coverage.mjs has to build the same string from the totals file
+ * to answer which declarations no fixture ever reached. Its first draft used
+ * `n.toFixed(2)` — which agrees with this function on 0.00 and disagrees on every figure
+ * above a thousand, because this one groups. Three real constants (-1,000.00, -3,450.00 and
+ * -11,980.00 on 433-A(OIC)) came back as "reached by no fixture" when all three are reached on
+ * every run. A re-implementation of an identity is a second answer to the question the identity
+ * exists to make one answer to, and it was committed by the tool that reports on that class.
+ *
+ * So the formatter moved here, both sides import it, and the two strings cannot part.
+ */
+export const money = (n) => (n < 0 ? '-' : '') + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 export const COMPARISONS = new Set(['equals', 'at_most']);
 
 /** Money to whole cents, so no comparison here is ever a float comparison. */

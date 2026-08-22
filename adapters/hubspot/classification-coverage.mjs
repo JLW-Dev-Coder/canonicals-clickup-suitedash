@@ -72,15 +72,22 @@ export const ENGINE_EXTRA_INPUTS = {
     // is a property nobody provisions, which is exactly what happened on 433-A(OIC).
     'business_income_expense_route',
   ],
-  // 433-A(OIC)'S ENTRY IS DELIBERATELY ABSENT, AND THE ABSENCE IS A CLAIM RATHER THAN AN
-  // OVERSIGHT. adapters/pdf/maps/433aoi.map.json declares the SAME `business_income_expense_route`
-  // over its lines (17) and (29) and its engine reads it the same way, so factually the row
-  // belongs here. Adding it would put the key in that form's key space, where assertion A1 of
-  // derive-names-433aoi.mjs would correctly STOP: the key has no binding in crosswalk.433aoi.json
-  // and no property in fields.433aoi.json. Fixing that means creating a property for a form this
-  // prompt's scope line excludes, and a permanent name is not something to create as a side
-  // effect. Recorded as B24 in adapters/pdf/maps/433boi.map.json `_carried.open`, with the exact
-  // remedy, so the gap cannot evaporate. THE 433-A(OIC) ROUND TRIP CANNOT CARRY THE ROUTE TODAY.
+  '433aoi': [
+    // [B24], CLOSED. This entry was DELIBERATELY ABSENT for one prompt and the absence was
+    // recorded as a claim: adapters/pdf/maps/433aoi.map.json declares the SAME
+    // `business_income_expense_route` over its lines (17) and (29) and its engine reads it the
+    // same way, so factually the row always belonged here. Adding it put the key in this form's
+    // key space, where assertion A1 of derive-names-433aoi.mjs correctly STOPped until the key
+    // had a binding — and clearing that STOP meant creating a PERMANENT HubSpot name, which is
+    // not something to do as a side effect of another form's pass. Prompt 44 is the pass that
+    // does it, with the full discipline for one property: derived, asserted against the live
+    // portal and the lie registry, dry-run with headroom, created through node fetch, read back.
+    //
+    // UNTIL THEN THE 433-A(OIC) ROUND TRIP COULD NOT CARRY THE ROUTE: the fetch layer emitted no
+    // such key, and gate step 11 STOPs on a record that declares no state. A finished form whose
+    // records cannot carry an input the engine requires is not finished.
+    'business_income_expense_route',
+  ],
 };
 
 /**

@@ -49,8 +49,8 @@
 // it cannot fade into a passing line. An entry whose value is no longer unresolvable is also a
 // STOP — a registration for a problem that has gone away is a registration nobody re-reads.
 
-import { readFileSync } from 'node:fs';
-import { loadBindings } from './bindings.mjs';
+import { readFileSync, existsSync } from 'node:fs';
+import { loadBindings, constructOf, CONSTRUCT_KIND, readsSourceConstruct, bindingSourceOf } from './bindings.mjs';
 import { MAPPED_FORMS } from '../pdf/resolve-fixture.mjs';
 import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 import { loadRecordShape, statesOf } from '../pdf/record-shape.mjs';
@@ -218,11 +218,68 @@ for (const g of universeGaps) problems.push(`UNIVERSE GAP  ${g}. This form could
 const registered = new Set(KNOWN_UNRESOLVABLE.map((k) => `${k.form}|${k.key}|${k.value}`));
 const hitRegistrations = new Set();
 const rows = [];
+const constructRows = [];
 
 for (const form of LIST) {
   let MAP, bindings;
   try { MAP = R(`adapters/pdf/maps/${form}.map.json`); } catch (e) { problems.push(`UNREADABLE MAP  ${form}: ${e.message}. A form whose map cannot be read is not a form with nothing to check.`); continue; }
   try { bindings = loadBindings(form); } catch (e) { problems.push(`UNREADABLE BINDINGS  ${form}: ${e.message}. Same reason.`); continue; }
+
+  // ── THE THIRD BOUNDARY: CONSTRUCT NAMES ───────────────────────────────────────────────
+  //
+  // bindings.mjs decides a property's `kind` from the `source` string a GENERATOR wrote, and
+  // until Prompt 44 it did so by comparing that string to literals — matching the generator's
+  // spellings by coincidence, with nothing asserting they matched. An unrecognised construct
+  // fell through to `scalar`, and a scalar is passed to the fill engine untranslated: an
+  // option value that needed translating reaches the page as nothing, on a valid PDF, exit 0.
+  //
+  // `constructOf` and `CONSTRUCT_KIND` are IMPORTED, never restated — a second copy of the
+  // vocabulary here would be a second answer to the question the vocabulary exists to make one
+  // answer to, which is the parallel-list defect guard-sweep.mjs enumerates.
+  //
+  // ASSERTED ON EVERY FORM INCLUDING THE INERT ONES. 433-F takes the crosswalk path and its
+  // rows carry no `source` at all, so this half has nothing to compare there — REPORTED as a
+  // proved no-op, never skipped, because "no constructs to check" and "every construct checks
+  // out" are indistinguishable from an exit code.
+  let constructRow = { form, constructs: [], rows: 0, path: 'crosswalk (no `source` field)' };
+  try {
+    const artefact = `adapters/hubspot/fields.${form}.json`;
+    const doc = existsSync(artefact) ? R(artefact) : null;
+    if (doc?.properties) {
+      const seen = new Map();
+      for (const p of doc.properties) {
+        const c = constructOf(p.source);
+        if (!seen.has(c)) seen.set(c, []);
+        seen.get(c).push(p.key);
+      }
+      const reads = readsSourceConstruct(form);
+      constructRow = { form, constructs: [...seen.keys()].sort(), rows: doc.properties.length, path: artefact, reads,
+        unknown: [...seen.keys()].filter((c) => CONSTRUCT_KIND[c] === undefined) };
+      for (const [c, keys] of seen) {
+        if (CONSTRUCT_KIND[c] !== undefined) continue;
+        const where = `${artefact} writes source construct ${JSON.stringify(c)} on ${keys.length} propert(ies) ` +
+          `(${keys.slice(0, 4).join(', ')}${keys.length > 4 ? ', …' : ''}), and bindings.mjs CONSTRUCT_KIND names only ` +
+          `[${Object.keys(CONSTRUCT_KIND).join(', ')}].`;
+        if (reads) {
+          problems.push(
+            `UNKNOWN CONSTRUCT  ${where} This form's kind is resolved THROUGH that string, so the generator that ` +
+            `writes this file and the resolver that reads it have parted on a spelling — and the resolver's answer ` +
+            `for an unknown construct used to be the silent one.`);
+        } else {
+          // INERT, AND REPORTED RATHER THAN INVISIBLE. bindingSourceOf says this form takes the
+          // crosswalk path, so nothing reads its `source` and no value is mis-shaped today.
+          // It is still a divergence: the artefact's vocabulary is not the vocabulary, and the
+          // day this form moves to the derived path those rows throw. Carried, not silenced.
+          constructRow.inertDivergence = (constructRow.inertDivergence || []).concat(
+            `${where} INERT: bindingSourceOf("${form}") is "${bindingSourceOf(form)}", so this file's \`source\` is read by nothing. [D-13]`);
+        }
+      }
+      // AND THE OTHER DIRECTION. A construct the vocabulary names that NO generator has ever
+      // written on any form is a resolver branch nothing exercises — reported across the whole
+      // LIST below rather than per form, since a construct live on one form is live.
+    }
+  } catch (e) { problems.push(`UNREADABLE DEFINITIONS  ${form}: ${e.message}. The construct vocabulary could not be compared, which is not the same as it agreeing.`); }
+  constructRows.push(constructRow);
 
   const cbKeys = new Set(Object.entries(MAP.checkboxes || {}).filter(([k, v]) => !k.startsWith('_') && v && typeof v === 'object' && !Array.isArray(v)).map(([k]) => k));
   const chKeys = new Set(Object.entries(MAP.check_here || {}).filter(([k, v]) => !k.startsWith('_') && v && typeof v.target === 'string').map(([k]) => k));
@@ -312,6 +369,21 @@ for (const k of KNOWN_UNRESOLVABLE) {
 }
 
 console.log(`intake-key assertion: ${LIST.length} mapped form(s) — ${LIST.join(', ')}`);
+console.log('');
+console.log('  CONSTRUCT VOCABULARY — bindings.mjs CONSTRUCT_KIND, asserted on every form including the inert ones');
+for (const c of constructRows) {
+  const reads = c.reads === undefined ? 'no definitions file'
+    : c.reads ? 'kind IS resolved through `source`'
+      : `kind is NOT resolved through \`source\` (${bindingSourceOf(c.form)} path)`;
+  console.log(`  ${c.form.padEnd(9)} ${String(c.rows).padStart(4)} row(s)   ${reads}`);
+  console.log(`             constructs written: ${c.constructs.length ? c.constructs.join(', ') : `(none — ${c.path})`}`);
+  // THE FIGURES, NOT A VERDICT. Each line names how many constructs the artefact writes, how
+  // many of them the vocabulary holds, and how many the resolver reads — so a form with nothing
+  // to compare prints 0 of 0 read rather than a sentence that reads as a pass.
+  const known = c.constructs.filter((x) => CONSTRUCT_KIND[x] !== undefined).length;
+  console.log(`             ${c.constructs.length} construct(s) written, ${known} named by CONSTRUCT_KIND, ${c.reads ? c.constructs.length : 0} read by the resolver (${c.reads ? 'derived/generated' : bindingSourceOf(c.form)} path)`);
+  for (const d of (c.inertDivergence || [])) console.log(`             DIVERGENCE, inert and reported every run: ${d}`);
+}
 console.log('');
 console.log('  FORM      option rows  resolved  values  group rows  with row_shape  shapes checked');
 for (const r of rows) {

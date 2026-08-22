@@ -31,6 +31,99 @@
 import { readFileSync } from 'fs';
 import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE WRITER-RESOLVER BOUNDARY — ONE CONSTRUCT VOCABULARY, DECLARED AND ASSERTED
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// The WRITER of `source` is a generator: gen-fields-from-map.mjs, derive-names-433aoi.mjs,
+// derive-names-433boi.mjs. The RESOLVER is this file, which decided `kind` by comparing that
+// string to literals — `p.source === 'groups'`, `=== 'checkboxes'`, `=== 'check_here'` — and
+// worked ONLY BECAUSE THE SPELLINGS HAPPEN TO MATCH. Nothing asserted they did. That is a
+// writer-resolver coincidence, the class Prompt 43 ruling 2 covers, and its failure is silent
+// in the worst way: a construct name this file does not recognise falls through to `scalar`,
+// the fetch layer passes the stored value through untranslated, and an untranslated "true" or
+// "grid" happens to work today because the option values and the record states are spelled
+// identically. It would stop working the moment either moved, with no error and a valid PDF.
+//
+// So the vocabulary is DECLARED here, both readers use it, and
+// adapters/hubspot/assert-intake-keys.mjs asserts at the boundary — on EVERY form, including
+// the ones where it is inert — that every construct a generator actually wrote is a construct
+// this table names. An unknown construct is a STOP, not a scalar.
+//
+// THE LEADING WORD IS THE CONSTRUCT. 433-A's generator writes prose into `source`
+// ("groups (5 printed slots x 6 columns, serialized)", "split (2 printed boxes, 1 property)"),
+// which is why `fromGeneratedFields` used `startsWith('groups')` and the other reader used
+// equality — two normalisers for one field. `constructOf` is the one normaliser.
+/** The construct a `source` value names, whatever prose the generator appended to it. */
+export const constructOf = (source) => String(source ?? '').trim().split(' ')[0];
+
+/**
+ * EVERY MAP CONSTRUCT A GENERATOR MAY WRITE, AND THE SHAPE THE FETCH LAYER MUST GIVE IT.
+ *
+ *   group   a repeatable table, stored as ONE textarea of JSON. The fill engine tests
+ *           Array.isArray and prints ZERO rows otherwise — no error, valid PDF, exit 0.
+ *   option  a value that must be translated through `map_option_by_value` before the fill
+ *           engine can resolve it against the map's own option keys.
+ *   scalar  everything else, the only case safe to pass through untouched.
+ *
+ * `engine` — an input the engine reads that the map names no cell for — is `scalar` HERE and
+ * is overridden to `option` by the row's own `map_option_by_value`, which is the discriminator
+ * that does not depend on the construct name at all. Its one instance,
+ * `business_income_expense_route`, is an ENUMERATION on both OIC forms.
+ */
+export const CONSTRUCT_KIND = {
+  map: 'scalar',
+  split: 'scalar',
+  allowed: 'scalar',
+  engine: 'scalar',
+  groups: 'group',
+  checkboxes: 'option',
+  check_here: 'option',
+};
+
+/**
+ * The kind for one artefact row. THE ROW'S OWN DECLARATION WINS over the construct name:
+ * anything carrying a `map_option_by_value` is an option, whatever produced it.
+ * Returns null for a construct the vocabulary does not name — the caller decides, and every
+ * caller in this repo treats null as a STOP rather than as a scalar.
+ */
+export const kindOf = (row) => {
+  if (row.map_option_by_value) return 'option';
+  const k = CONSTRUCT_KIND[constructOf(row.source)];
+  return k === undefined ? null : k;
+};
+
+/**
+ * WHAT HAPPENS AT THE BOUNDARY WHEN THE TWO SIDES DISAGREE. Not a fallback to `scalar` — that
+ * is the silent path this whole block exists to close — and not a warning, because the caller
+ * is about to hand the value to a fill engine that will accept it and print nothing.
+ */
+const unknownConstruct = (form, row) => {
+  throw new Error(
+    `BINDING KIND — fields.${form}.json declares key ${JSON.stringify(row.key)} with source ` +
+    `${JSON.stringify(row.source)}, whose construct ${JSON.stringify(constructOf(row.source))} is not in ` +
+    `bindings.mjs CONSTRUCT_KIND (${Object.keys(CONSTRUCT_KIND).join(', ')}).\n` +
+    `  The generator that wrote this file and the resolver that reads it have parted on a spelling.\n` +
+    `  Falling through to "scalar" would pass the stored value to the fill engine untranslated, which\n` +
+    `  reaches the page as nothing on a valid PDF with exit 0. Declare the construct or fix the writer.`);
+};
+
+/**
+ * WHICH ARTEFACT, AND THEREFORE WHETHER `source` IS READ AT ALL.
+ *
+ * Exported so adapters/hubspot/assert-intake-keys.mjs can scope the construct assertion to the
+ * forms whose rows this file actually resolves through `source`, WITHOUT restating the
+ * dispatch. A second copy of "which forms take the derived path" is a second answer to the
+ * question loadBindings exists to answer once.
+ */
+export const bindingSourceOf = (form) =>
+  form === '433a' ? 'generated'
+    : (form === '433aoi' || form === '433boi') ? 'derived'
+      : 'crosswalk';
+
+/** True where `kind` is decided from the generator's `source` string. */
+export const readsSourceConstruct = (form) => bindingSourceOf(form) !== 'crosswalk';
+
 export function loadBindings(form) {
   if (form === '433a') return fromGeneratedFields(form);
   // 433-B(OIC) joins 433-A(OIC) here rather than falling through to fromCrosswalk: its
@@ -58,18 +151,12 @@ function fromDerivedFields(form) {
   return doc.properties.map((p) => ({
     key: p.key,
     hs_name: p.hs_name,
-    // READ OFF THE ARTEFACT, INCLUDING THE FIFTH CONSTRUCT. `groups`, `checkboxes` and
-    // `check_here` are named constructs of a map. 433-B(OIC) adds `engine`: an input the engine
-    // reads that the map names no cell for, and its one instance —
-    // `business_income_expense_route` — is an ENUMERATION with a provisioned option set. A rule
-    // keyed on the construct name alone classified it `scalar`, so the fetch layer would have
-    // passed the stored value through untranslated; that happens to work today because the
-    // option values and the record states are spelled identically, and it would stop working
-    // the moment either moved, with no error and a valid PDF. So the discriminator is what the
-    // row DECLARES: anything carrying a `map_option_by_value` is an option, whatever produced it.
-    kind: p.source === 'groups' ? 'group'
-      : (p.source === 'checkboxes' || p.source === 'check_here' || p.map_option_by_value) ? 'option'
-        : 'scalar',
+    // ONE VOCABULARY, DECLARED AT THE TOP OF THIS FILE AND ASSERTED AT THE BOUNDARY BY
+    // adapters/hubspot/assert-intake-keys.mjs. This used to be a chain of literal comparisons
+    // against `p.source`, matching the generator's spellings by coincidence; an unrecognised
+    // construct fell through to `scalar` and the fetch layer passed the value through
+    // untranslated, silently. `kindOf` returns null instead, and null is a STOP.
+    kind: kindOf(p) ?? unknownConstruct(form, p),
     map_option_by_value: p.map_option_by_value || null,
     row_shape: p.row_shape || null,
     aliases: [],
@@ -86,7 +173,12 @@ function fromGeneratedFields(form) {
   return doc.properties.map((p) => ({
     key: p.key,
     hs_name: p.hs_name,
-    kind: p.source.startsWith('groups') ? 'group' : p.source === 'checkboxes' && p.map_option_by_value ? 'option' : 'scalar',
+    // THE SAME VOCABULARY AS FORM THREE'S READER, WHICH IT WAS NOT BEFORE. This read
+    // `startsWith('groups')` while the other read `=== 'groups'` — two normalisers for one
+    // field, agreeing only because 433-A's generator appends prose and the derivers do not.
+    // `constructOf` is the one normaliser and `CONSTRUCT_KIND` the one table. Proved a no-op on
+    // all three generated forms: 186 + 239 + 113 bindings, 0 kinds move.
+    kind: kindOf(p) ?? unknownConstruct(form, p),
     map_option_by_value: p.map_option_by_value || null,
     row_shape: null,
     aliases: [],

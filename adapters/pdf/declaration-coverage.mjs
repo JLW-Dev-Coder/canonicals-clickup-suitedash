@@ -41,8 +41,9 @@
 // nothing to the union: a stop. An unreadable input reports that it could not be read.
 
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolveFixture } from './resolve-fixture.mjs';
+import { money } from './comparisons.mjs';
 
 // THE FIXTURE LIST IS DERIVED, NOT TYPED.
 //
@@ -169,7 +170,27 @@ for (const fx of fixtures) {
   // reconciled away, because silently collapsing 83 to 82 would move a figure three prompts of
   // reports have quoted.
   const dupes = [...new Set(inClass.filter((id, i) => inClass.indexOf(id) !== i))];
-  runs.push({ fixture: fx, total: Number(kv.declarations_total), exercised: Number(kv.declarations_exercised), unexercised: ids, inClass, dupes });
+  // [D-11]'s second pair of figures, read off the same block on the same run. An older gate
+  // emits no such keys; that is REPORTED as an unreadable observability half rather than
+  // counted as zero, because a run whose block predates the key has not been measured.
+  if (kv.applied_unobservable_ids === undefined) {
+    console.error(`STOP — ${fx}: the summary block carries no applied_unobservable_ids. The observability half of [D-11] cannot be read for this run, and an unread half is not an empty one.`);
+    process.exit(2);
+  }
+  const appliedUnobservable = split(kv.applied_unobservable_ids);
+  if (appliedUnobservable.length !== Number(kv.applied_unobservable)) {
+    console.error(`STOP — ${fx}: the block says ${kv.applied_unobservable} applied-unobservable declaration(s) and names ${appliedUnobservable.length}.`);
+    process.exit(2);
+  }
+  // The observability POPULATION as identities: the in-class entries of the three kinds that
+  // carry the test. Derived from the in-class list rather than restated, so the two cannot part.
+  const obsInClass = inClass.filter((id) => /^(factor|constant|sign)\|/.test(id));
+  for (const id of appliedUnobservable) if (!obsInClass.includes(id)) {
+    console.error(`STOP — ${fx}: ${JSON.stringify(id)} is reported applied-unobservable and is not an in-class factor, constant or sign. One of the two lists is not describing this run.`);
+    process.exit(2);
+  }
+  runs.push({ fixture: fx, total: Number(kv.declarations_total), exercised: Number(kv.declarations_exercised), unexercised: ids, inClass, dupes,
+    appliedUnobservable, obsInClass, obsPop: Number(kv.observability_population) });
 }
 
 // THE TWO UNIONS. `everInClass` is the denominator: every declaration any fixture had the
@@ -234,4 +255,60 @@ if (!still.length) {
   console.log(`  UNEXERCISED BY EVERY FIXTURE — ${still.length} declared rule(s) that were in class somewhere and proved nowhere:`);
   const byKind = still.reduce((a, id) => { const [k, line, what] = id.split('|'); (a[k] ||= []).push(`${line} (${what})`); return a; }, {});
   for (const [k, lines] of Object.entries(byKind)) console.log(`    ${k.padEnd(10)} ${lines.join(', ')}`);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// [D-11] — THE TWO THINGS THE COVERAGE FIX MUST NOT LOSE
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// Coverage now asks whether a declaration was APPLIED. For a factor, a constant and a sign
+// that means `fired` is true whenever the run reached them — so those three kinds can no
+// longer appear in the residue above, and a residue a kind cannot enter is a residue that
+// stops watching it. Two lists take over, and both are unioned over IDENTITIES:
+//
+//   (a) APPLIED, NOT OBSERVABLE. The declaration ran and the printed total is the same either
+//       way. This is what the old `fired` was measuring, under its right name. A .8 seen only
+//       against zeros has never been proved to be .8 rather than .7.
+//
+//   (b) DECLARED, IN CLASS NOWHERE. A feeder the totals file declares that NO fixture ever
+//       reached — because its `when` clause never held on any record in the set. Under the old
+//       rule such a declaration would surface in the residue the moment it WAS reached and
+//       contributed zero; under the new one it never surfaces at all unless this list exists.
+//       Derived from the totals file, which is the declaring artefact, and not from the runs.
+const declaredFeeders = (() => {
+  const p = `adapters/pdf/maps/${form}.totals.json`;
+  if (!existsSync(p)) return { rows: [], why: `${p} is not in this tree` };
+  const doc = JSON.parse(readFileSync(p, 'utf8'));
+  const rows = [];
+  for (const e of (doc.totals || [])) for (const fd of (e.feeders || [])) {
+    // The identities are built the same way the gate builds them, so the two sides join.
+    if (typeof fd.factor === 'number' && fd.factor !== 1) rows.push(`factor|${e.line}|x ${fd.factor}`);
+    if (typeof fd.constant === 'number') rows.push(`constant|${e.line}|${money(fd.constant)}`);
+    if (fd.sign === -1) rows.push(`sign|${e.line}|minus ${fd.keys ? fd.keys.join(', ') : `${fd.group}.${fd.column}`}`);
+  }
+  return { rows: [...new Set(rows)], why: null };
+})();
+
+const inClassSet = new Set(everInClass);
+const neverInClass = declaredFeeders.rows.filter((id) => !inClassSet.has(id));
+const unobsUnion = [...new Set(runs.flatMap((r) => r.appliedUnobservable))];
+// A declaration observable on ANY run is proved at its magnitude somewhere, so the union
+// subtracts, exactly as the coverage union does.
+const observableSomewhere = new Set(runs.flatMap((r) => r.obsInClass.filter((id) => !r.appliedUnobservable.includes(id))));
+const neverObservable = unobsUnion.filter((id) => !observableSomewhere.has(id));
+
+console.log('');
+console.log(`  OBSERVABILITY — ${runs.reduce((n, r) => n + r.obsPop, 0)} applied-declaration test(s) across the ${runs.length} run(s); ${neverObservable.length} declaration(s) are applied on some run and observable on none.`);
+if (neverObservable.length) for (const id of neverObservable) {
+  const [k, line, what] = id.split('|');
+  console.log(`    ${k.padEnd(10)} ${line} (${what}) — exercised, and no fixture has yet shown the printed total distinguishing it from not applying it`);
+}
+if (declaredFeeders.why) {
+  console.log(`  DECLARED-BUT-NEVER-IN-CLASS — not computed: ${declaredFeeders.why}. An unread input reports that it could not be read.`);
+} else {
+  console.log(`  DECLARED-BUT-NEVER-IN-CLASS — ${declaredFeeders.rows.length} factor/constant/sign declaration(s) in ${form}.totals.json; ${neverInClass.length} were reached by no fixture in the set.`);
+  for (const id of neverInClass) {
+    const [k, line, what] = id.split('|');
+    console.log(`    ${k.padEnd(10)} ${line} (${what}) — declared, and no fixture in this set ever reached the branch that carries it`);
+  }
 }

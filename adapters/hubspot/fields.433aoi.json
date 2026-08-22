@@ -10,9 +10,9 @@
   "_generator_rule": "adapters/hubspot/generator-guard.mjs asserts, before every write, that this file already declares THIS tool. A different generator writing here is a STOP, not a warning: these definitions become permanent HubSpot property names and HubSpot does not free a name.",
   "naming_rule": "Ruling 5. exact -> irs433_<fact>; new -> irs433aoi_<fact>; the middle four by a per-entry ruling recorded on each crosswalk row. NOTHING HERE IS TYPED: re-running the deriver rebuilds this file, and a category change changes a name.",
   "counts": {
-   "total": 238,
+   "total": 239,
    "shared": 136,
-   "form_specific": 102,
+   "form_specific": 103,
    "pii": 35
   }
  },
@@ -6205,6 +6205,43 @@
    "entry": "X-19",
    "category": "different-arithmetic-same-name",
    "backbone_key": "business_property"
+  },
+  {
+   "key": "business_income_expense_route",
+   "fact": "business_income_expense_route",
+   "scope": "form-specific",
+   "hs_name": "irs433aoi_business_income_expense_route",
+   "form": "433aoi",
+   "field": "business_income_expense_route",
+   "label": "[433-A(OIC)] Business income expense route",
+   "description": "433-A(OIC) (input key: business_income_expense_route). Specific to Form 433-A(OIC). Crosswalk X-83, classified new.",
+   "group": "irs433aoic",
+   "type": "enumeration",
+   "fieldType": "select",
+   "options": [
+    {
+     "label": "Grid (lines 12-16 and 18-28 completed)",
+     "value": "grid",
+     "displayOrder": 0
+    },
+    {
+     "label": "Profit and loss statement attached",
+     "value": "profit_and_loss_statement",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "grid": "grid",
+    "profit_and_loss_statement": "profit_and_loss_statement"
+   },
+   "pii": false,
+   "line_ref": null,
+   "source": "engine",
+   "type_basis": "declared record shape - the printed route this filing takes through Section 6",
+   "row_shape": null,
+   "entry": "X-83",
+   "category": "new",
+   "backbone_key": null
   }
  ]
 }

@@ -1089,21 +1089,35 @@
     "433f"
    ],
    "granularity": "enumerated"
+  },
+  {
+   "id": "X-83",
+   "slice": "Prompt 44 commit 2",
+   "page": 5,
+   "category": "new",
+   "oic": "business_income_expense_route",
+   "a433": null,
+   "why": "THE DECLARED PRINTED ROUTE THROUGH SECTION 6, and the input the fill engine requires before it will check lines (17) and (29). 433-A(OIC) page 5 prints, at baseline y 421.3, \"If you provide a current profit and loss (P&L) statement for the information below, enter the total gross monthly income on line 17 and your monthly expenses on line 29 below.\" and at y 411.7 \"Do not complete lines (12) - (16) and (18) - (28).\" That is an ALTERNATIVE to completing the printed operand lines, so a record has to say which of the two it took before either total can be checked. 433-A prints nothing like it: its only profit-and-loss sentence is page 8 y 451.0, \"(lines 68 through 88 should reconcile with business Profit and Loss Statement)\", which asks the taxpayer to make the printed lines AGREE with a statement rather than offering to replace them. A reconciliation note and a route are different instructions, and only the second needs a stored answer. Hence `new`. NOT `same-question-different-subject`: that category is 433-B(OIC)'s, whose classification is relative to the backbone and whose subject is the business entity; adapters/pdf/maps/_subjects.cross-form.json records 433-A and 433-A(OIC) as COINCIDING, so subject is not what separates them here — the printed instruction is. Found as [B24] while building 433-B(OIC)'s key space, where the same input HAD a property and this form did not.",
+   "compared_against": [
+    "433-A page 8 y 451.0, the Section 7 profit-and-loss reconciliation note — the only sentence on 433-A that names a profit and loss statement at all"
+   ],
+   "granularity": "enumerated"
   }
  ],
  "_tally": {
   "_why": "Derived from entries[] by adapters/pdf/count-sweep.mjs [S-25], never retyped. A hand-kept tally beside a list is how 'eleven' survived three slices when the honest figure was ten.",
-  "entries": 82,
+  "entries": 83,
   "exact": 29,
   "superset": 1,
   "different-arithmetic-same-name": 11,
   "different-shape": 8,
   "same-fact-different-decomposition": 5,
-  "new": 25,
+  "new": 26,
   "asymmetric-the-other-way": 3,
   "_the_typed_tally_was_wrong_on_three_categories": "AUTHORED BY HAND AS 16 exact / 8 different-shape / 8 new, DERIVED AS 14 / 7 / 11. Corrected to the derived figures before this file was ever committed. Left recorded because it is the fourth time in this repo a hand-kept count beside its own list has drifted, and the first time the drift was caught in the same minute it was written - by [S-25], which existed before the file did.",
   "_slice_7": "Slice 7 added fifteen entries covering pages 7 and 8. NINE ARE `exact` AND THAT IS THE FINDING: 433-A(OIC) Section 9 and 433-A’s \"Other Information\" block are the same questions in the same order under the same AcroForm leaf names, index for index, including two nesting anomalies and one suffix inversion that are present on BOTH forms. 62 of the 334 distinct leaf names on 433-A(OIC) also appear on 433-A, and this block is where most of them are. The shared lineage is real and it is also where the sharpest traps live: p2_t50_8 names three different questions across the two forms, p2_t50_8b differs from p2_t50_8 by one character and by one question, and the six litigation cells are named correctly on 433-A and wrongly on 433-A(OIC).",
-  "_slice_8": "The naming pass added twenty-two entries and corrected three. Every added entry covers keys the completeness blanket claimed were already covered - see _the_completeness_blanket_was_false_when_it_was_written. The category mix of the additions is the finding in miniature: nine exact facts 433-A asks identically and nobody had crosswalked, and four totals carrying a printed constant or an absorbed operand that 433-A does not carry."
+  "_slice_8": "The naming pass added twenty-two entries and corrected three. Every added entry covers keys the completeness blanket claimed were already covered - see _the_completeness_blanket_was_false_when_it_was_written. The category mix of the additions is the finding in miniature: nine exact facts 433-A asks identically and nobody had crosswalked, and four totals carrying a printed constant or an absorbed operand that 433-A does not carry.",
+  "_prompt_44_movement": "X-83 added by Prompt 44 commit 2 - the 433-A(OIC) record-shape route [B24]. entries 82 -> 83, new 25 -> 26. Re-derived here by the same rule adapters/pdf/count-sweep.mjs [S-25] applies on every run; the sweep is what refused the stale figures."
  },
  "_what_this_file_does_not_say": "IT DOES NOT SAY WHICH HUBSPOT PROPERTY FEEDS ANYTHING. An `exact` classification means a 433-A value needs no transformation to become the OIC value; it does NOT mean a property already exists, that it is the right property, or that reuse is approved. The provisioning pass reads these categories to know WHICH DECISIONS IT HAS TO MAKE - every entry that is not `exact` is a decision - and makes them there.",
  "_the_reading_that_matters": "SEVEN OF THE FORTY-FOUR ENTRIES ARE different-arithmetic-same-name, AND THOSE ARE THE FILE'S REASON TO EXIST. Each is a pair the captions invite you to reuse and the arithmetic forbids: the quick-sale discount on four asset classes, the non-cash add-back at (36), the narrowed vehicle line at (41), and the two household totals at Box E. Every one of them produces a filed statement whose printed totals all reconcile and whose offer is wrong.",

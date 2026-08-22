@@ -3219,6 +3219,32 @@
    "pii": true,
    "scope": "shared",
    "scope_reason": "Same reasoning as real_property: quick_sale_value and quick_sale_equity are additional columns over the backbone business_property row, not competing values, and the printed conditional that zeroes a leased asset acts on quick_sale_equity. Two printed rows on both forms. The (9) total is form-specific."
+  },
+  {
+   "key": "business_income_expense_route",
+   "entry": "X-83",
+   "fact": "business_income_expense_route",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "declared record shape - the printed route this filing takes through Section 6",
+   "pii": false,
+   "options": [
+    {
+     "label": "Grid (lines 12-16 and 18-28 completed)",
+     "value": "grid",
+     "displayOrder": 0
+    },
+    {
+     "label": "Profit and loss statement attached",
+     "value": "profit_and_loss_statement",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "grid": "grid",
+    "profit_and_loss_statement": "profit_and_loss_statement"
+   }
   }
  ]
 }
