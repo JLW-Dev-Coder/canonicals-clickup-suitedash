@@ -58,8 +58,17 @@ function fromDerivedFields(form) {
   return doc.properties.map((p) => ({
     key: p.key,
     hs_name: p.hs_name,
+    // READ OFF THE ARTEFACT, INCLUDING THE FIFTH CONSTRUCT. `groups`, `checkboxes` and
+    // `check_here` are named constructs of a map. 433-B(OIC) adds `engine`: an input the engine
+    // reads that the map names no cell for, and its one instance —
+    // `business_income_expense_route` — is an ENUMERATION with a provisioned option set. A rule
+    // keyed on the construct name alone classified it `scalar`, so the fetch layer would have
+    // passed the stored value through untranslated; that happens to work today because the
+    // option values and the record states are spelled identically, and it would stop working
+    // the moment either moved, with no error and a valid PDF. So the discriminator is what the
+    // row DECLARES: anything carrying a `map_option_by_value` is an option, whatever produced it.
     kind: p.source === 'groups' ? 'group'
-      : (p.source === 'checkboxes' || p.source === 'check_here') ? 'option'
+      : (p.source === 'checkboxes' || p.source === 'check_here' || p.map_option_by_value) ? 'option'
         : 'scalar',
     map_option_by_value: p.map_option_by_value || null,
     row_shape: p.row_shape || null,

@@ -116,7 +116,12 @@ say('that would cross it, so nothing short of crossing it reads it. The endpoint
 say('');
 for (const p of probes) say(`- \`${p}\``);
 say('');
-say(after > CEILING ? '**STOP** - this pass would cross the ceiling, and the stop is BEFORE the loop rather than inside it.' : `Under the ceiling by ${CEILING - after}. Proceed.`);
+// BOTH BRANCHES QUOTE THE FIGURES THEY ARE ABOUT. A bare "this pass would cross the ceiling"
+// is a sentence about the whole run that nothing in it can be checked against, which is what
+// adapters/pdf/exclusion-sweep.mjs [EX-15] refuses - and it refused this line on its first run.
+say(after > CEILING
+  ? `**STOP** - ${before} + ${added} = ${after}, which is ${after - CEILING} past the ${CEILING.toLocaleString()} ceiling. The stop is BEFORE the loop rather than inside it: a create loop that runs out of ceiling partway through leaves some names permanent and the rest not, and there is no way back from that.`
+  : `Under the ceiling by ${CEILING - after}: ${before} + ${added} = ${after}. Proceed.`);
 say('');
 say('## Property groups');
 say('');

@@ -100,13 +100,24 @@
    "teardown": "torn_down",
    "absence_read": "GET /crm/v3/objects/contacts/243232979075 -> 404, read 2026-08-20 immediately after the DELETE by adapters/hubspot/hs-teardown-contact.mjs, in the same run that seeded it.",
    "gated": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.from-hubspot-243232979075.json --saturated -> GATE PASSED, all 11 steps, saturated."
+  },
+  {
+   "id": "243673264132",
+   "form": "433boi",
+   "purpose": "433-B(OIC) round trip: seed the 113 provisioned properties from samples/433boi.slice3.sample.json, fetch them back, gate the fetched record saturated, render the review page, and tear the contact down in the same run.",
+   "fixture": "samples/433boi.from-hubspot-243673264132.json (gitignored, as every from-hubspot fixture is - .gitignore now carries the 433boi pattern beside the other three)",
+   "email": "synthetic-433boi-roundtrip@example.com",
+   "seeded_from": "samples/433boi.slice3.sample.json, which declares _synthetic; 113 of 113 bindings populated.",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/243673264132 -> 404, read 2026-08-22 immediately after the DELETE by adapters/hubspot/hs-teardown-contact.mjs, in the same run that seeded it. The teardown's dry-run path was proved a no-op against the live contact immediately before the delete.",
+   "registered_when": "AT SEED TIME, in the same run, before the fetch. The register is the list of things that must be absent, and a list written at teardown time can only contain what somebody remembered to tear down - which is the same set as \"nothing was left behind\" and proves nothing."
   }
  ],
  "_retrospective_rows_are_weaker": "8 of the 10 rows were reconstructed after the fact, from working-tree fixtures that embed a contact id in their filename. Their `absence_read` is a live 404 taken during the Prompt 39 pre-flight, which is real evidence that they are gone NOW. What it is not is evidence of what happened at the time, and it could not have been: a probe seeded and never recorded is invisible to any reconstruction that starts from the fixtures, because such a reconstruction can only find probes that left a fixture behind. A probe seeded for a run that failed before the fetch leaves nothing at all. That gap closes going forward and cannot be closed backwards.",
  "_count": {
-  "probes": 10,
+  "probes": 11,
   "live": 0,
-  "torn_down": 10,
+  "torn_down": 11,
   "unknown": 0,
   "registered_retrospectively": 8,
   "_derived_by": "python over probes[]; adapters/hubspot/hs-preflight.mjs re-derives all five on every run and a typed figure that disagrees is a STOP."

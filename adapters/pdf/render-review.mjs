@@ -324,6 +324,35 @@ for (const { path, target } of cbTargets) {
   add({ construct: 'checkboxes', keys: [], target, hsValue: undefined, label: path.replace(/^checkboxes\./, '') });
 }
 
+// 5b. `check_here` — THE LONE BOX WITH NO COUNTERPART CELL, and it is a fifth construct rather
+// than a shape of `checkboxes`. A checkbox block is a NAMED-OPTION SET: the record says "yes"
+// and the engine ticks the yes target out of two or more. A check_here entry is ONE box whose
+// negative answer is the box left blank, so it binds a single `target` and carries its own
+// input key — and that key is the thing this page has to attribute the tick to.
+//
+// LEFT OUT UNTIL NOW, AND IT WAS TELLING A PREPARER SOMETHING FALSE. The walk above reads
+// `mapDoc.checkboxes` and nothing else, so on 433-B(OIC) the nine page-6 attachment ticks and
+// the only-employee box came out as ELEVEN record values reaching no printed cell — on a record
+// where the fill engine had ticked every one of them. 433-A(OIC) has seventeen of the same
+// construct and the same gap. The construct is read from the map exactly the way the fill
+// engines and bindings.mjs read it: an entry with a string `target` is an input, and an entry
+// without one is the block's own `_why` prose.
+for (const [key, def] of Object.entries(mapDoc.check_here || {})) {
+  if (key.startsWith('_') || !def || typeof def.target !== 'string') continue;
+  const v = data[key];
+  const ticked = v === true || ['yes', 'true', '1'].includes(String(v ?? '').trim().toLowerCase());
+  add({
+    construct: 'check_here', keys: [key], target: def.target,
+    // The page reads a tick off the PDF as "checked"; the record's side has to speak the same
+    // vocabulary or every one of these would report as a disagreement between "yes" and "checked".
+    hsValue: blank(v) ? '' : (ticked ? 'checked' : ''),
+    label: labelFor(key) ?? key,
+    addr: addrForKey(key),
+    note: blank(v) ? 'the record answers this box neither way, so it is left blank — which is what an unticked check-here box means'
+      : (ticked ? null : `the record answers ${JSON.stringify(v)}, and a check-here box has no printed "no": the negative answer IS the empty box`),
+  });
+}
+
 // 6. the IRS allowable column — computed, not supplied, so it is shown with its arithmetic
 const allowedRows = [];
 (function walkAllowed(node, path) {
