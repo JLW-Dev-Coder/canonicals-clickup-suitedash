@@ -28,7 +28,8 @@
     "fixtures:recordshape": "node scratchpad/author-record-shape-fixtures.mjs",
     "stress:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --role negative --saturated && node adapters/pdf/run-form-gate.mjs 433boi --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433boi",
     "intakekeys": "node adapters/hubspot/assert-intake-keys.mjs",
-    "crosswalk:433boi": "node adapters/hubspot/derive-names-433boi.mjs && node adapters/hubspot/reclassify-against-backbone.mjs 433boi && node adapters/hubspot/assert-intake-keys.mjs"
+    "crosswalk:433boi": "node adapters/hubspot/derive-names-433boi.mjs && node adapters/hubspot/reclassify-against-backbone.mjs 433boi && node adapters/hubspot/assert-intake-keys.mjs",
+    "dryrun:433boi": "node adapters/hubspot/hs-dryrun-433boi.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
