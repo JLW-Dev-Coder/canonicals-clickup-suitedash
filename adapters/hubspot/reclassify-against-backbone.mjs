@@ -111,33 +111,46 @@ export const CANDIDATE_THRESHOLD = 0.25;
  * EVERY CANDIDATE GETS A RULING. `same-fact` means the two names hold one fact and the binding
  * is arguable; `different-fact` means they share a word and not a question.
  */
+/**
+ * EVERY RULING DECLARES THE FORM IT WAS RULED ABOUT, and the three readers below filter on it.
+ *
+ * They did not, and this list was consulted for whatever form the tool was run against. Running
+ * it for 433-B(OIC) reported "SAME-FACT RULING WITH NO DEFINITION  40_monthly_rent_payment is
+ * ruled same-fact as irs433_exp_rent, and fields.433boi.json defines no property for that key" —
+ * a true sentence about a ruling that has nothing to do with that form, produced by a check
+ * asserting a 433-A(OIC) binding against a 433-B(OIC) definition file. The failure mode that
+ * matters is the other direction: a `different-fact` ruling written for one form would have
+ * silently disposed of a same-named candidate on another, and disposal is what stops a
+ * candidate being a STOP. So the scope is declared per ruling and a ruling with no form is
+ * itself a STOP — an unscoped ruling is one that applies everywhere, which is what this was.
+ */
 export const SAME_FACT_RULINGS = [
-  { key: '40_monthly_rent_payment', candidate: 'irs433_exp_rent', ruling: 'same-fact', carried: 'C-23',
+  { form: '433aoi', key: '40_monthly_rent_payment', candidate: 'irs433_exp_rent', ruling: 'same-fact', carried: 'C-23',
     rebound: true,
     orphan: 'irs433aoi_monthly_rent_payment',
     why: 'THE LIVE INSTANCE C-23 WAS FILED FOR, AND THE ONE THE WIDENED TARGET EXISTS TO SURFACE. `irs433_exp_rent` is on the backbone because 433-F prints a Rent line and 433-A does not, so no entry in a crosswalk authored against 433-A could see it. Both cells hold the taxpayer\'s monthly rent payment. NOT REBOUND HERE: `40_monthly_rent_payment` is the rent COMPONENT disclosed beside the OIC housing-and-utilities figure at (40), and whether the component a preparer discloses on an OIC and the expense line a preparer claims on a 433-F are one stored fact is a filing decision on permanent state. Ruled, reported, and left carried as C-23.',
     superseded: 'THE RULING WAS RIGHT AND THE DEFERRAL WAS WRONG, AND THE ORIGINAL IS KEPT ABOVE VERBATIM. What it got right: the two cells hold one fact, and which property a filed cell reads from is permanent state that a tool surfacing candidates must never change by itself. What it got wrong: it treated permanence as a reason to wait, when waiting is the one thing that makes it permanent. THERE WERE ZERO LIVE RECORDS - the only record that ever held either value was the synthetic probe, deleted at the end of the pass that wrote this ruling - so the rebind cost one crosswalk row and no migration, and every day it stayed deferred was a day a real record could arrive and make it cost a migration instead. Rebound under X-82 (same-fact-different-decomposition against 433-A line 37 Housing and Utilities): `40_monthly_rent_payment` now derives `irs433_exp_rent`, and `irs433aoi_monthly_rent_payment` is deprecated in its portal description and named in no definition file. Asserted by sameFactBindings() below, which is what makes this a state rather than a sentence.' },
 
-  { key: 'box_d_total_household_income', candidate: 'irs433_income_pension_household', ruling: 'different-fact',
+  { form: '433aoi', key: 'box_d_total_household_income', candidate: 'irs433_income_pension_household', ruling: 'different-fact',
     why: 'A BOX TOTAL AGAINST ONE OF ITS OPERANDS. Box D is the sum of every household income line; `irs433_income_pension_household` is the spouse-and-household pension line, one component of it. They share "household" and "income" because one contains the other, which is the opposite of being the same fact — binding them together would make the total overwrite an operand.' },
-  { key: 'box_d_total_household_income', candidate: 'irs433_income_social_security_household', ruling: 'different-fact',
+  { form: '433aoi', key: 'box_d_total_household_income', candidate: 'irs433_income_social_security_household', ruling: 'different-fact',
     why: 'Same shape as the pension candidate above: a total against one of the lines that feeds it.' },
 
-  { key: '32_additional_sources_of_income', candidate: 'irs433_income_unemployment', ruling: 'different-fact',
+  { form: '433aoi', key: '32_additional_sources_of_income', candidate: 'irs433_income_unemployment', ruling: 'different-fact',
     why: 'A CATCH-ALL LINE AGAINST A NAMED SOURCE. (32) is "additional sources of income" — the residual line for anything the printed list does not name — and unemployment compensation is one of the sources the list DOES name. A residual and a named member of the set it is residual to are never one fact.' },
-  { key: 's10_attached_other_income_statements', candidate: 'irs433_income_unemployment', ruling: 'different-fact',
+  { form: '433aoi', key: 's10_attached_other_income_statements', candidate: 'irs433_income_unemployment', ruling: 'different-fact',
     why: 'AN ATTACHMENT CHECKBOX AGAINST A DOLLAR FIGURE. This key is Section 10\'s "did you attach your other income statements" box; the candidate is an income amount. They share the word "income" and nothing else — different type, different section, different question.' },
 
-  { key: 's1_housing_status', candidate: 'irs433_exp_housing_utilities_total', ruling: 'different-fact',
+  { form: '433aoi', key: 's1_housing_status', candidate: 'irs433_exp_housing_utilities_total', ruling: 'different-fact',
     why: 'A TENURE OPTION SET AGAINST A DOLLAR TOTAL. `s1_housing_status` records whether the taxpayer owns, rents or lives with someone; the candidate is 433-F\'s housing-and-utilities expense figure. Shared token "housing", different type entirely.' },
-  { key: 's1_housing_other_specify', candidate: 'irs433_exp_housing_utilities_total', ruling: 'different-fact',
+  { form: '433aoi', key: 's1_housing_other_specify', candidate: 'irs433_exp_housing_utilities_total', ruling: 'different-fact',
     why: 'The free-text "other, specify" that accompanies the tenure option set above. Same disposition, same reason.' },
 
-  { key: 's4_other_business_address', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
+  { form: '433aoi', key: 's4_other_business_address', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
     why: 'AN ADDRESS AGAINST A NAME, on top of being a DIFFERENT BUSINESS. Section 4 asks about the taxpayer\'s self-employment business and then, separately, about any OTHER business the taxpayer has an interest in; `s4_other_business_*` is the second block. Neither the field nor the entity matches.' },
-  { key: 's4_other_business_telephone', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
+  { form: '433aoi', key: 's4_other_business_telephone', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
     why: 'Same block, same disposition: a telephone number against a business name, and the other business rather than the self-employment one.' },
-  { key: 's4_other_business_ein', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
+  { form: '433aoi', key: 's4_other_business_ein', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
     why: 'Same block, same disposition: an EIN against a business name, and the other business rather than the self-employment one.' },
 ];
 
@@ -153,7 +166,7 @@ export const CONSTRUCT_GRANULARITY = [
   // decision for a divergence that has gone away is the same STOP an undecided one gets, which
   // is why `retired` is checked below rather than merely written. The original text is kept
   // verbatim under `why`, because a superseded finding is kept with what it got right.
-  { pair: ['X-09', 'X-18'], carried: 'C-21',
+  { form: '433aoi', pair: ['X-09', 'X-18'], carried: 'C-21',
     retired: 'The pair is ALIGNED. X-18 no longer globs: its `oic` spells out all eight 8c_ keys, classification-coverage.mjs carries no mechanism for it, and both entries derive `enumerated`. The two cells the glob carried and nobody named - 8c_total_digital_assets and 8c_digital_asset_held - are classified cells on the record for the first time.',
     why: 'THE PAIR C-21 WAS FILED FOR. 433-A(OIC) draws the personal digital-asset block at (2c) and the business one at (8c) identically. X-09 ENUMERATES the six (2c) text cells by name and sweeps in neither the check-here box nor the identity total; X-18 writes "8c_* digital-asset block", a prefix glob that sweeps in all eight. So `8c_digital_asset_held` and `8c_total_digital_assets` are classified different-shape while `2c_digital_asset_held` and `2c_total_digital_assets` are classified new — two categories for one printed shape, and the disagreement is recorded in X-67.\n\nNOT ALIGNED HERE, DELIBERATELY. Aligning means choosing which granularity is the standard, and C-21’s own text says that is "a rule for the classification format, not a call this form gets to make": a glob is exactly enumerable and therefore checkable, and it also covers cells its author may never have looked at, and which of those two properties should win is a decision that binds 433-B(OIC) and every form after it. What HAS changed is that the difference is now derived and printed on every run instead of being a thing a reader had to notice. It changes no naming outcome: both pairs derive form-specific names.' },
 ];
@@ -168,11 +181,18 @@ export const reclassify = (form) => {
   const MAP433A = R('adapters/pdf/maps/433a.map.json');
   const FIELDS = R(`adapters/hubspot/fields.${form}.json`);
 
+  // THE RULINGS AND PAIR DECLARATIONS FOR THIS FORM, AND ONLY THIS FORM. An unscoped ruling is
+  // one that applies everywhere, which is what these were until 433-B(OIC) ran against them.
+  const unscoped = [...SAME_FACT_RULINGS, ...CONSTRUCT_GRANULARITY].filter(r => !r.form);
+  const RULINGS = SAME_FACT_RULINGS.filter(r => r.form === form);
+  const PAIRS = CONSTRUCT_GRANULARITY.filter(d => d.form === form);
+
   const back = backboneOf();
   const { coverage } = coverageOf(CLS, MAP, form);
   const rowOf = new Map(XW.bindings.map(b => [b.key, b]));
   const on433a = new Set(A433.properties.map(p => p.hs_name));
   const problems = [];
+  for (const r of unscoped) problems.push(`UNSCOPED RULING  ${r.key || (r.pair || []).join('/')} declares no scope. A ruling with no form is consulted for EVERY form this tool is run against, and a different-fact disposal written for one form would silently stop a same-named candidate on another from ever being a STOP.`);
 
   // ── (3a) NAME REUSE: an exact match on the backbone contributed by some other form ──────
   const reuse = [];
@@ -208,7 +228,7 @@ export const reclassify = (form) => {
       if (!inter.length) continue;
       const j = inter.length / new Set([...mine, ...theirs]).size;
       if (j < CANDIDATE_THRESHOLD) continue;
-      const ruling = SAME_FACT_RULINGS.find(r => r.key === b.key && r.candidate === name);
+      const ruling = RULINGS.find(r => r.key === b.key && r.candidate === name);
       candidates.push({ key: b.key, entry: b.entry, fact: b.fact, candidate: name,
         contributors: [...info.contributors].sort(), jaccard: Number(j.toFixed(2)), shared: inter,
         ruling: ruling?.ruling ?? null, why: ruling?.why ?? null, carried: ruling?.carried ?? null });
@@ -320,7 +340,7 @@ export const reclassify = (form) => {
       // and `_current_fmv` produces constantly; a whole block of them is a construct.
       if (shared.length < 3 || shared.length < Math.min(sa.size, sb.size) / 2) continue;
       const ga = granOf.get(ids[i]), gb = granOf.get(ids[j]);
-      const declared = CONSTRUCT_GRANULARITY.find(d => (d.pair[0] === ids[i] && d.pair[1] === ids[j]) || (d.pair[0] === ids[j] && d.pair[1] === ids[i]));
+      const declared = PAIRS.find(d => (d.pair[0] === ids[i] && d.pair[1] === ids[j]) || (d.pair[0] === ids[j] && d.pair[1] === ids[i]));
       const extraA = [...sa].filter(x => !sb.has(x)), extraB = [...sb].filter(x => !sa.has(x));
       sameConstruct.push({ a: ids[i], b: ids[j], prefixes: [pa, pb], shared: shared.length,
         sizes: [sa.size, sb.size], extraA, extraB, ga, gb, differs: ga !== gb, declared: declared?.why ?? null });
@@ -359,7 +379,7 @@ export const reclassify = (form) => {
   // to hold two different values for one taxpayer at one moment? A `same-fact` ruling says no,
   // and this asserts that the answer was acted on rather than recorded.
   const rebinds = [];
-  for (const rl of SAME_FACT_RULINGS) {
+  for (const rl of RULINGS) {
     if (rl.ruling !== 'same-fact') continue;
     const prop = (FIELDS.properties || []).find(p => p.key === rl.key);
     if (!prop) { problems.push(`SAME-FACT RULING WITH NO DEFINITION  ${rl.key} is ruled same-fact as ${rl.candidate}, and adapters/hubspot/fields.${form}.json defines no property for that key. The ruling is about a binding that does not exist.`); continue; }
@@ -375,7 +395,7 @@ export const reclassify = (form) => {
   // The orphan must be gone from the definitions too: a rebound key whose old name is still
   // provisioned recreates the duplicate on the next run.
   const definedNames = new Set((FIELDS.properties || []).map(p => p.hs_name));
-  for (const rl of SAME_FACT_RULINGS) {
+  for (const rl of RULINGS) {
     if (rl.ruling !== 'same-fact' || !rl.orphan) continue;
     if (definedNames.has(rl.orphan)) problems.push(`ORPHAN STILL DEFINED  ${rl.key} was rebound to ${rl.candidate} and ${rl.orphan} is still named in fields.${form}.json. The next provisioning run would recreate one fact in two places.`);
   }

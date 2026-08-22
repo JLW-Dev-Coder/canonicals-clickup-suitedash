@@ -666,6 +666,16 @@
     "why_it_was_not_converted_to_an_at_most_line": "TWO REASONS, EITHER OF WHICH IS ENOUGH. (1) The Miscellaneous cell is not a declared line in 433f.totals.json, so there is nothing to change the comparison ON — declaring it would be authoring a new tripwire, not converting one. (2) Its bound is \"the standard amount for the number of people in your family\", which is NOT printed anywhere on 433-F: it comes from the IRS National Standards table in adapters/pdf/maps/irs-standards-2026.json. Every feeder in this engine is a printed cell on the form being checked, and an at_most line whose right-hand side comes from a sidecar is a different construct from the one ruling 2 admitted.",
     "what_would_settle_it": "A decision that a declared line may take a feeder from the standards sidecar, and the allowable-household-size input that line would have to be computed against — which is the same input 433-A already carries. That is crosswalk and provisioning work, not a comparison-kind change.",
     "status": "OPEN"
+   },
+   {
+    "id": "F-04",
+    "raised": "Prompt 43, commit 2 — by adapters/hubspot/assert-intake-keys.mjs on its first run",
+    "what": "A PAY PERIOD OF \"other\" IS STORABLE AND UNPRINTABLE, AND IT FAILS SILENTLY. irs433_tp_pay_period and irs433_sp_pay_period each carry an `other` option, and crosswalk.433f.json maps the stored value straight through to the record as \"other\". fill-433f.mjs normalises the record value and looks it up in checkboxes.pay_freq.index, which holds weekly / biweekly / semimonthly / monthly and nothing else. freqIndex returns undefined, NO BOX IS CHECKED, the run exits 0 and a valid 433-F is written that says nothing at all about the pay period. Both the taxpayer row and the spouse row.",
+    "why_the_option_exists_and_is_correct": "The shared property is a superset by design. 433-F prints Weekly / Bi-weekly / Semi-monthly / Monthly and no Other box; 433-A(OIC) prints Weekly / Bi-weekly / Monthly / Other and no Semi-monthly. adapters/hubspot/433aoi.divergence-decisions.mjs already rules on the other direction and rules KEEP THE LIVE DEFINITION, because a live option set that is a strict superset of what a form prints means every value a form CAN print is storable. Nothing about that ruling is wrong. What is missing is the second half of it.",
+    "what_is_actually_wrong": "THE FAILURE IS SILENT ON THIS FORM AND LOUD ON THE OTHER. That same decision file states the correct behaviour for a value a form cannot print: hs-fetch-433aoi.mjs resolves through map_option_by_value, finds no key, and REFUSES TO WRITE the record; and fill-433aoi.mjs applyOption pushes an optionError and writes no PDF. 433-F does neither: its crosswalk row maps `other` to `other` rather than omitting it, so the fetch layer writes it happily, and its fill engine drops an unmatched frequency without a word.",
+    "what_would_settle_it": "Either remove `other` from the 433-F rows map_option_by_value, so the fetch layer refuses the record the way 433-A(OIC) does, or give fill-433f.mjs the optionError path fill-433aoi.mjs already has. The first is a one-line change to a crosswalk and the second is a change to a live fill engine; both are changes to a provisioned, round-tripping form and neither belongs in a 433-B(OIC) provisioning pass.",
+    "registered_where": "adapters/hubspot/assert-intake-keys.mjs KNOWN_UNRESOLVABLE, which REPORTS both instances on every run and STOPs if either stops being found. It is an exclusion and therefore a claim, not a silence.",
+    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -676,7 +686,7 @@
    }
   ],
   "_count": {
-   "open": 2,
+   "open": 3,
    "resolved": 1
   }
  }

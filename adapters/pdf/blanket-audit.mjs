@@ -335,6 +335,21 @@ export const EMPTY_DEMAND = [
   { blanket: 'S-25c', instrument: 'validate-map.mjs',
     why: 'THE CITATION IS AN ASSERTION OF ABSENCE. [S-25c] says the classification "BINDS NOTHING — no HubSpot property, no canonical column, no map key — so there is no binding here for validate-map.mjs to resolve". An empty demanded set is not a failure to prove that claim; it IS the claim, measured. A NON-empty demand would be the finding, and the prover would report it as an uncovered path.' },
 
+  // ── [S-25c] on 433-B(OIC): two of its citations demand nothing in that file ────────────
+  //
+  // [S-25c] enumerates what kinds of number a crosswalk classification holds and cites an
+  // instrument for each. It was written for 433-A(OIC), whose classification quotes printed
+  // slot counts and a page coordinate. 433-B(OIC) was authored in one pass against a closed
+  // map and its evidence is a different KIND: printed captions, quoted verbatim, and the two
+  // forms' printed ELIGIBILITY INSTRUCTIONS. Measured rather than asserted: the file holds
+  // ZERO `y NNN` runs and ZERO `x A..B` ranges, against 433-A(OIC)'s one and zero, and none of
+  // the claim sites [S-25c] covers there names a group at all.
+  { blanket: 'S-25c', instrument: 'align-block.mjs', forms: ['433boi'],
+    why: 'THE FILE QUOTES NO COORDINATE. adapters/pdf/maps/433boi.crosswalk-classification.json contains zero `y NNN` runs and zero `x A..B` ranges anywhere in it, claim site or not. Its evidence is printed captions quoted as text and the printed eligibility instructions that decide which of the two forms a business files on; the coordinates supporting those captions live in 433boi.map.json and 433boi.totals.json, where align-block.mjs and blanket-audit [K-12] already measure every one of them against the drawn page. An empty demand here is a property of what this file writes, not a citation nobody paid.' },
+
+  { blanket: 'S-25c', instrument: 'check-row-shape.mjs', forms: ['433boi'],
+    why: 'NO CLAIM SITE IN THIS FILE NAMES A GROUP. The numbers [S-25c] covers here are the entries\' `page` integers and the printed windows and thresholds quoted from the two forms - "10 years", "3 years", "$10,000", the printed X .8, the 12 and 24 multipliers. None of them is a slot count and none of them names a table, so `slotColumnsOf` has nothing to resolve. The ten `groups.X` citations the file does carry sit in `oic` and `a433` prose that states no count and is therefore not a claim site; the row shapes those groups declare are proved by check-row-shape.mjs against the map itself, and by adapters/hubspot/assert-intake-keys.mjs against every form\'s definition file, on every run.' },
+
   // ── the citations that are inapplicable on 433-A and 433-F rather than unpaid ───────────
   //
   // [S-18] lists FIVE kinds of number its region holds — printed coordinates, printed line

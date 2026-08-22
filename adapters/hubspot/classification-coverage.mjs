@@ -63,6 +63,24 @@ export const ENGINE_EXTRA_INPUTS = {
     '433f_hh_size',           // fill-433f.mjs: data.household_size ?? data['433f_hh_size']
     '433f_age_band',          // fill-433f.mjs: input('age_band')        -> allowed.oop_by_age
   ],
+  '433boi': [
+    // THE DECLARED RECORD SHAPE. run-form-gate.mjs step 11 resolves it through
+    // adapters/pdf/record-shape.mjs `stateFromRecord`, which reads `record[d.input]` BARE — the
+    // key is the one the map's `record_shape` block declares and nothing prefixes it. It names
+    // no printed cell, so `keySpaceOf` cannot see it, and a record that declares no state is a
+    // gate STOP rather than a default. An input the engine reads and the key space cannot see
+    // is a property nobody provisions, which is exactly what happened on 433-A(OIC).
+    'business_income_expense_route',
+  ],
+  // 433-A(OIC)'S ENTRY IS DELIBERATELY ABSENT, AND THE ABSENCE IS A CLAIM RATHER THAN AN
+  // OVERSIGHT. adapters/pdf/maps/433aoi.map.json declares the SAME `business_income_expense_route`
+  // over its lines (17) and (29) and its engine reads it the same way, so factually the row
+  // belongs here. Adding it would put the key in that form's key space, where assertion A1 of
+  // derive-names-433aoi.mjs would correctly STOP: the key has no binding in crosswalk.433aoi.json
+  // and no property in fields.433aoi.json. Fixing that means creating a property for a form this
+  // prompt's scope line excludes, and a permanent name is not something to create as a side
+  // effect. Recorded as B24 in adapters/pdf/maps/433boi.map.json `_carried.open`, with the exact
+  // remedy, so the gap cannot evaporate. THE 433-A(OIC) ROUND TRIP CANNOT CARRY THE ROUTE TODAY.
 };
 
 /**
@@ -110,6 +128,12 @@ export const MECHANISMS = {
       note: 'THE PHRASE AND ITS OWN GLOB DISAGREE. Four keys match 31_spouse_* literally; the fifth counterpart is 31_total_spouse_income, which does not. The COUNT of five is right and the glob is one short, so the mechanism is read as the glob over the 31_ prefix, which yields exactly the five the phrase claims. Reported rather than silently widened, and now enumerated in `sweeps` so the widening is a list somebody can disagree with rather than a prefix nobody read.',
     },
   },
+  // DECLARED EMPTY, NOT ABSENT. 433-B(OIC)'s classification names every key it covers verbatim —
+  // no prefix glob, no counterpart substitution — so every entry derives `enumerated`, which is
+  // the granularity standard C-21 settled. `MECHANISMS[form] || {}` would make an absent row and
+  // a declared-empty row behave identically, and they are different statements: one says nobody
+  // looked, the other says somebody looked and there is nothing to declare.
+  '433boi': {},
 };
 
 /** The granularity each mechanism kind carries, and the granularity of a bare verbatim naming. */
@@ -131,6 +155,12 @@ export const GRANULARITY_OF = {
  */
 export const coverageOf = (classDoc, mapDoc, form) => {
   const { keySpace, groupSource } = keySpaceOf(mapDoc);
+  // THE ENGINE'S EXTRA INPUTS ARE PART OF THE KEY SPACE THE CLASSIFICATION MUST COVER, and they
+  // are folded in HERE rather than in each caller — coverageCount() feeds blanket-audit [K-01]
+  // and coverageOf() feeds every deriver, and two key spaces answering one completeness claim is
+  // the two-instruments-one-claim defect this module's header is about. A form with no row in
+  // ENGINE_EXTRA_INPUTS is untouched, which is how 433-A(OIC) and 433-F stay where they were.
+  for (const k of (ENGINE_EXTRA_INPUTS[form] || [])) if (!keySpace.has(k)) keySpace.set(k, 'engine');
   const MECHANISM = MECHANISMS[form] || {};
   const entryById = new Map((classDoc.entries || []).map(e => [e.id, e]));
   const problems = [], notes = [];

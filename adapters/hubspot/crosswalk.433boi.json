@@ -1,0 +1,1693 @@
+{
+ "meta": {
+  "form": "433boi",
+  "form_revision": "4-2026",
+  "catalog": "55897B",
+  "map": "adapters/pdf/maps/433boi.map.json",
+  "classification": "adapters/pdf/maps/433boi.crosswalk-classification.json",
+  "backbone": "adapters/hubspot/fields.433a.json + fields.433f.json + fields.433aoi.json, read as one backbone by reclassify-against-backbone.mjs",
+  "pdf": "adapters/pdf/forms/f433boi.pdf",
+  "what_this_is": "THE KEY-TO-ENTRY BINDING, AND NOTHING ELSE IS BOUND HERE. One row per input key the 433-B(OIC) fill engine can consume, saying which classification entry covers it and which FACT it names. It does NOT carry the HubSpot property name: that is DERIVED by derive-names-433boi.mjs from the entry CATEGORY and the classification's subject ruling, so a category and a name can never disagree.",
+  "the_naming_rule": "exact -> irs433_<fact>, shared. new and same-question-different-subject -> irs433boi_<fact>, form-specific. The middle four - superset, different-arithmetic-same-name, different-shape, same-fact-different-decomposition - MUST declare scope and scope_reason per row and the deriver STOPs on a row that does not. asymmetric-the-other-way binds no key. On this form `exact` is used zero times and every row is form-specific; the classification's `subject` block is the ruling that makes that so, and A4 in the deriver asserts it.",
+  "the_governing_question": "Not \"is this the same fact\" but \"WOULD ONE PROPERTY SERVING BOTH FORMS EVER HAVE TO HOLD TWO DIFFERENT VALUES FOR ONE TAXPAYER AT ONE MOMENT.\" Every scope_reason below answers it in those terms and says YES, because the two forms are filed by two different legal persons.",
+  "fact_naming": "The input key with this form's section and line prefix stripped (s1_business_name -> business_name, s3_6_gross_receipts -> the predecessor's spelling bizinc_gross_receipts). WHERE THE PREDECESSOR HOLDS THE SAME QUESTION, THE FACT KEEPS THE PREDECESSOR'S SPELLING ON PURPOSE, so that irs433boi_bizinc_rent and irs433_bizexp_rent read as the pair they are and the twin table in the derivation report lists every one of them. A fact spelled differently to dodge the twin check would hide exactly what that check exists to show.",
+  "types_are_stated_not_inferred": "Money is NOT typed here and NOT inferred from a key name. The generator reads the map's own `rounding` blocks, which are the form's declaration of which cells are money quoted from the printed instructions, and types those number/number. Everything else is typed from the map construct - group, check_here, checkbox, named-option set - or stated.",
+  "generated_by": "scratchpad/author-433boi-crosswalk.mjs, which emits this file and the classification from one table. A key listed in an entry's prose and a key bound to that entry are the same claim, and a claim written twice in two files is a parallel list.",
+  "counts": {
+   "total_input_keys": 113,
+   "form_specific": 113,
+   "shared": 0,
+   "to_provision": 113,
+   "with_scope_ruling": 33,
+   "by_type": {
+    "string/text": 34,
+    "number/number": 43,
+    "enumeration/booleancheckbox": 27,
+    "string/textarea": 7,
+    "enumeration/select": 2
+   }
+  }
+ },
+ "bindings": [
+  {
+   "key": "s1_business_name",
+   "entry": "Y-01",
+   "fact": "business_name",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_ein",
+   "entry": "Y-01",
+   "fact": "employer_identification_number",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_physical_address",
+   "entry": "Y-01",
+   "fact": "business_physical_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_mailing_address",
+   "entry": "Y-01",
+   "fact": "business_mailing_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_county_of_business_location",
+   "entry": "Y-01",
+   "fact": "county_of_business_location",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_description_of_business_and_dba",
+   "entry": "Y-01",
+   "fact": "description_of_business_and_dba",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_primary_phone",
+   "entry": "Y-01",
+   "fact": "business_primary_phone",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_secondary_phone",
+   "entry": "Y-01",
+   "fact": "business_secondary_phone",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_fax_number",
+   "entry": "Y-01",
+   "fact": "business_fax_number",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_business_website_address",
+   "entry": "Y-01",
+   "fact": "business_website_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_total_number_of_employees",
+   "entry": "Y-02",
+   "fact": "total_number_of_employees",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "a printed count",
+   "pii": false
+  },
+  {
+   "key": "s1_frequency_of_tax_deposits",
+   "entry": "Y-02",
+   "fact": "frequency_of_tax_deposits",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_average_gross_monthly_payroll",
+   "entry": "Y-02",
+   "fact": "average_gross_monthly_payroll",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s1_payroll_outsourced",
+   "entry": "Y-03",
+   "fact": "payroll_outsourced",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s1_payroll_provider_name_and_address",
+   "entry": "Y-03",
+   "fact": "payroll_provider_name_and_address",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s1_federal_contractor",
+   "entry": "Y-04",
+   "fact": "federal_contractor",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s1_only_employee",
+   "entry": "Y-05",
+   "fact": "only_employee",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "partners",
+   "entry": "Y-06",
+   "fact": "partners",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true
+  },
+  {
+   "key": "bank_accounts",
+   "entry": "Y-07",
+   "fact": "bank_accounts",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The rows are the FILING ENTITY's bank accounts. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. The printed slot count also differs - three here against 433-A(OIC)'s two - and so does the type box, which this form prints and that one does not."
+  },
+  {
+   "key": "s2_1d_bank_accounts_from_attachment",
+   "entry": "Y-08",
+   "fact": "bank_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: would one property ever have to hold two different values for one filer at one moment? YES. It rolls up the bank rows that did not fit THIS form's three printed slots. A filer with an individual OIC and a business OIC has two attachment roll-ups, over two different sets of accounts, at the same moment."
+  },
+  {
+   "key": "s2_1_total_bank_accounts",
+   "entry": "Y-08",
+   "fact": "total_bank_accounts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. This is line (1) of the BUSINESS's asset section and feeds Box A; 433-A(OIC)'s (8) is the business half of an individual's asset section and feeds its Box B. Different operand sets, different destinations, and both can be live for one filer at once."
+  },
+  {
+   "key": "investment_accounts",
+   "entry": "Y-09",
+   "fact": "investment_accounts",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The rows are the FILING ENTITY's investment accounts. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. On 433-A(OIC) a business investment is a row of the general (9) business-assets table, which prints different columns; the two containers cannot hold each other's rows."
+  },
+  {
+   "key": "s2_2d_investment_accounts_from_attachment",
+   "entry": "Y-10",
+   "fact": "investment_accounts_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. The attachment roll-up for the investment rows that did not fit THIS form's two slots, over the filing entity's accounts. The individual's roll-up on 433-A(OIC) is a different set of accounts and both can be live at once."
+  },
+  {
+   "key": "s2_2_total_investment_accounts",
+   "entry": "Y-10",
+   "fact": "total_investment_accounts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment, and the operand lists differ as well as the subject: this line absorbs the digital-asset total at (2c), which 433-A(OIC) keeps out of its (2). A shared property would carry a figure over a different set of rows on each form."
+  },
+  {
+   "key": "digital_assets",
+   "entry": "Y-11",
+   "fact": "digital_assets",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The row is the FILING ENTITY's digital asset holding. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. 433-A(OIC) already splits this construct in two - (2c) personal and (8c) business - and neither of its two is this form's one."
+  },
+  {
+   "key": "s2_notes_receivable",
+   "entry": "Y-12",
+   "fact": "notes_receivable",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s2_accounts_receivable",
+   "entry": "Y-12",
+   "fact": "accounts_receivable",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s2_real_property_for_sale",
+   "entry": "Y-13",
+   "fact": "real_property_for_sale",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s2_real_property_listing_price",
+   "entry": "Y-13",
+   "fact": "real_property_listing_price",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "real_estate",
+   "entry": "Y-14",
+   "fact": "real_estate",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The rows are real property held by the FILING ENTITY. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. A filer with a home on their individual OIC and a warehouse on the business OIC needs both row sets at once, and neither table can hold the other's rows."
+  },
+  {
+   "key": "s2_3c_property_from_attachment",
+   "entry": "Y-15",
+   "fact": "property_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. The roll-up of properties that did not fit this form's two slots, all of them the filing entity's. The individual's roll-up is a different set of properties and both are live whenever both forms are filed."
+  },
+  {
+   "key": "s2_3_total_real_estate",
+   "entry": "Y-15",
+   "fact": "total_real_estate",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. Line (3) of the business asset section, feeding Box A. 433-A(OIC)'s (5) feeds its Box A over the individual's properties. Same caption, different rows, different box."
+  },
+  {
+   "key": "vehicles",
+   "entry": "Y-16",
+   "fact": "vehicles",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The rows are vehicles held by the FILING ENTITY. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. The column set matches 433-A(OIC)'s exactly, which is what makes reuse tempting here and wrong: a filer's own car and their LLC's flatbed are two row sets at one moment."
+  },
+  {
+   "key": "s2_4d_vehicles_from_attachment",
+   "entry": "Y-17",
+   "fact": "vehicles_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment - the roll-up of the filing entity's vehicles beyond three printed slots, against the individual's roll-up beyond theirs."
+  },
+  {
+   "key": "s2_4_total_vehicles",
+   "entry": "Y-17",
+   "fact": "total_vehicles",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and the arithmetic differs as well as the subject. 433-A(OIC)'s (6) block prints a vehicle exemption that this form does not print at all, so the two totals are not the same function of their rows even before the rows differ."
+  },
+  {
+   "key": "business_equipment",
+   "entry": "Y-18",
+   "fact": "business_equipment",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one table property ever have to hold two different row sets for one filer at one moment? YES. The row is equipment held by the FILING ENTITY. 433-A(OIC)'s counterpart table belongs to an individual's filing and this one belongs to a separate legal entity's, and the two forms are mutually exclusive by their own printed eligibility rules, so a filer holding both would need both row sets at once. The shared row-shape specification has no business_equipment class and this group routes business_property, the nearest one it holds - carried as B19 and not settled here."
+  },
+  {
+   "key": "s3_equipment_from_attachment",
+   "entry": "Y-19",
+   "fact": "equipment_from_attachment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. The roll-up of equipment beyond this form's single printed slot. 433-A(OIC)'s (9c) rolls up business assets of every class beyond its two slots, which is a wider set over a different entity."
+  },
+  {
+   "key": "s3_total_all_business_equipment",
+   "entry": "Y-19",
+   "fact": "total_all_business_equipment",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and the arithmetic differs. 433-A(OIC) subtracts a printed IRS allowed deduction for books and tools of trade from its business-asset total at (10) and this form prints no deduction at all, so the two figures are not the same function even of the same rows."
+  },
+  {
+   "key": "s3_box_a_available_equity_in_assets",
+   "entry": "Y-20",
+   "fact": "box_a_available_equity_in_assets",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: would one property ever hold two values for one filer at one moment? YES, and the decomposition differs too: 433-A(OIC) prints Box A for the individual and Box B for the sole proprietorship and this form prints ONE box over a separate entity's five asset lines. A filer with both OICs open has an individual Box A, a sole-prop Box B and a business Box A, all at once."
+  },
+  {
+   "key": "s3_income_period_beginning",
+   "entry": "Y-21",
+   "fact": "income_period_beginning",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes. irs433_period_from holds ONE period, and this form draws two that the page never requires to agree. Storing this in it would make the expense period overwrite the income period or the reverse, silently, on a statement signed under penalty of perjury."
+  },
+  {
+   "key": "s3_income_period_through",
+   "entry": "Y-21",
+   "fact": "income_period_through",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, for the reason above, on the closing date of the income period."
+  },
+  {
+   "key": "s4_expense_period_beginning",
+   "entry": "Y-21",
+   "fact": "expense_period_beginning",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes. The expense period is drawn separately over Section 4 and can legitimately differ from the income period; one shared period property could only ever hold one of the two."
+  },
+  {
+   "key": "s4_expense_period_through",
+   "entry": "Y-21",
+   "fact": "expense_period_through",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, for the reason above, on the closing date of the expense period."
+  },
+  {
+   "key": "s3_6_gross_receipts",
+   "entry": "Y-22",
+   "fact": "bizinc_gross_receipts",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s3_7_gross_rental_income",
+   "entry": "Y-22",
+   "fact": "bizinc_gross_rental_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s3_8_interest_income",
+   "entry": "Y-22",
+   "fact": "bizinc_interest",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s3_9_dividends",
+   "entry": "Y-22",
+   "fact": "bizinc_dividends",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s3_10_other_income",
+   "entry": "Y-22",
+   "fact": "bizinc_other_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s3_box_b_total_business_income",
+   "entry": "Y-23",
+   "fact": "box_b_total_business_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment. irs433_bizinc_total_income is the sole proprietorship's total monthly business income; this is a separate legal entity's. Both are live whenever a filer submits an individual OIC and a business OIC together, which is the ordinary case this pass was told to plan for."
+  },
+  {
+   "key": "s4_11_materials_purchased",
+   "entry": "Y-24",
+   "fact": "bizexp_materials_purchased",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_12_inventory_purchased",
+   "entry": "Y-24",
+   "fact": "bizexp_inventory_purchased",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_13_gross_wages_and_salaries",
+   "entry": "Y-24",
+   "fact": "bizexp_gross_wages_and_salaries",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_14_rent",
+   "entry": "Y-24",
+   "fact": "bizexp_rent",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_15_supplies",
+   "entry": "Y-24",
+   "fact": "bizexp_supplies",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_16_utilities_telephones",
+   "entry": "Y-24",
+   "fact": "bizexp_utilities_telephone",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_17_vehicle_costs",
+   "entry": "Y-24",
+   "fact": "bizexp_vehicle_costs",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_18_insurance",
+   "entry": "Y-24",
+   "fact": "bizexp_insurance",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_19_current_taxes",
+   "entry": "Y-24",
+   "fact": "bizexp_current_taxes",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_20_other_expenses",
+   "entry": "Y-24",
+   "fact": "bizexp_other_expenses",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s4_box_c_total_business_expenses",
+   "entry": "Y-25",
+   "fact": "box_c_total_business_expenses",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, two values at one moment, and the operand count differs. 433-A(OIC) sums eleven expense lines including secured debts other than credit cards; this form sums ten and prints no secured-debts line. Storing both in one property would make a ten-term sum and an eleven-term sum the same number."
+  },
+  {
+   "key": "s4_box_d_remaining_monthly_income",
+   "entry": "Y-26",
+   "fact": "box_d_remaining_monthly_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and it is the most dangerous pair on this form. Both boxes are \"income minus expenses\" and both print a floor of zero, so the captions invite reuse; but 433-A(OIC)'s Box C is an OPERAND of a later household calculation and this form's Box D is the figure the multipliers act on. One property would make a component and a result the same stored number."
+  },
+  {
+   "key": "s5_box_d_for_12_month_multiplier",
+   "entry": "Y-27",
+   "fact": "box_d_for_12_month_multiplier",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes. It is a copy of THIS form's Box D. 433-A(OIC)'s cell of the same shape copies its Box F, which is a different quantity computed from a different subject's figures, and both are live whenever both forms are filed."
+  },
+  {
+   "key": "s5_box_e_future_remaining_income",
+   "entry": "Y-27",
+   "fact": "box_e_future_remaining_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes. Twelve months of a business's remaining income against twelve months of an individual's. The arithmetic is identical and the input is not, which is exactly the shape this category names."
+  },
+  {
+   "key": "s5_box_d_for_24_month_multiplier",
+   "entry": "Y-27",
+   "fact": "box_d_for_24_month_multiplier",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, as for the 12-month copy above, on the 24-month row."
+  },
+  {
+   "key": "s5_box_f_future_remaining_income",
+   "entry": "Y-27",
+   "fact": "box_f_future_remaining_income",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes - AND THE LETTER F IS A TRAP. On this form Box F is twenty-four months of future income; on 433-A(OIC) Box F is the monthly remaining income the multipliers act ON. Same letter, opposite ends of the same calculation, and a shared name would put one where the other belongs."
+  },
+  {
+   "key": "s5_amount_from_box_a",
+   "entry": "Y-28",
+   "fact": "amount_from_box_a",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, twice over. It is a copy of a different box, and it is a copy that the printed asterisk permits to be REDUCED by an amount no cell on the form records - so two filers with the same Box A can legitimately print different figures here. 433-A(OIC)'s cell carries no such permission and is declared as an equality."
+  },
+  {
+   "key": "s5_amount_from_box_e_or_box_f",
+   "entry": "Y-28",
+   "fact": "amount_from_box_e_or_box_f",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes. It copies Box E or Box F of THIS form; the 433-A(OIC) cell of the same shape copies Box G or Box H of that one. Which of the pair was copied is set on Form 656 and recorded nowhere here, so the cell is not checkable on either form and a shared property would merge two unverifiable figures."
+  },
+  {
+   "key": "s5_offer_amount",
+   "entry": "Y-28",
+   "fact": "offer_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and this is the figure the whole form exists to produce. A business offer in compromise and an individual offer in compromise are two offers, on two Forms 656, for two taxpayers. One property holding both is one of them overwriting the other."
+  },
+  {
+   "key": "s6_currently_in_bankruptcy",
+   "entry": "Y-29",
+   "fact": "currently_in_bankruptcy",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_filed_bankruptcy_past_10_years",
+   "entry": "Y-29",
+   "fact": "filed_bankruptcy_past_10_years",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_bankruptcy_date_filed",
+   "entry": "Y-29",
+   "fact": "bk_date_filed",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s6_bankruptcy_petition_no",
+   "entry": "Y-29",
+   "fact": "bk_petition_no",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_bankruptcy_location_filed",
+   "entry": "Y-29",
+   "fact": "bk_location_filed",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_bankruptcy_date_dismissed_or_discharged",
+   "entry": "Y-30",
+   "fact": "bk_date_dismissed_or_discharged",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and in the direction that loses information. A value stored here cannot be decomposed into irs433_bk_date_dismissed and irs433_bk_date_discharged because the page never says which of the two it is; and a value read the other way would have to choose. Two properties on the predecessor and one here is not a shape a shared name can carry, quite apart from the two forms describing different persons."
+  },
+  {
+   "key": "s6_other_business_affiliations",
+   "entry": "Y-31",
+   "fact": "other_business_affiliations",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_affiliations_name_and_ein",
+   "entry": "Y-31",
+   "fact": "affiliations_name_and_ein",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_related_parties_owe_money",
+   "entry": "Y-32",
+   "fact": "related_parties_owe_money",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_party_to_litigation",
+   "entry": "Y-33",
+   "fact": "party_to_litigation",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_litigation_role",
+   "entry": "Y-33",
+   "fact": "suit_role",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "Plaintiff",
+     "value": "plaintiff",
+     "displayOrder": 0
+    },
+    {
+     "label": "Defendant",
+     "value": "defendant",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "plaintiff": "plaintiff",
+    "defendant": "defendant"
+   }
+  },
+  {
+   "key": "s6_litigation_location_of_filing",
+   "entry": "Y-33",
+   "fact": "suit_location_of_filing",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_litigation_represented_by",
+   "entry": "Y-33",
+   "fact": "suit_represented_by",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_litigation_docket_case_number",
+   "entry": "Y-33",
+   "fact": "suit_docket_case_no",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_litigation_possible_completion_date",
+   "entry": "Y-33",
+   "fact": "suit_possible_completion_date",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s6_litigation_subject",
+   "entry": "Y-33",
+   "fact": "suit_subject",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_litigation_amount_in_dispute",
+   "entry": "Y-33",
+   "fact": "suit_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s6_party_to_irs_litigation",
+   "entry": "Y-34",
+   "fact": "party_to_irs_litigation",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_irs_litigation_tax_types_and_periods",
+   "entry": "Y-34",
+   "fact": "irs_litigation_tax_types_and_periods",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_transferred_asset_under_value_past_10_years",
+   "entry": "Y-35",
+   "fact": "transferred_assets",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_asset_transfer_date_value_and_type",
+   "entry": "Y-36",
+   "fact": "asset_transfer_date_value_and_type",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: yes, and the decomposition is the reason on its own. Four predecessor cells collapse into one free-text cell here, and no rule splits that text back into a date, a value and a type - so the value can be written into the four but never read out of them, and the four carry a recipient this form never asks for."
+  },
+  {
+   "key": "s6_transferred_real_property_past_3_years",
+   "entry": "Y-37",
+   "fact": "transferred_real_property_past_3_years",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_real_property_transfer_type_value_date",
+   "entry": "Y-37",
+   "fact": "real_property_transfer_type_value_date",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_located_outside_us_6_months",
+   "entry": "Y-38",
+   "fact": "located_outside_us_6_months",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_assets_or_real_property_outside_us",
+   "entry": "Y-39",
+   "fact": "assets_or_real_property_outside_us",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_assets_outside_us_description_location_value",
+   "entry": "Y-39",
+   "fact": "assets_outside_us_description_location_value",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_funds_held_in_trust",
+   "entry": "Y-40",
+   "fact": "funds_held_in_trust_by_third_party",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_funds_held_in_trust_amount",
+   "entry": "Y-40",
+   "fact": "funds_held_in_trust_amount",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s6_funds_held_in_trust_where",
+   "entry": "Y-40",
+   "fact": "funds_held_in_trust_where",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s6_lines_of_credit",
+   "entry": "Y-41",
+   "fact": "lines_of_credit",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s6_line_of_credit_limit",
+   "entry": "Y-41",
+   "fact": "line_of_credit_limit",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s6_line_of_credit_amount_owed",
+   "entry": "Y-41",
+   "fact": "line_of_credit_amount_owed",
+   "backbone_key": null,
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell - declared as money by the map's own rounding block for the page it sits on",
+   "pii": false
+  },
+  {
+   "key": "s6_line_of_credit_property_securing",
+   "entry": "Y-41",
+   "fact": "line_of_credit_property_securing",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s7_signer_title",
+   "entry": "Y-42",
+   "fact": "signer_title",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false
+  },
+  {
+   "key": "s7_date_signed",
+   "entry": "Y-42",
+   "fact": "date_signed",
+   "backbone_key": null,
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false
+  },
+  {
+   "key": "s7_attach_profit_and_loss",
+   "entry": "Y-43",
+   "fact": "attached_profit_and_loss",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_bank_and_investment_statements",
+   "entry": "Y-43",
+   "fact": "attached_bank_and_investment_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_collateral_loan_statements",
+   "entry": "Y-43",
+   "fact": "attached_collateral_loan_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_accounts_and_notes_receivable",
+   "entry": "Y-43",
+   "fact": "attached_accounts_and_notes_receivable",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_digital_asset_records",
+   "entry": "Y-43",
+   "fact": "attached_digital_asset_records",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_lender_and_mortgage_statements",
+   "entry": "Y-43",
+   "fact": "attached_lender_and_mortgage_statements",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_special_circumstances",
+   "entry": "Y-43",
+   "fact": "attached_special_circumstances",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_form_2848",
+   "entry": "Y-43",
+   "fact": "attached_form_2848",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "s7_attach_form_656",
+   "entry": "Y-43",
+   "fact": "attached_form_656",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone check-here box",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   }
+  },
+  {
+   "key": "business_income_expense_route",
+   "entry": "Y-44",
+   "fact": "business_income_expense_route",
+   "backbone_key": null,
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "declared record shape - the printed route this filing takes through Sections 3 and 4",
+   "pii": false,
+   "options": [
+    {
+     "label": "Grid (lines 6-10 and 11-20 completed)",
+     "value": "grid",
+     "displayOrder": 0
+    },
+    {
+     "label": "Profit and loss statement attached",
+     "value": "profit_and_loss_statement",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "grid": "grid",
+    "profit_and_loss_statement": "profit_and_loss_statement"
+   }
+  }
+ ]
+}

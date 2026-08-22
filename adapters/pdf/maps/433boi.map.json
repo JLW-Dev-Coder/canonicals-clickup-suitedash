@@ -1445,6 +1445,15 @@
     "the_question": "Whether a floor that no record can reach should be DECLARED at all, or declared with a mark saying it is unreachable so a coverage table can count it separately from a floor nobody has got round to. Declaring it is defensible: the page prints the instruction over the block, and a declaration that mirrors the printed page is the standard this engine holds every other line to. Marking it is also defensible: an unexercisable rule sitting in the same column as an unexercised one makes the column mean two things.",
     "why_it_is_not_decided_here": "It is a rule for the declaration format, binding every form after this one, and 433-B(OIC) does not get to make it alone — the same reason C-21 was carried rather than settled inside a slice.",
     "status": "OPEN"
+   },
+   {
+    "id": "B24",
+    "raised": "Prompt 43, commit 2 — found while building this form's key space",
+    "what": "433-A(OIC) DECLARES THE SAME RECORD-SHAPE INPUT AND HAS NO PROPERTY FOR IT. adapters/pdf/maps/433aoi.map.json declares `business_income_expense_route` over its lines (17) and (29), and adapters/pdf/record-shape.mjs reads it straight off the record. It is in neither that map's `map` block, nor `checkboxes`, nor `check_here`, nor any group source, so adapters/hubspot/classification-coverage.mjs cannot see it, crosswalk.433aoi.json has no row for it and fields.433aoi.json defines no property. A 433-A(OIC) record fetched from HubSpot therefore cannot carry the route, and gate step 11 STOPs on a record that declares none — so the 433-A(OIC) round trip is broken for any record that goes through the portal.",
+    "how_433boi_avoids_it": "The key is declared in ENGINE_EXTRA_INPUTS['433boi'], which puts it in this form's key space, gives it a crosswalk row under Y-44, and derives irs433boi_business_income_expense_route like any other input.",
+    "why_it_is_not_fixed_here": "Adding the 433-A(OIC) row to ENGINE_EXTRA_INPUTS would put the key in that form's key space, where assertion A1 of derive-names-433aoi.mjs would correctly STOP for the absent binding — and clearing that STOP means creating irs433aoi_business_income_expense_route, a PERMANENT name on a form this prompt's scope line excludes. A permanent name is not something to create as a side effect of another form's pass.",
+    "the_ruling_it_needs_and_the_one_it_already_has": "Ruling 6's test was applied to this input for 433-B(OIC) and answered TWO FORM-SPECIFIC PROPERTIES: a filer can attach a current profit and loss statement for the corporation and complete the grid for their Schedule C, or the reverse, so one property would have to hold two values at one moment. The same answer holds from the 433-A(OIC) side, so the name it needs is already decided; only the creating is deferred.",
+    "status": "OPEN"
    }
   ],
   "resolved": [
@@ -1504,7 +1513,7 @@
    }
   ],
   "_count": {
-   "open": 18,
+   "open": 19,
    "resolved": 5
   }
  },

@@ -21,12 +21,14 @@
     "gate:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --saturated",
     "fixtures": "node adapters/pdf/resolve-fixture.mjs",
     "coverage:433boi": "node adapters/pdf/declaration-coverage.mjs 433boi",
-    "sweeps": "node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs",
+    "sweeps": "node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs && node adapters/hubspot/assert-intake-keys.mjs",
     "recordshape:433aoi": "node adapters/pdf/assert-record-shape.mjs 433aoi",
     "recordshape:433boi": "node adapters/pdf/assert-record-shape.mjs 433boi",
     "recordshape": "node adapters/pdf/assert-record-shape.mjs 433aoi && node adapters/pdf/assert-record-shape.mjs 433boi",
     "fixtures:recordshape": "node scratchpad/author-record-shape-fixtures.mjs",
-    "stress:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --role negative --saturated && node adapters/pdf/run-form-gate.mjs 433boi --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433boi"
+    "stress:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --role negative --saturated && node adapters/pdf/run-form-gate.mjs 433boi --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433boi",
+    "intakekeys": "node adapters/hubspot/assert-intake-keys.mjs",
+    "crosswalk:433boi": "node adapters/hubspot/derive-names-433boi.mjs && node adapters/hubspot/reclassify-against-backbone.mjs 433boi && node adapters/hubspot/assert-intake-keys.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

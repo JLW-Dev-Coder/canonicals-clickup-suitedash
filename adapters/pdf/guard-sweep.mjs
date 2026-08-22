@@ -152,6 +152,16 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── assert-intake-keys.mjs, the writer-resolver key assertion ────────────────────────
+  { id: 'G-131', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { universeGaps.push(', verdict: 'sound',
+    why: 'THE CROSS-FORM UNIVERSE PRE-PASS. A form whose map or bindings cannot be read is pushed onto `universeGaps`, and every gap becomes a UNIVERSE GAP problem before any verdict is reported. It cannot make the run report success: an unreadable form NARROWS the universe a WIDE verdict is judged against, which would turn a column another form legitimately prints into a column nothing prints, so the gap is the finding rather than a smaller answer to the same question. Its first draft was `catch { continue; }` and this sweep is what refused it.' },
+
+  { id: 'G-132', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { problems.push(`UNREADABLE MAP', verdict: 'sound',
+    why: 'THE MODEL CATCH, on the per-form loop. An unreadable map is pushed as a problem and the run exits 2. "A form with nothing to check" and "a form this tool could not read" are the two states this whole file is about keeping apart, and the message says which one it is.' },
+
+  { id: 'G-133', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { problems.push(`UNREADABLE BINDINGS', verdict: 'sound',
+    why: 'Same shape as G-132 on the other input. A form whose definition file will not parse has no option rows and no row shapes, which is indistinguishable from a form with none — so it is reported rather than counted as a clean pass.' },
+
   // ─── the atLeast primitive and its callers ────────────────────────────────────────────
   { id: 'G-01', file: 'count-sweep.mjs', anchor: 'const ms = re.global ?', verdict: 'sound',
     why: 'THE atLeast PRIMITIVE ITSELF. `pull()` returns `{fail}` when the extraction yields fewer than `atLeast` matches, and every caller turns a `fail` into an UNREADABLE problem rather than skipping. This is the fix for the original defect and the model the rest of this register is judged against.' },

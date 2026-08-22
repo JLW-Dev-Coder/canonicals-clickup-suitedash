@@ -29,10 +29,16 @@
 // and the seeder from each re-deriving it and drifting apart.
 
 import { readFileSync } from 'fs';
+import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 
 export function loadBindings(form) {
   if (form === '433a') return fromGeneratedFields(form);
-  if (form === '433aoi') return fromDerivedFields(form);
+  // 433-B(OIC) joins 433-A(OIC) here rather than falling through to fromCrosswalk: its
+  // crosswalk binds a key to a classification ENTRY and names a FACT, and the property name is
+  // DERIVED from the entry's category — so crosswalk.433boi.json carries no `hs_name` at all
+  // and fromCrosswalk would produce 113 bindings whose hs_name is undefined. Silently, because
+  // undefined is a legal thing to put in a Set of property names to request.
+  if (form === '433aoi' || form === '433boi') return fromDerivedFields(form);
   return fromCrosswalk(form);
 }
 
@@ -134,11 +140,15 @@ export function consumableKeys(form, mapDoc) {
     ...(mapDoc.allowed?.out_of_pocket_health?.inputs || []),
   ].filter(Boolean);
 
-  // 433-F's engine reads five inputs the map names only TARGETS for. Listed from reading
-  // fill-433f.mjs, and mirrored in validate-crosswalk.mjs — an unticked checkbox and an
-  // unasked question print identically, so neither list may quietly shrink.
-  const extra = {
-    '433f': ['433f_address_differs', '433f_pay_freq', '433f_spouse_pay_freq', '433f_hh_size', '433f_age_band'],
-  };
-  return new Set([...base, ...(extra[form] || [])]);
+  // THE ENGINE'S EXTRA INPUTS — the ones the map names only TARGETS for, or names no cell for
+  // at all. IMPORTED from adapters/hubspot/classification-coverage.mjs rather than restated.
+  //
+  // It WAS restated here: a literal `{ '433f': [five keys] }`, a copy of the table that module
+  // exports, in the file whose own header explains why the fetch layer and the seeder must not
+  // each re-derive the same thing. That is the parallel-list defect guard-sweep.mjs enumerates,
+  // sitting in this repo since the table was moved, and it stayed harmless only because nothing
+  // had been added to the table since. 433-B(OIC)'s `business_income_expense_route` is the
+  // addition that would have split them: the fetch layer would emit a key this function calls
+  // unconsumable, and hs-fetch would report the route as an ORPHAN and refuse to write.
+  return new Set([...base, ...(ENGINE_EXTRA_INPUTS[form] || [])]);
 }
