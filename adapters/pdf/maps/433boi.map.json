@@ -1399,12 +1399,6 @@
     "why_it_is_still_open": "The convention is fixed in the ENGINE and the correction is recorded in the MAP. What is not fixed is the lineage report itself, which is deliberate - it is the intake record and correcting it in place would erase what intake concluded - and the slice-1 and slice-2 evidence prose, which quotes coordinates in both conventions. That is [B18]."
    },
    {
-    "id": "B12",
-    "raised": "slice 2",
-    "what": "Three groups on pages 2 and 3 want the business/personal discriminator that cross-form item [D-06] freezes. Bound without it and reported. See _arguable_pages_2_and_3[2].",
-    "status": "OPEN"
-   },
-   {
     "id": "B13",
     "raised": "slice 2",
     "what": "One printed digital-asset row against a class that allows many; overflow drops silently into an attachment line this map declares not checkable. See _arguable_pages_2_and_3[3].",
@@ -1510,11 +1504,23 @@
     "what_it_got_right": "THE DISCRIMINATOR AND THE MEASUREMENT. `strict` is what separates an at_most line that was compared from one whose printed permission was proved, equality is the ordinary case, and every fixture in the tree at the time held at equality. All of that was true and is still true of those fixtures.",
     "what_it_got_wrong": "IT CONFLATED TWO FIGURES AND REFUSED THE FIXTURE FOR THE WRONG ONE. Its objection was that a record taking the exclusion \"would have to state an equity figure for income-producing assets other than real estate\", which the form prints no cell for — so the line \"would then check the engine against a figure the engine invented\". The at_most line does not read that figure and cannot: its only feeder is `s3_box_a_available_equity_in_assets`, and what it asserts is that the page-5 copy never EXCEEDS Box A. The record supplies `s5_amount_from_box_a`, which is a printed cell like every other, and the exclusion amount stays exactly where the form leaves it — nowhere. So the fixture states a printed cell, not an invented one, and the check remains one-sided rather than becoming an equality against a repo-chosen number.",
     "what_is_still_open": "NOTHING ABOUT THIS LINE, AND THE ORIGINAL QUESTION IS WITHDRAWN RATHER THAN ANSWERED. `what_would_settle_it` proposed a second operator input carrying the exclusion amount. That input is not needed to exercise the inequality and would not make the line check anything more than it checks now, because no cell on the form holds the amount to check it against. A preparer who takes the exclusion is still told so by the review-page advisory on this cell, which is the channel for a constraint arithmetic cannot express."
+   },
+   {
+    "id": "B12",
+    "raised": "slice 2",
+    "what": "Three groups on pages 2 and 3 want the business/personal discriminator that cross-form item [D-06] freezes. Bound without it and reported. See _arguable_pages_2_and_3[2].",
+    "status": "RESOLVED — Prompt 44 commit 1, by [D-06]'s split.",
+    "_resolution": {
+     "which_key_the_three_groups_took": "ALL THREE TOOK `row_flag[\"433boi\"]` — the routing-discriminator half — and none took `printed_as_checkbox`.",
+     "the_printed_evidence": "THE FORM DRAWS NO SUCH CELL. 433-B(OIC) prints no \"Business Account\", no \"Check if\" and no \"Primary Residence\"/\"Other\" anywhere on any page, and of its 77 checkbox widgets the only ones inside a bank, investment or real-estate subform are InvestmentAcct{1,2}.C2_19..C2_24 — the Stocks/Bonds/Other set printed at p2 y=465.7 and y=393.7, which the map already binds as `type_of_investment`. So there is no drawn cell for a business/personal or primary/other flag on this form, and the excusal is asserted rather than asserted-about: [A2] requires the column to be reachable on 433boi as neither text nor checkbox, and [EX-03] cross-checks the same thing from the excusal's side.",
+     "what_the_slice_argued_and_where_it_landed": "The slice argued that every row this form writes is a business row, so the flag would be a constant — \"the strongest evidence yet that it is routing metadata and not a printed cell\", reading as [D-06] option 1. Option 1 is what landed. The one correction is that a constant is not the same as a discriminator: on 433-B(OIC) there is only one table and nothing to route between, so `row_flag[\"433boi\"]` records that state in its own words rather than calling it routing. Smoothing it into \"routing\" is how a key comes to mean two things, which is the item it was blocked on.",
+     "the_groups": "1ac_bank_accounts (bank_account.is_business_account), 2ab_investment_accounts (investment.is_business_account), 3ab_real_estate (real_property.kind)."
+    }
    }
   ],
   "_count": {
-   "open": 19,
-   "resolved": 5
+   "open": 18,
+   "resolved": 6
   }
  },
  "_the_condition_that_governs_pages_2_and_3": {

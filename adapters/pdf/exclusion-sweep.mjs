@@ -285,73 +285,125 @@ export const PREDICATES = [
       return out;
     } },
 
-  // ─── ONE KEY, TWO INCOMPATIBLE DEFINITIONS, AND THE MAPS SETTLE IT ────────────────────
+  // ─── ONE KEY, TWO INCOMPATIBLE DEFINITIONS — SPLIT, AND THE PAGE SETTLED IT ───────────
   //
-  // `row_flag` is documented twice in this repo, and the two documents disagree:
+  // `row_flag` used to be documented twice in this repo, and the two documents disagreed:
   //
   //   asset-row-shapes.json  meta.how_to_read.row_flag
   //     "A column whose value prints as a CHECKBOX, not text."
-  //   assert-row-shape-spec.mjs, at the line that consumes it
+  //   assert-row-shape-spec.mjs, at the line that consumed it
   //     "// a routing flag, not a printed cell"
   //
-  // A checkbox IS a printed cell, so these are not two phrasings of one rule. Nothing had ever
-  // compared either sentence to a map, and comparing them splits the five flagged columns
-  // cleanly in two — with neither definition covering both halves. Carried as [C-23]; see
-  // adapters/pdf/maps/_carried.cross-form.json. NOT resolved here: the key is shared vocabulary
-  // across three finished forms and 433-B(OIC) inherits it.
+  // A checkbox IS a printed cell, so those were two rules. This entry is what found it, by
+  // comparing each sentence to the MAPS — and the split it reported, three load-bearing and two
+  // inert, is the thing [D-06] carried for three prompts.
+  //
+  // READ OFF THE PRINTED PAGE INSTEAD, THAT SPLIT IS NOT THE SPLIT. All five flagged columns
+  // are drawn as checkboxes somewhere: 433-F prints "Check if / Business Account" over both its
+  // accounts tables and "Primary Residence"/"Other" in each real-estate row, and draws eight
+  // widgets for them, none of which the map binds. So the three "load-bearing" columns were not
+  // unprinted — they were UNMAPPED, and map reachability cannot tell those apart. Measuring on
+  // the map and concluding about the page is this entry's own version of the axis conflation
+  // Prompt 43 named; it is recorded here rather than quietly corrected.
+  //
+  // The key is now two keys, both KEYED BY FORM, and this entry counts and cross-checks both.
   { id: 'EX-03', pred: '(declared) row_flag', kind: 'claiming', declaredIn: SPEC,
-    what: 'Removes a canonical column from [A2]\'s reachability assertion. What it CLAIMS depends on which of the two definitions is read — see the split reported below.',
+    what: 'Removes a canonical column from [A2]\'s reachability assertion ON THE FORM IT NAMES, on the claim that the form draws no cell for it. Its counterpart `printed_as_checkbox` (EX-03b) removes nothing — it CHECKS.',
     count: () => {
       const { spec } = load();
       let n = 0;
-      for (const c of spec.classes || []) for (const col of c.canonical_row || []) if (col.row_flag === true) n++;
+      for (const c of spec.classes || []) for (const col of c.canonical_row || [])
+        n += Object.keys(col.row_flag && typeof col.row_flag === 'object' ? col.row_flag : {}).length;
       return n;
     },
-    // THE SPLIT, DERIVED FROM THE MAPS ON EVERY RUN.
+    // THE EXCUSAL, CROSS-CHECKED AGAINST THE MAP THAT WOULD CONTRADICT IT.
     //
-    //   load-bearing  the column is reachable on NO accepting group. Removing the flag would
-    //                 make [A2] report MISSING COLUMN. Fits "not a printed cell"; does not fit
-    //                 "prints as a checkbox" — these print as nothing at all.
-    //   inert         the column IS reachable, as a checkbox, on every group that accepts the
-    //                 class. [A2] would pass without the flag. Fits "prints as a checkbox";
-    //                 does not fit "not a printed cell".
-    //
-    // The inert ones are REPORTED AND COUNTED, not failed: an excusal that excuses nothing
-    // hides no gap today. It is still recorded every run, because it is a latent hider — the
-    // day a map drops one of those checkbox bindings, [A2] would go on skipping it.
-    //
-    // THE STOP is reserved for the case both definitions reject: a flagged column reachable as
-    // TEXT. There are none today, and that is the assertion, not the observation.
+    // `row_flag[<form>]` claims the form draws no cell. The map contradicts that claim if the
+    // accepting group on that form binds the column AT ALL — as text or as a checkbox. Both are
+    // a STOP now, where before only the text case was: a flagged column bound as a checkbox was
+    // the "inert" half, reported and tolerated, and tolerating it is what let one key mean two
+    // things. [A2] makes the same assertion; this counts it from the excusal's side.
     crosscheck: () => {
       const { spec, maps } = load();
       const acc = acceptorsOf(maps);
       const out = [];
       for (const c of spec.classes || []) for (const col of c.canonical_row || []) {
-        if (col.row_flag !== true) continue;
-        for (const a of acc.get(c.class_id) || []) {
-          const key = col.printed_as?.[a.form] ?? col.key;
-          if (!a.cols.has(key)) continue;
-          const slot0 = maps[a.form]?.groups?.[a.group]?.slots?.[0] || {};
-          const asCheckbox = !!(slot0.checkboxes || {})[key];
-          if (!asCheckbox)
-            out.push(`[EX-03] CONTRADICTED — ${c.class_id}.${col.key} is excused from [A2] by row_flag, and ${a.form}.${a.group} declares "${key}" as a TEXT column. Neither definition of row_flag admits that: it is not a checkbox and it is not unprinted. Bind it or drop the flag.`);
+        const rf = col.row_flag && typeof col.row_flag === 'object' ? col.row_flag : {};
+        if (col.row_flag === true)
+          out.push(`[EX-03] UNMIGRATED — ${c.class_id}.${col.key} still carries the boolean row_flag. The key is keyed by form since [D-06]; a bare true names no form and excuses on all of them.`);
+        for (const form of Object.keys(rf)) {
+          for (const a of (acc.get(c.class_id) || []).filter((x) => x.form === form)) {
+            const key = col.printed_as?.[form] ?? col.key;
+            if (a.textCols.has(key))
+              out.push(`[EX-03] CONTRADICTED — ${c.class_id}.${col.key} is excused on ${form} as drawing no cell, and ${form}.${a.group} declares "${key}" as a TEXT column.`);
+            else if (a.cbCols.has(key))
+              out.push(`[EX-03] CONTRADICTED — ${c.class_id}.${col.key} is excused on ${form} as drawing no cell, and ${form}.${a.group} binds "${key}" as a CHECKBOX. That is printed_as_checkbox["${form}"].`);
+          }
         }
       }
       return out;
     },
     // Printed on every run beside the count, so the split cannot go quiet.
     observe: () => {
+      const { spec } = load();
+      const rows = [];
+      for (const c of spec.classes || []) for (const col of c.canonical_row || [])
+        for (const [form, why] of Object.entries(col.row_flag && typeof col.row_flag === 'object' ? col.row_flag : {}))
+          rows.push(`${c.class_id}.${col.key}@${form} — ${String(why).split('.')[0]}`);
+      return [
+        `${rows.length} routing-discriminator occurrence(s), each naming its form and its reason:`,
+        ...rows.map((r) => `  ${r}`),
+      ];
+    } },
+
+  // ─── AND THE OTHER HALF, WHICH EXCUSES NOTHING AND IS REGISTERED ANYWAY ───────────────
+  //
+  // `printed_as_checkbox` is not an exclusion: it makes [A2] check a column it used to skip.
+  // It is registered here because the sweep's subject is DECLARATIONS THAT CHANGE WHAT AN
+  // ASSERTION COVERS, and a key that moves five occurrences from "excused" to "checked" changes
+  // that as surely as one moving them the other way. Registering only the excusing half would
+  // leave the split half-visible — and half-visible is how it survived three prompts.
+  //
+  // Its `printed_but_unmapped_on` companion DOES excuse, and is counted here.
+  { id: 'EX-03b', pred: '(declared) printed_as_checkbox', kind: 'claiming', declaredIn: SPEC,
+    what: 'Moves a canonical column INTO [A2]\'s assertion on the form it names, and requires the binding to be a checkbox. The count below is the number of occurrences whose `printed_but_unmapped_on` then excuses them again — the only excusing this key does.',
+    count: () => {
+      const { spec } = load();
+      let n = 0;
+      for (const c of spec.classes || []) for (const col of c.canonical_row || [])
+        for (const form of Object.keys(col.printed_as_checkbox || {})) {
+          const u = col.printed_but_unmapped_on;
+          if (u === form || (Array.isArray(u) && u.includes(form))) n++;
+        }
+      return n;
+    },
+    crosscheck: () => {
       const { spec, maps } = load();
       const acc = acceptorsOf(maps);
-      const bearing = [], inert = [];
-      for (const c of spec.classes || []) for (const col of c.canonical_row || []) {
-        if (col.row_flag !== true) continue;
-        const hits = (acc.get(c.class_id) || []).filter((a) => a.cols.has(col.printed_as?.[a.form] ?? col.key));
-        (hits.length ? inert : bearing).push(`${c.class_id}.${col.key}${hits.length ? ` (reachable as a checkbox on ${hits.map((a) => `${a.form}.${a.group}`).join(', ')})` : ` (contributed_by ${col.contributed_by}; reachable on no accepting group)`}`);
-      }
+      const out = [];
+      for (const c of spec.classes || []) for (const col of c.canonical_row || [])
+        for (const form of Object.keys(col.printed_as_checkbox || {})) {
+          const u = col.printed_but_unmapped_on;
+          if (!(u === form || (Array.isArray(u) && u.includes(form)))) continue;
+          for (const a of (acc.get(c.class_id) || []).filter((x) => x.form === form))
+            if (a.cbCols.has(col.key) || a.textCols.has(col.key))
+              out.push(`[EX-03b] STALE — ${c.class_id}.${col.key} is excused on ${form} as printed-but-unmapped, and ${form}.${a.group} DOES bind it. A decision for a gap that has gone away is a STOP.`);
+        }
+      return out;
+    },
+    observe: () => {
+      const { spec, maps } = load();
+      const acc = acceptorsOf(maps);
+      const bound = [], unmapped = [];
+      for (const c of spec.classes || []) for (const col of c.canonical_row || [])
+        for (const [form, ev] of Object.entries(col.printed_as_checkbox || {})) {
+          const a = (acc.get(c.class_id) || []).find((x) => x.form === form);
+          const line = `${c.class_id}.${col.key}@${form} (${(ev.widgets || []).length} widget(s) drawn)`;
+          (a && a.cbCols.has(col.key) ? bound : unmapped).push(line);
+        }
       return [
-        `${bearing.length} load-bearing — [A2] would report MISSING COLUMN without the flag: ${bearing.join('; ') || 'none'}`,
-        `${inert.length} inert — the map already binds them, so the excusal rests on a premise the map contradicts [C-23]: ${inert.join('; ') || 'none'}`,
+        `${bound.length} bound as a checkbox and CHECKED by [A2]: ${bound.join('; ') || 'none'}`,
+        `${unmapped.length} printed and NOT bound — a declared gap the old row_flag hid by calling the cell unprinted: ${unmapped.join('; ') || 'none'}`,
       ];
     } },
 

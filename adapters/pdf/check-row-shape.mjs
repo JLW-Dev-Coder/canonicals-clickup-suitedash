@@ -71,6 +71,41 @@ export const declaredColumns = (slot) => {
  * columns a record is actually expected to hold.
  * @returns {string[]|null} null when the key names no group
  */
+/**
+ * THE SAME COLUMNS, KEPT APART BY THE CONSTRUCT THAT DECLARES THEM.
+ *
+ * slotColumnsOf() unions a slot's `text` and `checkboxes` keys, which is right for its callers
+ * — a stored row carries both alike. [D-06]'s split needs them separate: `printed_as_checkbox`
+ * asserts a column is bound as a CHECKBOX, and a check that accepted a text binding for it
+ * would pass on exactly the map that had got the construct wrong.
+ *
+ * `row_composites` are resolved into the TEXT set only, because a composite target is a text
+ * cell the map builds from other text cells; no composite in this repo produces a checkbox.
+ * @returns {{text:Set<string>, checkbox:Set<string>}|null} null when the key names no group
+ */
+export const slotColumnKinds = (mapDoc, key) => {
+  const entry = Object.entries(mapDoc.groups || {})
+    .find(([g, d]) => d && Array.isArray(d.slots) && (g === key || d.array === key || d.source === key));
+  if (!entry) return null;
+  const def = entry[1];
+  const text = new Set(), checkbox = new Set();
+  for (const s of def.slots) {
+    if (!s || typeof s !== 'object') continue;
+    if (s.text || s.checkboxes) {
+      Object.keys(s.text || {}).forEach((c) => text.add(c));
+      Object.keys(s.checkboxes || {}).forEach((c) => checkbox.add(c));
+    } else {
+      Object.keys(s).forEach((c) => text.add(c));   // 433-F's flat shape declares text cells
+    }
+  }
+  for (const [target, c] of Object.entries(def.row_composites || {})) {
+    if (!c || typeof c !== 'object' || !Array.isArray(c.from)) continue;   // `_why` prose
+    text.delete(target);
+    c.from.forEach((f) => text.add(f));
+  }
+  return { text, checkbox };
+};
+
 export const slotColumnsOf = (mapDoc, key) => {
   const entry = Object.entries(mapDoc.groups || {})
     .find(([g, d]) => d && Array.isArray(d.slots) && (g === key || d.array === key || d.source === key));

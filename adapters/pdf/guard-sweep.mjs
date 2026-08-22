@@ -152,6 +152,14 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── [D-06]'s split, and the catch this sweep refused on its first run ────────────────
+  { id: 'G-141', file: 'assert-row-shape-spec.mjs', anchor: 'catch (e) { kindsError =', verdict: 'sound',
+    why: 'THE SITE THIS SWEEP CORRECTED. Its first draft was `catch { kinds stays empty }` with the comment "left empty, reported by A2" — and A2 would NOT have reported it. Two empty column sets are exactly the state in which every `row_flag` excusal is confirmed, because the excusal is asserted by the ABSENCE of a contradicting binding: no columns, no contradiction, success. A success message guarded by the failure to read. It now records `kindsError` on the acceptor, and A2 pushes A2 UNREADABLE GROUP and `continue`s before judging a single column of that group. `slotColumnKinds` returning null (the group resolved to nothing) takes the same path, so the two ways of failing to read are one report.' },
+
+  // ─── the y-convention audit's readings for the reporters found by [D-12] ──────────────
+  { id: 'G-140', file: 'assert-y-convention.mjs', anchor: 'missing: !near.length &&', verdict: 'sound',
+    why: 'THE record-shape.mjs READING. `near` is every printed run starting at the x the evidence atom quotes; an EMPTY `near` sets `missing`, and the audit runner counts a `missing` row as an UNREADABLE problem and exits 2. So no run at the quoted coordinates is reported as a reading that did not happen, never as an object that agreed. This is the model shape of every other reading in the same array (verify-headings, align-block, money-probe, correlate-labels all set `missing` the same way), and it is the reason `agrees` is computed separately rather than defaulting to true.' },
+
   // ─── assert-intake-keys.mjs, the writer-resolver key assertion ────────────────────────
   { id: 'G-131', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { universeGaps.push(', verdict: 'sound',
     why: 'THE CROSS-FORM UNIVERSE PRE-PASS. A form whose map or bindings cannot be read is pushed onto `universeGaps`, and every gap becomes a UNIVERSE GAP problem before any verdict is reported. It cannot make the run report success: an unreadable form NARROWS the universe a WIDE verdict is judged against, which would turn a column another form legitimately prints into a column nothing prints, so the gap is the finding rather than a smaller answer to the same question. Its first draft was `catch { continue; }` and this sweep is what refused it.' },

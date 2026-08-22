@@ -58,6 +58,9 @@ import {
 } from './page-geometry.mjs';
 import { markerPairing } from './line-markers.mjs';
 import { probeMoneyCells } from './money-probe.mjs';
+import { verifyPrintedEvidence, EVIDENCE_TOLERANCE } from './record-shape.mjs';
+import { quotesAreDrawn } from './assert-subject-register.mjs';
+import { REGISTER as SUBJECT_REGISTER } from './gen-subject-register.mjs';
 
 // THE SEED IS A CONSTANT IN THE SOURCE AND IS PRINTED ON EVERY RUN. A sample nobody can
 // reproduce is an anecdote; a sample drawn from Math.random cannot be re-run at all.
@@ -120,9 +123,65 @@ export const REPORTER_DIR = 'adapters/pdf';
 // it as a stale register entry instead. A completeness check whose signature cannot see the
 // source of the thing it is checking is the [A3] shape with a regex on it. Returning a record
 // with `y1:`, `y:` or `rect:` in it counts, because that record is what the next tool prints.
+//
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// AND THEN THIS SIGNATURE ITSELF WAS HALF DEAD FOR THREE PROMPTS.  [D-12]
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// Four of the word boundaries in it were not `\b` escapes. They were LITERAL U+0008 BACKSPACE
+// BYTES, sitting in the regex source where two characters were meant. So the alternations read:
+//
+//   clause 1   /\.y1<BS>|\.y2<BS>|rect\[1\]|rect\[3\]/     the first two branches match nothing
+//   clause 2   /console\.log|writeFileSync|<BS>y1:|<BS>y:\s|rect:\s/        likewise the middle two
+//
+// which means A FILE THAT REPORTS A y THROUGH `.y1` OR `.y2` AND NEVER TOUCHES A WIDGET
+// RECTANGLE WAS INVISIBLE TO THE COMPLETENESS CHECK. The check went on printing OK. It is
+// the same defect one level in as the one it exists to catch — a reporter nobody sees — and
+// it was in the detector, not in the population.
+//
+// It hid EXACTLY ONE file, enumerated rather than estimated: adapters/pdf/record-shape.mjs,
+// which reads `t.y1` and emits `y:` on every printed-evidence atom, and which had never
+// appeared in Y_REPORTERS. Nothing was lost by the repair; the ten previously-found files are
+// still found. Both numbers are re-derived by signatureCanary() below.
+//
+// The reason it could hide is that NOTHING TESTED THE SIGNATURE. The file's canary tested the
+// CONVENTION COMPARISON — two synthetic runs, a run-top reporter must disagree twice — and a
+// detector whose canary covers its comparator and not its population selector is a canary for
+// the half that was working. signatureCanary() is the missing half.
+//
+// The first clause is also widened to name `baselineOfRun(` and `runTopOf(` — page-geometry's
+// own accessors. A file that asks this module for a baseline and prints it is reporting a y as
+// surely as one that reaches for `.y1`, and reaching for the accessor is the style this engine
+// asks for, so the signature was blind to its own preferred idiom.
 export const REPORTER_SIG = (src) =>
-  /\.y1|\.y2|rect\[1\]|rect\[3\]/.test(src)
-  && /console\.log|writeFileSync|y1:|y:\s|rect:\s/.test(src);
+  /\.y1\b|\.y2\b|rect\[1\]|rect\[3\]|baselineOfRun\(|runTopOf\(/.test(src)
+  && /console\.log|writeFileSync|\by1:|\by:\s|rect:\s/.test(src);
+
+/**
+ * THE CANARY FOR THE POPULATION SELECTOR, which is the half that had no canary.
+ *
+ * Each case is a synthetic source and the verdict the signature must reach on it. The first
+ * two are the exact shapes the backspace bytes suppressed: a file that reports a baseline
+ * through `.y1` and prints it, and one that returns it in a record. If either stops being
+ * detected, this fails — which is what the last three prompts had no way to notice.
+ *
+ * There is no `Math.random` and nothing is sampled: the cases are enumerated here, and the
+ * real population is enumerated by reporterCandidates(). Both counts are printed.
+ */
+export const signatureCanary = () => {
+  const cases = [
+    ['a baseline reporter that prints it', 'const y = t.y1;\nconsole.log(`y=${y}`);', true],
+    ['a baseline reporter that returns it in a record', 'return { page, y: t.y1 };', true],
+    ['a run-top reporter that prints it', 'console.log(`top=${t.y2}`);', true],
+    ['a widget reporter', 'console.log(w.rect[3]);', true],
+    ['an accessor reporter', 'import { baselineOfRun } from "./page-geometry.mjs";\nconsole.log(baselineOfRun(t));', true],
+    ['names a y and emits nothing', 'const y = t.y1; return y > 0;', false],
+    ['emits and names no y', 'console.log("done");', false],
+    ['mentions y in prose only', '// the y of a run is its baseline\nconsole.log("ok");', false],
+  ];
+  const missed = cases.filter(([, src, want]) => REPORTER_SIG(src) !== want).map(([what]) => what);
+  return { checks: cases.length, missed, holds: missed.length === 0 };
+};
 
 export const reporterCandidates = () => {
   const out = [];
@@ -291,6 +350,100 @@ const READINGS = [
       });
     },
   },
+
+  // THE THREE THAT WERE DECLARED IN THE SAME COMMIT THEY WERE FOUND IN.
+  //
+  // A Y_REPORTERS entry is a CLAIM, and a claim with no reading beside it is the shape this
+  // whole file exists to refuse. record-shape.mjs was invisible to the population selector for
+  // three prompts; declaring it and then not reading it would trade one silence for another.
+  {
+    tool: 'record-shape.mjs', kind: 'text-baseline', population: 'enumerated',
+    how: 'verifyPrintedEvidence(map, pages).demanded[].y — IMPORTED — against readPrintedText\'s baseline for the run the atom names. Every printed-evidence atom on every form that declares a record shape; a form that declares none contributes no population, and says so.',
+    read: async (form, ref) => {
+      const p = `adapters/pdf/maps/${form}.map.json`;
+      if (!existsSync(p)) return [];
+      const mapDoc = JSON.parse(readFileSync(p, 'utf8'));
+      let demanded;
+      try { ({ demanded } = verifyPrintedEvidence(mapDoc, ref.text)); }
+      catch (e) { return [{ at: `${form} record-shape`, reported: null, expected: null, missing: `verifyPrintedEvidence threw: ${e.message}` }]; }
+      return demanded.filter((d) => d.page !== undefined && d.y !== undefined).map((d) => {
+        // The atom names a BAND of runs (x is a range and the quote is a prefix), so the
+        // comparison is against every baseline drawn at that page and x-start, exactly as the
+        // heading reader does. EVIDENCE_TOLERANCE is record-shape's own, quoted not invented.
+        const near = (ref.text[Number(d.page) - 1]?.items || [])
+          .filter((t) => Math.abs(t.x1 - d.x?.[0]) <= EVIDENCE_TOLERANCE);
+        return {
+          at: d.what, reported: r1(d.y),
+          agrees: near.some((t) => Math.abs(r1(baselineOfRun(t)) - r1(d.y)) <= EVIDENCE_TOLERANCE),
+          expected: near.map((t) => r1(baselineOfRun(t))),
+          missing: !near.length && `${d.what} quotes p${d.page} x ${d.x?.[0]} and no run starts there`,
+        };
+      });
+    },
+  },
+
+  {
+    tool: 'assert-row-shape-spec.mjs', kind: 'text-baseline', population: 'enumerated',
+    how: 'adapters/hubspot/asset-row-shapes.json — every `printed_as_checkbox[<form>].printed_label` locator, whose y is the baseline [A4] resolves it at — against readPrintedText\'s baseline for the run starting at that x on that page. A4 asserts the run EXISTS; this asserts the number it is quoted at is a baseline and not a run top, which is the drift [B11] is about.',
+    read: async (form, ref) => {
+      const spec = JSON.parse(readFileSync('adapters/hubspot/asset-row-shapes.json', 'utf8'));
+      const out = [];
+      for (const c of (spec.classes || [])) for (const col of (c.canonical_row || [])) {
+        const ev = (col.printed_as_checkbox || {})[form];
+        for (const at of (ev?.printed_label || [])) {
+          const near = (ref.text[at.page - 1]?.items || []).filter((t) => Math.abs(t.x1 - at.x1) <= TOL);
+          out.push({
+            at: `${c.class_id}.${col.key} p${at.page}`, reported: r1(at.y),
+            agrees: near.some((t) => Math.abs(r1(baselineOfRun(t)) - r1(at.y)) <= TOL),
+            expected: near.map((t) => r1(baselineOfRun(t))),
+            missing: !near.length && `the evidence quotes p${at.page} x1 ${at.x1} and no run starts there`,
+          });
+        }
+      }
+      return out;
+    },
+  },
+
+  {
+    tool: 'gen-subject-register.mjs', kind: 'text-baseline', population: 'enumerated',
+    how: 'adapters/pdf/maps/_subjects.cross-form.json — the artefact the generator writes — forms[<form>].quotes[].y against readPrintedText\'s baseline for the run at that page and x1. Every quote on every registered form.',
+    read: async (form, ref) => {
+      if (!existsSync(SUBJECT_REGISTER)) return [];
+      const doc = JSON.parse(readFileSync(SUBJECT_REGISTER, 'utf8'));
+      const entry = doc.forms?.[form];
+      if (!entry) return [];
+      return Object.entries(entry.quotes || {}).map(([id, q]) => {
+        const hit = (ref.text[q.page - 1]?.items || []).find((t) => Math.abs(t.x1 - q.x1) <= TOL && t.str === q.text);
+        return {
+          at: `${form}.${id}`, reported: r1(q.y),
+          agrees: !!hit && Math.abs(r1(baselineOfRun(hit)) - r1(q.y)) <= TOL,
+          expected: hit ? [r1(baselineOfRun(hit))] : [],
+          missing: !hit && `the register quotes ${JSON.stringify(q.text.slice(0, 40))} at p${q.page} x1 ${q.x1} and no run there draws that string`,
+        };
+      });
+    },
+  },
+
+  {
+    tool: 'assert-subject-register.mjs', kind: 'text-baseline', population: 'enumerated',
+    how: 'quotesAreDrawn() is run against the register with one quote\'s baseline moved 1.0pt on this form; it must report that quote and only that quote. What is checked is that the asserter READS the baseline rather than trusting it — a checker that agrees with whatever it is handed reports zero disagreements forever.',
+    read: async (form) => {
+      if (!existsSync(SUBJECT_REGISTER)) return [];
+      const doc = JSON.parse(readFileSync(SUBJECT_REGISTER, 'utf8'));
+      const ids = Object.keys(doc.forms?.[form]?.quotes || {});
+      if (!ids.length) return [];
+      const id = ids[0];
+      const mut = JSON.parse(JSON.stringify(doc));
+      mut.forms = { [form]: mut.forms[form] };            // this form only, so the count is this form's
+      mut.forms[form].quotes[id].y = +(mut.forms[form].quotes[id].y + 1).toFixed(1);
+      const caught = (await quotesAreDrawn(mut)).filter((p) => p.includes(`${form}.${id}`)).length;
+      return [{
+        at: `${form}.${id} moved 1.0pt`, reported: caught, expected: [1],
+        agrees: caught === 1,
+        missing: caught === 0 && 'the asserter accepted a baseline the page does not draw, so its OK is about nothing',
+      }];
+    },
+  },
 ];
 
 // ---------------------------------------------------------------------------------------
@@ -333,6 +486,13 @@ export const runYConventionAudit = async () => {
   const canary = runCanary();
   if (!canary.ok) {
     problems.push(`CANARY DEAD  the comparator saw ${canary.wrong} disagreement(s) from a run-top reporter, ${canary.right} from a baseline reporter and ${canary.converts} from an explicitly converted one; expected 2, 0 and 0.\n      It cannot see a convention mismatch it was handed. Every "0 disagreement(s)" below is meaningless. STOP.`);
+  }
+  // THE SECOND CANARY, ON THE HALF THAT HAD NONE. `canary` above proves the COMPARATOR can
+  // see a mismatch. This proves the POPULATION SELECTOR can see a reporter — which is the half
+  // that was dead for three prompts and printed OK throughout. [D-12].
+  const sigCanary = signatureCanary();
+  if (!sigCanary.holds) {
+    problems.push(`SIGNATURE CANARY DEAD  REPORTER_SIG failed ${sigCanary.missed.length} of ${sigCanary.checks} synthetic case(s): ${sigCanary.missed.join('; ')}.\n      The completeness check cannot see the kind of file it is looking for. Every "declared reporter" count below is about a population this selector chose, and it is choosing wrong. STOP.`);
   }
 
   const forms = MAPPED_FORMS().filter((f) => existsSync(`adapters/pdf/forms/f${f}.pdf`));
@@ -380,7 +540,7 @@ export const runYConventionAudit = async () => {
     if (!found.has(f)) problems.push(`STALE REPORTER ENTRY  Y_REPORTERS declares ${f} and the derived signature no longer finds it. Either the file stopped reporting a y or it is gone; re-read it and re-write the entry.`);
   }
 
-  return { rows, problems, canary, noOp, cands, forms };
+  return { rows, problems, canary, sigCanary, noOp, cands, forms };
 };
 
 export const reportYConventionAudit = (a, { verbose = false } = {}) => {
@@ -391,6 +551,7 @@ export const reportYConventionAudit = (a, { verbose = false } = {}) => {
   console.log(`                    ${checked} object(s) cross-checked, ${bad} disagreement(s)`);
   console.log(`                    seed ${SEED}, ${BANDS_PER_FORM} seeded band(s) per form for align-block.mjs`);
   console.log(`                    canary: ${a.canary.ok ? 'holds' : 'DEAD'} (run-top reporter yields ${a.canary.wrong}, baseline ${a.canary.right}, converted ${a.canary.converts})`);
+  console.log(`                    signature canary: ${a.sigCanary.holds ? 'holds' : 'DEAD'} (${a.sigCanary.checks} synthetic case(s), ${a.sigCanary.missed.length} misclassified) — the population selector, which had none until [D-12]`);
   console.log(`                    line-markers pairing no-op: ${a.noOp.reduce((s, p) => s + p.markers, 0)} marker(s) re-paired from the pre-split expression, ${a.noOp.reduce((s, p) => s + p.diffs.length, 0)} difference(s)`);
   for (const [file, d] of Object.entries(Y_REPORTERS)) {
     console.log(`    ${file.padEnd(24)} reports ${String(d.reports).padEnd(18)}${d.also ? `and ${d.also}` : ''}`);

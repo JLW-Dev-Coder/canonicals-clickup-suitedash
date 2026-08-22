@@ -268,4 +268,22 @@ export const Y_REPORTERS = {
     also: 'text-baseline',
     how: 'Emits the widget rectangle as a four-tuple and never a scalar; distances are differences between edges, which are convention-free. Its probe prose quotes printed runs at their baselines.',
   },
+  'record-shape.mjs': {
+    reports: 'text-baseline',
+    how: 'verifyPrintedEvidence() returns one atom per quoted sentence carrying `y`, the baseline the record-shape declaration quotes, and matches it against `t.y1` at EVIDENCE_TOLERANCE 0.75. Its own uncovered-atom message already names the run-top/baseline drift as the thing that lands there.',
+    was_undeclared_until: 'Prompt 44. NOT because anyone chose to leave it out: adapters/pdf/assert-y-convention.mjs REPORTER_SIG carried four literal U+0008 bytes where `\\b` was meant, so its `.y1` branch matched nothing and a file reporting a baseline without touching a widget rectangle was invisible to the completeness check. This is the one file that hid. See [D-12].',
+  },
+  'assert-row-shape-spec.mjs': {
+    reports: 'text-baseline',
+    how: '[A4] re-derives the printed evidence behind every `printed_as_checkbox` declaration: each `printed_label` locator is (page, baseline, x1) and is resolved through baselineOfRun. It emits no scalar y of its own — it reports a locator that resolves to nothing — but it CONSUMES baselines, and a file that reads this convention wrongly would silently confirm evidence that is not on the page.',
+    was_undeclared_until: 'Prompt 44 commit 1, and only for the length of that commit: [D-06]\'s split gave this file its first baseline read, and the audit refused the run until it was declared. That is the register working, on a file added in the same commit as the repair to the selector that finds it.',
+  },
+  'gen-subject-register.mjs': {
+    reports: 'text-baseline',
+    how: 'Its locators are (page, baseline, x1) and it resolves each against baselineOfRun(t) before quoting the run, so the y it writes into adapters/pdf/maps/_subjects.cross-form.json is the run\'s baseline as this module measures it.',
+  },
+  'assert-subject-register.mjs': {
+    reports: 'text-baseline',
+    how: 'Re-derives every quote in the subject register by looking the baseline up again through baselineOfRun, and prints `y=` beside each in --verbose. On the register\'s own y just as much as on the page\'s.',
+  },
 };

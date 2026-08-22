@@ -112,7 +112,7 @@ import { walkTargets, classifyMapTargets } from './verify-form-coverage.mjs';
 import { slotColumnsOf } from './check-row-shape.mjs';
 import { verifyPrintedEvidence } from './record-shape.mjs';
 import { readFormRevision } from './read-form-revision.mjs';
-import { rowShapeSpecProblems, rowShapeSpecScope } from './assert-row-shape-spec.mjs';
+import { rowShapeSpecProblems, rowShapeSpecScope, splitOccurrences } from './assert-row-shape-spec.mjs';
 import { coverageCount, ENGINE_EXTRA_INPUTS } from '../hubspot/classification-coverage.mjs';
 
 // ---------------------------------------------------------------------------------------
@@ -1336,6 +1336,39 @@ export const COMPLETENESS = [
         ...(/\b(?:\d+|[a-z]+)\s+ACTIVE LIES/i.test(String(ctx.liesDoc?._counting || '')) ? [] : ['_counting.active_lies']),
       ];
       return { universe: universeList.length, covered: universeList.length - uncoveredList.length, universeList, uncoveredList };
+    } }),
+
+  // ── [D-06]'s split: two claims in the ruling that records it ───────────────────────────
+  //
+  // The ruling text in asset-row-shapes.json makes two quantified statements, and both name a
+  // set this tree can produce. Counted rather than declared not-coverage, because that is
+  // exactly what the ruling is FOR: [D-06] stood for three prompts on a split nobody counted.
+  C({ id: 'K-94', match: /every printed_as_checkbox occurrence — it must be bound/,
+    kind: 'counter',
+    what: 'Every (column, form) occurrence declaring printed_as_checkbox is disposed by [A2] — bound as a checkbox on the accepting group, or declared printed_but_unmapped_on for that form. Universe: the occurrences. Covered: the disposed ones.',
+    universe: { scoped_to: 'artefact', detail: 'every (canonical column, form) pair declaring printed_as_checkbox in adapters/hubspot/asset-row-shapes.json, across every mapped form — the artefact, not one form of it',
+      admits: (m) => typeof m === 'string' && /^[a-z_]+.[a-z0-9_]+@[0-9a-z]+$/.test(m) },
+    count: () => {
+      const { checkbox } = splitOccurrences();
+      const ok = (o) => o.bound || o.unmapped;
+      return {
+        universe: checkbox.length, covered: checkbox.filter(ok).length,
+        universeList: checkbox.map((o) => o.at), uncoveredList: checkbox.filter((o) => !ok(o)).map((o) => o.at),
+      };
+    } }),
+
+  C({ id: 'K-95', match: /each real-estate row\) and simply not bound/,
+    kind: 'counter',
+    what: 'The claim that 433-F draws these checkboxes and the map binds none of them. Universe: the printed_as_checkbox occurrences on 433f. Covered: those whose declared printed_but_unmapped_on names 433f AND which the map indeed does not bind — so the day one is bound, the count moves and the sentence stops being true out loud.',
+    universe: { scoped_to: 'form', detail: 'every (canonical column, 433f) pair declaring printed_as_checkbox — scoped to ONE form, because the sentence is about what 433-F draws and what the 433-F map binds',
+      admits: (m) => typeof m === 'string' && /^[a-z_]+.[a-z0-9_]+@433f$/.test(m) },
+    count: () => {
+      const on433f = splitOccurrences().checkbox.filter((o) => o.form === '433f');
+      const ok = (o) => o.unmapped && !o.bound;
+      return {
+        universe: on433f.length, covered: on433f.filter(ok).length,
+        universeList: on433f.map((o) => o.at), uncoveredList: on433f.filter((o) => !ok(o)).map((o) => o.at),
+      };
     } }),
 
   // ── the families that are NOT coverage claims ──────────────────────────────────────────
