@@ -88,6 +88,36 @@ export const load = () => {
 // (c) register records what a second implementation costs: a re-derived copy of the marker
 // pairing disagreed 40-to-3 with the original, and the whole disagreement was in the copy.
 /** Every (form, group) that accepts a class, with the columns its slots actually declare. */
+/**
+ * Columns a form binds through a TOP-LEVEL checkbox construct rather than through a group slot.
+ *
+ * WHY THIS EXISTS. slotColumnKinds() answers "what does this group's SLOT declaration name",
+ * and on 433-F the answer for every accounts and real-estate group is `checkbox: (none)` —
+ * because that form binds its row checkboxes in the map's top-level `checkboxes` block,
+ * index-aligned to the group, not as slot columns. [A2]'s stale-unmapped check asked only
+ * slotColumnKinds, so on 433-F it could return only one answer, and "the map does not bind
+ * this column" was inferred from a reading that had never looked where the binding is.
+ *
+ * Three `printed_but_unmapped_on: "433f"` declarations stood on that inference — for
+ * bank_account.is_business_account, investment.is_business_account and real_property.kind —
+ * while the map bound all eight widgets and fill-433f.mjs wrote them on every run. The
+ * spec file's own rule says naming a form that DOES bind the column is a STALE declaration
+ * and a STOP; the check that enforces it was structurally incapable of firing.
+ *
+ * THE PAIRING IS DECLARED, NEVER INFERRED. `checkboxes._binds` names the group and the
+ * canonical column for each row-level construct, and fill-433f.mjs reads the same block, so
+ * the engine and the assertion cannot hold different beliefs about what is bound.
+ */
+export const checkboxBoundColumns = (map) => {
+  const out = new Map();      // group -> Set(column)
+  for (const d of Object.values(map?.checkboxes?._binds || {})) {
+    if (!d || typeof d !== 'object' || !d.group || !d.column) continue;
+    if (!out.has(d.group)) out.set(d.group, new Set());
+    out.get(d.group).add(d.column);
+  }
+  return out;
+};
+
 export const acceptorsOf = (maps) => {
   const out = new Map();      // class_id -> [{ form, group, cols:Set }]
   for (const [form, map] of Object.entries(maps)) {
@@ -112,9 +142,13 @@ export const acceptorsOf = (maps) => {
         if (!k) kindsError = `slotColumnKinds resolved no group for ${form}.${group}`;
         else kinds = k;
       } catch (e) { kindsError = `slotColumnKinds threw on ${form}.${group}: ${e.message}`; }
+      // A COLUMN BOUND BY A TOP-LEVEL CHECKBOX CONSTRUCT IS BOUND. The union is taken here, at
+      // the one place the acceptor is built, so every check downstream sees the same set.
+      const cbDeclared = checkboxBoundColumns(map).get(group) || new Set();
+      const cbAll = new Set([...kinds.checkbox, ...cbDeclared]);
       for (const cls of accepts) {
         if (!out.has(cls)) out.set(cls, []);
-        out.get(cls).push({ form, group, cols: new Set(cols), textCols: kinds.text, cbCols: kinds.checkbox, kindsError });
+        out.get(cls).push({ form, group, cols: new Set([...cols, ...cbDeclared]), textCols: kinds.text, cbCols: cbAll, kindsError });
       }
     }
   }

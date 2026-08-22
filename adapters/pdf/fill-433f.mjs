@@ -201,8 +201,16 @@ if (cb) {
   // so the flag inherited that group's routing whole — including the part that filed a bank
   // account under INVESTMENTS. The groups are separate now and so are their flag columns; each
   // array aligns to its own group's rows and cannot reach the other table.
-  for (const [g, key] of [['bank_accounts', 'account_business_bank'],
-                          ['investments',   'account_business_investments']]) {
+  // THE GROUP PAIRING COMES FROM THE MAP, NOT FROM A LITERAL HERE. It used to be this array,
+  // and being here is why nothing could check it: adapters/pdf/assert-row-shape-spec.mjs [A2]
+  // asks whether the accepting group's SLOT declaration names a checkbox column, which on this
+  // form is always no, because 433-F binds its row checkboxes at the top level. The pairing was
+  // readable only by this engine, so [A2]'s stale-unmapped check could not fire on 433-F and
+  // three stale declarations stood over a map that binds all eight widgets. `checkboxes._binds`
+  // is now the one answer both read.
+  const binds = Object.entries(cb._binds || {}).filter(([, d]) => d && d.group && d.column);
+  for (const [key, { group: g, column }] of binds) {
+    if (column !== 'is_business_account') continue;   // `kind` is the RE pair below, not a flag array
     const flags = cb[key];
     if (!Array.isArray(flags)) continue;
     (groupRows[g] || []).forEach((acct, i) => {
@@ -215,12 +223,17 @@ if (cb) {
 
   // real estate PR/CO by row kind ('primary' -> primary box, 'other' -> other box).
   //
-  // NOTE: the scalar fallback for this group carries no `kind`, and no registry property
-  // supplies one, so a record that arrives from HubSpot cannot answer PR/CO at all and both
-  // boxes stay blank. That is a gap in the PROPERTY SET, not in this code, and it is left
-  // visible rather than guessed at — inferring "primary" from a description that happens to
-  // read "Primary residence" would put a claim on a filed collection statement that the
-  // taxpayer never made.
+  // THE GAP THIS NOTE USED TO DESCRIBE HAS CLOSED. It said the scalar fallback carried no
+  // `kind`, that no registry property supplied one, and that a record arriving from HubSpot
+  // therefore left both boxes blank. A record fetched from the live portal now carries
+  // real_estate[].kind, and a 433-F filled from contact 243232979075 comes out with PR1 and
+  // CO2 ticked. The note outlived the gap, and the same sentence had been copied into
+  // asset-row-shapes.json real_property.kind, where it was still being read as current.
+  //
+  // WHAT STANDS IS THE RULE, NOT THE GAP: this ticks only on an explicit `kind`. Inferring
+  // "primary" from a description that happens to read "Primary residence" would put a claim
+  // on a filed collection statement that the taxpayer never made, so a row without `kind`
+  // still leaves both boxes blank — by decision now, rather than for want of the column.
   const reRows = groupRows.real_estate || [];
   if (Array.isArray(cb.real_estate)) {
     reRows.forEach((re, i) => {

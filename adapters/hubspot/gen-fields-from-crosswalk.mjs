@@ -53,6 +53,37 @@ const SHARED_PREFIX = 'irs433';
 const FORM_PREFIX = `irs${form}`;
 const FORM_LABEL = form.replace(/^433/, '433-').toUpperCase();
 
+// [D-13]. `source` NAMES A MAP CONSTRUCT, AND THE CROSSWALK DOES NOT HOLD ONE.
+//
+// The crosswalk's `consumed_by` says which part of the engine reads a key — "map",
+// "groups.real_estate.array", "fill-433f.mjs checkbox block (input('address_differs'))" —
+// and this generator used to paste it straight into `source`. Two rows therefore carried a
+// FILE PATH plus a JS expression where every other definitions file in this repo carries one
+// word from bindings.mjs CONSTRUCT_KIND, and adapters/hubspot/assert-intake-keys.mjs reported
+// the divergence on every run as INERT — inert only because bindingSourceOf('433f') is
+// 'crosswalk', so nothing read this file's `source` at all. Inert is not the same as correct,
+// and it stops being inert the moment 433-F moves to the derived path.
+//
+// THE MAPPING IS DECLARED AND TOTAL. An unrecognised `consumed_by` is a STOP, not a fallback:
+// a default of 'map' would silently file an engine-only input as a mapped cell, which is the
+// wrong-construct defect this fix is for, one level down.
+const CONSUMED_BY_CONSTRUCT = [
+  [/^map$/,                          'map'],
+  [/^split$/,                        'split'],
+  [/^groups./,                      'groups'],
+  [/^special./,                     'map'],          // a composite of mapped cells; the map binds every one
+  [/allowed block/,                  'allowed'],
+  [/checkbox block/,                 'checkboxes'],
+];
+const constructFor = (r) => {
+  const cb = String(r.consumed_by ?? '').trim();
+  for (const [re, name] of CONSUMED_BY_CONSTRUCT) if (re.test(cb)) return name;
+  throw new Error(
+    `[D-13] UNMAPPED consumed_by ${JSON.stringify(cb)} on key ${r.key}. ` +
+    'source must be one map construct from bindings.mjs CONSTRUCT_KIND. Add the shape to ' +
+    `CONSUMED_BY_CONSTRUCT with the construct it means; do not default it.`);
+};
+
 const humanize = (name) => {
   const s = name.replace(/^irs433f?_/, '').replace(/_/g, ' ').trim();
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -90,7 +121,11 @@ for (const r of xw.bindings) {
     options: r.options ?? null,
     map_option_by_value: r.map_option_by_value ?? null,
     pii: !!r.pii,
-    source: isTable ? `groups (serialized: ${r.row_shape.join(', ')})` : r.consumed_by,
+    source: isTable ? `groups (serialized: ${r.row_shape.join(', ')})` : constructFor(r),
+    // THE CROSSWALK'S OWN WORDING, KEPT. `source` is now a construct name, and the sentence
+    // it used to hold said WHICH BLOCK of the engine reads the key and under what expression.
+    // That is real provenance and losing it would be paying for [D-13] with a fact.
+    consumed_by: r.consumed_by ?? null,
     type_basis: r.type_basis,
     classification: r.classification,
   });

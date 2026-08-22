@@ -1227,8 +1227,13 @@
        "why": "The PERSONAL BANK ACCOUNTS table prints \"Check if\" over \"Business Account\" as its last column header and draws one checkbox in each of its two rows. A printed cell, not a routing flag."
       }
      },
-     "printed_but_unmapped_on": "433f",
-     "_why_unmapped_on_433f": "The 433-F map binds the four text columns of this table and not the box. The gap is real and now declared: before this split the column was excused by `row_flag` on a premise the page contradicts, so nothing said the box was unbound. [A2] now names it."
+     "printed_and_mapped_on": "433f",
+     "_binding": "433-F binds every widget this column's printed_as_checkbox names, in `checkboxes` at the top level of the map rather than as a slot column of the group, and `checkboxes._binds` declares which group and column each construct is for. fill-433f.mjs writes them; a filled form carries the ticks.",
+     "_superseded_printed_but_unmapped_on": {
+      "text": "The 433-F map binds the four text columns of this table and not the box. The gap is real and now declared: before this split the column was excused by `row_flag` on a premise the page contradicts, so nothing said the box was unbound. [A2] now names it.",
+      "what_it_got_right": "That 433-F PRINTS a Business Account box on this table, with the printed label and the two widget names — that half is the [D-06] correction and it stands, verified against the drawn page.",
+      "what_it_got_wrong": "That the map does not bind the box. It does: `checkboxes.account_business_bank` names both widgets and fill-433f.mjs writes them. The claim was never compared against the map — [A2] asks slotColumnKinds, which on this form reports `checkbox: (none)` for every group because 433-F binds row checkboxes at the top level, so the check that should have refused this could only ever return no."
+     }
     }
    ],
    "not_a_row_column": [
@@ -1329,8 +1334,13 @@
        "why": "The INVESTMENTS table repeats the same \"Check if / Business Account\" header and draws its own pair of boxes. Two printed tables, two headers, four boxes in all."
       }
      },
-     "printed_but_unmapped_on": "433f",
-     "_why_unmapped_on_433f": "As on the bank table above."
+     "printed_and_mapped_on": "433f",
+     "_binding": "433-F binds every widget this column's printed_as_checkbox names, in `checkboxes` at the top level of the map rather than as a slot column of the group, and `checkboxes._binds` declares which group and column each construct is for. fill-433f.mjs writes them; a filled form carries the ticks.",
+     "_superseded_printed_but_unmapped_on": {
+      "text": "As on the bank table above.",
+      "what_it_got_right": "The same, for the INVESTMENTS table: the header is printed and two boxes are drawn.",
+      "what_it_got_wrong": "The same: `checkboxes.account_business_investments` binds both widgets."
+     }
     }
    ],
    "not_a_row_column": [
@@ -1647,7 +1657,12 @@
       "primary",
       "other"
      ],
-     "note": "NAMED IN THE BRIEF. No backbone column supplies it. fill-433f.mjs records the gap in its own comment and deliberately leaves both boxes blank rather than inferring 'primary' from a description that happens to read 'Primary residence'.",
+     "note": "NAMED IN THE BRIEF. 433-F prints \"Primary Residence\" and \"Other\" inside each real-estate row and the map binds all four boxes through `checkboxes.real_estate`; fill-433f.mjs ticks primary or other per row and a filled form carries the ticks.",
+     "_superseded_note": {
+      "text": "NAMED IN THE BRIEF. No backbone column supplies it. fill-433f.mjs records the gap in its own comment and deliberately leaves both boxes blank rather than inferring 'primary' from a description that happens to read 'Primary residence'.",
+      "what_it_got_right": "The reasoning about inference: a description reading \"Primary residence\" must not be turned into a tick, because that would put a claim on a signed collection statement the taxpayer never made. That rule stands and the engine still follows it — it ticks only on an explicit `kind`.",
+      "what_it_got_wrong": "Both facts. A backbone column DOES supply it — a record fetched from the live portal carries real_estate[].kind — and fill-433f.mjs does NOT leave the boxes blank: it checks the primary or other widget per row. A 433-F filled from HubSpot contact 243232979075 has PR1 and CO2 ticked. The note described a gap that had already closed."
+     },
      "row_flag": {
       "433a": "NO CELL. 433-A prints one real-property table and asks for a free-text description; nothing on the page asks which kind of property a row is.",
       "433aoi": "NO CELL. Same shape as 433-A.",
@@ -1686,8 +1701,13 @@
        "why": "433-F prints \"Primary Residence\" and \"Other\" INSIDE each real-estate row, beside the description, and draws a PRn/COn pair per row. Two rows, four boxes."
       }
      },
-     "printed_but_unmapped_on": "433f",
-     "_why_unmapped_on_433f": "fill-433f.mjs deliberately leaves both boxes blank rather than inferring \"primary\" from a description that happens to read \"Primary residence\" — no backbone column supplies the fact. That decision is unchanged; what changes is that the gap is now a DECLARED unmapped printed cell instead of a column excused as unprinted."
+     "printed_and_mapped_on": "433f",
+     "_binding": "433-F binds every widget this column's printed_as_checkbox names, in `checkboxes` at the top level of the map rather than as a slot column of the group, and `checkboxes._binds` declares which group and column each construct is for. fill-433f.mjs writes them; a filled form carries the ticks.",
+     "_superseded_printed_but_unmapped_on": {
+      "text": "fill-433f.mjs deliberately leaves both boxes blank rather than inferring \"primary\" from a description that happens to read \"Primary residence\" — no backbone column supplies the fact. That decision is unchanged; what changes is that the gap is now a DECLARED unmapped printed cell instead of a column excused as unprinted.",
+      "what_it_got_right": "That 433-F prints \"Primary Residence\" and \"Other\" inside each real-estate row and draws a PRn/COn pair per row — four boxes over two rows, verified against the drawn page.",
+      "what_it_got_wrong": "Two things. `checkboxes.real_estate` binds all four widgets and fill-433f.mjs ticks primary or other per row — it does NOT leave them blank. And \"no backbone column supplies it\" is out of date: a record fetched from the live portal carries real_estate[].kind, and a filled 433-F from that record has PR1 and CO2 ticked."
+     }
     },
     {
      "key": "year_refinanced",

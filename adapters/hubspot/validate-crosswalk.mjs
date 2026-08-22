@@ -55,7 +55,17 @@ const engineInputs = new Set([
     .filter(([, v]) => v && typeof v === 'object' && Array.isArray(v.parts))
     .map(([k]) => k),
   ...Object.entries(map.checkboxes || {})
-    .filter(([, v]) => v && typeof v === 'object' && !Array.isArray(v) && !v.index)
+  // `checkboxes` also carries DECLARATIONS beside its targets. `_binds` names which group and
+  // canonical column each row-level construct is for — read by fill-433f.mjs to pair a flag
+  // array with its group, and by assert-row-shape-spec [A2] to answer whether the map binds a
+  // column at all. It is not a widget target and no record supplies a value for it, so a
+  // crosswalk row for it would be a property provisioned for a declaration.
+  //
+  // Excluded BY SHAPE and by the `_` convention this repo uses throughout for prose and
+  // declarations, the same way the `split` filter above excludes its own prose keys — never by
+  // name, so a second declaration needs no edit here.
+    .filter(([k, v]) => !k.startsWith('_')
+      && v && typeof v === 'object' && !Array.isArray(v) && !v.index)
     .map(([k]) => k),
   ...Object.values(map.groups || {})
     .filter((d) => d && Array.isArray(d.slots))

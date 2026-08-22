@@ -260,19 +260,25 @@ for (const form of LIST) {
         const where = `${artefact} writes source construct ${JSON.stringify(c)} on ${keys.length} propert(ies) ` +
           `(${keys.slice(0, 4).join(', ')}${keys.length > 4 ? ', …' : ''}), and bindings.mjs CONSTRUCT_KIND names only ` +
           `[${Object.keys(CONSTRUCT_KIND).join(', ')}].`;
-        if (reads) {
-          problems.push(
-            `UNKNOWN CONSTRUCT  ${where} This form's kind is resolved THROUGH that string, so the generator that ` +
-            `writes this file and the resolver that reads it have parted on a spelling — and the resolver's answer ` +
-            `for an unknown construct used to be the silent one.`);
-        } else {
-          // INERT, AND REPORTED RATHER THAN INVISIBLE. bindingSourceOf says this form takes the
-          // crosswalk path, so nothing reads its `source` and no value is mis-shaped today.
-          // It is still a divergence: the artefact's vocabulary is not the vocabulary, and the
-          // day this form moves to the derived path those rows throw. Carried, not silenced.
-          constructRow.inertDivergence = (constructRow.inertDivergence || []).concat(
-            `${where} INERT: bindingSourceOf("${form}") is "${bindingSourceOf(form)}", so this file's \`source\` is read by nothing. [D-13]`);
-        }
+        // AN OFF-VOCABULARY CONSTRUCT IS A STOP ON EVERY FORM, READ OR NOT. [D-13] RESOLVED.
+        //
+        // This used to branch: a problem where the resolver reads `source`, and an INERT
+        // DIVERGENCE reported every run where it does not. 433-F took the second branch —
+        // bindingSourceOf('433f') is 'crosswalk' — and wrote a FILE PATH plus a JS expression
+        // into `source` on two properties for as long as the file existed, reported on every
+        // run and fixed by none of them. Inert is a statement about today's wiring, not about
+        // the artefact: the day 433-F moves to the derived path those two rows throw, and the
+        // reason they would throw is the reason they were already wrong.
+        //
+        // gen-fields-from-crosswalk.mjs now derives the construct from the crosswalk's
+        // `consumed_by` through a declared, total mapping, and keeps the original sentence on
+        // the row as `consumed_by` so no provenance was paid for the fix. With that landed,
+        // the tolerated branch has nothing left to tolerate and is gone.
+        problems.push(
+          `UNKNOWN CONSTRUCT  ${where} A definitions file whose vocabulary is not the vocabulary is ` +
+          `wrong whether or not anything reads it today — bindingSourceOf("${form}") is ` +
+          `"${bindingSourceOf(form)}", and that is a fact about this week's wiring, not about the ` +
+          `artefact. [D-13] is closed and this branch is what closed it.`);
       }
       // AND THE OTHER DIRECTION. A construct the vocabulary names that NO generator has ever
       // written on any form is a resolver branch nothing exercises — reported across the whole

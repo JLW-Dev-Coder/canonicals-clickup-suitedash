@@ -412,6 +412,12 @@
  },
  "checkboxes": {
   "address_differs": "topmostSubform[0].Page1[0].address[0].If_address_provided_above_is_different_then_last_r[0]",
+  "_binds_why": "WHICH GROUP AND WHICH CANONICAL COLUMN EACH ROW-LEVEL CHECKBOX CONSTRUCT BINDS. Declared here because two readers need the same answer and until this block existed they did not have one. fill-433f.mjs carried the group pairing as a literal array in its own source, and adapters/pdf/assert-row-shape-spec.mjs [A2] asked a DIFFERENT question - whether the accepting group's SLOT declaration names a checkbox column - which on this form can only ever answer no, because 433-F binds its row checkboxes here at the top level rather than inside the group. So [A2]'s stale-unmapped check was structurally incapable of firing on 433-F, and three printed_but_unmapped_on declarations in asset-row-shapes.json claiming this map binds nothing for is_business_account and kind stood for as long as the file has existed while the map bound all eight widgets and the engine wrote them. A guard that cannot fire is worse than none.",
+  "_binds": {
+   "account_business_bank": { "group": "bank_accounts", "column": "is_business_account" },
+   "account_business_investments": { "group": "investments", "column": "is_business_account" },
+   "real_estate": { "group": "real_estate", "column": "kind" }
+  },
   "_account_business_why": "One flag array per accounts group since the D1 split. A single four-entry array index-aligned to a single four-slot list inherited that list's routing whole: entries 0-1 were the INVESTMENTS table and 2-3 the bank table, in that order, which is the opposite of the printed order. Two arrays, each aligned to its own group, cannot express that error.",
   "account_business_bank": [
    "topmostSubform[0].Page1[0].AccountsTable[1].#subform[1].CheckBox11[0]",
