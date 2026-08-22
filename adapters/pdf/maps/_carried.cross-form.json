@@ -104,6 +104,18 @@
    "what_is_different_now": "The exposure is a DERIVED 0 rather than an observation, re-derived on every validate-map run and every sweeps run by adapters/pdf/enumerate-shadowing.mjs, with a canary that fires every verdict and an unreadable row treated as a STOP. The day the number stops being 0 is a reported finding with the file, the line, the predicate and its defining module named.",
    "what_would_close_it": "Read the character before the identifier inside exclusionSites() and refuse a site where it is a \".\". That is a change to the function every entry in PREDICATES is measured by, so its no-op path has to be proved across all twenty-eight entries and every site they cover in the same run — the standard the reachability change was held to. The enumerator above is what that proof would be run against: it already names, per site, whether the attribution rests on a bare call.",
    "status": "OPEN"
+  },
+  {
+   "id": "D-11",
+   "form": "engine-wide; live on 433-A(OIC) and 433-B(OIC) today",
+   "raised_in": "Prompt 43 commit 1, by the 433-B(OIC) declaration-coverage union",
+   "subject": "a declared printed constant of ZERO can never be reported as exercised, because the coverage test is `constant !== 0`",
+   "the_shape": "run-form-gate.mjs step 11 records a declared constant as `{ constant, fired: konst !== 0 }`. Every printed constant in this repo so far is the SAME one — \"if the vehicle is leased, enter 0 as the total value\", drawn on the page in words — and its value is 0. So `fired` is false on every record that takes the leased branch, INCLUDING the records that take it correctly and print the 0 the caption instructs. Five instances are live: 433-A(OIC) `6a leased` and `6c leased`, and 433-B(OIC) `4a leased`, `4b leased` and `4c leased`.",
+   "why_it_is_a_problem_today": "The coverage union names all five as \"in class somewhere and proved nowhere\", beside floors and predicates that genuinely have never been driven. Those are different facts. A reader closing gaps works down that list and cannot close these, and a list with permanently uncloseable rows on it stops being a list anyone works down.",
+   "what_it_is_NOT": "It is NOT a defect in the forms and NOT a gap in the fixtures. samples/433boi.overmax.sample.json parks two vehicles on `lease` and samples/433boi.slice3.sample.json parks a third there; all three branches HELD, the constant WAS applied, and the printed cell carries the 0 the caption asks for. The gate proves the branch. What it cannot report is the application of a value whose contribution is indistinguishable from not applying it.",
+   "the_candidate_ruling": "`fired` for a constant should mean THE BRANCH THAT CARRIES IT WAS TAKEN AND THE CONSTANT WAS ADDED, not `the constant moved the sum`. That is a change to a guard's own coverage rule, so it needs its own commit, its own canary, and a re-read of every other `fired` predicate in that table for the same conflation — `factor` has it too (`fired: cellSum !== 0` cannot distinguish a factor applied to zero from a factor not applied) and `sign` has it (`fired: cellSum !== 0`).",
+   "why_it_is_not_fixed_here": "A refactor of a guard is a change to the guard. Prompt 43 §4 asks for 433-B(OIC) fixtures, crosswalk, provisioning and round trip; rewriting the coverage predicate for three declaration kinds across four forms mid-provisioning is exactly the kind of adjacent change that has twice now reproduced the defect class it was meant to close. Recorded with its instances counted so it cannot evaporate.",
+   "status": "OPEN - recorded, not built."
   }
  ],
  "resolved": [
@@ -192,7 +204,7 @@
   }
  ],
  "_count": {
-  "open": 6,
+  "open": 7,
   "resolved": 4
  }
 }

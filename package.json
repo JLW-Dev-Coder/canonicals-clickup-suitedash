@@ -25,7 +25,8 @@
     "recordshape:433aoi": "node adapters/pdf/assert-record-shape.mjs 433aoi",
     "recordshape:433boi": "node adapters/pdf/assert-record-shape.mjs 433boi",
     "recordshape": "node adapters/pdf/assert-record-shape.mjs 433aoi && node adapters/pdf/assert-record-shape.mjs 433boi",
-    "fixtures:recordshape": "node scratchpad/author-record-shape-fixtures.mjs"
+    "fixtures:recordshape": "node scratchpad/author-record-shape-fixtures.mjs",
+    "stress:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --role negative --saturated && node adapters/pdf/run-form-gate.mjs 433boi --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433boi"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
