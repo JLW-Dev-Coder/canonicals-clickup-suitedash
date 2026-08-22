@@ -219,6 +219,16 @@ export const runHeight = (t) => t.y2 - t.y1;
 //
 // A file that reports a y and is not in here is a STOP there, not a finding.
 export const Y_REPORTERS = {
+  'absence-sweep.mjs': {
+    reports: 'text-baseline',
+    also: 'widget-rect',
+    how: 'It REPORTS a y only when a quoted coordinate fails, and the number it prints is the one the artefact quoted — so the convention it reports in is whichever the artefact used, which is the finding. What it COMPARES against is built here in drawnOf(): `baselines` from readPrintedText y1, `tops` from y2, and `wy` from the widget rectangle, kept apart so a miss can be diagnosed as the other convention rather than reported as a bad transcription. The presence test uses their union, which matches blanket-audit [K-12] deliberately: [S-27] claims a quoted coordinate corresponds to something the page draws, and a baseline-only test is a stricter claim than the one being audited.',
+    converts_at: 'drawnOf(), which builds all three sets from one read of one PDF, so no second instrument can disagree with the first about where a run is.',
+  },
+  'control-char-scan.mjs': {
+    reports: 'none',
+    how: 'IT REPORTS NO y A READER COULD TAKE FOR A BASELINE. Its `line` and `col` are 1-based positions in a SOURCE FILE — a line number and a character offset, counted from the top of a text buffer — and they are printed in the `file:line:col` form every editor uses. Nothing in this file reads a PDF, and the y-bearing name that puts it in this register is the word `line`, which here means a line of source and not a line of a drawn page.',
+  },
   'page-geometry.mjs': {
     reports: 'text-baseline',
     also: 'widget-rect',

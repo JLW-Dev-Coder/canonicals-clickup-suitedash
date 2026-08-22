@@ -105,6 +105,7 @@
 // the register carries family entries for the wide part.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { classifyCoordinates } from './absence-sweep.mjs';
 import { MANIFEST, sweptFiles, claimsIn, runCountSweep } from './count-sweep.mjs';
 import { markerPairing } from './line-markers.mjs';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
@@ -114,6 +115,17 @@ import { verifyPrintedEvidence } from './record-shape.mjs';
 import { readFormRevision } from './read-form-revision.mjs';
 import { rowShapeSpecProblems, rowShapeSpecScope, splitOccurrences } from './assert-row-shape-spec.mjs';
 import { coverageCount, ENGINE_EXTRA_INPUTS } from '../hubspot/classification-coverage.mjs';
+
+/** Every string in a JSON document, so a coordinate is read in the sentence it belongs to. */
+const proseStrings = (doc) => {
+  const out = [];
+  const walk = (o) => {
+    if (typeof o === 'string') { out.push(o); return; }
+    if (o && typeof o === 'object') for (const v of Object.values(o)) walk(v);
+  };
+  walk(doc);
+  return out;
+};
 
 // ---------------------------------------------------------------------------------------
 // THE SEED. Reported on every run, and changing it is a deliberate act that draws a
@@ -668,6 +680,7 @@ export const DETECTORS = {
   'success-sweep.mjs': { canary: 'CANARY_SRC, fourteen lines of synthetic source holding one site of each of the four classes, classified in memory by the same classify() the sweep uses. Line 13 is the defect verbatim — `process.exitCode = 3` inside a failure guard, then a bare `all assertions passed.` — arranged BELOW an earlier guard that does jump, because a witness accepting any jump above would certify the very line the file was written for. Expected yield: guarded, terminal, UNCONDITIONAL, narrative, in that order. CANARY_EXPECT\'s length is asserted against CANARY_CLASSES before the loop, so a shortened list cannot make `every` vacuously true.' },
   'enumerate-shadowing.mjs': { canary: 'canary(), seven synthetic condition strings run through the same classify() the enumeration uses, with an expected verdict asserted for each: a plain call reads BARE, a method call reads METHOD, a mixed site reads BARE and counts both occurrences, a predicate absent from the text reads ABSENT, a LONGER name is not matched by a shorter one, an optional-chained method reads METHOD, and null text reads ABSENT rather than zero. Not drawn from the artefacts. It is the canary this file most needs, because the expected answer over the real tree is ZERO and a broken classifier and a clean tree print the same number — so the count is not printed at all unless the canary bites first. Proved beyond the synthetic strings as well: a real same-file `bag.norm(xs)` planted in a swept file was found and named, and the enumeration returned to 0 when it was removed.' },
   'assert-fixture-authorship.mjs': { canary: 'canary(), seven synthetic key-pair comparisons run through the same keyDiff() the audit uses: a changed scalar, a key only on the committed side, a key only on the regenerated side, a nested change inside an array of objects, two identical objects yielding nothing, key ORDER yielding nothing, and "1" against 1 yielding a difference. Not drawn from the artefacts, and it runs BEFORE any generator is spawned - reportAuthorship returns the miss count and never reaches the table if the comparator is blind. It is the canary this file most needs: everything else it does is spawning processes and moving bytes, and its failure mode is agreeing with whatever it is handed. The last case is the sharpest - a fixture whose whole hand edit was cents-to-whole-dollars would read as reproduced exactly under a comparator that coerced.' },
+  'absence-sweep.mjs': { canary: 'canary(), twenty planted cases run through the SAME detectors the sweep uses. Three halves, and each covers a way this file can go blind. (a) every registered ABSENCE_SHAPE must fire on a planted sentence of its own shape, and no shape may fire on a planted PRESENCE sentence - a detector that cannot tell absence from presence would classify the whole tree and report on neither. (b) every one of the four coordinate universes must be recovered from a planted example, INCLUDING a widget rectangle: a rectangle is written (y 170.6..183.6, ...) and its first number opens a range, so a band test placed first swallows every widget, and the canary caught exactly that on this file first run. (c) the form reader must return both 433-A(OIC) and 433-A from a sentence naming both, and must NOT read 433-A out of 433-A(OIC) alone - the cross-form confusion this file exists to separate, introduced by the reader meant to detect it. Two later shapes, the region boundary and the multiplication sign, were authored with an eaten backslash and went dead silently; both now carry a planted case, which is why the register is twenty and not seventeen.' },
   'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
   'fill-433a.mjs': { not_a_detector: 'A FILL ENGINE. Its universe is the targets of the map, enumerated and partitioned, and the partition is asserted to account for every field in the PDF. Its regexes parse known values, not search open text.' },
   'fill-433f.mjs': { not_a_detector: 'Same as fill-433a.mjs.' },
@@ -854,14 +867,37 @@ export const COMPLETENESS = [
       admits: (m) => /^[xy] \d/.test(String(m)) },
     what: 'every coordinate quoted in the map and headings files is a value the page actually draws',
     count: (ctx) => {
-      const text = [JSON.stringify(ctx.mapDoc || {}), JSON.stringify(ctx.headingsDoc || {})].join(' ');
-      const ys = [...text.matchAll(/y (\d+(?:\.\d+)?)/g)].map(m => Number(m[1]));
-      const xs = [...text.matchAll(/x (\d+(?:\.\d+)?)\.\.(\d+(?:\.\d+)?)/g)].flatMap(m => [Number(m[1]), Number(m[2])]);
-      const all = [...ys.map(v => ['y', v]), ...xs.map(v => ['x', v])];
-      if (!all.length) return { universe: 0, covered: 0, universeList: [], fail: 'no coordinate was read out of the map or headings file, so the claim that every one of them is drawn is unchecked rather than true' };
+      // THE UNIVERSE IS THE HOST FORM'S POINT COORDINATES, and the partition comes from
+      // adapters/pdf/absence-sweep.mjs rather than from a second copy here.
+      //
+      // THIS COUNTER WAS DEAD FROM THE COMMIT THAT WROTE IT: two literal backspace bytes where a
+      // word-boundary escape was meant, so both matchAll regexes matched nothing, `all.length` was
+      // 0, and it took the `fail` branch on every run. Revived, it reported 17 uncovered coordinates
+      // across two forms — and NOT ONE was the bad transcription it exists to catch. Every
+      // one was this counter asking the wrong question, because a quoted `y NNN` belongs to
+      // one of four universes and only `point` claims the page draws a run there:
+      //
+      //   band        a range end. Bounds a REGION, often one claimed EMPTY — so finding
+      //               nothing there is the claim HOLDING, and a presence test inverts it.
+      //   widget      a rectangle edge, already inside this context's own presence set.
+      //   cross-form  a coordinate on ANOTHER form, quoted here. Testing it against this
+      //               form's page is a test of the wrong sheet.
+      //   factor      an `x` that is a multiplication sign: "2 slots x 11 text columns".
+      //
+      // Each exclusion is COUNTED into the universe report by the absence sweep, which runs
+      // every time. Narrowing here without that counter would be the assertion quietly
+      // shrinking its own input, which is what the sweeps exist to refuse.
+      const docs = [[ctx.mapDoc || {}, 'map'], [ctx.headingsDoc || {}, 'headings']];
+      const all = [];
+      for (const [doc, which] of docs)
+        for (const s of proseStrings(doc))
+          for (const c of classifyCoordinates(s, ctx.form, which))
+            if (c.kind === 'point') all.push([c.axis, c.value]);
+      if (!all.length) return { universe: 0, covered: 0, universeList: [], fail: 'no point coordinate was read out of the map or headings file, so the claim that every one of them is drawn is unchecked rather than true' };
       const hit = ([axis, v]) => (axis === 'y' ? ctx.drawnY : ctx.drawnX).has(Math.round(v * 10) / 10);
       const covered = all.filter(hit);
-      return { universe: all.length, covered: covered.length, universeList: all.map(([a, v]) => `${a} ${v}`), uncoveredList: all.filter(c => !hit(c)).map(([a, v]) => `${a} ${v}`) };
+      return { universe: all.length, covered: covered.length, universeList: all.map(([a, v]) => `${a} ${v}`),
+        uncoveredList: all.filter(c => !hit(c)).map(([a, v]) => `${a} ${v}`) };
     } }),
 
   C({ id: 'K-02', match: /every declared path exists|every `?path`? exists/i,

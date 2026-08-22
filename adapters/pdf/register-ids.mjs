@@ -54,6 +54,9 @@ import { PREDICATES, DECLARED, RETIRED } from './exclusion-sweep.mjs';
 import { BOUNDARIES } from './sweep-boundary.mjs';
 import { COMPLETENESS } from './blanket-audit.mjs';
 import { OVERRIDES } from './success-sweep.mjs';
+import { ABSENCE_SHAPES } from './absence-sweep.mjs';
+import { DECLARED as ABSENCE_DECLARED } from './absence-declared.mjs';
+import { CONTROLS } from './control-char-scan.mjs';
 
 const MAPS = 'adapters/pdf/maps';
 
@@ -101,6 +104,9 @@ export const REGISTERS = () => {
   add('blanket-audit.mjs:COMPLETENESS', 'engine', idsOf('COMPLETENESS', COMPLETENESS));
   add('success-sweep.mjs:OVERRIDES',    'engine', idsOf('OVERRIDES', OVERRIDES));
   add('sweep-boundary.mjs:BOUNDARIES',  'engine', idsOf('BOUNDARIES', BOUNDARIES));
+  add('absence-sweep.mjs:ABSENCE_SHAPES', 'engine', idsOf('ABSENCE_SHAPES', ABSENCE_SHAPES));
+  add('absence-declared.mjs:DECLARED',    'engine', idsOf('absence.DECLARED', ABSENCE_DECLARED));
+  add('control-char-scan.mjs:CONTROLS',   'engine', idsOf('CONTROLS', CONTROLS));
 
   // --- engine-wide JSON registers, enumerated --------------------------------------------
   const cross = json(`${MAPS}/_carried.cross-form.json`);
