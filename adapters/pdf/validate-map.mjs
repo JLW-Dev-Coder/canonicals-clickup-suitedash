@@ -21,6 +21,8 @@ import { auditComparisons, reportComparisons } from './comparisons.mjs';
 import { runCountSweep, reportCountSweep } from './count-sweep.mjs';
 import { runGuardSweep, reportGuardSweep, runFigureSweep, reportFigureSweep } from './guard-sweep.mjs';
 import { reportRowShapeSpec } from './assert-row-shape-spec.mjs';
+import { reportSubjectRegister } from './assert-subject-register.mjs';
+import { reportAuthorship as reportFixtureAuthorship } from './assert-fixture-authorship.mjs';
 import { runExclusionSweep, reportExclusionSweep } from './exclusion-sweep.mjs';
 import { runShadowingEnumeration, reportShadowing } from './enumerate-shadowing.mjs';
 import { runRegisterIdSweep, reportRegisterIdSweep } from './register-ids.mjs';
@@ -285,6 +287,22 @@ if (reportFigureSweep(figures) > 0) process.exit(2);
 // It exists at all because count-sweep [S-21] credited validate-crosswalk.mjs with this check
 // for three slices and validate-crosswalk.mjs never opened the file.
 if (reportRowShapeSpec({ verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (e1b) THE CROSS-FORM SUBJECT REGISTER. Every quote in it is re-derived from the page bytes of
+// the form it names, every mapped form must have a subject, and every unordered pair of
+// registered forms must carry a decided relation. Runs on every form for the same reason (e)
+// does — the register is shared, and the thing it decides (whether a fact can take a shared
+// property name) is decided BEFORE the next form's crosswalk, not during it. A form that gains
+// a map and no subject entry is a STOP here rather than a discovery three prompts later.
+if (await reportSubjectRegister({ verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
+
+// (e1c) FIXTURE AUTHORSHIP, ASSERTED BY REGENERATION. `_generated_by` is a provenance claim
+// that other exclusions lean on by name — [SB-10] excuses a fixture's figures from the count
+// sweep because a script computed them. [SB-17] checks the cited path EXISTS; this re-runs the
+// script and compares what it produces, which is the thing the sentence actually claims. A
+// fixture the generator no longer reproduces must declare its co-authorship key by key, and a
+// declaration naming a key regeneration reproduces is as much a STOP as a key it misses.
+if (reportFixtureAuthorship({ verbose: process.argv.includes('--sweep') }) > 0) process.exit(2);
 
 // (e2) THE EXCLUSION SWEEP. (e) asserts what the spec's lists SAY; this asks what its
 // excusals LEAVE OUT. Three of 433-F's printed tables were invisible to (e) for three slices

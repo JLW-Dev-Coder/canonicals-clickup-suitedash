@@ -39,6 +39,16 @@ for (const form of MAPPED_FORMS()) {
     process.exit(2);
   }
   const base = JSON.parse(readFileSync(acc.path, 'utf8'));
+  // A PROVENANCE BLOCK BELONGS TO THE FILE IT DESCRIBES, AND IS NOT INHERITED.
+  //
+  // These fixtures are built by spreading the acceptance record, so every top-level key it
+  // carries comes along — including `_co_authored_with_hand`, which names the keys a HAND
+  // authored in THAT file. Inherited into a derived fixture the block is false twice over: it
+  // describes edits nobody made here, and adapters/pdf/assert-fixture-authorship.mjs correctly
+  // reports it as a co-authorship declaration for a divergence that does not exist, on three
+  // fixtures this generator is the sole author of. `_generated_by` was already overwritten
+  // below for the same reason; this is the other half of it.
+  delete base._co_authored_with_hand;
 
   for (const d of rs.declarations) {
     const states = statesOf(d);

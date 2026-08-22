@@ -152,6 +152,13 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── fixture authorship asserted by regeneration, ruling 7 ────────────────────────────
+  { id: 'G-143', file: 'assert-fixture-authorship.mjs', anchor: 'catch (e) { out.push({ file: f, unreadable: e.message }); continue; }', verdict: 'sound',
+    why: 'A SAMPLE THAT WILL NOT PARSE IS A ROW, NOT A SKIP. The `continue` moves past the fixture only after pushing `{unreadable}`, and authorshipAudit() turns every such row into an UNREADABLE problem before any verdict is computed. A fixture whose authorship cannot be read is not a fixture with no claim — it is the one file in the directory nothing can say anything about, which is exactly the state a provenance check exists to refuse.' },
+
+  { id: 'G-144', file: 'assert-fixture-authorship.mjs', anchor: "const paths = [...new Set([...g.matchAll(/\\b([\\w./-]+\\.mjs)\\b/g)]", verdict: 'guarded',
+    why: 'AN EMPTY EXTRACTION IS A REAL AND COMMON STATE HERE, AND IT IS REPORTED AS ITSELF. A `_generated_by` sentence naming no path — "authored by a one-shot generator that was not committed" is one in this tree — makes a claim this instrument cannot check, and the fixture is pushed as `{noPath}`, counted in the header line on every run ("N name no path and make no claim this can check") and listed under --verbose. So a pattern that stopped matching would not quietly shrink the checked population to zero: it would move every fixture into a count printed beside the one it left. The population size is on the transcript, which is what [G-01] asks of an extraction that can legitimately match nothing.' },
+
   // ─── the construct-vocabulary boundary, ruling 8 ──────────────────────────────────────
   { id: 'G-142', file: '../hubspot/assert-intake-keys.mjs', anchor: 'catch (e) { problems.push(`UNREADABLE DEFINITIONS', verdict: 'sound',
     why: 'THE MODEL CATCH, on the third boundary this file asserts. A definitions file that will not parse, or a missing import, cannot yield a construct list — and an empty construct list is exactly the state in which the vocabulary comparison finds nothing to disagree with and the form reports clean. So the throw becomes an UNREADABLE DEFINITIONS problem and the run exits 2, with the sentence saying which of the two it is: "The construct vocabulary could not be compared, which is not the same as it agreeing." It fired for real on its first run, on a ReferenceError from an import that had not been added yet, and reported it rather than passing.' },
