@@ -192,9 +192,41 @@ if (allDupes.length) {
   console.log(`  ${allDupes.length} rule(s) are declared at more than one site, so a run's site count exceeds its rule count:`);
   for (const d of allDupes) console.log(`    ${d}  —  declared on ${runs.filter(r => r.dupes.includes(d)).length} of ${runs.length} fixture(s) at two sites`);
 }
-const perRun = [...new Set(runs.map(r => r.total))].sort((a, b) => a - b);
-if (everInClass.length !== perRun[perRun.length - 1])
-  console.log(`  (the union in-class count ${everInClass.length} exceeds every run's own declared total (${perRun.join(', ')}): some declarations sit behind a \`when\` clause and are in class only on the records that take that branch.)`);
+// THE NOTE IS GUARDED BY THE DIRECTION IT REPORTS. The union counts RULE IDENTITIES and a run's
+// total counts SITES, and TWO effects move those apart in OPPOSITE directions: a `when` clause puts
+// a rule in class on some records and not others, which pushes the union ABOVE any one run; a rule
+// declared at two sites is counted twice by that run and once by the union, which pushes it BELOW.
+// The note this replaces tested `!==` — either direction — then asserted ONE direction ("exceeds")
+// and ONE cause (`when` clauses). On 433-B(OIC) the relation runs the other way (80 against 82) and
+// the cause is the two-site collapse named directly above, so the sentence stated two things that
+// were both false about the run it was printed on. Each clause now fires only on the condition it
+// describes, and every size it quotes is derived rather than assumed.
+// The word `when` is printed with its backticks, so it is built rather than escaped inside a
+// template literal — an escaped backtick inside a heredoc-authored template is how this line was
+// first emitted unparseable.
+const BACKTICKED_WHEN = "`when`";
+
+const perRunSites = [...new Set(runs.map(r => r.total))].sort((a, b) => a - b);
+const maxSites    = perRunSites[perRunSites.length - 1];
+// A run's RULE IDENTITIES are its sites less the rules it declared more than once. `dupes` holds one
+// entry per repeated identity and the line above reports each as "at two sites", so one subtraction
+// per dupe is the whole correction. If a rule ever appears at THREE sites that stops being exact, so
+// the shape is asserted here rather than left to drift the number quietly.
+for (const r of runs) {
+  const seen = new Map();
+  for (const id of r.inClass) seen.set(id, (seen.get(id) || 0) + 1);
+  const over = [...seen].filter(([, n]) => n > 2);
+  if (over.length) {
+    console.error(`STOP — ${r.fixture}: ${JSON.stringify(over[0][0])} is declared at ${over[0][1]} sites, and the site-to-identity correction below subtracts one per repeated rule, which is right only at two. Widen the correction before trusting this table.`);
+    process.exit(2);
+  }
+}
+const perRunIds = [...new Set(runs.map(r => r.total - r.dupes.length))].sort((a, b) => a - b);
+const maxIds    = perRunIds[perRunIds.length - 1];
+if (everInClass.length > maxIds)
+  console.log('  (the union in-class count ' + everInClass.length + " EXCEEDS the largest single run's " + maxIds + ' rule identities (' + perRunIds.join(', ') + '): some declarations sit behind a ' + BACKTICKED_WHEN + ' clause and are in class only on the records that take that branch.)');
+if (everInClass.length < maxSites)
+  console.log(`  (the union in-class count ${everInClass.length} is BELOW every run's own declared total (${perRunSites.join(', ')}) because a run's total counts SITES and the union counts RULES: the ${allDupes.length} rule(s) named just above are declared at two sites each, so each is counted twice by a run and once here.)`);
 console.log('');
 if (!still.length) {
   console.log(`  Every declared behaviour on ${form} is exercised by at least one fixture.`);
