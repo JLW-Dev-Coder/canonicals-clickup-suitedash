@@ -1,0 +1,67 @@
+{
+ "form": "433-B",
+ "form_revision": "Rev. 6-2026",
+ "catalog": "16649P",
+ "pdf": "adapters/pdf/forms/f433b.pdf",
+ "fields_source": "adapters/pdf/maps/433b.fields.json",
+ "slice": "intake — nothing bound",
+ "map_version": 0,
+ "authored_from": "adapters/pdf/maps/433b.intake.json, in the same commit. The blank is pinned in adapters/pdf/forms/forms.sha256 and the revision and catalog number were read from drawn page bytes.",
+ "_what_this_file_is": "THE INTAKE SHELL, AND IT BINDS NOTHING. It is here so that this form has a map at all, which is what adapters/pdf/assert-subject-register.mjs [S2] requires of any form registered in _subjects.cross-form.json — and the subject had to be registered first, because the subject is what decides reuse and it comes before any binding. A reader who expects `map` to hold cells will find it empty, and that is the state this file is declaring rather than an omission.",
+ "_the_subject_is_settled_and_recorded_elsewhere": "adapters/pdf/maps/_subjects.cross-form.json, entry `433b`: a legal person that is not the filer. MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC); COINCIDES with 433-B(OIC), with the fifth \"Other\" entity box carried as [B-02].",
+ "map": {},
+ "_partition": {
+  "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
+  "form_fields_total": 447,
+  "in_this_slice": 0,
+  "bound_writable": 0,
+  "excluded_never_autofill": 0,
+  "deferred": 0,
+  "unaccounted": 447,
+  "_check": "0 + 0 + 0 = 0 bound writable, never-autofill and deferred. 447 - 0 = 447 unaccounted, which is every field the PDF draws: 103 on page 1, 64 on page 2, 82 on page 3, 94 on page 4, 70 on page 5, 34 on page 6. THIS MAP IS NOT CLOSED and says so.",
+  "_why_unaccounted_and_not_deferred": "The two words are not synonyms in this engine. `deferred` is derived from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells a slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Six pages nobody has bound is not a list of deferred cells; calling it deferred would be a glob claiming the granularity of an enumeration.",
+  "_unaccounted_by_page": {
+   "p1": 103,
+   "p2": 64,
+   "p3": 82,
+   "p4": 94,
+   "p5": 70,
+   "p6": 34
+  }
+ },
+ "_deferred_pages": "All six. Page 1 is slice 1; pages 2 and 3 are slice 2 (146 fields); page 4 is slice 3 (94); pages 5 and 6 are slice 4 (104).",
+ "_carried": {
+  "_why": "The questions this form has raised that no slice has answered. An arguable item is reported in full, carries an id, and is not resolved.",
+  "open": [
+   {
+    "id": "B-01",
+    "subject": "adapters/pdf/correlate-labels.mjs answers the caption ONE ROW ABOVE on this form, and its self-check refuses to write because of it",
+    "the_shape": "Three pairings were established from the printed page and offered as probes. The tool answered the row above on all three, every time by a fraction of a point: p1_8_1c[0] — page says \"County\" (y 586.5, x 57.6..83.4, 3.6pt LEFT, baseline inside the rectangle), tool says \"State\" (y 597.3, 3.3pt ABOVE, x 180.0..198.8 overlapping); p1_15_2bc[0] — page says \"Other LLC - Include number of members\" (y 607.1, x 337.1..482.3, 7.3pt LEFT, baseline inside the rectangle), tool says \"Limited Liability Company (LLC) classified as a corporation\" (y 617.9, x 337.1..546.8, the row above, whose extra 64pt of width is the only reason it overlaps the cell at all); p1_42_7aAnnualSalDrw[3] — page says \"Annual Salary/Draw\" (y 53.7, x 367.2..437.6, 6.0pt LEFT), tool says \"Ownership Percentage & Shares or Interest\" (y 62.9, x 367.2..521.7, again the wider run one row up). In all three the correct caption IS in the tool's candidate list, ranked second.",
+    "the_cause": "The ranking puts `above` and `left` on ONE distance scale, so a 3.3pt vertical gap beats a 3.6pt horizontal gap even though the vertical one crosses a printed row boundary. On 433-A, 433-F and 433-A(OIC) the dominant layout is caption-ABOVE-cell and the rule is right. 433-B's Sections 1 and 2 are caption-LEFT-of-cell in a two-column grid, and there it inverts.",
+    "why_it_is_not_settled_here": "Retuning the probes until three cells are found where the tool happens to agree would be fitting the guard to the tool, and the guard exists to catch the tool. Changing the ranking is a change to a tool the other four forms depend on and needs its own regression across all four; it is not made during an intake. The consequence for now is stated rather than worked around: no labels file exists for 433-B and none of this form's bindings may cite one.",
+    "status": "OPEN - recorded, not built."
+   },
+   {
+    "id": "B-02",
+    "subject": "The fifth entity box on 433-B page 1 is \"Other\", and nothing this form prints closes it against a sole proprietorship",
+    "the_shape": "2b prints five options: Partnership (y 628.7, x 337.1..378.1), Corporation (y 628.7, x 399.8..442.4), Other (y 628.7, x 466.7..486.7), Limited Liability Company (LLC) classified as a corporation (y 617.9, x 337.1..546.8) and Other LLC - Include number of members (y 607.1, x 337.1..482.3). 433-B(OIC) prints the same four named kinds and NO \"Other\", and expels the sole proprietorship by name. 433-B prints no exclusion at all — \"sole propri\" returns zero across all six drawn pages.",
+    "why_it_matters": "The 433-B/433-B(OIC) COINCIDE verdict rests on the four named kinds, which are the same on both pages. The \"Other\" box is an open edge on 433-B's own printed evidence: the only text that closes it is printed on 433-A page 7, and a subject read off another form's page is the inference the subject register exists to refuse.",
+    "why_it_is_not_settled_here": "Settling it needs either printed text on 433-B that this intake did not find, or a decision that 433-A's gate may be read as binding on 433-B. The second is a change to how the subject register reasons and is not made to close one box.",
+    "status": "OPEN - recorded, not built."
+   },
+   {
+    "id": "B-03",
+    "subject": "The page-3 subform named Line19c holds the row printed 19b",
+    "the_shape": "topmostSubform[0].Page3[0].Table_line19[0].Line19c[0] covers y 324.0..356.4. The printed marker inside that band is \"19b\" at y 347.7, x 36.6..50.4. The printed marker \"19c\" is at y 301.1 and belongs to \"Total Investments (Add lines 19a, 19b, and amounts from any attachments)\". So the subform name is one row ahead of the page.",
+    "found_by": "The lineage report, while judging the two TextField1 occurrences — the name lie is a second finding sitting under an inherited name and is unrelated to the inheritance.",
+    "why_it_is_not_settled_here": "Page 3 is slice 2. It is recorded now because it was seen now, and binding it belongs to the slice that reads the page.",
+    "status": "OPEN - recorded, not built."
+   }
+  ],
+  "resolved": [],
+  "_count": {
+   "open": 3,
+   "resolved": 0
+  }
+ }
+}

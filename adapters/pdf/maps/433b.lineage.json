@@ -1,0 +1,276 @@
+{
+ "_what_this_is": "The lineage of 433-B's AcroForm leaf names against every form already in this engine, judged PER OCCURRENCE.",
+ "_the_rule": "An inherited leaf name is evidence of nothing. A verdict is per occurrence, never per name. This form is the clearest demonstration of that rule in the tree so far: `p2_t11_13a` and `p2_t15_13b` each MATCH on one occurrence and CONTRADICT on the two beside it, because 433-B's digital-asset table has seven columns where 433-A's has five and the two extra columns reuse the current-value name with a bumped index.",
+ "_every_figure_here_is_derived": "adapters/pdf/tmp/p46/gen-lineage-433b.mjs, over the five forms' fields files and 433-B's widget geometry. The VERDICTS are authored from the printed column headers of both forms, quoted in each row.",
+ "counts": {
+  "b_fields": 447,
+  "b_distinct_leaf_names": 401,
+  "shared_leaf_names": 11,
+  "occurrences_judged": 17,
+  "by_verdict": {
+   "CONTRADICTS": 10,
+   "MATCHES": 5,
+   "NEW QUESTION": 2
+  },
+  "registry_entries_standing_on_a_shared_name": 0
+ },
+ "_the_headline": "ELEVEN INHERITED NAMES, SEVENTEEN OCCURRENCES, AND EVERY ONE OF THEM IS ON PAGE 3. Page 1 — the page this slice maps — carries not one inherited leaf name, so nothing in this report bears on slice 1 at all. Of the seventeen, 5 match, 10 contradict and 2 are a new question under an inherited name.",
+ "_the_registry_intersection_is_empty_and_it_is_empty_BY_CONSTRUCTION": "Name-lie registries exist on 433-A(OIC) (31 entries) and 433-B(OIC) (37). 433-B shares ZERO leaf names with either. The 11 names it does share are shared with 433-A and 433-F, and neither of those carries a registry. So no entry in any registry in this tree stands on any name this form inherits — not because the names were checked and found clean, but because the two sets never meet. That is a derived zero and it is a different thing from a clean bill of health, which is why it is written out.",
+ "_what_this_report_does_not_establish": [
+  "It says nothing about the 390 leaf names this form does NOT share. Those are judged when their page is read, on the printed page, like everything else.",
+  "It does not license reuse. Reuse runs on the SUBJECT axis and is settled in _subjects.cross-form.json: 433-B COINCIDES with 433-B(OIC), with which it shares no leaf name at all, and is MUTUALLY EXCLUSIVE with 433-A and 433-F, with which it shares all eleven. The two axes point opposite ways on this form, which is the sharpest available illustration that leaf-name overlap is not the reuse axis.",
+  "The [B-03] finding in the Line19c row is recorded, not resolved: it is a page-3 name lie and page 3 is not in this slice."
+ ],
+ "occurrences": [
+  {
+   "id": "BLN-01",
+   "leaf": "TextField1",
+   "path": "topmostSubform[0].Page3[0].Table_line19[0].Line19a[0].#subform[0].TextField1[0]",
+   "page": 3,
+   "rect": "y 367.2..399.6, x 50.4..237.6",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a"
+   ],
+   "this_form": "\"Name of Company & Address\" y 413.6 x 57.6..164.0 and \"(Street, City, State, ZIP code)\" y 403.6 x 57.6..161.5 — the INVESTMENTS table, printed row 19a",
+   "the_other_form": "\"Explain\" — 433-A page 1, a free-text cell at page level, not in any table",
+   "why": "The same name on two forms in two unrelated places. On 433-A it is an explanation box on page 1; here it is the name-and-address column of the page-3 investments table. Nothing about the name carries across."
+  },
+  {
+   "id": "BLN-02",
+   "leaf": "TextField1",
+   "path": "topmostSubform[0].Page3[0].Table_line19[0].Line19c[0].#subform[0].TextField1[0]",
+   "page": 3,
+   "rect": "y 324..356.4, x 50.4..237.6",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a"
+   ],
+   "this_form": "the same investments column, one row down — and the row it is on is printed 19b, not 19c",
+   "the_other_form": "\"Explain\" — 433-A page 1",
+   "why": "Same contradiction as the 19a occurrence, and it carries a second one of its own: the SUBFORM is named Line19c and the printed marker on the row its rectangle covers (y 324.0..356.4) is \"19b\" at y 347.7. \"19c\" is the printed marker of the TOTAL line at y 301.1. That is a name lie on this form in its own right, on page 3, and it is recorded here rather than resolved because page 3 is not in this slice. [B-03]."
+  },
+  {
+   "id": "BLN-03",
+   "leaf": "ListAccessPrivateKeys",
+   "path": "topmostSubform[0].Page3[0].ListAccessPrivateKeys[0]",
+   "page": 3,
+   "rect": "y 244.8..255.6, x 50.4..576",
+   "verdict": "MATCHES",
+   "inherited_from": [
+    "433a"
+   ],
+   "this_form": "\"List the name(s) of individuals who have access to the private key(s) and/or digital wallets\" — y 257.7 x 57.6..375.7, marker 20a at y 257.7 x 36.9..50.4",
+   "the_other_form": "\"List the name(s) of individuals who have access to the private key(s) and/or digital wallets\" — 433-A page 3, printed directly above its widget",
+   "why": "The captions are the same sentence, word for word. This is the one occurrence in the whole lineage where the inherited name and the printed caption agree on both forms."
+  },
+  {
+   "id": "BLN-04",
+   "leaf": "mmddyyyy",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].HeaderRow[0].assetAmount[0].mmddyyyy[0]",
+   "page": 3,
+   "rect": "y 214.2..223.2, x 428.4..471.6",
+   "verdict": "MATCHES",
+   "inherited_from": [
+    "433a"
+   ],
+   "this_form": "the as-of date in the current-value column header — \"as of\" y 216.2 x 409.7..427.2 immediately left of the widget at x 428.4..471.6, with the format hint \"mmddyyyy\" y 208.5 x 430.9..461.9 beneath it",
+   "the_other_form": "the same cell in the same column header on 433-A page 3 — widget x 511.2..561.6 under \"dollars as of\" / \"mmddyyyy\"",
+   "why": "Both are the date the current value is stated as of, in the header row of the digital-asset table. Same fact, same role, same column."
+  },
+  {
+   "id": "BLN-05",
+   "leaf": "Line13A",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].Line13A[0]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 50.4..216",
+   "verdict": "NEW QUESTION",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Digital asset, number of units, and digital asset address for self-hosted digital assets\" — y 227.2 x 55.7..201.5 and y 217.6 x 51.9..205.3",
+   "the_other_form": "\"Type of Digital Asset\" — y 621.1 x 52.2..125.8",
+   "why": "Column 1 of both tables and both identify the asset, so this is not a contradiction. But 433-A asks for the TYPE and 433-B asks for three things in one cell — the asset, the number of units, and the self-hosted address — and the address is not asked anywhere in 433-A's table. One property cannot hold both faithfully, so the inherited name reaches a question this engine has not been asked before."
+  },
+  {
+   "id": "BLN-06",
+   "leaf": "#field",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].#field[1]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 216..288",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Location of digital asset (exchange account, self-hosted wallet)\" — y 236.8 x 219.1..282.9, y 227.2 x 221.9..280.1, y 217.6 x 226.6..275.4, y 208.0 x 226.2..275.8",
+   "the_other_form": "\"Name of Digital Asset such as Virtual Currency Wallet, Exchange or Digital Currency Exchange (DCE)\" — y 635.5/625.9/616.3/606.7, x 138.1..259.5",
+   "why": "Column 2 of both tables, and the two columns ask different things. 433-B's column 2 is WHERE the asset is held; on 433-A the where-question is column 4 and carries a different leaf name entirely (p2_t12_13a). Binding this cell by inheritance would file a location under the name of the asset."
+  },
+  {
+   "id": "BLN-07",
+   "leaf": "p2_t13_13a",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].p2_t13_13a[0]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 288..360",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Account number for assets held by a custodian or broker\" — y 236.8 x 293.3..352.7, y 227.2 x 296.8..349.2, y 217.6 x 296.7..349.3, y 208.0 x 306.7..339.3",
+   "the_other_form": "\"Email Address Used to Set-up With the Digital Assets such as Virtual Currency Exchange or DCE\" — y 635.4/625.8/616.2/606.6, x 266.0..376.4",
+   "why": "Column 3 on both, and the two ask unrelated things: 433-B wants the custodian or broker ACCOUNT NUMBER, 433-A wants the EMAIL ADDRESS used to set the asset up. Both are identifiers of a sort, which is exactly what makes binding by name here plausible and wrong."
+  },
+  {
+   "id": "BLN-08",
+   "leaf": "p2_t11_13a",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].p2_t11_13a[0]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 417.6..475.2",
+   "verdict": "MATCHES",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Current value US dollar equivalent as of mmddyyyy\" — y 235.4 x 409.7..470.7, y 225.8 x 409.7..468.4, y 216.2 x 409.7..427.2, y 208.5 x 430.9..461.9",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "The current-value column on both forms. This is the occurrence the name is honest about — and the next two, under the SAME name, are not."
+  },
+  {
+   "id": "BLN-09",
+   "leaf": "p2_t11_13a",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].p2_t11_13a[1]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 486..525.6",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Loan Balance\" — y 227.2 x 490.5..508.3 and y 217.6 x 485.0..513.8",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "THE CASE THAT MAKES THE PER-OCCURRENCE RULE NECESSARY. 433-B's table has seven columns where 433-A's has five, and the extra two — loan balance and equity — reuse the current-value column's leaf name with a bumped index. Index [1] is the LOAN BALANCE. A map binding p2_t11_13a by name would write the current market value into the loan balance of a signed collection statement."
+  },
+  {
+   "id": "BLN-10",
+   "leaf": "p2_t11_13a",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13a[0].p2_t11_13a[2]",
+   "page": 3,
+   "rect": "y 179.5..203.5, x 536.4..576",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Equity Value Balance minus Loan\" — y 227.2 x 528.6..573.0 and y 217.6 x 530.0..571.6",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "Index [2] is the EQUITY column, \"Balance minus Loan\". Same shape as [1] and one column further right."
+  },
+  {
+   "id": "BLN-11",
+   "leaf": "Line13B",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].Line13B[0]",
+   "page": 3,
+   "rect": "y 155..179.5, x 50.4..216",
+   "verdict": "NEW QUESTION",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Digital asset, number of units, and digital asset address for self-hosted digital assets\" — y 227.2 x 55.7..201.5 and y 217.6 x 51.9..205.3",
+   "the_other_form": "\"Type of Digital Asset\" — y 621.1 x 52.2..125.8",
+   "why": "The 20c row of the same column. Same reading as Line13A."
+  },
+  {
+   "id": "BLN-12",
+   "leaf": "#field",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].#field[1]",
+   "page": 3,
+   "rect": "y 155..179.5, x 216..288",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Location of digital asset (exchange account, self-hosted wallet)\" — y 236.8 x 219.1..282.9, y 227.2 x 221.9..280.1, y 217.6 x 226.6..275.4, y 208.0 x 226.2..275.8",
+   "the_other_form": "\"Name of Digital Asset such as Virtual Currency Wallet, Exchange or Digital Currency Exchange (DCE)\" — y 635.5/625.9/616.3/606.7, x 138.1..259.5",
+   "why": "The second printed row (20c) of the same column. Same contradiction as the 20b row."
+  },
+  {
+   "id": "BLN-13",
+   "leaf": "p2_t17_13b",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].p2_t17_13b[0]",
+   "page": 3,
+   "rect": "y 155..179.5, x 288..360",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Account number for assets held by a custodian or broker\" — y 236.8 x 293.3..352.7, y 227.2 x 296.8..349.2, y 217.6 x 296.7..349.3, y 208.0 x 306.7..339.3",
+   "the_other_form": "\"Email Address Used to Set-up With the Digital Assets such as Virtual Currency Exchange or DCE\" — y 635.4/625.8/616.2/606.6, x 266.0..376.4",
+   "why": "The 20c row of the account-number column, against 433-A's email-address column. Same as p2_t13_13a on the 20b row."
+  },
+  {
+   "id": "BLN-14",
+   "leaf": "p2_t15_13b",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].p2_t15_13b[0]",
+   "page": 3,
+   "rect": "y 155..179.5, x 417.6..475.2",
+   "verdict": "MATCHES",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Current value US dollar equivalent as of mmddyyyy\" — y 235.4 x 409.7..470.7, y 225.8 x 409.7..468.4, y 216.2 x 409.7..427.2, y 208.5 x 430.9..461.9",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "The 20c row of the current-value column. The honest occurrence of this name, as [0] was for p2_t11_13a."
+  },
+  {
+   "id": "BLN-15",
+   "leaf": "p2_t15_13b",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].p2_t15_13b[1]",
+   "page": 3,
+   "rect": "y 155..179.5, x 486..525.6",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Loan Balance\" — y 227.2 x 490.5..508.3 and y 217.6 x 485.0..513.8",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "The 20c row's loan balance, under the current-value name. The same defect as p2_t11_13a[1], one printed row down."
+  },
+  {
+   "id": "BLN-16",
+   "leaf": "p2_t15_13b",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].p2_t15_13b[2]",
+   "page": 3,
+   "rect": "y 155..179.5, x 536.4..576",
+   "verdict": "CONTRADICTS",
+   "inherited_from": [
+    "433a",
+    "433f"
+   ],
+   "this_form": "\"Equity Value Balance minus Loan\" — y 227.2 x 528.6..573.0 and y 217.6 x 530.0..571.6",
+   "the_other_form": "\"Current value US dollars as of mmddyyyy (e.g., 1 Bitcoins $38,000.00 USD)\" — y 630.5/610.3/600.6/592.2, x 508.8..562.1",
+   "why": "The 20c row's equity column, under the current-value name."
+  },
+  {
+   "id": "BLN-17",
+   "leaf": "Line14f",
+   "path": "topmostSubform[0].Page3[0].RetirementAcct1[0].Line14f[1]",
+   "page": 3,
+   "rect": "y 140.4..154.8, x 486..576",
+   "verdict": "MATCHES",
+   "inherited_from": [
+    "433a"
+   ],
+   "this_form": "\"20e Total Equity of Digital Assets (Add lines 20b, 20c, and amounts from any attachments)\" — y 143.7 x 57.6..370.8, with the \"$\" at y 142.7 x 478.4..482.8; the widget is y 140.4..154.8 x 486.0..576.0",
+   "the_other_form": "\"15e Total Equity (Add lines 15a, 15b, 15c and amounts from any attachments)\" — 433-A page 3 y 424.5 x 57.6..321.7, widget y 421.2..442.8 x 507.6..576.0",
+   "why": "The same fact under the same name: the total equity of the digital-asset block, printed as the last line of that block on both forms. The operand lists differ because the tables have different row counts, which is a difference in the sum and not in what the cell is."
+  }
+ ]
+}

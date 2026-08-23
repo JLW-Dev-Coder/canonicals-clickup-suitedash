@@ -1,0 +1,16 @@
+{
+ "meta": {
+  "form": "433-B",
+  "form_revision": "Rev. 6-2026",
+  "map": "adapters/pdf/maps/433b.map.json",
+  "_what_this_file_is": "THE DECLARED EMPTY CROSSWALK FOR 433-B, AND IT IS EMPTY ON PURPOSE. This form has been taken in — blank pinned, revision read from drawn page bytes, fields enumerated, checkboxes probed, subject registered, lineage judged — and NOT ONE CELL IS BOUND. A crosswalk carries one row per bound cell, so the honest row count today is zero.",
+  "_why_the_file_exists_at_all_rather_than_being_absent": "adapters/hubspot/assert-intake-keys.mjs builds a CROSS-FORM universe: which columns some form prints and which some form consumes. It reads a crosswalk per mapped form, and on the first run after 433-B's map landed it refused with UNIVERSE GAP — 'a narrowed universe is not a smaller answer to the same question; it is an answer to a different one.' That refusal is correct and this file is the answer to it, not a way around it. A crosswalk that cannot be READ and one that reads ZERO must not report the same thing, and until this file existed they did.",
+  "_what_this_file_does_NOT_do": "It classifies nothing. Crosswalk classification for 433-B — which of this form's facts are the same question as an existing property, which are the same question about a different subject, and which are new — is a separate piece of work and is not begun here. When it is, the decision is governed by the SUBJECT verdict already recorded in adapters/pdf/maps/_subjects.cross-form.json (COINCIDES with 433-B(OIC), MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC)) and never by the eleven leaf names this form shares with 433-A and 433-F, which adapters/pdf/maps/433b.lineage.json shows are inert.",
+  "_the_zero_is_derived_not_asserted": "`bindings` is empty because `map` in adapters/pdf/maps/433b.map.json is empty. Both are 0 in the same commit and either becoming non-zero without the other is a disagreement the next run will report.",
+  "_authored_by": "Prompt 46 commit 2, the 433-B intake."
+ },
+ "option_extensions": [],
+ "bindings": [],
+ "not_provisioned": [],
+ "arguable": []
+}

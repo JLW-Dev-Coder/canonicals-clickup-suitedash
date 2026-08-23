@@ -338,6 +338,120 @@
      "text": "Business Information"
     }
    }
+  },
+  "433b": {
+   "form_file": "adapters/pdf/forms/f433b.pdf",
+   "subject": "A LEGAL PERSON THAT IS NOT THE FILER — the business entity: a partnership, a corporation, an LLC classified as a corporation, or any other LLC.",
+   "the_legal_person": "the business entity",
+   "_no_eligibility_text": "THERE IS NO ELIGIBILITY SENTENCE ANYWHERE ON THIS FORM. 433-B(OIC) opens \"Complete this form if your business is a\" over four bullets and then expels the sole proprietorship by name; 433-A names its subject in its own title and draws a printed gate on page 7. 433-B does neither. Between the masthead and \"Section 1: Business Information\" it prints one Note, and that Note is about completing entry spaces, not about who may file.",
+   "_the_absence_was_verified_against_the_drawn_page": "adapters/pdf/tmp/p46/b-eligibility-scan.mjs joins every drawn run of each of the six pages and searches 19 enumerated phrases — \"sole propri\", \"do not use this form\", \"do not use\", \"complete this form if\", \"this form should only be used\", \"should only be used\", \"use this form\", \"instead, complete\", \"complete form 433\", \"form 433-a\", \"form 433-b\", \"433-a (oic)\", \"wage earner\", \"self-employed\", \"individual\", \"schedule c\", \"if your business is\", \"who should\", \"purpose of this form\". Seven page/phrase hits, and not one of them is eligibility text: six are the running header \"Form 433-B (Rev. 6-2026)\" and the page footer, one is page 6's \"After we review the completed Form 433-B...\", and the single hit on \"individual\" is page 3's \"List the name(s) of individuals who have access to the private key(s) and/or digital wallets\". \"sole propri\" returns ZERO on all six pages. This is a claim about the PRINTED PAGE and it was settled by reading the printed page, never by asking what the map reaches.",
+   "_so_the_subject_is_read_from": "The four printed things that DO name a subject: the title, the entity list the filer must check, the Section 2 heading naming who the personnel are, and the signature block naming who signs. Three of the four exclude a natural person filing on their own behalf, and the fourth — the entity list — offers no box a sole proprietor could tick.",
+   "read_from": [
+    "title.1",
+    "entity.stem",
+    "entity.check",
+    "entity.b1",
+    "entity.b2",
+    "entity.b3",
+    "entity.b4",
+    "entity.b5",
+    "personnel.heading",
+    "signer.print_name"
+   ],
+   "where_the_business_facts_sit": "EVERY fact on this form is a business fact and its subject is the entity throughout — there is no section whose subject switches to a natural person. Section 2 collects facts ABOUT natural persons (partners, officers, LLC members, major shareholders) but the subject of the record is still the entity: each row is a person's relationship TO the business, carrying an ownership percentage and a salary the business pays. That is the mirror image of 433-A, where Sections 6 and 7 collect business facts whose subject is still the individual.",
+   "where_read_from": [
+    "personnel.heading",
+    "personnel.ownership_column",
+    "signer.print_name",
+    "certification.stem"
+   ],
+   "_the_other_form_that_names_this_one": "433-A page 7 prints \"No, Complete Form 433-B.\" on the sole-proprietorship gate, which is printed evidence about this form's subject drawn from the individual side. It is quoted in 433-A's own entry as `boundary.no` and is NOT quoted here, because a subject read off another form's page is exactly the inference this register exists to refuse. It corroborates; it does not establish.",
+   "quotes": {
+    "title.1": {
+     "page": 1,
+     "y": 723.6,
+     "x1": 196.6,
+     "x2": 501.8,
+     "text": "Collection Information Statement for Businesses"
+    },
+    "entity.stem": {
+     "page": 1,
+     "y": 639.5,
+     "x1": 324,
+     "x2": 372.6,
+     "text": "Type of entity"
+    },
+    "entity.check": {
+     "page": 1,
+     "y": 639.5,
+     "x1": 374.8,
+     "x2": 484,
+     "text": "(Check appropriate box below)"
+    },
+    "entity.b1": {
+     "page": 1,
+     "y": 628.7,
+     "x1": 337.1,
+     "x2": 378.1,
+     "text": "Partnership"
+    },
+    "entity.b2": {
+     "page": 1,
+     "y": 628.7,
+     "x1": 399.8,
+     "x2": 442.4,
+     "text": "Corporation"
+    },
+    "entity.b3": {
+     "page": 1,
+     "y": 628.7,
+     "x1": 466.7,
+     "x2": 486.7,
+     "text": "Other"
+    },
+    "entity.b4": {
+     "page": 1,
+     "y": 617.9,
+     "x1": 337.1,
+     "x2": 546.8,
+     "text": "Limited Liability Company (LLC) classified as a corporation"
+    },
+    "entity.b5": {
+     "page": 1,
+     "y": 607.1,
+     "x1": 337.1,
+     "x2": 482.3,
+     "text": "Other LLC - Include number of members"
+    },
+    "personnel.heading": {
+     "page": 1,
+     "y": 268.7,
+     "x1": 46,
+     "x2": 413.9,
+     "text": "PARTNERS, OFFICERS, LLC MEMBERS, MAJOR SHAREHOLDERS (Foreign and Domestic), ETC."
+    },
+    "personnel.ownership_column": {
+     "page": 1,
+     "y": 224.9,
+     "x1": 367.2,
+     "x2": 521.7,
+     "text": "Ownership Percentage & Shares or Interest"
+    },
+    "signer.print_name": {
+     "page": 6,
+     "y": 337.9,
+     "x1": 43.2,
+     "x2": 218.3,
+     "text": "Print Name of Officer, Partner or LLC Member"
+    },
+    "certification.stem": {
+     "page": 6,
+     "y": 397.4,
+     "x1": 96.8,
+     "x2": 539.5,
+     "text": "Under penalties of perjury, I declare that to the best of my knowledge and belief this statement of assets, liabilities, and other"
+    }
+   }
   }
  },
  "pairs": [
@@ -425,6 +539,87 @@
     "exclusion.2"
    ],
    "why": "THE SHARPEST PAIR IN THE REGISTER, AND THE ONLY ONE EITHER FORM DECIDES IN PRINT. 433-B(OIC) page 1 says that a sole proprietorship must not use it and must complete 433-A(OIC) instead — naming the other form. 433-A(OIC) page 4 asks its filer whether the business is a sole proprietorship. So the two forms partition business filers between them by printed instruction, and 113 of 113 form-specific properties on 433-B(OIC) is what that partition looks like from the property side."
+  },
+  {
+   "a": "433b",
+   "b": "433a",
+   "relation": "MUTUALLY EXCLUSIVE",
+   "basis_a": [
+    "entity.b1",
+    "entity.b2",
+    "entity.b4",
+    "entity.b5",
+    "signer.print_name"
+   ],
+   "basis_b": [
+    "title.1",
+    "title.2",
+    "boundary.question",
+    "boundary.yes",
+    "boundary.no"
+   ],
+   "why": "DECIDED BY BOTH PAGES, FROM OPPOSITE DIRECTIONS, AND ONE OF THEM NAMES THE OTHER. 433-A's title is \"Collection Information Statement for Wage Earners and Self-Employed Individuals\" and its page 7 asks \"Is the business a sole proprietorship (filing Schedule C)\" — on Yes it keeps the filer in its own Sections 6 and 7, and on No it prints \"No, Complete Form 433-B.\" 433-B's own entity list offers a partnership, a corporation, an LLC classified as a corporation and any other LLC, and its certification is signed by an \"Officer, Partner or LLC Member\" — a person signing FOR someone else. Neither form will hold the other's subject.",
+   "and_the_absence_that_completes_it": "433-B prints no box a sole proprietor could tick, and the phrase \"sole propri\" appears nowhere on its six drawn pages. So the boundary 433-A draws is not contradicted from this side; it is simply not drawn again."
+  },
+  {
+   "a": "433b",
+   "b": "433f",
+   "relation": "MUTUALLY EXCLUSIVE",
+   "basis_a": [
+    "entity.b1",
+    "entity.b2",
+    "entity.b4",
+    "entity.b5",
+    "signer.print_name"
+   ],
+   "basis_b": [
+    "who.2"
+   ],
+   "why": "NEITHER FORM NAMES THE OTHER, so this rests on the two subjects alone and on nothing either page says about the other. 433-F names a wage earner or self-employed individual; 433-B names an entity whose statement is signed by an officer, partner or LLC member on its behalf. One property cannot hold both at one moment for one filer, which is the whole test.",
+   "weaker_than_the_433a_pair_and_said_so": "The 433-A pair is settled by a printed gate that names Form 433-B in as many words. This one has no such sentence on either page and is decided by the two subjects being incompatible rather than by either form drawing the boundary. That is a real difference in the strength of the evidence and it is recorded rather than levelled."
+  },
+  {
+   "a": "433b",
+   "b": "433aoi",
+   "relation": "MUTUALLY EXCLUSIVE",
+   "basis_a": [
+    "entity.b1",
+    "entity.b2",
+    "entity.b4",
+    "entity.b5",
+    "signer.print_name"
+   ],
+   "basis_b": [
+    "title.1",
+    "title.2",
+    "who.stem",
+    "who.b6"
+   ],
+   "why": "Same as the 433-F pair and for the same reason: 433-A(OIC) is about an individual in every one of its six printed bullets without exception, and 433-B is about the entity. Neither page names the other."
+  },
+  {
+   "a": "433b",
+   "b": "433boi",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "entity.b1",
+    "entity.b2",
+    "entity.b4",
+    "entity.b5",
+    "personnel.heading",
+    "signer.print_name"
+   ],
+   "basis_b": [
+    "who.stem",
+    "who.b1",
+    "who.b2",
+    "who.b3",
+    "who.b4",
+    "exclusion.1"
+   ],
+   "why": "THE SAME FOUR ENTITY KINDS, NAMED IN THE SAME WORDS ON BOTH PAGES. 433-B(OIC) prints \"Complete this form if your business is a\" over Corporation, Limited Liability Company (LLC) classified as a corporation, Partnership, Other LLC. 433-B prints \"Type of entity (Check appropriate box below)\" over Partnership, Corporation, Limited Liability Company (LLC) classified as a corporation, Other LLC - Include number of members. Both are signed for the entity rather than by it — 433-B by an \"Officer, Partner or LLC Member\". A fact shared between these two can take one property.",
+   "the_open_edge_carried_rather_than_smoothed": "THE LISTS ARE NOT IDENTICAL. 433-B prints a fifth box, \"Other\" (page 1, y 628.7, x 466.7..486.7), with a free-text cell beside it; 433-B(OIC) has no such box, and expels the sole proprietorship by name where 433-B says nothing. So on 433-B's OWN printed evidence there is no sentence closing the \"Other\" box against a sole proprietorship, and the only text that closes it is printed on 433-A. The four named kinds coincide and that is what the verdict rests on; the fifth box is an open edge, carried as [B-02] and NOT resolved.",
+   "what_this_answers": "The register's own `the_next_question` asked whether 433-B shares 433-B(OIC)'s subject and recorded that it had not been shown. It is now shown, from both forms' own pages, subject to the open edge above."
   }
  ],
  "_not_in_this_register": {
@@ -432,10 +627,10 @@
   "433-D": "NOT DERIVED. No map, and its mirror construct ([D-01]) is a page problem rather than a subject one — but the subject is still derived before its crosswalk, not after.",
   "433-H": "NOT DERIVED. Zero AcroForm fields; a feasibility question rather than a form."
  },
- "the_next_question": "DOES 433-B SHARE 433-B(OIC)'s SUBJECT? 433-A page 7 sends a non-sole-proprietor to Form 433-B, and 433-B(OIC) page 1 admits corporations, partnerships and LLCs — which LOOKS like one subject stated by two forms. It has not been shown. Nothing in this register asserts it, and the 433-A/433-B(OIC) pair above records the caveat rather than smoothing it, because a subject assumed is the exact failure this file was written to stop.",
+ "the_next_question": "ANSWERED FOR 433-B, and its answer is recorded in the 433b/433boi pair above: the two coincide on the four entity kinds both pages name, with 433-B's fifth \"Other\" box carried as [B-02] because nothing 433-B prints closes it. WHAT IS STILL OPEN: 433-D and 433-H have no subject entry. 433-D is an instalment agreement rather than a collection information statement and may not have a subject in this register's sense at all; 433-H carries zero AcroForm fields and cannot be read by this engine, so its subject cannot be established the way every entry here was.",
  "_count": {
-  "forms": 4,
-  "quotes": 35,
-  "pairs": 6
+  "forms": 5,
+  "quotes": 47,
+  "pairs": 10
  }
 }

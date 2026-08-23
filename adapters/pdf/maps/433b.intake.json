@@ -1,0 +1,208 @@
+{
+ "_what_this_is": "The intake record for Form 433-B. Everything established BEFORE a single cell was bound, in the order the rulings ask for it: the blank pinned by SHA, the revision read from drawn page bytes, the subject, then the enumeration.",
+ "blank": {
+  "file": "adapters/pdf/forms/f433b.pdf",
+  "source": "https://www.irs.gov/pub/irs-pdf/f433b.pdf",
+  "bytes_written": 326778,
+  "header": "%PDF-1.7",
+  "sha256": "44faa52027ba0dd7f899faaea926e29552d966cc4bce12e8560d4bd0b60e4341",
+  "pinned_in": "adapters/pdf/forms/forms.sha256, in the same commit that fetched it and before anything read it.",
+  "verified": "sha256sum -c forms.sha256 -> f433a.pdf OK, f433f.pdf OK, f433aoi.pdf OK, f433boi.pdf OK, f433b.pdf OK. Five of five.",
+  "_the_filename": "f433b.pdf, which is the obvious spelling and is the right one here. It is worth saying because it is NOT the right one for 433-B(OIC): that form is f433boi.pdf and f433boic.pdf 404s. [D-04]."
+ },
+ "from_drawn_page_bytes": {
+  "_method": "adapters/pdf/read-form-revision.mjs, which inflates every content stream and reads the footer off the DRAWN page. Not from PDF metadata, and not from the XFA packet — see [[confirm-form-revision-from-page-bytes]] and the 433-H case, where the metadata answers and the page does not.",
+  "streams_inflated": 136,
+  "form": "433-B",
+  "revision": "Rev. 6-2026",
+  "catalog": "16649P",
+  "pages": 6,
+  "footer_read_verbatim_from_page_1": [
+   "\"Catalog Number 16649P\" — page 1, y 24.7, x 36.0..124.0",
+   "\"www.irs.gov\" — page 1, y 24.7, x 271.8..315.0",
+   "\"Form\" — page 1, y 24.1, x 472.9..491.6",
+   "\"433-B\" — page 1, y 24.1, x 493.8..526.5",
+   "\"(Rev.\" — page 1, y 24.1, x 529.8..548.9",
+   "\"6-2026)\" — page 1, y 24.1, x 551.2..576.0"
+  ],
+  "_the_footer_says_Catalog_Number": "Not \"Cat. No.\". Recorded because a hand-written reader keyed on the abbreviation would find nothing here and report the catalog number absent.",
+  "_the_masthead_agrees": "\"Form\" / \"433-B\" at y 738.3 and \"(June 2026)\" at y 725.6, x 36.0..72.3, which is the same revision the footer states in the other notation.",
+  "_this_is_newer_than_the_recon": "A 2026-08-19 recon of this form recorded no revision for it and its field counts were taken then. Everything in this record is re-derived from the bytes fetched today; nothing is carried over."
+ },
+ "enumeration": {
+  "_method": "adapters/pdf/enumerate-fields.mjs -> adapters/pdf/maps/433b.fields.json, and the per-page split from widget geometry.",
+  "fields_total": 447,
+  "by_type": {
+   "PDFTextField": 396,
+   "PDFCheckBox": 51
+  },
+  "widgets_total": 447,
+  "widgets_unplaced": 0,
+  "_one_widget_per_field": "447 fields and 447 widgets with none unplaced, so on this form no field is drawn twice. That is worth asserting rather than assuming: f433d.pdf draws every one of its 84 leaf stems TWICE, and a map binding by stem there writes to the taxpayer copy.",
+  "by_page": {
+   "p1": {
+    "total": 103,
+    "PDFTextField": 86,
+    "PDFCheckBox": 17
+   },
+   "p2": {
+    "total": 64,
+    "PDFTextField": 44,
+    "PDFCheckBox": 20
+   },
+   "p3": {
+    "total": 82,
+    "PDFTextField": 74,
+    "PDFCheckBox": 8
+   },
+   "p4": {
+    "total": 94,
+    "PDFTextField": 94,
+    "PDFCheckBox": 0
+   },
+   "p5": {
+    "total": 70,
+    "PDFTextField": 66,
+    "PDFCheckBox": 4
+   },
+   "p6": {
+    "total": 34,
+    "PDFTextField": 32,
+    "PDFCheckBox": 2
+   }
+  },
+  "_by_page_sums_to": 447,
+  "_page_1_is_the_largest_single_page_in_the_series": "103 fields, against 43 on 433-B(OIC) page 1 and 61 on its largest. Its 103 resolve into five structural blocks, derived from the subform tree and the printed markers: Section 1 left column (Line1a-f, 11 cells, markers 1a to 1f), Section 1 right column (2a to 3d and line 4, 16 cells), the payment-processor table (Table_Line5a-b, 4 cells, markers 5a and 5b), the credit-card table (Table_Lines6a-c, 12 cells, markers 6a to 6c) and Section 2's four personnel rows (Line7a_Col1 to Line7d_Col1, 15 cells each, markers 7a to 7d). 11 + 16 + 4 + 12 + 60 = 103."
+ },
+ "checkbox_probe": {
+  "_method": "adapters/pdf/probe-checkboxes.mjs -> adapters/pdf/maps/433b.checkboxes.txt",
+  "checkboxes": 51,
+  "distinct_on_states": [
+   "/Partnership",
+   "/Corporation",
+   "/Other",
+   "/LLC",
+   "/Other#20LLC",
+   "/Yes",
+   "/No",
+   "/Plaintiff",
+   "/Defendent",
+   "/Secured",
+   "/Unsecured",
+   "/Cash",
+   "/Accrual"
+  ],
+  "_the_on_states_are_NOT_uniform_on_this_form": "13 distinct on-states, and that is the finding. 433-B(OIC) turns every one of its 77 boxes on with /1 and a map for it can carry one spelling; this form cannot. Page 1's 2b entity list alone uses /Partnership, /Corporation, /Other, /LLC and /Other#20LLC; the question pairs use /Yes and /No; page 5 uses /Secured and /Unsecured and /Plaintiff and /Defendent; page 6 uses /Cash and /Accrual. A fill engine that wrote /1 here would tick nothing and report success, which is why the on-state is read from the widget rather than assumed.",
+  "_the_IRS_spells_one_of_them_Defendent": "Page 5 stores /Defendent, not /Defendant. It is written as it is stored. A map that corrected the spelling would silently tick nothing.",
+  "_the_one_with_an_escape_in_it": "/Other#20LLC — the on-state of topmostSubform[0].Page1[0].c1_0_2b[4] carries a PDF name-object escape for a space. It must be written as it is stored, not as \"Other LLC\".",
+  "page_1_boxes": 17
+ },
+ "preset_assertion": {
+  "_method": "adapters/pdf/assert-no-preset-boxes.mjs, over /V, /DV and every widget's /AS.",
+  "inspected": "51 checkbox(es) + 0 radio group(s), 51 widget(s)",
+  "result": "PASS — every box on the blank is off on all three, so any tick on a filled copy was put there by the fill engine."
+ },
+ "subject": {
+  "_where_it_is_recorded": "adapters/pdf/maps/_subjects.cross-form.json, entry `433b`, added in this commit BEFORE any binding.",
+  "verdict": "A LEGAL PERSON THAT IS NOT THE FILER — the business entity.",
+  "_and_this_form_prints_no_eligibility_text_at_all": "Which is the first thing the intake established and the reason the subject had to be read from the title, the entity list, the Section 2 heading and the signature block instead. The absence was verified against the drawn page over 19 enumerated phrases; \"sole propri\" returns zero on all six pages. See the register entry.",
+  "against_the_four_already_registered": "433-A MUTUALLY EXCLUSIVE, 433-F MUTUALLY EXCLUSIVE, 433-A(OIC) MUTUALLY EXCLUSIVE, 433-B(OIC) COINCIDE — with 433-B's fifth \"Other\" entity box carried as [B-02] because nothing 433-B prints closes it against a sole proprietorship."
+ },
+ "lineage": {
+  "_the_question_it_answers": "Which of this form's AcroForm leaf names are inherited from a form already in this engine, and per OCCURRENCE whether this form's printed caption matches, contradicts, or asks a new question under that name.",
+  "_the_rule_it_is_read_under": "An inherited leaf name is evidence of nothing. A verdict is per occurrence, never per name — which this form demonstrates twice over: `p2_t11_13a` matches on one of its three occurrences and contradicts on the other two.",
+  "distinct_leaf_names": 401,
+  "shared_with": {
+   "433a": {
+    "their_fields": 515,
+    "their_distinct_leaf_names": 386,
+    "shared": 11,
+    "names": [
+     "#field",
+     "Line13A",
+     "Line13B",
+     "Line14f",
+     "ListAccessPrivateKeys",
+     "TextField1",
+     "mmddyyyy",
+     "p2_t11_13a",
+     "p2_t13_13a",
+     "p2_t15_13b",
+     "p2_t17_13b"
+    ]
+   },
+   "433f": {
+    "their_fields": 214,
+    "their_distinct_leaf_names": 158,
+    "shared": 7,
+    "names": [
+     "#field",
+     "Line13A",
+     "Line13B",
+     "p2_t11_13a",
+     "p2_t13_13a",
+     "p2_t15_13b",
+     "p2_t17_13b"
+    ]
+   },
+   "433aoi": {
+    "their_fields": 425,
+    "their_distinct_leaf_names": 322,
+    "shared": 0,
+    "names": []
+   },
+   "433boi": {
+    "their_fields": 267,
+    "their_distinct_leaf_names": 170,
+    "shared": 0,
+    "names": []
+   }
+  },
+  "shared_union": 11,
+  "occurrences_on_this_form": 17,
+  "_every_occurrence_is_on_one_page": "All 17 sit on page 3. PAGE 1 — the page this slice maps — CARRIES NOT ONE INHERITED LEAF NAME. Every name on it is this form's own.",
+  "registries": {
+   "433a": {
+    "registry": "none in this tree"
+   },
+   "433f": {
+    "registry": "none in this tree"
+   },
+   "433aoi": {
+    "registry": "adapters/pdf/maps/433aoi.name-lies.json",
+    "entries": 31,
+    "standing_on_a_shared_leaf_name": 0,
+    "ids": []
+   },
+   "433boi": {
+    "registry": "adapters/pdf/maps/433boi.name-lies.json",
+    "entries": 37,
+    "standing_on_a_shared_leaf_name": 0,
+    "ids": []
+   }
+  },
+  "_the_headline": "THE LINEAGE IS INERT, AND IT IS INERT BY CONSTRUCTION RATHER THAN BY LUCK. Name-lie registries exist on 433-A(OIC) (31 entries) and 433-B(OIC) (37), and this form shares ZERO leaf names with either. The 11 names it does share are shared with 433-A and 433-F, and neither of those has a registry. So the intersection of \"shared with a form\" and \"carries a registry entry\" is EMPTY — no entry in any registry in this tree stands on any name this form inherits, and nothing is inherited into 433-B's own registry when it is opened.",
+  "_and_that_is_the_opposite_of_the_OIC_line": "433-B(OIC) shares 83 leaf names with 433-A(OIC), 9 of which carry registry entries, and three of those names are true on one page of 433-B(OIC) and false on another. The two lineages are almost disjoint: the OIC forms inherit from each other and 433-B inherits from the non-OIC pair. A registry is not a thing this engine has that applies to every form; it is a thing that follows a lineage."
+ },
+ "inherited_guards_during_intake": {
+  "_the_question": "Which guards this engine already carried FIRED on this new form, and which did not. A guard that never fires on new input has not been tested on new input.",
+  "_fired": [
+   "adapters/pdf/correlate-labels.mjs probe self-check — REFUSED to write a labels file. Three pairings established from the printed page and this tool answered the caption one row ABOVE on all three. See [B-01]. This is the guard doing exactly what it was written for: a form with no probes is refused, and a form whose probes fail produces no artefact.",
+   "adapters/pdf/line-markers.mjs under-determination report — 113 printed markers, 101 with a widget on the same row, and it declares 85 of those 101 pairings UNDER-DETERMINED: more than one widget survived its geometric filter and a distance tie-break chose. It states that the choice is the tool's and not the page's, which is [N-05]'s remedy actually implemented.",
+   "adapters/pdf/assert-subject-register.mjs [S2] — reported ORPHAN ENTRY the moment 433b was registered and no 433b.map.json existed. The map shell in this commit is what clears it, and the guard is the reason the shell is here rather than the register being left half-wired."
+  ],
+  "_fired_and_passed": [
+   "sha256sum -c forms.sha256 — five of five OK, including the four already pinned. The new blank did not disturb them.",
+   "adapters/pdf/assert-no-preset-boxes.mjs — 51 boxes, none pre-set on any of /V, /DV, /AS.",
+   "adapters/pdf/read-form-revision.mjs — read the revision and catalog number off inflated page content and its own sha read-back matched forms.sha256."
+  ],
+  "_did_NOT_fire_and_why": [
+   "adapters/pdf/absence-sweep.mjs — sweeps map, headings, totals, name-lies and crosswalk-classification prose per form. 433-B has a map shell carrying no evidence prose and none of the four sidecars, so its contribution is zero claims and zero coordinates. NOT TESTED ON THIS FORM YET; it is tested when slice 1 lands prose.",
+   "adapters/pdf/count-sweep.mjs — every claim it disposes is read out of a per-form artefact. The shell states its partition and nothing else, so the sweep has one block to read. NOT TESTED on this form's evidence.",
+   "adapters/pdf/assert-no-preset-boxes.mjs is listed above as fired; adapters/pdf/assert-overflow.mjs, assert-record-shape.mjs and declaration-coverage.mjs did NOT — all three need a fixture and a bound map, and this form has neither. They are untested on 433-B and will stay untested until a fixture exists.",
+   "adapters/pdf/verify-headings.mjs — needs a 433b.headings.json. None authored; the tool is untested on this form.",
+   "adapters/hubspot/assert-intake-keys.mjs — ran and passed, but its 433-B contribution is ZERO: it reads crosswalks and row shapes, and this form has neither. Passing here says nothing about this form, and that is the distinction the ruling asks for."
+  ]
+ },
+ "next": "Pages 2 and 3 (146 fields), then page 4 (94), then pages 5 and 6 (104). Then the crosswalk, provisioning, round trip and review page. The subject verdict above is what licenses reuse against 433-B(OIC) and refuses it against the other three; it is NOT the eleven shared leaf names, which this lineage report shows are inert."
+}

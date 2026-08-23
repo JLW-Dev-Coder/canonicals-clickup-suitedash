@@ -249,6 +249,64 @@ for (const g of geometry) {
 // Each probe names a field by its FULL path from topmostSubform[0]. Reconstructing a prefix
 // from a fragment is where two rounds of 433-F defects entered; nothing here does it.
 const PROBES = {
+  // 433-B. All three established with the printed run's own rectangle against the widget's,
+  // and every one of them chosen where the LEAF NAME would give a different answer — this form
+  // reuses one leaf name across four printed rows and spells a taxpayer identification number
+  // as an SSN, so a probe taken from a name would agree with the wrong thing twice.
+  '433b': [
+    // "Business Name" prints at y 651.1, x 57.6..113.5. The widget spans x 57.6..302.4 with its
+    // top at y 648.0 — directly beneath, sharing a left edge to 0.0pt. The next caption down the
+    // same column is "Business Street Address" at y 629.5, 21.6pt lower, so an off-by-one row is
+    // visible rather than plausible.
+    { label: 'Page1 1a business-name cell -> "Business Name"',
+      field: 'topmostSubform[0].Page1[0].Line1a-f[0].p1_1_1a[0]', want: /business\s*name/i },
+    // THE PROBE THAT MATTERS ON THIS FORM. The leaf name says SSN. The page says something
+    // wider: "Taxpayer Identification Number" prints at y 257.3, x 367.2..479.4, and the widget
+    // spans x 489.6..576.0 on the same row, 10.2pt to its right. A correlation that read the
+    // NAME would answer "SSN" and the name would agree with the wrong answer — an EIN is a
+    // taxpayer identification number and is not an SSN, and row 7a of this form is a partner,
+    // officer or LLC member who may be either.
+    { label: 'Page1 7a p1_39_SSN_7a[0] -> "Taxpayer Identification Number", NOT an SSN',
+      field: 'topmostSubform[0].Page1[0].p1_39_SSN_7a[0]', want: /taxpayer\s*identification\s*number/i },
+    // "County" prints at y 586.5, x 57.6..83.4, its baseline INSIDE the widget's rectangle
+    // (y 583.2..594.0) and 3.6pt to its left. The row above is the City / State / ZIP row at
+    // y 597.3.
+    { label: 'Page1 1c county cell -> "County"',
+      field: 'topmostSubform[0].Page1[0].Line1a-f[0].p1_8_1c[0]', want: /^county$/i },
+
+    // ═══════════════════════════════════════════════════════════════════════════════════
+    // THIS SELF-CHECK FAILS ON 433-B, AND THE PROBES ARE NOT THE THING THAT IS WRONG. [B-01]
+    // ═══════════════════════════════════════════════════════════════════════════════════
+    //
+    // Three separate pairings were established from the printed page here and this tool
+    // answered the caption ONE ROW ABOVE on all three, every time by a fraction of a point:
+    //
+    //   p1_8_1c[0]            page says "County"  (y 586.5, x 57.6..83.4, 3.6pt LEFT, baseline
+    //                         inside the rectangle) — tool answers "State" (y 597.3, the
+    //                         City/State/ZIP row, 3.3pt ABOVE, x 180.0..198.8 overlapping)
+    //   p1_15_2bc[0]          page says "Other LLC - Include number of members" (y 607.1,
+    //                         x 337.1..482.3, 7.3pt LEFT, baseline inside the rectangle) — tool
+    //                         answers "Limited Liability Company (LLC) classified as a
+    //                         corporation" (y 617.9, x 337.1..546.8, the row above, whose extra
+    //                         64pt of width is what makes it overlap the cell at all)
+    //   p1_42_7aAnnualSalDrw[3]  page says "Annual Salary/Draw" (y 53.7, x 367.2..437.6, 6.0pt
+    //                         LEFT) — tool answers "Ownership Percentage & Shares or Interest"
+    //                         (y 62.9, x 367.2..521.7, the row above, again the wider run)
+    //
+    // In all three the correct caption IS in the candidate list, ranked second. The rule that
+    // loses is the one that ranks `above` and `left` on ONE distance scale: a 3.3pt vertical gap
+    // beats a 3.6pt horizontal gap even though the vertical one crosses a printed row boundary.
+    // On 433-A, 433-F and 433-A(OIC) the dominant layout is caption-ABOVE-cell and the rule is
+    // right; 433-B's Section 1 and Section 2 are caption-LEFT-of-cell in a two-column grid, and
+    // there the rule inverts.
+    //
+    // The probes are NOT retuned until three cells are found where the tool happens to agree.
+    // That would be fitting the guard to the tool, and the guard exists to catch the tool. The
+    // self-check refuses, no labels file is written for 433-B, and the map binds page 1 on
+    // rectangles — which every standing rule already required. Changing the ranking is a change
+    // to a tool the other four forms depend on and needs its own regression across all four; it
+    // is carried as [B-01] and not done during an intake.
+  ],
   '433boi': [
     // ESTABLISHED FROM THE PRINTED PAGE with align-block.mjs, never from a leaf name — this
     // form is the one whose lineage report found three names true on one page and false on
