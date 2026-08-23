@@ -61,6 +61,7 @@ import { probeMoneyCells } from './money-probe.mjs';
 import { verifyPrintedEvidence, EVIDENCE_TOLERANCE } from './record-shape.mjs';
 import { quotesAreDrawn } from './assert-subject-register.mjs';
 import { REGISTER as SUBJECT_REGISTER } from './gen-subject-register.mjs';
+import { rx } from './regex-self-assert.mjs';
 
 // THE SEED IS A CONSTANT IN THE SOURCE AND IS PRINTED ON EVERY RUN. A sample nobody can
 // reproduce is an anecdote; a sample drawn from Math.random cannot be re-run at all.
@@ -153,9 +154,19 @@ export const REPORTER_DIR = 'adapters/pdf';
 // own accessors. A file that asks this module for a baseline and prints it is reporting a y as
 // surely as one that reaches for `.y1`, and reaching for the accessor is the style this engine
 // asks for, so the signature was blind to its own preferred idiom.
+const RX_Y_POPULATION = rx('RX-YC-01', /\.y1\b|\.y2\b|rect\[1\]|rect\[3\]|baselineOfRun\(|runTopOf\(/, {
+  why: 'a file that REACHES for a y \u2014 [D-12] is what four eaten backslashes did to this half, and it reported clean for three prompts',
+  matches: ['const y = t.y1;', 'rect[1]', 'baselineOfRun(page)', 'runTopOf(run)'],
+  rejects: ['t.y1x', 'rect1', 'baselineOfRunX', 'ty1'],
+});
+const RX_Y_EMISSION = rx('RX-YC-02', /console\.log|writeFileSync|\by1:|\by:\s|rect:\s/, {
+  why: 'and REPORTS it. Reaching without reporting is arithmetic; reporting is what puts a y in front of a reader under a convention',
+  matches: ['console.log(x)', 'writeFileSync(p, s)', '  y1: 3', 'return { y: 3 }', 'rect: [1]'],
+  rejects: ['consoleXlog', 'my1: 3', 'y:s', 'rect:x'],
+});
 export const REPORTER_SIG = (src) =>
-  /\.y1\b|\.y2\b|rect\[1\]|rect\[3\]|baselineOfRun\(|runTopOf\(/.test(src)
-  && /console\.log|writeFileSync|\by1:|\by:\s|rect:\s/.test(src);
+  RX_Y_POPULATION.test(src)
+  && RX_Y_EMISSION.test(src);
 
 /**
  * THE CANARY FOR THE POPULATION SELECTOR, which is the half that had no canary.

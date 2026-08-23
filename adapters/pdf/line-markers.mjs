@@ -20,6 +20,8 @@
 
 import { readFileSync } from 'node:fs';
 import { readPrintedText, readWidgetGeometry, baselineOfRun, runTopOf, Y_CONVENTION } from './page-geometry.mjs';
+import { rx } from './regex-self-assert.mjs';
+
 
 // THE y THIS TOOL REPORTS IS A BASELINE, and it did not used to be.
 //
@@ -56,13 +58,23 @@ export async function markerPairing(form) {
 // "18a" / "18a." / "(39)" / "(39) $" — the trailing "$" is the currency glyph the IRS sets in
 // the same run as the marker on the OIC forms, so it is stripped rather than treated as text.
 // "Box D" is a marker in its own right: the OIC totals are referred to by box, not by line.
-const LINE = /^\(?(\d{1,2}[a-z]?)\)?[.:]?\s*\$?$/i;
+const LINE = rx('RX-LM-01', /^\(?(\d{1,2}[a-z]?)\)?[.:]?\s*\$?$/i, {
+  why: 'a printed line marker standing alone in a text run \u2014 the marker a widget is paired to',
+  matches: ['7', '(3) $', '12.'],
+  rejects: ['123', 'x6a', '6a and more'],
+  captures: [['(6a)', ['6a']], ['12.', ['12']]],
+});
 // Anchored at the START of the drawn run, not searched anywhere in it. 433-A(OIC) sets the box
 // label and its caption as ONE run ("Box G Future Remaining Income"), so an exact-match pattern
 // finds Boxes A-F and misses G and H entirely — the two that carry the offer calculation. A
 // pattern that searched anywhere would instead match the body sentence "Enter the total from
 // Box F", which is prose about a box on another page and numbers nothing.
-const BOX = /^Box\s+([A-Z])\b/i;
+const BOX = rx('RX-LM-02', /^Box\s+([A-Z])\b/i, {
+  why: 'a printed Box marker and its letter',
+  matches: ['Box C \u2014 total'],
+  rejects: ['BoxsA', 'BoxA', 'a Box A'],
+  captures: [['Box A', ['A']], ['box  b', ['b']]],
+});
 
 const r1 = (n) => Math.round(n * 10) / 10;
 const markersIn = (text, pageCount) => {

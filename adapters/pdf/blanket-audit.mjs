@@ -115,6 +115,7 @@ import { verifyPrintedEvidence } from './record-shape.mjs';
 import { readFormRevision } from './read-form-revision.mjs';
 import { rowShapeSpecProblems, rowShapeSpecScope, splitOccurrences } from './assert-row-shape-spec.mjs';
 import { coverageCount, ENGINE_EXTRA_INPUTS } from '../hubspot/classification-coverage.mjs';
+import { rx } from './regex-self-assert.mjs';
 
 /** Every string in a JSON document, so a coordinate is read in the sentence it belongs to. */
 const proseStrings = (doc) => {
@@ -241,7 +242,11 @@ export const probeCanaryHolds = (ctx) => {
 // "active lies" against it compares a superseded figure with today's 22 and reports a defect
 // where a correction is being recorded. The stand-down is DECLARED and COUNTED, never silent:
 // a probe that quietly skipped these would be indistinguishable from one that found nothing.
-const HISTORICAL = /\b(?:through slice \d|at the time|used to|superseded|was wrong|the honest count|not eleven|it inherited the error|as it stood|in slice \d|before this|previously|the first version|had claimed|then said)\b/i;
+const HISTORICAL = rx('RX-BA-01', /\b(?:through slice \d|at the time|used to|superseded|was wrong|the honest count|not eleven|it inherited the error|as it stood|in slice \d|before this|previously|the first version|had claimed|then said)\b/i, {
+  why: 'prose that describes a state the tree used to be in, so a blanket read as a live claim is told from one narrating history',
+  matches: ['through slice 3 it was two', 'this was wrong', 'previously eleven'],
+  rejects: ['through slice d', 'unpreviously', 'a slice count'],
+});
 
 export const probeSite = (ctx, site) => {
   const v = site.value;
@@ -668,9 +673,20 @@ const DETECTOR_DIR = 'adapters/pdf';
 // missed exactly the files the rule is modelled on, and it was the STALE DETECTOR ENTRY check
 // that said so rather than a reader noticing. Any exit at all now qualifies: an instrument that
 // cannot stop a run is not a detector in this sense, and one that can is.
-const DETECTOR_SIG = (src) => /\.matchAll\(|new RegExp\(|\.match\(/.test(src) && /process\.exit(Code)?\b/.test(src);
+const RX_DETECTOR_READS = rx('RX-BA-02', /\.matchAll\(|new RegExp\(|\.match\(/, {
+  why: 'a file that reads its input through a regex — half the signature of a tool that detects rather than reports',
+  matches: ['s.matchAll(re)', 'new RegExp(x)', 's.match(re)'],
+  rejects: ['smatchAllX', 'x.matchAllY', 'newRegExpX'],
+});
+const RX_DETECTOR_STOPS = rx('RX-BA-03', /process\.exit(Code)?\b/, {
+  why: 'the other half — a file that can end the run on what it read, rather than print and continue',
+  matches: ['process.exit(2)', 'process.exitCode = 2'],
+  rejects: ['processXexit', 'process.exiting'],
+});
+const DETECTOR_SIG = (src) => RX_DETECTOR_READS.test(src) && RX_DETECTOR_STOPS.test(src);
 
 export const DETECTORS = {
+  'regex-self-assert.mjs': { canary: 'THREE, because it holds three separable detectors and each one\'s failure mode is silence in a different place. (a) assertionCanary(), eight planted registrations through the SAME assertSpec() the live path calls: a source carrying a literal backspace must be refused as shape 1, an eaten `\\s` must be caught by its own match probe, an eaten `\\)` by its own reject probe, an eaten `\\w` that still matches and still captures by its CAPTURE probe, a backslash-carrying regex declaring no probes must be refused outright — and, in the same call, three sound registrations must be ACCEPTED, because a detector that refused everything would satisfy a refusal-only canary and stop the whole engine on its next run. (b) scannerCanary(), thirteen planted cases through the hand-written lexer: a regex literal in each of eight syntactic positions must be found with its exact source, and a division expression, a line comment, a block comment, a string literal and a template literal must NOT be mistaken for one. A lexer that missed literals would report a small population and call it a whole one, so the false-negative half is the half that matters and the false-positive half is there so the lexer cannot pass by calling every slash a regex. (c) controlPopulationCanary(), which compares this file\'s derived shape-1 byte set against control-char-scan.mjs\'s CONTROLS register in BOTH directions, byte for byte — the two are one population with one register and one derived copy, and a disagreement between them is the duplicate-register defect. No verdict is printed on a run whose canaries did not pass, and none of the planted inputs is drawn from the artefacts.' },
   'blanket-audit.mjs': { canary: 'CANARY + PROBE_CANARY, both asserted in auditBlankets and both reported on every run.' },
   'count-sweep.mjs': { canary: 'THE atLeast CONTRACT, which is the same idea per claim site: a detector declares the minimum it must find in an input it was handed, and finding fewer is a STOP rather than a clean sweep. It is the construct the canary generalises.' },
   'guard-sweep.mjs': { canary: 'THE ORPHAN CHECK. Every register entry carries an `anchor` that must match a real line in the file it disposes of; an anchor matching nothing is a STOP. That is a canary per entry rather than one per run - the register cannot go quiet without saying so.' },

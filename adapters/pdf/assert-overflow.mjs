@@ -49,6 +49,8 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField } from 'pdf-lib';
 import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
+import { rx } from './regex-self-assert.mjs';
+
 
 // THE OVER-MAX FIXTURE IS RESOLVED FROM THE FORM ID, exactly as the gate's is: a path in an
 // npm script is a fact nobody re-derives, and `npm run gate:433boi` naming a one-page record
@@ -76,7 +78,12 @@ for (const p of [mapPath, fixturePath, `adapters/pdf/fill-${form}.mjs`]) {
 const map = JSON.parse(readFileSync(mapPath, 'utf8'));
 const rec = JSON.parse(readFileSync(fixturePath, 'utf8'));
 
-const NUMERIC = /^[\s$]*-?[\d,]+(\.\d+)?[\s%]*$/;
+const NUMERIC = rx('RX-AO-01', /^[\s$]*-?[\d,]+(\.\d+)?[\s%]*$/, {
+  why: 'a cell whose whole content reads as a number, so an over-max drop is told from a truncated value',
+  matches: ['1,234.56', ' $ 42 ', '-7'],
+  rejects: ['1,234.56x', 'd', 'twelve'],
+  captures: [['1,234.56', ['.56']]],
+});
 const groups = Object.entries(map.groups || {});
 if (!groups.length) { console.error(`STOP — ${mapPath} declares no groups. There is no overflow behaviour on this form to assert, and an empty assertion is not a pass.`); process.exit(2); }
 

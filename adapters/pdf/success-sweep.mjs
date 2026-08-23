@@ -82,6 +82,7 @@
 // fails and the sweep stops — rather than reporting zero problems because it has gone blind.
 
 import { readFileSync, readdirSync } from 'node:fs';
+import { rx } from './regex-self-assert.mjs';
 
 // WHAT IS SWEPT, ENUMERATED. Not a glob over the tree: two named directories, every `.mjs`
 // in each, listed in the report with its file count so a directory that stops being read
@@ -92,13 +93,28 @@ export const SWEPT_DIRS = ['adapters/pdf', 'adapters/hubspot'];
 // narrowing of an instrument's input by a sentence is the defect this cycle turned up, and a
 // token list is exactly such a sentence. Every extra token costs a `narrative` classification,
 // never a missed one.
-export const SUCCESS_TOKENS = /\b(passed|pass|OK|okay|clean|no problems|no issues|all good|success|succeeded|holds|held|agrees|agreed|verified|nothing to report|none found|no drift|consistent|matches|matched|correct|sound|confirmed|complete|closes|closed|intact|proved|proven|no-op|unchanged|as expected|good)\b/i;
+export const SUCCESS_TOKENS = rx('RX-SS-01', /\b(passed|pass|OK|okay|clean|no problems|no issues|all good|success|succeeded|holds|held|agrees|agreed|verified|nothing to report|none found|no drift|consistent|matches|matched|correct|sound|confirmed|complete|closes|closed|intact|proved|proven|no-op|unchanged|as expected|good)\b/i, {
+  why: 'the word that makes a printed line a success message, and therefore something that must be tied to a finding count',
+  matches: ['the check passed', 'all good', 'nothing to report'],
+  rejects: ['passedover', 'bypass', 'uncleanliness'],
+  captures: [['the check passed', ['passed']]],
+});
 
 // Identifiers that name a count of findings. A conditional over one of these is tied to the
 // result; a conditional over `verbose` or `usePortal` is not.
-const FINDING_IDENT = /\b(problems?|findings?|errs?|errors?|bad|failures?|failed|fail|stops?|missing|mismatche?d?|wrong|extra|unrouted|gaps?|issues?|violations?|drift|remaining|leaked|undisposed|orphans?|dead|skipped|declined|unaccounted|unex(?:ercised)?|differs|diffs|decided|\w*Ok)\b/;
+const FINDING_IDENT = rx('RX-SS-02', /\b(problems?|findings?|errs?|errors?|bad|failures?|failed|fail|stops?|missing|mismatche?d?|wrong|extra|unrouted|gaps?|issues?|violations?|drift|remaining|leaked|undisposed|orphans?|dead|skipped|declined|unaccounted|unex(?:ercised)?|differs|diffs|decided|\w*Ok)\b/, {
+  why: 'the identifier a success message must be guarded by — the count of what was found',
+  matches: ['problems', 'if (mismatch)', 'decidedOk'],
+  rejects: ['xproblem', 'deadly'],
+  captures: [['decidedOk', ['decidedOk']], ['if (problems.length)', ['problems']]],
+});
 
-const STRLIT = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+const STRLIT = rx('RX-SS-03', /(['"`])(?:\\.|(?!\1)[^\\])*\1/g, {
+  why: 'the printed text of a console call, isolated from the expression around it',
+  matches: ["'abc'", '"abc"'],
+  rejects: ["a'b1", 'abc'],
+  captures: [["'abc'", ["'"]]],
+});
 const isProse = (l) => { const t = l.trim(); return t.startsWith('//') || t.startsWith('*') || t.startsWith('/*'); };
 
 // EMITTERS, AND THE ONE STREAM THIS SWEEP DOES NOT READ.
@@ -113,8 +129,17 @@ const isProse = (l) => { const t = l.trim(); return t.startsWith('//') || t.star
 // [EX-11] in adapters/pdf/exclusion-sweep.mjs, whose cross-check asserts that no `console.error`
 // line in the swept files OPENS with a verdict (OK / PASSED / verified / …). A success message
 // that moved to stderr would break that assertion rather than slip through this one.
-const EMITS = /console\.(log|warn)\s*\(|(?:^|[^\w.])say\s*\(/;
-export const EXCLUDED_STREAM = /console\.error\s*\(/;
+const EMITS = rx('RX-SS-04', /console\.(log|warn)\s*\(|(?:^|[^\w.])say\s*\(/, {
+  why: 'a line that prints to the success stream — the population every success message is drawn from',
+  matches: ['console.log(x)', '  say(x)', 'console.warn (x)'],
+  rejects: ['consoleXlog(x)', 'console.logs(x)', 'essay(x)'],
+  captures: [['console.warn(1)', ['warn']]],
+});
+export const EXCLUDED_STREAM = rx('RX-SS-05', /console\.error\s*\(/, {
+  why: 'the failure stream, excluded from the success population because a line printed there is already a finding',
+  matches: ['console.error(x)', 'console.error  (x)'],
+  rejects: ['consoleXerror(x)', 'console.errors(x)'],
+});
 
 // ---------------------------------------------------------------------------------------
 // WITNESS (a) — the nearest enclosing conditional.
@@ -213,7 +238,11 @@ const JUMPS = [
  * Returns null when no failure accumulation is reported above the site at all.
  */
 /** A block body REPORTS A FAILURE if it writes to stderr or sets a non-zero exit code. */
-const REPORTS_FAILURE = /console\.error\s*\(|process\.exitCode\s*=|\bSTOP\s*\(/;
+const REPORTS_FAILURE = rx('RX-SS-06', /console\.error\s*\(|process\.exitCode\s*=|\bSTOP\s*\(/, {
+  why: 'a jumping failure path above a success message, which is one of the three things that can license it',
+  matches: ['console.error(1)', 'process.exitCode = 2', ' STOP(1)'],
+  rejects: ['xSTOP(1)', 'process.exitCodes = 2', 'consoleXerror(1)'],
+});
 
 export const nearestFailureGuard = (lines, idx) => {
   let depth = 0;
@@ -268,7 +297,12 @@ export const nearestFailureGuard = (lines, idx) => {
 // verdict-opening — a line that starts with OK/PASSED/verified/CONTENT-IDENTICAL is a verdict
 // whatever else it interpolates.
 // ---------------------------------------------------------------------------------------
-export const VERDICT_OPENER = /^\s*(?:\\n)?\s*(OK\b|PASSED\b|PASS\b|[A-Z-]+\s+PASSED\b|verified\b|CONTENT-IDENTICAL\b|every\b|all assertions\b|GATE PASSED\b)/;
+export const VERDICT_OPENER = rx('RX-SS-07', /^\s*(?:\\n)?\s*(OK\b|PASSED\b|PASS\b|[A-Z-]+\s+PASSED\b|verified\b|CONTENT-IDENTICAL\b|every\b|all assertions\b|GATE PASSED\b)/, {
+  why: 'a printed line that OPENS with a verdict, which is the shape a reader takes as the run\u2019s answer rather than as a remark',
+  matches: ['OK \u2014 done', '  GATE PASSED \u2014 all steps', 'every check holds', '\\n OK \u2014 done'],
+  rejects: ['OKAY', 'x OK', 'and every check holds'],
+  captures: [['PASS \u2014 ok', ['PASS']]],
+});
 
 // A NOTICE SAYS SOMETHING WAS NOT DONE, AND THAT IS NOT A CLAIM OF SUCCESS.
 //
@@ -280,7 +314,11 @@ export const VERDICT_OPENER = /^\s*(?:\\n)?\s*(OK\b|PASSED\b|PASS\b|[A-Z-]+\s+PA
 // NARROW ON PURPOSE. A bare `no` or `not` anywhere in a sentence would let
 // `all assertions passed. no problems.` classify as a notice, so the marker must be a
 // capitalised NOT, or `not` bound to a doing-word, or an opening that announces absence.
-export const NOTICE_MARK = /\bNOT\b|\bnot (?:run|a |an |the |yet|failed|checked|verified|exercised|thereby|currently|bound|created|reached)|\bcannot\b|\bNothing to\b|\bRefusing\b|\bno longer\b/;
+export const NOTICE_MARK = rx('RX-SS-08', /\bNOT\b|\bnot (?:run|a |an |the |yet|failed|checked|verified|exercised|thereby|currently|bound|created|reached)|\bcannot\b|\bNothing to\b|\bRefusing\b|\bno longer\b/, {
+  why: 'a line that states what was NOT done, which is a notice rather than a success message and is not held to the same guard',
+  matches: ['this is NOT checked', 'not run', 'cannot read', 'Nothing to do', 'no longer bound'],
+  rejects: ['NOTE that', 'unNOT', 'notable'],
+});
 
 export const isNarrative = (line) => {
   const lits = line.match(STRLIT) || [];

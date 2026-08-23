@@ -64,8 +64,14 @@
 
 import { readFileSync } from 'node:fs';
 import { exclusionSites, POSITIONS } from './exclusion-sweep.mjs';
+import { rx } from './regex-self-assert.mjs';
 
-const STRLIT = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+const STRLIT = rx('RX-ES-01', /(['"`])(?:\\.|(?!\1)[^\\])*\1/g, {
+  why: 'a whole string literal, so a predicate name quoted inside one is not read as a call to it',
+  matches: ["'abc'", '"abc"'],
+  rejects: ["a'b1", 'abc'],
+  captures: [["'abc'", ["'"]]],
+});
 
 /**
  * Where the captured condition text of a site is, given its file and 1-based line.

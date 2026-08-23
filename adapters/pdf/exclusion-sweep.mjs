@@ -70,11 +70,17 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { load, acceptorsOf, excusedClaims } from './assert-row-shape-spec.mjs';
 import { slotColumnsOf } from './check-row-shape.mjs';
 import { MAPPED_FORMS as FIXTURE_FORMS, candidatesFor } from './resolve-fixture.mjs';
+import { rx } from './regex-self-assert.mjs';
 
 export const SWEPT_DIRS = ['adapters/pdf', 'adapters/hubspot'];
 const SPEC = 'adapters/hubspot/asset-row-shapes.json';
 
-const STRLIT = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+const STRLIT = rx('RX-XS-01', /(['"`])(?:\\.|(?!\1)[^\\])*\1/g, {
+  why: 'a whole string literal, stripped before call detection so a name inside a message is not counted as a call site',
+  matches: ["'abc'", '"abc"'],
+  rejects: ["a'b1", 'abc'],
+  captures: [["'abc'", ["'"]]],
+});
 const isProse = (l) => { const t = l.trim(); return t.startsWith('//') || t.startsWith('*') || t.startsWith('/*'); };
 
 const sweptFiles = () => SWEPT_DIRS.flatMap((d) => readdirSync(d).filter((x) => x.endsWith('.mjs')).sort().map((f) => `${d}/${f}`));
@@ -82,8 +88,18 @@ const sweptFiles = () => SWEPT_DIRS.flatMap((d) => readdirSync(d).filter((x) => 
 // ---------------------------------------------------------------------------------------
 // THE SITE SCANNER.
 // ---------------------------------------------------------------------------------------
-const DEF = /^\s*(?:export\s+)?(?:const|let|function)\s+([A-Za-z_$][\w$]*)\s*(?:=\s*(?:async\s*)?\(|\()/;
-const CALL = /\b([A-Za-z_$][\w$]*)\s*\(/g;
+const DEF = rx('RX-XS-02', /^\s*(?:export\s+)?(?:const|let|function)\s+([A-Za-z_$][\w$]*)\s*(?:=\s*(?:async\s*)?\(|\()/, {
+  why: 'the line on which a predicate is DEFINED, and the name it is defined under',
+  matches: ['  export const g = async (a) => a', 'function h(a) {}'],
+  rejects: ['const = (a) => a', 'constfoo = (a) => a', '  x const foo = (a) => a'],
+  captures: [['const fooBar = (a) => a', ['fooBar']], ['function h(a) {}', ['h']]],
+});
+const CALL = rx('RX-XS-03', /\b([A-Za-z_$][\w$]*)\s*\(/g, {
+  why: 'every call site in a file, by the name being called — the population an exclusion predicate is attributed to',
+  matches: ['bar (2)'],
+  rejects: ['9foo(1)', 'foo.bar'],
+  captures: [['  foo(1)', ['foo']], ['bar (2)', ['bar']]],
+});
 export const POSITIONS = [
   ['skip-continue', /^\s*(?:\}\s*)?if\s*\((.+?)\)\s*(?:\{\s*)?continue\s*[;}]/],
   ['skip-return',   /^\s*(?:\}\s*)?if\s*\((.+?)\)\s*(?:\{\s*)?return\b/],
@@ -124,7 +140,12 @@ export const POSITIONS = [
 // false verdict. Carried, not closed silently.
 
 /** `import { a, b as c } from './x.mjs'` -> the local names and the module each came from. */
-const IMPORT = /^\s*import\s*\{([^}]*)\}\s*from\s*['\"]([^'\"]+)['\"]/;
+const IMPORT = rx('RX-XS-04', /^\s*import\s*\{([^}]*)\}\s*from\s*['\"]([^'\"]+)['\"]/, {
+  why: 'a named-import line, so a predicate called in one file and defined in another is resolved to its definition',
+  matches: ['import {z} from "y"'],
+  rejects: ["import a from './x.mjs';", "x import { a } from './x.mjs';"],
+  captures: [["import { a, b } from './x.mjs';", [' a, b ', './x.mjs']]],
+});
 
 const dirOf = (f) => f.slice(0, f.lastIndexOf('/'));
 const resolveSpec = (fromFile, spec) => {
@@ -237,6 +258,11 @@ export const sitesFor = (sites, entry) => {
 // THE REGISTER — SOURCE PREDICATES.
 // ---------------------------------------------------------------------------------------
 export const PREDICATES = [
+
+  // ─── prompt 46 ruling 3 ────────────────────────────────────────────────────────────────
+  { id: 'EX-91', pred: 'carriesBackslash', definedIn: 'adapters/pdf/regex-self-assert.mjs', kind: 'structural',
+    what: 'Excuses a regex literal from the backslash-carrying population that regex-self-assert.mjs counts, and from the probe requirement rx() places on that population.',
+    structural_because: 'It asks a question about the LITERAL, by code point, and no question about the world: a source with no U+005C in it has no escape that could have arrived with its backslash eaten, in either shape. Shape 1 needs a backslash to have been swallowed into a control byte and shape 2 needs one to have been swallowed leaving its letter, and a source that never held one is outside both by construction rather than by judgement. Its own failure mode is the safe one — a backslash missed adds a regex to the population that must then carry probes, which is work, never silence.' },
 
   // ─── the archetype ────────────────────────────────────────────────────────────────────
   { id: 'EX-01', pred: 'claimsNothing', definedIn: 'adapters/pdf/assert-row-shape-spec.mjs', kind: 'claiming',

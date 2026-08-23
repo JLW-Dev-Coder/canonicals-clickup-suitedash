@@ -62,6 +62,8 @@
 // rounding block. Add a total later without declaring its rounding and the gate stops. Silence
 // is never read as "no rounding"; that is the no-declared-state defect this repo keeps finding.
 
+import { rx } from './regex-self-assert.mjs';
+
 /**
  * A printed cell is text. "$1,200.00", "1200", "(50)" and "" all have to become numbers the
  * same way, and a cell that is text but not a number has to be distinguishable from a cell
@@ -310,7 +312,11 @@ export const reportRounding = (audit, mapPath) => {
 // asserted rather than assumed: a key in the wrong shape is reported by the engine that used
 // it and is a STOP, whether or not that form declares a rounding block. A form declaring none
 // yields an empty list, which is a proved no-op and not an unrun check.
-export const MISKEYED_CELL = /^groups\.[A-Za-z0-9_]+\.slots\[\d+\]\./;
+export const MISKEYED_CELL = rx('RX-RD-01', /^groups\.[A-Za-z0-9_]+\.slots\[\d+\]\./, {
+  why: 'a cell key written in a shape this module cannot resolve, so a rounding block declared over it would silently never apply',
+  matches: ['groups.assets.slots[0].amount'],
+  rejects: ['groupsXassets.slots[0].amount', 'groups.assets.slots[x].amount', 'groups.assets.slots0.amount', 'xgroups.assets.slots[0].amount'],
+});
 
 /**
  * Every key an engine looked a block up by that is in a shape `blockFor` cannot resolve.

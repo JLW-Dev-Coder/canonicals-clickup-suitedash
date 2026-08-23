@@ -65,6 +65,17 @@
 //                                                     against the host form's page is a test
 //                                                     of the wrong sheet.
 //
+// AND THE FOURTH ONE NEEDS THE FORM DECLARED, WHICH IS [D-14]. This file's first version READ
+// the owner out of the sentence — the last form named before the coordinate — and excluded the
+// whole universe from the comparison on the ground that an inferred attribution is not a basis
+// for a STOP. That ground held. Now that all 27 are declared in
+// adapters/pdf/maps/_cross-form-coordinates.json, the size of the problem is measurable: the
+// inference agrees with the declaration on 4 of 27 and is wrong on 23. It is wrong the same way
+// almost every time — `topmostSubform[0].F433-A-OIC_Page2[0]` and `433aoi.totals.json` both
+// contain the string a form-name reader matches as 433-A, so a sentence entirely about
+// 433-A(OIC)'s own page reads as a sentence about 433-A. Declaration is not a formality here;
+// it reverses 85% of the attributions.
+//
 // Collapsing those four into one is the same error as collapsing map-reachability into
 // page-printing: a comparison that cannot distinguish two facts reports on neither.
 //
@@ -93,7 +104,7 @@ export const sweptFiles = () => {
     for (const k of ['map', 'headings', 'totals', 'name-lies', 'crosswalk-classification'])
       if (existsSync(`${MAPS}/${f}.${k}.json`)) out.push({ form: f, file: `${MAPS}/${f}.${k}.json` });
   for (const s of ['adapters/hubspot/asset-row-shapes.json', `${MAPS}/_subjects.cross-form.json`,
-                   `${MAPS}/_carried.cross-form.json`])
+                   `${MAPS}/_carried.cross-form.json`, `${MAPS}/_cross-form-coordinates.json`])
     if (existsSync(s)) out.push({ form: null, file: s });
   return out;
 };
@@ -118,7 +129,7 @@ export const EXCLUDED = () => [
 // fully evidenced record. A guard tuned to fire constantly gets turned off, and a guard that
 // gets turned off is worse than none — so the unit of support is the parent object.
 
-const proseIn = (doc) => {
+export const proseIn = (doc) => {
   const out = [];
   const walk = (o, p, parent) => {
     if (typeof o === 'string') { out.push({ at: p, value: o, record: parent }); return; }
@@ -462,12 +473,47 @@ const main = async () => {
 
   const kinds = { point: 0, band: 0, widget: 0, 'cross-form': 0, factor: 0 };
   for (const c of coords) kinds[c.kind]++;
+
+  // ── [D-14] — THE OWNING FORM IS DECLARED, AND THE INFERENCE IS KEPT ONLY TO BE SCORED ──
+  //
+  // Until this commit a cross-form coordinate was EXCLUDED from the comparison, because the
+  // only reading available was "the last form named before it" and that reading is wrong on 23
+  // of the 27. It is now read from adapters/pdf/maps/_cross-form-coordinates.json, one row per
+  // occurrence, and the declared owner REPLACES the inferred one before any comparison runs.
+  //
+  // Two STOPs, in both directions: a cross-form coordinate with no row is undeclared, and a row
+  // matching no coordinate is a declaration about prose that is no longer there. Neither is
+  // silently absorbed — an unread register and an empty one must not report the same figure.
+  let xfDoc = null, xfUnreadable = null;
+  try { xfDoc = JSON.parse(readFileSync(`${MAPS}/_cross-form-coordinates.json`, 'utf8')); }
+  catch (e) { if (e.code !== 'ENOENT') xfUnreadable = e.message; }
+  if (xfUnreadable) problems.push({ kind: 'unreadable', file: `${MAPS}/_cross-form-coordinates.json`, why: xfUnreadable });
+  const xfRows = xfDoc?.declarations || [];
+  const xfUsed = new Set();
+  const xfUndeclared = [];
+  let xfAgree = 0;
+  {
+    const nth = new Map();
+    for (const c of coords) {
+      if (c.kind !== 'cross-form') continue;
+      const k = `${c.at}|${c.axis}|${c.value}`;
+      nth.set(k, (nth.get(k) || 0) + 1);
+      const occurrence = nth.get(k);
+      const d = xfRows.find((x) => x.at === c.at && x.axis === c.axis && x.value === c.value && x.occurrence === occurrence);
+      if (!d) { xfUndeclared.push({ ...c, occurrence }); continue; }
+      xfUsed.add(d.id);
+      if (d.form === c.form) xfAgree++;
+      c.declared = d;
+      c.form = d.form;
+    }
+  }
+  const xfOrphans = xfRows.filter((r) => !xfUsed.has(r.id));
   console.log('');
   console.log(`  COORDINATES — ${coords.length} quoted across the map and headings artefacts, by universe:`);
   console.log(`    point       ${String(kinds.point).padStart(4)}  a run is claimed drawn at this baseline — compared against the DRAWN TEXT of its own form`);
   console.log(`    band        ${String(kinds.band).padStart(4)}  one end of a range: a scan window, or a claim the region is EMPTY. Not a presence claim.`);
   console.log(`    widget      ${String(kinds.widget).padStart(4)}  a rectangle edge — a different number about a different object than a text baseline`);
-  console.log(`    cross-form  ${String(kinds['cross-form']).padStart(4)}  quoted about another form — compared against THAT form's page, never the host's`);
+  console.log(`    cross-form  ${String(kinds['cross-form']).padStart(4)}  quoted about another form — compared against the page of the form its declaration names, never the host's [D-14]`);
 
   const drawn = new Map();
   for (const f of new Set([...forms, ...coords.map((c) => c.form).filter(Boolean)])) drawn.set(f, await drawnOf(f));
@@ -482,14 +528,17 @@ const main = async () => {
     //   widget     excluded because a rectangle edge is compared against widget geometry, which
     //              [K-12] already folds into its own presence set; testing it here would be a
     //              second instrument measuring the same object and able to disagree with it.
-    //   cross-form excluded because THE OWNING FORM IS INFERRED FROM PROSE, NOT DECLARED. The
-    //              reader takes the last form named before the coordinate, and on this tree that
-    //              is wrong often enough to be untrustworthy: a sentence that names 433-A for
-    //              contrast and then quotes a 433-A(OIC) coordinate reads as 433-A. An inferred
-    //              attribution is not a basis for a STOP. These are COUNTED AND NAMED so the
-    //              population is visible, and settling them needs the owner DECLARED beside the
-    //              coordinate — which is a map change, and is carried rather than done here.
-    if (c.kind !== 'point') continue;
+    //   cross-form NO LONGER EXCLUDED, as of [D-14]. It used to be, and the reason was sound
+    //              while it stood: the owning form was INFERRED from prose — the last form named
+    //              before the coordinate — and that reading is wrong on 23 of the 27, because a
+    //              leaf path `topmostSubform[0].F433-A-OIC_PageN[0]` and a filename
+    //              `433aoi.totals.json` both carry the string a form-name reader matches as
+    //              433-A. An inferred attribution was never a basis for a STOP. A DECLARED one
+    //              is, so a cross-form coordinate carrying a row in
+    //              _cross-form-coordinates.json is compared against the page of the form that
+    //              row names. One still carrying no row stays out of the comparison and is a
+    //              STOP in its own right, below.
+    if (c.kind !== 'point' && !(c.kind === 'cross-form' && c.declared)) continue;
     const d = drawn.get(c.form);
     if (!d) { problems.push({ kind: 'no-page', ...c }); continue; }
     const v = r1(c.value);
@@ -503,11 +552,26 @@ const main = async () => {
   }
 
   console.log('');
-  console.log(`  host-form point coordinates compared against their own drawn page: ${kinds.point} checked, ` +
+  const xfDeclared = kinds['cross-form'] - xfUndeclared.length;
+  console.log(`  point coordinates compared against their own drawn page: ${kinds.point} checked, ` +
     `${bad.length} not drawn in any convention, ${conventionBreach.length} drawn but quoted in the other convention`);
+  console.log(`  cross-form coordinates compared against the DECLARED form's drawn page [AB-C1]: ${xfDeclared} of ${kinds['cross-form']} declared in ` +
+    `${MAPS}/_cross-form-coordinates.json, ${xfUndeclared.length} undeclared, ${xfOrphans.length} row(s) declaring prose that is no longer there`);
+  console.log(`    the last-form-named reading this replaces agrees with the declaration on ${xfAgree} of ${xfDeclared}` +
+    `${xfDeclared ? ` and is wrong on ${xfDeclared - xfAgree}` : ''} — which is why [D-14] required declaring rather than inferring`);
   console.log(`  not compared, each an exclusion with a reason: ${kinds.band} band end(s), ${kinds.widget} widget edge(s), ` +
-    `${kinds['cross-form']} cross-form coordinate(s) whose owning form is inferred from prose rather than declared [AB-C1], ` +
     `${kinds.factor} multiplication sign(s) read as an axis by a scanner that keys on the letter`);
+  for (const c of xfUndeclared) {
+    console.log(`    [AB-C1] UNDECLARED  ${c.at}`);
+    console.log(`        ${c.axis} ${c.value} (occurrence ${c.occurrence}) is quoted about a form that is not ${c.host || 'this artefact'}'s, and no row in _cross-form-coordinates.json names which.`);
+    console.log(`        The reader would take "${c.form}", the last form named before it. That reading is wrong on 23 of the 27 already declared. Declare it.`);
+    problems.push({ kind: 'undeclared-cross-form', ...c });
+  }
+  for (const r of xfOrphans) {
+    console.log(`    [AB-C1] ORPHAN DECLARATION  [${r.id}] ${r.at} ${r.axis} ${r.value} (occurrence ${r.occurrence})`);
+    console.log(`        declares an owning form for a cross-form coordinate this sweep does not find. The prose moved, or the coordinate did.`);
+    problems.push({ kind: 'orphan-cross-form-declaration', ...r });
+  }
   for (const c of conventionBreach) {
     console.log(`    [AB-Y1] ${c.at}`);
     console.log(`        ${c.axis} ${c.value} on ${c.form} is not a ${Y_CONVENTION}; it is the ${c.asWidget ? 'widget rectangle edge' : 'run TOP'} of a run that IS drawn.`);
@@ -524,7 +588,7 @@ const main = async () => {
   if (!problems.length) {
     console.log(`OK — ${claims.length} absence claim(s) enumerated; ${claims.length - undrawn.length} carry drawn evidence of their own,`);
     console.log(`${undrawn.length} carry none and every one of those is disposed (${disposed.length - openN} settled elsewhere, ${openN} OPEN and named).`);
-    console.log(`${kinds.point} host-form point coordinate(s) compared against their own drawn page, 0 undrawn.`);
+    console.log(`${kinds.point} host-form point coordinate(s) compared against their own drawn page and ${xfDeclared} cross-form coordinate(s) against the page of the form each one DECLARES, 0 undrawn.`);
     return 0;
   }
   console.log(`ABSENCE SWEEP — ${problems.length} problem(s). "The map does not reach it" and "the page does not print it"`);

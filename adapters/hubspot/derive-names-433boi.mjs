@@ -42,6 +42,7 @@
 // nothing. Nothing is silent and nothing is disabled.
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { refuseDowngrade, stampFor } from './no-downgrade.mjs';
 import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 import { keySpaceOf, coverageOf, ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 
@@ -273,11 +274,15 @@ const statusOf = (d) => {
 // ---------------------------------------------------------------------------------------
 const L = [];
 const say = (s = '') => L.push(s);
+const derivedCountForStamp = () => derived.length;
 const catCount = {};
 for (const d of derived) catCount[d.category] = (catCount[d.category] || 0) + 1;
 const scopeCount = { shared: derived.filter((d) => d.scope === 'shared').length, 'form-specific': derived.filter((d) => d.scope !== 'shared').length };
 
 say('# 433-B(OIC) property-name derivation');
+// THE STAMP. Written first so a future run can read this file's own answer rather than
+// re-deriving it from prose. See adapters/hubspot/no-downgrade.mjs.
+say(stampFor(usePortal, usePortal ? `portal read; ${derivedCountForStamp()} derived name(s) checked against it` : 'run without --portal; every per-key verdict below is "portal not read"'));
 say('');
 say(`Derived from \`adapters/pdf/maps/433boi.crosswalk-classification.json\` (${CLS.entries.length} entries) against`);
 say(`\`adapters/pdf/maps/433boi.map.json\` and \`adapters/hubspot/crosswalk.433boi.json\` (${bindings.length} bindings).`);
@@ -381,6 +386,8 @@ for (const d of derived) say(`| \`${d.key}\` | ${d.construct} | ${d.entry} | ${d
 say('');
 if (notes.length) { say('## Mechanism notes'); say(''); for (const n of notes) say(`- ${n}`); say(''); }
 
+// RULING 4 — a portal-verified report is not replaced by a not-run one on a missing flag.
+for (const l of refuseDowngrade({ path: 'adapters/hubspot/433boi.naming-derivation.md', wouldVerify: usePortal, label: '433boi.naming-derivation.md' })) console.log(l);
 writeFileSync('adapters/hubspot/433boi.naming-derivation.md', L.join('\n') + '\n');
 
 // ---------------------------------------------------------------------------------------

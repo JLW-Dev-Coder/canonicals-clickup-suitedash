@@ -152,6 +152,76 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── prompt 46 rulings 4 and 5 ────────────────────────────────────────────────────────
+
+  { id: 'G-162', file: 'absence-sweep.mjs', anchor: "catch (e) { if (e.code !== 'ENOENT') xfUnreadable = e.message; }", verdict: 'sound',
+    why: 'ENOENT AND UNPARSEABLE ARE SEPARATED, AND ONLY ONE OF THEM IS SILENT. A missing _cross-form-coordinates.json leaves `xfRows` empty, and an empty register does not pass the run: every cross-form coordinate then resolves to no row, is pushed as UNDECLARED, and the sweep exits non-zero naming all 27. A register that will not PARSE takes the other branch and is pushed as an `unreadable` problem before any of that. There is no path on which the file being absent or broken reads as the coordinates being declared.' },
+
+  { id: 'G-163', file: 'register-ids.mjs', anchor: 'and the derivation over ${from} threw', verdict: 'sound',
+    why: 'A DERIVATION THAT THROWS IS A FINDING, NOT A SKIP. It means the register\'s shape moved under the reader — `forms` becoming an object, `quotes` becoming an object, both of which happened while this check was being written — and the catch pushes a `bad` entry naming the path, the claimed figure and the throw. "I could not count it" and "it agrees" take different paths, which is the whole subject of this register.' },
+
+  { id: 'G-164', file: '../hubspot/no-downgrade.mjs', anchor: "catch (e) { return { state: 'unclassifiable', how: `unreadable", verdict: 'sound',
+    why: 'THE UNREADABLE STATE IS THE ONE THAT REFUSES. A landed report this module cannot open classifies as `unclassifiable`, and refuseDowngrade() THROWS on unclassifiable before it throws on anything else: "I could not read it" and "there was nothing to lose" must not take the same path. An empty input here blocks the write rather than permitting it.' },
+
+  { id: 'G-165', file: '../hubspot/no-downgrade.mjs', anchor: 'catch { /* absent is the case under test */ }', verdict: 'sound',
+    why: 'CANARY SETUP, AND THE FAILURE IS THE CASE. This rmSync clears the scratch path so the `absent -> not-run` direction can be exercised; the file not being there is exactly the state being set up, so a throw is nothing. What the canary then asserts is refuseDowngrade\'s verdict on that state, and that assertion is not guarded by this catch.' },
+
+  { id: 'G-166', file: '../hubspot/no-downgrade.mjs', anchor: 'catch (e) { threw = e.message; }', verdict: 'sound',
+    why: 'THE CANARY\'S INSTRUMENT, AND IT RECORDS BOTH DIRECTIONS. `threw` is compared against `expectThrow` on the next two lines, so a refusal that was expected and a refusal that was not both become misses of their own kind — "permitted a write it must refuse" and "refused a write it must permit". Swallowing is impossible: the value the catch stores IS the verdict.' },
+
+  { id: 'G-167', file: '../hubspot/no-downgrade.mjs', anchor: 'catch { /* already gone */ }', verdict: 'sound',
+    why: 'TEARDOWN, AND ITS ABSENCE IS VERIFIED RATHER THAN ASSUMED. The rmSync may legitimately find nothing — the last planted case is the absent one. What proves teardown is the `existsSync` on the following line, which pushes a miss if the synthetic file survived and is reported as `torn_down` in the canary line. Synthetic data, registered, torn down with absence verified.' },
+
+  // ─── prompt 46 ruling 3: the load-time regex self-assertion, and one phantom it created ──
+
+  // THIS ONE IS NOT A GUARD SITE AT ALL, AND SAYING SO IS THE POINT. `rx()` probe arrays quote
+  // code as DATA — a string that must match, a string that must not — and this sweep's
+  // [extract] selector reads `matchAll(` inside one of them as an extraction. It is disposed
+  // rather than silently filtered because every future probe that quotes code will land here
+  // the same way, and a reader who meets this entry learns the shape. Carried as [D-15].
+  { id: 'G-149', file: 'blanket-audit.mjs', anchor: "matches: ['s.matchAll(re)', 'new RegExp(x)', 's.match(re)'],", verdict: 'sound',
+    why: 'A PROBE STRING, NOT AN EXTRACTION. This line is the `matches` array of the RX-BA-02 registration: three literal strings the regex must match, compared at module load. Nothing here calls matchAll, nothing extracts, and there is no input that could arrive empty — the strings are constants in the source. The site is a false positive of the [extract] selector reading data that quotes code.' },
+
+  { id: 'G-150', file: 'regex-self-assert.mjs', anchor: 'const m = re.exec(input);', verdict: 'sound',
+    why: 'AN EMPTY EXTRACTION IS THE FINDING. `exec` returning null is tested on the next line and becomes "must capture X out of Y and does not match it at all" — a problem, which makes `rx()` throw and the importing module refuse to load. The vacuous case is the loudest state this construct has, not its quietest.' },
+
+  { id: 'G-151', file: 'regex-self-assert.mjs', anchor: 'module: (site.match(/adapters', verdict: 'guarded',
+    why: 'AN EMPTY EXTRACTION IS REPORTED AS ITSELF. If the stack frame cannot be parsed the fallback is the literal string "(unknown)", which is what the per-module table then prints. It affects a LABEL and never a verdict: the assertion has already run and passed by the time this line executes, and a registration attributed to "(unknown)" is visibly attributed to nothing rather than silently attributed to the wrong file.' },
+
+  // The four loop bounds in the lexer. Grouped in prose, disposed individually, because the
+  // sweep asks per site and a family anchor here would match text in three other files.
+  { id: 'G-152', file: 'regex-self-assert.mjs', anchor: 'text.charCodeAt(i) !== 10) i++; continue;', verdict: 'sound',
+    why: 'A LEXER LOOP BOUND, NOT A GUARD OVER A FINDING. `i < text.length` ends a line-comment skip at end of input. An empty file yields zero literals, and zero is PRINTED — the tree line states the population it counted on every run — so an empty input cannot be mistaken for a clean one. That the lexer finds what it must is proved by scannerCanary(), which plants a literal in each of eight syntactic positions.' },
+
+  { id: 'G-153', file: 'regex-self-assert.mjs', anchor: "!(text[i] === '*' && text[i + 1] === '/')", verdict: 'sound',
+    why: 'THE SAME BOUND, on an unterminated block comment. Running to end of input ends the scan; the file contributes the literals found before the comment, and the population figure is printed. See [G-152] for why an empty count cannot read as a clean one here.' },
+
+  { id: 'G-154', file: 'regex-self-assert.mjs', anchor: 'while (i < text.length && text[i] !== q)', verdict: 'sound',
+    why: 'THE SAME BOUND, on an unterminated string literal. Same disposition as [G-152]: the scan ends, the count is printed, and the canary is what proves the detector rather than the absence of findings.' },
+
+  { id: 'G-155', file: 'regex-self-assert.mjs', anchor: '/[a-z]/.test(text[i])', verdict: 'sound',
+    why: 'FLAG ACCUMULATION AFTER A CLOSED LITERAL. An empty flag string is the ordinary case — most literals carry no flags — and the literal has already been recorded by the time this runs. There is no verdict downstream of it: flags are reported, never compared.' },
+
+  // The five canary assertions. Every one of them is `if (!x.some(...)) push a miss`, which is
+  // the INVERSE of the shape this sweep hunts: the vacuous input pushes a finding.
+  { id: 'G-156', file: 'regex-self-assert.mjs', anchor: '!p1.some(', verdict: 'sound',
+    why: 'AN EMPTY PROBLEM LIST IS A CANARY MISS. `p1` empty means assertSpec() found nothing wrong with a regex carrying a planted literal backspace — which is the detector being dead. `.some` on an empty array is false, `!` makes it true, and a miss is pushed. Misses are terminal: main() prints CANARY DEAD and exits 2 before reading a single file.' },
+
+  { id: 'G-157', file: 'regex-self-assert.mjs', anchor: '!p2.some(', verdict: 'sound',
+    why: 'THE SAME INVERSION, on the planted eaten `\\s`. Empty means undetected means a miss. See [G-156].' },
+
+  { id: 'G-158', file: 'regex-self-assert.mjs', anchor: '!p2b.some(', verdict: 'sound',
+    why: 'THE SAME INVERSION, on the planted eaten `\\)` — the widening direction, which only a reject probe can see. See [G-156].' },
+
+  { id: 'G-159', file: 'regex-self-assert.mjs', anchor: '!p3.some(', verdict: 'sound',
+    why: 'THE SAME INVERSION, on the registration requirement: a backslash-carrying regex declaring no probes must be refused. See [G-156].' },
+
+  { id: 'G-160', file: 'regex-self-assert.mjs', anchor: '!p6.some(', verdict: 'sound',
+    why: 'THE SAME INVERSION, on the planted eaten `\\w` that still matches and still captures — the half `.test` cannot see. See [G-156].' },
+
+  { id: 'G-161', file: 'regex-self-assert.mjs', anchor: 'catch (e) {', verdict: 'sound', family: true,
+    why: 'BOTH CATCHES IN THIS FILE, AND NEITHER SWALLOWS. The first wraps `await import(m)` over the adopted set: a module whose registered regex was mangled throws out of its own import, and the catch prints REFUSED TO LOAD with the id and the probe that caught it, then returns 2. The second wraps readFileSync over the swept tree: an unreadable file prints UNREADABLE, increments `unreadable`, and main() returns 2 on any non-zero count before the clean verdict can be reached. A file this scan cannot open contributes the same zero findings as a clean one, which is the shape [D-12] hid in, so it is counted rather than skipped.' },
+
   // ─── fixture authorship asserted by regeneration, ruling 7 ────────────────────────────
   { id: 'G-143', file: 'assert-fixture-authorship.mjs', anchor: 'catch (e) { out.push({ file: f, unreadable: e.message }); continue; }', verdict: 'sound',
     why: 'A SAMPLE THAT WILL NOT PARSE IS A ROW, NOT A SKIP. The `continue` moves past the fixture only after pushing `{unreadable}`, and authorshipAudit() turns every such row into an UNREADABLE problem before any verdict is computed. A fixture whose authorship cannot be read is not a fixture with no claim — it is the one file in the directory nothing can say anything about, which is exactly the state a provenance check exists to refuse.' },

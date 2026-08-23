@@ -57,6 +57,21 @@ import { OVERRIDES } from './success-sweep.mjs';
 import { ABSENCE_SHAPES } from './absence-sweep.mjs';
 import { DECLARED as ABSENCE_DECLARED } from './absence-declared.mjs';
 import { CONTROLS } from './control-char-scan.mjs';
+import { REGISTRY as RX_REGISTRY, ADOPTERS as RX_ADOPTERS } from './regex-self-assert.mjs';
+// THE THREE ADOPTERS THIS FILE DOES NOT OTHERWISE PULL IN. A regex registers itself when its
+// module LOADS, so the size of that register depends on the importing tool's import graph — and
+// a register whose size depends on who is looking is not a register. Imported statically rather
+// than through loadAdopters(), because a top-level await here would propagate to validate-map.mjs
+// and through it to gate step 3. `assertAdoptersLoaded()` below is what keeps this list honest:
+// it is DERIVED against ADOPTERS rather than counted, so an adopter added there and forgotten
+// here is a STOP rather than a quietly smaller register.
+// It fired on its first run and named enumerate-shadowing.mjs, which this file imports
+// ABSENCE_SHAPES-style registers from but not the module itself. That is the check working:
+// the rx register would have been one entry short and nothing else would have said so.
+import './assert-y-convention.mjs';
+import './rounding.mjs';
+import './line-markers.mjs';
+import './enumerate-shadowing.mjs';
 
 const MAPS = 'adapters/pdf/maps';
 
@@ -88,6 +103,72 @@ export const MAPPED_FORMS = () =>
 // ---------------------------------------------------------------------------------------
 // Each entry: a label, a scope, and a reader that returns the ids. `view` names the register
 // whose ids this one refers to. Nothing here is a count; every figure is derived by reading.
+/**
+ * Every module regex-self-assert.mjs declares as an adopter must actually be loaded here, or
+ * the rx register this file counts is a partial one wearing a whole one's name. Derived on both
+ * sides — the expected set from ADOPTERS, the loaded set from the registrations themselves — so
+ * neither is a figure anyone typed.
+ */
+const assertAdoptersLoaded = () => {
+  const loaded = new Set([...RX_REGISTRY.values()].map((r) => r.module.split('/').pop()));
+  const missing = RX_ADOPTERS.map((m) => m.split('/').pop()).filter((f) => !loaded.has(f));
+  if (missing.length) throw new Error(
+    `regex-self-assert.mjs declares ${RX_ADOPTERS.length} adopter(s) and ${missing.length} of them contributed no registration here: ${missing.join(', ')}.\n` +
+    '      Either that module lost its rx() registrations, or register-ids.mjs is not importing it and is about to count a register smaller than the one that exists.');
+};
+
+/**
+ * A REGISTER THAT DECLARES ITS OWN SIZE IS COMPARED AGAINST IT — the ENGINE-WIDE ones, which
+ * nothing else reaches.
+ *
+ * count-sweep.mjs [S-07] already does this for `_carried._count.open` and `.resolved`, but its
+ * manifest entry keys on `file: /\.map\.json$/` and its whole context is built per form, so the
+ * ENGINE-WIDE `_carried.cross-form.json` was outside it. That register's `_count.resolved` said
+ * 7 against 8 entries at 8132a0d and nothing in the tree compared them. Found by re-deriving it
+ * during Prompt 46; the number is now derived on write and asserted here on every run.
+ *
+ * Enumerated, not globbed: each file names the scalar and the array it counts.
+ */
+const DECLARED_SIZES = [
+  { file: `${MAPS}/_carried.cross-form.json`, pairs: [
+    ['_count.open', (d) => d.open.length, 'open[]'],
+    ['_count.resolved', (d) => d.resolved.length, 'resolved[]'],
+  ] },
+  { file: `${MAPS}/_cross-form-coordinates.json`, pairs: [
+    ['_count', (d) => d.declarations.length, 'declarations[]'],
+  ] },
+  { file: `${MAPS}/_subjects.cross-form.json`, pairs: [
+    ['_count.pairs', (d) => d.pairs.length, 'pairs[]'],
+    // `forms` is an OBJECT keyed by form id, not an array, and the derivation says so rather
+    // than reaching for `.length` and finding undefined.
+    ['_count.forms', (d) => Object.keys(d.forms).length, 'the keys of forms{}'],
+    // `quotes` is an object too, keyed by the quote's own label. Derived from its KEYS.
+    ['_count.quotes', (d) => Object.values(d.forms).reduce((n, f) => n + Object.keys(f.quotes || {}).length, 0), 'the keys of every forms[*].quotes{} summed'],
+  ] },
+  { file: 'adapters/hubspot/probe-register.json', pairs: [
+    ['_count.probes', (d) => d.probes.length, 'probes[]'],
+  ] },
+];
+
+const assertDeclaredSizes = () => {
+  const bad = [];
+  for (const { file, pairs } of DECLARED_SIZES) {
+    const doc = json(file);
+    if (!doc) continue;                       // ENOENT is absence; json() throws on unparseable
+    for (const [path, derive, from] of pairs) {
+      const claimed = path.split('.').reduce((o, k) => (o === undefined || o === null ? o : o[k]), doc);
+      if (claimed === undefined) { bad.push(`${file} declares no \`${path}\` — a register that states its size everywhere else and not here is the one nobody checks`); continue; }
+      let derived;
+      // A derivation that THROWS is a STOP, never a skip: it means the register's shape moved
+      // under the reader, and "I could not count it" must not report as "it agrees".
+      try { derived = derive(doc); }
+      catch (e) { bad.push(`${file} \`${path}\` claims ${claimed} and the derivation over ${from} threw: ${e.message}`); continue; }
+      if (claimed !== derived) bad.push(`${file} \`${path}\` claims ${claimed}; ${from} derives ${derived}`);
+    }
+  }
+  if (bad.length) throw new Error(`DECLARED SIZE DISAGREES WITH THE REGISTER — ${bad.length}:\n      ${bad.join('\n      ')}`);
+};
+
 export const REGISTERS = () => {
   const R = [];
   const add = (label, scope, ids, extra = {}) => R.push({ label, scope, ids, ...extra });
@@ -107,6 +188,9 @@ export const REGISTERS = () => {
   add('absence-sweep.mjs:ABSENCE_SHAPES', 'engine', idsOf('ABSENCE_SHAPES', ABSENCE_SHAPES));
   add('absence-declared.mjs:DECLARED',    'engine', idsOf('absence.DECLARED', ABSENCE_DECLARED));
   add('control-char-scan.mjs:CONTROLS',   'engine', idsOf('CONTROLS', CONTROLS));
+  assertAdoptersLoaded();
+  assertDeclaredSizes();
+  add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));
 
   // --- engine-wide JSON registers, enumerated --------------------------------------------
   const cross = json(`${MAPS}/_carried.cross-form.json`);
@@ -116,6 +200,8 @@ export const REGISTERS = () => {
   }
   const probes = json('adapters/hubspot/probe-register.json');
   if (probes) add('probe-register.json:probes', 'engine', idsOf('probes', probes.probes || []));
+  const xf = json(`${MAPS}/_cross-form-coordinates.json`);
+  if (xf) add('_cross-form-coordinates.json:declarations', 'engine', idsOf('cross-form-coordinates', xf.declarations || []));
 
   // --- per-form registers, from the map glob ---------------------------------------------
   // A map that exists and will not parse throws out of json() and takes the run down. That is
