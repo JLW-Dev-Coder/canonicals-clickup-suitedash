@@ -72,16 +72,14 @@
    "status": "OPEN"
   },
   {
-   "id": "D-13",
-   "form": "433-F, and any form that later moves to the derived path",
-   "raised_in": "Prompt 44 commit 2, by the construct-vocabulary assertion on its first run",
-   "subject": "adapters/hubspot/fields.433f.json writes a FILE PATH where every other definitions file writes a MAP CONSTRUCT, and nothing reads it",
-   "the_shape": "Two of its 56 rows — `433f_age_band` and `433f_address_differs` — carry `source: \"fill-433f.mjs\"`. Every other definitions file writes one of `map`, `split`, `allowed`, `engine`, `groups`, `checkboxes`, `check_here`: the name of the map construct the property came from. A file path is not a construct; it is the name of the thing that READS the input.",
-   "why_it_is_inert_today": "bindings.mjs `bindingSourceOf(\"433f\")` is \"crosswalk\", so 433-F's `kind` comes from its crosswalk row's own `row_shape` and `map_option_by_value` and this file's `source` is read by nothing. No value is mis-shaped and no cell prints empty.",
-   "why_it_is_recorded_anyway": "It is the writer-resolver divergence the ruling is about, sitting in the tree and harmless only by accident of which path the form takes. The day 433-F moves to the derived path — which is the direction every form after 433-A has taken — those two rows resolve to no construct and `kindOf` returns null, which is now a STOP. Better a STOP than the silent scalar it would have been before this commit; better still to fix the writer.",
-   "what_it_is_NOT": "NOT a defect in the 433-F round trip and NOT a wrong property. Both properties are correct, provisioned and live; only the provenance field disagrees with the vocabulary.",
-   "the_remedy": "Decide what those two rows should say. `engine` is the honest construct — an input the engine reads that the map names no cell for — and it is exactly what ENGINE_EXTRA_INPUTS[\"433f\"] already declares both keys as. Rewriting them means re-running gen-fields-from-crosswalk.mjs, which is 433-F's generator and outside this prompt's scope line.",
-   "reported_where": "adapters/hubspot/assert-intake-keys.mjs prints it on every run under DIVERGENCE, inert and reported every run.",
+   "id": "D-14",
+   "form": "every mapped form; found on 433-A(OIC) and 433-B(OIC)",
+   "raised_in": "Prompt 45 commit 1, by adapters/pdf/absence-sweep.mjs on its first full run",
+   "subject": "A coordinate quoted about ANOTHER form carries no declaration of which form it is about, so the owning form is inferred from prose",
+   "the_shape": "Evidence prose quotes cross-form coordinates — \"433-A page 2 y 464.1\", inside 433-A(OIC)’s map; \"while 433-A(OIC) page 5 y 421.3 prints an ALTERNATIVE\", inside 433-B(OIC)’s. 27 such coordinates are in the tree. Nothing beside them says which form they are on, so a reader has to take the last form named in the sentence, and blanket-audit [K-12] took the HOST form and compared them against the wrong sheet — which is 15 of the 17 uncovered coordinates it reported when it was revived.",
+   "why_it_is_not_settled_here": "The absence sweep classifies these as `cross-form` and EXCLUDES them from its comparison, counted and named, because last-form-named is wrong often enough to be untrustworthy: a sentence that names 433-A for contrast and then quotes a 433-A(OIC) coordinate reads as 433-A. An inferred attribution is not a basis for a STOP, and asserting on one would manufacture findings rather than remove them.",
+   "the_remedy": "The owner declared beside the coordinate, the way `printed_as_checkbox` declares its form. That is a map edit across two artefacts and it is not made unasked — and it is the same discipline the printed-evidence rule already imposes on a NEW claim.",
+   "reported_where": "adapters/pdf/absence-sweep.mjs prints the cross-form count in its universe table on every run, tagged [AB-C1].",
    "status": "OPEN - recorded, not built."
   }
  ],
@@ -249,6 +247,24 @@
     "what_moved": "Reported in full in the run: five zero constants across two forms left the \"in class somewhere and proved nowhere\" list, which is what made that list uncloseable, and reappeared in the observability list where they CAN be closed by a fixture that parks a non-zero figure on the leased branch.",
     "the_defect_this_fix_committed_and_the_sweep_that_caught_it": "The DECLARED-BUT-NEVER-IN-CLASS check builds a declaration identity from the totals file and compares it against the identities the gate builds. Its first draft formatted the constant with `toFixed(2)` where the gate uses a grouping formatter — agreeing on 0.00 and disagreeing on every figure above a thousand — and reported three real 433-A(OIC) constants (-1,000.00, -3,450.00, -11,980.00) as reached by no fixture when all three are reached on every run. A re-implementation of an identity is a second answer to the question the identity exists to make one answer to, committed by the tool reporting on that class. The formatter now lives once, in adapters/pdf/comparisons.mjs, and both sides import it."
    }
+  },
+  {
+   "id": "D-13",
+   "form": "433-F, and any form that later moves to the derived path",
+   "raised_in": "Prompt 44 commit 2, by the construct-vocabulary assertion on its first run",
+   "subject": "adapters/hubspot/fields.433f.json writes a FILE PATH where every other definitions file writes a MAP CONSTRUCT, and nothing reads it",
+   "the_shape": "Two of its 56 rows — `433f_age_band` and `433f_address_differs` — carry `source: \"fill-433f.mjs\"`. Every other definitions file writes one of `map`, `split`, `allowed`, `engine`, `groups`, `checkboxes`, `check_here`: the name of the map construct the property came from. A file path is not a construct; it is the name of the thing that READS the input.",
+   "why_it_is_inert_today": "bindings.mjs `bindingSourceOf(\"433f\")` is \"crosswalk\", so 433-F's `kind` comes from its crosswalk row's own `row_shape` and `map_option_by_value` and this file's `source` is read by nothing. No value is mis-shaped and no cell prints empty.",
+   "why_it_is_recorded_anyway": "It is the writer-resolver divergence the ruling is about, sitting in the tree and harmless only by accident of which path the form takes. The day 433-F moves to the derived path — which is the direction every form after 433-A has taken — those two rows resolve to no construct and `kindOf` returns null, which is now a STOP. Better a STOP than the silent scalar it would have been before this commit; better still to fix the writer.",
+   "what_it_is_NOT": "NOT a defect in the 433-F round trip and NOT a wrong property. Both properties are correct, provisioned and live; only the provenance field disagrees with the vocabulary.",
+   "the_remedy": "Decide what those two rows should say. `engine` is the honest construct — an input the engine reads that the map names no cell for — and it is exactly what ENGINE_EXTRA_INPUTS[\"433f\"] already declares both keys as. Rewriting them means re-running gen-fields-from-crosswalk.mjs, which is 433-F's generator and outside this prompt's scope line.",
+   "reported_where": "adapters/hubspot/assert-intake-keys.mjs prints it on every run under DIVERGENCE, inert and reported every run.",
+   "status": "RESOLVED",
+   "resolved_in": "Prompt 45 commit 2",
+   "what_resolved_it": "gen-fields-from-crosswalk.mjs now DERIVES the construct from the crosswalk row’s `consumed_by` through CONSUMED_BY_CONSTRUCT, a declared and total mapping. An unrecognised shape THROWS rather than defaulting: a default of \"map\" would file an engine-only input as a mapped cell, which is this same wrong-construct defect one level down.",
+   "where_the_remedy_above_was_half_right": "The remedy recorded here proposed `engine` for both rows. That is right for 433f_age_band — it selects which published IRS standard the allowed block writes and the map names no cell for it, which is what CONSTRUCT_KIND defines `engine` as. It is WRONG for 433f_address_differs: the map DOES name that cell, at checkboxes.address_differs, so the construct is `checkboxes` and `engine` would understate it. The discriminator is whether the map names a cell for the input, not which block of the engine reads it.",
+   "what_it_cost": "Nothing on any form. All four definitions files now write only CONSTRUCT_KIND names; the three that already agreed regenerate byte-identical; 433-F fills identically on all 213 fields. The crosswalk sentence that used to sit in `source` is kept on the row as `consumed_by`, so no provenance was paid for the fix.",
+   "and_the_tolerated_branch_is_gone": "assert-intake-keys.mjs used to report this as an INERT DIVERGENCE because bindingSourceOf(\"433f\") is \"crosswalk\" and nothing read the field. That branch is removed: an off-vocabulary construct is a STOP on every form, read or not. Inert is a statement about this week’s wiring, not about the artefact."
   }
  ],
  "_count": {

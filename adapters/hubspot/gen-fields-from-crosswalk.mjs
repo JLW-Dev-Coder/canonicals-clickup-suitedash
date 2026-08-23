@@ -72,7 +72,18 @@ const CONSUMED_BY_CONSTRUCT = [
   [/^split$/,                        'split'],
   [/^groups./,                      'groups'],
   [/^special./,                     'map'],          // a composite of mapped cells; the map binds every one
-  [/allowed block/,                  'allowed'],
+  // THE DISCRIMINATOR IS WHETHER THE MAP NAMES A CELL FOR THE INPUT, not which block reads it.
+  //   allowed block  -> `engine`. `age_band` and `household_size` SELECT which published IRS
+  //                    standard the allowed block writes; the map names no cell for either, and
+  //                    CONSTRUCT_KIND defines `engine` as exactly that — an input the engine
+  //                    reads that the map names no cell for. `allowed` is the construct for the
+  //                    standards CELLS themselves, which is what fields.433a.json writes it on.
+  //   checkbox block -> `checkboxes`. The map DOES name these cells: checkboxes.address_differs
+  //                    and checkboxes.pay_freq are targets, so the property feeds a construct
+  //                    the map declares and `engine` would understate it.
+  // [D-13]'s own carried entry proposed `engine` for both. That is right for age_band and wrong
+  // for address_differs, and the map is what says so.
+  [/allowed block/,                  'engine'],
   [/checkbox block/,                 'checkboxes'],
 ];
 const constructFor = (r) => {
