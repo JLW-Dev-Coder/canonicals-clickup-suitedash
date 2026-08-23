@@ -1,0 +1,71 @@
+{
+ "_fixture": {
+  "form": "433b",
+  "role": "stress",
+  "why": "OVER-MAX ON ALL THREE PAGE-1 GROUPS AT ONCE. The page draws two payment-processor rows, three credit-card rows and four personnel rows; this record supplies three, four and five. Run with --saturated it proves each surplus row is DROPPED AND LOGGED rather than truncated onto the page or written over the last printed row — which is what adapters/pdf/assert-overflow.mjs then checks against the filled PDF.",
+  "_why_all_three_at_once_and_not_one_at_a_time": "Because the engine loops the groups and a cap that only fires when it is the only one firing is a cap nothing has exercised in company. Three caps, one run, three drops expected: payment_processors[2], credit_cards_accepted[3], personnel[4].",
+  "_the_surplus_rows_are_marked_in_their_own_values": "Every cell of every dropped row carries the word OVERMAX, so a surplus row that reached the page would be visible in the filled PDF by reading it rather than by counting rows.",
+  "_synthetic": "Every value is invented and identifies nobody.",
+  "_authored_by": "Prompt 46 commit 3."
+ },
+
+ "intake_id": "433b-overmax",
+
+ "s1_business_name": "Overmax Holdings LLC",
+ "s1_business_street_address": "1 Cap Test Way",
+ "s1_mailing_address": "PO Box 1",
+ "s1_city": "Olympia",
+ "s1_state": "WA",
+ "s1_zip": "98501",
+ "s1_county": "Thurston",
+ "s1_business_telephone_area_code": "360",
+ "s1_business_telephone_number": "555-0100",
+ "s1_type_of_business": "Holding company",
+ "s1_business_website": "www.overmax.example",
+ "s1_ein": "00-0000002",
+ "s1_type_of_entity": "Corporation",
+ "s1_entity_other_description": "n/a",
+ "s1_llc_number_of_members": "0",
+ "s1_date_incorporated_or_established": "01012020",
+ "s1_number_of_employees": "3",
+ "s1_monthly_gross_payroll": "9000.00",
+ "s1_frequency_of_tax_deposits": "Monthly",
+ "s1_eftps_enrolled": "no",
+ "s1_engages_in_ecommerce": "no",
+
+ "payment_processors": [
+  { "name_and_address": "Processor One, 1 First St, Olympia, WA 98501", "account_number": "P-0001" },
+  { "name_and_address": "Processor Two, 2 Second St, Olympia, WA 98501", "account_number": "P-0002" },
+  { "name_and_address": "OVERMAX Processor Three, 3 Third St, Olympia, WA 98501", "account_number": "OVERMAX-P-0003" }
+ ],
+
+ "credit_cards_accepted": [
+  { "type_of_credit_card": "Visa", "merchant_account_number": "C-0001", "issuing_bank_name_and_address": "Bank One, 1 Bank St, Olympia, WA 98501", "issuing_bank_phone": "360-555-0101" },
+  { "type_of_credit_card": "Mastercard", "merchant_account_number": "C-0002", "issuing_bank_name_and_address": "Bank Two, 2 Bank St, Olympia, WA 98501", "issuing_bank_phone": "360-555-0102" },
+  { "type_of_credit_card": "Discover", "merchant_account_number": "C-0003", "issuing_bank_name_and_address": "Bank Three, 3 Bank St, Olympia, WA 98501", "issuing_bank_phone": "360-555-0103" },
+  { "type_of_credit_card": "OVERMAX Amex", "merchant_account_number": "OVERMAX-C-0004", "issuing_bank_name_and_address": "OVERMAX Bank Four, 4 Bank St, Olympia, WA 98501", "issuing_bank_phone": "360-555-0104" }
+ ],
+
+ "personnel": [
+  { "full_name": "Person One", "title": "President", "home_address": "1 Home St", "city": "Olympia", "state": "WA", "zip": "98501",
+    "taxpayer_identification_number": "000-00-0010", "home_phone_area_code": "360", "home_phone_number": "555-0110",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0111", "ownership_percentage": "25%", "annual_salary_or_draw": "100000.00" },
+  { "full_name": "Person Two", "title": "Treasurer", "home_address": "2 Home St", "city": "Olympia", "state": "WA", "zip": "98501",
+    "taxpayer_identification_number": "000-00-0011", "home_phone_area_code": "360", "home_phone_number": "555-0112",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0113", "ownership_percentage": "25%", "annual_salary_or_draw": "100000.00" },
+  { "full_name": "Person Three", "title": "Secretary", "home_address": "3 Home St", "city": "Olympia", "state": "WA", "zip": "98501",
+    "taxpayer_identification_number": "000-00-0012", "home_phone_area_code": "360", "home_phone_number": "555-0114",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0115", "ownership_percentage": "25%", "annual_salary_or_draw": "100000.00" },
+  { "full_name": "Person Four", "title": "Director", "home_address": "4 Home St", "city": "Olympia", "state": "WA", "zip": "98501",
+    "taxpayer_identification_number": "000-00-0013", "home_phone_area_code": "360", "home_phone_number": "555-0116",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0117", "ownership_percentage": "25%", "annual_salary_or_draw": "100000.00" },
+  { "full_name": "OVERMAX Person Five", "title": "OVERMAX Director", "home_address": "OVERMAX 5 Home St", "city": "OVERMAX", "state": "WA", "zip": "98501",
+    "taxpayer_identification_number": "000-00-0014", "home_phone_area_code": "360", "home_phone_number": "555-0118",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0119", "ownership_percentage": "OVERMAX", "annual_salary_or_draw": "999999.00" }
+ ],
+
+ "personnel_7a_responsible_for_payroll_taxes": "yes",
+ "personnel_7b_responsible_for_payroll_taxes": "no",
+ "personnel_7c_responsible_for_payroll_taxes": "no",
+ "personnel_7d_responsible_for_payroll_taxes": "no"
+}

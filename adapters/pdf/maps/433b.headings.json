@@ -1,0 +1,61 @@
+{
+ "form": "433b",
+ "form_revision": "6-2026",
+ "catalog": "16649P",
+ "_what": "The printed headings on 433-B, and the band each one opens. A widget belongs to the band its RECTANGLE sits in, and a group belongs to the heading whose band its rows are drawn under. Both coordinate sets come from adapters/pdf/page-geometry.mjs, so this file and the map cannot disagree about where anything is.",
+ "_why": "A group bound under the wrong heading writes a row into the wrong printed table, and nothing about the leaf names would say so on this form — page 1's names are p1_24_6a and p1_33_7aFullNm, which name a row and a column and never a table. The band is the check.",
+ "_band_rule": "A heading's band runs from its own baseline DOWN to the next declared heading on the same page, or to the foot of the page if there is none below it. Declared here rather than derived so a heading nobody wrote down cannot silently widen the band above it.",
+ "_slice": "Slice 1. Page 1 only; pages 2 to 6 declare no heading here yet and are not claimed to have none.",
+
+ "headings": [
+  {
+   "id": "SECTION_1_BUSINESS_INFORMATION",
+   "page": 1,
+   "text": "Section 1: Business Information",
+   "_at": "y 662.4, x 46.0..197.3. Drawn as ONE text run on this form, unlike 433-B(OIC), which splits its banner into three runs and needs a convention about which part names the subject. Here there is nothing to choose."
+  },
+  {
+   "id": "PAYMENT_PROCESSOR",
+   "page": 1,
+   "text": "PAYMENT PROCESSOR",
+   "_at": "y 505.5, x 43.2..124.6, with the qualifier \"(e.g., PayPal, Authorize.net, Google Checkout, etc.)\" drawn as a separate run at x 126.5..287.0 on the same baseline. The band is anchored on the part that names the thing."
+  },
+  {
+   "id": "CREDIT_CARDS_ACCEPTED",
+   "page": 1,
+   "text": "CREDIT CARDS ACCEPTED BY THE BUSINESS",
+   "_at": "y 430.7, x 46.0..226.9. One run."
+  },
+  {
+   "id": "SECTION_2_BUSINESS_PERSONNEL",
+   "page": 1,
+   "text": "Section 2: Business Personnel and Contacts",
+   "_at": "y 284.4, x 46.0..256.8. One run."
+  },
+  {
+   "id": "PARTNERS_OFFICERS_LLC_MEMBERS",
+   "page": 1,
+   "text": "PARTNERS, OFFICERS, LLC MEMBERS, MAJOR SHAREHOLDERS (Foreign and Domestic), ETC.",
+   "_at": "y 268.7, x 46.0..413.9. One run. It sits 15.7pt below the Section 2 banner and opens the band the four personnel rows are drawn in."
+  }
+ ],
+
+ "groups": {
+  "payment_processors": {
+   "heading": "PAYMENT_PROCESSOR",
+   "_why": "The two rows are drawn at y 464.4..486.0 (marker 5a) and y 442.8..464.4 (marker 5b). Both rectangles lie strictly below PAYMENT_PROCESSOR's baseline at y 505.5 and strictly above CREDIT_CARDS_ACCEPTED's at y 430.7, which closes the band.",
+   "_the_two_column_captions_are_inside_this_band_and_open_no_band_of_their_own": "\"Name and Address\" at y 490.5 and \"Payment Processor Account Number\" at y 489.2 name COLUMNS, not bands. Neither is registered above, and registering one would cut the band above the very rows it captions."
+  },
+  "credit_cards_accepted": {
+   "heading": "CREDIT_CARDS_ACCEPTED",
+   "_why": "The three rows occupy y 367.2..403.2 (6a), y 331.2..367.2 (6b) and y 295.2..331.2 (6c). Every rectangle is below CREDIT_CARDS_ACCEPTED's baseline at y 430.7 and above SECTION_2_BUSINESS_PERSONNEL's at y 284.4, which closes the band. The lowest row bottom is y 295.2, 10.8pt clear of that boundary, so the separation is a real gap and not a tolerance."
+  },
+  "personnel": {
+   "heading": "PARTNERS_OFFICERS_LLC_MEMBERS",
+   "_why": "The four rows run from y 255.6 down to y 50.4 — row 7a's topmost cell at y 255.6..266.4 and row 7d's lowest at y 50.4..61.2. Every one is below PARTNERS_OFFICERS_LLC_MEMBERS's baseline at y 268.7 and above the page footer at y 24.1. Nothing is registered below it on this page, so the band runs to the foot.",
+   "_and_the_band_above_it_holds_no_row": "SECTION_2_BUSINESS_PERSONNEL at y 284.4 and PARTNERS_OFFICERS_LLC_MEMBERS at y 268.7 are 15.7pt apart and NOTHING is drawn between them. The section banner opens a band containing only the block title, which is why the group is declared against the block and not against the section: a group declared against the section would claim a band starting 15.7pt too high and would swallow anything a later revision printed there."
+  }
+ },
+
+ "_no_other_group_on_page_1": "The map declares three groups and page 1 draws three repeating blocks. Everything else on the page is a scalar: Section 1's eleven left-column cells and sixteen right-column cells are one-per-page facts about the entity, not rows. The 2b entity list is five checkboxes in one exclusive set rather than a repeating block — five options for one fact, not five rows of the same fact."
+}

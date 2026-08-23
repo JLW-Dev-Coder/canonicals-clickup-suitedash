@@ -347,6 +347,21 @@ const missing = (demanded, supplied, key = (x) => x) => demanded.filter(d => !su
 // `forms` scopes a declaration to the forms where the demand is structurally empty; omit it
 // and the declaration applies to every form.
 export const EMPTY_DEMAND = [
+  // ── [S-18] on 433-B: the page has no arithmetic, so step 11's prover has no atoms ──────
+  //
+  // [S-18] credits gate step 11 with recomputing every entry in `<form>.totals.json`, and the
+  // atoms it demands are the printed money constants the covered sites quote. On 433-B slice 1
+  // there are none, and that is not a shortfall in the evidence — it is the page. Page 1 draws
+  // no lettered Box, no "Total" line, no "Add lines", no "Subtract", no "minus" and no
+  // "multiply"; the only occurrence of the word "box" on it is "(Check appropriate box below)".
+  // All seven of those figures are DERIVED against the drawn page on every run by count-sweep
+  // [S-37], with the "box" row as the positive control that proves the reading is alive.
+  //
+  // So this form declares no totals file, gate step 11 SKIPS, and the demanded set is empty
+  // because the universe is. A NON-empty demand here would be the finding.
+  { blanket: 'S-18', instrument: 'gate step 11', forms: ['433b'],
+    why: 'PAGE 1 OF 433-B HAS NO ARITHMETIC AT ALL, so there is no printed money constant for the step-11 prover to demand and no totals declaration for it to recompute. The absence is checked rather than asserted: count-sweep [S-37] re-derives it against the drawn page every run over six enumerated patterns plus a positive control. When slice 2 reads pages 2 and 3 — which print Total Investments, Total Equity of Digital Assets and a full monthly income and expense statement — this entry must be re-read and almost certainly removed, because the universe it says is empty will not be.' },
+
   { blanket: 'S-15', instrument: 'validate-map.mjs',
     why: 'THE CITATION IS ABOUT ROUNDING, NOT ABOUT PATHS. [S-15] credits validate-map.mjs with "requiring every money cell here to sit in exactly one rounding block", which is the rounding cross-check validate-map.mjs runs through rounding.mjs — not the target-existence check the path prover measures. The totals declaration quotes printed captions and operand key names and no full AcroForm path, so the path demand is correctly empty. The rounding claim itself is counted by [K-07], which is where that half of the sentence is paid.' },
   { blanket: 'S-25c', instrument: 'validate-map.mjs',
@@ -791,6 +806,46 @@ export const COMPLETENESS = [
       // halves so this counter can be held to the same enumeration standard as the rest.
       const un = c.uncoveredList || [];
       return { ...c, universeList: [...un, ...Array.from({ length: c.universe - un.length }, (_, i) => `covered_key_${i}`)] };
+    } }),
+
+  // ── 433-B slice 1: the three per-BLOCK coverage claims ────────────────────────────────
+  //
+  // The map's page-1 partition is already counted by count-sweep [S-01] and [S-02] — 103 of
+  // 103, derived from widget geometry. What those counters do NOT reach are three sentences
+  // that state coverage of a SUB-BLOCK: "Every one of the 60 cells is bound on the page"
+  // (Section 2's four personnel rows), "Every one of those 16 cells is bound" (the two page-1
+  // tables) and "all eight Section 2 phone cells, are bound" (the P3/P7 parenthesis rule).
+  //
+  // A whole-page counter cannot settle any of them. 103 of 103 holds while the 60 is really 59
+  // and something else is bound twice — which is exactly the arithmetic a per-block claim
+  // invites. The universe here is therefore the BLOCK, derived from the map's own group
+  // declarations and its bindings, and not the page.
+  C({ id: 'K-98', match: /Every one of the 60 cells is bound|Every one of those 16 cells is bound|Section 2 phone cells, are bound/i,
+    kind: 'counter',
+    what: 'each 433-B page-1 sub-block is bound to the cell count its own declaration states',
+    universe: { scoped_to: 'block', detail: 'the slots a group declares (personnel 4 x 13 = 52 text cells plus 4 x 2 declared checkbox pairs = 60; payment_processors 2 x 2 plus credit_cards_accepted 3 x 4 = 16) and the eight Section 2 phone cells the personnel slots declare',
+      admits: (m, ctx) => typeof m === 'string' && ctx.form === '433b' },
+    count: (ctx) => {
+      const g = ctx.mapDoc.groups || {};
+      const cells = (name) => (g[name]?.slots || []).reduce((n, s) => n + Object.keys(s.text || {}).length, 0);
+      // The personnel block is 52 text cells plus the eight Yes/No boxes its four declared
+      // pairs supply. Both halves are read from the map rather than stated.
+      const pairs = Object.keys(ctx.mapDoc.checkboxes || {}).filter((k) => /^personnel_7[a-d]_/.test(k)).length;
+      const personnel = cells('personnel') + pairs * 2;
+      const tables = cells('payment_processors') + cells('credit_cards_accepted');
+      const phones = (g.personnel?.slots || []).reduce((n, s) =>
+        n + Object.keys(s.text || {}).filter((c) => /phone/.test(c)).length, 0);
+      const rows = [
+        { what: 'Section 2 personnel cells', claimed: 60, derived: personnel },
+        { what: 'the two page-1 table blocks', claimed: 16, derived: tables },
+        // 16, not 8: four phone cells per personnel row over four rows. The prose is generated
+        // from the same binding list, so the two cannot drift apart again.
+        { what: 'Section 2 phone cells', claimed: 16, derived: phones },
+      ];
+      const universeList = rows.map((r) => `${r.what}: ${r.claimed}`);
+      const covered = rows.filter((r) => r.claimed === r.derived).length;
+      return { universe: rows.length, covered, universeList,
+        uncoveredList: rows.filter((r) => r.claimed !== r.derived).map((r) => `${r.what}: prose states ${r.claimed}, the map declares ${r.derived}`) };
     } }),
 
   // ── 433-B(OIC) slice 1: the page-1 completeness claims ────────────────────────────────

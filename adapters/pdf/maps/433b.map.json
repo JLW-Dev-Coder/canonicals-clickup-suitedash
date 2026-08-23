@@ -1,35 +1,47 @@
 {
- "form": "433-B",
- "form_revision": "Rev. 6-2026",
+ "form": "433b",
+ "form_printed": "433-B",
+ "form_revision": "6-2026",
  "catalog": "16649P",
  "pdf": "adapters/pdf/forms/f433b.pdf",
  "fields_source": "adapters/pdf/maps/433b.fields.json",
- "slice": "intake — nothing bound",
- "map_version": 0,
+ "slice": "slice 1 — page 1",
+ "map_version": 1,
  "authored_from": "adapters/pdf/maps/433b.intake.json, in the same commit. The blank is pinned in adapters/pdf/forms/forms.sha256 and the revision and catalog number were read from drawn page bytes.",
- "_what_this_file_is": "THE INTAKE SHELL, AND IT BINDS NOTHING. It is here so that this form has a map at all, which is what adapters/pdf/assert-subject-register.mjs [S2] requires of any form registered in _subjects.cross-form.json — and the subject had to be registered first, because the subject is what decides reuse and it comes before any binding. A reader who expects `map` to hold cells will find it empty, and that is the state this file is declaring rather than an omission.",
  "_the_subject_is_settled_and_recorded_elsewhere": "adapters/pdf/maps/_subjects.cross-form.json, entry `433b`: a legal person that is not the filer. MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC); COINCIDES with 433-B(OIC), with the fifth \"Other\" entity box carried as [B-02].",
- "map": {},
+ "map": {
+  "s1_business_name": "topmostSubform[0].Page1[0].Line1a-f[0].p1_1_1a[0]",
+  "s1_business_street_address": "topmostSubform[0].Page1[0].Line1a-f[0].p1_3_1b[0]",
+  "s1_mailing_address": "topmostSubform[0].Page1[0].Line1a-f[0].p1_4_1bMailAdd[0]",
+  "s1_city": "topmostSubform[0].Page1[0].Line1a-f[0].p1_5_1bCity[0]",
+  "s1_state": "topmostSubform[0].Page1[0].Line1a-f[0].p1_6_1bstate[0]",
+  "s1_zip": "topmostSubform[0].Page1[0].Line1a-f[0].p1_7_1bZIP[0]",
+  "s1_county": "topmostSubform[0].Page1[0].Line1a-f[0].p1_8_1c[0]",
+  "s1_business_telephone_area_code": "topmostSubform[0].Page1[0].Line1a-f[0].p1_9_1d_3digits[0]",
+  "s1_business_telephone_number": "topmostSubform[0].Page1[0].Line1a-f[0].p1_10_1d_7digits[0]",
+  "s1_type_of_business": "topmostSubform[0].Page1[0].Line1a-f[0].p1_11_1e[0]",
+  "s1_business_website": "topmostSubform[0].Page1[0].Line1a-f[0].p1_12_1f[0]",
+  "s1_ein": "topmostSubform[0].Page1[0].p1_13_2a[0]",
+  "s1_entity_other_description": "topmostSubform[0].Page1[0].p1_15_2b[0]",
+  "s1_llc_number_of_members": "topmostSubform[0].Page1[0].p1_15_2bc[0]",
+  "s1_date_incorporated_or_established": "topmostSubform[0].Page1[0].p1_16_2c[0]",
+  "s1_number_of_employees": "topmostSubform[0].Page1[0].p1_17_3a[0]",
+  "s1_monthly_gross_payroll": "topmostSubform[0].Page1[0].p1_18_3b[0]",
+  "s1_frequency_of_tax_deposits": "topmostSubform[0].Page1[0].p1_19_3c[0]"
+ },
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 447,
-  "in_this_slice": 0,
-  "bound_writable": 0,
+  "in_this_slice": 103,
+  "bound_writable": 103,
   "excluded_never_autofill": 0,
   "deferred": 0,
-  "unaccounted": 447,
-  "_check": "0 + 0 + 0 = 0 bound writable, never-autofill and deferred. 447 - 0 = 447 unaccounted, which is every field the PDF draws: 103 on page 1, 64 on page 2, 82 on page 3, 94 on page 4, 70 on page 5, 34 on page 6. THIS MAP IS NOT CLOSED and says so.",
-  "_why_unaccounted_and_not_deferred": "The two words are not synonyms in this engine. `deferred` is derived from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells a slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Six pages nobody has bound is not a list of deferred cells; calling it deferred would be a glob claiming the granularity of an enumeration.",
-  "_unaccounted_by_page": {
-   "p1": 103,
-   "p2": 64,
-   "p3": 82,
-   "p4": 94,
-   "p5": 70,
-   "p6": 34
-  }
+  "unaccounted": 344,
+  "_check": "103 + 0 + 0 = 103 bound writable, never-autofill and deferred, and that is every field page 1 draws. 447 - 103 = 344 unaccounted, which is every field on pages 2 to 6: 64 on page 2, 82 on page 3, 94 on page 4, 70 on page 5, 34 on page 6. THIS MAP IS NOT CLOSED and says so; the figure falls to zero when slice 4 lands and not before.",
+  "_why_unaccounted_and_not_deferred": "The two words are not synonyms in this engine. `deferred` is derived from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration.",
+  "_unaccounted_by_page": "p2 64, p3 82, p4 94, p5 70, p6 34 = 344"
  },
- "_deferred_pages": "All six. Page 1 is slice 1; pages 2 and 3 are slice 2 (146 fields); page 4 is slice 3 (94); pages 5 and 6 are slice 4 (104).",
+ "_deferred_pages": "Pages 2 and 3 are slice 2, 146 fields. Page 4 is slice 3, 94 fields. Pages 5 and 6 are slice 4, 104 fields. THE FIGURES ARE NOT PARENTHESISED, and that is not style: a bracketed number in map prose reads as a printed LINE MARKER to blanket-audit.mjs, which then demanded that marker from line-markers.mjs and reported a forward-reference gap, because this form draws no marker of that number. THIS SENTENCE ITSELF carried the bracketed figure in its first draft and reproduced the defect it describes — which is the fix reproducing the defect class it fixes, caught by the same audit on the next run.",
  "_carried": {
   "_why": "The questions this form has raised that no slice has answered. An arguable item is reported in full, carries an id, and is not resolved.",
   "open": [
@@ -52,16 +64,1242 @@
    {
     "id": "B-03",
     "subject": "The page-3 subform named Line19c holds the row printed 19b",
-    "the_shape": "topmostSubform[0].Page3[0].Table_line19[0].Line19c[0] covers y 324.0..356.4. The printed marker inside that band is \"19b\" at y 347.7, x 36.6..50.4. The printed marker \"19c\" is at y 301.1 and belongs to \"Total Investments (Add lines 19a, 19b, and amounts from any attachments)\". So the subform name is one row ahead of the page.",
+    "the_shape": "The cell topmostSubform[0].Page3[0].Table_line19[0].Line19c[0].#subform[0].TextField1[0] covers y 324.0..356.4. THE SUBFORM THAT CONTAINS IT IS NAMED Line19c and is not itself a field, which is why this entry cites the cell: validate-map.mjs resolves every topmostSubform path quoted in prose against the field list, and a container path is not in it. That refusal is correct and this sentence is the answer to it. The printed marker inside that band is \"19b\" at y 347.7, x 36.6..50.4. The printed marker \"19c\" is at y 301.1 and belongs to \"Total Investments (Add lines 19a, 19b, and amounts from any attachments)\". So the subform name is one row ahead of the page.",
     "found_by": "The lineage report, while judging the two TextField1 occurrences — the name lie is a second finding sitting under an inherited name and is unrelated to the inheritance.",
     "why_it_is_not_settled_here": "Page 3 is slice 2. It is recorded now because it was seen now, and binding it belongs to the slice that reads the page.",
+    "status": "OPEN - recorded, not built."
+   },
+   {
+    "id": "B-04",
+    "subject": "18 of page 1's 103 cells are bound on printed punctuation, which every correlator in this engine discards before ranking",
+    "the_shape": "See [C1-1]. The parentheses around each telephone area code are the only printed thing separating the two cells of a phone pair, and adapters/pdf/correlate-labels.mjs's isDescriptive filter drops them as punctuation before candidates are ranked. So no tool in this repo can corroborate these ten bindings, and none can contradict them either.",
+    "why_it_is_not_settled_here": "The remedy is a round trip — fill and read back — and this slice has no fixture round trip yet. It is recorded now because the binding is being landed now.",
     "status": "OPEN - recorded, not built."
    }
   ],
   "resolved": [],
   "_count": {
-   "open": 3,
+   "open": 4,
    "resolved": 0
   }
- }
+ },
+ "groups": {
+  "payment_processors": {
+   "max": 2,
+   "slots": [
+    {
+     "text": {
+      "name_and_address": "topmostSubform[0].Page1[0].Table_Line5a-b[0].Line5a[0].Line5A[0]",
+      "account_number": "topmostSubform[0].Page1[0].Table_Line5a-b[0].Line5a[0].p1_20_5a[0]"
+     }
+    },
+    {
+     "text": {
+      "name_and_address": "topmostSubform[0].Page1[0].Table_Line5a-b[0].Line5b[0].p1_21_5b[0]",
+      "account_number": "topmostSubform[0].Page1[0].Table_Line5a-b[0].Line5b[0].p1_22_5b[0]"
+     }
+    }
+   ],
+   "_printed": "Two printed rows, markers 5a (y 466.7) and 5b (y 445.1), under the heading \"PAYMENT PROCESSOR (e.g., PayPal, Authorize.net, Google Checkout, etc.)\" at y 505.5, x 43.2..287.0. Two columns, both column-header bound: \"Name and Address (Street, City, State, ZIP code)\" at y 490.5 and \"Payment Processor Account Number\" at y 489.2.",
+   "_max_is_from_the_page": "The form draws exactly two rows. `max` 2 is the count of printed rows, not a policy."
+  },
+  "credit_cards_accepted": {
+   "max": 3,
+   "slots": [
+    {
+     "text": {
+      "type_of_credit_card": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6a[0].p1_24_6a[0]",
+      "merchant_account_number": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6a[0].p1_25_6a[0]",
+      "issuing_bank_name_and_address": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6a[0].#subform[0].p1_60_6a[0]",
+      "issuing_bank_phone": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6a[0].#subform[0].p1_26_6a[0]"
+     }
+    },
+    {
+     "text": {
+      "type_of_credit_card": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6b[0].p1_27_6b[0]",
+      "merchant_account_number": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6b[0].p1_28_6b[0]",
+      "issuing_bank_name_and_address": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6b[0].#subform[0].p1_61_6b[0]",
+      "issuing_bank_phone": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6b[0].#subform[0].p1_29_6b[0]"
+     }
+    },
+    {
+     "text": {
+      "type_of_credit_card": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6c[0].p1_30_6c[0]",
+      "merchant_account_number": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6c[0].p1_31_6c[0]",
+      "issuing_bank_name_and_address": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6c[0].#subform[0].p1_62_6c[0]",
+      "issuing_bank_phone": "topmostSubform[0].Page1[0].Table_Lines6a-c[0].Line6c[0].#subform[0].p1_32_6c[0]"
+     }
+    }
+   ],
+   "_printed": "Three printed rows, markers 6a (y 369.5), 6b (y 333.5) and 6c (y 297.5), under the heading \"CREDIT CARDS ACCEPTED BY THE BUSINESS\" at y 430.7, x 46.0..226.9. Four columns per row.",
+   "_the_fourth_column_is_two_cells_in_one_column": "The bank cell (y 378.0..403.2) and the phone cell (y 367.2..378.0) share the x range 266.4..576.0 and are separated by baseline. The printed \"Phone\" for each row sits on the LOWER band, which is the second witness that tells them apart. Binding them by column alone would put a phone number in the bank address."
+  },
+  "personnel": {
+   "max": 4,
+   "slots": [
+    {
+     "text": {
+      "full_name": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_33_7aFullNm[0]",
+      "title": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_34_7aTitle[0]",
+      "home_address": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_35_7aHmAdd[0]",
+      "city": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_36_7aCity[0]",
+      "state": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_37_7aSt[0]",
+      "zip": "topmostSubform[0].Page1[0].Line7a_Col1[0].p1_38_7aZIP[0]",
+      "taxpayer_identification_number": "topmostSubform[0].Page1[0].p1_39_SSN_7a[0]",
+      "home_phone_area_code": "topmostSubform[0].Page1[0].p1_40_7a_3digits[0]",
+      "home_phone_number": "topmostSubform[0].Page1[0].p1_41_7a_7digits[0]",
+      "work_cell_phone_area_code": "topmostSubform[0].Page1[0].p1_43_7a_3digitswrk[0]",
+      "work_cell_phone_number": "topmostSubform[0].Page1[0].p1_44_7a_7digitswrk[0]",
+      "ownership_percentage": "topmostSubform[0].Page1[0].p1_42_7aowner[0]",
+      "annual_salary_or_draw": "topmostSubform[0].Page1[0].p1_42_7aAnnualSalDrw[0]"
+     }
+    },
+    {
+     "text": {
+      "full_name": "topmostSubform[0].Page1[0].Line7b_Col1[0].p1_43_7bFullNm[0]",
+      "title": "topmostSubform[0].Page1[0].Line7b_Col1[0].p1_44_7bTitle[0]",
+      "home_address": "topmostSubform[0].Page1[0].Line7b_Col1[0].p145_7bHmAdd[0]",
+      "city": "topmostSubform[0].Page1[0].Line7b_Col1[0].p1_46_7bCity[0]",
+      "state": "topmostSubform[0].Page1[0].Line7b_Col1[0].p1_47_7bState[0]",
+      "zip": "topmostSubform[0].Page1[0].Line7b_Col1[0].p1_48_7bZIP[0]",
+      "taxpayer_identification_number": "topmostSubform[0].Page1[0].p1_51_7bSSN[0]",
+      "home_phone_area_code": "topmostSubform[0].Page1[0].p1_49_7b_3digitshm[0]",
+      "home_phone_number": "topmostSubform[0].Page1[0].p1_50_7b_7digitshm[0]",
+      "work_cell_phone_area_code": "topmostSubform[0].Page1[0].p1_53_7b_3digits[0]",
+      "work_cell_phone_number": "topmostSubform[0].Page1[0].p1_54_7b_7digits[0]",
+      "ownership_percentage": "topmostSubform[0].Page1[0].p1_52_7bowner[0]",
+      "annual_salary_or_draw": "topmostSubform[0].Page1[0].p1_42_7aAnnualSalDrw[1]"
+     }
+    },
+    {
+     "text": {
+      "full_name": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_002_7cFullNM[0]",
+      "title": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_002_7cTitle[0]",
+      "home_address": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_002_7cHmAdd[0]",
+      "city": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_002_7cCity[0]",
+      "state": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_007_7cSt[0]",
+      "zip": "topmostSubform[0].Page1[0].Line7c_Col1[0].p1_007_7cZIP[0]",
+      "taxpayer_identification_number": "topmostSubform[0].Page1[0].p1_002_7cSSN[0]",
+      "home_phone_area_code": "topmostSubform[0].Page1[0].p1_00_7c_3digitshm[0]",
+      "home_phone_number": "topmostSubform[0].Page1[0].p1_00_7c_7digitshm[0]",
+      "work_cell_phone_area_code": "topmostSubform[0].Page1[0].p1_00_7c_3digitswrk[0]",
+      "work_cell_phone_number": "topmostSubform[0].Page1[0].p1_00_7c_7digitswrk[0]",
+      "ownership_percentage": "topmostSubform[0].Page1[0].OwnrshpPrcntg7c[0]",
+      "annual_salary_or_draw": "topmostSubform[0].Page1[0].p1_42_7aAnnualSalDrw[2]"
+     }
+    },
+    {
+     "text": {
+      "full_name": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_002_7dFullNm[0]",
+      "title": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_002_7dTitle[0]",
+      "home_address": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_002_7dHmAdd[0]",
+      "city": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_002_7dCity[0]",
+      "state": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_007_7dState[0]",
+      "zip": "topmostSubform[0].Page1[0].Line7d_Col1[0].p1_007_7dZIP[0]",
+      "taxpayer_identification_number": "topmostSubform[0].Page1[0].p1_002_7dSSN[0]",
+      "home_phone_area_code": "topmostSubform[0].Page1[0].p1_00_3digits7d[0]",
+      "home_phone_number": "topmostSubform[0].Page1[0].p1_00_7digits7d[0]",
+      "work_cell_phone_area_code": "topmostSubform[0].Page1[0].p1_00_3digits7dwrk[0]",
+      "work_cell_phone_number": "topmostSubform[0].Page1[0].p1_00_7digits7dwrk[0]",
+      "ownership_percentage": "topmostSubform[0].Page1[0].p1_001_7downer[0]",
+      "annual_salary_or_draw": "topmostSubform[0].Page1[0].p1_42_7aAnnualSalDrw[3]"
+     }
+    }
+   ],
+   "_printed": "Four printed rows, markers 7a (y 256.7), 7b (y 202.7), 7c (y 148.7) and 7d (y 94.7), under the heading \"PARTNERS, OFFICERS, LLC MEMBERS, MAJOR SHAREHOLDERS (Foreign and Domestic), ETC.\" at y 268.7, x 46.0..413.9, inside \"Section 2: Business Personnel and Contacts\" at y 284.4.",
+   "_every_row_prints_the_same_captions": "So a caption alone determines nothing here. Each cell is fixed by its printed marker AND its baseline band AND its column x, and all three are stated in the evidence table.",
+   "_the_leaf_names_generalise_in_no_direction": "One column, four spellings: p1_42_7aowner, p1_52_7bowner, OwnrshpPrcntg7c, p1_001_7downer. One name, four rows: p1_42_7aAnnualSalDrw[0..3], whose \"7a\" is false on three of four. And the home/work telephone convention INVERTS — rows 7a and 7d spell home plainly and mark work \"wrk\"; row 7b marks home \"hm\" and spells work plainly; row 7c marks both. Every one of the 60 cells is bound on the page."
+  }
+ },
+ "checkboxes": {
+  "_the_on_state_is_read_from_the_widget_and_never_assumed": "This form uses 13 distinct on-states where 433-B(OIC) uses /1 for all 77 of its boxes. Every box below carries the on-state its own widget stores. A map that carried one spelling would tick nothing on this form and report success.",
+  "s1_eftps_enrolled": {
+   "yes": "topmostSubform[0].Page1[0].c1_1[0]",
+   "no": "topmostSubform[0].Page1[0].c1_1[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Question 3d, drawn as two runs: \"Is the business enrolled in Electronic\" y 541.5 x 324.0..454.5 and \"Federal Tax Payment System (EFTPS)\" y 531.5 x 324.0..459.6. \"Yes\" y 531.5 x 498.5..512.7 with its box y 530.6..538.6 x 482.4..490.4; \"No\" y 531.5 x 555.1..565.9 with its box y 530.6..538.6 x 540.0..548.0.",
+   "_witness": "EACH BOX IS DRAWN TO THE LEFT OF THE WORD IT LABELS, by 8.1pt and 7.1pt. The pair sits on the SECOND printed line of a two-line question, so the box row and the question's first line have different baselines and only the second line's is inside the rectangles."
+  },
+  "s1_engages_in_ecommerce": {
+   "yes": "topmostSubform[0].Page1[0].c1_2_[0]",
+   "no": "topmostSubform[0].Page1[0].c1_2_[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Line 4, \"Does the business engage in e-Commerce\" y 519.5 x 58.4..210.7, \"(Internet sales)\" x 213.0..264.5, \"If yes, complete 5a and 5b.\" x 266.7..363.8. \"Yes\" y 520.5 x 498.5..512.7 with its box y 519.0..527.0 x 482.4..490.4; \"No\" y 520.5 x 553.5..564.4 with its box y 519.0..527.0 x 540.0..548.0.",
+   "_witness": "THE TWO \"No\" RUNS ON THIS PAGE ARE NOT IN THE SAME COLUMN. The 3d row's \"No\" starts at x 555.1 and line 4's at x 553.5, 1.6pt apart. The two rows are separated by baseline, and the x difference is recorded so a later reader does not treat the column as fixed."
+  },
+  "personnel_7a_responsible_for_payroll_taxes": {
+   "yes": "topmostSubform[0].Page1[0].Line7a_Col1[0].c1_01_7a[0]",
+   "no": "topmostSubform[0].Page1[0].Line7a_Col1[0].c1_01_7a[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Row 7a of Section 2. The caption \"Responsible for Depositing Payroll Taxes\" is printed LEFT of both boxes at x 57.6..204.3; \"Yes\" at x ~229 and \"No\" at x ~271 each sit to the right of their own box. Rectangles: y 213.8..221.8, x 216..224 and y 213.8..221.8, x 259.2..267.2.",
+   "_witness": "The caption cannot separate the pair — it captions both. Each box is told from the other by the option word to ITS right, and the row by the printed marker and the baseline band."
+  },
+  "personnel_7b_responsible_for_payroll_taxes": {
+   "yes": "topmostSubform[0].Page1[0].Line7b_Col1[0].c1_02_7b[0]",
+   "no": "topmostSubform[0].Page1[0].Line7b_Col1[0].c1_02_7b[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Row 7b of Section 2. The caption \"Responsible for Depositing Payroll Taxes\" is printed LEFT of both boxes at x 57.6..204.3; \"Yes\" at x ~229 and \"No\" at x ~271 each sit to the right of their own box. Rectangles: y 159.8..167.8, x 216..224 and y 159.8..167.8, x 259.2..267.2.",
+   "_witness": "The caption cannot separate the pair — it captions both. Each box is told from the other by the option word to ITS right, and the row by the printed marker and the baseline band."
+  },
+  "personnel_7c_responsible_for_payroll_taxes": {
+   "yes": "topmostSubform[0].Page1[0].Line7c_Col1[0].c1_03_7c[0]",
+   "no": "topmostSubform[0].Page1[0].Line7c_Col1[0].c1_03_7c[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Row 7c of Section 2. The caption \"Responsible for Depositing Payroll Taxes\" is printed LEFT of both boxes at x 57.6..204.3; \"Yes\" at x ~229 and \"No\" at x ~271 each sit to the right of their own box. Rectangles: y 105.8..113.8, x 216..224 and y 105.8..113.8, x 259.2..267.2.",
+   "_witness": "The caption cannot separate the pair — it captions both. Each box is told from the other by the option word to ITS right, and the row by the printed marker and the baseline band."
+  },
+  "personnel_7d_responsible_for_payroll_taxes": {
+   "yes": "topmostSubform[0].Page1[0].Line7d_Col1[0].c1_04_7d[0]",
+   "no": "topmostSubform[0].Page1[0].Line7d_Col1[0].c1_04_7d[1]",
+   "_on_yes": "/Yes",
+   "_on_no": "/No",
+   "_printed": "Row 7d of Section 2. The caption \"Responsible for Depositing Payroll Taxes\" is printed LEFT of both boxes at x 57.6..204.3; \"Yes\" at x ~229 and \"No\" at x ~271 each sit to the right of their own box. Rectangles: y 51.8..59.8, x 216..224 and y 51.8..59.8, x 259.2..267.2.",
+   "_witness": "The caption cannot separate the pair — it captions both. Each box is told from the other by the option word to ITS right, and the row by the printed marker and the baseline band."
+  },
+  "s1_type_of_entity": {
+   "Partnership": "topmostSubform[0].Page1[0].c1_0_2b[0]",
+   "Corporation": "topmostSubform[0].Page1[0].c1_0_2b[1]",
+   "Other": "topmostSubform[0].Page1[0].c1_0_2b[2]",
+   "Limited Liability Company (LLC) classified as a corporation": "topmostSubform[0].Page1[0].c1_0_2b[3]",
+   "Other LLC - Include number of members": "topmostSubform[0].Page1[0].c1_0_2b[4]",
+   "_printed": "\"Partnership\" y 628.7, x 337.1..378.1, box y 627.8..635.8, x 324..332; \"Corporation\" y 628.7, x 399.8..442.4, box y 627.8..635.8, x 388.8..396.8; \"Other\" y 628.7, x 466.7..486.7, box y 627.8..635.8, x 453.6..461.6; \"Limited Liability Company (LLC) classified as a corporation\" y 617.9, x 337.1..546.8, box y 617..625, x 324..332; \"Other LLC - Include number of members\" y 607.1, x 337.1..482.3, box y 606.2..614.2, x 324..332",
+   "_on_states": "Partnership -> /Partnership; Corporation -> /Corporation; Other -> /Other; Limited Liability Company (LLC) classified as a corporation -> /LLC; Other LLC - Include number of members -> /Other#20LLC",
+   "_witness": "EVERY BOX IS DRAWN TO THE LEFT OF THE WORD IT LABELS, by 5.1pt on four of the five and 3.0pt on \"Corporation\". The five boxes are three on one baseline (y 627.8) and one each on y 617.0 and y 606.2, so the set is two printed columns on the first row and one per row after."
+  }
+ },
+ "exclusive": {
+  "_why": "A printed set in which at most one box may be ticked. Seven sets on page 1: one five-way entity list and six Yes/No pairs. Each option carries the on-state its own widget stores, and this form has 13 distinct ones.",
+  "_the_entity_set_is_the_only_non_binary_one": "\"Type of entity\" y 639.5 x 324.0..372.6 with \"(Check appropriate box below)\" x 374.8..484.0. FIVE options, whose on-states are /Partnership, /Corporation, /Other, /LLC and /Other#20LLC — none of them /1, and the last carries a PDF name-object escape for a space. Two of the five have a companion TEXT cell beside them (s1_entity_other_description, s1_llc_number_of_members); neither is part of the set, and both are bound as scalars. Whether the set is exclusive at all is [C1-3].",
+  "_the_six_pairs": "3d EFTPS enrolment, line 4 e-Commerce, and one \"Responsible for Depositing Payroll Taxes\" per Section 2 row. Each is one printed question with two printed boxes, and each box is told from the other by the option word to ITS right.",
+  "s1_type_of_entity": [
+   "topmostSubform[0].Page1[0].c1_0_2b[0]",
+   "topmostSubform[0].Page1[0].c1_0_2b[1]",
+   "topmostSubform[0].Page1[0].c1_0_2b[2]",
+   "topmostSubform[0].Page1[0].c1_0_2b[3]",
+   "topmostSubform[0].Page1[0].c1_0_2b[4]"
+  ],
+  "s1_eftps_enrolled": [
+   "topmostSubform[0].Page1[0].c1_1[0]",
+   "topmostSubform[0].Page1[0].c1_1[1]"
+  ],
+  "s1_engages_in_ecommerce": [
+   "topmostSubform[0].Page1[0].c1_2_[0]",
+   "topmostSubform[0].Page1[0].c1_2_[1]"
+  ],
+  "personnel_7a_responsible_for_payroll_taxes": [
+   "topmostSubform[0].Page1[0].Line7a_Col1[0].c1_01_7a[0]",
+   "topmostSubform[0].Page1[0].Line7a_Col1[0].c1_01_7a[1]"
+  ],
+  "personnel_7b_responsible_for_payroll_taxes": [
+   "topmostSubform[0].Page1[0].Line7b_Col1[0].c1_02_7b[0]",
+   "topmostSubform[0].Page1[0].Line7b_Col1[0].c1_02_7b[1]"
+  ],
+  "personnel_7c_responsible_for_payroll_taxes": [
+   "topmostSubform[0].Page1[0].Line7c_Col1[0].c1_03_7c[0]",
+   "topmostSubform[0].Page1[0].Line7c_Col1[0].c1_03_7c[1]"
+  ],
+  "personnel_7d_responsible_for_payroll_taxes": [
+   "topmostSubform[0].Page1[0].Line7d_Col1[0].c1_04_7d[0]",
+   "topmostSubform[0].Page1[0].Line7d_Col1[0].c1_04_7d[1]"
+  ]
+ },
+ "_the_condition_that_governs_page_1": "Page 1 asks WHO THE BUSINESS IS and WHO SPEAKS FOR IT. Section 1 is the entity's own identity, contact and payroll facts; Section 2 is the natural persons behind it, each row carrying that person's relationship TO the entity — a title, an ownership percentage, a salary the entity pays, and whether they deposit its payroll taxes. NOTHING ON THIS PAGE IS AN ASSET, A LIABILITY OR AN AMOUNT THE FORM ADDS UP.",
+ "_no_arithmetic_on_this_page_at_all": "CHECKED AGAINST THE DRAWN PAGE, not against the map. Page 1 draws no lettered Box, no \"Total\" line, no \"Add lines\", no \"Subtract\", no \"minus\" and no \"multiply\". The only occurrence of the word \"box\" is the instruction \"(Check appropriate box below)\" at y 639.5, x 374.8..484.0. So this slice declares no `_computed`, no `totals`, no `rounding` and no operand list — there is none to quote. Two money cells are drawn (3b Monthly Gross Payroll, and each personnel row's Annual Salary/Draw) and neither feeds anything on this page.",
+ "_none_of_the_five_flag_classes_appears_on_this_page": "The five flagged columns in adapters/hubspot/asset-row-shapes.json are is_business_account (twice, on two classes), kind (primary residence / other), claimed_on_1040 and contributes_to_household_income. All five are ASSET-ROW or DEPENDENT columns — bank accounts, real estate, household members — and page 1 draws no asset row and no dependent. THIS SLICE DECLARES NO `row_flag` FOR 433-B ANYWHERE, and it declares no `printed_as_checkbox` either, because 433-B has no row-shape declaration yet: its crosswalk is the declared empty one at adapters/hubspot/crosswalk.433b.json. When asset rows are read on pages 2 and 3, is_business_account will need deciding on the printed page and not by analogy — on a form whose every account is a business account by construction.",
+ "_printed_headings_and_markers_first": {
+  "_why": "The headings and markers are read off the page BEFORE any cell is bound, so a binding is checked against a structure that was established without it.",
+  "sections": [
+   "\"Section 1: Business Information\" — y 662.4, x 46.0..197.3",
+   "\"Section 2: Business Personnel and Contacts\" — y 284.4, x 46.0..256.8"
+  ],
+  "block_headings": [
+   "\"PAYMENT PROCESSOR\" — y 505.5, x 43.2..124.6, with \"(e.g., PayPal, Authorize.net, Google Checkout, etc.)\" x 126.5..287.0",
+   "\"CREDIT CARDS ACCEPTED BY THE BUSINESS\" — y 430.7, x 46.0..226.9",
+   "\"PARTNERS, OFFICERS, LLC MEMBERS, MAJOR SHAREHOLDERS (Foreign and Domestic), ETC.\" — y 268.7, x 46.0..413.9"
+  ],
+  "markers": [
+   "1a y 652.1",
+   "1b y 630.5",
+   "1c y 585.5",
+   "1d y 574.7",
+   "1e y 565.7",
+   "1f y 544.1",
+   "2a y 650.3",
+   "2b y 639.5",
+   "2c y 596.3",
+   "3a y 574.7",
+   "3b y 563.9",
+   "3c y 553.1",
+   "3d y 541.5",
+   "4 y 520.5",
+   "5a y 466.7",
+   "5b y 445.1",
+   "6a y 369.5",
+   "6b y 333.5",
+   "6c y 297.5",
+   "7a y 256.7",
+   "7b y 202.7",
+   "7c y 148.7",
+   "7d y 94.7"
+  ],
+  "_the_masthead_Note_is_not_a_marker": "\"Note: Complete all entry spaces with the current data available or \\\"N/A\\\" (not applicable)...\" at y 687.3 and y 679.3 is an instruction about completing the form, not a line. It is the only prose between the masthead and Section 1, and it is NOT eligibility text — see the intake record."
+ },
+ "_the_y_convention_in_this_file": "Every y is a TEXT BASELINE for printed runs and a rectangle edge for widgets, and each is labelled as one or the other. The one declared convention, asserted by adapters/pdf/assert-y-convention.mjs.",
+ "_map_evidence_page1": {
+  "_the_pairing_rule": "Declared once and cited per cell. L: the caption's right edge is at or left of the widget's left edge with its baseline INSIDE the rectangle. A: directly above, sharing a left edge within 2pt. R: to the right with its baseline inside the rectangle — every checkbox on this page prints its option to the right of the box. C: a column header whose x range lies inside the cell's, used only in the two tables, which print no per-cell caption. P3/P7: a parenthesised phone pair, where one caption captions two cells and the printed \"(\" and \")\" are what separate them.",
+  "_the_rule_was_REFUSED_before_it_was_right": "The first draft declared the phone cells L and the website cell A, and the assertion refused ten of the 103: the seven-digit phone cells sit 48.2pt from their caption and the website caption is drawn as two runs, only the first of which shares the widget's left edge. The fix is a rule that describes what the page draws, not a wider tolerance. Both refusals are recorded because a rule that was loosened until it passed is not a rule.",
+  "_every_figure_below_is_derived": "adapters/pdf/tmp/p46/gen-slice1-433b.mjs finds each named caption on the drawn page, takes the run nearest its widget, and computes the rectangle, the baseline and the gap. A caption it cannot find where the rule says it is takes the run down. Re-run it and this table regenerates.",
+  "_second_witness": "Named on every cell the rule alone does not determine — the two table blocks, all ten phone cells, every checkbox pair, and all 60 Section 2 cells.",
+  "bindings": [
+   {
+    "key": "s1_business_name",
+    "leaf": "p1_1_1a[0]",
+    "widget": "y 637.2..648, x 57.6..302.4",
+    "printed": "Business Name",
+    "printed_at": "y 651.1, x 57.6..113.5",
+    "pairing": "directly above, left edges 57.6 = 57.6, 3.1pt"
+   },
+   {
+    "key": "s1_business_street_address",
+    "leaf": "p1_3_1b[0]",
+    "widget": "y 615.6..626.4, x 57.6..302.4",
+    "printed": "Business Street Address",
+    "printed_at": "y 629.5, x 57.6..145.6",
+    "pairing": "directly above, left edges 57.6 = 57.6, 3.1pt"
+   },
+   {
+    "key": "s1_mailing_address",
+    "leaf": "p1_4_1bMailAdd[0]",
+    "widget": "y 604.8..615.6, x 122.8..302.4",
+    "printed": "Mailing Address",
+    "printed_at": "y 608.1, x 57.6..115.1",
+    "pairing": "immediately left, baseline inside the rectangle, 7.7pt"
+   },
+   {
+    "key": "s1_city",
+    "leaf": "p1_5_1bCity[0]",
+    "widget": "y 594..604.8, x 75.6..180",
+    "printed": "City",
+    "printed_at": "y 597.3, x 57.6..71.7",
+    "pairing": "immediately left, baseline inside the rectangle, 3.9pt"
+   },
+   {
+    "key": "s1_state",
+    "leaf": "p1_6_1bstate[0]",
+    "widget": "y 594..604.8, x 202..230.4",
+    "printed": "State",
+    "printed_at": "y 597.3, x 180..198.8",
+    "pairing": "immediately left, baseline inside the rectangle, 3.2pt"
+   },
+   {
+    "key": "s1_zip",
+    "leaf": "p1_7_1bZIP[0]",
+    "widget": "y 594..604.8, x 255.6..302.4",
+    "printed": "ZIP",
+    "printed_at": "y 597.3, x 239.8..252",
+    "pairing": "immediately left, baseline inside the rectangle, 3.6pt"
+   },
+   {
+    "key": "s1_county",
+    "leaf": "p1_8_1c[0]",
+    "widget": "y 583.2..594, x 87..302.4",
+    "printed": "County",
+    "printed_at": "y 586.5, x 57.6..83.4",
+    "pairing": "immediately left, baseline inside the rectangle, 3.6pt"
+   },
+   {
+    "key": "s1_business_telephone_area_code",
+    "leaf": "p1_9_1d_3digits[0]",
+    "widget": "y 572.4..583.2, x 144.5..172.8",
+    "printed": "Business Telephone",
+    "printed_at": "y 574.7, x 57.6..129.8",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 575 x 138.8..141.1 and \")\" at x 174.8..177.1; this cell (x 144.5..172.8) is between them",
+    "second_witness": "THE PRINTED PARENTHESES ARE THE SECOND WITNESS. \"Business Telephone\" captions the whole 1d row and cannot on its own separate the two cells in it. The page draws \"(\" at y 575.0 x 138.8..141.1 and \")\" at x 174.8..177.1, and this widget (x 144.5..172.8) is the one BETWEEN them. That is the area code."
+   },
+   {
+    "key": "s1_business_telephone_number",
+    "leaf": "p1_10_1d_7digits[0]",
+    "widget": "y 572.4..583.2, x 181.4..302.4",
+    "printed": "Business Telephone",
+    "printed_at": "y 574.7, x 57.6..129.8",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 575 x 174.8..177.1 is 4.3pt left of this cell (x 181.4..302.4)",
+    "second_witness": "The same caption and the same second witness read the other way: this widget (x 181.4..302.4) starts 4.3pt RIGHT of the closing \")\" at x 177.1, so it is the subscriber number and not the area code."
+   },
+   {
+    "key": "s1_type_of_business",
+    "leaf": "p1_11_1e[0]",
+    "widget": "y 550.8..561.6, x 57.6..302.4",
+    "printed": "Type of Business",
+    "printed_at": "y 564.7, x 57.6..119.1",
+    "pairing": "directly above, left edges 57.6 = 57.6, 3.1pt"
+   },
+   {
+    "key": "s1_business_website",
+    "leaf": "p1_12_1f[0]",
+    "widget": "y 529.2..540, x 57.6..302.4",
+    "printed": "Business",
+    "printed_at": "y 543.1, x 57.6..90",
+    "pairing": "directly above, left edges 57.6 = 57.6, 3.1pt",
+    "second_witness": "THE CAPTION IS DRAWN AS TWO RUNS. \"Business\" at y 543.1 x 57.6..90.0 and \"Website (web address)\" at y 543.1 x 92.3..173.8 are one printed caption split by the extractor. The left edge shared with the widget is \"Business\"'s (57.6 = 57.6); the run named here is the one that says what the cell is for."
+   },
+   {
+    "key": "s1_ein",
+    "leaf": "p1_13_2a[0]",
+    "widget": "y 648..658.8, x 445..576",
+    "printed": "Employer Identification No. (EIN)",
+    "printed_at": "y 651.3, x 324..439.9",
+    "pairing": "immediately left, baseline inside the rectangle, 5.1pt"
+   },
+   {
+    "key": "s1_entity_partnership",
+    "leaf": "c1_0_2b[0]",
+    "widget": "y 627.8..635.8, x 324..332",
+    "printed": "Partnership",
+    "printed_at": "y 628.7, x 337.1..378.1",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt"
+   },
+   {
+    "key": "s1_entity_corporation",
+    "leaf": "c1_0_2b[1]",
+    "widget": "y 627.8..635.8, x 388.8..396.8",
+    "printed": "Corporation",
+    "printed_at": "y 628.7, x 399.8..442.4",
+    "pairing": "to the right, baseline inside the rectangle, 3pt"
+   },
+   {
+    "key": "s1_entity_other",
+    "leaf": "c1_0_2b[2]",
+    "widget": "y 627.8..635.8, x 453.6..461.6",
+    "printed": "Other",
+    "printed_at": "y 628.7, x 466.7..486.7",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt"
+   },
+   {
+    "key": "s1_entity_llc_as_corporation",
+    "leaf": "c1_0_2b[3]",
+    "widget": "y 617..625, x 324..332",
+    "printed": "Limited Liability Company (LLC) classified as a corporation",
+    "printed_at": "y 617.9, x 337.1..546.8",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt"
+   },
+   {
+    "key": "s1_entity_other_llc",
+    "leaf": "c1_0_2b[4]",
+    "widget": "y 606.2..614.2, x 324..332",
+    "printed": "Other LLC - Include number of members",
+    "printed_at": "y 607.1, x 337.1..482.3",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt"
+   },
+   {
+    "key": "s1_entity_other_description",
+    "leaf": "p1_15_2b[0]",
+    "widget": "y 626.4..637.2, x 489.6..576",
+    "printed": "Other",
+    "printed_at": "y 628.7, x 466.7..486.7",
+    "pairing": "immediately left, baseline inside the rectangle, 2.9pt",
+    "second_witness": "The free-text cell for the \"Other\" entity type, on the same row as its box and 2.9pt right of the printed word."
+   },
+   {
+    "key": "s1_llc_number_of_members",
+    "leaf": "p1_15_2bc[0]",
+    "widget": "y 604.8..615.6, x 489.6..576",
+    "printed": "Other LLC - Include number of members",
+    "printed_at": "y 607.1, x 337.1..482.3",
+    "pairing": "immediately left, baseline inside the rectangle, 7.3pt",
+    "second_witness": "THE CAPTION NAMES WHAT THIS CELL HOLDS IN ITS OWN WORDS — \"Include number of members\". Its baseline lies INSIDE this widget's rectangle. adapters/pdf/correlate-labels.mjs answers the caption one row above for this cell; see [B-01]. The binding is on the rectangle."
+   },
+   {
+    "key": "s1_date_incorporated_or_established",
+    "leaf": "p1_16_2c[0]",
+    "widget": "y 594..604.8, x 439.2..576",
+    "printed": "Date Incorporated/Established",
+    "printed_at": "y 596.3, x 324..433",
+    "pairing": "immediately left, baseline inside the rectangle, 6.2pt",
+    "second_witness": "The format hint \"mmddyyyy\" is printed at y 586.9 x 443.2..481.7, beneath the widget and inside its x range. A format hint is not a caption and is not what this cell is bound to; it is recorded because it fixes the value shape."
+   },
+   {
+    "key": "s1_number_of_employees",
+    "leaf": "p1_17_3a[0]",
+    "widget": "y 572.4..583.2, x 403.2..576",
+    "printed": "Number of Employees",
+    "printed_at": "y 574.7, x 324..395.6",
+    "pairing": "immediately left, baseline inside the rectangle, 7.6pt"
+   },
+   {
+    "key": "s1_monthly_gross_payroll",
+    "leaf": "p1_18_3b[0]",
+    "widget": "y 561.6..572.4, x 403.2..576",
+    "printed": "Monthly Gross Payroll",
+    "printed_at": "y 563.9, x 324..394.9",
+    "pairing": "immediately left, baseline inside the rectangle, 8.3pt"
+   },
+   {
+    "key": "s1_frequency_of_tax_deposits",
+    "leaf": "p1_19_3c[0]",
+    "widget": "y 550.8..561.6, x 426.1..576",
+    "printed": "Frequency of Tax Deposits",
+    "printed_at": "y 553.1, x 324..420",
+    "pairing": "immediately left, baseline inside the rectangle, 6.1pt"
+   },
+   {
+    "key": "s1_eftps_enrolled_yes",
+    "leaf": "c1_1[0]",
+    "widget": "y 530.6..538.6, x 482.4..490.4",
+    "printed": "Yes",
+    "printed_at": "y 531.5, x 498.5..512.7",
+    "pairing": "to the right, baseline inside the rectangle, 8.1pt",
+    "second_witness": "THE QUESTION IS TWO RUNS AND A LINE ABOVE. 3d prints \"Is the business enrolled in Electronic\" at y 541.5 x 324.0..454.5 and \"Federal Tax Payment System (EFTPS)\" at y 531.5 x 324.0..459.6. The Yes/No pair sits on the second of those two lines. This box is at x 482.4..490.4 and \"Yes\" at x 498.5..512.7 is the nearest printed run to its right."
+   },
+   {
+    "key": "s1_eftps_enrolled_no",
+    "leaf": "c1_1[1]",
+    "widget": "y 530.6..538.6, x 540..548",
+    "printed": "No",
+    "printed_at": "y 531.5, x 555.1..565.9",
+    "pairing": "to the right, baseline inside the rectangle, 7.1pt",
+    "second_witness": "The same 3d row. This box is at x 540.0..548.0 and \"No\" at x 555.1..565.9 is to its right. The two boxes are 57.6pt apart and each has exactly one option word between it and the next box."
+   },
+   {
+    "key": "s1_ecommerce_yes",
+    "leaf": "c1_2_[0]",
+    "widget": "y 519..527, x 482.4..490.4",
+    "printed": "Yes",
+    "printed_at": "y 520.5, x 498.5..512.7",
+    "pairing": "to the right, baseline inside the rectangle, 8.1pt",
+    "second_witness": "Line 4, \"Does the business engage in e-Commerce (Internet sales)\" at y 519.5. The Yes at x 498.5..512.7 sits on the marker row y 520.5, and this box is at x 482.4..490.4, 8.1pt left of it."
+   },
+   {
+    "key": "s1_ecommerce_no",
+    "leaf": "c1_2_[1]",
+    "widget": "y 519..527, x 540..548",
+    "printed": "No",
+    "printed_at": "y 520.5, x 553.5..564.4",
+    "pairing": "to the right, baseline inside the rectangle, 5.5pt",
+    "second_witness": "The same line-4 row; box x 540.0..548.0, \"No\" at x 553.5..564.4. NOTE the two \"No\" runs on this page differ by 1.6pt in x1 between the 3d row (555.1) and the line-4 row (553.5), so the two rows are told apart by baseline and not by column alone."
+   },
+   {
+    "key": "payment_processors[0].name_and_address",
+    "leaf": "Line5A[0]",
+    "widget": "y 464.4..486, x 50.4..432",
+    "printed": "Name and Address",
+    "printed_at": "y 490.5, x 166.6..224.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER, because this table prints no per-cell caption. \"Name and Address\" at y 490.5 x 166.6..224.3 and its qualifier \"(Street, City, State, ZIP code)\" at x 226.2..313.4 both lie inside this cell's x range (50.4..432.0), and the cell is one of two same-width cells stacked beneath them. Row is fixed by the printed marker 5a."
+   },
+   {
+    "key": "payment_processors[0].account_number",
+    "leaf": "p1_20_5a[0]",
+    "widget": "y 464.4..486, x 432..576",
+    "printed": "Payment Processor Account Number",
+    "printed_at": "y 489.2, x 437.5..570.5",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "The right-hand column of the same table: the header at y 489.2 x 437.5..570.5 lies inside this cell's x range (432.0..576.0). Row fixed by the printed marker 5a."
+   },
+   {
+    "key": "payment_processors[1].name_and_address",
+    "leaf": "p1_21_5b[0]",
+    "widget": "y 442.8..464.4, x 50.4..432",
+    "printed": "Name and Address",
+    "printed_at": "y 490.5, x 166.6..224.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER, because this table prints no per-cell caption. \"Name and Address\" at y 490.5 x 166.6..224.3 and its qualifier \"(Street, City, State, ZIP code)\" at x 226.2..313.4 both lie inside this cell's x range (50.4..432.0), and the cell is one of two same-width cells stacked beneath them. Row is fixed by the printed marker 5b."
+   },
+   {
+    "key": "payment_processors[1].account_number",
+    "leaf": "p1_22_5b[0]",
+    "widget": "y 442.8..464.4, x 432..576",
+    "printed": "Payment Processor Account Number",
+    "printed_at": "y 489.2, x 437.5..570.5",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "The right-hand column of the same table: the header at y 489.2 x 437.5..570.5 lies inside this cell's x range (432.0..576.0). Row fixed by the printed marker 5b."
+   },
+   {
+    "key": "credit_cards_accepted[0].type_of_credit_card",
+    "leaf": "p1_24_6a[0]",
+    "widget": "y 367.2..403.2, x 50.4..151.2",
+    "printed": "Type of Credit Card",
+    "printed_at": "y 419, x 61.9..125.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 419.0 x 61.9..125.3, inside this cell's x range (50.4..151.2), with its example run \"(e.g., Visa, Mastercard, etc.)\" at y 409.0 x 49.0..138.2 beneath it. Row fixed by the printed marker 6a."
+   },
+   {
+    "key": "credit_cards_accepted[0].merchant_account_number",
+    "leaf": "p1_25_6a[0]",
+    "widget": "y 367.2..391.2, x 151.2..266.4",
+    "printed": "Merchant Account Number",
+    "printed_at": "y 414.1, x 160.3..257.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.1 x 160.3..257.3, inside this cell's x range (151.2..266.4). Row fixed by the printed marker 6a."
+   },
+   {
+    "key": "credit_cards_accepted[0].issuing_bank_name_and_address",
+    "leaf": "p1_60_6a[0]",
+    "widget": "y 378..403.2, x 266.4..576",
+    "printed": "Issuing Bank Name and Address",
+    "printed_at": "y 414, x 313.3..430.2",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.0 x 313.3..430.2, with \"(Street, City, State, ZIP code)\" at x 432.4..536.3, both inside this cell's x range (266.4..576.0). THIS CELL AND THE PHONE CELL BELOW IT SHARE A COLUMN AND ARE SEPARATED BY BASELINE: this one spans y 378.0..403.2 and the phone cell spans y 367.2..378.0, and the printed \"Phone\" for row 6a sits on the LOWER band. Row fixed by the printed marker 6a."
+   },
+   {
+    "key": "credit_cards_accepted[0].issuing_bank_phone",
+    "leaf": "p1_26_6a[0]",
+    "widget": "y 367.2..378, x 302.4..576",
+    "printed": "Phone",
+    "printed_at": "y 369.5, x 272.9..295.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.5pt",
+    "second_witness": "The printed \"Phone\" for row 6a is 6.5pt left of this cell with its baseline inside the rectangle. It is the second witness that separates this cell from the bank-address cell directly above it in the same column."
+   },
+   {
+    "key": "credit_cards_accepted[1].type_of_credit_card",
+    "leaf": "p1_27_6b[0]",
+    "widget": "y 331.2..367.2, x 50.4..151.2",
+    "printed": "Type of Credit Card",
+    "printed_at": "y 419, x 61.9..125.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 419.0 x 61.9..125.3, inside this cell's x range (50.4..151.2), with its example run \"(e.g., Visa, Mastercard, etc.)\" at y 409.0 x 49.0..138.2 beneath it. Row fixed by the printed marker 6b."
+   },
+   {
+    "key": "credit_cards_accepted[1].merchant_account_number",
+    "leaf": "p1_28_6b[0]",
+    "widget": "y 331.2..355.2, x 151.2..266.4",
+    "printed": "Merchant Account Number",
+    "printed_at": "y 414.1, x 160.3..257.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.1 x 160.3..257.3, inside this cell's x range (151.2..266.4). Row fixed by the printed marker 6b."
+   },
+   {
+    "key": "credit_cards_accepted[1].issuing_bank_name_and_address",
+    "leaf": "p1_61_6b[0]",
+    "widget": "y 342..367.2, x 266.4..576",
+    "printed": "Issuing Bank Name and Address",
+    "printed_at": "y 414, x 313.3..430.2",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.0 x 313.3..430.2, with \"(Street, City, State, ZIP code)\" at x 432.4..536.3, both inside this cell's x range (266.4..576.0). THIS CELL AND THE PHONE CELL BELOW IT SHARE A COLUMN AND ARE SEPARATED BY BASELINE: this one spans y 378.0..403.2 and the phone cell spans y 367.2..378.0, and the printed \"Phone\" for row 6b sits on the LOWER band. Row fixed by the printed marker 6b."
+   },
+   {
+    "key": "credit_cards_accepted[1].issuing_bank_phone",
+    "leaf": "p1_29_6b[0]",
+    "widget": "y 331.2..342, x 302.4..576",
+    "printed": "Phone",
+    "printed_at": "y 333.5, x 272.9..295.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.5pt",
+    "second_witness": "The printed \"Phone\" for row 6b is 6.5pt left of this cell with its baseline inside the rectangle. It is the second witness that separates this cell from the bank-address cell directly above it in the same column."
+   },
+   {
+    "key": "credit_cards_accepted[2].type_of_credit_card",
+    "leaf": "p1_30_6c[0]",
+    "widget": "y 295.2..331.2, x 50.4..151.2",
+    "printed": "Type of Credit Card",
+    "printed_at": "y 419, x 61.9..125.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 419.0 x 61.9..125.3, inside this cell's x range (50.4..151.2), with its example run \"(e.g., Visa, Mastercard, etc.)\" at y 409.0 x 49.0..138.2 beneath it. Row fixed by the printed marker 6c."
+   },
+   {
+    "key": "credit_cards_accepted[2].merchant_account_number",
+    "leaf": "p1_31_6c[0]",
+    "widget": "y 295.2..319.2, x 151.2..266.4",
+    "printed": "Merchant Account Number",
+    "printed_at": "y 414.1, x 160.3..257.3",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.1 x 160.3..257.3, inside this cell's x range (151.2..266.4). Row fixed by the printed marker 6c."
+   },
+   {
+    "key": "credit_cards_accepted[2].issuing_bank_name_and_address",
+    "leaf": "p1_62_6c[0]",
+    "widget": "y 306..331.2, x 266.4..576",
+    "printed": "Issuing Bank Name and Address",
+    "printed_at": "y 414, x 313.3..430.2",
+    "pairing": "column header: its x range lies inside this cell's",
+    "second_witness": "COLUMN HEADER at y 414.0 x 313.3..430.2, with \"(Street, City, State, ZIP code)\" at x 432.4..536.3, both inside this cell's x range (266.4..576.0). THIS CELL AND THE PHONE CELL BELOW IT SHARE A COLUMN AND ARE SEPARATED BY BASELINE: this one spans y 378.0..403.2 and the phone cell spans y 367.2..378.0, and the printed \"Phone\" for row 6c sits on the LOWER band. Row fixed by the printed marker 6c."
+   },
+   {
+    "key": "credit_cards_accepted[2].issuing_bank_phone",
+    "leaf": "p1_32_6c[0]",
+    "widget": "y 295.2..306, x 302.4..576",
+    "printed": "Phone",
+    "printed_at": "y 297.5, x 272.9..295.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.5pt",
+    "second_witness": "The printed \"Phone\" for row 6c is 6.5pt left of this cell with its baseline inside the rectangle. It is the second witness that separates this cell from the bank-address cell directly above it in the same column."
+   },
+   {
+    "key": "personnel[0].full_name",
+    "leaf": "p1_33_7aFullNm[0]",
+    "widget": "y 255.6..266.4, x 97.6..345.8",
+    "printed": "Full Name",
+    "printed_at": "y 256.3, x 57.6..93.6",
+    "pairing": "immediately left, baseline inside the rectangle, 4pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].title",
+    "leaf": "p1_34_7aTitle[0]",
+    "widget": "y 244.8..255.6, x 77.6..345.8",
+    "printed": "Title",
+    "printed_at": "y 245.5, x 57.6..72.6",
+    "pairing": "immediately left, baseline inside the rectangle, 5pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].home_address",
+    "leaf": "p1_35_7aHmAdd[0]",
+    "widget": "y 234..244.8, x 117.6..345.8",
+    "printed": "Home Address",
+    "printed_at": "y 234.7, x 57.6..110.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.7pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].city",
+    "leaf": "p1_36_7aCity[0]",
+    "widget": "y 223.2..234, x 77.6..165.6",
+    "printed": "City",
+    "printed_at": "y 223.9, x 57.6..71.7",
+    "pairing": "immediately left, baseline inside the rectangle, 5.9pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].state",
+    "leaf": "p1_37_7aSt[0]",
+    "widget": "y 223.2..234, x 192.8..273.6",
+    "printed": "State",
+    "printed_at": "y 223.9, x 172.8..191.6",
+    "pairing": "immediately left, baseline inside the rectangle, 1.2pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].zip",
+    "leaf": "p1_38_7aZIP[0]",
+    "widget": "y 223.2..234, x 288.6..345.6",
+    "printed": "ZIP",
+    "printed_at": "y 223.9, x 275.8..288",
+    "pairing": "immediately left, baseline inside the rectangle, 0.6pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].taxpayer_identification_number",
+    "leaf": "p1_39_SSN_7a[0]",
+    "widget": "y 255.6..266.4, x 489.6..576",
+    "printed": "Taxpayer Identification Number",
+    "printed_at": "y 257.3, x 367.2..479.4",
+    "pairing": "immediately left, baseline inside the rectangle, 10.2pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF NAME SAYS SSN AND THE PAGE SAYS TAXPAYER IDENTIFICATION NUMBER. A partner, officer or LLC member may hold either an SSN or an EIN, and the printed caption asks for whichever applies. Bound on the caption. This is one of the three probes in adapters/pdf/correlate-labels.mjs for this form, and it is the one that passes."
+   },
+   {
+    "key": "personnel[0].home_phone_area_code",
+    "leaf": "p1_40_7a_3digits[0]",
+    "widget": "y 244.8..255.6, x 439.7..468",
+    "printed": "Home Telephone",
+    "printed_at": "y 245.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 247.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE PRINTED PARENTHESES ARE THE SECOND WITNESS, as on 1d: \"(\" and \")\" are drawn around this widget and the caption \"Home Telephone\" captions both cells of the pair."
+   },
+   {
+    "key": "personnel[0].home_phone_number",
+    "leaf": "p1_41_7a_7digits[0]",
+    "widget": "y 244.8..255.6, x 476.6..576",
+    "printed": "Home Telephone",
+    "printed_at": "y 245.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 247.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The cell right of the closing \")\" on the Home Telephone row."
+   },
+   {
+    "key": "personnel[0].work_cell_phone_area_code",
+    "leaf": "p1_43_7a_3digitswrk[0]",
+    "widget": "y 234..244.8, x 439.7..468",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 234.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 247.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF-NAME CONVENTION INVERTS BETWEEN ROWS AND THIS IS WHY NONE OF THESE IS BOUND BY NAME. On rows 7a and 7d the HOME pair is spelled plainly and the WORK pair carries \"wrk\"; on row 7b the HOME pair carries \"hm\" and the WORK pair is spelled plainly; row 7c marks both. A map binding \"the plain one\" would put the work number in the home field on row 7b."
+   },
+   {
+    "key": "personnel[0].work_cell_phone_number",
+    "leaf": "p1_44_7a_7digitswrk[0]",
+    "widget": "y 234..244.8, x 476.6..576",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 234.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 247.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[0].ownership_percentage",
+    "leaf": "p1_42_7aowner[0]",
+    "widget": "y 223.2..234, x 530..576",
+    "printed": "Ownership Percentage & Shares or Interest",
+    "printed_at": "y 224.9, x 367.2..521.7",
+    "pairing": "immediately left, baseline inside the rectangle, 8.3pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. FOUR ROWS, FOUR DIFFERENT LEAF-NAME SPELLINGS FOR ONE COLUMN: p1_42_7aowner, p1_52_7bowner, OwnrshpPrcntg7c, p1_001_7downer. Nothing about the names generalises; the column does."
+   },
+   {
+    "key": "personnel[0].annual_salary_or_draw",
+    "leaf": "p1_42_7aAnnualSalDrw[0]",
+    "widget": "y 212.4..223.2, x 443.6..576",
+    "printed": "Annual Salary/Draw",
+    "printed_at": "y 214.7, x 367.2..437.6",
+    "pairing": "immediately left, baseline inside the rectangle, 6pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. ONE LEAF NAME ACROSS ALL FOUR ROWS. p1_42_7aAnnualSalDrw carries indices [0] to [3], so the \"7a\" in the name is FALSE on three of its four occurrences. Index 0 is row 7a. Binding by leaf stem without the index writes every personnel salary into row 7a."
+   },
+   {
+    "key": "personnel[0].responsible_for_payroll_taxes_yes",
+    "leaf": "c1_01_7a[0]",
+    "widget": "y 213.8..221.8, x 216..224",
+    "printed": "Yes",
+    "printed_at": "y 214.7, x 229.1..243.3",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the left of the pair, with \"Yes\" printed to its right on the same baseline."
+   },
+   {
+    "key": "personnel[0].responsible_for_payroll_taxes_no",
+    "leaf": "c1_01_7a[1]",
+    "widget": "y 213.8..221.8, x 259.2..267.2",
+    "printed": "No",
+    "printed_at": "y 214.7, x 270.5..281.3",
+    "pairing": "to the right, baseline inside the rectangle, 3.3pt",
+    "second_witness": "Row is fixed by the printed marker 7a and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the right of the pair. The caption is \"Responsible for Depositing Payroll Taxes\", printed left of both boxes at x 57.6..204.3; the two option words separate them."
+   },
+   {
+    "key": "personnel[1].full_name",
+    "leaf": "p1_43_7bFullNm[0]",
+    "widget": "y 201.6..212.4, x 97.6..345.8",
+    "printed": "Full Name",
+    "printed_at": "y 202.3, x 57.6..93.6",
+    "pairing": "immediately left, baseline inside the rectangle, 4pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].title",
+    "leaf": "p1_44_7bTitle[0]",
+    "widget": "y 190.8..201.6, x 77.6..345.8",
+    "printed": "Title",
+    "printed_at": "y 191.5, x 57.6..72.6",
+    "pairing": "immediately left, baseline inside the rectangle, 5pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].home_address",
+    "leaf": "p145_7bHmAdd[0]",
+    "widget": "y 180..190.8, x 117.6..345.8",
+    "printed": "Home Address",
+    "printed_at": "y 180.7, x 57.6..110.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.7pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].city",
+    "leaf": "p1_46_7bCity[0]",
+    "widget": "y 169.2..180, x 77.6..165.6",
+    "printed": "City",
+    "printed_at": "y 169.9, x 57.6..71.7",
+    "pairing": "immediately left, baseline inside the rectangle, 5.9pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].state",
+    "leaf": "p1_47_7bState[0]",
+    "widget": "y 169.2..180, x 192.8..273.6",
+    "printed": "State",
+    "printed_at": "y 169.9, x 172.8..191.6",
+    "pairing": "immediately left, baseline inside the rectangle, 1.2pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].zip",
+    "leaf": "p1_48_7bZIP[0]",
+    "widget": "y 169.2..180, x 288.6..345.6",
+    "printed": "ZIP",
+    "printed_at": "y 169.9, x 275.8..288",
+    "pairing": "immediately left, baseline inside the rectangle, 0.6pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].taxpayer_identification_number",
+    "leaf": "p1_51_7bSSN[0]",
+    "widget": "y 201.6..212.4, x 489.6..576",
+    "printed": "Taxpayer Identification Number",
+    "printed_at": "y 203.3, x 367.2..479.4",
+    "pairing": "immediately left, baseline inside the rectangle, 10.2pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF NAME SAYS SSN AND THE PAGE SAYS TAXPAYER IDENTIFICATION NUMBER. A partner, officer or LLC member may hold either an SSN or an EIN, and the printed caption asks for whichever applies. Bound on the caption. This is one of the three probes in adapters/pdf/correlate-labels.mjs for this form, and it is the one that passes."
+   },
+   {
+    "key": "personnel[1].home_phone_area_code",
+    "leaf": "p1_49_7b_3digitshm[0]",
+    "widget": "y 190.8..201.6, x 439.7..468",
+    "printed": "Home Telephone",
+    "printed_at": "y 191.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 193.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE PRINTED PARENTHESES ARE THE SECOND WITNESS, as on 1d: \"(\" and \")\" are drawn around this widget and the caption \"Home Telephone\" captions both cells of the pair."
+   },
+   {
+    "key": "personnel[1].home_phone_number",
+    "leaf": "p1_50_7b_7digitshm[0]",
+    "widget": "y 190.8..201.6, x 476.6..576",
+    "printed": "Home Telephone",
+    "printed_at": "y 191.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 193.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The cell right of the closing \")\" on the Home Telephone row."
+   },
+   {
+    "key": "personnel[1].work_cell_phone_area_code",
+    "leaf": "p1_53_7b_3digits[0]",
+    "widget": "y 180..190.8, x 439.7..468",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 180.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 193.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF-NAME CONVENTION INVERTS BETWEEN ROWS AND THIS IS WHY NONE OF THESE IS BOUND BY NAME. On rows 7a and 7d the HOME pair is spelled plainly and the WORK pair carries \"wrk\"; on row 7b the HOME pair carries \"hm\" and the WORK pair is spelled plainly; row 7c marks both. A map binding \"the plain one\" would put the work number in the home field on row 7b."
+   },
+   {
+    "key": "personnel[1].work_cell_phone_number",
+    "leaf": "p1_54_7b_7digits[0]",
+    "widget": "y 180..190.8, x 476.6..576",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 180.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 193.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[1].ownership_percentage",
+    "leaf": "p1_52_7bowner[0]",
+    "widget": "y 169.2..180, x 530..576",
+    "printed": "Ownership Percentage & Shares or Interest",
+    "printed_at": "y 170.9, x 367.2..521.7",
+    "pairing": "immediately left, baseline inside the rectangle, 8.3pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. FOUR ROWS, FOUR DIFFERENT LEAF-NAME SPELLINGS FOR ONE COLUMN: p1_42_7aowner, p1_52_7bowner, OwnrshpPrcntg7c, p1_001_7downer. Nothing about the names generalises; the column does."
+   },
+   {
+    "key": "personnel[1].annual_salary_or_draw",
+    "leaf": "p1_42_7aAnnualSalDrw[1]",
+    "widget": "y 158.4..169.2, x 443.6..576",
+    "printed": "Annual Salary/Draw",
+    "printed_at": "y 160.7, x 367.2..437.6",
+    "pairing": "immediately left, baseline inside the rectangle, 6pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. ONE LEAF NAME ACROSS ALL FOUR ROWS. p1_42_7aAnnualSalDrw carries indices [0] to [3], so the \"7a\" in the name is FALSE on three of its four occurrences. Index 1 is row 7b. Binding by leaf stem without the index writes every personnel salary into row 7a."
+   },
+   {
+    "key": "personnel[1].responsible_for_payroll_taxes_yes",
+    "leaf": "c1_02_7b[0]",
+    "widget": "y 159.8..167.8, x 216..224",
+    "printed": "Yes",
+    "printed_at": "y 160.7, x 229.1..243.3",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the left of the pair, with \"Yes\" printed to its right on the same baseline."
+   },
+   {
+    "key": "personnel[1].responsible_for_payroll_taxes_no",
+    "leaf": "c1_02_7b[1]",
+    "widget": "y 159.8..167.8, x 259.2..267.2",
+    "printed": "No",
+    "printed_at": "y 160.7, x 271.3..282.1",
+    "pairing": "to the right, baseline inside the rectangle, 4.1pt",
+    "second_witness": "Row is fixed by the printed marker 7b and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the right of the pair. The caption is \"Responsible for Depositing Payroll Taxes\", printed left of both boxes at x 57.6..204.3; the two option words separate them."
+   },
+   {
+    "key": "personnel[2].full_name",
+    "leaf": "p1_002_7cFullNM[0]",
+    "widget": "y 147.6..158.4, x 97.6..345.8",
+    "printed": "Full Name",
+    "printed_at": "y 148.3, x 57.6..93.6",
+    "pairing": "immediately left, baseline inside the rectangle, 4pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].title",
+    "leaf": "p1_002_7cTitle[0]",
+    "widget": "y 136.8..147.6, x 77.6..345.8",
+    "printed": "Title",
+    "printed_at": "y 137.5, x 57.6..72.6",
+    "pairing": "immediately left, baseline inside the rectangle, 5pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].home_address",
+    "leaf": "p1_002_7cHmAdd[0]",
+    "widget": "y 126..136.8, x 117.6..345.8",
+    "printed": "Home Address",
+    "printed_at": "y 126.7, x 57.6..110.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.7pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].city",
+    "leaf": "p1_002_7cCity[0]",
+    "widget": "y 115.2..126, x 77.6..165.6",
+    "printed": "City",
+    "printed_at": "y 115.9, x 57.6..71.7",
+    "pairing": "immediately left, baseline inside the rectangle, 5.9pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].state",
+    "leaf": "p1_007_7cSt[0]",
+    "widget": "y 115.2..126, x 192.8..273.6",
+    "printed": "State",
+    "printed_at": "y 115.9, x 172.8..191.6",
+    "pairing": "immediately left, baseline inside the rectangle, 1.2pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].zip",
+    "leaf": "p1_007_7cZIP[0]",
+    "widget": "y 115.2..126, x 288.6..345.6",
+    "printed": "ZIP",
+    "printed_at": "y 115.9, x 275.8..288",
+    "pairing": "immediately left, baseline inside the rectangle, 0.6pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].taxpayer_identification_number",
+    "leaf": "p1_002_7cSSN[0]",
+    "widget": "y 147.6..158.4, x 489.6..576",
+    "printed": "Taxpayer Identification Number",
+    "printed_at": "y 149.3, x 367.2..479.4",
+    "pairing": "immediately left, baseline inside the rectangle, 10.2pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF NAME SAYS SSN AND THE PAGE SAYS TAXPAYER IDENTIFICATION NUMBER. A partner, officer or LLC member may hold either an SSN or an EIN, and the printed caption asks for whichever applies. Bound on the caption. This is one of the three probes in adapters/pdf/correlate-labels.mjs for this form, and it is the one that passes."
+   },
+   {
+    "key": "personnel[2].home_phone_area_code",
+    "leaf": "p1_00_7c_3digitshm[0]",
+    "widget": "y 136.8..147.6, x 439.7..468",
+    "printed": "Home Telephone",
+    "printed_at": "y 137.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 139.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE PRINTED PARENTHESES ARE THE SECOND WITNESS, as on 1d: \"(\" and \")\" are drawn around this widget and the caption \"Home Telephone\" captions both cells of the pair."
+   },
+   {
+    "key": "personnel[2].home_phone_number",
+    "leaf": "p1_00_7c_7digitshm[0]",
+    "widget": "y 136.8..147.6, x 476.6..576",
+    "printed": "Home Telephone",
+    "printed_at": "y 137.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 139.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The cell right of the closing \")\" on the Home Telephone row."
+   },
+   {
+    "key": "personnel[2].work_cell_phone_area_code",
+    "leaf": "p1_00_7c_3digitswrk[0]",
+    "widget": "y 126..136.8, x 439.7..468",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 126.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 139.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF-NAME CONVENTION INVERTS BETWEEN ROWS AND THIS IS WHY NONE OF THESE IS BOUND BY NAME. On rows 7a and 7d the HOME pair is spelled plainly and the WORK pair carries \"wrk\"; on row 7b the HOME pair carries \"hm\" and the WORK pair is spelled plainly; row 7c marks both. A map binding \"the plain one\" would put the work number in the home field on row 7b."
+   },
+   {
+    "key": "personnel[2].work_cell_phone_number",
+    "leaf": "p1_00_7c_7digitswrk[0]",
+    "widget": "y 126..136.8, x 476.6..576",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 126.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 139.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[2].ownership_percentage",
+    "leaf": "OwnrshpPrcntg7c[0]",
+    "widget": "y 115.2..126, x 530..576",
+    "printed": "Ownership Percentage & Shares or Interest",
+    "printed_at": "y 115.9, x 367.2..521.7",
+    "pairing": "immediately left, baseline inside the rectangle, 8.3pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. FOUR ROWS, FOUR DIFFERENT LEAF-NAME SPELLINGS FOR ONE COLUMN: p1_42_7aowner, p1_52_7bowner, OwnrshpPrcntg7c, p1_001_7downer. Nothing about the names generalises; the column does."
+   },
+   {
+    "key": "personnel[2].annual_salary_or_draw",
+    "leaf": "p1_42_7aAnnualSalDrw[2]",
+    "widget": "y 104.4..115.2, x 443.6..576",
+    "printed": "Annual Salary/Draw",
+    "printed_at": "y 106.7, x 367.2..437.6",
+    "pairing": "immediately left, baseline inside the rectangle, 6pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. ONE LEAF NAME ACROSS ALL FOUR ROWS. p1_42_7aAnnualSalDrw carries indices [0] to [3], so the \"7a\" in the name is FALSE on three of its four occurrences. Index 2 is row 7c. Binding by leaf stem without the index writes every personnel salary into row 7a."
+   },
+   {
+    "key": "personnel[2].responsible_for_payroll_taxes_yes",
+    "leaf": "c1_03_7c[0]",
+    "widget": "y 105.8..113.8, x 216..224",
+    "printed": "Yes",
+    "printed_at": "y 106.7, x 229.1..243.3",
+    "pairing": "to the right, baseline inside the rectangle, 5.1pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the left of the pair, with \"Yes\" printed to its right on the same baseline."
+   },
+   {
+    "key": "personnel[2].responsible_for_payroll_taxes_no",
+    "leaf": "c1_03_7c[1]",
+    "widget": "y 105.8..113.8, x 259.2..267.2",
+    "printed": "No",
+    "printed_at": "y 106.7, x 272..282.9",
+    "pairing": "to the right, baseline inside the rectangle, 4.8pt",
+    "second_witness": "Row is fixed by the printed marker 7c and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the right of the pair. The caption is \"Responsible for Depositing Payroll Taxes\", printed left of both boxes at x 57.6..204.3; the two option words separate them."
+   },
+   {
+    "key": "personnel[3].full_name",
+    "leaf": "p1_002_7dFullNm[0]",
+    "widget": "y 93.6..104.4, x 97.6..345.8",
+    "printed": "Full Name",
+    "printed_at": "y 94.3, x 57.6..93.6",
+    "pairing": "immediately left, baseline inside the rectangle, 4pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].title",
+    "leaf": "p1_002_7dTitle[0]",
+    "widget": "y 82.8..93.6, x 77.6..345.8",
+    "printed": "Title",
+    "printed_at": "y 83.5, x 57.6..72.6",
+    "pairing": "immediately left, baseline inside the rectangle, 5pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].home_address",
+    "leaf": "p1_002_7dHmAdd[0]",
+    "widget": "y 72..82.8, x 117.6..345.8",
+    "printed": "Home Address",
+    "printed_at": "y 72.7, x 57.6..110.9",
+    "pairing": "immediately left, baseline inside the rectangle, 6.7pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].city",
+    "leaf": "p1_002_7dCity[0]",
+    "widget": "y 61.2..72, x 77.6..165.6",
+    "printed": "City",
+    "printed_at": "y 61.9, x 57.6..71.7",
+    "pairing": "immediately left, baseline inside the rectangle, 5.9pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].state",
+    "leaf": "p1_007_7dState[0]",
+    "widget": "y 61.2..72, x 192.8..273.6",
+    "printed": "State",
+    "printed_at": "y 61.9, x 172.8..191.6",
+    "pairing": "immediately left, baseline inside the rectangle, 1.2pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].zip",
+    "leaf": "p1_007_7dZIP[0]",
+    "widget": "y 61.2..72, x 288.6..345.6",
+    "printed": "ZIP",
+    "printed_at": "y 61.9, x 275.8..288",
+    "pairing": "immediately left, baseline inside the rectangle, 0.6pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].taxpayer_identification_number",
+    "leaf": "p1_002_7dSSN[0]",
+    "widget": "y 93.6..104.4, x 489.6..576",
+    "printed": "Taxpayer Identification Number",
+    "printed_at": "y 95.3, x 367.2..479.4",
+    "pairing": "immediately left, baseline inside the rectangle, 10.2pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF NAME SAYS SSN AND THE PAGE SAYS TAXPAYER IDENTIFICATION NUMBER. A partner, officer or LLC member may hold either an SSN or an EIN, and the printed caption asks for whichever applies. Bound on the caption. This is one of the three probes in adapters/pdf/correlate-labels.mjs for this form, and it is the one that passes."
+   },
+   {
+    "key": "personnel[3].home_phone_area_code",
+    "leaf": "p1_00_3digits7d[0]",
+    "widget": "y 82.8..93.6, x 439.7..468",
+    "printed": "Home Telephone",
+    "printed_at": "y 83.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 85.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE PRINTED PARENTHESES ARE THE SECOND WITNESS, as on 1d: \"(\" and \")\" are drawn around this widget and the caption \"Home Telephone\" captions both cells of the pair."
+   },
+   {
+    "key": "personnel[3].home_phone_number",
+    "leaf": "p1_00_7digits7d[0]",
+    "widget": "y 82.8..93.6, x 476.6..576",
+    "printed": "Home Telephone",
+    "printed_at": "y 83.5, x 367.2..428.4",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 85.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The cell right of the closing \")\" on the Home Telephone row."
+   },
+   {
+    "key": "personnel[3].work_cell_phone_area_code",
+    "leaf": "p1_00_3digits7dwrk[0]",
+    "widget": "y 72..82.8, x 439.7..468",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 72.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — \"(\" at y 85.1 x 434..436.1 and \")\" at x 470..472.1; this cell (x 439.7..468) is between them",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. THE LEAF-NAME CONVENTION INVERTS BETWEEN ROWS AND THIS IS WHY NONE OF THESE IS BOUND BY NAME. On rows 7a and 7d the HOME pair is spelled plainly and the WORK pair carries \"wrk\"; on row 7b the HOME pair carries \"hm\" and the WORK pair is spelled plainly; row 7c marks both. A map binding \"the plain one\" would put the work number in the home field on row 7b."
+   },
+   {
+    "key": "personnel[3].work_cell_phone_number",
+    "leaf": "p1_00_7digits7dwrk[0]",
+    "widget": "y 72..82.8, x 476.6..576",
+    "printed": "Work/Cell Phone",
+    "printed_at": "y 72.7, x 367.2..427.5",
+    "pairing": "the caption above captions BOTH cells of the pair; the cell is fixed by the printed parentheses — the closing \")\" at y 85.1 x 470..472.1 is 4.5pt left of this cell (x 476.6..576)",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated."
+   },
+   {
+    "key": "personnel[3].ownership_percentage",
+    "leaf": "p1_001_7downer[0]",
+    "widget": "y 61.2..72, x 530..576",
+    "printed": "Ownership Percentage & Shares or Interest",
+    "printed_at": "y 62.9, x 367.2..521.7",
+    "pairing": "immediately left, baseline inside the rectangle, 8.3pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. FOUR ROWS, FOUR DIFFERENT LEAF-NAME SPELLINGS FOR ONE COLUMN: p1_42_7aowner, p1_52_7bowner, OwnrshpPrcntg7c, p1_001_7downer. Nothing about the names generalises; the column does."
+   },
+   {
+    "key": "personnel[3].annual_salary_or_draw",
+    "leaf": "p1_42_7aAnnualSalDrw[3]",
+    "widget": "y 50.4..61.2, x 443.6..576",
+    "printed": "Annual Salary/Draw",
+    "printed_at": "y 53.7, x 367.2..437.6",
+    "pairing": "immediately left, baseline inside the rectangle, 6pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. ONE LEAF NAME ACROSS ALL FOUR ROWS. p1_42_7aAnnualSalDrw carries indices [0] to [3], so the \"7a\" in the name is FALSE on three of its four occurrences. Index 3 is row 7d. Binding by leaf stem without the index writes every personnel salary into row 7a."
+   },
+   {
+    "key": "personnel[3].responsible_for_payroll_taxes_yes",
+    "leaf": "c1_04_7d[0]",
+    "widget": "y 51.8..59.8, x 216..224",
+    "printed": "Yes",
+    "printed_at": "y 52.7, x 228.6..242.8",
+    "pairing": "to the right, baseline inside the rectangle, 4.6pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the left of the pair, with \"Yes\" printed to its right on the same baseline."
+   },
+   {
+    "key": "personnel[3].responsible_for_payroll_taxes_no",
+    "leaf": "c1_04_7d[1]",
+    "widget": "y 51.8..59.8, x 259.2..267.2",
+    "printed": "No",
+    "printed_at": "y 52.7, x 271.3..282.1",
+    "pairing": "to the right, baseline inside the rectangle, 4.1pt",
+    "second_witness": "Row is fixed by the printed marker 7d and by the baseline band; the column by x. Every one of the four rows prints the same captions at the same x, so neither alone determines a cell and both are stated. The box at the right of the pair. The caption is \"Responsible for Depositing Payroll Taxes\", printed left of both boxes at x 57.6..204.3; the two option words separate them."
+   }
+  ]
+ },
+ "_never_autofill": {
+  "_why": "Nothing on page 1 is withheld. Every one of the 103 cells is a fact a filer supplies and none is a signature, a date of signature, or an IRS-use cell. The signature block and the \"IRS USE ONLY\" box are both on page 6.",
+  "targets": []
+ },
+ "_arguable_page1": [
+  {
+   "id": "C1-1",
+   "what": "Both cells of the 1d business telephone, and all 16 Section 2 phone cells, are bound on PRINTED PARENTHESES rather than on a caption.",
+   "the_reading": "Each telephone is drawn as two cells under one caption, and the caption sits 14.7pt from the first cell and 48.2pt from the second. Nothing in the caption distinguishes them. The page draws \"(\" and \")\" around the first cell every time — ten times on this page — and that is what the binding rests on.",
+   "why_it_is_arguable": "A parenthesis is punctuation, and this engine's own correlators discard punctuation as non-descriptive before ranking. So the witness these ten cells stand on is one every other tool in the repo is built to throw away. It is the right witness here because it is the only thing on the page that separates the two cells, but it is a witness of a kind nothing else in this engine uses, and if it were ever wrong nothing else would contradict it.",
+   "what_would_settle_it": "A round trip: fill the area-code cell with a value that cannot be a subscriber number and read the filled page back. Not done in this slice."
+  },
+  {
+   "id": "C1-2",
+   "what": "The two page-1 tables are bound on COLUMN HEADERS, which is a weaker witness than a per-cell caption.",
+   "the_reading": "Table_Line5a-b and Table_Lines6a-c print no caption beside any cell. The only printed text naming a column is the header above the whole table, and the row comes from the printed marker. Every one of those 16 cells is bound on header x-range containment plus marker row.",
+   "why_it_is_arguable": "Header containment is a claim about a COLUMN and the cell inherits it. Where two cells share a column — the credit-card bank address and its phone — containment alone binds both to the same header, and only the printed \"Phone\" on the lower band separates them. That second witness exists for the phone cell; the bank cell is bound by being the one that is left.",
+   "what_would_settle_it": "The same round trip. A filled copy would show a bank address in the phone row immediately."
+  },
+  {
+   "id": "C1-3",
+   "what": "The 2b entity set is declared exclusive on the printed instruction, not on anything the PDF enforces.",
+   "the_reading": "\"(Check appropriate box below)\" at y 639.5, x 374.8..484.0 is singular. The five boxes are five separate checkbox fields with five different on-states, not one radio group — nothing in the AcroForm prevents two being ticked at once.",
+   "why_it_is_arguable": "The exclusivity is a reading of the printed instruction. \"appropriate box\" is singular but the form also prints \"Other\" and \"Other LLC - Include number of members\" as separate options, and an LLC classified as a corporation arguably satisfies two of the five descriptions at once. The map declares one; the page does not enforce it.",
+   "what_would_settle_it": "Nothing on page 1. It is a question about what the IRS accepts, not about what the page draws."
+  },
+  {
+   "id": "C1-4",
+   "what": "The four Section 2 rows are modelled as a group with max 4 and no printed overflow instruction.",
+   "the_reading": "The page draws exactly four personnel rows and the masthead says \"Include attachments if additional space is needed to respond completely to any question.\" (y 679.3, x 230.4..570.3). That sentence is the form's only statement about what happens past the printed rows, and it is printed once for the whole form rather than beside this block.",
+   "why_it_is_arguable": "Every other overflow declaration in this engine cites a per-block printed instruction. Here there is none, so a fifth partner has nowhere to go and the general attachment sentence is doing the work of a block-level one. Whether that sentence licenses an overflow declaration for THIS block is a reading.",
+   "what_would_settle_it": "It is a genuine gap in what the page says. Recorded, not resolved."
+  }
+ ]
 }

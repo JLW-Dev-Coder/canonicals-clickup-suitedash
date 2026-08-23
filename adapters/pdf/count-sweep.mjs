@@ -383,6 +383,44 @@ export const MANIFEST = [
     },
     fallback: { kind: 'underivable', reason: 'The rationale for declaring a partition at all. Only 433-A(OIC)\u2019s instance states a figure \u2014 the 63 fields 433-F accumulated silently unreferenced before the declaration existed \u2014 and that figure is about a PAST state of a map that has since been closed, so nothing in the present tree reproduces it. What is derived where it appears is the only thing about it that can still become false: that it is not larger than 433-F\u2019s whole field count.' } }),
 
+  // ═══ 433-B slice 1: two absence claims, both derived ══════════════════════════════════
+  //
+  // Both were UNDISPOSED on this map's first validate-map run, and both are the kind of claim
+  // that is worth deriving rather than declaring underivable: one is an absence about the
+  // DRAWN PAGE and the other is a count of a register on disk. An absence stated in prose and
+  // never re-read is the shape [D-06] was.
+  D({ id: 'S-37', file: /433b\.map\.json$/, at: /^_no_arithmetic_on_this_page_at_all$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
+      const joined = pages[0].items.map((t) => t.str).join(' ');
+      // The six things the claim says page 1 does not draw, enumerated here so the claim and
+      // the check read the same list. "box" is excluded from the vocabulary and asserted
+      // separately, because the page DOES draw it once — in "(Check appropriate box below)".
+      const VOCAB = [/\bBox\s+[A-Z]\b/, /\bTotal\b/i, /\bAdd lines?\b/i, /\bSubtract\b/i, /\bminus\b/i, /\bmultiply\b/i];
+      const rows = VOCAB.map((re) => ({ what: `page 1 draws no run matching /${re.source}/`, claimed: 0, derived: (joined.match(new RegExp(re.source, re.flags.includes('i') ? 'gi' : 'g')) || []).length, from: 'every drawn run of page 1, joined' }));
+      rows.push({ what: 'occurrences of the word "box" on page 1', claimed: 1, derived: (joined.match(/\bbox\b/gi) || []).length, from: 'the same joined page text; the one occurrence is "(Check appropriate box below)"' });
+      return rows;
+    } }),
+
+  D({ id: 'S-38', file: /433b\.map\.json$/, at: /^_none_of_the_five_flag_classes_appears_on_this_page$/,
+    kind: 'derived',
+    derive: () => {
+      const spec = JSON.parse(readFileSync('adapters/hubspot/asset-row-shapes.json', 'utf8'));
+      let flagged = 0;
+      const walk = (o) => {
+        if (Array.isArray(o)) { o.forEach(walk); return; }
+        if (o && typeof o === 'object') {
+          if (o.key && (o.row_flag || o.printed_as_checkbox)) flagged++;
+          for (const k of Object.keys(o)) walk(o[k]);
+        }
+      };
+      walk(spec);
+      return [{ what: 'flagged columns in asset-row-shapes.json', claimed: 5, derived: flagged,
+        from: 'every column object carrying a row_flag or printed_as_checkbox declaration' }];
+    } }),
+
   // ═══ the carried-questions ledger ════════════════════════════════════════════════════
   D({ id: 'S-07', file: /\.map\.json$/, at: /^_carried\._count\.(open|resolved)$/,
     kind: 'derived',

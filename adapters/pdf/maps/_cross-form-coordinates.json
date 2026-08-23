@@ -2,9 +2,9 @@
  "_what_this_is": "The owning form of every cross-form coordinate quoted in this engine's map and headings prose, DECLARED. [D-14].",
  "_why_it_exists": "A coordinate quoted about another form used to carry no declaration of which form it was about, so absence-sweep.mjs took the LAST FORM NAMED before it and blanket-audit [K-12] took the HOST form. Neither is a basis for a comparison: 15 of the 17 uncovered coordinates [K-12] reported when it was revived were the counter asking the wrong question. Declaration replaces both readings.",
  "_how_a_row_is_keyed": "at + axis + value + occurrence, where occurrence counts identical triples within one prose value. absence-sweep.mjs enumerates the population and resolves each member against exactly one row here; an undeclared coordinate is a STOP and a row matching no coordinate is a STOP.",
- "_what_declaring_bought": "The last-form-named reading agrees with the declared owner on 4 of 29. On the other 25 it is wrong, and on 17 of those it is wrong in ONE way: the leaf path `topmostSubform[0].F433-A-OIC_PageN[0]` and the filenames `433aoi.labels.txt` and `433aoi.totals.json` all contain the string a form-name reader matches as 433-A, so a sentence entirely about 433-A(OIC)'s own page reads as a sentence about 433-A. The remaining wrong ones are the ordinary case the reader was built for and still fails: a sentence that names another form for CONTRAST and then quotes the host form's own coordinate.",
+ "_what_declaring_bought": "The last-form-named reading agrees with the declared owner on 4 of 30. On the other 26 it is wrong, and on 17 of those it is wrong in ONE way: the leaf path `topmostSubform[0].F433-A-OIC_PageN[0]` and the filenames `433aoi.labels.txt` and `433aoi.totals.json` all contain the string a form-name reader matches as 433-A, so a sentence entirely about 433-A(OIC)'s own page reads as a sentence about 433-A. The remaining wrong ones are the ordinary case the reader was built for and still fails: a sentence that names another form for CONTRAST and then quotes the host form's own coordinate.",
  "_the_page_field": "Stated only where the quoted sentence states it, or where the leaf path names the page subform. `null` means the sentence does not say, and nothing here guesses. The comparison absence-sweep.mjs runs is form-wide, so `page` is context for a reader and is not what the sweep keys on.",
- "_count": 29,
+ "_count": 30,
  "_inference_agrees": 4,
  "declarations": [
   {
@@ -305,6 +305,19 @@
    "inferred_would_have_been": "433boi",
    "inference_agrees": false,
    "why": "The printed \"Other LLC - Include number of members\" option, the next row down of the same 433-B entity list. Same sentence, same page, same misattribution."
+  },
+  {
+   "id": "XF-30",
+   "at": "adapters/pdf/maps/433b.headings.json :: headings.0._at",
+   "axis": "y",
+   "value": 662.4,
+   "occurrence": 1,
+   "host_form": "433b",
+   "form": "433b",
+   "page": 1,
+   "inferred_would_have_been": "433boi",
+   "inference_agrees": false,
+   "why": "The baseline of 433-B's OWN \"Section 1: Business Information\" banner. The sentence names 433-B(OIC) only to say that THAT form splits its banner into three runs and this one does not, and the reader takes the contrast."
   },
   {
    "id": "XF-22",

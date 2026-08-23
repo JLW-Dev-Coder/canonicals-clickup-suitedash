@@ -1,0 +1,67 @@
+{
+ "_fixture": {
+  "form": "433b",
+  "role": "acceptance",
+  "why": "Slice 1's acceptance record. SATURATED: every one of the 103 page-1 cells carries a value, every group is filled to its printed row count, and every one of the seven declared exclusive sets has exactly one option chosen. A cell left empty here would be a cell the gate never proved writable, which is the state a saturated fixture exists to remove.",
+  "_the_entity_option_exercises_the_escaped_on_state": "s1_type_of_entity is \"Other LLC - Include number of members\", whose stored on-value is /Other#20LLC — the one on-state on this form carrying a PDF name-object escape. The engine reads it off the widget and reads it back to prove it turned on.",
+  "_the_two_companion_text_cells_are_both_filled": "s1_entity_other_description and s1_llc_number_of_members are bound as scalars and are not part of the exclusive set, so both are written whatever the set says. Filling both while choosing the Other-LLC option is deliberate: it proves they are independent of the set.",
+  "_synthetic": "Every value is invented. No real taxpayer, no real EIN, no real portal record. The EIN and the three taxpayer identification numbers are in IRS-reserved-looking but non-issuable ranges and identify nobody.",
+  "_authored_by": "Prompt 46 commit 3, by hand from adapters/pdf/maps/433b.map.json's binding list."
+ },
+
+ "record_id": "INT-SAMPLE-433B-001",
+
+ "s1_business_name": "Northgate Ironworks LLC",
+ "s1_business_street_address": "4820 Foundry Row, Building C",
+ "s1_mailing_address": "PO Box 11284",
+ "s1_city": "Bellingham",
+ "s1_state": "WA",
+ "s1_zip": "98227",
+ "s1_county": "Whatcom",
+ "s1_business_telephone_area_code": "360",
+ "s1_business_telephone_number": "555-0184",
+ "s1_type_of_business": "Structural steel fabrication",
+ "s1_business_website": "www.northgate-ironworks.example",
+
+ "s1_ein": "00-0000000",
+ "s1_type_of_entity": "Other LLC - Include number of members",
+ "s1_entity_other_description": "Member-managed LLC, no corporate election",
+ "s1_llc_number_of_members": "4",
+ "s1_date_incorporated_or_established": "03142017",
+ "s1_number_of_employees": "26",
+ "s1_monthly_gross_payroll": "148500.00",
+ "s1_frequency_of_tax_deposits": "Semi-weekly",
+ "s1_eftps_enrolled": "yes",
+ "s1_engages_in_ecommerce": "yes",
+
+ "payment_processors": [
+  { "name_and_address": "Cascade Merchant Services, 1100 Rail Ave, Seattle, WA 98104", "account_number": "CMS-4471-9920" },
+  { "name_and_address": "Tidewater Payments Inc, 88 Harbour St, Portland, OR 97204", "account_number": "TWP-0038-1177" }
+ ],
+
+ "credit_cards_accepted": [
+  { "type_of_credit_card": "Visa", "merchant_account_number": "4471992000118", "issuing_bank_name_and_address": "Puget Commerce Bank, 200 Fourth Ave, Seattle, WA 98104", "issuing_bank_phone": "206-555-0142" },
+  { "type_of_credit_card": "Mastercard", "merchant_account_number": "5388114700226", "issuing_bank_name_and_address": "Harbour Line Bank NA, 44 Marine Dr, Bellingham, WA 98225", "issuing_bank_phone": "360-555-0177" },
+  { "type_of_credit_card": "American Express", "merchant_account_number": "3782822463100", "issuing_bank_name_and_address": "Northwest Card Trust, 9 Pioneer Sq, Tacoma, WA 98402", "issuing_bank_phone": "253-555-0119" }
+ ],
+
+ "personnel": [
+  { "full_name": "Adela R Marchetti", "title": "Managing Member", "home_address": "312 Cedar Bluff Lane", "city": "Bellingham", "state": "WA", "zip": "98225",
+    "taxpayer_identification_number": "000-00-0000", "home_phone_area_code": "360", "home_phone_number": "555-0201",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0202", "ownership_percentage": "40%", "annual_salary_or_draw": "192000.00" },
+  { "full_name": "Desmond O Achebe", "title": "Member and Operations Lead", "home_address": "88 Quarry View Court", "city": "Ferndale", "state": "WA", "zip": "98248",
+    "taxpayer_identification_number": "000-00-0001", "home_phone_area_code": "360", "home_phone_number": "555-0203",
+    "work_cell_phone_area_code": "425", "work_cell_phone_number": "555-0204", "ownership_percentage": "30%", "annual_salary_or_draw": "164000.00" },
+  { "full_name": "Priya N Raghunathan", "title": "Member and Controller", "home_address": "17 Alderwood Terrace, Apt 4B", "city": "Lynden", "state": "WA", "zip": "98264",
+    "taxpayer_identification_number": "00-0000001", "home_phone_area_code": "360", "home_phone_number": "555-0205",
+    "work_cell_phone_area_code": "206", "work_cell_phone_number": "555-0206", "ownership_percentage": "20%", "annual_salary_or_draw": "151000.00" },
+  { "full_name": "Tomas E Villalobos", "title": "Member", "home_address": "2204 Shipyard Way", "city": "Blaine", "state": "WA", "zip": "98230",
+    "taxpayer_identification_number": "000-00-0002", "home_phone_area_code": "360", "home_phone_number": "555-0207",
+    "work_cell_phone_area_code": "360", "work_cell_phone_number": "555-0208", "ownership_percentage": "10%", "annual_salary_or_draw": "98000.00" }
+ ],
+
+ "personnel_7a_responsible_for_payroll_taxes": "yes",
+ "personnel_7b_responsible_for_payroll_taxes": "no",
+ "personnel_7c_responsible_for_payroll_taxes": "yes",
+ "personnel_7d_responsible_for_payroll_taxes": "no"
+}

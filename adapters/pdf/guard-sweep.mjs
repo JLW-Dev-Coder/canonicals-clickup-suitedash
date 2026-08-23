@@ -152,6 +152,29 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ─── prompt 46 ruling 7: 433-B slice 1 ────────────────────────────────────────────────
+
+  { id: 'G-173', file: 'count-sweep.mjs', anchor: 'const rows = VOCAB.map((re) =>', verdict: 'sound',
+    why: 'AN EXTRACTION WHOSE REQUIRED ANSWER IS ZERO, WHICH IS THE ONE SHAPE THIS SWEEP CANNOT JUDGE ON ITS OWN. [S-37] asserts that page 1 draws no run matching any of six arithmetic patterns, so each of these six rows compares a claimed 0 against a derived 0 — and a pattern that stopped matching would report exactly the zero it is required to report. That is why the row below it exists and why the two are one disposition: it asserts the word "box" appears EXACTLY ONCE on the same joined page text, through the same reading, so a dead extraction reports 0 against a claimed 1 and takes the run down. The six absences are only readable because of that positive control, and neither line is sound without the other.' },
+
+  { id: 'G-174', file: 'count-sweep.mjs', anchor: "rows.push({ what: 'occurrences of the word \"box\" on page 1'", verdict: 'sound',
+    why: 'THE POSITIVE CONTROL ITSELF. `claimed: 1` against a derived count off the drawn page: if this extraction returned 0 the run STOPS, and that is the whole reason it is here. It is the answer to "can an empty input make this report success" for [G-173] as well — the six zero-rows above it are only trustworthy because this one row would fail if the reading were dead.' },
+
+  { id: 'G-169', file: 'fill-433b.mjs', anchor: 'try { field = form.getTextField(name); } catch { skipped.push(name); return; }', verdict: 'sound',
+    why: 'A TARGET THIS FORM HAS NO TEXT FIELD FOR IS RECORDED, NOT DROPPED. `skipped` is carried into the run\'s tripwires file and printed in the closing line on every run, so a map naming a cell the PDF does not draw shows as a non-zero skip count rather than as a quieter success. It cannot happen silently either way: validate-map.mjs resolves every target in this map against the field list at gate step 3, before this engine is reached.' },
+
+  { id: 'G-170', file: 'fill-433b.mjs', anchor: 'catch (e) { capacityErrors.push({ key: key ?? name, name, len: s.length, max, value: s, why: e.message }); }', verdict: 'sound',
+    why: 'A VALUE THE FIELD REFUSES IS A HARD FAILURE, NOT A SKIP. The catch records the throw with the input key, the widget, the length and the declared maximum, and `capacityErrors.length` STOPS the run before any PDF is written. An empty list means every value the record supplied was accepted, and the number of cells written is printed beside it.' },
+
+  { id: 'G-171', file: 'fill-433b.mjs', anchor: 'catch { skipped.push(name); }', verdict: 'sound',
+    why: 'THE CHECKBOX ARM OF [G-169], and it has a second guard the text arm does not need. A box that cannot be fetched is pushed to `skipped` and never reaches `ticked`, so it is not read back — but every box that IS ticked is, and the read-back STOPS the run on any that did not turn on. With thirteen distinct on-states on this form that is the check that matters, and it is downstream of this catch rather than inside it.' },
+
+  { id: 'G-172', file: 'fill-433b.mjs', anchor: 'const on = targets.filter((t) => { try { return form.getCheckBox(t).isChecked(); } catch { return false; } });', verdict: 'sound',
+    why: 'THE EXCLUSIVE ASSERTION, AND `false` IS THE SAFE DIRECTION HERE. An unreadable box counts as NOT checked, which can only make a set look MORE exclusive — so this catch cannot manufacture a pass over a real violation, only understate one. It is not the reading that would be missed either: an unreadable box is one that was never ticked (the tick path pushes to `skipped`) or one that was ticked and then would fail the read-back above, which stops the run outright. Both paths are covered before this line decides anything.' },
+
+  { id: 'G-168', file: 'fill-433b.mjs', anchor: 'const notOn = ticked.filter(', verdict: 'sound',
+    why: 'AN EMPTY `ticked` IS AN EMPTY PROBLEM LIST, AND THAT IS THE RIGHT ANSWER. This is the checkbox read-back: every box this engine ticked is read back off the same form object to prove it turned on, because 433-B stores THIRTEEN distinct on-states where 433-B(OIC) stores one, and a box whose on-value the document disagreed with would stay off while `cbFilled` counted it written. If nothing was ticked there is nothing that could have failed to turn on — a record choosing no option is a legitimate state, and the count of boxes ticked is printed on every run whether it is zero or seven. So an empty input here reports zero findings over zero attempts rather than zero findings over an unread population. The catch inside the filter returns TRUE, not false: a box that cannot be read back is a finding, not a pass.' },
+
   // ─── prompt 46 rulings 4 and 5 ────────────────────────────────────────────────────────
 
   { id: 'G-162', file: 'absence-sweep.mjs', anchor: "catch (e) { if (e.code !== 'ENOENT') xfUnreadable = e.message; }", verdict: 'sound',

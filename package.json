@@ -33,7 +33,11 @@
     "readback:433boi": "node adapters/hubspot/hs-readback-433boi.mjs",
     "scan:control": "node adapters/pdf/control-char-scan.mjs",
     "sweep:absence": "node adapters/pdf/absence-sweep.mjs",
-    "assert:regex": "node adapters/pdf/regex-self-assert.mjs"
+    "assert:regex": "node adapters/pdf/regex-self-assert.mjs",
+    "gate:433b": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+    "coverage:433b": "node adapters/pdf/declaration-coverage.mjs 433b",
+    "recordshape:433b": "node adapters/pdf/assert-record-shape.mjs 433b",
+    "stress:433b": "node adapters/pdf/run-form-gate.mjs 433b --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433b"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
