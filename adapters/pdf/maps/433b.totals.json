@@ -1,0 +1,114 @@
+{
+ "form": "433b",
+ "form_revision": "6-2026",
+ "catalog": "16649P",
+ "_why": "Which printed total adds which printed rows. Read by run-form-gate.mjs step 11, which recomputes every total FROM WHAT THE FILLED PDF PRINTS and compares it against the printed total. No figure lives here — only the structure of the form.",
+ "authored_from": "The printed page text of adapters/pdf/forms/f433b.pdf pages 2, 3 and 4, extracted from the content streams. Each caption below is quoted verbatim from the drawn page and each names its own addends, which is why these six are tripwires at all: where a form does not say what it adds, a computed figure is this engine's assertion rather than the page's.",
+ "_notes": [
+  "GATE STEP 11 WAS SKIPPED FOR THIS FORM UNTIL THIS FILE EXISTED, and the skip was honest: page 1 draws no lettered Box, no \"Total\" line, no \"Add lines\", no \"Subtract\" and no \"minus\". Pages 2 and 3 draw four printed totals and the step turns on.",
+  "EVERY ONE OF THE FOUR CAPTIONS NAMES AN OPERAND THE FORM DRAWS NO CELL FOR — \"and amounts from any attachments\". These are declared `equals` anyway, and that is an assertion about what THIS ENGINE writes rather than about every correctly filed 433-B: the engine has no key for the attachment term because the page has no cell for it, so every record it produces prints a total exactly equal to the sum of the printed rows. [B-05] carries the difference and it is not resolved here, because what the captions license is an `at_least` and adapters/pdf/comparisons.mjs admits only `equals` and `at_most` and says a third shape is a new ruling.",
+  "NO FLOOR IS DECLARED ON ANY OF THE FOUR. This form prints no rounding instruction and no \"do not enter a negative number\" sentence anywhere on pages 1 to 3 — \"negative\" returns zero across all three — so a floor here would be this engine's policy rather than the page's.",
+  "THE AVAILABLE-CREDIT BLOCK STILL HAS NO ENTRY, AND PAGE 4 IS WHY IT NEVER WILL. Page 3 draws rows 21a and 21b and no total row beneath them; page 4 opens a new block, REAL PROPERTY, at printed marker 22a. So the available-credit block ends where page 3 ends and the form prints no total for it. That was an open absence about pages 1 to 3 when slice 2 landed and it is a CLOSED one now: the next printed marker after 21b has been read and it starts a different table. [C23-4] is answered.",
+  "PAGE 4 ADDS TWO TOTALS AND NO NEW SHAPE. Both are `equals`, both name \"amounts from any attachments\" as an addend the page draws no cell for, and both therefore inherit [B-05] exactly as the first four do. Six printed totals on this form now, six equality tripwires, one open item covering all six."
+ ],
+ "totals": [
+  {
+   "line": "17d",
+   "caption": "Total Cash in Banks (Add lines 17a through 17c and amounts from any attachments)",
+   "caption_at": "page 2, y 85.1, x 57.6..133.7 with the addend list at x 136.0..362.1; the printed \"$\" at y 85.6 x 492.1..497.1",
+   "printed_rows": "17a, 17b, 17c — the three Account Balance cells of the BUSINESS BANK ACOUNTS table",
+   "total_key": "s4_17d_total_cash_in_banks",
+   "feeders": [
+    {
+     "group": "business_bank_accounts",
+     "column": "account_balance"
+    }
+   ],
+   "_the_operand_list_is_the_captions_own": "The caption names 17a through 17c, which are the three printed rows, plus \"amounts from any attachments\", for which this form draws no cell. Three printed cells, one feeder, and the missing fourth term is [B-05]."
+  },
+  {
+   "line": "18f",
+   "caption": "Outstanding Balance (Add lines 18a through 18e and amounts from any attachments)",
+   "caption_at": "page 3, y 437.9, x 57.6..137.4 with the addend list at x 139.7..365.8; the printed \"$\" at y 437.9 x 485.2..489.6",
+   "printed_rows": "18a to 18e — the five Amount Due cells of the ACCOUNTS/NOTES RECEIVABLE table",
+   "total_key": "s4_18f_outstanding_balance",
+   "feeders": [
+    {
+     "group": "accounts_notes_receivable",
+     "column": "amount_due"
+    }
+   ],
+   "_the_operand_list_is_the_captions_own": "The caption names 18a through 18e, which are the five printed rows, plus the attachment term. Five printed cells, one feeder."
+  },
+  {
+   "line": "19c",
+   "caption": "Total Investments (Add lines 19a, 19b, and amounts from any attachments)",
+   "caption_at": "page 3, y 301.1, x 57.6..125.7 with the addend list at x 128.0..329.1; the printed \"$\" at y 301.1 x 485.2..489.7",
+   "printed_rows": "19a, 19b — the two Equity Value Minus Loan cells of the INVESTMENTS table",
+   "total_key": "s4_19c_total_investments",
+   "feeders": [
+    {
+     "group": "investments",
+     "column": "equity_value_minus_loan"
+    }
+   ],
+   "_which_column_the_total_sums": "THE EQUITY COLUMN, and the cell says so by where it is drawn: x 492.5..576.0, against an Equity Value Minus Loan column of x 492.4..576.0 and a Loan Balance column of x 406.0..482.4. The caption names the ROWS (19a, 19b) and the rectangle names the COLUMN."
+  },
+  {
+   "line": "20e",
+   "caption": "Total Equity of Digital Assets (Add lines 20b, 20c, and amounts from any attachments)",
+   "caption_at": "page 3, y 143.7, x 57.6..167.3 with the addend list at x 169.6..370.8; the printed \"$\" at y 142.7 x 478.4..482.8",
+   "printed_rows": "20b, 20c — the two Equity Value minus Loan cells of the DIGITAL ASSETS table",
+   "total_key": "s4_20e_total_equity_of_digital_assets",
+   "feeders": [
+    {
+     "group": "digital_assets",
+     "column": "equity_value_minus_loan"
+    }
+   ],
+   "_which_column_the_total_sums": "THE EQUITY COLUMN, ON THE CAPTION, AND THE RECTANGLE DISAGREES. This cell runs x 486.0..576.0 and therefore spans BOTH the Loan Balance column (x 486.0..525.6) and the Equity column (x 536.4..576.0), and its printed \"$\" at x 478.4 is the loan column's marker position. The caption says \"Total Equity\" in its own words and that is what this declaration follows. It is the only total on these pages whose two witnesses point at different columns, and it carries [B-06].",
+   "_and_the_page_skips_20d": "The printed markers on this block run 20a, 20b, 20c, 20e. No 20d is drawn anywhere on the form. Transcribed, not corrected."
+  },
+  {
+   "line": "22e",
+   "caption": "Total Equity (Add lines 22a through 22d and amounts from any attachments)",
+   "caption_at": "page 4, y 383.9, x 57.6..102.9, with the addend list at x 105.1..331.7; the printed \"$\" at y 383.9 x 485.2..489.6, 2.8pt left of the cell",
+   "printed_rows": "22a to 22d — the four Equity FMV Minus Loan cells of the REAL PROPERTY table",
+   "total_key": "s4_22e_total_equity_real_property",
+   "feeders": [
+    {
+     "group": "real_property",
+     "column": "equity"
+    }
+   ],
+   "_which_column_the_total_sums": "THE EQUITY COLUMN, ON THE CAPTION AND ON THE MONEY MARKER, AND THEY AGREE. The cell is x 492.4..576, y 381.6..391.2, maxLen 14, wider than the equity lane of 521.2..576.0, and its printed \"$\" is at x 485.2..489.6 — which is NOT one of this page's four column marker positions (262.0, 326.8, 391.6, 514.0) and so belongs to no column but this line. Its left edge 492.4 is the same left edge 18f and 19c use on page 3. UNLIKE [B-06], whose money marker sits at a neighbouring column's position, both witnesses here point the same way.",
+   "_the_operand_list_is_the_captions_own": "The caption names 22a through 22d, which are the four printed rows, plus \"amounts from any attachments\", for which this form draws no cell. Four printed cells, one feeder, and the missing fifth term is [B-05]."
+  },
+  {
+   "line": "23e",
+   "caption": "Total Equity (Add lines 23a through 23d and amounts from any attachments)",
+   "caption_at": "page 4, y 38.3, x 57.6..102.9, with the addend list at x 105.1..331.7; the printed \"$\" at y 38.3 x 485.2..489.6, 2.8pt left of the cell",
+   "printed_rows": "23a to 23d — the four Equity FMV Minus Loan cells of the VEHICLES, LEASED AND PURCHASED table",
+   "total_key": "s4_23e_total_equity_vehicles",
+   "feeders": [
+    {
+     "group": "vehicles",
+     "column": "equity"
+    }
+   ],
+   "_which_column_the_total_sums": "THE EQUITY COLUMN, ON THE CAPTION AND ON THE MONEY MARKER, AND THEY AGREE. The cell is x 492.4..576, y 36..45.6, maxLen 14, wider than the equity lane of 521.2..576.0, and its printed \"$\" is at x 485.2..489.6 — which is NOT one of this page's four column marker positions (262.0, 326.8, 391.6, 514.0) and so belongs to no column but this line. Its left edge 492.4 is the same left edge 18f and 19c use on page 3. UNLIKE [B-06], whose money marker sits at a neighbouring column's position, both witnesses here point the same way.",
+   "_the_operand_list_is_the_captions_own": "The caption names 23a through 23d, which are the four printed rows, plus \"amounts from any attachments\", for which this form draws no cell. Four printed cells, one feeder, and the missing fifth term is [B-05]."
+  }
+ ],
+ "not_checkable": {
+  "_why": "Printed money cells that hold a total-shaped figure and are DELIBERATELY not tripwires. Declared with the reason, because a cell absent from this file is indistinguishable from one nobody looked at.",
+  "entries": [
+   {
+    "map_key": "s4_16a_total_cash_on_hand",
+    "printed_caption": "CASH ON HAND — Include cash that is not in the bank — Total Cash on Hand",
+    "printed_at": "page 2, y 308.3, x 57.6..248.3 with \"Total Cash on Hand\" at x 407.1..482.4",
+    "why_not_checkable": "IT ADDS NOTHING THE FORM PRINTS. The caption says \"Total Cash on Hand\" and the block draws no rows beneath it — no 16a(i), no list, nothing to sum. The word \"Total\" here means \"the whole of it\", not \"the sum of the lines above\". Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\"; this one does not, and where the form does not say what it adds, a computed figure would be this engine's assertion rather than the page's."
+   }
+  ]
+ }
+}

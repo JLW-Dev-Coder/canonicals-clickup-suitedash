@@ -5,8 +5,7 @@
  "_what": "The printed headings on 433-B, and the band each one opens. A widget belongs to the band its RECTANGLE sits in, and a group belongs to the heading whose band its rows are drawn under. Both coordinate sets come from adapters/pdf/page-geometry.mjs, so this file and the map cannot disagree about where anything is.",
  "_why": "A group bound under the wrong heading writes a row into the wrong printed table, and nothing about the leaf names would say so on this form — page 1's names are p1_24_6a and p1_33_7aFullNm, which name a row and a column and never a table. The band is the check.",
  "_band_rule": "A heading's band runs from its own baseline DOWN to the next declared heading on the same page, or to the foot of the page if there is none below it. Declared here rather than derived so a heading nobody wrote down cannot silently widen the band above it.",
- "_slice": "Slice 1. Page 1 only; pages 2 to 6 declare no heading here yet and are not claimed to have none.",
-
+ "_slice": "Slices 1 to 3. Pages 1 to 4. Pages 5 and 6 declare no heading here yet and are NOT claimed to have none — that absence is about this file, not about the form.",
  "headings": [
   {
    "id": "SECTION_1_BUSINESS_INFORMATION",
@@ -37,9 +36,62 @@
    "page": 1,
    "text": "PARTNERS, OFFICERS, LLC MEMBERS, MAJOR SHAREHOLDERS (Foreign and Domestic), ETC.",
    "_at": "y 268.7, x 46.0..413.9. One run. It sits 15.7pt below the Section 2 banner and opens the band the four personnel rows are drawn in."
+  },
+  {
+   "id": "SECTION_3_OTHER_FINANCIAL_INFORMATION",
+   "page": 2,
+   "text": "Section 3: Other Financial Information",
+   "_at": "y 734.4, x 46.0..226.3, with the qualifier \"(Attach copies of all applicable documents)\" drawn as a separate run at x 229.1..434.5 on the same baseline. The band is anchored on the part that names the section."
+  },
+  {
+   "id": "SECTION_4_BUSINESS_ASSET_AND_LIABILITY_INFORMATION",
+   "page": 2,
+   "text": "Section 4: Business Asset and Liability Information (Foreign and Domestic)",
+   "_at": "y 345.6, x 46.0..400.9. One run. The instruction beneath it — \"Include assets located in foreign countries or jurisdictions and add attachment(s) if additional space is needed to respond.\" at y 329.9 x 38.2..504.2 — is prose, not a heading, and opens no band."
+  },
+  {
+   "id": "BUSINESS_BANK_ACCOUNTS",
+   "page": 2,
+   "text": "BUSINESS BANK ACOUNTS",
+   "_at": "y 274.6, x 56.0..163.4. THE PAGE SPELLS IT WITH ONE C. Transcribed verbatim, because this file is compared against the drawn run and a corrected spelling would match nothing. The qualifiers \"Include online and mobile\", \"accounts\" and \"(e.g., PayPal), money market accounts, savings accounts, checking accounts\" continue on the same baseline and two below it."
+  },
+  {
+   "id": "ACCOUNTS_NOTES_RECEIVABLE",
+   "page": 3,
+   "text": "ACCOUNTS/NOTES RECEIVABLE",
+   "_at": "y 736.5, x 43.2..159.0, with \"Include e-payment accounts receivable and factoring companies, and any bartering or online auction accounts.\" at x 163.0..520.9 on the same baseline."
+  },
+  {
+   "id": "INVESTMENTS",
+   "page": 3,
+   "text": "INVESTMENTS",
+   "_at": "y 425.5, x 43.2..100.2, with \"List all investment assets below. Include stocks, bonds, mutual funds, stock options, certificates of deposit, commodities (e.g., gold, silver, copper, etc.).\" at x 104.7..575.2 on the same baseline."
+  },
+  {
+   "id": "DIGITAL_ASSETS",
+   "page": 3,
+   "text": "DIGITAL ASSETS",
+   "_at": "y 289.7, x 43.2..108.4, with three lines of qualifier beneath it. It sits 12.4pt below the 19c total row and opens the band 20a, 20b, 20c and 20e are drawn in."
+  },
+  {
+   "id": "AVAILABLE_CREDIT",
+   "page": 3,
+   "text": "AVAILABLE CREDIT",
+   "_at": "y 132.5, x 56.0..132.4, with \"Include all lines of credit and credit cards.\" at x 136.9..285.9 on the same baseline. It is the last heading on page 3 and its band runs to the foot of the page."
+  },
+  {
+   "id": "REAL_PROPERTY",
+   "page": 4,
+   "text": "REAL PROPERTY",
+   "_at": "y 715.1, x 43.2..110.5, with \"Include all real property and land contracts the business owns/leases/rents.\" at x 114.9..384.7 on the same baseline. It is the first heading on page 4 and its band runs down to VEHICLES_LEASED_AND_PURCHASED at y 370.5."
+  },
+  {
+   "id": "VEHICLES_LEASED_AND_PURCHASED",
+   "page": 4,
+   "text": "VEHICLES, LEASED AND PURCHASED",
+   "_at": "y 370.5, x 43.2..191.4, with \"Include boats, RVs, motorcycles, all-terrain and off-road vehicles, trailers, mobile homes, etc.\" at x 195.8..528.3 on the same baseline. It sits 13.4pt below the 22e total row and opens the band 23a to 23e are drawn in. It is the last heading on page 4 and its band runs to the foot of the page."
   }
  ],
-
  "groups": {
   "payment_processors": {
    "heading": "PAYMENT_PROCESSOR",
@@ -54,8 +106,37 @@
    "heading": "PARTNERS_OFFICERS_LLC_MEMBERS",
    "_why": "The four rows run from y 255.6 down to y 50.4 — row 7a's topmost cell at y 255.6..266.4 and row 7d's lowest at y 50.4..61.2. Every one is below PARTNERS_OFFICERS_LLC_MEMBERS's baseline at y 268.7 and above the page footer at y 24.1. Nothing is registered below it on this page, so the band runs to the foot.",
    "_and_the_band_above_it_holds_no_row": "SECTION_2_BUSINESS_PERSONNEL at y 284.4 and PARTNERS_OFFICERS_LLC_MEMBERS at y 268.7 are 15.7pt apart and NOTHING is drawn between them. The section banner opens a band containing only the block title, which is why the group is declared against the block and not against the section: a group declared against the section would claim a band starting 15.7pt too high and would swallow anything a later revision printed there."
+  },
+  "business_bank_accounts": {
+   "heading": "BUSINESS_BANK_ACCOUNTS",
+   "_why": "The three rows are drawn at y 176.4..212.4 (marker 17a), y 140.4..176.4 (17b) and y 104.4..140.4 (17c). All three rectangles lie strictly below BUSINESS_BANK_ACOUNTS's baseline at y 274.6 and above the foot of the page, and no heading is declared between them. THE 17d TOTAL CELL (y 82.8..104.4) IS IN THE SAME BAND AND IS NOT A ROW OF THIS GROUP — it is a scalar, because the page draws it as the block's total rather than as a fourth account."
+  },
+  "accounts_notes_receivable": {
+   "heading": "ACCOUNTS_NOTES_RECEIVABLE",
+   "_why": "The five rows are drawn from y 651.6..702.0 (marker 18a) down to y 450.0..500.4 (18e). All five lie strictly below ACCOUNTS/NOTES RECEIVABLE's baseline at y 736.5 and strictly above INVESTMENTS at y 425.5, which is the next declared heading on the page. The 18f total cell (y 435.6..450.0) is in the same band and is a scalar for the same reason as 17d."
+  },
+  "investments": {
+   "heading": "INVESTMENTS",
+   "_why": "The two rows are drawn at y 356.4..399.6 (marker 19a) and y 313.1..356.4 (19b). Both lie strictly below INVESTMENTS's baseline at y 425.5 and strictly above DIGITAL ASSETS at y 289.7. THE BAND IS WHAT PLACES ROW 19b, and it is the reason [B-03] does not matter here: that row's subform is named Line19c, and the band says it is the second row of the INVESTMENTS block whatever the subform is called."
+  },
+  "digital_assets": {
+   "heading": "DIGITAL_ASSETS",
+   "_why": "The two rows are drawn at y 179.5..203.5 (marker 20b) and y 155.0..179.5 (20c). Both lie strictly below DIGITAL ASSETS's baseline at y 289.7 and strictly above AVAILABLE CREDIT at y 132.5. THE BAND IS THE ONLY THING PLACING THESE ROWS: their container is named RetirementAcct1 and their subforms Row13a and Row13b, none of which names this block or these markers."
+  },
+  "available_credit": {
+   "heading": "AVAILABLE_CREDIT",
+   "_why": "The two rows are drawn at y 68.4..100.8 (marker 21a) and y 37.6..68.4 (21b). Both lie strictly below AVAILABLE CREDIT's baseline at y 132.5, and there is no heading below it on page 3, so the band runs to the foot of the page. Their subforms are named Row20a and Row20b for rows the page marks 21a and 21b."
+  },
+  "real_property": {
+   "heading": "REAL_PROPERTY",
+   "_why": "The four rows are drawn at y 608.4..676.8 (marker 22a), y 540.0..608.4 (22b), y 471.6..540.0 (22c) and y 403.2..471.6 (22d). All four lie strictly below REAL PROPERTY's baseline at y 715.1 and strictly above VEHICLES, LEASED AND PURCHASED at y 370.5, which is the next declared heading on the page. THE 22e TOTAL CELL (y 381.6..391.2) IS IN THE SAME BAND AND IS NOT A ROW OF THIS GROUP — it is a scalar, because the page draws it as the block's total rather than as a fifth property, which is the same reading 17d, 18f, 19c and 20e already carry."
+  },
+  "vehicles": {
+   "heading": "VEHICLES_LEASED_AND_PURCHASED",
+   "_why": "The four rows are drawn at y 262.8..331.2 (marker 23a), y 194.4..262.8 (23b), y 126.0..194.4 (23c) and y 57.6..126.0 (23d). All four lie strictly below VEHICLES, LEASED AND PURCHASED's baseline at y 370.5, and there is no heading below it on page 4, so the band runs to the foot of the page. The 23e total cell (y 36.0..45.6) is in the same band and is a scalar for the same reason as 22e. THE BAND IS DOING REAL WORK HERE AND NOT ONLY FORMALLY: these four rows carry the leaf tokens 22a, 22b, 22c and 22d, which are exactly the printed markers of the REAL PROPERTY rows in the band above. Placed by name they would land in the other table."
   }
  },
-
- "_no_other_group_on_page_1": "The map declares three groups and page 1 draws three repeating blocks. Everything else on the page is a scalar: Section 1's eleven left-column cells and sixteen right-column cells are one-per-page facts about the entity, not rows. The 2b entity list is five checkboxes in one exclusive set rather than a repeating block — five options for one fact, not five rows of the same fact."
+ "_no_other_group_on_page_1": "The map declares three groups and page 1 draws three repeating blocks. Everything else on the page is a scalar: Section 1's eleven left-column cells and sixteen right-column cells are one-per-page facts about the entity, not rows. The 2b entity list is five checkboxes in one exclusive set rather than a repeating block — five options for one fact, not five rows of the same fact.",
+ "_no_other_group_on_pages_2_and_3": "Five groups are declared for these two pages and the map binds no sixth on either. Derived rather than asserted: adapters/pdf/verify-headings.mjs takes every group in the map whose slots bind a page-2 or page-3 target and requires a heading declaration for each, so a group added to the map without one is a STOP rather than a silence.",
+ "_no_other_group_on_page_4": "Two groups are declared for this page and the map binds no third on it. Derived rather than asserted: adapters/pdf/verify-headings.mjs takes every group in the map whose slots bind a page-4 target and requires a heading declaration for each, so a group added to the map without one is a STOP rather than a silence."
 }
