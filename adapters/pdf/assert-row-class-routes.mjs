@@ -47,6 +47,7 @@ import { readFileSync, writeFileSync, mkdtempSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { examined } from './examined.mjs';
 
 /** Form -> the acceptance fixture and the engine that consumes it. */
 export const FORMS = [
@@ -58,6 +59,15 @@ export const FORMS = [
   // assert-row-shape-spec's FORMS and out of blanket-audit's marker union. Its one group,
   // `partners`, accepts the business_principal class declared for it in the same commit.
   { form: '433boi', sample: 'samples/433boi.slice1.sample.json', engine: 'adapters/pdf/fill-433boi.mjs' },
+  // 433-B JOINS AT ITS SLICE 1 AND CONTRIBUTES ZERO DECLARING GROUPS, WHICH IS THE POINT.
+  // adapters/pdf/assert-examined.mjs reported this file emitting NO examined line for 433-B at
+  // all - not a zero, an absence - because the form was simply not in this list. A form absent
+  // from here has its refusal path unproved and nothing says so, which is the same
+  // exclusion-by-omission recorded above for 433-B(OIC). Its three page-1 groups
+  // (payment_processors, credit_cards_accepted, personnel) declare no row_class, so
+  // routingScope() yields nothing for it and the count is a CHECKED zero rather than a silence.
+  // It becomes non-zero the moment a slice declares one.
+  { form: '433b', sample: 'samples/433b.slice1.sample.json', engine: 'adapters/pdf/fill-433b.mjs' },
 ];
 
 const CANARY = '__canary_not_a_class__';
@@ -134,6 +144,9 @@ export const reportRouting = ({ verbose = false } = {}) => {
     console.error(`  CANARY ${canaries.length} of an expected ${groups.length} — the harness did not refuse the canary in every declaring group, so it is not reading what it reports on.`);
   }
 
+  for (const f of FORMS.map((x) => x.form ?? x)) {
+    examined('assert-row-class-routes', String(f), results.filter((r) => r.form === f).length, 'poisoned-routing-runs');
+  }
   const bad = unreadable.length + unproved.length + broken.length + (canaries.length === groups.length ? 0 : 1);
   if (!bad) console.log(`OK — every one of the ${groups.length} declaring group(s) refuses a wrong-class row and names it, and the canary was refused ${canaries.length}/${groups.length} times.`);
   return bad;

@@ -62,6 +62,8 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { slotColumnsOf, slotColumnKinds } from './check-row-shape.mjs';
 import { readPrintedText, readWidgetGeometry, baselineOfRun } from './page-geometry.mjs';
+import { examined } from './examined.mjs';
+import { MAPPED_FORMS } from './resolve-fixture.mjs';
 
 const SPEC = 'adapters/hubspot/asset-row-shapes.json';
 // The forms whose maps this spec is joined against. 433-A(OIC) carries no `printed_tables`
@@ -469,6 +471,13 @@ export const reportRowShapeSpec = ({ verbose = false } = {}) => {
   if (!kan.holds) problems.push(`CANARY DEAD — ${kan.missed.length} of ${kan.checks} mutation(s) went unreported: ${kan.missed.join('; ')}. The split's assertions cannot see the states they were written for, so this file's OK is about nothing.`);
 
   if (!problems.length) {
+    // rowShapeSpecScope() is the derived scope this file already reports on; its `forms` is
+    // the list of forms an accepting group was found on. A mapped form absent from it has
+    // been examined ZERO times by this guard and is emitted as such.
+    { const sc = rowShapeSpecScope();
+      for (const f of MAPPED_FORMS()) {
+        examined('assert-row-shape-spec', f, sc.forms.includes(f) ? sc.units.length : 0, 'declared-row-shape-units');
+      } }
     console.log('OK — every accepted class is declared, every contributed column is reachable on the group that accepts it, every printed checkbox is bound as a checkbox or declared unmapped, every routing-flag excusal is contradicted by no map, and every unrouted claim carries a live declaration.');
     return 0;
   }

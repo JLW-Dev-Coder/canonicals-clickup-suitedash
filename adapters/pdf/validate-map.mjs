@@ -29,6 +29,7 @@ import { runRegisterIdSweep, reportRegisterIdSweep } from './register-ids.mjs';
 import { runSuccessSweep, reportSuccessSweep } from './success-sweep.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
 import { reclassify, report as reportReclassify } from '../hubspot/reclassify-against-backbone.mjs';
+import { examined } from './examined.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -52,6 +53,7 @@ const targets = [];
 
 const unique = new Set(targets.map(([, v]) => v));
 console.log(`form ${form}: ${targets.length} target reference(s), ${unique.size} unique, from ${mapPath}; PDF fields: ${names.size}`);
+examined('validate-map', form, targets.length, 'map-target-references');
 
 const missing = targets.filter(([, v]) => !names.has(v));
 if (missing.length) {

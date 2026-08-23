@@ -48,6 +48,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readPrintedText, readWidgetGeometry } from './page-geometry.mjs';
+import { examined } from './examined.mjs';
 
 // BAND MEMBERSHIP IS NOT ROW ORDER
 // --------------------------------
@@ -217,13 +218,28 @@ const slotTextTargets = (slot) => {
   const src = (slot && typeof slot === 'object' && slot.text && typeof slot.text === 'object') ? slot.text : slot;
   return Object.entries(src || {}).filter(([, v]) => typeof v === 'string').map(([col, target]) => ({ col, target }));
 };
-/** Checkbox targets carried on the slot itself (433-A shape). */
+/** Checkbox targets carried on the slot itself (433-A shape).
+ *
+ * AN UNDERSCORE-PREFIXED KEY IS AN ANNOTATION, NOT A CELL. This function used to take every
+ * string in a slot's checkbox definition as a widget name, which held for exactly as long as no
+ * slot checkbox carried prose: 433-B(OIC) declares six of them and every value in every one is a
+ * topmostSubform path. 433-B's page-3 collateral pairs carry `_on_Yes`, `_on_No`, `_printed` and
+ * `_witness` beside their two targets, and this walker demanded a widget rectangle for the string
+ * "/Yes" — four UNRESOLVED findings naming the keys, on the first run of the first map to do it.
+ *
+ * The convention is engine-wide and was already enforced everywhere else: every fill engine's
+ * applyOption does `if (opt.startsWith('_')) continue;` before matching an option, and each one's
+ * top-level checkbox loop skips a set whose key opens with an underscore. This is the one place
+ * that never learned it. Both levels are filtered, because an annotation can sit beside a set
+ * (`_the_on_state_is_read_from_the_widget`) as readily as inside one.
+ */
 const slotCheckTargets = (slot) => {
   const out = [];
   const cbs = slot && typeof slot === 'object' ? slot.checkboxes : null;
   for (const [q, v] of Object.entries(cbs || {})) {
+    if (q.startsWith('_')) continue;
     if (typeof v === 'string') out.push({ col: q, target: v });
-    else for (const [opt, t] of Object.entries(v || {})) if (typeof t === 'string') out.push({ col: `${q}.${opt}`, target: t });
+    else for (const [opt, t] of Object.entries(v || {})) if (!opt.startsWith('_') && typeof t === 'string') out.push({ col: `${q}.${opt}`, target: t });
   }
   return out;
 };
@@ -453,6 +469,7 @@ if (!errors.length && !bad.length) {
     console.error('  or the map\'s groups no longer resolve to slots — and both of those are findings, not passes.');
     process.exit(2);
   }
+  examined('verify-headings', form, nRows, 'group-rows-under-a-declared-heading');
   console.log(`OK — ${nRows} group row(s) across ${report.length} group(s) print under the heading declared for them, and every group's slots run in printed order down the page.`);
   process.exit(0);
 }

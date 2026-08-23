@@ -50,6 +50,7 @@ import { PDFDocument, PDFCheckBox, PDFRadioGroup, PDFName } from 'pdf-lib';
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { formPath } from './read-form-revision.mjs';
+import { examined } from './examined.mjs';
 
 const nameOf = (v) => (v === undefined || v === null) ? null : v.toString();
 const isOn   = (s) => s !== null && s !== '/Off';
@@ -92,6 +93,7 @@ export function reportPresetBoxes(r) {
   console.log(`  blank source: ${r.file}`);
   console.log(`  inspected:    ${r.checkboxes} checkbox(es) + ${r.radios} radio group(s), ${r.widgets} widget(s), on /V, /DV and every widget's /AS`);
   if (!r.findings.length) {
+    examined('assert-no-preset-boxes', r.form, r.checkboxes + r.radios, 'blank-form-boxes');
     console.log(`  OK — every box on the blank form is off on all three, so any tick on a filled copy was put there by the fill engine.`);
     return true;
   }

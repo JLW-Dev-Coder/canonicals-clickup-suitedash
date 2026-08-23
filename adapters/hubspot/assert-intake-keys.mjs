@@ -54,6 +54,7 @@ import { loadBindings, constructOf, CONSTRUCT_KIND, readsSourceConstruct, bindin
 import { MAPPED_FORMS } from '../pdf/resolve-fixture.mjs';
 import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 import { loadRecordShape, statesOf } from '../pdf/record-shape.mjs';
+import { examined } from '../pdf/examined.mjs';
 
 const R = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -393,6 +394,10 @@ for (const c of constructRows) {
 console.log('');
 console.log('  FORM      option rows  resolved  values  group rows  with row_shape  shapes checked');
 for (const r of rows) {
+  // THE FORM THAT EARNED [R-04]. This guard reported PASS on a run including 433-B whose
+  // 433-B contribution was zero option values and zero row shapes. The figure is emitted per
+  // form from the rows this run already built, so the zero is a reading and not a silence.
+  examined('assert-intake-keys', r.form, r.optionValues + r.shapeChecked, 'option-values-plus-row-shapes');
   console.log(`  ${r.form.padEnd(9)} ${String(r.optionRows).padStart(11)} ${String(r.optionChecked).padStart(9)} ${String(r.optionValues).padStart(7)} ${String(r.groupRows).padStart(11)} ${String(r.withShape).padStart(15)} ${String(r.shapeChecked).padStart(15)}`);
   // THE NO-OP, PROVED AND PRINTED. Silence here would be indistinguishable from a pass.
   if (!r.optionRows) console.log(`             no-op proved: ${r.form} declares no property with map_option_by_value, so the option half of this check has nothing to compare and says so.`);

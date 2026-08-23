@@ -47,6 +47,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { readPrintedText, baselineOfRun } from './page-geometry.mjs';
 import { REGISTER, FORM_FILE } from './gen-subject-register.mjs';
+import { examined } from './examined.mjs';
 
 const TOL = 0.05;
 
@@ -185,6 +186,9 @@ export const reportSubjectRegister = async ({ verbose = false } = {}) => {
     for (const [id, q] of Object.entries(e.quotes || {}))
       console.log(`    ${f}.${id.padEnd(20)} p${q.page} y=${q.y} x=${q.x1}-${q.x2} ${JSON.stringify(q.text)}`);
   if (!problems.length) {
+    for (const f of forms) {
+      examined('assert-subject-register', f, Object.keys(doc.forms?.[f]?.quotes || {}).length, 'quotes-re-derived-from-the-page');
+    }
     console.log('OK — every quote is drawn on the page it names, every mapped form has a subject, every pair is decided, and every citation resolves.');
     return 0;
   }

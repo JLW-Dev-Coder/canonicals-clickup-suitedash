@@ -50,6 +50,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { loadRecordShape, statesOf } from './record-shape.mjs';
 import { resolveFixtureSet, resolveFixture } from './resolve-fixture.mjs';
+import { examined } from './examined.mjs';
 
 const form = process.argv[2];
 if (!form) { console.error('usage: node adapters/pdf/assert-record-shape.mjs <form>'); process.exit(2); }
@@ -57,6 +58,7 @@ if (!form) { console.error('usage: node adapters/pdf/assert-record-shape.mjs <fo
 const mapDoc = JSON.parse(readFileSync(`adapters/pdf/maps/${form}.map.json`, 'utf8'));
 const rs = loadRecordShape(mapDoc);
 if (!rs.declared) {
+  examined('assert-record-shape', form, 0, 'declared-record-shape-routes');
   console.log(`record-shape assertion: ${form} declares no record shape — nothing to exercise, and that is a checked absence rather than a pass. adapters/pdf/maps/${form}.map.json carries no \`record_shape\` key.`);
   process.exit(0);
 }
@@ -78,6 +80,7 @@ for (const r of rows) if (r.expect && !['holds', 'stops'].includes(r.expect))
   problems.push(`UNKNOWN EXPECTATION ${r.path} declares expect "${r.expect}" — it is "holds" or "stops" and there is no third.`);
 
 console.log(`record-shape assertion: ${form} — ${rs.declarations.length} declared route(s), ${set.paths.length} fixture(s) in the set`);
+examined('assert-record-shape', form, rs.declarations.length, 'declared-record-shape-routes');
 console.log(`  swept: ${set.swept.dir}/ — ${set.swept.filter}; classified by ${set.swept.classifier}`);
 
 // THE ACCEPTANCE FIXTURE IS A WITNESS FOR THE STATE IT DECLARES, and it must be, because

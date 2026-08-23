@@ -72,6 +72,7 @@ import './assert-y-convention.mjs';
 import './rounding.mjs';
 import './line-markers.mjs';
 import './enumerate-shadowing.mjs';
+import { parseRules, RULES_PATH } from './assert-rules.mjs';
 
 const MAPS = 'adapters/pdf/maps';
 
@@ -191,6 +192,24 @@ export const REGISTERS = () => {
   assertAdoptersLoaded();
   assertDeclaredSizes();
   add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));
+
+  // THE STANDING RULES. Not a JSON register and not an in-code array: the ids live in the
+  // headings of adapters/pdf/RULES.md, which is what a prompt cites and therefore what has to
+  // be unique. Read through assert-rules.mjs's own parser rather than re-scanned here — a
+  // second reading of a population is a second answer to the question the id exists to make
+  // one answer to, which is the shape [D-11]'s fix committed and its own sweep caught.
+  // ENGINE-SCOPED, not form-scoped: a rule is a statement about how work is done on every
+  // form, so an R- id colliding with anything anywhere is a collision.
+  {
+    const parsed = parseRules(readFileSync(RULES_PATH, 'utf8'));
+    // A DOCUMENT THAT WILL NOT PARSE CONTRIBUTES NO IDS, AND THAT IS THE ONE STATE THIS MUST
+    // NOT BE QUIET ABOUT. assert-rules.mjs exits 2 on it, and it runs in the same suite; what
+    // would be wrong is for THIS register to report a clean sweep over an empty contribution,
+    // which is [R-04] exactly. So an unparseable document is added as a single synthetic id
+    // that can never be legal, and the sweep reports it rather than counting zero.
+    if (!parsed.rules.length) add('RULES.md:rules', 'engine', idsOf('RULES.md', [{ id: 'R-UNREADABLE' }]));
+    else add('RULES.md:rules', 'engine', idsOf('RULES.md', parsed.rules));
+  }
 
   // --- engine-wide JSON registers, enumerated --------------------------------------------
   const cross = json(`${MAPS}/_carried.cross-form.json`);

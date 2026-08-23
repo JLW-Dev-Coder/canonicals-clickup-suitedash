@@ -92,7 +92,16 @@ export const classify = (path) => {
   try { text = readFileSync(path, 'utf8'); }
   catch (e) { return { state: 'unclassifiable', how: `unreadable — ${e.message}` }; }
 
-  const stampLine = text.split(/\r?\n/).find((l) => l.startsWith(STAMP_PREFIX));
+  // EVERY STAMP LINE, NOT THE FIRST. This was `.find(...)`, which reads the first stamp in the
+  // document and cannot see a second. A report carrying two — a `yes` left standing above a `no`
+  // from a later partial run, or two runs concatenated — would classify on whichever came first,
+  // and first-wins is a guess. The paragraph below already refuses exactly that guess for the two
+  // LEGACY prose sentences ("guessing which half to believe is exactly the judgement this module
+  // exists to refuse") and did not apply it to this module's own stamp. Found by enumerating the
+  // class after the same shape was fixed in adapters/pdf/assert-overflow.mjs, not by tripping on it.
+  const stampLines = text.split(/\r?\n/).filter((l) => l.startsWith(STAMP_PREFIX));
+  if (stampLines.length > 1) return { state: 'unclassifiable', how: `${stampLines.length} stamp lines, and a document with more than one stamp does not have a stamp: ${JSON.stringify(stampLines)}` };
+  const stampLine = stampLines[0];
   if (stampLine) {
     if (stampLine.startsWith(`${STAMP_PREFIX} yes`)) return { state: 'verified', how: 'stamp', detail: stampLine };
     if (stampLine.startsWith(`${STAMP_PREFIX} no`)) return { state: 'not-run', how: 'stamp', detail: stampLine };

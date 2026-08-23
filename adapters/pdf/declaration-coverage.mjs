@@ -44,6 +44,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolveFixture } from './resolve-fixture.mjs';
 import { money } from './comparisons.mjs';
+import { examined } from './examined.mjs';
 
 // THE FIXTURE LIST IS DERIVED, NOT TYPED.
 //
@@ -201,6 +202,7 @@ const everInClass   = [...new Set(runs.flatMap(r => r.inClass))];
 const everExercised = new Set(runs.flatMap(r => r.inClass.filter(id => !r.unexercised.includes(id))));
 const still = everInClass.filter(id => !everExercised.has(id));
 
+examined('declaration-coverage', form, everInClass.length, 'declarations-in-class-on-some-fixture');
 console.log(`DECLARATION COVERAGE — ${form}, ${runs.length} fixture(s)`);
 console.log('');
 console.log('  FIXTURE                                        in class  exercised  not');

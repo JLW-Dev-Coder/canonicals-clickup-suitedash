@@ -50,6 +50,7 @@ const printedPages = async (form) => {
 };
 import { classifyMapTargets, walkTargets } from './verify-form-coverage.mjs';
 import { probeMoneyCells, declaredMoneyCells } from './money-probe.mjs';
+import { examined } from './examined.mjs';
 
 // ---------------------------------------------------------------------------------------
 // WHAT IS SWEPT.
@@ -419,6 +420,267 @@ export const MANIFEST = [
       walk(spec);
       return [{ what: 'flagged columns in asset-row-shapes.json', claimed: 5, derived: flagged,
         from: 'every column object carrying a row_flag or printed_as_checkbox declaration' }];
+    } }),
+
+  // ═══ slice 2's three prose claims about pages 2 and 3 ═══════════════════════════════
+
+  D({ id: 'S-39', file: /433b\.map\.json$/, at: /^_the_condition_that_governs_pages_2_and_3$/,
+    kind: 'derived',
+    derive: (ctx) => {
+      const rows = [];
+      const map = ctx.mapDoc;
+      const ev = map._map_evidence_page2_3?.bindings || [];
+      const sets = Object.keys(map.checkboxes || {}).filter((k) => !k.startsWith('_'));
+      // EIGHT YES/NO QUESTIONS IN SECTION 3 ON PAGE 2. Derived from the map's own declared
+      // sets, filtered to those whose key opens s3_ and which declare BOTH a yes and a no —
+      // the plaintiff/defendant pair is deliberately not one of them, and the figure would be
+      // nine if a two-option set were counted as a yes/no question.
+      const s3yn = sets.filter((k) => k.startsWith('s3_') && map.checkboxes[k].yes && map.checkboxes[k].no);
+      rows.push({ what: 'yes/no questions in Section 3 on page 2', claimed: 8, derived: s3yn.length,
+        from: 'the map\'s own checkbox sets whose key opens s3_ and which declare both a yes and a no target' });
+      // FIVE PRINTED TABLES across the two pages, derived from the groups whose slots bind a
+      // page-2 or page-3 target rather than from a list of table names.
+      const tables = Object.keys(map.groups || {}).filter((g) => !g.startsWith('_'))
+        .filter((g) => (map.groups[g].slots || []).some((sl) => Object.values(sl.text || {}).some((t) => /Page[23]\[0\]/.test(t))));
+      rows.push({ what: 'printed tables on pages 2 and 3', claimed: 5, derived: tables.length,
+        from: 'the map\'s own groups, filtered to those whose slots bind a Page2 or Page3 target' });
+      // THE BINDING SPLIT, off the evidence table's OWN pairing verdicts.
+      rows.push({ what: 'bindings on pages 2 and 3', claimed: 146, derived: ev.length, from: 'the evidence table this map carries' });
+      rows.push({ what: 'bindings bound on a CONTAINED column header', claimed: 78,
+        derived: ev.filter((e) => /^column caption CONTAINED/.test(e.pairing)).length, from: 'the evidence table\'s own pairing verdicts' });
+      rows.push({ what: 'bindings captioned immediately beside their own cell', claimed: 17,
+        derived: ev.filter((e) => /^immediately left/.test(e.pairing)).length, from: 'the evidence table\'s own pairing verdicts' });
+      return rows;
+    } }),
+
+  D({ id: 'S-40', file: /433b\.map\.json$/, at: /^_the_arithmetic_arrives_on_page_2$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const rows = [];
+      // FOUR PRINTED TOTALS, DERIVED TWICE: from the totals file the map is authored beside,
+      // and from the DRAWN PAGE. A claim about what the page prints that is only checked
+      // against the file describing the page is one artefact agreeing with another.
+      // THE CLAIM WAS UNSCOPED AND THE FORM GREW. This row read "printed totals declared
+      // for 433-B", claimed 4, and derived the whole totals file — which was the same number
+      // only while pages 2 and 3 were the only pages read. Slice 3 added 22e and 23e and the
+      // derivation returned 6 against a claim of 4. The prose key is about PAGES 2 AND 3, so
+      // the row is SCOPED to them rather than the claim being bumped to 6: a figure that
+      // silently tracks whatever the file happens to hold checks nothing. [R-07] — the
+      // universe is part of the figure.
+      rows.push({ what: 'printed totals declared for 433-B on pages 2 and 3', claimed: 4,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [23],/.test(t.caption_at || '')).length,
+        from: "adapters/pdf/maps/433b.totals.json, filtered by the page each total's own caption_at names" });
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
+      const joined23 = [1, 2].map((i) => pages[i].items.map((t) => t.str).join(' ')).join(' ');
+      rows.push({ what: 'runs matching /Add lines?/ on pages 2 and 3', claimed: 4,
+        derived: (joined23.match(/Add lines?/gi) || []).length, from: 'every drawn run of pages 2 and 3, joined' });
+      return rows;
+    } }),
+
+  D({ id: 'S-41', file: /433b\.map\.json$/, at: /^_the_five_flag_classes_on_pages_2_and_3$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      // THE SAME REGISTER [S-38] READS FOR PAGE 1, PLUS THE ABSENCE HALF THIS CLAIM ADDS.
+      // [S-38] asserts the SIZE of the flagged set; this one asserts that none of it is DRAWN
+      // on these two pages, which is a claim about the page and is settled by reading it.
+      const spec = JSON.parse(readFileSync('adapters/hubspot/asset-row-shapes.json', 'utf8'));
+      let flagged = 0;
+      const walk = (o) => {
+        if (Array.isArray(o)) { o.forEach(walk); return; }
+        if (o && typeof o === 'object') {
+          if (o.key && (o.row_flag || o.printed_as_checkbox)) flagged++;
+          for (const k of Object.keys(o)) walk(o[k]);
+        }
+      };
+      walk(spec);
+      const rows = [{ what: 'flagged columns in asset-row-shapes.json', claimed: 5, derived: flagged,
+        from: 'every column object carrying a row_flag or printed_as_checkbox declaration' }];
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
+      const joined23 = [1, 2].map((i) => pages[i].items.map((t) => t.str).join(' ')).join(' ');
+      // READ OFF THE DRAWN PAGE AND NOT OFF THE MAP. "The map does not reach it" and "the page
+      // does not print it" are different facts, and only one of them is about the form.
+      for (const re of [/Check if/i, /Business Account/i, /Primary Residence/i, /1040/, /household income/i])
+        rows.push({ what: `pages 2 and 3 draw no run matching /${re.source}/`, claimed: 0,
+          derived: (joined23.match(new RegExp(re.source, 'gi')) || []).length, from: 'every drawn run of pages 2 and 3, joined' });
+      // THE POSITIVE CONTROL, AND ITS FIRST DRAFT CLAIMED TWO AND DERIVED ONE.
+      // Five required zeros are only readable if the reading works at all, so this row asserts
+      // something the page DOES draw. The claim was "Used as collateral appears twice, once as
+      // each of the two column headers" and the derivation returned 1: the INVESTMENTS header is
+      // drawn as one run, "Used as collateral" at y 413.7, and the DIGITAL ASSETS one is broken
+      // across two baselines, "Used as" at y 232.0 and "collateral" at y 222.4, so a joined
+      // page text holds the phrase once. The derivation was right and the claim was wrong, and
+      // the claim is corrected rather than the comparison loosened. The control still works:
+      // one is not zero, and a reading that had gone dead would return zero for this row too.
+      rows.push({ what: 'occurrences of the phrase "Used as collateral" as ONE drawn run on pages 2 and 3', claimed: 1,
+        derived: (joined23.match(/Used as collateral/gi) || []).length,
+        from: 'the same joined page text; the one occurrence is the INVESTMENTS column header, and the DIGITAL ASSETS header says the same thing across two baselines' });
+      return rows;
+    } }),
+
+  // ═══ slice 3, page 4 ═════════════════════════════════════════════════════════════════
+  D({ id: 'S-42', file: /433b\.map\.json$/, at: /^_the_condition_that_governs_page_4$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const map = ctx.mapDoc;
+      const { readWidgetGeometry } = await import('./page-geometry.mjs');
+      const { widgets } = await readWidgetGeometry(readFileSync(map.pdf));
+      const w4 = widgets.filter((w) => w.page === 4);
+      const rows = [
+        { what: 'widgets drawn on page 4', claimed: 94, derived: w4.length, from: 'the drawn page, via readWidgetGeometry' },
+        // EVERY ONE OF THEM A TEXT FIELD, WHICH IS WHAT MAKES THE NO-CHECKBOX CLAIM CHECKABLE.
+        // The claim "the page draws no checkbox" is an ABSENCE about the form, so it is read off
+        // the widget list rather than off the map — [R-05].
+        { what: 'page-4 widgets that are NOT a text field', claimed: 0,
+          derived: w4.filter((w) => w.type !== 'PDFTextField').length, from: 'the drawn page; every page-4 widget is a PDFTextField' },
+      ];
+      // TWO PRINTED TABLES, derived from the groups whose slots bind a page-4 target rather than
+      // from a list of table names.
+      const tables = Object.keys(map.groups || {}).filter((g) => !g.startsWith('_'))
+        .filter((g) => (map.groups[g].slots || []).some((sl) => Object.values(sl.text || {}).some((t) => /Page4\[0\]/.test(t))));
+      rows.push({ what: 'printed tables on page 4', claimed: 2, derived: tables.length,
+        from: "the map's own groups, filtered to those whose slots bind a Page4 target" });
+      // THE SHARED GRID: six columns, and the two tables' extra cells.
+      const rp = (map.groups.real_property.slots || [])[0], vh = (map.groups.vehicles.slots || [])[0];
+      rows.push({ what: 'columns per real-property row', claimed: 10, derived: Object.keys(rp.text || {}).length, from: "the map's own real_property slot 0" });
+      rows.push({ what: 'columns per vehicle row', claimed: 13, derived: Object.keys(vh.text || {}).length, from: "the map's own vehicles slot 0" });
+      const shared = Object.keys(rp.text || {}).filter((k) => k in (vh.text || {}));
+      rows.push({ what: 'columns the two tables share', claimed: 8, derived: shared.length,
+        from: "the map's own two slot-0 column sets, intersected" });
+      return rows;
+    } }),
+
+  D({ id: 'S-43', file: /433b\.map\.json$/, at: /^_the_leaf_names_on_page_4_are_one_printed_marker_behind$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      // THE OFFSET, RE-DERIVED FROM THE DRAWN PAGE ON EVERY RUN rather than read back out of the
+      // map that claims it. The generator asserted it once at authoring time; this asserts it
+      // again from the PDF, so a revision that renumbers the form is caught here too.
+      const { readWidgetGeometry, readPrintedText, baselineOfRun } = await import('./page-geometry.mjs');
+      const bytes = readFileSync(ctx.mapDoc.pdf);
+      const { widgets } = await readWidgetGeometry(bytes);
+      const R4 = (await readPrintedText(bytes))[3].items.map((t) => ({ str: t.str, y: baselineOfRun(t), x1: t.x1 }));
+      const WANT = ['22a', '22b', '22c', '22d', '22e', '23a', '23b', '23c', '23d', '23e'];
+      const M = R4.filter((t) => WANT.includes(t.str) && t.x1 < 60).sort((a, b) => b.y - a.y);
+      const my = Object.fromEntries(M.map((m) => [m.str, m.y]));
+      const band = (mk) => { const i = WANT.indexOf(mk); return { top: my[mk] + 12, bot: i + 1 < WANT.length ? my[WANT[i + 1]] + 12 : 30 }; };
+      const OFF = { '22a': '21a', '22b': '21b', '22c': '21c', '22d': '21d', '22e': '21e', '23a': '22a', '23b': '22b', '23c': '22c', '23d': '22d', '23e': '22e' };
+      const tok = (n) => { const m = /_(\d{1,2}[a-e])(?:[A-Za-z0-9]*)?\[0\]$/.exec(n); return m ? m[1] : null; };
+      let behind = 0, agree = 0, other = 0, none = 0;
+      for (const w of widgets.filter((x) => x.page === 4)) {
+        const mid = (w.rect[1] + w.rect[3]) / 2;
+        const mk = WANT.find((m) => { const b = band(m); return mid < b.top && mid >= b.bot; });
+        const t = tok(w.name);
+        if (t === null) none++;
+        else if (t === mk) agree++;
+        else if (t === OFF[mk]) behind++;
+        else other++;
+      }
+      return [
+        { what: 'page-4 widgets whose leaf token is the printed marker MINUS ONE', claimed: 82, derived: behind, from: 'the drawn page: each widget placed in a printed marker band by its rect midpoint, its leaf token read from its name' },
+        { what: 'page-4 widgets whose leaf token AGREES with their printed marker', claimed: 2, derived: agree, from: 'the same derivation; both are on the 22b row' },
+        { what: 'page-4 widgets carrying a token from a block on another page', claimed: 8, derived: other, from: 'the same derivation; 18a, 18b, 18c, 18e, 59b, 69b twice and 79b' },
+        { what: 'page-4 widgets carrying no row token at all', claimed: 2, derived: none, from: 'the same derivation; Line2d and f2_037_0_' },
+        // THE POSITIVE CONTROL. Four counts that must sum to the page, so a dead name-reader
+        // cannot satisfy all four by returning zero.
+        { what: 'the four counts above, summed', claimed: 94, derived: behind + agree + other + none, from: 'the same derivation, summed — this row is what stops a dead token reader satisfying the other four with zeros' },
+      ];
+    } }),
+
+  D({ id: 'S-44', file: /433b\.map\.json$/, at: /^_the_five_flag_classes_on_page_4$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      // THE SAME REGISTER [S-38] AND [S-41] READ, PLUS PAGE 4'S OWN ABSENCE HALF.
+      const spec = JSON.parse(readFileSync('adapters/hubspot/asset-row-shapes.json', 'utf8'));
+      let flagged = 0;
+      const walk = (o) => {
+        if (Array.isArray(o)) { o.forEach(walk); return; }
+        if (o && typeof o === 'object') {
+          if (o.key && (o.row_flag || o.printed_as_checkbox)) flagged++;
+          for (const k of Object.keys(o)) walk(o[k]);
+        }
+      };
+      walk(spec);
+      const rows = [{ what: 'flagged columns in asset-row-shapes.json', claimed: 5, derived: flagged,
+        from: 'every column object carrying a row_flag or printed_as_checkbox declaration' }];
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
+      const joined4 = pages[3].items.map((t) => t.str).join(' ');
+      rows.push({ what: 'printed runs on page 4', claimed: 161, derived: pages[3].items.length, from: 'the drawn page' });
+      // READ OFF THE DRAWN PAGE AND NOT OFF THE MAP — [R-05]. This is the page where the kind column
+      // would live if it lived anywhere on this form: page 4 IS 433-B's real-property page, and
+      // on 433-A that column is drawn as a Primary Residence / Other pair inside each row.
+      for (const re of [/Check if/i, /Business Account/i, /Primary Residence/i, /1040/, /household/i])
+        rows.push({ what: `page 4 draws no run matching /${re.source}/`, claimed: 0,
+          derived: (joined4.match(new RegExp(re.source, 'gi')) || []).length, from: 'every drawn run of page 4, joined' });
+      // THE POSITIVE CONTROL. Five required zeros are only readable if the reading works at all.
+      // THE CONTROL'S CLAIM WAS WRONG AND THE DERIVATION WAS RIGHT, so the claim is corrected
+      // rather than the comparison loosened — the same way [S-41]'s "Used as collateral" control
+      // was corrected when it claimed two and derived one. Page 4 draws the phrase TWICE on one
+      // baseline: the block heading "REAL PROPERTY" at y 715.1 x 43.2..110.5, and the instruction
+      // "Include all real property and land contracts the business owns/leases/rents." at
+      // x 114.9..384.7 beside it. A case-insensitive match sees both, and both are really there.
+      rows.push({ what: 'occurrences of the phrase "Real Property" on page 4', claimed: 2,
+        derived: (joined4.match(/Real Property/gi) || []).length,
+        from: 'the same joined page text; the block heading at y 715.1 and the instruction drawn beside it on the same baseline' });
+      return rows;
+    } }),
+
+  D({ id: 'S-45', file: /433b\.map\.json$/, at: /^_the_arithmetic_on_page_4$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const rows = [];
+      // SIX PRINTED TOTALS NOW, DERIVED TWICE: from the totals file, and from the DRAWN PAGES.
+      rows.push({ what: 'printed totals declared for 433-B', claimed: 6, derived: (ctx.totalsDoc?.totals || []).length,
+        from: 'adapters/pdf/maps/433b.totals.json' });
+      rows.push({ what: 'totals declared for page 4', claimed: 2,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 4,/.test(t.caption_at || '')).length,
+        from: "the totals file's own caption_at, which names the page each total is drawn on" });
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
+      const joined4 = pages[3].items.map((t) => t.str).join(' ');
+      rows.push({ what: 'runs matching /Add lines?/ on page 4', claimed: 2,
+        derived: (joined4.match(/Add lines?/gi) || []).length, from: 'every drawn run of page 4, joined' });
+      rows.push({ what: 'occurrences of "Total Equity" on page 4', claimed: 2,
+        derived: (joined4.match(/Total Equity/gi) || []).length, from: 'the same joined page text' });
+      // THE ATTACHMENT TERM, WHICH IS WHAT [B-05] IS ABOUT, counted on this page too.
+      rows.push({ what: 'page-4 total captions naming "amounts from any attachments"', claimed: 2,
+        derived: (joined4.match(/amounts from any attachments/gi) || []).length, from: 'the same joined page text' });
+      // NO ROUNDING OR NEGATIVE INSTRUCTION ON THIS PAGE, which is why no floor is declared.
+      for (const re of [/do not enter a negative/i, /negative/i, /round/i])
+        rows.push({ what: `page 4 draws no run matching /${re.source}/`, claimed: 0,
+          derived: (joined4.match(new RegExp(re.source, 'gi')) || []).length, from: 'every drawn run of page 4, joined' });
+      return rows;
+    } }),
+
+  D({ id: 'S-46', file: /433b\.map\.json$/, at: /^(_no_arguable_item_on_page_4|_the_two_totals_are_not_the_B06_shape)$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const map = ctx.mapDoc;
+      const ev = (map._map_evidence_page4 || {}).bindings || [];
+      const rows = [
+        { what: 'bindings on page 4', claimed: 94, derived: ev.length, from: 'the evidence table this map carries' },
+        { what: 'page-4 arguable items', claimed: 0, derived: (map._arguable_page4 || []).length,
+          from: "the map's own _arguable_page4, which this slice does not create" },
+        { what: 'page-4 cells bound on a CONTAINED column header', claimed: 84,
+          derived: ev.filter((e) => /^column caption CONTAINED/.test(e.pairing)).length, from: "the evidence table's own pairing verdicts" },
+        { what: 'page-4 cells captioned immediately beside their own cell', claimed: 8,
+          derived: ev.filter((e) => /^immediately left/.test(e.pairing)).length, from: "the evidence table's own pairing verdicts" },
+        { what: 'page-4 cells bound by the total-line rule', claimed: 2,
+          derived: ev.filter((e) => /^the total-line rule/.test(e.pairing)).length, from: "the evidence table's own pairing verdicts" },
+      ];
+      // THE THIRD WITNESS ON THE GRID COLUMNS, re-derived from the drawn page: four money
+      // markers on each of the eight grid rows, and none on the two total rows.
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(map.pdf));
+      const cash = pages[3].items.filter((t) => t.str === '$');
+      rows.push({ what: 'printed "$" marks on page 4', claimed: 34, derived: cash.length,
+        from: 'the drawn page: four on each of the eight grid rows, plus one on each of the two total lines' });
+      rows.push({ what: 'printed "$" marks on page 4 at a COLUMN marker position', claimed: 32,
+        derived: cash.filter((t) => [262.0, 326.8, 391.6, 514.0].some((x) => Math.abs(t.x1 - x) <= 1.0)).length,
+        from: 'the same marks, filtered to the four column marker x positions — the remaining two are the total lines, at x 485.2, which is no column\'s position and is why the two totals are not the [B-06] shape' });
+      return rows;
     } }),
 
   // ═══ the carried-questions ledger ════════════════════════════════════════════════════
@@ -1371,6 +1633,7 @@ export const reportCountSweep = (s, { verbose = false } = {}) => {
   const byDisp = s.rows.reduce((a, r) => { a[r.disposition] = (a[r.disposition] || 0) + 1; return a; }, {});
   const checks = s.rows.reduce((a, r) => a + (r.checks || 0), 0);
   console.log(`count sweep: ${s.rows.length} claim site(s) across ${s.files.length} artefact(s) — ${Object.entries(byDisp).map(([k, v]) => `${v} ${k}`).join(', ')}; ${checks} derived comparison(s)`);
+  examined('count-sweep', s.form, s.rows.length, 'claim-sites');
   if (verbose) {
     let cur = null;
     for (const r of s.rows) {

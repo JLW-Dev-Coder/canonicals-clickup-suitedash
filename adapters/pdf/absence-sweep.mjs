@@ -89,6 +89,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { readPrintedText, readWidgetGeometry, Y_CONVENTION } from './page-geometry.mjs';
 import { DECLARED } from './absence-declared.mjs';
+import { examined } from './examined.mjs';
 
 const VERBOSE = process.argv.includes('--verbose');
 const MAPS = 'adapters/pdf/maps';
@@ -586,6 +587,13 @@ const main = async () => {
 
   console.log('');
   if (!problems.length) {
+    // PER HOST FORM. A claim belongs to the form whose artefact states it, which is the
+    // same attribution the sweep already uses to decide which drawn page to check it against.
+    // MAPPED_FORMS is the universe, not the set of forms that happen to have claims: a form
+    // with none must be REPORTED as zero, or the one interesting row is the missing one.
+    for (const f of MAPPED_FORMS()) {
+      examined('absence-sweep', f, claims.filter((c) => c.hostForm === f).length, 'absence-claims');
+    }
     console.log(`OK — ${claims.length} absence claim(s) enumerated; ${claims.length - undrawn.length} carry drawn evidence of their own,`);
     console.log(`${undrawn.length} carry none and every one of those is disposed (${disposed.length - openN} settled elsewhere, ${openN} OPEN and named).`);
     console.log(`${kinds.point} host-form point coordinate(s) compared against their own drawn page and ${xfDeclared} cross-form coordinate(s) against the page of the form each one DECLARES, 0 undrawn.`);

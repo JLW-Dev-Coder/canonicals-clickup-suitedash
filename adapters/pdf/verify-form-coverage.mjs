@@ -75,6 +75,7 @@
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFileSync } from 'fs';
 import { pathToFileURL } from 'url';
+import { examined } from './examined.mjs';
 
 const TARGET_PREFIX = 'topmostSubform[0].';
 
@@ -291,6 +292,7 @@ export function reportFormCoverage(r) {
   console.log('  ---------------------------------------------------------------------');
   console.log(`  ${pad(r.total)}  total`);
   console.log(`  ${pad(r.fieldCount)}  fields on the form${r.total === r.fieldCount ? '  — accounting CLOSES' : '  — MISMATCH'}`);
+  examined('verify-form-coverage', r.form, r.fieldCount, 'form-fields-accounted-for');
   console.log('');
   console.log(`  exclusive sets: ${r.counts.exclusiveSets} (${r.counts.deferredSets} fully deferred, required to have ZERO checked)`);
   console.log(`  map bindings:   ${r.counts.writableTargets} writable, ${r.counts.neverTargets} never-autofill, ${r.counts.deferredTargets} deferred`);

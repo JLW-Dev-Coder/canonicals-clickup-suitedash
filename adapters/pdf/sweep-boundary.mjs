@@ -95,6 +95,11 @@ export const sampleFormTotals = () => {
   return out;
 };
 
+// THE MARKDOWN UNDER adapters/ THAT IS NOT A RUN REPORT. Declared once and read by [SB-14]'s
+// counter, by [SB-14]'s crosscheck and by [SB-19], so the two entries cannot drift into both
+// claiming the same file or neither claiming it.
+const NOT_RUN_REPORTS = new Set(['adapters/pdf/RULES.md']);
+
 // ---------------------------------------------------------------------------------------
 // THE REGISTER.
 // ---------------------------------------------------------------------------------------
@@ -230,21 +235,52 @@ export const BOUNDARIES = [
     },
     observe: () => ['[SB-13] 433boi.lineage-433aoi.json is the file [B11] came out of: it quotes printed runs at their RUN TOPS where every map in this repo quotes baselines. It is left unedited on purpose — it is the intake record, and correcting it in place would erase what intake concluded. The correction belongs in the map and is carried as [B11].'] },
 
-  { id: 'SB-14', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.md, adapters/pdf/**/*.md',
-    what: 'Removes every markdown document under adapters/ — naming derivations, provisioning dry-runs and read-backs, style notes.',
+  { id: 'SB-14', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.md, adapters/pdf/**/*.md — EXCEPT what [SB-19] takes',
+    what: 'Removes every markdown document under adapters/ — naming derivations, provisioning dry-runs and read-backs, style notes — SAVE for the files [SB-19] names, which are not run reports and are removed from this entry rather than absorbed by it.',
     claim: 'These are RUN REPORTS: each describes one execution against a live external system and is not re-derivable from this tree, because the tree does not hold the state the run was against.',
-    count: () => ['adapters/hubspot', 'adapters/pdf', 'adapters/pdf/maps'].filter(isDir).reduce((n, d) => n + readdirSync(d).filter((f) => f.endsWith('.md')).length, 0),
+    count: () => ['adapters/hubspot', 'adapters/pdf', 'adapters/pdf/maps'].filter(isDir).reduce((n, d) => n + readdirSync(d).filter((f) => f.endsWith('.md') && !NOT_RUN_REPORTS.has(`${d}/${f}`)).length, 0),
     // A RUN REPORT IS ABOUT A RUN, so the checkable half is that a run happened: every one of
     // these names the tool that produced it. A .md under adapters/ naming no producing tool is
     // not a run report, and the exclusion does not cover it.
     crosscheck: () => {
       const out = [];
       for (const d of ['adapters/hubspot', 'adapters/pdf', 'adapters/pdf/maps'].filter(isDir))
-        for (const f of readdirSync(d).filter((x) => x.endsWith('.md'))) {
+        for (const f of readdirSync(d).filter((x) => x.endsWith('.md') && !NOT_RUN_REPORTS.has(`${d}/${x}`))) {
           const src = r(`${d}/${f}`);
           if (!/\.mjs|\.ts\b|npm run/.test(src))
             out.push(`[SB-14] CONTRADICTED — ${d}/${f} is excused as a run report and names no tool that produced it. Either it is not a run report, or the run it describes cannot be repeated.`);
         }
+      return out;
+    } },
+
+  { id: 'SB-19', sweep: 'count-sweep.mjs', kind: 'scoped', path: 'adapters/pdf/RULES.md',
+    what: 'Removes the standing-rules document from count-sweep\u2019s manifest, and removes it from [SB-14]\u2019s excusal at the same time.',
+    _why_it_is_not_SB_14: 'It IS excluded from count-sweep, like every other .md under adapters/, but NOT for [SB-14]\u2019s reason. That entry excuses a document because it is a RUN REPORT \u2014 a description of one execution against a live external system, not re-derivable from this tree. RULES.md reports no run; it is a standing artefact read to decide how work is done. [SB-14]\u2019s crosscheck asks only whether the document names a tool, and RULES.md names dozens, so it passed silently under a ground that is false of it. Widening [SB-14] until it covered a file its reason does not hold for is the sentence-softening this register exists to refuse \u2014 the move [SB-22] records being refused when guard-sweep\u2019s HubSpot exclusion turned out to be false of four files. The boundary moved; the sentence did not.',
+    assertedBy: 'adapters/pdf/assert-rules.mjs, which is stronger than the manifest would be rather than weaker. Every rule must parse into four parts; ids must be unique and CONTIGUOUS from R-01; every rule must name the defect that earned it or declare in as many words that it cannot, and every declared absence is reported BY NAME on every run rather than absorbed into a pass; every commit hash cited must resolve with git cat-file IN THIS REPOSITORY; every adapters/, samples/ or scratchpad/ path in a backtick span must exist, which is [R-13] applied to the file that states it \u2014 and which fired twice on its first run. The parser carries a nine-case canary aimed at its POPULATION SELECTOR, the half [D-12] left untested.',
+    count: () => 1,
+    crosscheck: () => {
+      const out = [];
+      const p = 'adapters/pdf/RULES.md';
+      if (!existsSync(p)) { out.push(`[SB-19] CONTRADICTED — ${p} is not in this tree, so this boundary stands over nothing.`); return out; }
+      if (!existsSync('adapters/pdf/assert-rules.mjs')) out.push('[SB-19] CONTRADICTED — the asserter this entry names, adapters/pdf/assert-rules.mjs, is not in this tree. A scoped exclusion whose named cover is absent is an unregistered exclusion.');
+      // THE HALF THAT COULD ROT, AND ITS FIRST DRAFT WAS TOO WIDE. It read every count-bearing
+      // line in the document and demanded each say it was derived, and it fired on 21 lines that
+      // are HISTORICAL: "five flagged columns", "all six drawn pages", "four widgets" — figures
+      // quoted out of the defect that earned a rule, describing what was found at one moment.
+      // [SB-13] is the precedent and its words are exact: "a figure in it is history and not a
+      // live claim". Demanding a derivation for those would demand that a rules document
+      // re-derive a defect from 2026-08-19 on every run, which nothing in this tree can do.
+      //
+      // SO THE DIVISION IS BY POSITION, WHICH IS BOTH TRUE AND CHECKABLE. A figure inside a rule
+      // is history. A figure ABOVE the first rule is a claim about THIS DOCUMENT — how many
+      // rules it holds, how many are attributed — and that is precisely the class count-sweep
+      // would otherwise own, so it is the class this entry has to keep honest. Every such figure
+      // must say it is derived, and adapters/pdf/assert-rules.mjs is what derives it.
+      const all = r(p).split(String.fromCharCode(10));
+      const firstRule = all.findIndex((l) => l.startsWith('## [R-'));
+      if (firstRule < 0) { out.push(`[SB-19] CONTRADICTED — ${p} holds no rule heading, so the position rule this entry rests on divides nothing.`); return out; }
+      const header = all.slice(0, firstRule).filter((l) => statesACount(l) && !/derived|Derived|DERIVED|assert-rules/.test(l));
+      if (header.length) out.push(`[SB-19] CONTRADICTED — ${header.length} line(s) ABOVE the first rule in ${p} state a count about the document itself without saying it is derived. A figure there is a claim count-sweep would otherwise own:` + header.map((l) => String.fromCharCode(10) + '      ' + l.trim().slice(0, 110)).join(''));
       return out;
     } },
 

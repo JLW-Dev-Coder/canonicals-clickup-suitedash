@@ -259,6 +259,22 @@ export const sitesFor = (sites, entry) => {
 // ---------------------------------------------------------------------------------------
 export const PREDICATES = [
 
+  // ─── prompt 47: the three membership predicates slice 2 counters are built on ──────────
+  //
+  // Each one DEFINES a covered set rather than excusing anything from a check, and all three
+  // were renamed before they were registered: the first drafts were called isHeader, has and
+  // ok, and the local const named `has` attributed SEVENTEEN unrelated call sites in the same
+  // file to itself on the first run — [D-08] happening inside one module. A predicate name
+  // that is common is a predicate name that shadows.
+  { id: 'EX-92', pred: 'headerBound', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
+    what: 'Splits the four declared columns of the 433-B business-bank-accounts group into those whose evidence row records a column-caption pairing and those that do not, for counter [K-100].',
+    structural_because: 'IT IS THE NUMERATOR OF A COUNTER, NOT AN EXCUSAL. A column it answers false for is not removed from the assertion — it is reported as UNCOVERED and named in uncoveredList, which is the loudest thing that counter can do. The denominator is the map own declared columns and is computed without it, so this predicate cannot narrow the universe; it can only move the covered figure DOWN, and a covered figure below the universe is a failing blanket.' },
+  { id: 'EX-93', pred: 'declaresSet', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
+    what: 'Splits the investment and digital-asset rows into those declaring a used_as_collateral exclusive set and those not, for counter [K-101].',
+    structural_because: 'The same shape as [EX-92]: numerator only. The universe is the slots the map declares and is built before this predicate runs, so a row it answers false for appears in uncoveredList and fails the blanket rather than disappearing from it.' },
+  { id: 'EX-94', pred: 'besideItsOwnCell', definedIn: 'adapters/pdf/blanket-audit.mjs', kind: 'structural',
+    what: 'Splits the lower cells of the three stacked columns on 433-B pages 2 and 3 into those bound on a caption printed immediately beside them and those not, for counter [K-102].',
+    structural_because: 'Numerator only, as above. It reads the evidence table OWN pairing verdict rather than re-deciding a pairing, so it cannot disagree with the generator that refused the slice unless the evidence table itself was edited after generation — which is what the counter would then report.' },
   // ─── prompt 46 ruling 3 ────────────────────────────────────────────────────────────────
   { id: 'EX-91', pred: 'carriesBackslash', definedIn: 'adapters/pdf/regex-self-assert.mjs', kind: 'structural',
     what: 'Excuses a regex literal from the backslash-carrying population that regex-self-assert.mjs counts, and from the probe requirement rx() places on that population.',

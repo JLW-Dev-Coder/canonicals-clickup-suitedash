@@ -2,17 +2,22 @@
 //
 //   node adapters/pdf/fill-433b.mjs [samplePath] [--saturated]
 //
-// SLICE 1 — PAGE 1. The map binds 103 of the form's 447 fields and declares the other 344
-// unaccounted; this engine writes exactly what the map binds and nothing else. A cell on pages
-// 2 to 6 is not skipped here, it is unreachable: there is no key for it.
+// SLICES 1 AND 2 — PAGES 1 TO 3. The map binds 249 of the form's 447 fields and declares the
+// other 198 unaccounted; this engine writes exactly what the map binds and nothing else. A cell
+// on pages 4 to 6 is not skipped here, it is unreachable: there is no key for it.
 //
 // WHAT THIS ENGINE DOES NOT CARRY, AND WHY EACH ABSENCE IS DECLARED
 // -----------------------------------------------------------------
-// `totals`    — PAGE 1 HAS NO ARITHMETIC AT ALL. The page draws no lettered Box, no "Total"
-//               line, no "Add lines", no "Subtract" and no "minus"; the only occurrence of the
-//               word "box" is the instruction "(Check appropriate box below)". So there is
-//               nothing to compute and no operand list to quote. Gate step 11 SKIPS for this
-//               form, and that skip is a declared absence rather than a gap.
+// `totals`    — THIS NOTE USED TO SAY "PAGE 1 HAS NO ARITHMETIC AT ALL", and that sentence was
+//               true of page 1 and is kept in the map under `_no_arithmetic_on_this_page_at_all`
+//               with the seven figures that prove it, derived against the drawn page on every
+//               run. PAGES 2 AND 3 DRAW FOUR PRINTED TOTALS — 17d, 18f, 19c and 20e, each
+//               naming its own addends — and adapters/pdf/maps/433b.totals.json declares all
+//               four. Gate step 11 stops being SKIPPED for this form.
+//               THIS ENGINE STILL COMPUTES NOTHING. A total is a cell the RECORD supplies, like
+//               any other; step 11 recomputes it from what the filled PDF prints and compares.
+//               An engine that computed its own totals would be checking its arithmetic against
+//               itself, which is the one thing a tripwire cannot be built on.
 // `rounding`  — wired in and loaded, exactly as on 433-F and 433-B(OIC), both of which also
 //               declare none. It is loaded rather than skipped so that a later slice declaring
 //               a rounding block cannot find the mechanism missing at the moment it matters.
@@ -23,7 +28,13 @@
 //               makes them two captioned cells rather than one value split across two boxes.
 // `allowed`   — the Collection Financial Standards are a 433-F and 433-A(OIC) construct. This
 //               form prints no allowable-expense table on any page.
-// `check_here`— no lone tick on page 1. Every one of its 17 boxes belongs to a declared set.
+// `check_here`— no lone tick on pages 1 to 3. Every box on all three belongs to a declared set:
+//               17 on page 1, 20 on page 2 and 8 on page 3, in 21 exclusive sets. Two of those
+//               sets are not Yes/No — the five-way entity list on page 1 and the
+//               Plaintiff/Defendant pair on page 2 — and four are declared on a GROUP SLOT
+//               rather than at the top level. Gate step 10 requires exactly one box checked per
+//               exclusive set on a saturated run, which is what makes "no lone tick" checkable
+//               rather than asserted.
 //
 // THE ON-STATE IS THE THING THIS FORM DOES DIFFERENTLY, AND IT IS THE ONE PLACE AN ENGINE
 // WRITTEN FROM 433-B(OIC) WOULD SILENTLY DO NOTHING
@@ -31,7 +42,12 @@
 // 433-B(OIC) turns every one of its 77 boxes on with /1 and its engine can say so in a comment.
 // This form stores THIRTEEN distinct on-states — /Yes /No /Partnership /Corporation /Other /LLC
 // /Other#20LLC /Plaintiff /Defendent /Secured /Unsecured /Cash /Accrual — and page 1 alone uses
-// five of them for one printed list. pdf-lib's check() reads each box's own on-value, so the
+// five of them. AND ONE OF THE THIRTEEN IS MISSPELLED IN THE DOCUMENT: page 2's question-9 pair
+// draws "Defendant" and stores /Defendent. The map keys the option on the PRINTED word, which is
+// what a record says, and carries the on-state the WIDGET holds, which is what the document
+// accepts. Writing the printed spelling as an on-state would tick nothing while cbFilled counted
+// it written — which is exactly what the read-back below exists to catch, and it would.
+// pdf-lib's check() reads each box's own on-value, so the
 // value is never written raw here either; what IS asserted, after writing, is that every box
 // this engine ticked came back on. A box whose on-state the document disagreed with would
 // otherwise stay off and this engine would report it filled.
@@ -41,12 +57,32 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { verifyAppearances, reportAppearances } from './verify-appearances.mjs';
 import { checkRowShapes, reportRowShapes, checkRowClasses, reportRowClasses, checkRowClassCollisions, reportRowClassCollisions } from './check-row-shape.mjs';
 import { loadRounding, roundForOutput, miskeyedCells, reportCellSpelling } from './rounding.mjs';
+import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
+
+// THE DEFAULT FIXTURE IS RESOLVED, NEVER TYPED. `samples/433b.slice1.sample.json` was written
+// into this engine twice, and a path in a script is a fact nobody re-derives: slice 2 supersedes
+// that fixture, and an engine still naming it would fill a three-page map from a one-page record
+// and report success on whatever it happened to reach. That is [R-22], and it is the defect
+// adapters/pdf/resolve-fixture.mjs was written for.
+const resolveDefaultFixture = () => {
+  const r = resolveFixture('433b', 'acceptance');
+  if (!r.path) { reportResolution(r); process.exit(2); }
+  return r.path;
+};
 
 const argv = process.argv.slice(2);
 const saturated = argv.includes('--saturated');
 const MAP = 'adapters/pdf/maps/433b.map.json';
 const mapDoc = JSON.parse(readFileSync(MAP, 'utf8'));
-const data = JSON.parse(readFileSync(argv.filter((a) => !a.startsWith('--'))[0] || 'samples/433b.slice1.sample.json', 'utf8'));
+// THE POSITIONAL IS TAKEN ONCE, AND THE RESOLUTION HAPPENS ONCE. This read the argv filter and
+// called resolveDefaultFixture() in TWO places — here and in the tripwires record 170 lines
+// down — and adapters/pdf/exclusion-sweep.mjs reported both as exclusion sites attributed to a
+// predicate nobody had registered. It was right to: an argv filter beside a `||` is an exclusion
+// position, and the name in front of the parenthesis is what the sweep attributes it to. Two
+// reads of one command line that could disagree is also the shape a stale path lives in.
+const namedFixture = argv.filter((a) => !a.startsWith('--'))[0];
+const samplePath = namedFixture || resolveDefaultFixture();
+const data = JSON.parse(readFileSync(samplePath, 'utf8'));
 const pdf = await PDFDocument.load(readFileSync(mapDoc.pdf));
 const form = pdf.getForm();
 
@@ -127,6 +163,14 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
     // ONE CELL SPELLING: `group[row].column`, which is what rounding.mjs, the totals predicate,
     // the name-lie registry's `bound_to`, `exclusive` and the gate all address by.
     for (const [sub, name] of Object.entries(def.slots[i].text || {})) setText(name, row[sub], `${g}[${i}].${sub}`);
+    // A CHECKBOX DECLARED ON A SLOT, READ OFF THE ROW OBJECT. Pages 2 and 3 draw four of these
+    // — one "Used as collateral on loan" pair per investment row and per digital-asset row —
+    // and the record writes `used_as_collateral: "yes"` inside the row it already has, rather
+    // than a top-level key with a row index baked into it. Keyed `group[row].column` like every
+    // other group cell, which is the one cell spelling the resolver, the rounding block, the
+    // exclusive declaration and the gate all address by.
+    for (const [sub, options] of Object.entries(def.slots[i].checkboxes || {}))
+      applyOption(`${g}[${i}].${sub}`, options, row[sub]);
   });
 }
 const rowShape = checkRowShapes(mapDoc, groupSource);
@@ -210,16 +254,26 @@ writeFileSync(out, await pdf.save());
 // processors, three credit cards and four personnel rows; a fifth partner has nowhere to go,
 // and the form's only statement about that is the masthead's "Include attachments if additional
 // space is needed" — which is [C1-4].
-const tripwires = { form: '433b', slice: mapDoc.slice, sample: argv.filter((a) => !a.startsWith('--'))[0] || 'samples/433b.slice1.sample.json',
+const tripwires = { form: '433b', slice: mapDoc.slice, sample: samplePath,
   mode: saturated ? 'saturated' : 'production', filled, checkboxes_ticked: cbFilled, skipped, overflow_dropped: overflow, rounded };
 writeFileSync(out.replace(/\.pdf$/, '.tripwires.json'), JSON.stringify(tripwires, null, 1) + '\n');
 
 console.log(`fill 433-B (${mapDoc.slice}) — ${filled} text cell(s), ${cbFilled} box(es), ${skipped.length} skipped, ${overflow.length} row(s) dropped as overflow`);
-// ONE LINE NAMING EVERY DROP, NOT ONE LINE PER DROP. adapters/pdf/assert-overflow.mjs finds
-// the FIRST line beginning "OVERFLOW" and reads every `group[index]` on it; a line per row
-// meant it read only the first and reported the other two as UNLOGGED — a drop nobody is told
-// about, which is the exact failure that tool exists for, produced by the engine that was
-// telling them. The per-row detail follows on indented lines that do not open with the word.
+// ONE LINE NAMING EVERY DROP, PLUS AN INDENTED DETAIL LINE PER DROP.
+//
+// THIS COMMENT USED TO SAY WHY, AND WHAT IT SAID IS NO LONGER TRUE. It read: "assert-overflow
+// .mjs finds the FIRST line beginning OVERFLOW and reads every group[index] on it; a line per
+// row meant it read only the first and reported the other two as UNLOGGED". That WAS the
+// defect and the account of it was right. What was wrong was the remedy: the engine was
+// changed and the reader was left, so the convention lived in this comment and nowhere a tool
+// could enforce it, and the next engine written would have broken it again in silence.
+//
+// adapters/pdf/assert-overflow.mjs now UNIONS the ids across every line that opens with the
+// word, and asks its reader six canary questions on every run — including this exact shape and
+// the one-line-per-drop shape that produced the defect. So the format below is a choice about
+// what reads well in a transcript rather than a contract with the reader. The detail lines are
+// INDENTED deliberately: a line that does not start with the word is not read as a second log,
+// which is what makes a per-drop line safe to print at all.
 if (overflow.length) {
   console.log(`OVERFLOW DROPPED ${overflow.join(', ')} — the page draws no such row; each is logged here and not written`);
   for (const o of overflow) console.log(`    dropped ${o}: past the last printed slot its group declares`);

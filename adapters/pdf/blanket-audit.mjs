@@ -116,6 +116,7 @@ import { readFormRevision } from './read-form-revision.mjs';
 import { rowShapeSpecProblems, rowShapeSpecScope, splitOccurrences } from './assert-row-shape-spec.mjs';
 import { coverageCount, ENGINE_EXTRA_INPUTS } from '../hubspot/classification-coverage.mjs';
 import { rx } from './regex-self-assert.mjs';
+import { examined } from './examined.mjs';
 
 /** Every string in a JSON document, so a coordinate is read in the sentence it belongs to. */
 const proseStrings = (doc) => {
@@ -400,8 +401,8 @@ export const EMPTY_DEMAND = [
     why: 'These maps quote full AcroForm paths as TARGET VALUES, hundreds of them, and target values are not claim sites — a bare path states no count. The paths validate-map.mjs proves are therefore proved as targets by the gate\'s own step 3 rather than as quoted evidence, and [K-02] and [K-14] count exactly that set. What is empty here is the EVIDENCE-QUOTING habit, which is a 433-A(OIC) construct.' },
   { blanket: 'S-18', instrument: 'gate step 11', forms: ['433a', '433f'],
     why: 'Neither map quotes a printed dollar constant of $1,000 or more. The printed constants step 11 folds into a total — the $1,000 at (1) and the $11,980 at (7) — are a 433-A(OIC) feature; 433-A and 433-F print no such constant inside a total caption, and their totals declarations carry no `constant` feeder for one.' },
-  { blanket: 'S-15', instrument: 'gate step 11', forms: ['433a', '433f'],
-    why: 'Same absence, in the totals declaration rather than the map: these two forms declare no printed money constant as a feeder, so there is no constant for the prover to demand. The other half of [S-15]\'s citation — that step 11 recomputes each declared total — is counted by [K-05], which holds on all three forms.' },
+  { blanket: 'S-15', instrument: 'gate step 11', forms: ['433a', '433f', '433b'],
+    why: 'Same absence, in the totals declaration rather than the map: these three forms declare no printed money constant as a feeder, so there is no constant for the prover to demand. The other half of [S-15]\'s citation — that step 11 recomputes each declared total — is counted by [K-05], which holds on all three forms.' },
   // ── [S-18] on 433-B(OIC): three of its four citations demand nothing on a one-page slice ──
   //
   // ALL FOUR, and a correction: the first draft of this block declared three and asserted that
@@ -461,6 +462,22 @@ export const EMPTY_DEMAND = [
     why: 'The change log on these two maps records what a slice decided in field-name terms and quotes no coordinate. Same measurement as the [S-18] entry above.' },
   { blanket: 'S-17f', instrument: 'line-markers.mjs', forms: ['433f'],
     why: '433-F\'s change log names its sections by letter — "Section A", "Section E" — and not by printed line marker, so there is no `(nn)`, `line NN` or `Box X` run in the covered sites for the marker prover to demand. line-markers.mjs itself reports 433-F\'s markers; what is empty is the citation\'s demand, not the instrument\'s output.' },
+  // ── [S-14f] on 433-B: the totals NOTES carry no coordinate and no marker in the prover's
+  // spelling, and the entries beside them carry both ──────────────────────────────────────
+  //
+  // The four _notes on adapters/pdf/maps/433b.totals.json say why step 11 was skipped until
+  // this file existed, why all four captions name an operand the form draws no cell for, why
+  // the available-credit block has no entry, and why no floor is declared. They are ARGUMENTS,
+  // and the coordinates and markers they are arguments about live one level down in the
+  //  entries — every one of which carries a caption_at giving page, y and x range,
+  // and a printed_rows naming its markers. Those sites are covered by [S-15] and are where
+  // both provers find their atoms. What is empty here is this citation demand, not the
+  // evidence: moving the argument into the entries would put four paragraphs of reasoning
+  // beside four structural declarations, which is where nobody would read them.
+  { blanket: 'S-14f', instrument: 'align-block.mjs', forms: ['433b'],
+    why: 'The four totals notes on this form quote printed captions, an operand list and the names of two other artefacts. They quote no y and no x range: every coordinate on this form s totals lives in the caption_at field of the totals entries, which is a different region and is where align-block s prover does find atoms.' },
+  { blanket: 'S-14f', instrument: 'line-markers.mjs', forms: ['433b'],
+    why: 'The notes name printed markers in the page s own spelling — 17d, 18f, 19c, 20e, 21a, 21b — and not in the (nn) or line NN or Box X forms the marker prover extracts, because 433-B prints them that way and this file transcribes what the page prints. The markers ARE demanded and proved, from the printed_rows and line fields of the totals entries; line-markers.mjs reports this form s markers either way. What is empty is this citation s demand over this region.' },
   { blanket: 'S-14f', instrument: 'align-block.mjs', forms: ['433a', '433f'],
     why: 'The totals notes on these forms quote printed captions and operand names, not coordinates. Same measurement as the [S-18] entry above.' },
 ];
@@ -712,6 +729,7 @@ export const DETECTORS = {
   'enumerate-shadowing.mjs': { canary: 'canary(), seven synthetic condition strings run through the same classify() the enumeration uses, with an expected verdict asserted for each: a plain call reads BARE, a method call reads METHOD, a mixed site reads BARE and counts both occurrences, a predicate absent from the text reads ABSENT, a LONGER name is not matched by a shorter one, an optional-chained method reads METHOD, and null text reads ABSENT rather than zero. Not drawn from the artefacts. It is the canary this file most needs, because the expected answer over the real tree is ZERO and a broken classifier and a clean tree print the same number — so the count is not printed at all unless the canary bites first. Proved beyond the synthetic strings as well: a real same-file `bag.norm(xs)` planted in a swept file was found and named, and the enumeration returned to 0 when it was removed.' },
   'assert-fixture-authorship.mjs': { canary: 'canary(), seven synthetic key-pair comparisons run through the same keyDiff() the audit uses: a changed scalar, a key only on the committed side, a key only on the regenerated side, a nested change inside an array of objects, two identical objects yielding nothing, key ORDER yielding nothing, and "1" against 1 yielding a difference. Not drawn from the artefacts, and it runs BEFORE any generator is spawned - reportAuthorship returns the miss count and never reaches the table if the comparator is blind. It is the canary this file most needs: everything else it does is spawning processes and moving bytes, and its failure mode is agreeing with whatever it is handed. The last case is the sharpest - a fixture whose whole hand edit was cents-to-whole-dollars would read as reproduced exactly under a comparator that coerced.' },
   'absence-sweep.mjs': { canary: 'canary(), twenty planted cases run through the SAME detectors the sweep uses. Three halves, and each covers a way this file can go blind. (a) every registered ABSENCE_SHAPE must fire on a planted sentence of its own shape, and no shape may fire on a planted PRESENCE sentence - a detector that cannot tell absence from presence would classify the whole tree and report on neither. (b) every one of the four coordinate universes must be recovered from a planted example, INCLUDING a widget rectangle: a rectangle is written (y 170.6..183.6, ...) and its first number opens a range, so a band test placed first swallows every widget, and the canary caught exactly that on this file first run. (c) the form reader must return both 433-A(OIC) and 433-A from a sentence naming both, and must NOT read 433-A out of 433-A(OIC) alone - the cross-form confusion this file exists to separate, introduced by the reader meant to detect it. Two later shapes, the region boundary and the multiplication sign, were authored with an eaten backslash and went dead silently; both now carry a planted case, which is why the register is twenty and not seventeen.' },
+  'assert-rules.mjs': { canary: 'parserCanary(), NINE synthetic documents run through the SAME parseRules() the assertion uses, each with its verdict asserted: a well-formed rule and two well-formed rules must PARSE (a detector that refused everything would satisfy a refusal-only canary and stop the engine on its next run); a rule with no blockquote, one with no attribution and one with no dating must each produce a problem; a DUPLICATE id and a GAP in the numbering must each produce a problem while still yielding both rules; an EMPTY document must produce a problem rather than a clean pass, which is the vacuous shape this file exists for; and a rule declaring \u0060**Attribution:\u0060 with a reason must be ACCEPTED, because a checked absence is a state the parser has to be able to reach. None of the nine is drawn from RULES.md. It runs BEFORE the document is read and the CLI exits 2 without reading it if any case is dead — [D-12] is the case that shape is written against: a detector whose canary covered its comparator and not its POPULATION SELECTOR reported clean for three prompts while half of it was dead, and every case here is aimed at the selector.' },
   'assert-overflow.mjs': { not_a_detector: 'IT WALKS A CLOSED UNIVERSE. Its input is the declared overflow rules of the map and the row counts of the fixture, both enumerated; the regex is over a known declaration, not a search for instances. Finding nothing is not a possible outcome - the number of declared rules is derived and reported, and zero declarations would print as zero declarations.' },
   'fill-433a.mjs': { not_a_detector: 'A FILL ENGINE. Its universe is the targets of the map, enumerated and partitioned, and the partition is asserted to account for every field in the PDF. Its regexes parse known values, not search open text.' },
   'fill-433f.mjs': { not_a_detector: 'Same as fill-433a.mjs.' },
@@ -1492,7 +1510,63 @@ export const COMPLETENESS = [
       };
     } }),
 
+  // ── 433-B slice 2: pages 2 and 3 ───────────────────────────────────────────────────────
+
+  C({ id: 'K-100', match: /all column-header bound/,
+    kind: 'counter',
+    what: 'Every column of the BUSINESS BANK ACOUNTS table is bound on a printed column header rather than on a caption beside its own cell. Universe: the four declared columns of that group. Covered: those whose evidence row records a column-caption pairing — so a column rebound on anything else moves the count and the sentence stops being true out loud.',
+    universe: { scoped_to: 'artefact', detail: 'the four declared columns of groups.business_bank_accounts in the 433-B map',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
+    count: (ctx) => {
+      const g = ctx.mapDoc?.groups?.business_bank_accounts;
+      const cols = Object.keys(g?.slots?.[0]?.text || {});
+      const ev = ctx.mapDoc?._map_evidence_page2_3?.bindings || [];
+      // THE EVIDENCE ROW FOR ROW 0 OF EACH COLUMN, because the claim is about the COLUMNS and
+      // every row of a column carries the same pairing by construction.
+      // INLINED, NOT NAMED. A named predicate in a filter position is an exclusion site to
+      // adapters/pdf/exclusion-sweep.mjs, and a local const named `has` here attributed SEVENTEEN
+      // unrelated call sites in this file to itself on the first run — [D-08] in one file.
+      const headerBound = (c) => /^column caption (CONTAINED|OVERLAPPING)/.test(ev.find((e) => e.key === `business_bank_accounts[0].${c}`)?.pairing || '');
+      return { universe: cols.length, covered: cols.filter((c) => headerBound(c)).length,
+        universeList: cols, uncoveredList: cols.filter((c) => !headerBound(c)) };
+    } }),
+
+  C({ id: 'K-101', match: /a per-row checkbox column that is NOT one of the five and is bound/,
+    kind: 'counter',
+    what: 'Every investment row and every digital-asset row on page 3 carries its own used_as_collateral exclusive set. Universe: those rows. Covered: those with a declared exclusive set. A row added without one moves the count.',
+    universe: { scoped_to: 'artefact', detail: 'every declared slot of groups.investments and groups.digital_assets in the 433-B map',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
+    count: (ctx) => {
+      const m = ctx.mapDoc || {};
+      const rows = [];
+      for (const g of ['investments', 'digital_assets'])
+        (m.groups?.[g]?.slots || []).forEach((_, i) => rows.push(`${g}[${i}]`));
+      const declaresSet = (r) => Array.isArray(m.exclusive?.[`${r}.used_as_collateral`]) && m.exclusive[`${r}.used_as_collateral`].length === 2;
+      return { universe: rows.length, covered: rows.filter((r) => declaresSet(r)).length,
+        universeList: rows, uncoveredList: rows.filter((r) => !declaresSet(r)) };
+    } }),
+
+  C({ id: 'K-102', match: /each stack is bound|That second witness exists for the lower cells/,
+    kind: 'counter',
+    what: 'Every cell that shares a printed column with the cell above it is bound on a caption printed immediately beside it, not on the column header the cell above it also inherits. Universe: the lower cells of the three stacked columns on pages 2 and 3. Covered: those whose evidence row records an immediately-left pairing. THIS IS THE ARGUABLE ITEM ARGUING WITH ITSELF, and the counter is what makes the argument checkable: the item says header containment alone would bind two cells to one header, and this counts how many of them carry the second witness that separates them.',
+    universe: { scoped_to: 'artefact', detail: 'the contact_name and phone cells of every accounts_notes_receivable row, the phone cell of every investments row, and the account_number cell of every available_credit row',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
+    count: (ctx) => {
+      const m = ctx.mapDoc || {};
+      const ev = m._map_evidence_page2_3?.bindings || [];
+      const keys = [];
+      (m.groups?.accounts_notes_receivable?.slots || []).forEach((_, i) => keys.push(`accounts_notes_receivable[${i}].contact_name`, `accounts_notes_receivable[${i}].phone`));
+      (m.groups?.investments?.slots || []).forEach((_, i) => keys.push(`investments[${i}].phone`));
+      (m.groups?.available_credit?.slots || []).forEach((_, i) => keys.push(`available_credit[${i}].account_number`));
+      const besideItsOwnCell = (k) => /^immediately left/.test(ev.find((e) => e.key === k)?.pairing || '');
+      return { universe: keys.length, covered: keys.filter((k) => besideItsOwnCell(k)).length,
+        universeList: keys, uncoveredList: keys.filter((k) => !besideItsOwnCell(k)) };
+    } }),
   // ── the families that are NOT coverage claims ──────────────────────────────────────────
+
+  C({ id: 'K-103', match: /All four were re-derived/,
+    kind: 'not-coverage',
+    reason: 'THE `what_this_item_got_right` HALF OF A RESOLVED FINDING — the same shape as [K-97]. [B-03] asserted four things about the page-3 investments block and this sentence records that all four survived being re-derived. It restates what a past claim got right; it does not assert that a set in this tree is covered. The four things themselves are not restated here either: each is a coordinate or a printed marker, and adapters/pdf/tmp/p47/gen-slice2-433b.mjs refuses the whole slice if any caption is not drawn where the map says it is, which is a stronger check than a count would be. Counting it again would be a second denominator over a set the generator already refuses to be wrong about.' }),
   C({ id: 'K-93', match: /every page-5 binding rests on a caption plus a second witness/,
     kind: 'not-coverage',
     reason: 'A NEGATIVE CLAIM ABOUT WHAT THE PAGE DRAWS, not that a set has been covered. "Page 5 draws no line marker at all, so nothing here is bound by a number" says there is nothing of a kind - and a set of size zero has no covered half to count, only an existence to check. What checks it is count-sweep [S-32], which derives the marker count for page 5 from line-markers.mjs on every run and requires the block\'s own sentence - "finds 3 markers on page 5 and every one of them is a BOX marker" - to agree with the instrument. The POSITIVE half of the same paragraph, that every page-5 binding names two witnesses, is enumerated in the paragraph itself: nine keys, nine captions, nine second witnesses, each named.' }),
@@ -1761,6 +1835,7 @@ export const reportBlanketAudit = (a, { verbose = false } = {}) => {
   const stood = a.blankets.reduce((s, b) => s + b.stoodDown.length, 0);
   const counters = a.disposed.filter(d => d.kind2 === 'counter');
   console.log(`blanket audit: ${a.blankets.length} blanket(s) over ${totalSites} site(s); seed "${a.seed}"; ${sampled} site(s) sampled`);
+  examined('blanket-audit', a.form, sampled, 'sampled-blanket-sites');
   console.log(`  probe: ${a.blankets.reduce((s, b) => s + b.findings.length, 0)} finding(s); ${stood} number(s) stood down as a stated PAST figure, which is what the blanket reasons already cover`);
   console.log(`  forward references: ${a.forward.length} pair(s), ${a.forward.filter(f => f.unproved).length} unproved, ${a.forward.filter(f => f.uncovered?.length).length} with a gap`);
   console.log(`  detectors: ${a.detectors.length} candidate(s) by the derived signature - ${a.detectors.filter(d => d.canary).length} carry a canary, ${a.detectors.filter(d => d.not_a_detector).length} declared not a detector, ${a.detectors.filter(d => !d.disposed).length} undisposed`);

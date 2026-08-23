@@ -54,6 +54,8 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, unlinkSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { examined } from './examined.mjs';
+import { MAPPED_FORMS } from './resolve-fixture.mjs';
 
 const SAMPLES = 'samples';
 
@@ -228,6 +230,11 @@ export const reportAuthorship = ({ verbose = false } = {}) => {
     console.log(`  ${String(r.verdict).padEnd(13)} ${r.file.padEnd(48)} ${r.script}${r.differs.length ? `\n                differing key(s): ${r.differs.join(', ')}` : ''}`);
   if (verbose) for (const r of noPath) console.log(`  (no path)     ${r.file.padEnd(48)} ${JSON.stringify(r.sentence)}`);
   if (!a.problems.length) {
+  // A FIXTURE BELONGS TO THE FORM ITS FILENAME OPENS WITH, which is how samples/ is already
+  // swept by adapters/pdf/resolve-fixture.mjs — the same classifier, not a second one.
+  for (const f of MAPPED_FORMS()) {
+    examined('assert-fixture-authorship', f, claimants().filter((c) => c.file.startsWith(`${f}.`)).length, 'fixtures-claiming-a-generator');
+  }
     console.log(`OK — every fixture naming a generator is either reproduced by it exactly or declares its co-authorship, and every declared hand-authored key is one regeneration actually finds.`);
     return 0;
   }

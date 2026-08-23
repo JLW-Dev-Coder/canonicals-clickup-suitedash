@@ -50,6 +50,52 @@ import { readFileSync, existsSync } from 'node:fs';
 import { PDFDocument, PDFTextField } from 'pdf-lib';
 import { resolveFixture, reportResolution } from './resolve-fixture.mjs';
 import { rx } from './regex-self-assert.mjs';
+import { examined } from './examined.mjs';
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE ENGINE LOG READER, AND THE SIX QUESTIONS IT IS ASKED ON EVERY RUN
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// A REPAIRED INSTRUMENT IS A NEW INSTRUMENT. This reader was `.find()` over the output lines
+// and therefore saw only the FIRST line beginning "OVERFLOW"; fill-433b.mjs printed one line
+// per drop and two of its three drops were reported UNLOGGED by the tool whose entire purpose
+// is to catch a drop nobody is told about. Nothing had ever asked this reader a question whose
+// answer was known in advance, which is why a defect this size lived in one expression.
+//
+// So it is a function now, and `--canary` asks it six.
+export const loggedIds = (out) => {
+  const logLines = String(out).split('\n').filter((l) => /^OVERFLOW\b/.test(l.trim()));
+  const ids = [...new Set(logLines.flatMap((l) => [...l.matchAll(/([A-Za-z0-9_]+)\[(\d+)\]/g)].map((m) => `${m[1]}[${m[2]}]`)))];
+  return { logLines, ids };
+};
+
+// EACH CASE IS A SHAPE AN ENGINE IN THIS TREE EITHER PRINTS OR COULD PRINT, and the two that
+// matter most are (b) and (c): (b) is the shape that produced the defect, and (c) is the shape
+// the repaired fill-433b.mjs prints — a header line naming every drop plus an INDENTED detail
+// line per drop, which must contribute nothing extra because it does not open with the word.
+export const logReaderCanary = () => {
+  const cases = [
+    ['a  one line naming three drops (433-A / 433-A(OIC) shape)',
+      'OVERFLOW (dropped, form has no slot): g[0], g[1], g[2]', ['g[0]', 'g[1]', 'g[2]']],
+    ['b  ONE LINE PER DROP — the shape that produced the defect',
+      'OVERFLOW g[0]\nOVERFLOW g[1]\nOVERFLOW g[2]', ['g[0]', 'g[1]', 'g[2]']],
+    ['c  header line plus an indented detail line per drop (fill-433b.mjs today)',
+      'OVERFLOW DROPPED g[0], g[1]\n    dropped g[0]: past the last slot\n    dropped g[1]: past the last slot', ['g[0]', 'g[1]']],
+    ['d  a dropped row whose own TEXT contains the word, mid-line',
+      'fill 433-B — 4 cells\n  wrote name=OVERFLOW TEST LLC g[9] into slot 0', []],
+    ['e  no overflow at all', 'fill 433-F — 12 cells, 0 dropped', []],
+    ['f  the same id named on two lines is ONE drop, not two',
+      'OVERFLOW g[0]\nOVERFLOW g[0]', ['g[0]']],
+  ];
+  const dead = [];
+  for (const [name, input, want] of cases) {
+    const got = loggedIds(input).ids;
+    if (JSON.stringify(got) !== JSON.stringify(want))
+      dead.push(`CANARY DEAD  ${name}: reader returned ${JSON.stringify(got)}, expected ${JSON.stringify(want)}`);
+  }
+  return { cases: cases.length, dead };
+};
+
 
 
 // THE OVER-MAX FIXTURE IS RESOLVED FROM THE FORM ID, exactly as the gate's is: a path in an
@@ -87,8 +133,20 @@ const NUMERIC = rx('RX-AO-01', /^[\s$]*-?[\d,]+(\.\d+)?[\s%]*$/, {
 const groups = Object.entries(map.groups || {});
 if (!groups.length) { console.error(`STOP — ${mapPath} declares no groups. There is no overflow behaviour on this form to assert, and an empty assertion is not a pass.`); process.exit(2); }
 
+// THE CANARY RUNS BEFORE ANY QUESTION IS ASKED OF A REAL FORM. A reader that cannot read is
+// indistinguishable from a form with nothing to report, and that indistinguishability is the
+// whole defect this file was repaired for.
+const canary = logReaderCanary();
+if (canary.dead.length) {
+  console.error(`STOP — the engine-log reader failed ${canary.dead.length} of its own ${canary.cases} canary case(s). Nothing this tool says about ${form} can be believed until it can read a log whose answer is known.`);
+  canary.dead.forEach((d) => console.error(`  ${d}`));
+  process.exit(2);
+}
+
 console.log(`assert-overflow ${form} ${fixturePath}`);
+console.log(`  log reader: ${canary.cases} canary case(s) live — one line for all, one line per drop, header plus indented detail, a row whose own text says OVERFLOW, no overflow, and the same id twice`);
 console.log(`  ${groups.length} declared group(s) in ${mapPath}`);
+examined('assert-overflow', form, groups.length, 'declared-groups');
 
 // ─── 1. IS THIS FIXTURE ACTUALLY OVER-MAX? ────────────────────────────────────────────────
 const problems = [];
@@ -138,21 +196,44 @@ if (run.status !== 0) {
   console.error(out.split('\n').map(l => `    ${l}`).join('\n'));
   process.exit(2);
 }
-// "OVERFLOW (dropped, form has no slot): g[0], g[1]" on 433-A / 433-A(OIC), "OVERFLOW: ..."
-// on 433-F. Anchored on the line START so a row whose own text contained the word OVERFLOW —
+// EVERY LINE THAT OPENS "OVERFLOW", NOT THE FIRST ONE.
+//
+// This read was `out.split('\n').find(...)` — the FIRST such line and no other — and the
+// convention it silently required, without ever saying so, was "one line naming every drop".
+// fill-433b.mjs logged a line PER DROP, which is a perfectly reasonable thing for an engine
+// to do, and two of its three drops were therefore reported UNLOGGED: a drop nobody is told
+// about, which is the exact failure this tool exists for, manufactured by the tool out of the
+// engine that was telling it.
+//
+// THE FIRST REPAIR CHANGED THE ENGINE AND LEFT THE READER, so the convention lived only in a
+// comment inside fill-433b.mjs and the next engine written would break it again. THE FIX
+// BELONGS IN THE READER, because the reader is where the assumption was. Every line whose
+// trimmed form opens with the word OVERFLOW is collected and the ids are UNIONED across all
+// of them, so one-line-per-drop, one-line-for-all and any mixture of the two read the same.
+// Anchored on the line START, as before, so a row whose own text contains the word OVERFLOW —
 // which the acceptance fixtures' dropped rows deliberately do — cannot be mistaken for the log.
-const logLine = out.split('\n').find(l => /^OVERFLOW\b/.test(l.trim()));
-if (!logLine && expected.length) {
+//
+// WHAT IS DELIBERATELY NOT COUNTED A SECOND TIME: an indented detail line. fill-433b.mjs
+// prints "    dropped payment_processors[2]: past the last printed slot" beneath its header
+// line, and those do not START with the word, so they are not read as a second log. That is
+// what makes a per-drop detail line safe for an engine to print at all.
+const { logLines, ids: logged } = loggedIds(out);
+if (!logLines.length && expected.length) {
   console.error('');
   console.error(`STOP — the fill engine printed no line beginning "OVERFLOW", yet the map and the fixture say ${expected.length} row(s) have no printed slot. Either the rows were dropped silently or they were not dropped at all, and this tool cannot tell which from here. Reported as a failure; an unreadable log is never a pass.`);
   process.exit(2);
 }
-const logged = logLine ? [...logLine.matchAll(/([A-Za-z0-9_]+)\[(\d+)\]/g)].map(m => `${m[1]}[${m[2]}]`) : [];
+// UNIONED AND DE-DUPLICATED. An engine that prints a header line naming all three drops AND
+// three per-drop lines that also opened with the word would otherwise have each id counted
+// twice and be reported as OVER-LOGGING every one of them.
 const wantIds = expected.map(e => `${e.group}[${e.index}]`);
 const missing = wantIds.filter(id => !logged.includes(id));
 const extra   = logged.filter(id => !wantIds.includes(id));
 console.log('');
-console.log(`  ENGINE LOG: ${logLine ? logLine.trim() : '(no OVERFLOW line, and none was expected)'}`);
+// ONE REPORTED LINE PER LOG LINE. A tool that read three lines and printed one of them would
+// be showing a transcript reader less than it decided on.
+console.log(`  ENGINE LOG: ${logLines.length ? logLines.map((l) => l.trim()).join(`\n              `) : '(no OVERFLOW line, and none was expected)'}`);
+console.log(`    ${logLines.length} line(s) in the engine's log open with the word OVERFLOW; the ids below are their union`);
 console.log(`    ${wantIds.length} drop(s) expected from the map and the fixture; ${logged.length} named in the log`);
 if (missing.length) problems.push(`UNLOGGED      ${missing.join(', ')} — the map says these rows have no printed slot and the engine's log does not name them. A drop nobody is told about is the failure this tool exists for.`);
 if (extra.length)   problems.push(`OVER-LOGGED   ${extra.join(', ')} — named as dropped, but the map declares a printed slot for them. Either the engine's cap disagrees with the map's max, or the log is naming the wrong index.`);

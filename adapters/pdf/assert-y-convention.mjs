@@ -62,6 +62,7 @@ import { verifyPrintedEvidence, EVIDENCE_TOLERANCE } from './record-shape.mjs';
 import { quotesAreDrawn } from './assert-subject-register.mjs';
 import { REGISTER as SUBJECT_REGISTER } from './gen-subject-register.mjs';
 import { rx } from './regex-self-assert.mjs';
+import { examined } from './examined.mjs';
 
 // THE SEED IS A CONSTANT IN THE SOURCE AND IS PRINTED ON EVERY RUN. A sample nobody can
 // reproduce is an anecdote; a sample drawn from Math.random cannot be re-run at all.
@@ -569,6 +570,13 @@ export const reportYConventionAudit = (a, { verbose = false } = {}) => {
   }
   for (const r of a.rows) {
     console.log(`    ${r.form.padEnd(8)} ${r.tool.padEnd(24)} ${String(r.kind).padEnd(18)} ${String(r.checked).padStart(4)} checked  ${String(r.disagreements).padStart(3)} disagree  ${r.population || ''}`);
+  }
+  // PER FORM, from the rows this audit already built. Grouped rather than recomputed: a
+  // second computation of a figure is a second answer to the question the figure exists to
+  // make one answer to.
+  for (const f of a.forms) {
+    const mine = a.rows.filter((r) => r.form === f);
+    examined('assert-y-convention', f, mine.reduce((s, r) => s + (typeof r.checked === 'number' ? r.checked : 0), 0), 'cross-checked-y-objects');
   }
   if (verbose) for (const R of READINGS) console.log(`      ${R.tool}: ${R.how}`);
   if (!a.problems.length) {
