@@ -1394,14 +1394,27 @@ export const COMPLETENESS = [
       };
     } }),
 
+  // [K-95] IS NOW A NOT-COVERAGE DISPOSITION OVER A SUPERSEDED SENTENCE, AND [K-96] IS THE
+  // COUNTER THAT REPLACED IT. The sentence [K-95] was written for said 433-F draws these
+  // checkboxes 'and simply not bound'. The map bound all eight the whole time, so the counter
+  // did exactly what it was built to do: the day one was bound the count moved, and it moved
+  // to 0 of 3 the moment the three stale printed_but_unmapped_on declarations were superseded.
   C({ id: 'K-95', match: /each real-estate row\) and simply not bound/,
+    kind: 'not-coverage',
+    reason: 'A SUPERSEDED FINDING, KEPT VERBATIM. This text now lives under `_superseded_the_not_bound_half` beside what it got right (the whole printed half — 433-F does draw these boxes, and measuring the split on map reachability while stating it about the page was the defect [D-06] exists for) and what it got wrong (the four words "and simply not bound": the 433-F map binds all eight widgets and fill-433f.mjs writes them). It is prose about a past state, and its live replacement carries the counter — see [K-96], which asserts the opposite half and would fail the day a binding were removed.' }),
+
+  C({ id: 'K-97', match: /that half is the \[D-06\] correction and it stands|four boxes over two rows/,
+    kind: 'not-coverage',
+    reason: 'THE `what_it_got_right` HALF OF A SUPERSEDED FINDING. A superseded finding is kept verbatim beside what it got right and what it got wrong, and the right-half sentence RESTATES the part of a past claim that survived — it does not assert that a set in this tree has been covered. The evidence it points at is not restated here either: `printed_as_checkbox` carries the printed label page, baseline and x1 and the widget names for each occurrence, and [A2] in adapters/pdf/assert-row-shape-spec.mjs checks every one of them against the map on every run. The LIVE claim these sentences are the history of is the corrected [D-06] paragraph, and that one carries a counter — [K-96], which asserts every printed_as_checkbox occurrence on 433-F is bound and moves the day one is not. Counting the right-half again would be a second denominator over the same set, able to disagree with the first.' }),
+
+  C({ id: 'K-96', match: /three columns gained printed evidence — the label/,
     kind: 'counter',
-    what: 'The claim that 433-F draws these checkboxes and the map binds none of them. Universe: the printed_as_checkbox occurrences on 433f. Covered: those whose declared printed_but_unmapped_on names 433f AND which the map indeed does not bind — so the day one is bound, the count moves and the sentence stops being true out loud.',
+    what: 'The corrected [D-06] claim: every canonical column 433-F draws a checkbox for carries printed evidence AND is bound by the 433-F map. Universe: the printed_as_checkbox occurrences on 433f. Covered: those the map binds — so removing a binding moves the count and the sentence stops being true out loud, which is the direction the superseded version could not see.',
     universe: { scoped_to: 'form', detail: 'every (canonical column, 433f) pair declaring printed_as_checkbox — scoped to ONE form, because the sentence is about what 433-F draws and what the 433-F map binds',
       admits: (m) => typeof m === 'string' && /^[a-z_]+.[a-z0-9_]+@433f$/.test(m) },
     count: () => {
       const on433f = splitOccurrences().checkbox.filter((o) => o.form === '433f');
-      const ok = (o) => o.unmapped && !o.bound;
+      const ok = (o) => o.bound;
       return {
         universe: on433f.length, covered: on433f.filter(ok).length,
         universeList: on433f.map((o) => o.at), uncoveredList: on433f.filter((o) => !ok(o)).map((o) => o.at),
