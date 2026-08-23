@@ -1,14 +1,14 @@
 {
  "_fixture": {
   "form": "433b",
-  "role": "stress",
-  "why": "An OVER-MAX record: every one of the TEN groups the map declares carries one record more than the form prints a row for. Run with --saturated it proves that overflow is DROPPED AND LOGGED rather than truncated onto the page, and adapters/pdf/assert-overflow.mjs then proves each dropped row absent from every text field of the filled PDF.",
-  "_why_it_cannot_be_the_acceptance_fixture": "A saturated acceptance fixture fills every printed slot EXACTLY to max, because that is what saturation means, so it can never overflow one. The two properties are in direct opposition and one record cannot hold both.",
-  "_every_dropped_row_is_identifiable": "Each row past the last printed slot opens its first bound non-numeric text column with the word OVERMAX. assert-overflow.mjs does not know that word: it DERIVES the column to look in from the map's own last-slot declaration and looks for whatever value that column holds. The word is here so a human reading the filled PDF can see at a glance that nothing beginning OVERMAX reached the page.",
-  "_synthetic": "Every value is invented. No real taxpayer, no real EIN, no real bank, no real portal record.",
-  "_authored_by": "Prompt 47 commit 3 for the first eight groups; scratchpad/433b-slice3-author-slice3-fixtures.mjs extended it with real_property and vehicles in Prompt 48 commit 3.",
-  "_the_page_1_groups_are_carried_forward": "The three page-1 groups keep the over-max rows the slice-1 stress fixture gave them, so the drops this fixture forced before slice 2 are the same drops it forces now.",
-  "_the_two_page_4_totals_sum_the_PRINTED_rows_only": "real_property and vehicles each carry five records against four printed slots, and 22e and 23e are the sum of the FOUR that fit. The page cannot print a row it has no slot for, so the printed total is the sum of what fits. A total here that included the dropped row would make gate step 11 fail for the right reason by accident, and a tripwire that fires for an accidental reason is one nobody can read."
+  "role": "acceptance",
+  "why": "Slice 3's acceptance record. SATURATED: every one of the 343 mapped cells across pages 1 to 4 carries a value, every one of the ten groups is filled to its printed row count, and every one of the 21 declared exclusive sets has exactly one option chosen. A cell left empty here would be a cell the gate never proved writable.",
+  "superseded": "samples/433b.slice2.sample.json, which is now marked role \"superseded\" and names this file. Its 249 keys for pages 1 to 3 are CARRIED FORWARD VERBATIM rather than retyped — a retyped copy is 249 chances to differ from the record the slice-2 gate actually ran, and nothing would say which was meant.",
+  "_the_six_totals_are_computed_from_the_rows_in_this_file": "scratchpad/433b-slice3-author-slice3-fixtures.mjs sums the printed rows and writes the result; the four page-2 and page-3 totals were computed the same way by slice 2 and are carried forward with the rows they sum. Gate step 11 then recomputes each one from what the FILLED PDF PRINTS and compares. Two computations over two different artefacts — one over the record, one over the drawn page — which is what makes the comparison worth making. A typed total would be asserting the arithmetic it is supposed to exercise.",
+  "_page_4_draws_no_checkbox_so_this_slice_adds_no_option": "All 94 page-4 widgets are text fields. The 21 exclusive sets and every option value in this record are unchanged from slice 2, and that is a property of the page rather than of this fixture.",
+  "_the_zero_rows_are_deliberate_and_they_are_not_empty_cells": "real_property[2] is a LEASED showroom, so its FMV, loan balance and equity are 0.00 and its monthly payment is the rent — which is what the printed column headers ask for on a row the block heading says to include (\"all real property and land contracts the business owns/leases/rents\"). vehicles[2] is owned outright, so its loan balance and monthly payment are 0.00 and its equity equals its FMV. A ZERO IS A WRITTEN VALUE AND AN EMPTY CELL IS NOT: both rows still carry a value in all ten and thirteen of their columns, so saturation is not weakened, and the two rows exercise the arithmetic at its boundary rather than only in its middle.",
+  "_synthetic": "Every value is invented. No real taxpayer, no real EIN, no real bank, no real portal record. The telephone numbers are all 555-01xx, every VIN is marked NOTAREALVIN in its own text, and the addresses use street numbers that do not exist on the roads named. Nothing here identifies anybody.",
+  "_authored_by": "Prompt 48 commit 3, from adapters/pdf/maps/433b.map.json's binding list and samples/433b.slice2.sample.json."
  },
  "_generated_by": "scratchpad/433b-slice3-author-slice3-fixtures.mjs",
  "record_id": "INT-SAMPLE-433B-001",
@@ -35,119 +35,94 @@
  "s1_engages_in_ecommerce": "yes",
  "payment_processors": [
   {
-   "name_and_address": "Processor One, 1 First St, Olympia, WA 98501",
-   "account_number": "P-0001"
+   "name_and_address": "Cascade Merchant Services, 1100 Rail Ave, Seattle, WA 98104",
+   "account_number": "CMS-4471-9920"
   },
   {
-   "name_and_address": "Processor Two, 2 Second St, Olympia, WA 98501",
-   "account_number": "P-0002"
-  },
-  {
-   "name_and_address": "OVERMAX Processor Three, 3 Third St, Olympia, WA 98501",
-   "account_number": "OVERMAX-P-0003"
+   "name_and_address": "Tidewater Payments Inc, 88 Harbour St, Portland, OR 97204",
+   "account_number": "TWP-0038-1177"
   }
  ],
  "credit_cards_accepted": [
   {
    "type_of_credit_card": "Visa",
-   "merchant_account_number": "C-0001",
-   "issuing_bank_name_and_address": "Bank One, 1 Bank St, Olympia, WA 98501",
-   "issuing_bank_phone": "360-555-0101"
+   "merchant_account_number": "4471992000118",
+   "issuing_bank_name_and_address": "Puget Commerce Bank, 200 Fourth Ave, Seattle, WA 98104",
+   "issuing_bank_phone": "206-555-0142"
   },
   {
    "type_of_credit_card": "Mastercard",
-   "merchant_account_number": "C-0002",
-   "issuing_bank_name_and_address": "Bank Two, 2 Bank St, Olympia, WA 98501",
-   "issuing_bank_phone": "360-555-0102"
+   "merchant_account_number": "5388114700226",
+   "issuing_bank_name_and_address": "Harbour Line Bank NA, 44 Marine Dr, Bellingham, WA 98225",
+   "issuing_bank_phone": "360-555-0177"
   },
   {
-   "type_of_credit_card": "Discover",
-   "merchant_account_number": "C-0003",
-   "issuing_bank_name_and_address": "Bank Three, 3 Bank St, Olympia, WA 98501",
-   "issuing_bank_phone": "360-555-0103"
-  },
-  {
-   "type_of_credit_card": "OVERMAX Amex",
-   "merchant_account_number": "OVERMAX-C-0004",
-   "issuing_bank_name_and_address": "OVERMAX Bank Four, 4 Bank St, Olympia, WA 98501",
-   "issuing_bank_phone": "360-555-0104"
+   "type_of_credit_card": "American Express",
+   "merchant_account_number": "3782822463100",
+   "issuing_bank_name_and_address": "Northwest Card Trust, 9 Pioneer Sq, Tacoma, WA 98402",
+   "issuing_bank_phone": "253-555-0119"
   }
  ],
  "personnel": [
   {
-   "full_name": "Person One",
-   "title": "President",
-   "home_address": "1 Home St",
-   "city": "Olympia",
+   "full_name": "Adela R Marchetti",
+   "title": "Managing Member",
+   "home_address": "312 Cedar Bluff Lane",
+   "city": "Bellingham",
    "state": "WA",
-   "zip": "98501",
-   "taxpayer_identification_number": "000-00-0010",
+   "zip": "98225",
+   "taxpayer_identification_number": "000-00-0000",
    "home_phone_area_code": "360",
-   "home_phone_number": "555-0110",
+   "home_phone_number": "555-0201",
    "work_cell_phone_area_code": "360",
-   "work_cell_phone_number": "555-0111",
-   "ownership_percentage": "25%",
-   "annual_salary_or_draw": "100000.00"
+   "work_cell_phone_number": "555-0202",
+   "ownership_percentage": "40%",
+   "annual_salary_or_draw": "192000.00"
   },
   {
-   "full_name": "Person Two",
-   "title": "Treasurer",
-   "home_address": "2 Home St",
-   "city": "Olympia",
+   "full_name": "Desmond O Achebe",
+   "title": "Member and Operations Lead",
+   "home_address": "88 Quarry View Court",
+   "city": "Ferndale",
    "state": "WA",
-   "zip": "98501",
-   "taxpayer_identification_number": "000-00-0011",
+   "zip": "98248",
+   "taxpayer_identification_number": "000-00-0001",
    "home_phone_area_code": "360",
-   "home_phone_number": "555-0112",
-   "work_cell_phone_area_code": "360",
-   "work_cell_phone_number": "555-0113",
-   "ownership_percentage": "25%",
-   "annual_salary_or_draw": "100000.00"
+   "home_phone_number": "555-0203",
+   "work_cell_phone_area_code": "425",
+   "work_cell_phone_number": "555-0204",
+   "ownership_percentage": "30%",
+   "annual_salary_or_draw": "164000.00"
   },
   {
-   "full_name": "Person Three",
-   "title": "Secretary",
-   "home_address": "3 Home St",
-   "city": "Olympia",
+   "full_name": "Priya N Raghunathan",
+   "title": "Member and Controller",
+   "home_address": "17 Alderwood Terrace, Apt 4B",
+   "city": "Lynden",
    "state": "WA",
-   "zip": "98501",
-   "taxpayer_identification_number": "000-00-0012",
+   "zip": "98264",
+   "taxpayer_identification_number": "00-0000001",
    "home_phone_area_code": "360",
-   "home_phone_number": "555-0114",
-   "work_cell_phone_area_code": "360",
-   "work_cell_phone_number": "555-0115",
-   "ownership_percentage": "25%",
-   "annual_salary_or_draw": "100000.00"
+   "home_phone_number": "555-0205",
+   "work_cell_phone_area_code": "206",
+   "work_cell_phone_number": "555-0206",
+   "ownership_percentage": "20%",
+   "annual_salary_or_draw": "151000.00"
   },
   {
-   "full_name": "Person Four",
-   "title": "Director",
-   "home_address": "4 Home St",
-   "city": "Olympia",
+   "full_name": "Tomas E Villalobos",
+   "title": "Member",
+   "home_address": "2204 Shipyard Way",
+   "city": "Blaine",
    "state": "WA",
-   "zip": "98501",
-   "taxpayer_identification_number": "000-00-0013",
+   "zip": "98230",
+   "taxpayer_identification_number": "000-00-0002",
    "home_phone_area_code": "360",
-   "home_phone_number": "555-0116",
+   "home_phone_number": "555-0207",
    "work_cell_phone_area_code": "360",
-   "work_cell_phone_number": "555-0117",
-   "ownership_percentage": "25%",
-   "annual_salary_or_draw": "100000.00"
-  },
-  {
-   "full_name": "OVERMAX Person Five",
-   "title": "OVERMAX Director",
-   "home_address": "OVERMAX 5 Home St",
-   "city": "OVERMAX",
-   "state": "WA",
-   "zip": "98501",
-   "taxpayer_identification_number": "000-00-0014",
-   "home_phone_area_code": "360",
-   "home_phone_number": "555-0118",
-   "work_cell_phone_area_code": "360",
-   "work_cell_phone_number": "555-0119",
-   "ownership_percentage": "OVERMAX",
-   "annual_salary_or_draw": "999999.00"
+   "work_cell_phone_number": "555-0208",
+   "ownership_percentage": "10%",
+   "annual_salary_or_draw": "98000.00"
   }
  ],
  "personnel_7a_responsible_for_payroll_taxes": "yes",
@@ -213,12 +188,6 @@
    "bank_name_and_address": "Nooksack Credit Union, 22 Alder Rd, Ferndale, WA 98248",
    "account_number": "7781200345",
    "account_balance": "6310.00"
-  },
-  {
-   "type_of_account": "OVERMAX Trust Account",
-   "bank_name_and_address": "OVERMAX Fourth Bank, 4 Fourth Street, Olympia, WA 98501",
-   "account_number": "9990000004",
-   "account_balance": "1000.00"
   }
  ],
  "s4_17d_total_cash_in_banks": "56735.65",
@@ -267,15 +236,6 @@
    "date_due": "09302026",
    "invoice_or_contract_number": "INV-2026-0405",
    "amount_due": "3125.75"
-  },
-  {
-   "name_and_address": "OVERMAX Sixth Receivable Ltd, 6 Sixth Street, Tacoma, WA 98402",
-   "contact_name": "OVERMAX Contact Six",
-   "phone": "253-555-0399",
-   "status": "OVERMAX status",
-   "date_due": "01012027",
-   "invoice_or_contract_number": "OVERMAX-INV-6",
-   "amount_due": "1000.00"
   }
  ],
  "s4_18f_outstanding_balance": "179476.00",
@@ -294,14 +254,6 @@
    "current_value": "25500.00",
    "loan_balance": "0.00",
    "equity_value_minus_loan": "25500.00",
-   "used_as_collateral": "No"
-  },
-  {
-   "name_of_company_and_address": "OVERMAX Third Investment Corp, 3 Third Ave, Tacoma, WA 98402",
-   "phone": "253-555-0398",
-   "current_value": "1000.00",
-   "loan_balance": "0.00",
-   "equity_value_minus_loan": "1000.00",
    "used_as_collateral": "No"
   }
  ],
@@ -326,15 +278,6 @@
    "loan_balance": "9000.00",
    "equity_value_minus_loan": "20800.00",
    "used_as_collateral": "Yes"
-  },
-  {
-   "asset_description": "OVERMAX Litecoin, 40 LTC, ltc1qOVERMAXNOTAREALADDRESS0000",
-   "location_of_asset": "OVERMAX exchange account",
-   "account_number": "OVERMAX-9900",
-   "current_value_usd": "1000.00",
-   "loan_balance": "0.00",
-   "equity_value_minus_loan": "1000.00",
-   "used_as_collateral": "No"
   }
  ],
  "s4_20e_total_equity_of_digital_assets": "67000.00",
@@ -354,17 +297,8 @@
    "credit_limit": "25000.00",
    "amount_owed": "6875.40",
    "available_credit": "18124.60"
-  },
-  {
-   "full_name_and_address": "OVERMAX Third Credit Line, 3 Third Ave, Tacoma, WA 98402",
-   "account_number": "OVERMAX-LOC-3",
-   "credit_limit": "1000.00",
-   "amount_owed": "0.00",
-   "available_credit": "1000.00"
   }
  ],
- "intake_id": "433b-overmax",
- "_the_totals_are_the_acceptance_totals_on_purpose": "Each of the five over-fed groups gains a row worth exactly 1,000.00 in the column its total sums, and NONE of the four totals is adjusted. A dropped row prints nothing, so the printed total must still equal the sum of the printed rows; if an over-max row leaked onto the page, step 11 would report a 1,000.00 discrepancy. That makes the arithmetic tripwire an independent second proof of the same absence adapters/pdf/assert-overflow.mjs proves by reading every text field of the filled PDF.",
  "real_property": [
   {
    "description": "Kiln and warehouse building",
@@ -413,20 +347,9 @@
    "location": "0 Grandview Road, Custer, WA 98240, Whatcom County",
    "lender_name_address": "Marla Petrunich, 902 Peace Portal Drive, Blaine, WA 98230",
    "lender_phone": "5550193"
-  },
-  {
-   "description": "OVERMAX fifth property",
-   "purchase_date": "01012025",
-   "current_fmv": "1.00",
-   "current_loan_balance": "0.00",
-   "monthly_payment": "1.00",
-   "final_payment_date": "01012026",
-   "equity": "1.00",
-   "location": "OVERMAX location, nowhere, WA 98225, Whatcom County",
-   "lender_name_address": "OVERMAX lender, nowhere, WA 98225",
-   "lender_phone": "5550199"
   }
  ],
+ "s4_22e_total_equity_real_property": "471050.00",
  "vehicles": [
   {
    "model_year": "2019",
@@ -487,23 +410,7 @@
    "equity": "3850.00",
    "lender_name_address": "Northwest Farm Credit Services, 1700 South Assembly Street, Spokane, WA 99224",
    "lender_phone": "5550136"
-  },
-  {
-   "model_year": "2025",
-   "make_model": "OVERMAX fifth vehicle, which the form prints no row for",
-   "mileage": "1",
-   "license_tag": "WA OVERMAX-1",
-   "vin": "NOTAREALVINOVERMAX",
-   "purchase_date": "01012025",
-   "current_fmv": "1.00",
-   "current_loan_balance": "0.00",
-   "monthly_payment": "1.00",
-   "final_payment_date": "01012026",
-   "equity": "1.00",
-   "lender_name_address": "OVERMAX lender, nowhere, WA 98225",
-   "lender_phone": "5550199"
   }
  ],
- "s4_22e_total_equity_real_property": "471050.00",
  "s4_23e_total_equity_vehicles": "49850.00"
 }
