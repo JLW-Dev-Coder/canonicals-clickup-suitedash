@@ -9,7 +9,9 @@
   "EVERY ONE OF THE FOUR CAPTIONS NAMES AN OPERAND THE FORM DRAWS NO CELL FOR — \"and amounts from any attachments\". These are declared `equals` anyway, and that is an assertion about what THIS ENGINE writes rather than about every correctly filed 433-B: the engine has no key for the attachment term because the page has no cell for it, so every record it produces prints a total exactly equal to the sum of the printed rows. [B-05] carries the difference and it is not resolved here, because what the captions license is an `at_least` and adapters/pdf/comparisons.mjs admits only `equals` and `at_most` and says a third shape is a new ruling.",
   "NO FLOOR IS DECLARED ON ANY OF THE FOUR. This form prints no rounding instruction and no \"do not enter a negative number\" sentence anywhere on pages 1 to 3 — \"negative\" returns zero across all three — so a floor here would be this engine's policy rather than the page's.",
   "THE AVAILABLE-CREDIT BLOCK STILL HAS NO ENTRY, AND PAGE 4 IS WHY IT NEVER WILL. Page 3 draws rows 21a and 21b and no total row beneath them; page 4 opens a new block, REAL PROPERTY, at printed marker 22a. So the available-credit block ends where page 3 ends and the form prints no total for it. That was an open absence about pages 1 to 3 when slice 2 landed and it is a CLOSED one now: the next printed marker after 21b has been read and it starts a different table. [C23-4] is answered.",
-  "PAGE 4 ADDS TWO TOTALS AND NO NEW SHAPE. Both are `equals`, both name \"amounts from any attachments\" as an addend the page draws no cell for, and both therefore inherit [B-05] exactly as the first four do. Six printed totals on this form now, six equality tripwires, one open item covering all six."
+  "PAGE 4 ADDS TWO TOTALS AND NO NEW SHAPE. Both are `equals`, both name \"amounts from any attachments\" as an addend the page draws no cell for, and both therefore inherit [B-05] exactly as the first four do. Six printed totals on this form now, six equality tripwires, one open item covering all six.",
+  "SLICE 4 ADDS FIVE TOTALS AND TWO SHAPES THIS FORM HAD NOT CARRIED. Line 36 is the FIRST printed total on 433-B whose caption does NOT name \"amounts from any attachments\", so [B-05] does not reach it. Line 49 names an operand — line 48, the IRS-use cell — that this engine binds and never writes, which is declared in its own entry rather than absorbed. Line 50 is the form's first DIFFERENCE, and the page prints the operator and the order. Eleven printed totals on this form now.",
+  "THE EQUITY COLUMNS ARE NOW IN not_checkable, AND THAT IS A CORRECTION AS MUCH AS AN ADDITION. Pages 3 and 4 landed with equity columns and no entry, so those cells were in the state this block exists to end: a printed money cell holding a computed-looking figure that nobody had said anything about. The entry covers all of them, names [B-07], and does not resolve it."
  ],
  "totals": [
   {
@@ -98,6 +100,108 @@
    ],
    "_which_column_the_total_sums": "THE EQUITY COLUMN, ON THE CAPTION AND ON THE MONEY MARKER, AND THEY AGREE. The cell is x 492.4..576, y 36..45.6, maxLen 14, wider than the equity lane of 521.2..576.0, and its printed \"$\" is at x 485.2..489.6 — which is NOT one of this page's four column marker positions (262.0, 326.8, 391.6, 514.0) and so belongs to no column but this line. Its left edge 492.4 is the same left edge 18f and 19c use on page 3. UNLIKE [B-06], whose money marker sits at a neighbouring column's position, both witnesses here point the same way.",
    "_the_operand_list_is_the_captions_own": "The caption names 23a through 23d, which are the four printed rows, plus \"amounts from any attachments\", for which this form draws no cell. Four printed cells, one feeder, and the missing fifth term is [B-05]."
+  },
+  {
+   "line": "24h",
+   "caption": "Total Equity (Add lines 24a through 24g and amounts from any attachments)",
+   "caption_at": "page 5, y 272.3, x 57.6..102.9 with the addend list at x 105.1..331.6; the printed \"$\" at y 272.3 x 485.8..490.3",
+   "printed_rows": "24a to 24g — the four EQUIPMENT equity cells and the three INTANGIBLE equity cells, seven in all",
+   "total_key": "s4_24h_total_equity_business_equipment",
+   "feeders": [
+    {
+     "group": "business_equipment",
+     "column": "equity"
+    },
+    {
+     "group": "intangible_assets",
+     "column": "equity"
+    }
+   ],
+   "_the_operand_list_is_the_captions_own": "The caption names 24a through 24g, which is BOTH sub-tables and not just the four equipment rows — the intangible rows draw an equity cell and nothing else, and the caption sweeps them in. Two feeders, one per group, seven printed cells, plus the attachment term the form draws no cell for, which is [B-05]."
+  },
+  {
+   "line": "25c",
+   "caption": "Total Payments (Add lines 25a and 25b and amounts from any attachments)",
+   "caption_at": "page 5, y 75.3, x 57.6..116.8 with the addend list at x 119.1..331.3; the printed \"$\" at y 74.3 x 484.4..488.8",
+   "printed_rows": "25a and 25b — the two Payment Amount cells of the BUSINESS LIABILITIES table",
+   "total_key": "s4_25c_total_payments",
+   "feeders": [
+    {
+     "group": "business_liabilities",
+     "column": "payment_amount"
+    }
+   ],
+   "_which_column_the_total_sums": "THE PAYMENT AMOUNT COLUMN. The caption says \"Total Payments\" and the column header says \"Payment Amount\"; the cell at x 491.0..576.0 contains that lane entire (514.0..576.0) and clips the right end of the Date of Final Payment lane (439.2..504.0), which is a date column drawing no \"$\" and carrying maxLen 8. See the map's _the_25c_cell_is_not_the_B06_shape."
+  },
+  {
+   "line": "36",
+   "caption": "Total Income (Add lines 26 through 35)",
+   "caption_at": "page 6, y 507.3, x 53.6..103.5 with the addend list at x 105.7..195.2; the printed \"$\" at y 507.3 x 218.8..223.2",
+   "printed_rows": "26 to 35 — the five named income lines and the five Other Income rows",
+   "total_key": "s5_36_total_income",
+   "feeders": [
+    {
+     "keys": [
+      "s5_26_gross_receipts",
+      "s5_27_gross_rental_income",
+      "s5_28_interest_income",
+      "s5_29_dividends",
+      "s5_30_cash_receipts"
+     ]
+    },
+    {
+     "group": "other_income",
+     "column": "amount"
+    }
+   ],
+   "_no_attachment_term": "THE FIRST PRINTED TOTAL ON THIS FORM WHOSE CAPTION DOES NOT NAME \"amounts from any attachments\". The six earlier ones all do and [B-05] covers all six; this one names lines 26 through 35 and stops. So the equality this declares is the page's own and not an engine assertion standing in for an at_least — which is worth saying, because [B-05]'s whole content is that the other captions license an at_least and comparisons.mjs admits only equals and at_most."
+  },
+  {
+   "line": "49",
+   "caption": "Total Expenses (Add lines 37 through 48)",
+   "caption_at": "page 6, y 496.5, x 320.0..378.3 with the addend list at x 380.6..470.1; the printed \"$\" at y 495.5 x 485.2..489.6",
+   "printed_rows": "37 to 48 — twelve printed expense lines, of which 48 is the IRS-use cell",
+   "total_key": "s5_49_total_expenses",
+   "feeders": [
+    {
+     "keys": [
+      "s5_37_materials_purchased",
+      "s5_38_inventory_purchased",
+      "s5_39_gross_wages_and_salaries",
+      "s5_40_rent",
+      "s5_41_supplies",
+      "s5_42_utilities_telephone",
+      "s5_43_vehicle_gasoline_oil",
+      "s5_44_repairs_and_maintenance",
+      "s5_45_insurance",
+      "s5_46_current_taxes",
+      "s5_47_other_expenses"
+     ]
+    }
+   ],
+   "_one_printed_operand_is_missing_from_the_feeders_and_it_is_declared": "LINE 48 IS AN OPERAND OF THIS CAPTION AND IS NOT A FEEDER. It is the IRS-use cell, declared at the map's _never_autofill: this engine binds it so the partition accounts for it and never writes it. So on every record this engine produces line 48 is empty and 49 equals the sum of 37 through 47, which is what this tripwire compares. THIS IS AN ASSERTION ABOUT WHAT THIS ENGINE WRITES, NOT ABOUT EVERY CORRECTLY FILED 433-B — the same shape [B-05] carries for the attachment term, one degree stronger, because here the missing operand HAS a cell and the emptiness is this engine's own declared choice rather than the form's omission. A run in which 48 were ever written would make this comparison wrong, and the never-autofill declaration is what stops that."
+  },
+  {
+   "line": "50",
+   "caption": "Net Income (Line 36 minus Line 49)",
+   "caption_at": "page 6, y 485.7, x 320.0..364.0 with the relation at x 366.2..448.4; the printed \"$\" at y 484.7 x 485.2..489.6",
+   "printed_rows": "none — this line sums no table. It is a DIFFERENCE of two other printed totals, in the printed order.",
+   "total_key": "s5_50_net_income",
+   "feeders": [
+    {
+     "keys": [
+      "s5_36_total_income"
+     ]
+    },
+    {
+     "keys": [
+      "s5_49_total_expenses"
+     ],
+     "sign": -1
+    }
+   ],
+   "_the_first_difference_on_this_form": "The six totals through slice 3 and the four above it are sums. This one is not, and the page states the operator and the order: \"(Line 36 minus Line 49)\". The construct is the one 433-B(OIC) Box D uses — Box B minus Box C in the printed order — and the order is load-bearing, because the two operands are not interchangeable.",
+   "_no_floor": "The page draws no \"do not enter a negative number\" sentence anywhere on it — \"negative\" returns zero across all six drawn pages of this form — so net income is allowed to be negative and a floor here would be this engine's policy rather than the page's."
   }
  ],
  "not_checkable": {
@@ -108,7 +212,15 @@
     "printed_caption": "CASH ON HAND — Include cash that is not in the bank — Total Cash on Hand",
     "printed_at": "page 2, y 308.3, x 57.6..248.3 with \"Total Cash on Hand\" at x 407.1..482.4",
     "why_not_checkable": "IT ADDS NOTHING THE FORM PRINTS. The caption says \"Total Cash on Hand\" and the block draws no rows beneath it — no 16a(i), no list, nothing to sum. The word \"Total\" here means \"the whole of it\", not \"the sum of the lines above\". Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\"; this one does not, and where the form does not say what it adds, a computed figure would be this engine's assertion rather than the page's."
+   },
+   {
+    "map_key": "business_equipment[*].equity, intangible_assets[*].equity, and the equity column of every earlier table on this form",
+    "printed_caption": "Equity / FMV Minus Loan (pages 4 and 5) and Equity / Value Minus Loan (page 3)",
+    "printed_at": "page 3 y 413.7 x 517.3 and y 403.7 x 497.4; page 3 y 227.2 x 528.6 and y 217.6 x 530.0; page 4 y 696.3 x 531.7 and y 688.3 x 513.4, repeated at y 350.7 and y 342.7; page 5 y 703.5 x 531.7 and y 695.5 x 513.4",
+    "why_not_checkable": "THE RELATION IS IN A COLUMN HEADER, NOT ON A ROW, AND THIS IS ARGUABLE — see [B-07], which is raised rather than resolved. The header names what the column holds; it is not an instruction drawn on a row between two cells the way 433-B(OIC) prints \"$ [Current market value] – $ [Minus loan balance] = (2a) $\" with the operator between the operands. Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\" or \"Line X minus Line Y\" ON THE LINE. Making a column header into twelve row-level tripwires is a ruling, and it would reach back over pages 3 and 4, which are landed. Declared here rather than left silent because a cell absent from this file is indistinguishable from one nobody looked at.",
+    "_the_intangible_rows_cannot_carry_it_at_all": "Rows 24e to 24g draw an equity cell and NO fmv and NO loan cell. Whatever is decided for the twelve cells that have both operands, these three have neither, and a relation with no operands drawn is not a relation the page states."
    }
   ]
- }
+ },
+ "authored_from_page5_6": "The printed page text of adapters/pdf/forms/f433b.pdf pages 5 and 6, extracted from the content streams. Each caption below is quoted verbatim from the drawn page and each names its own addends."
 }

@@ -1,0 +1,70 @@
+  // ── 433-B slice 4: pages 5 and 6, and the map closing ────────────────────────────────
+  //
+  // THE THREE MATCHES BELOW ARE ANCHORED EXACTLY AND THE ENTRIES SIT AT THE END OF THIS
+  // REGISTER, both for the same reason. The detector hands a counter the CLAUSE it found —
+  // "every field is accounted", not the sentence around it — and COMPLETENESS.find() takes the
+  // FIRST entry whose match tests true. An unanchored regex placed early can therefore catch a
+  // clause some other entry was written for, and dispose of it under the wrong counter, which
+  // reports a pass over a set nobody meant. Anchored and last, these three can only catch a
+  // clause nothing else caught.
+
+  // THE STRONGEST COMPLETENESS CLAIM THIS MAP HAS EVER MADE, and the one the whole slice
+  // exists to earn. Slices 1 to 3 said "slice N - pages A to B" and were held to a partial
+  // check; slice 4 says COMPLETE, and verify-form-coverage.mjs reads that word and turns the
+  // strict check on. The counter here is the same partition read a second way: every field
+  // the PDF draws must be in exactly one of the three declared states.
+  C({ id: 'K-110', match: /^every field is accounted$/i,
+    kind: 'counter',
+    what: 'The map claims completeness. Universe: every fillable field the PDF draws. Covered: every field the map classifies as writable, never-autofill or deferred. A field the form gains and the map does not bind moves the count and the claim stops being true out loud.',
+    universe: { scoped_to: 'form', detail: 'every fillable field in adapters/pdf/forms/f433b.pdf, by name',
+      admits: (m, ctx) => typeof m === 'string' && !!ctx.form },
+    count: (ctx) => {
+      const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
+      const fields = JSON.parse(readFileSync('adapters/pdf/maps/433b.fields.json', 'utf8')).fields.map((f) => f.name);
+      const { deferred, never, writable } = classifyMapTargets(map);
+      const held = new Set([...deferred, ...never, ...writable.keys()]);
+      const uncovered = fields.filter((n) => !held.has(n));
+      return { universe: fields.length, covered: fields.length - uncovered.length, universeList: fields, uncoveredList: uncovered };
+    } }),
+
+  // THE FIVE FLAG CLASSES, AS FIVE CHECKED ABSENCES RATHER THAN ONE SENTENCE. The claim is
+  // not "none of them appears" — that is the RESULT. The claim being counted is that each of
+  // the five was actually LOOKED FOR, on each page, with its own derived figure. A class the
+  // map stopped probing would silently drop out of a sentence that went on saying "each".
+  C({ id: 'K-111', match: /^each is a checked$/i,
+    kind: 'counter',
+    what: 'Each of the five registered flag classes carries its own derived per-page count on pages 5 and 6. Universe: the five classes times the two pages. Covered: the (page, phrase) pairs the map actually records a figure for.',
+    universe: { scoped_to: 'artefact', detail: 'the five flagged columns registered in adapters/hubspot/asset-row-shapes.json, probed once per page over pages 5 and 6',
+      admits: (m) => typeof m === 'string' && /^p[56]:/.test(m) },
+    count: () => {
+      const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
+      const probes = (map._the_five_flag_classes_on_pages_5_and_6 || {}).probes_per_run || {};
+      const PHRASES = ['primary residence', 'business account', 'check if', '1040', 'household'];
+      const want = [];
+      for (const p of [5, 6]) for (const ph of PHRASES) want.push(`p${p}:${ph}`);
+      const uncovered = want.filter((k) => typeof probes[k] !== 'number');
+      return { universe: want.length, covered: want.length - uncovered.length, universeList: want, uncoveredList: uncovered };
+    } }),
+
+  // THE SIX CHECKBOXES. The sentence says the pages DO print boxes and that none of them is a
+  // flag-class column, and it ends "every one is accounted for". That is a coverage claim
+  // about the boxes, and the set it covers is the exclusive sets: a box in no declared set is
+  // a box nothing constrains, which is the state the sentence denies.
+  C({ id: 'K-112', match: /^every one is accounted$/i,
+    kind: 'counter',
+    what: 'Every checkbox widget on pages 5 and 6 belongs to a declared exclusive set. Universe: the checkbox widgets the two pages draw. Covered: those named by a set in the map\'s `checkboxes` block. A loose box moves the count.',
+    universe: { scoped_to: 'form', detail: 'every PDFCheckBox widget on pages 5 and 6 of adapters/pdf/forms/f433b.pdf, by name',
+      admits: (m, ctx) => typeof m === 'string' && !!ctx.form },
+    count: (ctx) => {
+      const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
+      const boxes = JSON.parse(readFileSync('adapters/pdf/maps/433b.fields.json', 'utf8')).fields
+        .filter((f) => f.type === 'PDFCheckBox' && /\.Page[56]\[0\]\./.test(f.name)).map((f) => f.name);
+      const named = new Set();
+      for (const [set, def] of Object.entries(map.checkboxes || {})) {
+        if (!map.exclusive || !map.exclusive[set]) continue;
+        for (const [k, v] of Object.entries(def)) if (!k.startsWith('_') && typeof v === 'string') named.add(v);
+      }
+      const uncovered = boxes.filter((n) => !named.has(n));
+      return { universe: boxes.length, covered: boxes.length - uncovered.length, universeList: boxes, uncoveredList: uncovered };
+    } }),
+

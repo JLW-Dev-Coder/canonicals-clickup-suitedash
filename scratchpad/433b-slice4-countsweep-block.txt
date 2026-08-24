@@ -1,0 +1,112 @@
+  // ── SLICE 4: pages 5 and 6, and the map closing ─────────────────────────────────────────
+  //
+  // Every figure slice 4 wrote into the map is derived here from the map's own evidence table
+  // or from the drawn page. The evidence table is not a second opinion: it is what the
+  // generator asserted against the PDF before the patch script was allowed to write, and these
+  // rows check that the summary prose beside it did not drift from it.
+  D({ id: 'S-47', file: /433b\.map\.json$/, at: /^(_the_condition_that_governs_pages_5_and_6|_the_arithmetic_on_pages_5_and_6|_the_25c_cell_is_not_the_B06_shape|_what_slice_now_says_and_why_the_wording_matters|_map_evidence_page5_6\._(the_pairing_rule|second_witness|correlate_labels_is_not_consulted|every_figure_below_is_derived))$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const map = ctx.mapDoc;
+      const ev = (map._map_evidence_page5_6 || {}).bindings || [];
+      const rows = [
+        { what: 'bindings on pages 5 and 6', claimed: 104, derived: ev.length, from: 'the evidence table this map carries' },
+        { what: 'bindings on page 5', claimed: 70, derived: ev.filter((e) => e.page === 5).length, from: 'the evidence table' },
+        { what: 'bindings on page 6', claimed: 34, derived: ev.filter((e) => e.page === 6).length, from: 'the evidence table' },
+        { what: 'cells with a second witness recorded', claimed: 104, derived: ev.filter((e) => typeof e.second_witness === 'string' && e.second_witness.length > 0).length,
+          from: "the evidence table's own second_witness field — the claim is that EVERY one of the 104 carries one" },
+        { what: 'every checkbox option on both pages recording a PDF on-state', claimed: 6, derived: ev.filter((e) => e.on_state).length,
+          from: 'the evidence table' },
+        { what: 'printed totals declared on pages 5 and 6', claimed: 5,
+          derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [56],/.test(t.caption_at || '')).length,
+          from: "the totals file's own caption_at" },
+        { what: 'declared total lines on 433-B now', claimed: 11, derived: (ctx.totalsDoc?.totals || []).length,
+          from: 'adapters/pdf/maps/433b.totals.json' },
+      ];
+      // THE PAIRING-RULE COUNTS, derived from the evidence table's own verdicts. The prose names
+      // six rules; a rule the prose names and no cell takes would be a rule nobody has tested.
+      const RULES = { C: 80, CO: 2, L: 14, R: 4, RS: 2, T: 2 };
+      for (const [r, claimed] of Object.entries(RULES))
+        rows.push({ what: `pages 5 and 6 cells bound by rule ${r}`, claimed,
+          derived: ev.filter((e) => new RegExp(`^${r} `).test(e.pairing || '')).length,
+          from: "the evidence table's own pairing verdicts" });
+      // THE DRAWN PAGE, for the [B-06] resemblance and the money markers that settle it.
+      const { readPrintedText } = await import('./page-geometry.mjs');
+      const pages = await readPrintedText(readFileSync(map.pdf));
+      const j5 = pages[4].items.map((t) => t.str).join(' ');
+      const j6 = pages[5].items.map((t) => t.str).join(' ');
+      rows.push({ what: 'runs matching /Add lines?/ on page 5', claimed: 2, derived: (j5.match(/Add lines?/gi) || []).length, from: 'every drawn run of page 5, joined' });
+      rows.push({ what: 'runs matching /Add lines?/ on page 6', claimed: 2, derived: (j6.match(/Add lines?/gi) || []).length, from: 'every drawn run of page 6, joined' });
+      rows.push({ what: 'occurrences of "minus" on page 6', claimed: 1, derived: (j6.match(/minus/gi) || []).length,
+        from: 'the drawn page — line 50 is this form\'s first difference and the word appears once' });
+      rows.push({ what: 'page-5 and page-6 total captions naming "amounts from any attachments"', claimed: 2,
+        derived: ((j5 + ' ' + j6).match(/amounts from any attachments/gi) || []).length,
+        from: 'the two joined pages — BOTH are on page 5, which is why line 36 is the first total on this form [B-05] does not reach' });
+      for (const re of [/do not enter a negative/i, /negative/i, /round/i])
+        rows.push({ what: `pages 5 and 6 draw no run matching /${re.source}/`, claimed: 0,
+          derived: ((j5 + ' ' + j6).match(new RegExp(re.source, 'gi')) || []).length, from: 'both joined pages' });
+      // THE POSITIVE CONTROL for the three zero-rows above, through the same reading.
+      rows.push({ what: 'occurrences of "Total" on pages 5 and 6', claimed: 6,
+        derived: ((j5 + ' ' + j6).match(/Total/g) || []).length,
+        from: 'the same joined text. A required-NON-zero row: without it the three zeros above would report exactly the zero a dead reading reports.' });
+      return rows;
+    } }),
+
+  // The offset findings. Their figures are counts of a SET whose members are named beside them,
+  // so both the count and the membership are derived — a count alone would let one exception be
+  // swapped for another and still agree, which is the whole of [R-07].
+  D({ id: 'S-48', file: /433b\.map\.json$/, at: /^_the_leaf_names_on_pages_5_and_6_are_one_printed_marker_behind(\..*)?$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const o = ctx.mapDoc._the_leaf_names_on_pages_5_and_6_are_one_printed_marker_behind || {};
+      const ev = (ctx.mapDoc._map_evidence_page5_6 || {}).bindings || [];
+      const rows = [];
+      for (const [p, n] of [['page_5', 5], ['page_6', 6]]) {
+        const side = o[p] || {};
+        const exc = Object.keys(side.exceptions || {});
+        rows.push({ what: `page ${n}: offset + exceptions + agreeing accounts for every widget`,
+          claimed: ev.filter((e) => e.page === n).length,
+          derived: (side.offset || 0) + exc.length + (side.agreeing || 0),
+          from: 'the three states this map declares for that page, summed against its own binding count' });
+        rows.push({ what: `page ${n}: widgets whose leaf token equals their printed marker`, claimed: 0, derived: side.agreeing ?? -1,
+          from: "the map's own record. Page 4 had TWO such coincidences and named them; these two pages have none, and a zero here is a checked absence rather than an unread page." });
+        rows.push({ what: `page ${n}: named exceptions`, claimed: exc.length, derived: exc.length,
+          from: 'the exception object\'s own keys — the members ARE the figure, so this row is the identity that makes the ones above readable rather than a comparison of two numbers' });
+      }
+      return rows;
+    } }),
+
+  // The five flag classes on these two pages: five checked absences, each with its own count,
+  // plus the join artefact that a joined-text probe manufactures and a per-run probe does not.
+  D({ id: 'S-49', file: /433b\.map\.json$/, at: /^_the_five_flag_classes_on_pages_5_and_6(\..*)?$/,
+    kind: 'derived',
+    derive: async (ctx) => {
+      const f = ctx.mapDoc._the_five_flag_classes_on_pages_5_and_6 || {};
+      const { readPrintedText, readWidgetGeometry } = await import('./page-geometry.mjs');
+      const bytes = readFileSync(ctx.mapDoc.pdf);
+      const pages = await readPrintedText(bytes);
+      const { widgets } = await readWidgetGeometry(bytes);
+      const rows = [];
+      const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      for (const [k, claimed] of Object.entries(f.probes_per_run || {})) {
+        const m = /^p(\d):(.+)$/.exec(k);
+        if (!m) { rows.push({ what: `flag probe key ${k}`, fail: 'the key does not name a page and a phrase, so nothing can be derived from it' }); continue; }
+        const runs = pages[Number(m[1]) - 1].items;
+        rows.push({ what: `page ${m[1]}: per-run occurrences of ${JSON.stringify(m[2])}`, claimed,
+          derived: runs.reduce((n, t) => n + (t.str.toLowerCase().match(new RegExp(esc(m[2]), 'g')) || []).length, 0),
+          from: 'each drawn run on its own — NOT the joined page text, which manufactures a phrase at a run boundary on page 6' });
+      }
+      for (const [p, claimed] of Object.entries(f.checkbox_widgets || {})) {
+        const n = Number(String(p).replace(/\D/g, ''));
+        rows.push({ what: `checkbox widgets on page ${n}`, claimed,
+          derived: widgets.filter((w) => w.page === n && w.type === 'PDFCheckBox').length, from: 'the drawn form' });
+      }
+      // THE JOIN ARTEFACT, DERIVED. The claim is that the joined-text probe finds exactly one
+      // thing the per-run probe does not, and that it is manufactured at a named boundary.
+      const j6 = pages[5].items.map((t) => t.str).join(' ').toLowerCase();
+      rows.push({ what: 'join-artefact phrases declared', claimed: (f.join_artefacts || []).length,
+        derived: (j6.match(/business account/g) || []).length,
+        from: 'the joined page-6 text, where the banner ending "for Business" is followed by the run "Accounting Method Used:"' });
+      return rows;
+    } }),
+

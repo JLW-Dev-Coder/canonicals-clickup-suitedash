@@ -5,7 +5,7 @@
  "catalog": "16649P",
  "pdf": "adapters/pdf/forms/f433b.pdf",
  "fields_source": "adapters/pdf/maps/433b.fields.json",
- "slice": "slice 3 — pages 1 to 4",
+ "slice": "COMPLETE - every field on every page of this form is mapped or explicitly excluded",
  "map_version": 3,
  "authored_from": "adapters/pdf/maps/433b.intake.json, in the same commit. The blank is pinned in adapters/pdf/forms/forms.sha256 and the revision and catalog number were read from drawn page bytes.",
  "_the_subject_is_settled_and_recorded_elsewhere": "adapters/pdf/maps/_subjects.cross-form.json, entry `433b`: a legal person that is not the filer. MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC); COINCIDES with 433-B(OIC), with the fifth \"Other\" entity box carried as [B-02].",
@@ -68,21 +68,46 @@
   "s4_21_amount_owed_as_of": "topmostSubform[0].Page3[0].Table_Line20a-b[0].HeaderRow[0].AmntOwd20[0].Asof20a[0]",
   "s4_21_available_credit_as_of": "topmostSubform[0].Page3[0].Table_Line20a-b[0].HeaderRow[0].AvalCrdt20[0].Asof20b[0]",
   "s4_22e_total_equity_real_property": "topmostSubform[0].Page4[0].p4_00_21e[0]",
-  "s4_23e_total_equity_vehicles": "topmostSubform[0].Page4[0].p4_77_22e[0]"
+  "s4_23e_total_equity_vehicles": "topmostSubform[0].Page4[0].p4_77_22e[0]",
+  "s4_24h_total_equity_business_equipment": "topmostSubform[0].Page5[0].p5_00_23e[0]",
+  "s4_25c_total_payments": "topmostSubform[0].Page5[0].p5_63_24d[0]",
+  "s5_period_from": "topmostSubform[0].Page6[0].p6_1_Sec5[0]",
+  "s5_period_to": "topmostSubform[0].Page6[0].p6_2_Sec5[0]",
+  "s5_26_gross_receipts": "topmostSubform[0].Page6[0].TotalIncome[0].GrssMnthly25[0]",
+  "s5_27_gross_rental_income": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly26[0]",
+  "s5_28_interest_income": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly27[0]",
+  "s5_29_dividends": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly28[0]",
+  "s5_30_cash_receipts": "topmostSubform[0].Page6[0].TotalIncome[0].GroosMnthly29[0]",
+  "s5_36_total_income": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly35[0]",
+  "s5_37_materials_purchased": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly36[0]",
+  "s5_38_inventory_purchased": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly36[1]",
+  "s5_39_gross_wages_and_salaries": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMntly38[0]",
+  "s5_40_rent": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly39[0]",
+  "s5_41_supplies": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly40[0]",
+  "s5_42_utilities_telephone": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly41[0]",
+  "s5_43_vehicle_gasoline_oil": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly42[0]",
+  "s5_44_repairs_and_maintenance": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnhtly43[0]",
+  "s5_45_insurance": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly44[0]",
+  "s5_46_current_taxes": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly45[0]",
+  "s5_47_other_expenses": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly46[0]",
+  "s5_49_total_expenses": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly48[0]",
+  "s5_50_net_income": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly49[0]"
  },
  "_partition": {
   "_why": "Declared as the map is authored, not assembled in a closing pass. 433-F accumulated 63 silently unreferenced fields precisely because that declaration was left to the end.",
   "form_fields_total": 447,
-  "in_this_slice": 343,
-  "bound_writable": 343,
-  "excluded_never_autofill": 0,
+  "in_this_slice": 447,
+  "bound_writable": 446,
+  "excluded_never_autofill": 1,
   "deferred": 0,
-  "unaccounted": 104,
-  "_check": "343 + 0 + 0 = 343 bound writable, never-autofill and deferred, and that is every field pages 1 to 4 draw. 447 - 343 = 104 unaccounted, which is every field on pages 5 and 6. THE PER-PAGE FIGURES, FOR EVERY PAGE OF THE FORM RATHER THAN ONLY THE UNREAD ONES: 103 on page 1, 64 on page 2, 82 on page 3, 94 on page 4, 70 on page 5, 34 on page 6. The first four sum to the accounted figure above and the last two to the unaccounted one. THIS MAP IS NOT CLOSED and says so; the unaccounted figure falls to zero when slice 4 lands and not before.",
-  "_why_unaccounted_and_not_deferred": "The two words are not synonyms in this engine. `deferred` is derived from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration.",
-  "_unaccounted_by_page": "p5 70, p6 34 = 104"
+  "unaccounted": 0,
+  "_check": "446 + 1 + 0 = 447 bound writable, never-autofill and deferred. THE MAP IS CLOSED: 447 - 447 = 0 unaccounted. THE PER-PAGE FIGURES, FOR EVERY PAGE OF THE FORM: 103 on page 1, 64 on page 2, 82 on page 3, 94 on page 4, 70 on page 5, 34 on page 6 — and they sum to the three partitions with nothing left over. THE ONE NEVER-AUTOFILL TARGET is printed line 48, the IRS-use expense cell on page 6; it is bound under _never_autofill and NOT under map.map, so the walk classifies it once and this engine writes it never.",
+  "_why_unaccounted_and_not_deferred": "The two words are not synonyms in this engine. `deferred` is derived from fields the map NAMES under a `_deferred` key — an enumerated list of specific cells this slice declines to bind. `unaccounted` is derived from widget geometry over pages the map has not authored at all. Pages 2 to 6 are not a list of deferred cells; they are pages nobody has read yet, and calling them deferred would be a glob claiming the granularity of an enumeration. SLICE 4 CLOSES IT. There is no page left that nobody has read, so the unaccounted figure is 0 and stays 0 unless the form revision changes."
  },
- "_deferred_pages": "Pages 5 and 6 are slice 4, 104 fields. THE FIGURES ARE NOT PARENTHESISED, and that is not style: a bracketed number in map prose reads as a printed LINE MARKER to blanket-audit.mjs, which then demands that marker from line-markers.mjs and reports a forward-reference gap, because this form draws no marker of that number.",
+ "_deferred_pages": {
+  "_why": "EMPTY, AND NOW PERMANENTLY. Slices 1 to 4 have read every page the form draws. This key is kept rather than deleted so that a later revision adding a page has somewhere to declare it, and so that its emptiness is a stated fact rather than a missing key.",
+  "pages": []
+ },
  "_carried": {
   "_why": "The questions this form has raised that no slice has answered. An arguable item is reported in full, carries an id, and is not resolved.",
   "open": [
@@ -637,6 +662,164 @@
    "_four_columns_share_two_x_lanes": "Year and Mileage are both drawn at x 50.4..115.2, and Make/Model and License/Tag Number both at x 115.2..201.6. They are separated by BAND, not by x, and each carries a second witness in its own widget: maxLen 4 on Year against 7 on Mileage, and 15 on License/Tag Number against no limit on Make/Model.",
    "_the_lender_caption_omits_landlord": "This block's caption reads \"Lender/Lessor Name, Address,\" where the real-property block above reads \"Lender/Lessor/Landlord Name, Address,\". Transcribed as drawn rather than normalised to the other block's wording — a vehicle has no landlord.",
    "_two_phone_cells_wear_the_same_name": "The four lender phone cells are p4_43_59b, p4_54_69b, p4_64_69b and p4_74_79b. TWO OF THEM CARRY 69b, on rows the page marks 23b and 23c, and they are told apart by band alone. No line 59, 69 or 79 is drawn anywhere on this form."
+  },
+  "business_equipment": {
+   "max": 4,
+   "_printed_rows": "The four EQUIPMENT rows of BUSINESS EQUIPMENT AND INTANGIBLE ASSETS, printed markers 24a to 24d. The block heading is drawn at page 5 y 733.1 x 43.2..228.3 and its instruction, \"Include all machinery, equipment, merchandise inventory, and other assets in 24a through 24d\", names the four by their printed markers.",
+   "_the_leaf_names_say_23a_to_23d": "One printed marker behind, as page 4 is. Every binding below is fixed by the printed marker for its row and the printed header stack for its column; the leaf token is recorded and is evidence of nothing ([R-08]).",
+   "slots": [
+    {
+     "text": {
+      "asset_description": "topmostSubform[0].Page5[0].Line23a[0].p5_1_23a[0]",
+      "purchase_lease_date": "topmostSubform[0].Page5[0].Line23a[0].p5_2_23a[0]",
+      "current_fmv": "topmostSubform[0].Page5[0].Line23a[0].p5_3_23a[0]",
+      "current_loan_balance": "topmostSubform[0].Page5[0].Line23a[0].p5_4_23a[0]",
+      "monthly_payment": "topmostSubform[0].Page5[0].Line23a[0].p5_5_23a[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].Line23a[0].p5_6_23a[0]",
+      "equity": "topmostSubform[0].Page5[0].Line23a[0].p5_7_23a[0]",
+      "location_of_asset": "topmostSubform[0].Page5[0].p5_8_23a[0]",
+      "lender_name_address": "topmostSubform[0].Page5[0].Lender-Phone1[0].p5_9_23a[0]",
+      "lender_phone": "topmostSubform[0].Page5[0].Lender-Phone1[0].p5_74_76b[0]"
+     }
+    },
+    {
+     "text": {
+      "asset_description": "topmostSubform[0].Page5[0].Line23b[0].p5_10_23b[0]",
+      "purchase_lease_date": "topmostSubform[0].Page5[0].Line23b[0].p5_11_23b[0]",
+      "current_fmv": "topmostSubform[0].Page5[0].Line23b[0].p5_12_23b[0]",
+      "current_loan_balance": "topmostSubform[0].Page5[0].Line23b[0].p5_13_23b[0]",
+      "monthly_payment": "topmostSubform[0].Page5[0].Line23b[0].p5_14_23b[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].Line23b[0].p5_15_23b[0]",
+      "equity": "topmostSubform[0].Page5[0].Line23b[0].p5_16_23b[0]",
+      "location_of_asset": "topmostSubform[0].Page5[0].p5_17_23b[0]",
+      "lender_name_address": "topmostSubform[0].Page5[0].Lender-Phone2[0].p5_18_23b[0]",
+      "lender_phone": "topmostSubform[0].Page5[0].Lender-Phone2[0].p5_74_77b[0]"
+     }
+    },
+    {
+     "text": {
+      "asset_description": "topmostSubform[0].Page5[0].Line23c[0].p5_19_23c[0]",
+      "purchase_lease_date": "topmostSubform[0].Page5[0].Line23c[0].p5_20_23c[0]",
+      "current_fmv": "topmostSubform[0].Page5[0].Line23c[0].p5_21_23c[0]",
+      "current_loan_balance": "topmostSubform[0].Page5[0].Line23c[0].p5_22_23c[0]",
+      "monthly_payment": "topmostSubform[0].Page5[0].Line23c[0].p5_23_23c[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].Line23c[0].p5_24_23c[0]",
+      "equity": "topmostSubform[0].Page5[0].Line23c[0].p5_25_23c[0]",
+      "location_of_asset": "topmostSubform[0].Page5[0].p5_26_23c[0]",
+      "lender_name_address": "topmostSubform[0].Page5[0].Lender-Phone3[0].p5_27_23c[0]",
+      "lender_phone": "topmostSubform[0].Page5[0].Lender-Phone3[0].p5_74_78b[0]"
+     }
+    },
+    {
+     "text": {
+      "asset_description": "topmostSubform[0].Page5[0].Line23d[0].p5_28_23d[0]",
+      "purchase_lease_date": "topmostSubform[0].Page5[0].Line23d[0].p5_29_23d[0]",
+      "current_fmv": "topmostSubform[0].Page5[0].Line23d[0].p5_30_23d[0]",
+      "current_loan_balance": "topmostSubform[0].Page5[0].Line23d[0].p5_31_23d[0]",
+      "monthly_payment": "topmostSubform[0].Page5[0].Line23d[0].p5_32_23d[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].Line23d[0].p5_33_23d[0]",
+      "equity": "topmostSubform[0].Page5[0].Line23d[0].p5_34_23d[0]",
+      "location_of_asset": "topmostSubform[0].Page5[0].p5_35_23d[0]",
+      "lender_name_address": "topmostSubform[0].Page5[0].Lender-Phone4[0].p5_36_23d[0]",
+      "lender_phone": "topmostSubform[0].Page5[0].Lender-Phone4[0].p5_74_79b[0]"
+     }
+    }
+   ]
+  },
+  "intangible_assets": {
+   "max": 3,
+   "_printed_rows": "The three INTANGIBLE rows of the same block, printed markers 24e to 24g. The instruction at page 5 y 725.1 reads \"List intangible assets in 24e through 24g (licenses, patents, logos, domain names, trademarks, copyrights, software, mining claims, goodwill and trade secrets.)\" and names them by their printed markers.",
+   "_two_cells_per_row_not_ten": "These rows draw a DESCRIPTION and an EQUITY cell and nothing else — no purchase date, no FMV, no loan balance, no monthly payment, no final payment date, no location and no lender. That is why they are a separate group and not three more slots of business_equipment: a slot shape is a claim about what the page draws, and eight of the ten columns are not drawn on these rows.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].Page5[0].p5_28_23e[0]",
+      "equity": "topmostSubform[0].Page5[0].p5_34_23e[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page5[0].p5_28_23f[0]",
+      "equity": "topmostSubform[0].Page5[0].p5_34_23f[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page5[0].p5_28_23g[0]",
+      "equity": "topmostSubform[0].Page5[0].p5_34_23g[0]"
+     }
+    }
+   ]
+  },
+  "business_liabilities": {
+   "max": 2,
+   "_printed_rows": "The two rows of BUSINESS LIABILITIES, printed markers 25a and 25b, under the heading at page 5 y 260.3 x 58.0..146.1 with its instruction \"Include notes and judgements not listed previously on this form.\"",
+   "_the_secured_flag_is_a_checkbox_pair_and_lives_outside_the_slot": "Each row prints a Secured / Unsecured pair, and this map already keeps per-row checkbox pairs as top-level keys rather than inside the slot — personnel_7a_responsible_for_payroll_taxes and its three siblings are the precedent on page 1. The two keys are business_liabilities_25a_secured_or_unsecured and business_liabilities_25b_secured_or_unsecured.",
+   "_two_rows_two_naming_schemes": "Row 25a spells its four contact cells as ONE indexed leaf name, p5_00_24a[0] to [3]; row 25b spells the same four as p5_49_24b, p5_50_24b, p5_51_24b and p5_52_24b. The bindings rest on the printed captions on both rows.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].Page5[0].BusinessLiablities[0].p5_37_24a[0]",
+      "date_pledged": "topmostSubform[0].Page5[0].DatePledged[0].p5_39_24a[0]",
+      "balance_owed": "topmostSubform[0].Page5[0].BalancedOwned[0].p5_40_24a[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].DateFinalPay[0].p5_41_24a[0]",
+      "payment_amount": "topmostSubform[0].Page5[0].Payment[0].p5_42_24a[0]",
+      "name": "topmostSubform[0].Page5[0].p5_00_24a[0]",
+      "street_address": "topmostSubform[0].Page5[0].p5_00_24a[1]",
+      "city_state_zip": "topmostSubform[0].Page5[0].p5_00_24a[2]",
+      "phone": "topmostSubform[0].Page5[0].p5_00_24a[3]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page5[0].p5_43_24b[0]",
+      "date_pledged": "topmostSubform[0].Page5[0].p5_45_24b[0]",
+      "balance_owed": "topmostSubform[0].Page5[0].p5_46_24b[0]",
+      "final_payment_date": "topmostSubform[0].Page5[0].p5_47_24b[0]",
+      "payment_amount": "topmostSubform[0].Page5[0].p5_48_24b[0]",
+      "name": "topmostSubform[0].Page5[0].p5_49_24b[0]",
+      "street_address": "topmostSubform[0].Page5[0].p5_50_24b[0]",
+      "city_state_zip": "topmostSubform[0].Page5[0].p5_51_24b[0]",
+      "phone": "topmostSubform[0].Page5[0].p5_52_24b[0]"
+     }
+    }
+   ]
+  },
+  "other_income": {
+   "max": 5,
+   "_printed_rows": "Printed lines 31 to 35 of Section 5's income column. They draw NO printed item name of their own: the single caption \"Other Income (Specify below)\" at page 6 y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside its amount. Lines 26 to 30 print their item names and therefore draw no such cell.",
+   "slots": [
+    {
+     "text": {
+      "description": "topmostSubform[0].Page6[0].TotalIncome[0].FillIn30[0]",
+      "amount": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly30[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page6[0].TotalIncome[0].FillIn31[0]",
+      "amount": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly31[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page6[0].TotalIncome[0].FillIn32[0]",
+      "amount": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly32[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page6[0].TotalIncome[0].FillIn33[0]",
+      "amount": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly33[0]"
+     }
+    },
+    {
+     "text": {
+      "description": "topmostSubform[0].Page6[0].TotalIncome[0].FillIn34[0]",
+      "amount": "topmostSubform[0].Page6[0].TotalIncome[0].GrossMnthly34[0]"
+     }
+    }
+   ]
   }
  },
  "checkboxes": {
@@ -779,6 +962,25 @@
    "_printed": "Question 9's second row. \"Plaintiff\" y 632.3 x 75.9..102.4 with its box y 630.8..638.8 x 59.6..67.6; \"Defendant\" y 632.3 x 130.8..167.8 with its box y 630.8..638.8 x 115.2..123.2.",
    "_the_on_state_is_misspelled_in_the_document": "The page draws \"Defendant\" and the widget stores /Defendent. The map keys on the PRINTED word, which is what a record says, and carries the on-state the WIDGET holds, which is what the document accepts. Writing the printed spelling as an on-state would tick nothing and the engine would report the box filled — which is the exact failure the checkbox read-back in fill-433b.mjs exists to catch.",
    "_witness": "EACH BOX IS DRAWN TO THE LEFT OF THE WORD IT LABELS, by 8.3pt and 7.6pt. This is the only non-binary, non-entity set on the form and the only one whose options are not Yes and No."
+  },
+  "business_liabilities_25a_secured_or_unsecured": {
+   "Secured": "topmostSubform[0].Page5[0].Secured[0].p5_1_24a[0]",
+   "Unsecured": "topmostSubform[0].Page5[0].Secured[0].p5_1_24a[1]",
+   "_printed": "Row 25a. \"Secured\" y 217.7 x 265.0..294.9, box y 217.4..225.4 x 252.0..260.0; \"Unsecured\" y 199.7 x 265.0..300.0, box y 199.4..207.4 x 252.0..260.0. The column header above the block reads \"Secured/\" y 243.5 x 257.3..289.9 and \"Unsecured\" y 236.5 x 254.1..293.1.",
+   "_on_states": "Secured -> /Secured; Unsecured -> /Unsecured. The on-state each box stores is the printed word itself, which settles the option independently of the geometry."
+  },
+  "business_liabilities_25b_secured_or_unsecured": {
+   "Secured": "topmostSubform[0].Page5[0].SecUNsec24b[0].p5_5_24b[0]",
+   "Unsecured": "topmostSubform[0].Page5[0].SecUNsec24b[0].p5_5_24b[1]",
+   "_printed": "Row 25b. \"Secured\" y 149.3 x 265.0..294.9, box y 149.0..157.0 x 252.0..260.0; \"Unsecured\" y 131.3 x 265.0..300.0, box y 131.0..139.0 x 252.0..260.0.",
+   "_on_states": "Secured -> /Secured; Unsecured -> /Unsecured. Same two on-states as row 25a, on a differently named subform: Secured[0] on 25a, SecUNsec24b[0] on 25b."
+  },
+  "s5_accounting_method": {
+   "Cash": "topmostSubform[0].Page6[0].p6_01_Sec5[0]",
+   "Accrual": "topmostSubform[0].Page6[0].p6_01_Sec5[1]",
+   "_printed": "\"Accounting Method Used:\" y 718.7 x 36.0..135.1; \"Cash\" y 718.7 x 159.1..177.6, box y 719.6..727.6 x 144.0..152.0; \"Accrual\" y 718.7 x 208.5..235.4, box y 719.6..727.6 x 194.4..202.4.",
+   "_the_labels_are_below_the_boxes_and_R_does_not_hold": "The label baselines sit 0.9pt BELOW the box bottoms, so the R rule this form uses everywhere else — option printed to the right with its baseline INSIDE the rectangle — does not hold and is not widened to make it hold ([R-09]). The pairing is RS: on one printed baseline, each box takes the unique run lying to its right and left of the next box. Both are settled again by the on-states.",
+   "_on_states": "Cash -> /Cash; Accrual -> /Accrual."
   }
  },
  "exclusive": {
@@ -871,7 +1073,29 @@
   "digital_assets[1].used_as_collateral": [
    "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].#subform[0].digiUsed2[0]",
    "topmostSubform[0].Page3[0].RetirementAcct1[0].Table_Line14de[0].Row13b[0].#subform[0].digiUsed2[1]"
-  ]
+  ],
+  "business_liabilities_25a_secured_or_unsecured": {
+   "_why": "A liability is secured or it is not. Two options, at most one ticked.",
+   "options": [
+    "/Secured",
+    "/Unsecured"
+   ]
+  },
+  "business_liabilities_25b_secured_or_unsecured": {
+   "_why": "The same printed pair on row 25b.",
+   "options": [
+    "/Secured",
+    "/Unsecured"
+   ]
+  },
+  "s5_accounting_method": {
+   "_why": "A business keeps its books on ONE of the two bases the line names. Two options, at most one ticked.",
+   "options": [
+    "/Cash",
+    "/Accrual"
+   ]
+  },
+  "_the_three_sets_slice_4_adds": "Two Secured/Unsecured pairs on page 5 and the accounting-method pair on page 6. Page 5 draws four checkbox widgets and page 6 two, and all six are in these three sets — no loose box on either page."
  },
  "_the_condition_that_governs_page_1": "Page 1 asks WHO THE BUSINESS IS and WHO SPEAKS FOR IT. Section 1 is the entity's own identity, contact and payroll facts; Section 2 is the natural persons behind it, each row carrying that person's relationship TO the entity — a title, an ownership percentage, a salary the entity pays, and whether they deposit its payroll taxes. NOTHING ON THIS PAGE IS AN ASSET, A LIABILITY OR AN AMOUNT THE FORM ADDS UP.",
  "_no_arithmetic_on_this_page_at_all": "CHECKED AGAINST THE DRAWN PAGE, not against the map. Page 1 draws no lettered Box, no \"Total\" line, no \"Add lines\", no \"Subtract\", no \"minus\" and no \"multiply\". The only occurrence of the word \"box\" is the instruction \"(Check appropriate box below)\" at y 639.5, x 374.8..484.0. So this slice declares no `_computed`, no `totals`, no `rounding` and no operand list — there is none to quote. Two money cells are drawn (3b Monthly Gross Payroll, and each personnel row's Annual Salary/Draw) and neither feeds anything on this page.",
@@ -1834,8 +2058,16 @@
   ]
  },
  "_never_autofill": {
-  "_why": "Nothing on page 1 is withheld. Every one of the 103 cells is a fact a filer supplies and none is a signature, a date of signature, or an IRS-use cell. The signature block and the \"IRS USE ONLY\" box are both on page 6.",
-  "targets": []
+  "_why": "Mapped, understood, and deliberately blank — a stronger claim than `_deferred`, which means \"not resolved yet\". Empty through slice 3, and the map said so with the reason: the IRS-use cell and the signature block are both on page 6. Slice 4 reads page 6 and the sentence resolves in two directions at once.",
+  "_the_signature_block_draws_no_widget": "Page 6 prints \"Signature\", \"Title\", \"Date\" at y 373.9 and \"Print Name of Officer, Partner or LLC Member\" at y 337.9, and the IRS USE ONLY (Notes) box at y 261.9. NOT ONE OF THEM DRAWS A WIDGET. Page 6 holds 34 fillable fields and every one of them is above y 482.4; there is nothing below that to withhold. So the signature half of the slice-1 sentence is a checked absence, not a never-autofill entry.",
+  "_the_irs_use_cell_does_draw_one": "Printed line 48, \"IRS Use Only-Allowable Installment Payments\", draws the leaf ActlMnthly47 in the expense column like any other line. It is declared below so the partition accounts for it and a reviewer can see it, and it is never written. THE LEAF IS NAMED HERE AND THE FULL PATH ONLY IN THE target FIELD BELOW: this file is walked for target strings under any key, so a path written into prose would be a SECOND reference to the same cell and would fail the duplicate-write check.",
+  "fields": [
+   {
+    "target": "topmostSubform[0].Page6[0].TotalExpenses[0].ActlMnthly47[0]",
+    "key": "s5_48_irs_allowable_installment_payments",
+    "reason": "THE IRS-USE CELL ON THIS FORM. Printed line 48 reads \"IRS Use Only-Allowable Installment Payments\" — the page says whose cell it is, in the caption, in words. 433-A declares fourteen never-autofill fields for exactly this column and its stated ground is the one that applies here: a wrong allowable printed on a filed collection statement is worse than an empty cell an examiner fills in. Unlike 433-A, this form publishes no fixed amount for any part of the column, so there is not even the two-line exception 433-A carries."
+   }
+  ]
  },
  "_arguable_page1": [
   {
@@ -4321,6 +4553,1127 @@
     "printed_at": "y 38.3, x 57.6..102.9 (first run of the phrase, \"Total Equity\")",
     "pairing": "the total-line rule: the caption on the total line's own baseline, one printed \"$\" between it and the cell",
     "second_witness": "Fixed by the printed marker 23e at y 38.3. The caption \"Total Equity\" shares this cell's baseline 38.3 hundreds of points to its left, and exactly one printed \"$\" lies between them at x 485.2..489.6, 2.8pt from the cell's left edge. THE CELL IS WIDER THAN THE EQUITY COLUMN — x 492.4..576 against an equity lane of 521.2..576.0 — and it is bound as the equity total on three witnesses: the caption says \"Total Equity\" in the page's own words; its \"$\" is at x 485.2, which is NOT one of the four column marker positions 262.0, 326.8, 391.6 and 514.0, so it belongs to no column but this line; and its left edge 492.4 is the SAME left edge the two unambiguous totals on page 3 use — 18f at x 492.4..576.0 and 19c at x 492.5..576.0. THIS IS NOT THE [B-06] SHAPE: [B-06] is arguable because the 20e cell's money marker sits at another COLUMN's marker position, and this one's does not."
+   }
+  ]
+ },
+ "_what_slice_now_says_and_why_the_wording_matters": "THE WORD IS READ, NOT DECORATIVE. adapters/pdf/verify-form-coverage.mjs mapClaimsComplete() tests this string for a leading \"complete\" and only then holds the form to FULL coverage; a map that has not made the claim is a declared partial slice and cannot be held to a promise it never gave. Slices 1 to 3 spelled it \"slice N - pages A to B\" and earned the partial check honestly. Slice 4 reads the last two pages, so the claim is made and the strict check turns on. Making the claim is the point of closing the map: it is what converts \"nothing has contradicted this yet\" into \"every field is accounted for and something checks it\".",
+ "authored_from_page5_6": "The printed page text and widget geometry of adapters/pdf/forms/f433b.pdf pages 5 and 6, extracted from the content streams by scratchpad/433b-slice4-gen-slice4-433b.mjs, which asserts every caption against the drawn page before this file writes anything.",
+ "_the_condition_that_governs_pages_5_and_6": "Every binding is fixed by TWO printed facts: the printed row marker for the row and the printed column caption for the column. Neither alone can settle a cell — a header cannot say which row and a marker cannot say which column — and the pair IS the second witness on every table cell. The four cells that are not table cells (the two block totals and the two period dates) take the total-line rule or the immediately-left rule and name their money marker or their distinguishing word.",
+ "_the_leaf_names_on_pages_5_and_6_are_one_printed_marker_behind": {
+  "_the_finding": "THE OFFSET CONTINUES, on both pages, in two different notations, and it is pinned by name rather than counted.",
+  "page_5": {
+   "offset": 64,
+   "exceptions": {
+    "Page5[0].Lender-Phone1[0].p5_74_76b[0]": "token 76b. NO PRINTED MARKER 76 EXISTS ANYWHERE ON THIS FORM, which ends at 50. The four equipment lender/lessor PHONE cells carry 76b, 77b, 78b and 79b — a scheme borrowed from somewhere off this form entirely. Page 4 does the same thing with p4_43_59b, p4_54_69b, p4_64_69b and p4_74_79b, and p4_74_79b and this page's p5_74_79b differ ONLY in the page token: two cells on two pages under one leaf stem.",
+    "Page5[0].Lender-Phone2[0].p5_74_77b[0]": "token 77b, same scheme as 76b above.",
+    "Page5[0].Lender-Phone3[0].p5_74_78b[0]": "token 78b, same scheme as 76b above.",
+    "Page5[0].Lender-Phone4[0].p5_74_79b[0]": "token 79b, same scheme as 76b above, and the one that collides across pages with page 4's p4_74_79b.",
+    "Page5[0].p5_00_23e[0]": "THE 24h TOTAL, token 23e. One behind would be 23h. 23e is the token of the 24e INTANGIBLE ROW, whose equity cell is p5_34_23e[0] on the same page — so this page carries the token 23e twice, on the block total and on a row three lines above it. A binder taking the total by leaf stem would write the total into the 24e row.",
+    "Page5[0].p5_63_24d[0]": "THE 25c TOTAL, token 24d. One behind would be 24c. There are only two liability rows, 25a and 25b, so 24d names a row this block does not have; the name looks inherited from a four-row block."
+   },
+   "agreeing": 0
+  },
+  "page_6": {
+   "offset": 29,
+   "exceptions": {
+    "Page6[0].TotalExpenses[0].ActlMnthly36[1]": "TWO printed markers behind, not one: it is the printed-38 cell and its token is 36. It is also a DUPLICATE LEAF NAME — ActlMnthly36[0] one row above it is the printed-37 cell, so one leaf name spells two different printed expense lines. Everything else numbered on this page is exactly one behind.",
+    "Page6[0].p6_01_Sec5[0]": "the accounting-method Cash box. Its trailing \"5\" is the SECTION number, not a line number: the two boxes and the two period dates are all named *_Sec5, and Section 5 is what page 6 is. No printed line marker applies.",
+    "Page6[0].p6_01_Sec5[1]": "the accounting-method Accrual box, same Sec5 scheme.",
+    "Page6[0].p6_1_Sec5[0]": "the period FROM date, same Sec5 scheme.",
+    "Page6[0].p6_2_Sec5[0]": "the period TO date, same Sec5 scheme."
+   },
+   "agreeing": 0
+  },
+  "_across_pages": "The leaf p4_74_79b on page 4 and the leaf p5_74_79b on page 5 differ only in the page token. Two lender-phone cells, two pages, one leaf stem — which is why a binder keyed on the stem would collide them. THE TWO CELLS ARE NAMED HERE BY LEAF AND NOT BY FULL PATH ON PURPOSE: validate-map.mjs walks this file for target strings under any key, so a full topmostSubform path written into evidence prose reads as a SECOND BINDING of that cell and fails the duplicate-write check. It fired on the first draft of this very sentence.",
+  "_within_page_5": "The token 23e appears twice: on p5_34_23e[0], the equity cell of intangible row 24e, and on p5_00_23e[0], the block total at printed 24h three lines below it.",
+  "_within_page_6": "The leaf name ActlMnthly36 appears twice, as [0] and [1], and spells two different printed expense lines — 37 and 38."
+ },
+ "_the_five_flag_classes_on_pages_5_and_6": {
+  "_the_answer": "NONE OF THE FIVE APPEARS ON EITHER PAGE, and each is a checked absence with its own derived count rather than one sentence covering all five.",
+  "_the_five": "is_business_account (twice, on two classes), kind (primary residence / other), claimed_on_1040 and contributes_to_household_income, as registered in adapters/hubspot/asset-row-shapes.json.",
+  "probes_per_run": {
+   "p5:primary residence": 0,
+   "p5:business account": 0,
+   "p5:check if": 0,
+   "p5:1040": 0,
+   "p5:household": 0,
+   "p6:primary residence": 0,
+   "p6:business account": 0,
+   "p6:check if": 0,
+   "p6:1040": 0,
+   "p6:household": 0
+  },
+  "_the_probe_is_per_run_and_that_matters_here": "The page-4 slice searched the page text JOINED with spaces. On page 6 that produces a hit the page does not draw: the banner \"Section 5: Monthly Income/Expenses Statement for Business\" is followed by the run \"Accounting Method Used:\", and the join makes \"Business Accounting\". A phrase manufactured at a run boundary is not a phrase on the page. The per-run count is the answer, the joined count is computed beside it, and the difference is named.",
+  "join_artefacts": [
+   "p6 \"business account\": per-run 0, joined 1 — manufactured at \"Section 5: Monthly Income/Expenses Statement for Business\" + \"Accounting Method Used:\""
+  ],
+  "checkbox_widgets": {
+   "page5": 4,
+   "page6": 2
+  },
+  "_where_one_would_have_been_expected": "is_business_account. Page 5 draws BUSINESS LIABILITIES with a Secured/Unsecured pair per row and page 6 draws an accounting-method pair, so both pages DO print checkboxes — six between them — and none of the six is a flag-class column. The six are enumerated in `exclusive` above and every one is accounted for."
+ },
+ "_the_arithmetic_on_pages_5_and_6": "FIVE new printed totals: 24h and 25c on page 5, and 36, 49 and 50 on page 6. Two shapes this form has not carried before arrive with them — a total whose operand list includes a cell this engine never writes (49, which names line 48), and a DIFFERENCE rather than a sum (50, \"Line 36 minus Line 49\"). Both are declared in 433b.totals.json with the printed caption that licenses them.",
+ "_the_25c_cell_is_not_the_B06_shape": "The 25c cell is drawn wider than the column its caption names — x 491.0..576.0 against a Payment Amount lane of 514.0..576.0 — which is the resemblance [B-06] records on page 3's 20e. The witnesses AGREE here, as they do for page 4's 22e and 23e: the caption says \"Total Payments\" and the column header says \"Payment Amount\"; the printed \"$\" is at x 484.4..488.8, which is not one of the two money-marker positions this block uses for its rows (x 370.0 for Balance Owed and x 506.8 for Payment Amount) and belongs to no column but the total line; and the only other column the cell overlaps, Date of Final Payment at x 439.2..504.0, is a date column that draws no \"$\" on either row and carries maxLen 8. Recorded because a reader who knows [B-06] would expect a second instance here and there is not one. The same is true of 24h at x 493.7..576.0 against an equity lane of 521.2..576.0.",
+ "_map_evidence_page5_6": {
+  "_the_pairing_rule": "Six rules on these two pages. C: a column caption stack with AT LEAST ONE RUN contained in the cell's x range, drawn above the rect top — slice 3's declared predicate, kept, because a header phrase is set as several runs and the widest can overhang the lane by a point while plainly captioning the column; the run carrying the containment is recorded and the runs that only overlap are named beside it. CO: overlapping from above and NOT contained; weaker, and every CO cell names a second witness. L: the caption ends at or left of the cell with its baseline INSIDE the rectangle. R: the option printed to the right with its baseline inside the rectangle. T: the total-line rule — caption baseline inside the rectangle, caption left of the cell, exactly one printed \"$\" between them within 12pt. RS: new here, for the two page-6 boxes whose labels sit 0.9pt BELOW them, where R fails and is not widened.",
+  "_rule_counts": {
+   "C": 80,
+   "CO": 2,
+   "L": 14,
+   "R": 4,
+   "RS": 2,
+   "T": 2
+  },
+  "_every_figure_below_is_derived": "Every rectangle, baseline, x range and maxLen in these rows is read off adapters/pdf/forms/f433b.pdf by scratchpad/433b-slice4-gen-slice4-433b.mjs and written here by scratchpad/433b-slice4-patch-map-slice4.mjs, which computes nothing of its own. A caption the generator cannot find where its rule says it is takes the run down before this file is reached.",
+  "_second_witness": "Every one of the 104 cells carries one. On a table cell it is the pair — the printed row marker AND the printed column caption, neither of which can settle the cell alone. On the two totals it is the printed operand list plus the money marker's distance from the cell. On the four checkbox options it is the PDF on-state, which spells the printed word. On the two period dates it is which printed run lies immediately left of which cell, and the word \"to\" belonging to the second.",
+  "_correlate_labels_is_not_consulted": "adapters/pdf/maps/433b.labels.json is ABSENT from this tree — correlate-labels.mjs fails its own page-1 county self-check on 433-B and exits 2 without writing — so EVERY BINDING ON THESE PAGES RESTS ON GEOMETRY AND PRINTED TEXT ALONE, with no labels-file witness to agree or disagree. Its probes were not retuned: the guard exists to catch the tool. The absence is re-derived by the generator on every run rather than quoted, and a labels file appearing would STOP it.",
+  "bindings": [
+   {
+    "key": "business_equipment[0].asset_description",
+    "page": 5,
+    "widget": "y 662.4..673.2, x 50.4..201.6, maxLen 30",
+    "printed": "Asset Description",
+    "printed_at": "y 676.3, x 57.6..120.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by \"Asset Description\", which is drawn once per equipment row and nowhere else on the page; the printed block heading \"BUSINESS EQUIPMENT AND INTANGIBLE ASSETS\" at y 733.1 x 43.2..228.3 opens the band. maxLen 30.",
+    "leaf": "p5_1_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].purchase_lease_date",
+    "page": 5,
+    "widget": "y 662.4..684, x 201.6..259.2, maxLen 8",
+    "printed": "Purchase/Lease Date (mmddyyyy)",
+    "printed_at": "y 691.5, x 209.1..251.7",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Purchase/Lease Date (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(mmddyyyy)\" at y 691.5, x 209.1..251.7, inside this cell's x 201.6..259.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"(mmddyyyy)\" y 691.5 x 461.1..503.7. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_2_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].current_fmv",
+    "page": 5,
+    "widget": "y 662.4..684, x 269.2..324, maxLen 12",
+    "printed": "Current Fair Market Value (FMV)",
+    "printed_at": "y 691.5, x 281.3..301.9",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Current Fair Market Value (FMV)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(FMV)\" at y 691.5, x 281.3..301.9, inside this cell's x 269.2..324; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Market Value\" y 699.5 x 268.2..315. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_3_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].current_loan_balance",
+    "page": 5,
+    "widget": "y 662.4..684, x 334..388.8, maxLen 12",
+    "printed": "Current Loan Balance",
+    "printed_at": "y 695.5, x 342..370.8",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Current Loan Balance\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Balance\" at y 695.5, x 342..370.8, inside this cell's x 334..388.8; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Current Loan\" y 703.5 x 333..379.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_4_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].monthly_payment",
+    "page": 5,
+    "widget": "y 662.4..684, x 398.8..453.6, maxLen 12",
+    "printed": "Amount of Monthly Payment",
+    "printed_at": "y 691.5, x 405.4..437",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Amount of Monthly Payment\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 691.5, x 405.4..437, inside this cell's x 398.8..453.6; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 699.5 x 466.6..498.2. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_5_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].final_payment_date",
+    "page": 5,
+    "widget": "y 662.4..684, x 453.6..511.2, maxLen 8",
+    "printed": "Date of Final Payment (mmddyyyy)",
+    "printed_at": "y 699.5, x 466.6..498.2",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Date of Final Payment (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 699.5, x 466.6..498.2, inside this cell's x 453.6..511.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 691.5 x 405.4..437. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_6_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].equity",
+    "page": 5,
+    "widget": "y 662.4..684, x 521.2..576, maxLen 12",
+    "printed": "Equity FMV Minus Loan",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the header stack \"Equity FMV Minus Loan\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Equity\" at y 703.5, x 531.7..555.5, inside this cell's x 521.2..576; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"FMV Minus Loan\" y 695.5 x 513.4..573.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_7_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].location_of_asset",
+    "page": 5,
+    "widget": "y 604.8..651.6, x 50.4..295.2, maxLen null",
+    "printed": "Location of asset",
+    "printed_at": "y 654.7, x 57.6..119.1",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by \"Location of asset\" with its qualifiers \"(Street, City, State, ZIP code)\" and \"and County\" drawn on the same baseline to its right; the cell is the full-width left half of the row's second band.",
+    "leaf": "p5_8_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].lender_name_address",
+    "page": 5,
+    "widget": "y 615.6..651.6, x 295.2..576, maxLen null",
+    "printed": "Lender/Lessor Name, Address,",
+    "printed_at": "y 654.7, x 302.4..413.7",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by \"Lender/Lessor Name, Address,\" with \"(Street, City, State, ZIP code)\" and \"and Phone\" on the same baseline; the cell is the right half of the row's second band and the phone cell below it takes the \"and Phone\" part.",
+    "leaf": "p5_9_23a[0]"
+   },
+   {
+    "key": "business_equipment[0].lender_phone",
+    "page": 5,
+    "widget": "y 604.8..615.6, x 424.8..576, maxLen 14",
+    "printed": "Phone",
+    "printed_at": "y 607.1, x 396..419",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 24a at y 675.3, x 36.9. Column fixed by the printed \"Phone\" ending at x 419, left of the cell at x 424.8, with its baseline inside the rectangle. THE LEAF NAME IS p5_74_76b AND IT IS EVIDENCE OF NOTHING — see NOT_OFFSET.",
+    "leaf": "p5_74_76b[0]"
+   },
+   {
+    "key": "business_equipment[1].asset_description",
+    "page": 5,
+    "widget": "y 583.2..594, x 50.4..201.6, maxLen 30",
+    "printed": "Asset Description",
+    "printed_at": "y 597.1, x 57.6..120.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by \"Asset Description\", which is drawn once per equipment row and nowhere else on the page; the printed block heading \"BUSINESS EQUIPMENT AND INTANGIBLE ASSETS\" at y 733.1 x 43.2..228.3 opens the band. maxLen 30.",
+    "leaf": "p5_10_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].purchase_lease_date",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 201.6..259.2, maxLen 8",
+    "printed": "Purchase/Lease Date (mmddyyyy)",
+    "printed_at": "y 691.5, x 209.1..251.7",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Purchase/Lease Date (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(mmddyyyy)\" at y 691.5, x 209.1..251.7, inside this cell's x 201.6..259.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"(mmddyyyy)\" y 691.5 x 461.1..503.7. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_11_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].current_fmv",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 269.2..324, maxLen 12",
+    "printed": "Current Fair Market Value (FMV)",
+    "printed_at": "y 691.5, x 281.3..301.9",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Current Fair Market Value (FMV)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(FMV)\" at y 691.5, x 281.3..301.9, inside this cell's x 269.2..324; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Market Value\" y 699.5 x 268.2..315. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_12_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].current_loan_balance",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 334..388.8, maxLen 12",
+    "printed": "Current Loan Balance",
+    "printed_at": "y 695.5, x 342..370.8",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Current Loan Balance\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Balance\" at y 695.5, x 342..370.8, inside this cell's x 334..388.8; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Current Loan\" y 703.5 x 333..379.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_13_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].monthly_payment",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 398.8..453.6, maxLen 12",
+    "printed": "Amount of Monthly Payment",
+    "printed_at": "y 691.5, x 405.4..437",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Amount of Monthly Payment\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 691.5, x 405.4..437, inside this cell's x 398.8..453.6; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 699.5 x 466.6..498.2. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_14_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].final_payment_date",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 453.6..511.2, maxLen 8",
+    "printed": "Date of Final Payment (mmddyyyy)",
+    "printed_at": "y 699.5, x 466.6..498.2",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Date of Final Payment (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 699.5, x 466.6..498.2, inside this cell's x 453.6..511.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 691.5 x 405.4..437. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_15_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].equity",
+    "page": 5,
+    "widget": "y 583.2..604.8, x 521.2..576, maxLen 12",
+    "printed": "Equity FMV Minus Loan",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the header stack \"Equity FMV Minus Loan\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Equity\" at y 703.5, x 531.7..555.5, inside this cell's x 521.2..576; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"FMV Minus Loan\" y 695.5 x 513.4..573.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_16_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].location_of_asset",
+    "page": 5,
+    "widget": "y 525.6..572.4, x 50.4..295.2, maxLen null",
+    "printed": "Location of asset",
+    "printed_at": "y 575.5, x 57.6..119.1",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by \"Location of asset\" with its qualifiers \"(Street, City, State, ZIP code)\" and \"and County\" drawn on the same baseline to its right; the cell is the full-width left half of the row's second band.",
+    "leaf": "p5_17_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].lender_name_address",
+    "page": 5,
+    "widget": "y 536.4..572.4, x 295.2..576, maxLen null",
+    "printed": "Lender/Lessor Name, Address,",
+    "printed_at": "y 575.5, x 302.4..413.7",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by \"Lender/Lessor Name, Address,\" with \"(Street, City, State, ZIP code)\" and \"and Phone\" on the same baseline; the cell is the right half of the row's second band and the phone cell below it takes the \"and Phone\" part.",
+    "leaf": "p5_18_23b[0]"
+   },
+   {
+    "key": "business_equipment[1].lender_phone",
+    "page": 5,
+    "widget": "y 525.6..536.4, x 424.8..576, maxLen 14",
+    "printed": "Phone",
+    "printed_at": "y 527.9, x 396..419",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 24b at y 596.1, x 36.6. Column fixed by the printed \"Phone\" ending at x 419, left of the cell at x 424.8, with its baseline inside the rectangle. THE LEAF NAME IS p5_74_77b AND IT IS EVIDENCE OF NOTHING — see NOT_OFFSET.",
+    "leaf": "p5_74_77b[0]"
+   },
+   {
+    "key": "business_equipment[2].asset_description",
+    "page": 5,
+    "widget": "y 504..514.8, x 50.4..201.6, maxLen 30",
+    "printed": "Asset Description",
+    "printed_at": "y 517.9, x 57.6..120.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by \"Asset Description\", which is drawn once per equipment row and nowhere else on the page; the printed block heading \"BUSINESS EQUIPMENT AND INTANGIBLE ASSETS\" at y 733.1 x 43.2..228.3 opens the band. maxLen 30.",
+    "leaf": "p5_19_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].purchase_lease_date",
+    "page": 5,
+    "widget": "y 504..525.6, x 201.6..259.2, maxLen 8",
+    "printed": "Purchase/Lease Date (mmddyyyy)",
+    "printed_at": "y 691.5, x 209.1..251.7",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Purchase/Lease Date (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(mmddyyyy)\" at y 691.5, x 209.1..251.7, inside this cell's x 201.6..259.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"(mmddyyyy)\" y 691.5 x 461.1..503.7. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_20_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].current_fmv",
+    "page": 5,
+    "widget": "y 504..525.6, x 269.2..324, maxLen 12",
+    "printed": "Current Fair Market Value (FMV)",
+    "printed_at": "y 691.5, x 281.3..301.9",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Current Fair Market Value (FMV)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(FMV)\" at y 691.5, x 281.3..301.9, inside this cell's x 269.2..324; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Market Value\" y 699.5 x 268.2..315. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_21_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].current_loan_balance",
+    "page": 5,
+    "widget": "y 504..525.6, x 334..388.8, maxLen 12",
+    "printed": "Current Loan Balance",
+    "printed_at": "y 695.5, x 342..370.8",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Current Loan Balance\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Balance\" at y 695.5, x 342..370.8, inside this cell's x 334..388.8; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Current Loan\" y 703.5 x 333..379.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_22_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].monthly_payment",
+    "page": 5,
+    "widget": "y 504..525.6, x 398.8..453.6, maxLen 12",
+    "printed": "Amount of Monthly Payment",
+    "printed_at": "y 691.5, x 405.4..437",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Amount of Monthly Payment\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 691.5, x 405.4..437, inside this cell's x 398.8..453.6; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 699.5 x 466.6..498.2. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_23_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].final_payment_date",
+    "page": 5,
+    "widget": "y 504..525.6, x 453.6..511.2, maxLen 8",
+    "printed": "Date of Final Payment (mmddyyyy)",
+    "printed_at": "y 699.5, x 466.6..498.2",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Date of Final Payment (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 699.5, x 466.6..498.2, inside this cell's x 453.6..511.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 691.5 x 405.4..437. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_24_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].equity",
+    "page": 5,
+    "widget": "y 504..525.6, x 521.2..576, maxLen 12",
+    "printed": "Equity FMV Minus Loan",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the header stack \"Equity FMV Minus Loan\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Equity\" at y 703.5, x 531.7..555.5, inside this cell's x 521.2..576; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"FMV Minus Loan\" y 695.5 x 513.4..573.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_25_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].location_of_asset",
+    "page": 5,
+    "widget": "y 446.4..493.2, x 50.4..295.2, maxLen null",
+    "printed": "Location of asset",
+    "printed_at": "y 496.3, x 57.6..119.1",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by \"Location of asset\" with its qualifiers \"(Street, City, State, ZIP code)\" and \"and County\" drawn on the same baseline to its right; the cell is the full-width left half of the row's second band.",
+    "leaf": "p5_26_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].lender_name_address",
+    "page": 5,
+    "widget": "y 457.2..493.2, x 295.2..576, maxLen null",
+    "printed": "Lender/Lessor Name, Address,",
+    "printed_at": "y 496.3, x 302.4..413.7",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by \"Lender/Lessor Name, Address,\" with \"(Street, City, State, ZIP code)\" and \"and Phone\" on the same baseline; the cell is the right half of the row's second band and the phone cell below it takes the \"and Phone\" part.",
+    "leaf": "p5_27_23c[0]"
+   },
+   {
+    "key": "business_equipment[2].lender_phone",
+    "page": 5,
+    "widget": "y 446.4..457.2, x 424.8..576, maxLen 14",
+    "printed": "Phone",
+    "printed_at": "y 448.7, x 396..419",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 24c at y 516.9, x 36.9. Column fixed by the printed \"Phone\" ending at x 419, left of the cell at x 424.8, with its baseline inside the rectangle. THE LEAF NAME IS p5_74_78b AND IT IS EVIDENCE OF NOTHING — see NOT_OFFSET.",
+    "leaf": "p5_74_78b[0]"
+   },
+   {
+    "key": "business_equipment[3].asset_description",
+    "page": 5,
+    "widget": "y 424.8..435.6, x 50.4..201.6, maxLen 30",
+    "printed": "Asset Description",
+    "printed_at": "y 438.7, x 57.6..120.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by \"Asset Description\", which is drawn once per equipment row and nowhere else on the page; the printed block heading \"BUSINESS EQUIPMENT AND INTANGIBLE ASSETS\" at y 733.1 x 43.2..228.3 opens the band. maxLen 30.",
+    "leaf": "p5_28_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].purchase_lease_date",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 201.6..259.2, maxLen 8",
+    "printed": "Purchase/Lease Date (mmddyyyy)",
+    "printed_at": "y 691.5, x 209.1..251.7",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Purchase/Lease Date (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(mmddyyyy)\" at y 691.5, x 209.1..251.7, inside this cell's x 201.6..259.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"(mmddyyyy)\" y 691.5 x 461.1..503.7. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_29_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].current_fmv",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 269.2..324, maxLen 12",
+    "printed": "Current Fair Market Value (FMV)",
+    "printed_at": "y 691.5, x 281.3..301.9",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Current Fair Market Value (FMV)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"(FMV)\" at y 691.5, x 281.3..301.9, inside this cell's x 269.2..324; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Market Value\" y 699.5 x 268.2..315. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_30_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].current_loan_balance",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 334..388.8, maxLen 12",
+    "printed": "Current Loan Balance",
+    "printed_at": "y 695.5, x 342..370.8",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Current Loan Balance\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Balance\" at y 695.5, x 342..370.8, inside this cell's x 334..388.8; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Current Loan\" y 703.5 x 333..379.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_31_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].monthly_payment",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 398.8..453.6, maxLen 12",
+    "printed": "Amount of Monthly Payment",
+    "printed_at": "y 691.5, x 405.4..437",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Amount of Monthly Payment\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 691.5, x 405.4..437, inside this cell's x 398.8..453.6; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 699.5 x 466.6..498.2. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_32_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].final_payment_date",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 453.6..511.2, maxLen 8",
+    "printed": "Date of Final Payment (mmddyyyy)",
+    "printed_at": "y 699.5, x 466.6..498.2",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Date of Final Payment (mmddyyyy)\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Payment\" at y 699.5, x 466.6..498.2, inside this cell's x 453.6..511.2; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"Payment\" y 691.5 x 405.4..437. NO printed \"$\" is drawn left of this cell on any row, and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint.",
+    "leaf": "p5_33_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].equity",
+    "page": 5,
+    "widget": "y 424.8..446.4, x 521.2..576, maxLen 12",
+    "printed": "Equity FMV Minus Loan",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption stack, at least one run contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the header stack \"Equity FMV Minus Loan\", drawn ONCE above row 24a and captioning all four equipment rows. The run carrying the containment is \"Equity\" at y 703.5, x 531.7..555.5, inside this cell's x 521.2..576; the other run(s) of the stack only OVERLAP and are named rather than absorbed: \"FMV Minus Loan\" y 695.5 x 513.4..573.8. A printed \"$\" is drawn immediately left of this cell on every one of the four equipment rows, and the widget carries maxLen 12.",
+    "leaf": "p5_34_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].location_of_asset",
+    "page": 5,
+    "widget": "y 367.2..414, x 50.4..295.2, maxLen null",
+    "printed": "Location of asset",
+    "printed_at": "y 417.1, x 57.6..119.1",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by \"Location of asset\" with its qualifiers \"(Street, City, State, ZIP code)\" and \"and County\" drawn on the same baseline to its right; the cell is the full-width left half of the row's second band.",
+    "leaf": "p5_35_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].lender_name_address",
+    "page": 5,
+    "widget": "y 378..414, x 295.2..576, maxLen null",
+    "printed": "Lender/Lessor Name, Address,",
+    "printed_at": "y 417.1, x 302.4..413.7",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by \"Lender/Lessor Name, Address,\" with \"(Street, City, State, ZIP code)\" and \"and Phone\" on the same baseline; the cell is the right half of the row's second band and the phone cell below it takes the \"and Phone\" part.",
+    "leaf": "p5_36_23d[0]"
+   },
+   {
+    "key": "business_equipment[3].lender_phone",
+    "page": 5,
+    "widget": "y 367.2..378, x 424.8..576, maxLen 14",
+    "printed": "Phone",
+    "printed_at": "y 369.5, x 396..419",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 24d at y 437.7, x 36.6. Column fixed by the printed \"Phone\" ending at x 419, left of the cell at x 424.8, with its baseline inside the rectangle. THE LEAF NAME IS p5_74_79b AND IT IS EVIDENCE OF NOTHING — see NOT_OFFSET.",
+    "leaf": "p5_74_79b[0]"
+   },
+   {
+    "key": "intangible_assets[0].description",
+    "page": 5,
+    "widget": "y 342..356.4, x 50.4..511.2, maxLen null",
+    "printed": "Intangible Asset Description",
+    "printed_at": "y 359.5, x 57.6..157.8",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24e at y 358.5, x 36.9. Column fixed by \"Intangible Asset Description\", drawn once per intangible row. The printed instruction \"List intangible assets in 24e through 24g (licenses, patents, logos, domain names, trademarks, copyrights, software, mining claims, goodwill and trade secrets.)\" at y 725.1 names these three rows by their printed markers.",
+    "leaf": "p5_28_23e[0]"
+   },
+   {
+    "key": "intangible_assets[0].equity",
+    "page": 5,
+    "widget": "y 342..357.2, x 521.2..576, maxLen 12",
+    "printed": "Equity",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24e at y 358.5, x 36.9. Column fixed by the same \"Equity\" header the four equipment rows use, at x 531.7..555.5 inside this cell's x 521.2..576. A printed \"$\" is drawn immediately left of it at x 514, and the widget carries maxLen 12. THE INTANGIBLE ROWS DRAW NO FMV AND NO LOAN CELL — two cells per row, not eight — so the \"FMV Minus Loan\" half of the header has no operands here; see [B-07].",
+    "leaf": "p5_34_23e[0]"
+   },
+   {
+    "key": "intangible_assets[1].description",
+    "page": 5,
+    "widget": "y 316.8..331.2, x 50.4..511.2, maxLen null",
+    "printed": "Intangible Asset Description",
+    "printed_at": "y 334.3, x 57.6..157.8",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24f at y 333.3, x 37. Column fixed by \"Intangible Asset Description\", drawn once per intangible row. The printed instruction \"List intangible assets in 24e through 24g (licenses, patents, logos, domain names, trademarks, copyrights, software, mining claims, goodwill and trade secrets.)\" at y 725.1 names these three rows by their printed markers.",
+    "leaf": "p5_28_23f[0]"
+   },
+   {
+    "key": "intangible_assets[1].equity",
+    "page": 5,
+    "widget": "y 316.8..332, x 521.2..576, maxLen 12",
+    "printed": "Equity",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24f at y 333.3, x 37. Column fixed by the same \"Equity\" header the four equipment rows use, at x 531.7..555.5 inside this cell's x 521.2..576. A printed \"$\" is drawn immediately left of it at x 514, and the widget carries maxLen 12. THE INTANGIBLE ROWS DRAW NO FMV AND NO LOAN CELL — two cells per row, not eight — so the \"FMV Minus Loan\" half of the header has no operands here; see [B-07].",
+    "leaf": "p5_34_23f[0]"
+   },
+   {
+    "key": "intangible_assets[2].description",
+    "page": 5,
+    "widget": "y 291.6..306, x 50.4..511.2, maxLen null",
+    "printed": "Intangible Asset Description",
+    "printed_at": "y 309.1, x 57.6..157.8",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24g at y 308.1, x 36.6. Column fixed by \"Intangible Asset Description\", drawn once per intangible row. The printed instruction \"List intangible assets in 24e through 24g (licenses, patents, logos, domain names, trademarks, copyrights, software, mining claims, goodwill and trade secrets.)\" at y 725.1 names these three rows by their printed markers.",
+    "leaf": "p5_28_23g[0]"
+   },
+   {
+    "key": "intangible_assets[2].equity",
+    "page": 5,
+    "widget": "y 291.6..306.8, x 521.2..576, maxLen 12",
+    "printed": "Equity",
+    "printed_at": "y 703.5, x 531.7..555.5",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 24g at y 308.1, x 36.6. Column fixed by the same \"Equity\" header the four equipment rows use, at x 531.7..555.5 inside this cell's x 521.2..576. A printed \"$\" is drawn immediately left of it at x 514, and the widget carries maxLen 12. THE INTANGIBLE ROWS DRAW NO FMV AND NO LOAN CELL — two cells per row, not eight — so the \"FMV Minus Loan\" half of the header has no operands here; see [B-07].",
+    "leaf": "p5_34_23g[0]"
+   },
+   {
+    "key": "s4_24h_total_equity_business_equipment",
+    "page": 5,
+    "widget": "y 270..279.6, x 493.7..576, maxLen 14",
+    "printed": "Total Equity",
+    "printed_at": "y 272.3, x 57.6..102.9",
+    "pairing": "T — total-line rule: caption baseline inside the rectangle, caption left of the cell, one printed \"$\" between them within 12pt",
+    "second_witness": "Row fixed by the printed marker 24h at y 272.3. The operand list is the caption's own: \"(Add lines 24a through 24g and amounts from any attachments)\" drawn on the same baseline at x 105.1..331.6. The money marker is at y 272.3, x 485.8..490.3, 3.4pt left of the cell. THE LEAF NAME IS p5_00_23e AND IT NAMES THE 24e ROW — see NOT_OFFSET.",
+    "leaf": "p5_00_23e[0]"
+   },
+   {
+    "key": "business_liabilities[0].description",
+    "page": 5,
+    "widget": "y 194.4..219.6, x 50.4..244.8, maxLen null",
+    "printed": "Description:",
+    "printed_at": "y 222.7, x 57.6..100.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed twice over: the row caption \"Description:\" drawn on the marker's own baseline, and the column header \"Business Liabilities\" at y 240.5 x 56.0..123.9 above the block. The printed block heading \"BUSINESS LIABILITIES\" at y 260.3 x 58.0..146.1 opens the band.",
+    "leaf": "p5_37_24a[0]"
+   },
+   {
+    "key": "business_liabilities[0].date_pledged",
+    "page": 5,
+    "widget": "y 194.4..206.4, x 302.4..367.2, maxLen 8",
+    "printed": "Date Pledged",
+    "printed_at": "y 243.5, x 313.9..357.7",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the header stack drawn once above row 25a at x 302.4..367.2. NO printed \"$\" is drawn left of this cell on either row and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint drawn under the header.",
+    "leaf": "p5_39_24a[0]"
+   },
+   {
+    "key": "business_liabilities[0].balance_owed",
+    "page": 5,
+    "widget": "y 194.4..206.4, x 377.2..439.2, maxLen 12",
+    "printed": "Balance Owed",
+    "printed_at": "y 240.5, x 377.1..429.3",
+    "pairing": "CO — column caption OVERLAPPING from above, not contained",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. THIS IS THE ONE CO CELL ON EITHER PAGE AND IT MISSES CONTAINMENT BY 0.1pt: \"Balance Owed\" runs x 377.1..429.3 and the cell x 377.2..439.2, so the caption starts 0.1pt left of the cell's left edge. It is reported as CO rather than rounded into a C, because a tolerance that swallowed 0.1pt is the shape [R-09] forbids. THE SECOND WITNESS IS DECISIVE: a printed \"$\" is drawn at y 196.7 x 370.0 immediately left of this cell on both rows and left of no other cell in this block except the payment amount, and the widget carries maxLen 12, the money width. The two date columns beside it carry maxLen 8 and no \"$\".",
+    "leaf": "p5_40_24a[0]"
+   },
+   {
+    "key": "business_liabilities[0].final_payment_date",
+    "page": 5,
+    "widget": "y 194.4..206.4, x 439.2..504, maxLen 8",
+    "printed": "Date of Final",
+    "printed_at": "y 247.5, x 451.3..491.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the header stack drawn once above row 25a at x 439.2..504. NO printed \"$\" is drawn left of this cell on either row and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint drawn under the header.",
+    "leaf": "p5_41_24a[0]"
+   },
+   {
+    "key": "business_liabilities[0].payment_amount",
+    "page": 5,
+    "widget": "y 194.4..206.4, x 514..576, maxLen 12",
+    "printed": "Payment",
+    "printed_at": "y 243.5, x 524.2..555.8",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the header stack drawn once above row 25a at x 514..576. A printed \"$\" is drawn immediately left of this cell on both rows and the widget carries maxLen 12. The header is two runs, \"Payment\" at y 243.5 x 524.2..555.8 and \"Amount\" at y 236.5 x 526.0..554.0; the \"Payment\" at y 240.5 x 457.4..485.8 belongs to the DATE OF FINAL PAYMENT stack and is not contained in this cell.",
+    "leaf": "p5_42_24a[0]"
+   },
+   {
+    "key": "business_liabilities_25a_secured_or_unsecured.Secured",
+    "page": 5,
+    "widget": "y 217.4..225.4, x 252..260, maxLen null",
+    "printed": "Secured",
+    "printed_at": "y 217.7, x 265..294.9",
+    "pairing": "R — option printed immediately right of the box, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. The pair is captioned by the column header \"Secured/\" at y 243.5 x 257.3..289.9 and \"Unsecured\" at y 236.5 x 254.1..293.1 above the block. THE BOX'S OWN PDF ON-STATE IS /Secured, the printed word itself, which settles the option independently of the geometry.",
+    "on_state": "/Secured",
+    "leaf": "p5_1_24a[0]"
+   },
+   {
+    "key": "business_liabilities_25a_secured_or_unsecured.Unsecured",
+    "page": 5,
+    "widget": "y 199.4..207.4, x 252..260, maxLen null",
+    "printed": "Unsecured",
+    "printed_at": "y 199.7, x 265..300",
+    "pairing": "R — option printed immediately right of the box, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. The pair is captioned by the column header \"Secured/\" at y 243.5 x 257.3..289.9 and \"Unsecured\" at y 236.5 x 254.1..293.1 above the block. THE BOX'S OWN PDF ON-STATE IS /Unsecured, the printed word itself, which settles the option independently of the geometry.",
+    "on_state": "/Unsecured",
+    "leaf": "p5_1_24a[1]"
+   },
+   {
+    "key": "business_liabilities[0].name",
+    "page": 5,
+    "widget": "y 183.6..194.4, x 86.4..576, maxLen null",
+    "printed": "Name",
+    "printed_at": "y 186.9, x 57.6..78.8",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the printed \"Name\" ending left of the cell with its baseline inside the rectangle. ALL FOUR OF ROW 25a's CONTACT CELLS SHARE ONE LEAF NAME, p5_00_24a, distinguished only by index [0] to [3]; row 25b spells the same four cells p5_49_24b, p5_50_24b, p5_51_24b and p5_52_24b. Two rows, two naming schemes, and the indexed one carries no column information at all.",
+    "leaf": "p5_00_24a[0]"
+   },
+   {
+    "key": "business_liabilities[0].street_address",
+    "page": 5,
+    "widget": "y 172.8..183.6, x 129.6..576, maxLen null",
+    "printed": "Street Address",
+    "printed_at": "y 176.1, x 57.6..110.9",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the printed \"Street Address\" ending left of the cell with its baseline inside the rectangle. ALL FOUR OF ROW 25a's CONTACT CELLS SHARE ONE LEAF NAME, p5_00_24a, distinguished only by index [0] to [3]; row 25b spells the same four cells p5_49_24b, p5_50_24b, p5_51_24b and p5_52_24b. Two rows, two naming schemes, and the indexed one carries no column information at all.",
+    "leaf": "p5_00_24a[1]"
+   },
+   {
+    "key": "business_liabilities[0].city_state_zip",
+    "page": 5,
+    "widget": "y 162..172.8, x 140.4..403.2, maxLen null",
+    "printed": "City/State/ZIP code",
+    "printed_at": "y 164.3, x 57.6..128.1",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the printed \"City/State/ZIP code\" ending left of the cell with its baseline inside the rectangle. ALL FOUR OF ROW 25a's CONTACT CELLS SHARE ONE LEAF NAME, p5_00_24a, distinguished only by index [0] to [3]; row 25b spells the same four cells p5_49_24b, p5_50_24b, p5_51_24b and p5_52_24b. Two rows, two naming schemes, and the indexed one carries no column information at all.",
+    "leaf": "p5_00_24a[2]"
+   },
+   {
+    "key": "business_liabilities[0].phone",
+    "page": 5,
+    "widget": "y 162..172.8, x 433.2..576, maxLen 12",
+    "printed": "Phone",
+    "printed_at": "y 164.3, x 403.2..426.2",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25a at y 222.7, x 36.9. Column fixed by the printed \"Phone\" ending left of the cell with its baseline inside the rectangle. ALL FOUR OF ROW 25a's CONTACT CELLS SHARE ONE LEAF NAME, p5_00_24a, distinguished only by index [0] to [3]; row 25b spells the same four cells p5_49_24b, p5_50_24b, p5_51_24b and p5_52_24b. Two rows, two naming schemes, and the indexed one carries no column information at all.",
+    "leaf": "p5_00_24a[3]"
+   },
+   {
+    "key": "business_liabilities[1].description",
+    "page": 5,
+    "widget": "y 126..151.3, x 50.4..244.7, maxLen null",
+    "printed": "Description:",
+    "printed_at": "y 154.3, x 57.6..100.6",
+    "pairing": "C — row caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed twice over: the row caption \"Description:\" drawn on the marker's own baseline, and the column header \"Business Liabilities\" at y 240.5 x 56.0..123.9 above the block. The printed block heading \"BUSINESS LIABILITIES\" at y 260.3 x 58.0..146.1 opens the band.",
+    "leaf": "p5_43_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].date_pledged",
+    "page": 5,
+    "widget": "y 126..138, x 302.4..367.2, maxLen 8",
+    "printed": "Date Pledged",
+    "printed_at": "y 243.5, x 313.9..357.7",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the header stack drawn once above row 25a at x 302.4..367.2. NO printed \"$\" is drawn left of this cell on either row and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint drawn under the header.",
+    "leaf": "p5_45_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].balance_owed",
+    "page": 5,
+    "widget": "y 126..138, x 377.2..439.2, maxLen 12",
+    "printed": "Balance Owed",
+    "printed_at": "y 240.5, x 377.1..429.3",
+    "pairing": "CO — column caption OVERLAPPING from above, not contained",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. THIS IS THE ONE CO CELL ON EITHER PAGE AND IT MISSES CONTAINMENT BY 0.1pt: \"Balance Owed\" runs x 377.1..429.3 and the cell x 377.2..439.2, so the caption starts 0.1pt left of the cell's left edge. It is reported as CO rather than rounded into a C, because a tolerance that swallowed 0.1pt is the shape [R-09] forbids. THE SECOND WITNESS IS DECISIVE: a printed \"$\" is drawn at y 128.3 x 370.0 immediately left of this cell on both rows and left of no other cell in this block except the payment amount, and the widget carries maxLen 12, the money width. The two date columns beside it carry maxLen 8 and no \"$\".",
+    "leaf": "p5_46_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].final_payment_date",
+    "page": 5,
+    "widget": "y 126..138, x 439.2..504, maxLen 8",
+    "printed": "Date of Final",
+    "printed_at": "y 247.5, x 451.3..491.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the header stack drawn once above row 25a at x 439.2..504. NO printed \"$\" is drawn left of this cell on either row and the widget carries maxLen 8, the width of the printed (mmddyyyy) hint drawn under the header.",
+    "leaf": "p5_47_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].payment_amount",
+    "page": 5,
+    "widget": "y 126..138, x 514..576, maxLen 12",
+    "printed": "Payment",
+    "printed_at": "y 243.5, x 524.2..555.8",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the header stack drawn once above row 25a at x 514..576. A printed \"$\" is drawn immediately left of this cell on both rows and the widget carries maxLen 12. The header is two runs, \"Payment\" at y 243.5 x 524.2..555.8 and \"Amount\" at y 236.5 x 526.0..554.0; the \"Payment\" at y 240.5 x 457.4..485.8 belongs to the DATE OF FINAL PAYMENT stack and is not contained in this cell.",
+    "leaf": "p5_48_24b[0]"
+   },
+   {
+    "key": "business_liabilities_25b_secured_or_unsecured.Secured",
+    "page": 5,
+    "widget": "y 149..157, x 252..260, maxLen null",
+    "printed": "Secured",
+    "printed_at": "y 149.3, x 265..294.9",
+    "pairing": "R — option printed immediately right of the box, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. The pair is captioned by the column header \"Secured/\" at y 243.5 x 257.3..289.9 and \"Unsecured\" at y 236.5 x 254.1..293.1 above the block. THE BOX'S OWN PDF ON-STATE IS /Secured, the printed word itself, which settles the option independently of the geometry.",
+    "on_state": "/Secured",
+    "leaf": "p5_5_24b[0]"
+   },
+   {
+    "key": "business_liabilities_25b_secured_or_unsecured.Unsecured",
+    "page": 5,
+    "widget": "y 131..139, x 252..260, maxLen null",
+    "printed": "Unsecured",
+    "printed_at": "y 131.3, x 265..300",
+    "pairing": "R — option printed immediately right of the box, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. The pair is captioned by the column header \"Secured/\" at y 243.5 x 257.3..289.9 and \"Unsecured\" at y 236.5 x 254.1..293.1 above the block. THE BOX'S OWN PDF ON-STATE IS /Unsecured, the printed word itself, which settles the option independently of the geometry.",
+    "on_state": "/Unsecured",
+    "leaf": "p5_5_24b[1]"
+   },
+   {
+    "key": "business_liabilities[1].name",
+    "page": 5,
+    "widget": "y 115.2..126, x 86.4..576, maxLen null",
+    "printed": "Name",
+    "printed_at": "y 118.5, x 57.6..78.8",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the printed \"Name\" ending left of the cell with its baseline inside the rectangle. Row 25b spells these four cells with four distinct leaf names where row 25a uses one indexed name; the binding rests on the printed caption on both rows, not on either scheme.",
+    "leaf": "p5_49_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].street_address",
+    "page": 5,
+    "widget": "y 104.4..115.2, x 129.6..576, maxLen null",
+    "printed": "Street Address",
+    "printed_at": "y 107.7, x 57.6..110.9",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the printed \"Street Address\" ending left of the cell with its baseline inside the rectangle. Row 25b spells these four cells with four distinct leaf names where row 25a uses one indexed name; the binding rests on the printed caption on both rows, not on either scheme.",
+    "leaf": "p5_50_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].city_state_zip",
+    "page": 5,
+    "widget": "y 93.6..104.4, x 140.4..403.2, maxLen null",
+    "printed": "City/State/ZIP code",
+    "printed_at": "y 95.9, x 57.6..128.1",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the printed \"City/State/ZIP code\" ending left of the cell with its baseline inside the rectangle. Row 25b spells these four cells with four distinct leaf names where row 25a uses one indexed name; the binding rests on the printed caption on both rows, not on either scheme.",
+    "leaf": "p5_51_24b[0]"
+   },
+   {
+    "key": "business_liabilities[1].phone",
+    "page": 5,
+    "widget": "y 93.6..104.4, x 433.2..576, maxLen 12",
+    "printed": "Phone",
+    "printed_at": "y 95.9, x 403.2..426.2",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "Row fixed by the printed marker 25b at y 154.3, x 36.6. Column fixed by the printed \"Phone\" ending left of the cell with its baseline inside the rectangle. Row 25b spells these four cells with four distinct leaf names where row 25a uses one indexed name; the binding rests on the printed caption on both rows, not on either scheme.",
+    "leaf": "p5_52_24b[0]"
+   },
+   {
+    "key": "s4_25c_total_payments",
+    "page": 5,
+    "widget": "y 72..81.6, x 491..576, maxLen 14",
+    "printed": "Total Payments",
+    "printed_at": "y 75.3, x 57.6..116.8",
+    "pairing": "T — total-line rule: caption baseline inside the rectangle, caption left of the cell, one printed \"$\" between them within 12pt",
+    "second_witness": "Row fixed by the printed marker 25c at y 75.3. The operand list is the caption's own: \"(Add lines 25a and 25b and amounts from any attachments)\" at x 119.1..331.3. The money marker is at y 74.3, x 484.4..488.8, 2.2pt left of the cell. THE CELL IS WIDER THAN THE COLUMN IT SUMS — x 491.0..576.0 against a Payment Amount lane of 514.0..576.0 — which is the [B-06] resemblance page 4 also carries; the witnesses agree here for the same reason they do there and it is recorded at _the_25c_cell_is_not_the_B06_shape. THE LEAF NAME IS p5_63_24d AND THIS BLOCK HAS NO ROW d.",
+    "leaf": "p5_63_24d[0]"
+   },
+   {
+    "key": "s5_accounting_method.Cash",
+    "page": 6,
+    "widget": "y 719.6..727.6, x 144..152, maxLen null",
+    "printed": "Cash",
+    "printed_at": "y 718.7, x 159.1..177.6",
+    "pairing": "RS — right on the same printed baseline, the unique run between this box and the next",
+    "second_witness": "R DOES NOT HOLD HERE AND IS NOT WIDENED TO MAKE IT: the box runs y 719.6..727.6 and \"Cash\" is drawn at baseline 718.7, 0.9pt BELOW the box bottom. Three printed runs share baseline 718.7 — \"Accounting Method Used:\" x 36.0..135.1, \"Cash\" x 159.1..177.6 and \"Accrual\" x 208.5..235.4 — and exactly one lies between this box and the next. SECOND WITNESS, INDEPENDENT OF ALL GEOMETRY: the box's PDF on-state is /Cash.",
+    "on_state": "/Cash",
+    "leaf": "p6_01_Sec5[0]"
+   },
+   {
+    "key": "s5_accounting_method.Accrual",
+    "page": 6,
+    "widget": "y 719.6..727.6, x 194.4..202.4, maxLen null",
+    "printed": "Accrual",
+    "printed_at": "y 718.7, x 208.5..235.4",
+    "pairing": "RS — right on the same printed baseline, the unique run between this box and the line end",
+    "second_witness": "Same relation as the Cash box: \"Accrual\" at x 208.5..235.4 is the only run right of this box on baseline 718.7. SECOND WITNESS: the box's PDF on-state is /Accrual.",
+    "on_state": "/Accrual",
+    "leaf": "p6_01_Sec5[1]"
+   },
+   {
+    "key": "s5_period_from",
+    "page": 6,
+    "widget": "y 680.4..697, x 258.3..381.6, maxLen 8",
+    "printed": "(mmddyyyy)",
+    "printed_at": "y 686.9, x 191.9..234.6",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "The printed sentence is \"Income and Expenses during the period\" x 38.0..189.7 followed by \"(mmddyyyy)\" x 191.9..234.6 on baseline 686.9; this cell takes the FIRST (mmddyyyy) and the TO cell takes the run \"to (mmddyyyy)\" at x 383.4..435.4. The two are distinguished by which printed run is immediately left of which cell, and by the word \"to\" belonging to the second. maxLen 8 on both.",
+    "leaf": "p6_1_Sec5[0]"
+   },
+   {
+    "key": "s5_period_to",
+    "page": 6,
+    "widget": "y 680.4..697, x 442.3..575.8, maxLen 8",
+    "printed": "to (mmddyyyy)",
+    "printed_at": "y 686.9, x 383.4..435.4",
+    "pairing": "L — caption immediately left, baseline inside the rectangle",
+    "second_witness": "The run is \"to (mmddyyyy)\" at x 383.4..435.4, which carries the word \"to\" and is the only run left of this cell on its baseline. maxLen 8.",
+    "leaf": "p6_2_Sec5[0]"
+   },
+   {
+    "key": "s5_26_gross_receipts",
+    "page": 6,
+    "widget": "y 622.8..633.6, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 26 at y 626.1, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Gross Receipts from Sales/Services\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Gross Monthly\" at y 636.0 x 233.0..285.4, contained in this cell's x 226.0..302.4, under the block caption \"Total Monthly Business Income\" at y 653.5 x 109.4..229.0. A printed \"$\" is drawn at x 218.8 immediately left of the cell and the widget carries maxLen 12.",
+    "leaf": "GrssMnthly25[0]"
+   },
+   {
+    "key": "s5_27_gross_rental_income",
+    "page": 6,
+    "widget": "y 612..622.8, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 27 at y 615.3, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Gross Rental Income\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Gross Monthly\" at y 636.0 x 233.0..285.4, contained in this cell's x 226.0..302.4, under the block caption \"Total Monthly Business Income\" at y 653.5 x 109.4..229.0. A printed \"$\" is drawn at x 218.8 immediately left of the cell and the widget carries maxLen 12.",
+    "leaf": "GrossMnthly26[0]"
+   },
+   {
+    "key": "s5_28_interest_income",
+    "page": 6,
+    "widget": "y 601.2..612, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 28 at y 604.5, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Interest Income\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Gross Monthly\" at y 636.0 x 233.0..285.4, contained in this cell's x 226.0..302.4, under the block caption \"Total Monthly Business Income\" at y 653.5 x 109.4..229.0. A printed \"$\" is drawn at x 218.8 immediately left of the cell and the widget carries maxLen 12.",
+    "leaf": "GrossMnthly27[0]"
+   },
+   {
+    "key": "s5_29_dividends",
+    "page": 6,
+    "widget": "y 590.4..601.2, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 29 at y 593.7, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Dividends\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Gross Monthly\" at y 636.0 x 233.0..285.4, contained in this cell's x 226.0..302.4, under the block caption \"Total Monthly Business Income\" at y 653.5 x 109.4..229.0. A printed \"$\" is drawn at x 218.8 immediately left of the cell and the widget carries maxLen 12.",
+    "leaf": "GrossMnthly28[0]"
+   },
+   {
+    "key": "s5_30_cash_receipts",
+    "page": 6,
+    "widget": "y 579.6..590.4, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 30 at y 582.9, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Cash Receipts (Not included in lines 26-29)\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Gross Monthly\" at y 636.0 x 233.0..285.4, contained in this cell's x 226.0..302.4, under the block caption \"Total Monthly Business Income\" at y 653.5 x 109.4..229.0. A printed \"$\" is drawn at x 218.8 immediately left of the cell and the widget carries maxLen 12.",
+    "leaf": "GroosMnthly29[0]"
+   },
+   {
+    "key": "other_income[0].amount",
+    "page": 6,
+    "widget": "y 558..568.8, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 31 at y 561.3, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. The five rows 31-35 draw NO printed item name of their own — the single caption \"Other Income (Specify below)\" at y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside it. Column fixed by the \"Gross Monthly\" header; a printed \"$\" at x 218.8 is immediately left of the cell; maxLen 12.",
+    "leaf": "GrossMnthly30[0]"
+   },
+   {
+    "key": "other_income[0].description",
+    "page": 6,
+    "widget": "y 558..568.8, x 47..216, maxLen 32",
+    "printed": "Other Income (Specify below)",
+    "printed_at": "y 572.1, x 53.6..159.1",
+    "pairing": "C — the block caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 31 at y 561.3, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. This is the SPECIFY cell the caption's own word points at. It is the only cell in the income lane left of the amount column, x 47.0..216.0, maxLen 32, and rows 26-30 draw no such cell because their item names are printed.",
+    "leaf": "FillIn30[0]"
+   },
+   {
+    "key": "other_income[1].amount",
+    "page": 6,
+    "widget": "y 547.2..558, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 32 at y 550.5, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. The five rows 31-35 draw NO printed item name of their own — the single caption \"Other Income (Specify below)\" at y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside it. Column fixed by the \"Gross Monthly\" header; a printed \"$\" at x 218.8 is immediately left of the cell; maxLen 12.",
+    "leaf": "GrossMnthly31[0]"
+   },
+   {
+    "key": "other_income[1].description",
+    "page": 6,
+    "widget": "y 547.2..558, x 47..216, maxLen 32",
+    "printed": "Other Income (Specify below)",
+    "printed_at": "y 572.1, x 53.6..159.1",
+    "pairing": "C — the block caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 32 at y 550.5, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. This is the SPECIFY cell the caption's own word points at. It is the only cell in the income lane left of the amount column, x 47.0..216.0, maxLen 32, and rows 26-30 draw no such cell because their item names are printed.",
+    "leaf": "FillIn31[0]"
+   },
+   {
+    "key": "other_income[2].amount",
+    "page": 6,
+    "widget": "y 536.4..547.2, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 33 at y 539.7, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. The five rows 31-35 draw NO printed item name of their own — the single caption \"Other Income (Specify below)\" at y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside it. Column fixed by the \"Gross Monthly\" header; a printed \"$\" at x 218.8 is immediately left of the cell; maxLen 12.",
+    "leaf": "GrossMnthly32[0]"
+   },
+   {
+    "key": "other_income[2].description",
+    "page": 6,
+    "widget": "y 536.4..547.2, x 47..216, maxLen 32",
+    "printed": "Other Income (Specify below)",
+    "printed_at": "y 572.1, x 53.6..159.1",
+    "pairing": "C — the block caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 33 at y 539.7, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. This is the SPECIFY cell the caption's own word points at. It is the only cell in the income lane left of the amount column, x 47.0..216.0, maxLen 32, and rows 26-30 draw no such cell because their item names are printed.",
+    "leaf": "FillIn32[0]"
+   },
+   {
+    "key": "other_income[3].amount",
+    "page": 6,
+    "widget": "y 525.6..536.4, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 34 at y 528.9, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. The five rows 31-35 draw NO printed item name of their own — the single caption \"Other Income (Specify below)\" at y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside it. Column fixed by the \"Gross Monthly\" header; a printed \"$\" at x 218.8 is immediately left of the cell; maxLen 12.",
+    "leaf": "GrossMnthly33[0]"
+   },
+   {
+    "key": "other_income[3].description",
+    "page": 6,
+    "widget": "y 525.6..536.4, x 47..216, maxLen 32",
+    "printed": "Other Income (Specify below)",
+    "printed_at": "y 572.1, x 53.6..159.1",
+    "pairing": "C — the block caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 34 at y 528.9, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. This is the SPECIFY cell the caption's own word points at. It is the only cell in the income lane left of the amount column, x 47.0..216.0, maxLen 32, and rows 26-30 draw no such cell because their item names are printed.",
+    "leaf": "FillIn33[0]"
+   },
+   {
+    "key": "other_income[4].amount",
+    "page": 6,
+    "widget": "y 514.8..525.6, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 35 at y 518.1, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. The five rows 31-35 draw NO printed item name of their own — the single caption \"Other Income (Specify below)\" at y 572.1 x 53.6..159.1 sits above all five and the filer names each one in the cell beside it. Column fixed by the \"Gross Monthly\" header; a printed \"$\" at x 218.8 is immediately left of the cell; maxLen 12.",
+    "leaf": "GrossMnthly34[0]"
+   },
+   {
+    "key": "other_income[4].description",
+    "page": 6,
+    "widget": "y 514.8..525.6, x 47..216, maxLen 32",
+    "printed": "Other Income (Specify below)",
+    "printed_at": "y 572.1, x 53.6..159.1",
+    "pairing": "C — the block caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 35 at y 518.1, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Income (Specify below)\" drawn on that same baseline immediately right of the marker. This is the SPECIFY cell the caption's own word points at. It is the only cell in the income lane left of the amount column, x 47.0..216.0, maxLen 32, and rows 26-30 draw no such cell because their item names are printed.",
+    "leaf": "FillIn34[0]"
+   },
+   {
+    "key": "s5_36_total_income",
+    "page": 6,
+    "widget": "y 504..514.8, x 226..302.4, maxLen 12",
+    "printed": "Gross Monthly",
+    "printed_at": "y 636, x 233..285.4",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 36 at y 507.3, x 38, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Total Income\" drawn on that same baseline immediately right of the marker. The operand list is the caption's own: \"(Add lines 26 through 35)\" at y 507.3 x 105.7..195.2. T does not apply — this total sits IN the income column rather than on a total line of its own, so it takes the column caption like every other cell in the lane, and the printed \"$\" at x 218.8 is the column's marker, not a total-line marker. maxLen 12.",
+    "leaf": "GrossMnthly35[0]"
+   },
+   {
+    "key": "s5_37_materials_purchased",
+    "page": 6,
+    "widget": "y 622.8..633.6, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 37 at y 626.1, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Materials Purchased\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly36[0]"
+   },
+   {
+    "key": "s5_38_inventory_purchased",
+    "page": 6,
+    "widget": "y 612..622.8, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 38 at y 615.3, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Inventory Purchased\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell. THIS CELL'S LEAF NAME IS ActlMnthly36[1] — the same leaf name the printed-37 cell above it carries, and two printed markers behind rather than one. See NOT_OFFSET6.",
+    "leaf": "ActlMnthly36[1]"
+   },
+   {
+    "key": "s5_39_gross_wages_and_salaries",
+    "page": 6,
+    "widget": "y 601.2..612, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 39 at y 604.5, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Gross Wages & Salaries\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMntly38[0]"
+   },
+   {
+    "key": "s5_40_rent",
+    "page": 6,
+    "widget": "y 590.4..601.2, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 40 at y 593.7, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Rent\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly39[0]"
+   },
+   {
+    "key": "s5_41_supplies",
+    "page": 6,
+    "widget": "y 579.6..590.4, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 41 at y 582.9, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Supplies\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly40[0]"
+   },
+   {
+    "key": "s5_42_utilities_telephone",
+    "page": 6,
+    "widget": "y 568.8..579.6, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 42 at y 572.1, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Utilities/Telephone\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly41[0]"
+   },
+   {
+    "key": "s5_43_vehicle_gasoline_oil",
+    "page": 6,
+    "widget": "y 558..568.8, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 43 at y 561.3, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Vehicle Gasoline/Oil\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly42[0]"
+   },
+   {
+    "key": "s5_44_repairs_and_maintenance",
+    "page": 6,
+    "widget": "y 547.2..558, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 44 at y 550.5, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Repairs & Maintenance\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnhtly43[0]"
+   },
+   {
+    "key": "s5_45_insurance",
+    "page": 6,
+    "widget": "y 536.4..547.2, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 45 at y 539.7, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Insurance\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly44[0]"
+   },
+   {
+    "key": "s5_46_current_taxes",
+    "page": 6,
+    "widget": "y 525.6..536.4, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 46 at y 528.9, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Current Taxes\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly45[0]"
+   },
+   {
+    "key": "s5_47_other_expenses",
+    "page": 6,
+    "widget": "y 514.8..525.6, x 492.4..576, maxLen 12",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 47 at y 518.1, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Other Expenses (Specify)\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly46[0]"
+   },
+   {
+    "key": "s5_48_irs_allowable_installment_payments",
+    "page": 6,
+    "widget": "y 504..514.8, x 492.4..576, maxLen null",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 48 at y 507.3, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"IRS Use Only-Allowable Installment Payments\" drawn on that same baseline immediately right of the marker. Column fixed by the header \"Actual Monthly\" at y 635.9 x 502.5..555.9, contained in this cell's x 492.4..576.0, under the block caption \"Total Monthly Business Expenses\" at y 653.5 x 375.1..503.3. A printed \"$\" is drawn at x 485.2 immediately left of the cell.",
+    "leaf": "ActlMnthly47[0]"
+   },
+   {
+    "key": "s5_49_total_expenses",
+    "page": 6,
+    "widget": "y 493.2..504, x 492.4..576, maxLen null",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 49 at y 496.5, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Total Expenses\" drawn on that same baseline immediately right of the marker. The operand list is the caption's own: \"(Add lines 37 through 48)\" at y 496.5 x 380.6..470.1. One of those operands, line 48, is an IRS-use cell this engine never writes — declared at _never_autofill and carried into the tripwire declaration rather than assumed away.",
+    "leaf": "ActlMnthly48[0]"
+   },
+   {
+    "key": "s5_50_net_income",
+    "page": 6,
+    "widget": "y 482.4..493.2, x 492.4..576, maxLen null",
+    "printed": "Actual Monthly",
+    "printed_at": "y 635.9, x 502.5..555.9",
+    "pairing": "C — column caption contained, above the cell",
+    "second_witness": "Row fixed by the printed marker 50 at y 485.7, x 304.4, whose baseline lies inside this cell's rectangle, AND by the printed item name \"Net Income\" drawn on that same baseline immediately right of the marker. The relation is the caption's own: \"(Line 36 minus Line 49)\" at y 485.7 x 366.2..448.4. It is a DIFFERENCE and the printed order is stated, which is what makes it checkable; the same construct 433-B(OIC) Box D uses.",
+    "leaf": "ActlMnthly49[0]"
    }
   ]
  }
