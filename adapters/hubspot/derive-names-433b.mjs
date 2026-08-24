@@ -366,7 +366,14 @@ if (usePortal) {
   const all = (await hs('/crm/v3/properties/contacts')).results || [];
   if (!all.length) STOP('A7', 'the portal returned zero contact properties. That is not a portal with 400+ HubSpot-defined properties; refusing to treat an unreadable read as "nothing exists".');
   portal = new Map(all.map((p) => [p.name, p]));
-  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').startsWith(`433-B (input key: ${d.key})`);
+  // NAMES THIS FORM AND THIS KEY — not BEGINS WITH them. This form is not broken today,
+  // because A7 returns on every `scope === "reuse"` row before reaching this predicate and
+  // the reuses are the only rows whose descriptions name two forms. It is the SAME LATENT
+  // DEFECT as the one [D-18]'s fourth instance made live on 433-B(OIC), and it goes live the
+  // first time any later form re-describes an irs433b_ property this form created. Repaired
+  // in the same place and the same commit, because a class repaired on one form and left on
+  // its neighbour is the reproduction [R-12] says to expect.
+  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').includes(`433-B (input key: ${d.key})`);
   for (const d of derived) {
     if (!portal.has(d.hs_name)) continue;
     const live = portal.get(d.hs_name);
@@ -385,7 +392,8 @@ const statusOf = (d) => {
   const l = portal.get(d.hs_name);
   if (!l) return '**would be created**';
   if (d.scope === 'reuse') return 'REUSED - live, created by 433-B(OIC)';
-  if ((l.description || '').startsWith(`433-B (input key: ${d.key})`)) return 'created by this pass';
+  // The same reading as A7's, for the same reason.
+  if ((l.description || '').includes(`433-B (input key: ${d.key})`)) return 'created by this pass';
   return 'already live - contributed by another form in the series';
 };
 
@@ -593,11 +601,17 @@ if (emit && !stops.length) {
         pii: props.filter((p) => p.pii).length,
       },
     },
+    // ONLY GROUPS A ROW ACTUALLY NAMES ARE DECLARED — the same rule
+    // adapters/hubspot/gen-fields-from-map.mjs has always applied, and this deriver did not.
+    // fields.433b.json declared `irs433` and not one of its 116 rows names it: every shared
+    // fact on this form binds a property 433-B(OIC) already created, and those sit in
+    // irs433boic. A group row that gives no property a home disposes of nothing, which is
+    // [D-19] facing the other way, and assert-registry-targets.mjs [RT-2] is what found it.
     groups: [
       { name: 'irs433', label: 'Form 433 series (shared)', displayOrder: 0 },
       { name: 'irs433boic', label: 'Form 433-B(OIC)', displayOrder: 4 },
       { name: 'irs433b', label: 'Form 433-B', displayOrder: 5 },
-    ],
+    ].filter((g) => props.some((p) => p.group === g.name)),
     properties: props,
   }, null, 1) + '\n');
   console.log(`emitted adapters/hubspot/fields.433b.json (${props.length} definitions)`);

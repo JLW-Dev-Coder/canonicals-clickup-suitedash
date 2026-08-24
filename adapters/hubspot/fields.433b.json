@@ -20,11 +20,6 @@
  },
  "groups": [
   {
-   "name": "irs433",
-   "label": "Form 433 series (shared)",
-   "displayOrder": 0
-  },
-  {
    "name": "irs433boic",
    "label": "Form 433-B(OIC)",
    "displayOrder": 4

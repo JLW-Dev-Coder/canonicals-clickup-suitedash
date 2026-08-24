@@ -190,7 +190,13 @@ if (usePortal) {
   // list this file carries: hs-provision writes the input key into the description, so a
   // property whose live description names this form and THIS key is one we created, and any
   // other occupant of the name is still a STOP.
-  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').startsWith(`433-A(OIC) (input key: ${d.key})`);
+  // NAMES THIS FORM AND THIS KEY, not BEGINS WITH them. [D-18]: the 433-B pass rewrote nine
+  // reused descriptions to name two forms, and this exact predicate on the 433-B(OIC) deriver
+  // went false on four of them and STOPped that tool at [A7]. Nothing has re-described an
+  // irs433aoi_ property yet; when something does, this line is where it would have broken.
+  // Repaired in the same commit as its two neighbours, because a class fixed on two forms
+  // and left on the third is the reproduction [R-12] says to expect.
+  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').includes(`433-A(OIC) (input key: ${d.key})`);
   for (const d of derived) {
     if (portal.has(d.hs_name) && !d.backbone_key && !oursByDescription(d)) {
       STOP('A7', `"${d.key}" derives "${d.hs_name}", which already exists on the portal, its row claims no backbone_key, and its live description does not name this form and this key. Either it is the same fact and the row must say which 433-A key it reuses, or it is a different fact and the name is taken.`);
@@ -211,7 +217,8 @@ const statusOf = (d) => {
   if (!portal) return 'portal not read';
   const l = portal.get(d.hs_name);
   if (!l) return '**would be created**';
-  if ((l.description || '').startsWith('433-A(OIC) (input key: ' + d.key + ')')) return 'created by this pass';
+  // The same reading as A7's, for the same reason.
+  if ((l.description || '').includes('433-A(OIC) (input key: ' + d.key + ')')) return 'created by this pass';
   return 'already live - contributed by another form in the series';
 };
 

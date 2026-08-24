@@ -58,6 +58,10 @@ import { ABSENCE_SHAPES } from './absence-sweep.mjs';
 import { DECLARED as ABSENCE_DECLARED } from './absence-declared.mjs';
 import { CONTROLS } from './control-char-scan.mjs';
 import { STANDARD as FIRING_STANDARD } from './firing-proofs.mjs';
+// THE [D-18] POST-PASS REGISTER. Its PP ids name questions a per-form portal tool asks of the
+// live portal, and they have to be unique against every other register for the same reason
+// [D-07] gives: a citation can otherwise be paid by the wrong disposition.
+import { QUESTIONS as POST_PASS_QUESTIONS } from '../hubspot/post-pass-sweep.mjs';
 import { CLAIMS as FIRING_CLAIMS } from './assert-firing-proofs.mjs';
 import { REGISTRY as RX_REGISTRY, ADOPTERS as RX_ADOPTERS } from './regex-self-assert.mjs';
 // THE THREE ADOPTERS THIS FILE DOES NOT OTHERWISE PULL IN. A regex registers itself when its
@@ -193,6 +197,7 @@ export const REGISTERS = () => {
   add('control-char-scan.mjs:CONTROLS',   'engine', idsOf('CONTROLS', CONTROLS));
   add('firing-proofs.mjs:STANDARD',       'engine', idsOf('FIRING_STANDARD', FIRING_STANDARD));
   add('assert-firing-proofs.mjs:CLAIMS',  'engine', idsOf('FIRING_CLAIMS', FIRING_CLAIMS));
+  add('post-pass-sweep.mjs:QUESTIONS', 'engine', idsOf('POST_PASS_QUESTIONS', POST_PASS_QUESTIONS));
   assertAdoptersLoaded();
   assertDeclaredSizes();
   add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));

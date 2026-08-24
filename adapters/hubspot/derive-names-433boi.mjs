@@ -253,7 +253,14 @@ if (usePortal) {
   const all = (await hs('/crm/v3/properties/contacts')).results || [];
   if (!all.length) STOP('A7', 'the portal returned zero contact properties. That is not a portal with 400+ HubSpot-defined properties; refusing to treat an unreadable read as "nothing exists".');
   portal = new Map(all.map((p) => [p.name, p]));
-  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').startsWith(`433-B(OIC) (input key: ${d.key})`);
+  // NAMES THIS FORM AND THIS KEY — not BEGINS WITH them. [D-18], fourth instance: the 433-B
+  // pass rewrote nine reused descriptions to "Serves BOTH Form 433-B (input key: A) and Form
+  // 433-B(OIC) (input key: B)...", and this predicate — true on every run for the whole life
+  // of this form until then — went false on four of them, STOPping the deriver at [A7].
+  // The "(OIC)" between the form name and the paren is what keeps the two tokens disjoint,
+  // where /433-B\b/ was not: that regex matches INSIDE "433-B(OIC)" and is the second
+  // instance [D-18] records.
+  const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').includes(`433-B(OIC) (input key: ${d.key})`);
   for (const d of derived) {
     if (portal.has(d.hs_name) && !d.backbone_key && !oursByDescription(d)) {
       STOP('A7', `"${d.key}" derives "${d.hs_name}", which already exists on the portal, its row claims no backbone_key, and its live description does not name this form and this key. Either it is the same fact and the row must say which predecessor key it reuses, or it is a different fact and the name is taken.`);
@@ -265,7 +272,9 @@ const statusOf = (d) => {
   if (!portal) return 'portal not read';
   const l = portal.get(d.hs_name);
   if (!l) return '**would be created**';
-  if ((l.description || '').startsWith('433-B(OIC) (input key: ' + d.key + ')')) return 'created by this pass';
+  // The same reading as A7's, for the same reason: a description naming two forms still
+  // names this one. Reported "already live - contributed by another form" before this fix.
+  if ((l.description || '').includes('433-B(OIC) (input key: ' + d.key + ')')) return 'created by this pass';
   return 'already live - contributed by another form in the series';
 };
 
@@ -431,10 +440,15 @@ if (emit && !stops.length) {
       the_subject_ruling: SUBJ.the_ruling,
       counts: { total: props.length, shared: props.filter((p) => p.scope === 'shared').length, form_specific: props.filter((p) => p.scope !== 'shared').length, pii: props.filter((p) => p.pii).length },
     },
+    // ONLY GROUPS A ROW ACTUALLY NAMES ARE DECLARED — the same rule
+    // adapters/hubspot/gen-fields-from-map.mjs has always applied, and this deriver did not.
+    // fields.433boi.json declared `irs433` and not one of its 113 rows names it. A group row
+    // that gives no property a home disposes of nothing, which is [D-19] facing the other
+    // way, and assert-registry-targets.mjs [RT-2] is what found it.
     groups: [
       { name: 'irs433', label: 'Form 433 series (shared)', displayOrder: 0 },
       { name: 'irs433boic', label: 'Form 433-B(OIC)', displayOrder: 4 },
-    ],
+    ].filter((g) => props.some((p) => p.group === g.name)),
     properties: props,
   }, null, 1) + '\n');
   console.log(`emitted adapters/hubspot/fields.433boi.json (${props.length} definitions)`);
