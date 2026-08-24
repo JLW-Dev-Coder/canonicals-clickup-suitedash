@@ -680,8 +680,22 @@ computed from a broken operand went on agreeing with itself. An expectation of f
 derived cause behind it is refused in as many words, since that field is exactly where a tolerance
 would hide. The canary plants both shapes, neither of which the first draft could express.
 
+**What the amendment itself then broke, and it is this rule's own class.** The sharpening renamed
+`[FS-3]`'s messages from *"the others passed"* to *"the others read as expected"* and left
+`judgeEntry()` in `adapters/pdf/firing-proofs.mjs` filtering on the **old** string. So the
+`sole_declared_line` exemption — which exists so a tool with exactly one declared line can state a
+checked absence rather than be read as a silence — **matched nothing and was dead**: a conforming
+record was still refused, by a message telling its author to add the field they had already added.
+Nothing caught it, because the canary planted the empty list and never planted the *declared* empty
+list. A refactor of a guard is a change to the guard, and here the refactor was the sharpening of
+that very guard. The repair is at the cause: the prefix is now **derived** from `STANDARD` by
+`prefixOf()`, so the filter and the message cannot name different things again; `judgeEntry()`
+refuses rather than returns clean if the exemption finds nothing to exempt; and the canary plants
+both directions, so a judge that exempts everything and a judge that exempts nothing both fail.
+
 **Roughly when.** Ruled 2026-08-23 on the prompt-48 report; the mechanism lands in this commit.
-Cycle-dated for the half with no hash yet.
+The `sole_declared_line` repair 2026-08-23, prompt 50 commit 1. Cycle-dated for the half with no
+hash yet.
 
 ---
 

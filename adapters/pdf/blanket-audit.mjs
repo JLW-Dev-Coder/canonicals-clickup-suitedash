@@ -1464,6 +1464,28 @@ export const COMPLETENESS = [
       return { universe: universeList.length, covered: universeList.length - uncoveredList.length, universeList, uncoveredList };
     } }),
 
+  // ── 433-B's classification: the cross-form-identifier claim, COUNTED ────────────────────
+  //
+  // The sentence says that ANY identifier of the other form a host-form guard can parse will be
+  // checked against the wrong page. That is a quantified claim over a set this tree can produce
+  // — the parseable identifiers in that file — and it is countable, so it is counted rather than
+  // declared not-coverage. It is also the claim most likely to be broken by a later edit: the
+  // whole finding is that adding one coordinate or one full AcroForm path back into this file
+  // silently sends a host-form guard at the wrong document, and TWO SUCCESSIVE DRAFTS OF THE
+  // FILE DID EXACTLY THAT before the audit caught them. The counter is what makes the third
+  // time loud.
+  // AND IT IS A not-coverage DISPOSITION, NOT A COUNTER, FOR A REASON THE FIRST DRAFT LEARNED
+  // THE HARD WAY. Written as a counter it measured EVERY coordinate in the file and reported
+  // 0 of 22 — because 22 of them are 433-B's OWN baselines, quoted as evidence for 433-B's own
+  // captions, which are legitimate and are already compared against 433-B's drawn page by
+  // [S-25c] on every run. The claim is about the OTHER form's identifiers, and "which form does
+  // this number belong to" is not derivable from the number. A counter over the whole set is a
+  // SECOND DENOMINATOR over ground [S-25c] already holds, and [K-97] records why that is worse
+  // than no counter: two instruments answering one question can disagree.
+  C({ id: 'K-114', match: /any identifier of the other form that a host-form guard can parse/,
+    kind: 'not-coverage',
+    reason: 'A STATEMENT OF WHAT HAPPENED, WITH A LIVE INSTRUMENT ALREADY ON IT. The sentence records that two successive drafts of this file put another form\'s identifiers where a host-form guard would read them as this form\'s — first three baselines off 433-B(OIC) page 5, then the full AcroForm paths that replaced them — and that both were refused. It is history, and the guarantee it describes is not enforced by this sentence: [S-25c] compares EVERY coordinate quoted anywhere in this file against 433-B\'s own drawn page and every full `topmostSubform[0]` path against the targets 433-B\'s map actually binds, on every run, claim site or not. That is the instrument, it is what caught both drafts, and it is why one of the three original baselines mattered more than the other two — y 224.5 lands on 433-B page 1\'s City/State/ZIP row by coincidence, so a reader checking it against the host form would have found a run and been satisfied. Counting the set again here would put a second denominator on ground [S-25c] holds.' }),
+
   // ── [D-06]'s split: two claims in the ruling that records it ───────────────────────────
   //
   // The ruling text in asset-row-shapes.json makes two quantified statements, and both name a

@@ -141,6 +141,12 @@ export const MECHANISMS = {
   // a declared-empty row behave identically, and they are different statements: one says nobody
   // looked, the other says somebody looked and there is nothing to declare.
   '433boi': {},
+  // DECLARED EMPTY for the same reason, and on this form the declaration carries a second one.
+  // 433-B's classification is the first in the series that REUSES names, and a mechanism here
+  // would be the obvious way to write "and the nine reused keys" — which is exactly the claim
+  // that must stay enumerated, because a glob covering a reuse decision would name keys whose
+  // permanence nobody looked at. Every entry names every key verbatim.
+  '433b': {},
 };
 
 /** The granularity each mechanism kind carries, and the granularity of a bare verbatim naming. */

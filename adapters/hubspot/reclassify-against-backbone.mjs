@@ -179,7 +179,30 @@ export const reclassify = (form) => {
   const A433 = R('adapters/hubspot/fields.433a.json');
   const SHAPES = R('adapters/hubspot/asset-row-shapes.json');
   const MAP433A = R('adapters/pdf/maps/433a.map.json');
-  const FIELDS = R(`adapters/hubspot/fields.${form}.json`);
+
+  // A FORM WHOSE DEFINITIONS DO NOT EXIST YET IS A DECLARED STATE, NOT A RAW ENOENT.
+  //
+  // [D-16]'s resolution records that this tool's neighbour "died with a raw ENOENT stack" on
+  // 433-A, and that the item "counted the forms that threw a TypeError and missed the one that
+  // threw an ENOENT, which is the same defect class the item is about". This is that class in
+  // this file: a form arrives with a CLASSIFICATION and no field file, because the
+  // classification is authored in the commit BEFORE the names are derived — which is the whole
+  // point of separating them, since a property name cannot be renamed once made. Crashing here
+  // makes `validate-map.mjs <form>` unrunnable for exactly the window in which the
+  // classification most needs validating.
+  //
+  // The absence is DECLARED and REPORTED rather than caught and skipped: the checks that need
+  // the field file are named, and the tool says which ones it did not run and why.
+  let FIELDS = null, fieldsAbsent = null;
+  try { FIELDS = R(`adapters/hubspot/fields.${form}.json`); }
+  // NAMED `fieldsErr` AND NOT `e`, so this line is distinguishable. A bare `catch (e) {` is a
+  // substring of anchors other dispositions already stand on, and guard-sweep's register is
+  // keyed on a line: [G-52] and [G-53] were both ORPHANED once by exactly that collision, and
+  // the note at that entry says a register keyed on a line needs its lines to be distinguishable.
+  catch (fieldsErr) {
+    if (fieldsErr.code !== 'ENOENT') throw fieldsErr;
+    fieldsAbsent = `adapters/hubspot/fields.${form}.json does not exist. The classification for ${form} has landed and its names have not been derived yet, which is the state between the classification commit and the derivation commit. The backbone and same-fact checks below run on the CROSSWALK; the checks that read derived property definitions are NOT run and are named in the report. This is a declared gap, not a pass: nothing about ${form}'s property definitions has been examined, because there are none.`;
+  }
 
   // THE RULINGS AND PAIR DECLARATIONS FOR THIS FORM, AND ONLY THIS FORM. An unscoped ruling is
   // one that applies everywhere, which is what these were until 433-B(OIC) ran against them.
@@ -379,7 +402,13 @@ export const reclassify = (form) => {
   // to hold two different values for one taxpayer at one moment? A `same-fact` ruling says no,
   // and this asserts that the answer was acted on rather than recorded.
   const rebinds = [];
-  for (const rl of RULINGS) {
+  // THE TWO CHECKS BELOW READ THE DERIVED DEFINITIONS, so on a form whose field file does not
+  // exist yet they are NOT RUN, and the report says so by name. `rebinds` staying empty is then
+  // "nothing was examined", which is a different fact from "nothing was wrong" — [R-04].
+  const notRun = fieldsAbsent
+    ? ['SAME-FACT RULINGS ACTED ON (rebinds)', 'ORPHAN STILL DEFINED']
+    : [];
+  for (const rl of fieldsAbsent ? [] : RULINGS) {
     if (rl.ruling !== 'same-fact') continue;
     const prop = (FIELDS.properties || []).find(p => p.key === rl.key);
     if (!prop) { problems.push(`SAME-FACT RULING WITH NO DEFINITION  ${rl.key} is ruled same-fact as ${rl.candidate}, and adapters/hubspot/fields.${form}.json defines no property for that key. The ruling is about a binding that does not exist.`); continue; }
@@ -394,17 +423,24 @@ export const reclassify = (form) => {
   }
   // The orphan must be gone from the definitions too: a rebound key whose old name is still
   // provisioned recreates the duplicate on the next run.
-  const definedNames = new Set((FIELDS.properties || []).map(p => p.hs_name));
-  for (const rl of RULINGS) {
+  const definedNames = new Set(fieldsAbsent ? [] : (FIELDS.properties || []).map(p => p.hs_name));
+  for (const rl of fieldsAbsent ? [] : RULINGS) {
     if (rl.ruling !== 'same-fact' || !rl.orphan) continue;
     if (definedNames.has(rl.orphan)) problems.push(`ORPHAN STILL DEFINED  ${rl.key} was rebound to ${rl.candidate} and ${rl.orphan} is still named in fields.${form}.json. The next provisioning run would recreate one fact in two places.`);
   }
 
-  return { form, back, reuse, candidates, comparedAgainst, asymmetric, granularity, sameConstruct, problems, CLS, coverage, rebinds };
+  return { form, back, reuse, candidates, comparedAgainst, asymmetric, granularity, sameConstruct, problems, CLS, coverage, rebinds, fieldsAbsent, notRun };
 };
 
 export const report = (r, { verbose = false } = {}) => {
   const contribCount = (f) => [...r.back.values()].filter(v => v.contributors.has(f)).length;
+  // THE DECLARED GAP IS PRINTED FIRST, not appended at the end where a reader who stopped at the
+  // OK line would miss it. A run that could not read the definitions must not look like a run
+  // that read them and found nothing.
+  if (r.fieldsAbsent) {
+    console.log(`  DECLARED GAP — ${r.fieldsAbsent}`);
+    for (const n of r.notRun) console.log(`      NOT RUN: ${n}`);
+  }
   console.log(`reclassify ${r.form} against the backbone: ${r.back.size} live irs433_* name(s) — 433a ${contribCount('433a')}, 433f ${contribCount('433f')}, ${r.form} ${contribCount(r.form)}`);
   const widened = [...r.comparedAgainst.values()].filter(v => v.length > 1).length;
   console.log(`  compared_against: ${r.comparedAgainst.size} entr(ies) — ${widened} compare against more than one form, ${r.comparedAgainst.size - widened} against ${r.CLS.against} alone`);
