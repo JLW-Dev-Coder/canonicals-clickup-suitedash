@@ -24,9 +24,18 @@
   "different-shape": "The same facts, laid out differently — a different number of rows, a different set of columns, a different overflow rule. The facts transfer; the container does not.",
   "same-fact-different-decomposition": "One quantity split into different parts by the two forms. N cells here against one there, or a different cut. Not a reuse in either direction: N cells cannot bind one property and one cannot be split into N.",
   "new": "This form prints the fact and the predecessor does not print it at all. Not a naming decision — there is no counterpart to collide with.",
-  "same-question-different-subject": "DECLARED AND UNUSED, and the zero is the finding. It is the category that took 17 of 433-B(OIC)'s 49 entries, and it cannot apply here because the subject register puts these two forms on the same subject. A category absent from a file is indistinguishable from one nobody considered, so it is named with its count."
+  "same-question-different-subject": "The predecessor asks this question and asks it about ITS subject, which is a different legal person from this form's. The question transfers; the answer does not. Derives a form-specific name from a DEFAULT, so every entry in it must carry a `subject_reason` naming the two subjects and the state of the world in which they differ, and must name in `compared_against` the form whose subject the register calls MUTUALLY EXCLUSIVE. THE COUNT WAS 0 IN THIS FILE'S FIRST DRAFT AND THE ZERO WAS WRONG — see `_the_zero_that_was_wrong` below."
  },
  "_why_the_shared_leaf_names_are_not_evidence": "adapters/pdf/maps/433b.lineage.json records that 433-B shares ELEVEN AcroForm leaf names with 433-A and NONE with 433-B(OIC) — the form it coincides with on subject and the form every reuse in this file is with. NOT ONE SHARED LEAF NAME APPEARS IN THIS FILE AS EVIDENCE OF ANYTHING. The two axes point opposite ways on this form, which is [R-06]'s prefix half demonstrated rather than argued, and the categories here are read off the PRINTED captions.",
+ "_the_zero_that_was_wrong": {
+  "_what_it_said": "This file's first draft recorded `same-question-different-subject: 0` and wrote, in `_the_categories`: \"DECLARED AND UNUSED, and the zero is the finding. It is the category that took 17 of 433-B(OIC)'s 49 entries, and it cannot apply here because the subject register puts these two forms on the same subject.\" Kept verbatim under [R-21].",
+  "_what_it_got_right": "The reasoning, as far as it went, and the pair it went to. 433-B and 433-B(OIC) DO share a subject, the register does say COINCIDE, and against 433-B(OIC) alone the category genuinely cannot apply. Every entry ruled against that form is unaffected, and not one derived name changed.",
+  "_what_it_got_WRONG": "IT ANSWERED A QUESTION ABOUT ONE PAIR AND STATED IT ABOUT THE FORM. The subject register decides FOUR pairs for 433-B, not one: COINCIDE with 433-B(OIC) and MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC). `same-question-different-subject` is the category for a counterpart on a MUTUALLY EXCLUSIVE form, so the three pairs where it could apply are exactly the three the draft did not consult. Fourteen keys across six entries were called `new` — \"this form prints the fact and the predecessor does not print it at all\" — while 433-A prints every one of them.",
+  "_what_found_it": "THE TWIN TABLE, adapters/hubspot/derive-names-433b.mjs A8. It builds `irs433_<fact>` for every form-specific row and looks it up on the backbone, and STOPs when a live twin sits under a category that adjudicates nothing — which `new` does not, because `new` asserts there is nothing to adjudicate. Ten of the fourteen were caught by exact fact-name match on the first run; re-reading the backbone against every entry found the rest and confirmed the six.",
+  "_why_the_fact_spellings_are_the_predecessors_ON_PURPOSE": "income_change_amount, total_cash_on_hand, available_credit, accounts_notes_receivable, accounting_method, payment_processors, credit_cards_accepted and engages_in_ecommerce are all spelled the way 433-A spells them. A name chosen to describe this form instead would have hidden the pair from the twin table, and the check would have passed on all fourteen. The spelling is the thing that made the defect visible.",
+  "_and_one_entry_had_to_SPLIT": "Z-25 covered cash on hand AND the two safe cells. Cash on hand has a 433-A counterpart (twice — line 12 for the individual, line 64 for their business) and the safe cells do not: 433-A prints irs433_safe_deposit_box, a box at a bank, which is not a safe on a company's premises. One entry cannot carry two different relations to the predecessor, so the safe cells became Z-51.",
+  "_what_did_NOT_change": "NOT ONE DERIVED NAME, and that is worth stating plainly. Every one of the fourteen keys was form-specific before and is form-specific now; the correction is to the RECORDED REASON, from a false one to a true one. The defect would not have created a wrong property — it would have left the file asserting that nobody prints these facts, which the next form to be classified against 433-B would have read and believed."
+ },
  "_how_every_new_entrys_absence_was_VERIFIED_and_not_assumed": {
   "_the_rule": "[R-05]. \"The map does not reach it\" and \"the page does not print it\" are different facts, and map reachability never settles a claim about the printed page. Every `new` entry in this file asserts that 433-B(OIC) does not print a counterpart, and each of those is an absence claim about ANOTHER FORM'S DRAWN PAGE.",
   "_how_it_was_read": "adapters/pdf/forms/f433boi.pdf was drawn with pdfjs across all six pages and its text runs concatenated — 17,665 characters — and each claimed-absent caption was searched in that text, NOT in adapters/pdf/maps/433boi.map.json and NOT in adapters/hubspot/fields.433boi.json. Where an entry claims no CELL rather than no caption, the page's widget rectangles were read as well; Z-19 carries that reading verbatim.",
@@ -63,6 +72,8 @@
    ],
    "scope_reason": "THE RULING-2 QUESTION ANSWERS NO. A business filing both forms has one legal name and one EIN, and they are the same on both documents at the same moment — an EIN is issued once and does not vary by which form asks for it. This is the first `exact` in the series and it is a consequence of the subject axis: [R-06] rules that `irs433boi_` records WHICH FORM CREATED A NAME, not which form owns it, so binding the existing property prefix and all is the rule applying rather than an exception to it.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -105,6 +116,8 @@
    "scope": "form-specific",
    "scope_reason": "The 433-B(OIC) cell holds two facts, one of which 433-B never asks for. A \"yes\" to reuse would mean a 433-B record either loses the DBA a 433-B(OIC) record carries, or invents one; and a preparer reading `irs433boi_description_of_business_and_dba` back onto 433-B would print a trade name into a cell captioned \"Type of Business\".",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -163,6 +176,8 @@
    ],
    "scope_reason": "The word \"Total\" on the other form distinguishes nothing here — 433-B prints no partial employee count anywhere on the form for it to be a total OF, so the two cells hold the same number for one business at one moment.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -192,6 +207,8 @@
    ],
    "scope_reason": "The same question in the same words about the same business, and a deposit schedule is a standing fact rather than a period figure, so the two documents state it identically at one moment.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -211,15 +228,18 @@
   {
    "id": "Z-13",
    "page": 1,
-   "category": "new",
+   "category": "same-question-different-subject",
    "oic": "s1_engages_in_ecommerce, groups.payment_processors, groups.credit_cards_accepted",
-   "boi": "Nothing. 433-B(OIC) prints neither the e-Commerce question nor either table.",
-   "why": "433-B prints line 4, \"Does the business engage in e-Commerce (Internet sales) — If yes, complete 5a and 5b.\", and then two tables: payment processors (name and address, account number; 2 rows) and credit cards accepted (type of credit card, merchant account number, issuing bank name and address, issuing bank phone; 3 rows).",
+   "boi": "Nothing on 433-B(OIC), which prints neither the e-Commerce question nor either table. BUT 433-A PRINTS ALL THREE: irs433_engages_in_ecommerce (433-A line 61), irs433_payment_processors and irs433_credit_cards_accepted.",
+   "why": "433-B prints line 4, \"Does the business engage in e-Commerce (Internet sales) — If yes, complete 5a and 5b.\", and then two tables: payment processors (name and address, account number; 2 rows) and credit cards accepted (type of credit card, merchant account number, issuing bank name and address, issuing bank phone; 3 rows). 433-A asks the same three things at its line 61 and the two tables beside it.",
    "scope": "form-specific",
-   "scope_reason": "No counterpart exists on the other form. Both tables get their own property because a group is written as one serialized textarea and there is no existing group property whose row shape these columns could fill.",
+   "subject_reason": "433-A line 61 sits in that form's SELF-EMPLOYMENT section and asks whether THE INDIVIDUAL TAXPAYER'S sole proprietorship takes internet sales; 433-B asks whether A SEPARATE LEGAL ENTITY does. The subject register records 433b / 433a as MUTUALLY EXCLUSIVE, and a sole proprietorship IS the individual for tax purposes while a corporation, partnership or multi-member LLC is not. A filer who runs a Schedule C business AND owns a corporation files both forms and answers differently on each — the proprietorship sells online and the corporation does not, or the reverse — so one property would have to hold two values at one moment.",
+   "scope_reason": "A COUNTERPART EXISTS AND IT BELONGS TO A DIFFERENT LEGAL PERSON, which is why this is not `new`. Both tables also get their own property because a group is written as one serialized textarea and 433-A's row shapes describe an individual's arrangements.",
    "compared_against": [
+    "433a",
     "433boi"
-   ]
+   ],
+   "_this_entry_was_RE_RULED": "IT SAID `new` AND \"No counterpart exists on the other form\", AND THE SECOND HALF WAS TRUE OF THE WRONG UNIVERSE. 433-B(OIC) prints none of this, which is what the entry checked; 433-A prints all three, which it did not. Caught by adapters/hubspot/derive-names-433b.mjs A8 — the twin table — which found irs433_engages_in_ecommerce, irs433_payment_processors and irs433_credit_cards_accepted live on the backbone under a category that adjudicates nothing. Kept here rather than silently corrected ([R-21]): what it got RIGHT is that no property may be reused, and the derived name is unchanged; what it got WRONG is the reason, and a `new` entry states that nobody prints the fact, which was false."
   },
   {
    "id": "Z-14",
@@ -257,6 +277,8 @@
    "scope": "form-specific",
    "scope_reason": "THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -347,15 +369,18 @@
   {
    "id": "Z-23",
    "page": 2,
-   "category": "new",
+   "category": "same-question-different-subject",
    "oic": "s3_14_income_change_anticipated, s3_14_explain, s3_14_how_much_increase_decrease, s3_14_when_increase_decrease",
    "boi": "Nothing.",
-   "why": "433-B prints question 14, \"Any increase/decrease in income anticipated\", with cells for Explain, How much will it increase/decrease, and When will it increase/decrease. 433-B(OIC) prints no forward-looking income question.",
+   "why": "433-B prints question 14, \"Any increase/decrease in income anticipated\", with cells for Explain, How much will it increase/decrease, and When will it increase/decrease. 433-B(OIC) prints no forward-looking income question. 433-A PRINTS THE SAME THREE DETAIL CELLS at its line 6 — irs433_income_change_explain, irs433_income_change_amount and irs433_income_change_when — and no separate boolean, the question being carried by the line itself.",
    "scope": "form-specific",
-   "scope_reason": "No counterpart exists.",
+   "subject_reason": "433-A line 6 asks whether THE INDIVIDUAL TAXPAYER'S income will change; 433-B question 14 asks whether A SEPARATE LEGAL ENTITY'S will. The subject register records 433b / 433a as MUTUALLY EXCLUSIVE. A taxpayer whose salary is about to rise while the corporation they own is about to lose a contract answers \"increase\" on one form and \"decrease\" on the other, on the same day — two values, one taxpayer, one moment. The boolean has no 433-A counterpart at all and rides with the three cells it governs, because a flag separated from the cells it gates is a flag about nothing.",
+   "scope_reason": "A COUNTERPART EXISTS ON 433-A AND IT BELONGS TO A DIFFERENT LEGAL PERSON. THE FACT SPELLINGS ARE DELIBERATELY THE PREDECESSOR'S — income_change_amount, income_change_when, income_change_explain — so that the pair shows up in the twin table rather than hiding behind a name chosen to dodge the check.",
    "compared_against": [
+    "433a",
     "433boi"
-   ]
+   ],
+   "_this_entry_was_RE_RULED": "IT SAID `new` AND \"No counterpart exists.\" That was checked against 433-B(OIC), where it holds. It was not checked against 433-A, which prints the same three detail cells at its line 6. Caught by derive-names-433b.mjs A8. Kept under [R-21]: the derived name is unchanged and no property may be reused either way — what changed is that the entry now states the true reason instead of a false one."
   },
   {
    "id": "Z-24",
@@ -370,19 +395,37 @@
    ],
    "scope_reason": "THE PARENTHETICAL IS AN INSTRUCTION, NOT A QUALIFIER — it tells the filer where to list the contracts, and changes nothing about who answers yes. Being a Federal Government Contractor is a standing fact about one business and both forms ask it as one boolean. This is the one reuse on the form whose two captions are not near-identical, and it is ruled on what the sentences ASK rather than on how alike they read, which is the same reasoning that refused Z-20 where the captions were nearly identical and the questions were not.",
    "compared_against": [
+    "433a",
     "433boi"
    ]
   },
   {
    "id": "Z-25",
    "page": 2,
-   "category": "new",
-   "oic": "s4_16a_total_cash_on_hand, s4_16b_safe_on_premises, s4_16b_safe_contents",
-   "boi": "Nothing.",
-   "why": "433-B prints \"CASH ON HAND — Include cash that is not in the bank — Total Cash on Hand\" at printed marker 16a, and at 16b \"Is there a safe on the business premises\" with a Contents cell. 433-B(OIC) prints no cash-on-hand line and no safe question.",
+   "category": "same-question-different-subject",
+   "oic": "s4_16a_total_cash_on_hand",
+   "boi": "Nothing on 433-B(OIC). BUT 433-A PRINTS IT TWICE: irs433_total_cash_on_hand (433-A line 12, the individual's) and irs433_business_cash_on_hand (433-A line 64, the individual's sole proprietorship's).",
+   "why": "433-B prints \"CASH ON HAND — Include cash that is not in the bank — Total Cash on Hand\" at printed marker 16a. `s4_16a_total_cash_on_hand` is declared not_checkable in adapters/pdf/maps/433b.totals.json — the word \"Total\" there means \"the whole of it\", not the sum of lines above — so it is a scalar money cell rather than a total, and nothing about its arithmetic bears on this ruling.",
    "scope": "form-specific",
-   "scope_reason": "No counterpart exists. `s4_16a_total_cash_on_hand` is declared not_checkable in adapters/pdf/maps/433b.totals.json — the word \"Total\" there means \"the whole of it\", not the sum of lines above — so it is a scalar money cell rather than a total, and nothing about its arithmetic bears on this ruling.",
+   "subject_reason": "THE PREDECESSOR ITSELF ALREADY SPLIT THIS FACT BY SUBJECT, which is the clearest possible evidence for the ruling. 433-A draws cash on hand at line 12 for THE INDIVIDUAL and again at line 64 for THAT INDIVIDUAL'S BUSINESS, under two property names, because one filer holds two different amounts at one moment. 433-B's cell is a THIRD subject — a separate legal entity that is not the filer — and the subject register records 433b / 433a as MUTUALLY EXCLUSIVE. A form that split the fact in two rather than share one property is not a form whose either half a third subject may take.",
+   "scope_reason": "A COUNTERPART EXISTS ON 433-A, in two flavours, and neither is this form's subject.",
    "compared_against": [
+    "433a",
+    "433boi"
+   ],
+   "_this_entry_was_RE_RULED_AND_SPLIT": "IT SAID `new`, \"No counterpart exists\", AND IT COVERED THREE KEYS. Both halves were wrong in different ways. 433-A prints cash on hand (twice), so `new` was false for this key; and the two SAFE cells beside it, which the entry had swept in with it, are a genuinely different fact and now carry their own entry, Z-51. Bundling them had made one ruling do for two relations to the predecessor — the shape [R-08]'s \"per occurrence, never per name\" forbids, one artefact up from leaf names. Caught by derive-names-433b.mjs A8."
+  },
+  {
+   "id": "Z-51",
+   "page": 2,
+   "category": "new",
+   "oic": "s4_16b_safe_on_premises, s4_16b_safe_contents",
+   "boi": "Nothing on 433-B(OIC), and NOTHING ON 433-A EITHER — checked, because the entry this one was split out of got that wrong for its neighbour.",
+   "why": "433-B prints at marker 16b \"Is there a safe on the business premises\" with a Contents cell.",
+   "scope": "form-specific",
+   "scope_reason": "A SAFE ON THE BUSINESS PREMISES IS NOT A SAFE DEPOSIT BOX, and that distinction is the whole of this entry. 433-A prints irs433_safe_deposit_box at its line 10 — a box held AT A BANK, by the individual — and the nearest-name check would have paired the two. A safe standing in a company's office and a box in a bank vault are different objects in different places under different control, and the fact 433-B asks for is the contents of the first. No counterpart exists, and unlike its former entry-mate this claim was verified against 433-A rather than assumed.",
+   "compared_against": [
+    "433a",
     "433boi"
    ]
   },
@@ -396,6 +439,8 @@
    "scope": "form-specific",
    "scope_reason": "THE `asset_class` COLUMN IS NOT COSMETIC — it is how the 433-B(OIC) record tells its own row kinds apart, and a 433-B row written without it is a row that form's reader cannot classify. The as-of date has no counterpart at all. A shared property would have to hold rows of two shapes and nothing in the serialization says which shape a given row is.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -415,15 +460,18 @@
   {
    "id": "Z-28",
    "page": 3,
-   "category": "new",
+   "category": "same-question-different-subject",
    "oic": "groups.accounts_notes_receivable, s4_18f_outstanding_balance",
-   "boi": "433-B(OIC) prints only two Yes/No questions, s2_accounts_receivable and s2_notes_receivable, and no table and no total.",
-   "why": "433-B tables 5 rows of name_and_address, contact_name, phone, status, date_due, invoice_or_contract_number, amount_due, and totals them at \"Outstanding Balance (Add lines 18a through 18e and amounts from any attachments)\".",
+   "boi": "433-B(OIC) prints only two Yes/No questions, s2_accounts_receivable and s2_notes_receivable, and no table and no total. 433-A PRINTS BOTH: irs433_accounts_notes_receivable (a table) and irs433_total_receivable_amount_due (433-A line 66f).",
+   "why": "433-B tables 5 rows of name_and_address, contact_name, phone, status, date_due, invoice_or_contract_number, amount_due, and totals them at \"Outstanding Balance (Add lines 18a through 18e and amounts from any attachments)\". 433-A tables the same thing in its self-employment section and totals it at 66f.",
    "scope": "form-specific",
-   "scope_reason": "A BOOLEAN AND A TABLE ARE NOT THE SAME FACT. 433-B(OIC) asks whether receivables exist; 433-B asks what they are and what they come to. Neither the table nor the total has a counterpart property to collide with.",
+   "subject_reason": "433-A's receivable table and its 66f total belong to THE INDIVIDUAL TAXPAYER'S sole proprietorship, which for tax purposes is the individual; 433-B's belong to A SEPARATE LEGAL ENTITY. The subject register records 433b / 433a as MUTUALLY EXCLUSIVE. A filer who runs a Schedule C practice and also owns a corporation has two sets of debtors owing two sets of amounts at one moment, and one table property could hold only one of them.",
+   "scope_reason": "A COUNTERPART EXISTS ON 433-A AND IT BELONGS TO A DIFFERENT LEGAL PERSON. The observation the earlier ruling made about 433-B(OIC) still stands beside it: a boolean and a table are not the same fact, so that form contributes no candidate either.",
    "compared_against": [
+    "433a",
     "433boi"
-   ]
+   ],
+   "_this_entry_was_RE_RULED": "IT SAID `new` AND \"Neither the table nor the total has a counterpart property to collide with.\" The first clause was right about 433-B(OIC) and wrong about 433-A, which has both. Caught by derive-names-433b.mjs A8. Kept under [R-21]: what it got right — that 433-B(OIC)'s two booleans are not this table — is preserved in the scope_reason above."
   },
   {
    "id": "Z-29",
@@ -435,6 +483,8 @@
    "scope": "form-specific",
    "scope_reason": "The 433-B(OIC) row is typed and this one is not: `type_of_investment` is an enumeration whose values that form's engine resolves, and a 433-B row has no value to put there. Writing rows of this shape into that property would leave the enumerated column empty on every row, which is a record that form cannot read back.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -461,6 +511,7 @@
    "scope": "form-specific",
    "scope_reason": "AN IDENTICAL KEY NAME IS EVIDENCE OF NOTHING — the same finding as [R-08] one artefact along, and this is where a key-name-driven derivation would have produced its collision. 433-B(OIC) carries `number_of_units`, which [R-09] singles out as the cell a blanket money rule corrupts silently because a holding of 1.2345 units rounded to 1 is a false statement about property; 433-B has no units column at all, so a shared property would carry rows that are silent about the quantity held.",
    "compared_against": [
+    "433a",
     "433boi"
    ]
   },
@@ -480,15 +531,18 @@
   {
    "id": "Z-33",
    "page": 3,
-   "category": "new",
+   "category": "same-question-different-subject",
    "oic": "groups.available_credit, s4_21_amount_owed_as_of, s4_21_available_credit_as_of",
-   "boi": "433-B(OIC) prints a Yes/No s6_lines_of_credit with three scalar cells — limit, amount owed, property securing — and no table.",
-   "why": "433-B tables 2 rows of full_name_and_address, account_number, credit_limit, amount_owed, available_credit, with two block-level as-of dates.",
+   "boi": "433-B(OIC) prints a Yes/No s6_lines_of_credit with three scalar cells — limit, amount owed, property securing — and no table. 433-A PRINTS THE TABLE: irs433_available_credit, with irs433_available_credit_as_of at line 16 and irs433_total_available_credit at 16e.",
+   "why": "433-B tables 2 rows of full_name_and_address, account_number, credit_limit, amount_owed, available_credit, with two block-level as-of dates. 433-A tables the same facts at its line 16 with one as-of date and a total this form does not print.",
    "scope": "form-specific",
-   "scope_reason": "A TABLE AND THREE SCALARS ARE DIFFERENT CONTAINERS FOR DIFFERENT FACTS. 433-B(OIC)'s three cells describe ONE line of credit; 433-B tables several and asks for the account number and the lender's address besides. Serializing rows into `irs433boi_line_of_credit_limit` is not a shape mismatch to be worked around — it is writing a table into a scalar.",
+   "subject_reason": "433-A line 16 is the INDIVIDUAL TAXPAYER'S available credit — their credit cards and personal lines; 433-B's is A SEPARATE LEGAL ENTITY'S. The subject register records 433b / 433a as MUTUALLY EXCLUSIVE. A taxpayer's personal card limit and their corporation's revolving facility are different numbers on the same day, and a property holding one cannot hold the other.",
+   "scope_reason": "A COUNTERPART EXISTS ON 433-A AND IT BELONGS TO A DIFFERENT LEGAL PERSON. The 433-B(OIC) observation stands beside it and is unchanged: a table and three scalars are different containers, so that form contributes no candidate either — serializing rows into `irs433boi_line_of_credit_limit` would be writing a table into a scalar. The two as-of dates ride with the table because each dates one of its columns.",
    "compared_against": [
+    "433a",
     "433boi"
-   ]
+   ],
+   "_this_entry_was_RE_RULED": "IT SAID `new`. 433-A prints the table AND the as-of date, under names this form's facts reproduce. Caught by derive-names-433b.mjs A8. Kept under [R-21]: the 433-B(OIC) reasoning it recorded was right and is preserved verbatim in the scope_reason."
   },
   {
    "id": "Z-34",
@@ -500,6 +554,8 @@
    "scope": "form-specific",
    "scope_reason": "THE `quick_sale_value` COLUMN IS THE WHOLE OFFER-IN-COMPROMISE DIFFERENCE MADE VISIBLE. 433-B(OIC) values assets at quick sale because an offer is measured against what the Service could realise; 433-B states fair market value under collection. A row written from this form into that property would be silent in the column that form's arithmetic actually uses.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -513,6 +569,7 @@
    "scope": "form-specific",
    "scope_reason": "Four rows against two, and an attachment addend on one side only — and beneath that, the equity being summed is quick-sale equity on 433-B(OIC) and fair-market equity here (Z-34). Two different computations over two different row counts.",
    "compared_against": [
+    "433a",
     "433boi"
    ]
   },
@@ -526,6 +583,8 @@
    "scope": "form-specific",
    "scope_reason": "Same quick-sale separation as Z-34, plus two columns each form has and the other does not: 433-B records the VIN and 433-B(OIC) records whether the vehicle is leased or owned. Neither row can be written into the other property without dropping a column, and the identical key name is again evidence of nothing.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -539,6 +598,7 @@
    "scope": "form-specific",
    "scope_reason": "Different row counts, an attachment addend on one side only, and quick-sale equity against fair-market equity underneath.",
    "compared_against": [
+    "433a",
     "433boi"
    ]
   },
@@ -597,15 +657,18 @@
   {
    "id": "Z-42",
    "page": 5,
-   "category": "new",
+   "category": "same-question-different-subject",
    "oic": "s5_accounting_method",
-   "boi": "Nothing.",
-   "why": "433-B prints \"Accounting Method Used:\" with Cash and Accrual boxes at the head of Section 5. 433-B(OIC) prints no accounting method anywhere.",
+   "boi": "Nothing on 433-B(OIC), which prints no accounting method anywhere. 433-A PRINTS IT: irs433_accounting_method at its Section 7, as an enumeration.",
+   "why": "433-B prints \"Accounting Method Used:\" with Cash and Accrual boxes at the head of Section 5.",
    "scope": "form-specific",
-   "scope_reason": "No counterpart exists — AND THIS CELL IS WHY Z-44 AND Z-47 ARE NOT REUSES. It is the declaration that every income and expense figure on this form is stated on a basis the other form never names.",
+   "subject_reason": "433-A's accounting method governs the income and expense figures of THE INDIVIDUAL TAXPAYER'S sole proprietorship; 433-B's governs A SEPARATE LEGAL ENTITY'S books. The subject register records 433b / 433a as MUTUALLY EXCLUSIVE. A filer may keep a cash-basis Schedule C and own an accrual-basis corporation — the two are commonly on different bases, since an entity past the gross-receipts test is required to accrue — so one property would hold two answers at one moment, and it is exactly the cell whose value changes what every figure beneath it MEANS.",
+   "scope_reason": "A COUNTERPART EXISTS ON 433-A AND IT BELONGS TO A DIFFERENT LEGAL PERSON — AND THIS CELL IS ALSO WHY Z-44 AND Z-47 ARE NOT REUSES against 433-B(OIC). It is the declaration that every income and expense figure on this form is stated on a basis 433-B(OIC) never names.",
    "compared_against": [
+    "433a",
     "433boi"
-   ]
+   ],
+   "_this_entry_was_RE_RULED": "IT SAID `new` AND \"No counterpart exists\". 433-A prints the same enumeration. Caught by derive-names-433b.mjs A8. Kept under [R-21]: the clause that mattered downstream — that this cell is why the income and expense lines cannot be reused — was right and is preserved."
   },
   {
    "id": "Z-43",
@@ -630,6 +693,8 @@
    "scope": "form-specific",
    "scope_reason": "THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -656,6 +721,7 @@
    "scope": "form-specific",
    "scope_reason": "One total sums five cells; the other sums five cells and a table. Different operand sets, on top of the basis difference Z-44 records.",
    "compared_against": [
+    "433a",
     "433boi"
    ]
   },
@@ -669,6 +735,8 @@
    "scope": "form-specific",
    "scope_reason": "ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times.",
    "compared_against": [
+    "433a",
+    "433aoi",
     "433boi"
    ]
   },
@@ -701,7 +769,7 @@
  ],
  "_tally": {
   "_why": "Derived from entries[] by scratchpad/433b-classify-author.mjs and re-derived by adapters/pdf/count-sweep.mjs [S-25]. A hand-kept tally beside a list is how \"eleven\" survived three slices when the honest figure was ten. Every declared category is seeded at 0, so an unused one reports its zero instead of being absent.",
-  "entries": 49,
+  "entries": 50,
   "exact": 8,
   "superset": 2,
   "asymmetric-the-other-way": 1,
@@ -709,8 +777,8 @@
   "different-arithmetic-same-name": 11,
   "different-shape": 9,
   "same-fact-different-decomposition": 3,
-  "new": 14,
-  "same-question-different-subject": 0
+  "new": 9,
+  "same-question-different-subject": 6
  },
  "_what_this_file_does_not_say": "IT DOES NOT SAY WHICH HUBSPOT PROPERTY FEEDS ANYTHING, except where an entry's `reuse_of` names one — and that field is a statement about which existing property this form BINDS, not a name this file creates. Every name this pass creates is derived by adapters/hubspot/derive-names-433b.mjs.",
  "_granularity_is_declared_per_entry": "EVERY ENTRY NAMES EVERY KEY IT COVERS VERBATIM. This form declares NO naming mechanism — no prefix glob, no counterpart substitution — so adapters/hubspot/classification-coverage.mjs carries an EMPTY MECHANISMS row for it and every entry derives `enumerated`. Declared empty, not absent: an absent row and a declared-empty row are different statements.",

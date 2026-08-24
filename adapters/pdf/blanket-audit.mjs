@@ -1474,6 +1474,10 @@ export const COMPLETENESS = [
   // silently sends a host-form guard at the wrong document, and TWO SUCCESSIVE DRAFTS OF THE
   // FILE DID EXACTLY THAT before the audit caught them. The counter is what makes the third
   // time loud.
+  C({ id: 'K-31', match: /Every entry ruled against that form is unaffected, and not one derived/,
+    kind: 'not-coverage',
+    reason: 'PROSE ABOUT A PAST STATE, WHICH IS THIS DISPOSITION\'S OWN GROUND. The sentence is the `what_it_got_right` half of a superseded finding kept verbatim under [R-21]: 433-B\'s classification first recorded `same-question-different-subject: 0`, six entries were re-ruled when the twin table found their facts live on the backbone, and this clause records that the correction moved no NAME. The set it quantifies over is the derivation as it stood BEFORE the correction, which is not in this tree — counting it would mean carrying a copy of the superseded derivation solely so a counter could compare against it. THE LIVE GUARANTEE IS HELD ELSEWHERE AND MORE STRONGLY: adapters/hubspot/validate-crosswalk.mjs asserts on every run that no hs_name is used twice (A4), that every name is legal and every CREATED name carries this form\'s prefix (A5), that every reuse names a property that exists and every creation names one that does not (A6, 9 and 107 on this form), and that every reused property keeps every option its owner declares (A7). Those four are what would fail if a name had moved to somewhere it should not be, and they run against the portal rather than against a memory of a previous run.' }),
+
   // AND IT IS A not-coverage DISPOSITION, NOT A COUNTER, FOR A REASON THE FIRST DRAFT LEARNED
   // THE HARD WAY. Written as a counter it measured EVERY coordinate in the file and reported
   // 0 of 22 — because 22 of them are 433-B's OWN baselines, quoted as evidence for 433-B's own

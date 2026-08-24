@@ -3,14 +3,1679 @@
   "form": "433-B",
   "form_revision": "Rev. 6-2026",
   "map": "adapters/pdf/maps/433b.map.json",
-  "_what_this_file_is": "THE DECLARED EMPTY CROSSWALK FOR 433-B, AND IT IS EMPTY ON PURPOSE. This form has been taken in — blank pinned, revision read from drawn page bytes, fields enumerated, checkboxes probed, subject registered, lineage judged — and NOT ONE CELL IS BOUND. A crosswalk carries one row per bound cell, so the honest row count today is zero.",
+  "_what_this_file_is": "THE CROSSWALK FOR 433-B — one row per engine input key, carrying the FACT each cell holds and the type it is stored as. It carries NO hs_name: adapters/hubspot/derive-names-433b.mjs turns (category, scope, fact) into a name and is the only place a name exists. This file replaced the DECLARED EMPTY crosswalk authored at prompt 46 commit 2, whose zero was honest at the time — the map bound nothing then and binds every one of the form's 447 widgets now.",
   "_why_the_file_exists_at_all_rather_than_being_absent": "adapters/hubspot/assert-intake-keys.mjs builds a CROSS-FORM universe: which columns some form prints and which some form consumes. It reads a crosswalk per mapped form, and on the first run after 433-B's map landed it refused with UNIVERSE GAP — 'a narrowed universe is not a smaller answer to the same question; it is an answer to a different one.' That refusal is correct and this file is the answer to it, not a way around it. A crosswalk that cannot be READ and one that reads ZERO must not report the same thing, and until this file existed they did.",
   "_what_this_file_does_NOT_do": "It classifies nothing. Crosswalk classification for 433-B — which of this form's facts are the same question as an existing property, which are the same question about a different subject, and which are new — is a separate piece of work and is not begun here. When it is, the decision is governed by the SUBJECT verdict already recorded in adapters/pdf/maps/_subjects.cross-form.json (COINCIDES with 433-B(OIC), MUTUALLY EXCLUSIVE with 433-A, 433-F and 433-A(OIC)) and never by the eleven leaf names this form shares with 433-A and 433-F, which adapters/pdf/maps/433b.lineage.json shows are inert.",
   "_the_zero_is_derived_not_asserted": "`bindings` is empty because `map` in adapters/pdf/maps/433b.map.json is empty. Both are 0 in the same commit and either becoming non-zero without the other is a disagreement the next run will report.",
-  "_authored_by": "Prompt 46 commit 2, the 433-B intake."
+  "_authored_by": "scratchpad/433b-crosswalk-author.mjs, prompt 50 commit 2.",
+  "_the_reuse_rows_are_the_finding": "NINE ROWS CARRY `reuse_of`, AND THEY ARE THE FIRST IN THIS SERIES. Every form before 433-B came out 100% form-specific because its subject was new; 433-B's subject COINCIDES with 433-B(OIC)'s, so [R-06]'s prefix half applies for the first time and nine facts bind properties the irs433boi_ prefix records 433-B(OIC) as having created. The other 107 rows need a new name. The split is derived from the classification, not typed here.",
+  "_why_the_counts_block_is_absent": "meta.counts IS NOT WRITTEN BY THIS FILE. validate-crosswalk.mjs derives every one of the six figures from the rows and compares; a hand-kept block beside the rows is the shape [R-07] forbids. Its six \"says undefined, rows say N\" lines are the declaration doing its job, not a gap."
  },
  "option_extensions": [],
- "bindings": [],
+ "bindings": [
+  {
+   "key": "s1_business_name",
+   "entry": "Z-02",
+   "fact": "business_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_business_name",
+   "reuse_reason": "Z-02 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s1_business_street_address",
+   "entry": "Z-01",
+   "fact": "business_street_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-01 says on what. THE OBVIOUS REUSE IS THE WRONG ONE AND THIS ENTRY EXISTS TO SAY SO. `s1_mailing_address` and `irs433boi_business_mailing_address` share a caption almost word for word, and binding them would put a bare street line into a property that on 433-B(OIC) holds street, city, state and ZIP together. The printed page settles it: 433-B's City/State/ZIP row is drawn BELOW \"Mailing Address\" and inside the same printed marker 1b, so those three cells complete an address on this form and have no counterpart cell on the other. A property cannot be half an address on one form and a whole one on the other."
+  },
+  {
+   "key": "s1_mailing_address",
+   "entry": "Z-01",
+   "fact": "mailing_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-01 says on what. THE OBVIOUS REUSE IS THE WRONG ONE AND THIS ENTRY EXISTS TO SAY SO. `s1_mailing_address` and `irs433boi_business_mailing_address` share a caption almost word for word, and binding them would put a bare street line into a property that on 433-B(OIC) holds street, city, state and ZIP together. The printed page settles it: 433-B's City/State/ZIP row is drawn BELOW \"Mailing Address\" and inside the same printed marker 1b, so those three cells complete an address on this form and have no counterpart cell on the other. A property cannot be half an address on one form and a whole one on the other."
+  },
+  {
+   "key": "s1_city",
+   "entry": "Z-01",
+   "fact": "city",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-01 says on what. THE OBVIOUS REUSE IS THE WRONG ONE AND THIS ENTRY EXISTS TO SAY SO. `s1_mailing_address` and `irs433boi_business_mailing_address` share a caption almost word for word, and binding them would put a bare street line into a property that on 433-B(OIC) holds street, city, state and ZIP together. The printed page settles it: 433-B's City/State/ZIP row is drawn BELOW \"Mailing Address\" and inside the same printed marker 1b, so those three cells complete an address on this form and have no counterpart cell on the other. A property cannot be half an address on one form and a whole one on the other."
+  },
+  {
+   "key": "s1_state",
+   "entry": "Z-01",
+   "fact": "state",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-01 says on what. THE OBVIOUS REUSE IS THE WRONG ONE AND THIS ENTRY EXISTS TO SAY SO. `s1_mailing_address` and `irs433boi_business_mailing_address` share a caption almost word for word, and binding them would put a bare street line into a property that on 433-B(OIC) holds street, city, state and ZIP together. The printed page settles it: 433-B's City/State/ZIP row is drawn BELOW \"Mailing Address\" and inside the same printed marker 1b, so those three cells complete an address on this form and have no counterpart cell on the other. A property cannot be half an address on one form and a whole one on the other."
+  },
+  {
+   "key": "s1_zip",
+   "entry": "Z-01",
+   "fact": "zip",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-01 says on what. THE OBVIOUS REUSE IS THE WRONG ONE AND THIS ENTRY EXISTS TO SAY SO. `s1_mailing_address` and `irs433boi_business_mailing_address` share a caption almost word for word, and binding them would put a bare street line into a property that on 433-B(OIC) holds street, city, state and ZIP together. The printed page settles it: 433-B's City/State/ZIP row is drawn BELOW \"Mailing Address\" and inside the same printed marker 1b, so those three cells complete an address on this form and have no counterpart cell on the other. A property cannot be half an address on one form and a whole one on the other."
+  },
+  {
+   "key": "s1_county",
+   "entry": "Z-03",
+   "fact": "county_of_business_location",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_county_of_business_location",
+   "reuse_reason": "Z-03 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s1_business_telephone_area_code",
+   "entry": "Z-04",
+   "fact": "business_telephone_area_code",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-04 says on what. Two cells cannot both bind one property, and neither of them alone holds the fact the other form's property holds. Writing the seven-digit half into `irs433boi_business_primary_phone` would drop the area code from a number a revenue officer is expected to dial."
+  },
+  {
+   "key": "s1_business_telephone_number",
+   "entry": "Z-04",
+   "fact": "business_telephone_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-04 says on what. Two cells cannot both bind one property, and neither of them alone holds the fact the other form's property holds. Writing the seven-digit half into `irs433boi_business_primary_phone` would drop the area code from a number a revenue officer is expected to dial."
+  },
+  {
+   "key": "s1_type_of_business",
+   "entry": "Z-05",
+   "fact": "type_of_business",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-05 says on what. The 433-B(OIC) cell holds two facts, one of which 433-B never asks for. A \"yes\" to reuse would mean a 433-B record either loses the DBA a 433-B(OIC) record carries, or invents one; and a preparer reading `irs433boi_description_of_business_and_dba` back onto 433-B would print a trade name into a cell captioned \"Type of Business\"."
+  },
+  {
+   "key": "s1_business_website",
+   "entry": "Z-06",
+   "fact": "business_website_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_business_website_address",
+   "reuse_reason": "Z-06 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s1_ein",
+   "entry": "Z-02",
+   "fact": "employer_identification_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_employer_identification_number",
+   "reuse_reason": "Z-02 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s1_entity_other_description",
+   "entry": "Z-07",
+   "fact": "entity_other_description",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "s1_llc_number_of_members",
+   "entry": "Z-07",
+   "fact": "llc_number_of_members",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "a printed count",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s1_date_incorporated_or_established",
+   "entry": "Z-08",
+   "fact": "date_incorporated_or_established",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s1_number_of_employees",
+   "entry": "Z-09",
+   "fact": "total_number_of_employees",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "a printed count",
+   "backbone_key": null,
+   "pii": false,
+   "reuse_of": "irs433boi_total_number_of_employees",
+   "reuse_reason": "Z-09 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s1_monthly_gross_payroll",
+   "entry": "Z-10",
+   "fact": "monthly_gross_payroll",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-10 says on what. AN AVERAGE OVER A PERIOD AND A MONTH'S FIGURE ARE TWO NUMBERS, and for a business with seasonal or commission payroll they are far apart. This is the category whose own definition warns that the names invite reuse and the resulting figure is wrong on a document signed under penalty of perjury while every printed total still reconciles — a payroll figure feeds no total on either form, so nothing downstream would have disagreed."
+  },
+  {
+   "key": "s1_frequency_of_tax_deposits",
+   "entry": "Z-11",
+   "fact": "frequency_of_tax_deposits",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_frequency_of_tax_deposits",
+   "reuse_reason": "Z-11 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s3_8_payroll_service_name_and_address",
+   "entry": "Z-15",
+   "fact": "payroll_service_name_and_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-15 says on what. NEITHER QUESTION CONTAINS THE OTHER, which is why this is not a superset in either direction. A business using a Reporting Agent that files its employment tax returns at no separate fee answers YES on 433-B and NO on 433-B(OIC); a business that outsources only its tax return preparation for a fee answers YES on 433-B(OIC) and NO on 433-B. Two answers, one taxpayer, one moment. The provider cell rides with the predicate: if the two questions can select different arrangements, the provider named can be a different provider, so binding the name while splitting the boolean would put one arrangement's provider under the other's flag."
+  },
+  {
+   "key": "s3_8_payroll_service_effective_dates",
+   "entry": "Z-15",
+   "fact": "payroll_service_effective_dates",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-15 says on what. NEITHER QUESTION CONTAINS THE OTHER, which is why this is not a superset in either direction. A business using a Reporting Agent that files its employment tax returns at no separate fee answers YES on 433-B and NO on 433-B(OIC); a business that outsources only its tax return preparation for a fee answers YES on 433-B(OIC) and NO on 433-B. Two answers, one taxpayer, one moment. The provider cell rides with the predicate: if the two questions can select different arrangements, the provider named can be a different provider, so binding the name while splitting the boolean would put one arrangement's provider under the other's flag."
+  },
+  {
+   "key": "s3_9_location_of_filing",
+   "entry": "Z-16",
+   "fact": "suit_location_of_filing",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_9_represented_by",
+   "entry": "Z-16",
+   "fact": "suit_represented_by",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_9_docket_or_case_number",
+   "entry": "Z-16",
+   "fact": "suit_docket_or_case_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_9_amount_of_suit",
+   "entry": "Z-16",
+   "fact": "suit_amount_of_suit",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_9_possible_completion_date",
+   "entry": "Z-16",
+   "fact": "suit_possible_completion_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_9_subject_of_suit",
+   "entry": "Z-16",
+   "fact": "suit_subject_of_suit",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_10_date_filed",
+   "entry": "Z-17",
+   "fact": "bankruptcy_date_filed",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_10_date_dismissed",
+   "entry": "Z-17",
+   "fact": "bankruptcy_date_dismissed",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_10_date_discharged",
+   "entry": "Z-17",
+   "fact": "bankruptcy_date_discharged",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_10_petition_number",
+   "entry": "Z-17",
+   "fact": "bankruptcy_petition_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_10_district_of_filing",
+   "entry": "Z-17",
+   "fact": "bankruptcy_district_of_filing",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_11_name_and_address",
+   "entry": "Z-19",
+   "fact": "related_party_name_and_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "s3_11_date_of_loan",
+   "entry": "Z-19",
+   "fact": "related_party_date_of_loan",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_11_current_balance",
+   "entry": "Z-19",
+   "fact": "related_party_current_balance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_11_current_balance_as_of",
+   "entry": "Z-19",
+   "fact": "related_party_current_balance_as_of",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_11_payment_date",
+   "entry": "Z-19",
+   "fact": "related_party_payment_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_11_payment_amount",
+   "entry": "Z-19",
+   "fact": "related_party_payment_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_12_list_asset",
+   "entry": "Z-20",
+   "fact": "transferred_asset_description",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-20 says on what. THE MOST DANGEROUS PAIR ON THIS FORM, because the captions are near-identical, the ten-year window matches exactly, and the difference is a $10,000 threshold buried mid-sentence that no property name could ever carry. A business that gave away a $6,000 vehicle answers YES on 433-B and NO on 433-B(OIC). Had this been ruled on the caption it would have read as `exact`. The four detail cells also fail on decomposition — four cells cannot bind one combined property — so they would have been caught by the second test even if the first had been missed, which is the only reason this entry is not the one that got through."
+  },
+  {
+   "key": "s3_12_value_at_time_of_transfer",
+   "entry": "Z-20",
+   "fact": "transferred_asset_value_at_transfer",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-20 says on what. THE MOST DANGEROUS PAIR ON THIS FORM, because the captions are near-identical, the ten-year window matches exactly, and the difference is a $10,000 threshold buried mid-sentence that no property name could ever carry. A business that gave away a $6,000 vehicle answers YES on 433-B and NO on 433-B(OIC). Had this been ruled on the caption it would have read as `exact`. The four detail cells also fail on decomposition — four cells cannot bind one combined property — so they would have been caught by the second test even if the first had been missed, which is the only reason this entry is not the one that got through."
+  },
+  {
+   "key": "s3_12_date_transferred",
+   "entry": "Z-20",
+   "fact": "transferred_asset_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-20 says on what. THE MOST DANGEROUS PAIR ON THIS FORM, because the captions are near-identical, the ten-year window matches exactly, and the difference is a $10,000 threshold buried mid-sentence that no property name could ever carry. A business that gave away a $6,000 vehicle answers YES on 433-B and NO on 433-B(OIC). Had this been ruled on the caption it would have read as `exact`. The four detail cells also fail on decomposition — four cells cannot bind one combined property — so they would have been caught by the second test even if the first had been missed, which is the only reason this entry is not the one that got through."
+  },
+  {
+   "key": "s3_12_to_whom_or_where_transferred",
+   "entry": "Z-20",
+   "fact": "transferred_asset_to_whom_or_where",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-20 says on what. THE MOST DANGEROUS PAIR ON THIS FORM, because the captions are near-identical, the ten-year window matches exactly, and the difference is a $10,000 threshold buried mid-sentence that no property name could ever carry. A business that gave away a $6,000 vehicle answers YES on 433-B and NO on 433-B(OIC). Had this been ruled on the caption it would have read as `exact`. The four detail cells also fail on decomposition — four cells cannot bind one combined property — so they would have been caught by the second test even if the first had been missed, which is the only reason this entry is not the one that got through."
+  },
+  {
+   "key": "s3_13_related_business_name_and_address",
+   "entry": "Z-22",
+   "fact": "related_business_name_and_address",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-22 says on what. Two cells cannot bind one property, and the split is not the same split: 433-B's first cell carries an ADDRESS the combined cell never asked for. This entry sits directly under a reused boolean (Z-21) and that is the point — the same question can be answered into different containers, and the container is what a property has to match."
+  },
+  {
+   "key": "s3_13_related_business_ein",
+   "entry": "Z-22",
+   "fact": "related_business_ein",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-22 says on what. Two cells cannot bind one property, and the split is not the same split: 433-B's first cell carries an ADDRESS the combined cell never asked for. This entry sits directly under a reused boolean (Z-21) and that is the point — the same question can be answered into different containers, and the container is what a property has to match."
+  },
+  {
+   "key": "s3_14_explain",
+   "entry": "Z-23",
+   "fact": "income_change_explain",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "free-text explanation",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_14_how_much_increase_decrease",
+   "entry": "Z-23",
+   "fact": "income_change_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_14_when_increase_decrease",
+   "entry": "Z-23",
+   "fact": "income_change_when",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_16a_total_cash_on_hand",
+   "entry": "Z-25",
+   "fact": "total_cash_on_hand",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_16b_safe_contents",
+   "entry": "Z-51",
+   "fact": "safe_contents",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "s4_17_account_balance_as_of",
+   "entry": "Z-26",
+   "fact": "bank_account_balance_as_of",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-26 says on what. THE `asset_class` COLUMN IS NOT COSMETIC — it is how the 433-B(OIC) record tells its own row kinds apart, and a 433-B row written without it is a row that form's reader cannot classify. The as-of date has no counterpart at all. A shared property would have to hold rows of two shapes and nothing in the serialization says which shape a given row is."
+  },
+  {
+   "key": "s4_17d_total_cash_in_banks",
+   "entry": "Z-27",
+   "fact": "total_cash_in_banks",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-27 says on what. THE OPERAND LISTS DIFFER BY A TERM THE PAGE DRAWS ON ONE FORM AND NOT THE OTHER. 433-B(OIC)'s total includes an attachment figure a filer types in; 433-B's names attachments in its caption and gives nowhere to state them. A figure carried across is a total over a different set of addends, and both pages still reconcile internally, which is what makes this category the dangerous one."
+  },
+  {
+   "key": "s4_18f_outstanding_balance",
+   "entry": "Z-28",
+   "fact": "receivables_outstanding_balance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_19c_total_investments",
+   "entry": "Z-30",
+   "fact": "total_investments",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-30 says on what. Same defect as Z-27: one form draws the attachment addend and the other names it without drawing it, so the two totals sum different sets. The subform this total lives in is named `Line19c` on the page that marks the row 19b, which is registered at [B-03] and is exactly why the binding was made from the printed marker rather than the leaf name ([R-08])."
+  },
+  {
+   "key": "s4_20a_individuals_with_private_key_access",
+   "entry": "Z-31",
+   "fact": "individuals_with_private_key_access",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-31 says on what. AN IDENTICAL KEY NAME IS EVIDENCE OF NOTHING — the same finding as [R-08] one artefact along, and this is where a key-name-driven derivation would have produced its collision. 433-B(OIC) carries `number_of_units`, which [R-09] singles out as the cell a blanket money rule corrupts silently because a holding of 1.2345 units rounded to 1 is a false statement about property; 433-B has no units column at all, so a shared property would carry rows that are silent about the quantity held."
+  },
+  {
+   "key": "s4_20_current_value_as_of",
+   "entry": "Z-31",
+   "fact": "digital_asset_current_value_as_of",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-31 says on what. AN IDENTICAL KEY NAME IS EVIDENCE OF NOTHING — the same finding as [R-08] one artefact along, and this is where a key-name-driven derivation would have produced its collision. 433-B(OIC) carries `number_of_units`, which [R-09] singles out as the cell a blanket money rule corrupts silently because a holding of 1.2345 units rounded to 1 is a false statement about property; 433-B has no units column at all, so a shared property would carry rows that are silent about the quantity held."
+  },
+  {
+   "key": "s4_20e_total_equity_of_digital_assets",
+   "entry": "Z-32",
+   "fact": "total_equity_of_digital_assets",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_21_amount_owed_as_of",
+   "entry": "Z-33",
+   "fact": "available_credit_amount_owed_as_of",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_21_available_credit_as_of",
+   "entry": "Z-33",
+   "fact": "available_credit_as_of",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s4_22e_total_equity_real_property",
+   "entry": "Z-35",
+   "fact": "total_equity_real_property",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-35 says on what. Four rows against two, and an attachment addend on one side only — and beneath that, the equity being summed is quick-sale equity on 433-B(OIC) and fair-market equity here (Z-34). Two different computations over two different row counts."
+  },
+  {
+   "key": "s4_23e_total_equity_vehicles",
+   "entry": "Z-37",
+   "fact": "total_equity_vehicles",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-37 says on what. Different row counts, an attachment addend on one side only, and quick-sale equity against fair-market equity underneath."
+  },
+  {
+   "key": "s4_24h_total_equity_business_equipment",
+   "entry": "Z-40",
+   "fact": "total_equity_business_equipment_and_intangibles",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-40 says on what. A TOTAL OVER TWO TABLES AND A TOTAL OVER ONE ARE NOT THE SAME TOTAL, and one of the two tables (Z-39) does not exist on the other form at all. This is the clearest case on the form of a caption that would have invited reuse — \"Total Equity\" against \"Total value of all business equipment\" — over an operand set that is not even the same arity."
+  },
+  {
+   "key": "s4_25c_total_payments",
+   "entry": "Z-41",
+   "fact": "total_liability_payments",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s5_period_from",
+   "entry": "Z-43",
+   "fact": "income_expense_period_from",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-43 says on what. ONE PERIOD AGAINST TWO IS A SHAPE DIFFERENCE THAT CHANGES WHAT A VALUE MEANS. Binding `s5_period_from` to `irs433boi_income_period_beginning` would leave a 433-B record silent about the expense period, and reading it back would assert that this form declared the two separately when it declared them once."
+  },
+  {
+   "key": "s5_period_to",
+   "entry": "Z-43",
+   "fact": "income_expense_period_to",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-43 says on what. ONE PERIOD AGAINST TWO IS A SHAPE DIFFERENCE THAT CHANGES WHAT A VALUE MEANS. Binding `s5_period_from` to `irs433boi_income_period_beginning` would leave a 433-B record silent about the expense period, and reading it back would assert that this form declared the two separately when it declared them once."
+  },
+  {
+   "key": "s5_26_gross_receipts",
+   "entry": "Z-44",
+   "fact": "bizinc_gross_receipts",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-44 says on what. THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with."
+  },
+  {
+   "key": "s5_27_gross_rental_income",
+   "entry": "Z-44",
+   "fact": "bizinc_gross_rental_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-44 says on what. THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with."
+  },
+  {
+   "key": "s5_28_interest_income",
+   "entry": "Z-44",
+   "fact": "bizinc_interest_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-44 says on what. THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with."
+  },
+  {
+   "key": "s5_29_dividends",
+   "entry": "Z-44",
+   "fact": "bizinc_dividends",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-44 says on what. THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with."
+  },
+  {
+   "key": "s5_30_cash_receipts",
+   "entry": "Z-44",
+   "fact": "bizinc_cash_receipts",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-44 says on what. THE SAME CAPTION OVER A DIFFERENT DECLARED BASIS IS A DIFFERENT FIGURE. Cash-basis and accrual-basis gross receipts for one business over one month are two numbers, and only this form says which it is. The two forms also scope their periods differently (Z-43). A figure carried across is a figure computed under a basis the receiving form never declared, and every printed total on both pages would still reconcile — which is the property that makes this category the one to be most careful with."
+  },
+  {
+   "key": "s5_36_total_income",
+   "entry": "Z-46",
+   "fact": "total_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-46 says on what. One total sums five cells; the other sums five cells and a table. Different operand sets, on top of the basis difference Z-44 records."
+  },
+  {
+   "key": "s5_37_materials_purchased",
+   "entry": "Z-47",
+   "fact": "bizexp_materials_purchased",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_38_inventory_purchased",
+   "entry": "Z-47",
+   "fact": "bizexp_inventory_purchased",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_39_gross_wages_and_salaries",
+   "entry": "Z-47",
+   "fact": "bizexp_gross_wages_and_salaries",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_40_rent",
+   "entry": "Z-47",
+   "fact": "bizexp_rent",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_41_supplies",
+   "entry": "Z-47",
+   "fact": "bizexp_supplies",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_42_utilities_telephone",
+   "entry": "Z-47",
+   "fact": "bizexp_utilities_telephone",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_43_vehicle_gasoline_oil",
+   "entry": "Z-47",
+   "fact": "bizexp_vehicle_gasoline_oil",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_44_repairs_and_maintenance",
+   "entry": "Z-47",
+   "fact": "bizexp_repairs_and_maintenance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_45_insurance",
+   "entry": "Z-47",
+   "fact": "bizexp_insurance",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_46_current_taxes",
+   "entry": "Z-47",
+   "fact": "bizexp_current_taxes",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_47_other_expenses",
+   "entry": "Z-47",
+   "fact": "bizexp_other_expenses",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-47 says on what. ELEVEN LINES AGAINST TEN, and the eleventh is not the only reason. Every one of these figures is stated on the accounting basis of Z-42 over the single period of Z-43, neither of which 433-B(OIC) declares; and 433-B(OIC)'s \"vehicle costs\" is one line where this form prints \"Vehicle Gasoline/Oil\" alone, so even the correspondence that looks one-to-one is a broader line against a narrower one. Ruled as ONE entry because every key in it fails for the same two reasons and splitting it would state the same ground eleven times."
+  },
+  {
+   "key": "s5_49_total_expenses",
+   "entry": "Z-48",
+   "fact": "total_expenses",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-48 says on what. A total over eleven addends and a total over ten are not the same total, and the eleventh addend is a line the other form never prints (Z-47)."
+  },
+  {
+   "key": "s5_50_net_income",
+   "entry": "Z-49",
+   "fact": "net_income",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-B declares NO rounding block, so it is written and compared TO THE CENT. Stated per row rather than inherited: on this form \"money\" is a fact about the cell, not a page-level declaration, because there is no page-level declaration to inherit.",
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-49 says on what. The subtraction has the same shape and neither operand is the same figure (Z-46, Z-48), so the difference is not the same difference. THIS IS ALSO THE LINE THE [FS-3] AMENDMENT WAS RULED ON: it is the only declared line on this form that is computed from two others, which is why a one-cent break in 36 or 49 makes 50 disagree correctly and by construction, and why a firing proof on either operand must now DERIVE that dependency from this file's own feeder graph rather than assert it."
+  },
+  {
+   "key": "s1_eftps_enrolled",
+   "entry": "Z-12",
+   "fact": "eftps_enrolled",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s1_engages_in_ecommerce",
+   "entry": "Z-13",
+   "fact": "engages_in_ecommerce",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "personnel_7a_responsible_for_payroll_taxes",
+   "entry": "Z-14",
+   "fact": "personnel_7a_responsible_for_payroll_taxes",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-14 says on what. THE FACTS TRANSFER AND THE CONTAINER DOES NOT, and two of the differences are not cosmetic: 433-B(OIC) fuses ownership percentage and annual salary into one printed cell where 433-B draws two, and 433-B carries a per-row payroll-tax responsibility flag that 433-B(OIC) never asks. A row written under one shape and read under the other loses the flag and cannot separate the fused cell. The four Yes/No flags ride with the table rather than standing alone, because each one is a column of the row it sits in."
+  },
+  {
+   "key": "personnel_7b_responsible_for_payroll_taxes",
+   "entry": "Z-14",
+   "fact": "personnel_7b_responsible_for_payroll_taxes",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-14 says on what. THE FACTS TRANSFER AND THE CONTAINER DOES NOT, and two of the differences are not cosmetic: 433-B(OIC) fuses ownership percentage and annual salary into one printed cell where 433-B draws two, and 433-B carries a per-row payroll-tax responsibility flag that 433-B(OIC) never asks. A row written under one shape and read under the other loses the flag and cannot separate the fused cell. The four Yes/No flags ride with the table rather than standing alone, because each one is a column of the row it sits in."
+  },
+  {
+   "key": "personnel_7c_responsible_for_payroll_taxes",
+   "entry": "Z-14",
+   "fact": "personnel_7c_responsible_for_payroll_taxes",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-14 says on what. THE FACTS TRANSFER AND THE CONTAINER DOES NOT, and two of the differences are not cosmetic: 433-B(OIC) fuses ownership percentage and annual salary into one printed cell where 433-B draws two, and 433-B carries a per-row payroll-tax responsibility flag that 433-B(OIC) never asks. A row written under one shape and read under the other loses the flag and cannot separate the fused cell. The four Yes/No flags ride with the table rather than standing alone, because each one is a column of the row it sits in."
+  },
+  {
+   "key": "personnel_7d_responsible_for_payroll_taxes",
+   "entry": "Z-14",
+   "fact": "personnel_7d_responsible_for_payroll_taxes",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-14 says on what. THE FACTS TRANSFER AND THE CONTAINER DOES NOT, and two of the differences are not cosmetic: 433-B(OIC) fuses ownership percentage and annual salary into one printed cell where 433-B draws two, and 433-B carries a per-row payroll-tax responsibility flag that 433-B(OIC) never asks. A row written under one shape and read under the other loses the flag and cannot separate the fused cell. The four Yes/No flags ride with the table rather than standing alone, because each one is a column of the row it sits in."
+  },
+  {
+   "key": "s1_type_of_entity",
+   "entry": "Z-07",
+   "fact": "type_of_entity",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (5 options)",
+   "options": [
+    {
+     "label": "Partnership",
+     "value": "partnership",
+     "displayOrder": 0
+    },
+    {
+     "label": "Corporation",
+     "value": "corporation",
+     "displayOrder": 1
+    },
+    {
+     "label": "Other",
+     "value": "other",
+     "displayOrder": 2
+    },
+    {
+     "label": "Limited Liability Company (LLC) classified as a corporation",
+     "value": "limited_liability_company_llc_classified_as_a_corporation",
+     "displayOrder": 3
+    },
+    {
+     "label": "Other LLC - Include number of members",
+     "value": "other_llc_include_number_of_members",
+     "displayOrder": 4
+    }
+   ],
+   "map_option_by_value": {
+    "partnership": "Partnership",
+    "corporation": "Corporation",
+    "other": "Other",
+    "limited_liability_company_llc_classified_as_a_corporation": "Limited Liability Company (LLC) classified as a corporation",
+    "other_llc_include_number_of_members": "Other LLC - Include number of members"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_8_uses_payroll_service",
+   "entry": "Z-15",
+   "fact": "uses_payroll_service",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-15 says on what. NEITHER QUESTION CONTAINS THE OTHER, which is why this is not a superset in either direction. A business using a Reporting Agent that files its employment tax returns at no separate fee answers YES on 433-B and NO on 433-B(OIC); a business that outsources only its tax return preparation for a fee answers YES on 433-B(OIC) and NO on 433-B. Two answers, one taxpayer, one moment. The provider cell rides with the predicate: if the two questions can select different arrangements, the provider named can be a different provider, so binding the name while splitting the boolean would put one arrangement's provider under the other's flag."
+  },
+  {
+   "key": "s3_9_party_to_lawsuit",
+   "entry": "Z-16",
+   "fact": "party_to_lawsuit",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "s3_10_ever_filed_bankruptcy",
+   "entry": "Z-17",
+   "fact": "ever_filed_bankruptcy",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-17 says on what. DIRECTION MATTERS AND IT RUNS THIS WAY: 433-B's window strictly contains 433-B(OIC)'s. A business that emerged from Chapter 11 twelve years ago answers YES on 433-B and NO on 433-B(OIC). The detail cells inherit the same defect as Z-16 — they describe the bankruptcy the parent question selected — and they carry a second one of their own: 433-B separates dismissal from discharge and 433-B(OIC) fuses them, so `irs433boi_bk_date_dismissed_or_discharged` cannot say which of the two a date is, and two 433-B cells cannot both bind it."
+  },
+  {
+   "key": "s3_11_related_parties_owe",
+   "entry": "Z-18",
+   "fact": "related_parties_owe_money",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "reuse_of": "irs433boi_related_parties_owe_money",
+   "reuse_reason": "Z-18 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s3_12_assets_transferred",
+   "entry": "Z-20",
+   "fact": "assets_transferred_under_value",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-20 says on what. THE MOST DANGEROUS PAIR ON THIS FORM, because the captions are near-identical, the ten-year window matches exactly, and the difference is a $10,000 threshold buried mid-sentence that no property name could ever carry. A business that gave away a $6,000 vehicle answers YES on 433-B and NO on 433-B(OIC). Had this been ruled on the caption it would have read as `exact`. The four detail cells also fail on decomposition — four cells cannot bind one combined property — so they would have been caught by the second test even if the first had been missed, which is the only reason this entry is not the one that got through."
+  },
+  {
+   "key": "s3_13_other_business_affiliations",
+   "entry": "Z-21",
+   "fact": "other_business_affiliations",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "reuse_of": "irs433boi_other_business_affiliations",
+   "reuse_reason": "Z-21 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s3_14_income_change_anticipated",
+   "entry": "Z-23",
+   "fact": "income_change_anticipated",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_15_federal_government_contractor",
+   "entry": "Z-24",
+   "fact": "federal_contractor",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "reuse_of": "irs433boi_federal_contractor",
+   "reuse_reason": "Z-24 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form."
+  },
+  {
+   "key": "s4_16b_safe_on_premises",
+   "entry": "Z-51",
+   "fact": "safe_on_premises",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "yes/no checkbox pair",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "true": "yes",
+    "false": "no"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s3_9_plaintiff_or_defendant",
+   "entry": "Z-16",
+   "fact": "plaintiff_or_defendant",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "options": [
+    {
+     "label": "Plaintiff",
+     "value": "plaintiff",
+     "displayOrder": 0
+    },
+    {
+     "label": "Defendant",
+     "value": "defendant",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "plaintiff": "Plaintiff",
+    "defendant": "Defendant"
+   },
+   "backbone_key": null,
+   "pii": false,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-16 says on what. THE PREDECESSOR'S WINDOW IS THE WIDER ONE, which is what `asymmetric-the-other-way` records. A business whose only litigation closed three years ago answers NO on 433-B and YES on 433-B(OIC) — two values, one taxpayer, one moment. AND THE SEVEN DETAIL CELLS INHERIT THAT, which is the part a caption-by-caption comparison would miss: each of them describes THE SUIT THE PARENT QUESTION SELECTED, and if the two questions can select different suits then \"Docket/Case No.\" holds a different docket on each form. Binding the details while splitting the boolean is the worse of the two errors, because every caption would still match and the docket would be the wrong one."
+  },
+  {
+   "key": "business_liabilities_25a_secured_or_unsecured",
+   "entry": "Z-41",
+   "fact": "liability_25a_secured_or_unsecured",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "options": [
+    {
+     "label": "Secured",
+     "value": "secured",
+     "displayOrder": 0
+    },
+    {
+     "label": "Unsecured",
+     "value": "unsecured",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "secured": "Secured",
+    "unsecured": "Unsecured"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "business_liabilities_25b_secured_or_unsecured",
+   "entry": "Z-41",
+   "fact": "liability_25b_secured_or_unsecured",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "options": [
+    {
+     "label": "Secured",
+     "value": "secured",
+     "displayOrder": 0
+    },
+    {
+     "label": "Unsecured",
+     "value": "unsecured",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "secured": "Secured",
+    "unsecured": "Unsecured"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "s5_accounting_method",
+   "entry": "Z-42",
+   "fact": "accounting_method",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (2 options)",
+   "options": [
+    {
+     "label": "Cash",
+     "value": "cash",
+     "displayOrder": 0
+    },
+    {
+     "label": "Accrual",
+     "value": "accrual",
+     "displayOrder": 1
+    }
+   ],
+   "map_option_by_value": {
+    "cash": "Cash",
+    "accrual": "Accrual"
+   },
+   "backbone_key": null,
+   "pii": false
+  },
+  {
+   "key": "payment_processors",
+   "entry": "Z-13",
+   "fact": "payment_processors",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "credit_cards_accepted",
+   "entry": "Z-13",
+   "fact": "credit_cards_accepted",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "personnel",
+   "entry": "Z-14",
+   "fact": "personnel",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-14 says on what. THE FACTS TRANSFER AND THE CONTAINER DOES NOT, and two of the differences are not cosmetic: 433-B(OIC) fuses ownership percentage and annual salary into one printed cell where 433-B draws two, and 433-B carries a per-row payroll-tax responsibility flag that 433-B(OIC) never asks. A row written under one shape and read under the other loses the flag and cannot separate the fused cell. The four Yes/No flags ride with the table rather than standing alone, because each one is a column of the row it sits in."
+  },
+  {
+   "key": "business_bank_accounts",
+   "entry": "Z-26",
+   "fact": "business_bank_accounts",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-26 says on what. THE `asset_class` COLUMN IS NOT COSMETIC — it is how the 433-B(OIC) record tells its own row kinds apart, and a 433-B row written without it is a row that form's reader cannot classify. The as-of date has no counterpart at all. A shared property would have to hold rows of two shapes and nothing in the serialization says which shape a given row is."
+  },
+  {
+   "key": "accounts_notes_receivable",
+   "entry": "Z-28",
+   "fact": "accounts_notes_receivable",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "investments",
+   "entry": "Z-29",
+   "fact": "investments",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-29 says on what. The 433-B(OIC) row is typed and this one is not: `type_of_investment` is an enumeration whose values that form's engine resolves, and a 433-B row has no value to put there. Writing rows of this shape into that property would leave the enumerated column empty on every row, which is a record that form cannot read back."
+  },
+  {
+   "key": "digital_assets",
+   "entry": "Z-31",
+   "fact": "digital_assets",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-31 says on what. AN IDENTICAL KEY NAME IS EVIDENCE OF NOTHING — the same finding as [R-08] one artefact along, and this is where a key-name-driven derivation would have produced its collision. 433-B(OIC) carries `number_of_units`, which [R-09] singles out as the cell a blanket money rule corrupts silently because a holding of 1.2345 units rounded to 1 is a false statement about property; 433-B has no units column at all, so a shared property would carry rows that are silent about the quantity held."
+  },
+  {
+   "key": "available_credit",
+   "entry": "Z-33",
+   "fact": "available_credit",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "real_property",
+   "entry": "Z-34",
+   "fact": "real_property",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-34 says on what. THE `quick_sale_value` COLUMN IS THE WHOLE OFFER-IN-COMPROMISE DIFFERENCE MADE VISIBLE. 433-B(OIC) values assets at quick sale because an offer is measured against what the Service could realise; 433-B states fair market value under collection. A row written from this form into that property would be silent in the column that form's arithmetic actually uses."
+  },
+  {
+   "key": "vehicles",
+   "entry": "Z-36",
+   "fact": "vehicles",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-36 says on what. Same quick-sale separation as Z-34, plus two columns each form has and the other does not: 433-B records the VIN and 433-B(OIC) records whether the vehicle is leased or owned. Neither row can be written into the other property without dropping a column, and the identical key name is again evidence of nothing."
+  },
+  {
+   "key": "business_equipment",
+   "entry": "Z-38",
+   "fact": "business_equipment",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-B and 433-B(OIC) ever have to hold two different values for one taxpayer at one moment? YES, and Z-38 says on what. Ten columns against six, quick-sale valuation against fair market, and 433-B records where the equipment is and who lent against it. The name collision is the third on this form and the third time it decides nothing."
+  },
+  {
+   "key": "intangible_assets",
+   "entry": "Z-39",
+   "fact": "intangible_assets",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "business_liabilities",
+   "entry": "Z-41",
+   "fact": "business_liabilities",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  },
+  {
+   "key": "other_income",
+   "entry": "Z-45",
+   "fact": "other_income",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "repeatable table, serialized as a JSON array",
+   "pii": false,
+   "backbone_key": null
+  }
+ ],
  "not_provisioned": [],
  "arguable": []
 }

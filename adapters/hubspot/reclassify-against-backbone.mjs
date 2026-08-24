@@ -131,6 +131,46 @@ export const SAME_FACT_RULINGS = [
     why: 'THE LIVE INSTANCE C-23 WAS FILED FOR, AND THE ONE THE WIDENED TARGET EXISTS TO SURFACE. `irs433_exp_rent` is on the backbone because 433-F prints a Rent line and 433-A does not, so no entry in a crosswalk authored against 433-A could see it. Both cells hold the taxpayer\'s monthly rent payment. NOT REBOUND HERE: `40_monthly_rent_payment` is the rent COMPONENT disclosed beside the OIC housing-and-utilities figure at (40), and whether the component a preparer discloses on an OIC and the expense line a preparer claims on a 433-F are one stored fact is a filing decision on permanent state. Ruled, reported, and left carried as C-23.',
     superseded: 'THE RULING WAS RIGHT AND THE DEFERRAL WAS WRONG, AND THE ORIGINAL IS KEPT ABOVE VERBATIM. What it got right: the two cells hold one fact, and which property a filed cell reads from is permanent state that a tool surfacing candidates must never change by itself. What it got wrong: it treated permanence as a reason to wait, when waiting is the one thing that makes it permanent. THERE WERE ZERO LIVE RECORDS - the only record that ever held either value was the synthetic probe, deleted at the end of the pass that wrote this ruling - so the rebind cost one crosswalk row and no migration, and every day it stayed deferred was a day a real record could arrive and make it cost a migration instead. Rebound under X-82 (same-fact-different-decomposition against 433-A line 37 Housing and Utilities): `40_monthly_rent_payment` now derives `irs433_exp_rent`, and `irs433aoi_monthly_rent_payment` is deprecated in its portal description and named in no definition file. Asserted by sameFactBindings() below, which is what makes this a state rather than a sentence.' },
 
+  // ── 433-B ─────────────────────────────────────────────────────────────────────────────
+  //
+  // Both candidates share the single token "income" with 433-B's other-income TABLE, and both
+  // are ruled different-fact on the same two grounds — the subject and the container. Recorded
+  // separately rather than as one entry with two candidates, because the ruling is per (key,
+  // candidate) pair and a single row disposing of two would be one decision wearing two hats.
+  { form: '433b', key: 'other_income', candidate: 'irs433_income_pension_household', ruling: 'different-fact',
+    why: 'A BUSINESS ENTITY\'S OTHER-INCOME TABLE AGAINST A HOUSEHOLD\'S PENSION LINE, and they fail on both available tests at once. THE SUBJECT: `irs433_income_pension_household` is 433-F\'s spouse-and-household pension income — a NATURAL PERSON\'S retirement income — and adapters/pdf/maps/_subjects.cross-form.json records 433b / 433f as MUTUALLY EXCLUSIVE, so no fact about the filing entity may take it. THE CONTAINER: this key is a five-row TABLE of description-and-amount pairs, serialized as a JSON array into a textarea; the candidate is a single number. Writing rows into it would put text in a numeric property. They share the word "income" because both are income, which is a category and not a fact.' },
+  { form: '433b', key: 'other_income', candidate: 'irs433_income_social_security_household', ruling: 'different-fact',
+    why: 'Same shape as the pension candidate above and the same two grounds: a household\'s social security income belongs to a natural person whose subject the register calls MUTUALLY EXCLUSIVE with this form\'s, and a scalar cannot hold a five-row table. A corporation does not draw social security.' },
+  { form: '433b', key: 'other_income', candidate: 'irs433_income_unemployment', ruling: 'different-fact',
+    why: 'A RESIDUAL TABLE AGAINST A NAMED SOURCE, on top of the same subject and container grounds as the two above. Unemployment compensation is paid to a person who has lost employment; a corporation is not unemployed. And 433-B\'s other-income table is the residual for whatever its five printed income lines do not name — a residual and a named member of the set it is residual to are never one fact, which is the disposition `32_additional_sources_of_income` already carries against this same candidate.' },
+
+  { form: '433b', key: 'business_liabilities', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
+    why: 'A LIABILITY TABLE AGAINST A BUSINESS\'S NAME, sharing only the token "business". The candidate is a single text cell holding what a self-employed INDIVIDUAL calls their trade; this key is a two-row table of description, date pledged, balance owed, final payment date, payment amount and the creditor\'s name, address and phone, for a SEPARATE LEGAL ENTITY. Different subject (433b / 433f and 433b / 433aoi are both MUTUALLY EXCLUSIVE), different type, different question. The shared token is the word "business" doing what it does in English rather than naming a fact.' },
+
+  // The four `description` candidates and the five `party` ones are the token matcher working as
+  // designed on generic words. Each is disposed on its own, because a blanket over "every
+  // candidate that shares only a generic token" would be a rule nobody could check against the
+  // day a generic token happened to name a real duplicate.
+  { form: '433b', key: 's1_entity_other_description', candidate: 'irs433_exp_other_1_description', ruling: 'different-fact',
+    why: 'THE FREE-TEXT BESIDE AN ENTITY-TYPE CHECKBOX AGAINST AN EXPENSE-LINE LABEL. `s1_entity_other_description` is what a filer writes when none of Partnership, Corporation or LLC fits — it names a KIND OF LEGAL PERSON. The candidate is 433-F\'s label for the first of three write-in OTHER EXPENSE lines. Shared token "description", and nothing else: different form, different section, different question, different subject.' },
+  { form: '433b', key: 's1_entity_other_description', candidate: 'irs433_exp_other_2_description', ruling: 'different-fact',
+    why: 'The second of 433-F\'s three write-in expense labels. Same disposition and same reason as `irs433_exp_other_1_description` above.' },
+  { form: '433b', key: 's1_entity_other_description', candidate: 'irs433_exp_other_3_description', ruling: 'different-fact',
+    why: 'The third of 433-F\'s three write-in expense labels. Same disposition and same reason.' },
+  { form: '433b', key: 's1_entity_other_description', candidate: 'irs433_description_of_digital_asset', ruling: 'different-fact',
+    why: 'AN ENTITY TYPE AGAINST A DIGITAL ASSET. The candidate is 433-A(OIC)\'s per-row description of a crypto holding; this cell names what kind of legal person is filing. Shared token "description".' },
+
+  { form: '433b', key: 's3_11_name_and_address', candidate: 'irs433_party_to_litigation', ruling: 'different-fact',
+    why: 'A RELATED PARTY WHO OWES THE BUSINESS MONEY AGAINST A YES/NO ABOUT BEING SUED. The token is "party" and it carries two unrelated senses: a related PARTY is a person connected to the filer (an officer, partner or employee), while PARTY TO litigation is a role in a lawsuit. Different type as well — a name-and-address text cell against a boolean. This candidate and the four below are the token matcher hitting an English homonym, and each is disposed on its own so that the day "party" does name a real duplicate the entry has to be written rather than inherited.' },
+  { form: '433b', key: 's3_11_date_of_loan', candidate: 'irs433_party_to_litigation', ruling: 'different-fact',
+    why: 'A DATE AGAINST A BOOLEAN, on the same homonym as `s3_11_name_and_address` above. The date a related party took a loan from the business has no relation to whether the filer is in litigation.' },
+  { form: '433b', key: 's3_11_current_balance', candidate: 'irs433_party_to_litigation', ruling: 'different-fact',
+    why: 'A MONEY CELL AGAINST A BOOLEAN, same homonym. The balance a related party still owes is not a litigation flag.' },
+  { form: '433b', key: 's3_11_payment_date', candidate: 'irs433_party_to_litigation', ruling: 'different-fact',
+    why: 'A DATE AGAINST A BOOLEAN, same homonym.' },
+  { form: '433b', key: 's3_11_payment_amount', candidate: 'irs433_party_to_litigation', ruling: 'different-fact',
+    why: 'A MONEY CELL AGAINST A BOOLEAN, same homonym.' },
+
   { form: '433aoi', key: 'box_d_total_household_income', candidate: 'irs433_income_pension_household', ruling: 'different-fact',
     why: 'A BOX TOTAL AGAINST ONE OF ITS OPERANDS. Box D is the sum of every household income line; `irs433_income_pension_household` is the spouse-and-household pension line, one component of it. They share "household" and "income" because one contains the other, which is the opposite of being the same fact — binding them together would make the total overwrite an operand.' },
   { form: '433aoi', key: 'box_d_total_household_income', candidate: 'irs433_income_social_security_household', ruling: 'different-fact',
