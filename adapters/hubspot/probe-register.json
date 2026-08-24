@@ -111,13 +111,27 @@
    "teardown": "torn_down",
    "absence_read": "GET /crm/v3/objects/contacts/243673264132 -> 404, read 2026-08-22 immediately after the DELETE by adapters/hubspot/hs-teardown-contact.mjs, in the same run that seeded it. The teardown's dry-run path was proved a no-op against the live contact immediately before the delete.",
    "registered_when": "AT SEED TIME, in the same run, before the fetch. The register is the list of things that must be absent, and a list written at teardown time can only contain what somebody remembered to tear down - which is the same set as \"nothing was left behind\" and proves nothing."
+  },
+  {
+   "id": "243992818996",
+   "form": "433b",
+   "purpose": "433-B round trip: seed all 116 bound properties from samples/433b.slice4.sample.json (107 created by this pass under irs433b_, 9 REUSED from 433-B(OIC) under irs433boi_), fetch them back, gate the fetched record saturated, render the review page, prove the dry-run path a no-op against the live record, and tear the contact down in the same run.",
+   "fixture": "samples/433b.from-hubspot-243992818996.json (gitignored, as every from-hubspot fixture is)",
+   "email": "synthetic-433b-roundtrip@example.com",
+   "seeded_from": "samples/433b.slice4.sample.json, which declares _synthetic at _fixture._synthetic; 116 of 116 bindings populated.",
+   "_registered_when": "AT SEED TIME, BEFORE THE FETCH — which is [R-24]. A list written at teardown time can only contain what someone remembered to tear down, which is the same set as \"nothing was left behind\" and proves nothing. This row was written while the contact was live and its teardown fields were empty.",
+   "_the_nine_reused_properties_are_the_reason_this_probe_matters": "This is the first round trip in the series that reads values back out of properties ANOTHER FORM created. If the fetch layer had assembled its request from this form's prefix it would have asked for nine irs433b_ names that do not exist and reported nine empty cells — indistinguishable from a filer who left them blank. The probe carries a value in all nine.",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/243992818996 -> 404, taken AFTER the delete and on a SEPARATE request from it. A 2xx on the archive call is the request being accepted, which is a different fact from the object being gone, and HubSpot search lags writes — so the evidence is a direct object GET, never a search miss ([R-23]).",
+   "gated": "samples/433b.from-hubspot-243992818996.json passed the 433-B gate at all 12 steps, saturated, before teardown; adapters/pdf/out/433b_review_HS-243992818996.html was rendered from that record and the filled PDF, bound to it by SHA-256.",
+   "registered_when": "AT SEED TIME. This row was written to the register while the contact was live and its teardown fields were empty, then completed here — which is [R-24]: a list written at teardown time can only contain what someone remembered to tear down."
   }
  ],
  "_retrospective_rows_are_weaker": "8 of the 10 rows were reconstructed after the fact, from working-tree fixtures that embed a contact id in their filename. Their `absence_read` is a live 404 taken during the Prompt 39 pre-flight, which is real evidence that they are gone NOW. What it is not is evidence of what happened at the time, and it could not have been: a probe seeded and never recorded is invisible to any reconstruction that starts from the fixtures, because such a reconstruction can only find probes that left a fixture behind. A probe seeded for a run that failed before the fetch leaves nothing at all. That gap closes going forward and cannot be closed backwards.",
  "_count": {
-  "probes": 11,
+  "probes": 12,
   "live": 0,
-  "torn_down": 11,
+  "torn_down": 12,
   "unknown": 0,
   "registered_retrospectively": 8,
   "_derived_by": "python over probes[]; adapters/hubspot/hs-preflight.mjs re-derives all five on every run and a typed figure that disagrees is a STOP."

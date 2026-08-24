@@ -107,9 +107,34 @@ for (const { p } of differs) if (!DECISIONS[p.hs_name]) stops.push(`UNDECIDED DI
 // If ANY irs433b_ name is already live, something created properties for this form outside this
 // pass, and a dry run reporting them as "exists and matches" would be reporting agreement with an
 // object nobody in this repo made.
+// THE QUESTION IS "IS ANY NAME UNDER OUR PREFIX ONE WE DID NOT DECLARE", NOT "IS THE PREFIX
+// USED AT ALL", AND THE FIRST DRAFT ASKED THE SECOND.
+//
+// Before the first create the two questions have the same answer, and 433-B(OIC)'s dry run — the
+// file this one was written from — only ever ran before its creates. So this STOPped on every
+// run AFTER the provisioning pass it exists to precede, naming all 107 properties it had just
+// correctly created. A guard tuned to fire constantly gets turned off ([R-10]), and this one
+// would have been, one run after it started being useful.
+//
+// What it should catch is unchanged and is now stated precisely: a live name under this form's
+// prefix that this form's definitions do NOT declare means something outside this pass created
+// properties for this form. A PARTIAL run is also still caught — some but not all declared names
+// live is reported by name, because that is the state an interrupted create loop leaves.
+const declaredNames = new Set(props.map((p) => p.hs_name));
 const livePrefixed = custom.filter((p) => p.name.startsWith(CREATE_PREFIX));
-if (livePrefixed.length) stops.push(`THE ${CREATE_PREFIX} PREFIX IS ALREADY LIVE on ${livePrefixed.length} propert(ies): ${livePrefixed.map((p) => p.name).join(', ')}. `
-  + 'This portal has never seen that prefix, so either an earlier run of this pass got partway through, or something outside this repo created properties for this form.');
+const undeclaredLive = livePrefixed.filter((p) => !declaredNames.has(p.name));
+const declaredCreates = props.filter((p) => p.scope !== 'reuse');
+const declaredLive = declaredCreates.filter((p) => live.has(p.hs_name));
+
+if (undeclaredLive.length) stops.push(`${undeclaredLive.length} live propert(ies) carry this form's ${CREATE_PREFIX} prefix and are NOT declared by fields.433b.json: ${undeclaredLive.map((p) => p.name).join(', ')}. `
+  + 'Something outside this pass created properties for this form, and a dry run reporting them as "exists and matches" would be reporting agreement with an object nobody in this repo made.');
+else if (declaredLive.length && declaredLive.length < declaredCreates.length) stops.push(`PARTIAL PROVISIONING — ${declaredLive.length} of this form's ${declaredCreates.length} declared names are live and ${declaredCreates.length - declaredLive.length} are not. `
+  + 'That is the state an interrupted create loop leaves: some names permanent and the rest not. Missing: '
+  + declaredCreates.filter((p) => !live.has(p.hs_name)).map((p) => p.hs_name).join(', '));
+
+const provisioningState = declaredLive.length === 0 ? 'BEFORE the first create — no declared name is live'
+  : declaredLive.length === declaredCreates.length ? 'AFTER a complete pass — every declared name is live'
+    : `PARTIAL — ${declaredLive.length} of ${declaredCreates.length} declared names live`;
 
 // AND THE PREFIX TEST IS ASSERTED, because irs433boi_ names all start with "irs433b" and only the
 // underscore separates the two prefixes. A test written without it would count all 113 of
@@ -174,7 +199,16 @@ say(`| exists and DIFFERS | ${differs.length} |`);
 say(`| new (would be created) | ${fresh.length} |`);
 say(`| **total definitions** | **${props.length}** |`);
 say('');
-say(`The \`${CREATE_PREFIX}\` prefix is live on **${livePrefixed.length}** propert(ies) today; the \`${REUSE_PREFIX}\` prefix on **${custom.filter((p) => p.name.startsWith(REUSE_PREFIX)).length}**.`);
+say(`The \`${CREATE_PREFIX}\` prefix is live on **${livePrefixed.length}** propert(ies) today, **${undeclaredLive.length}** of them NOT declared by this form; the \`${REUSE_PREFIX}\` prefix on **${custom.filter((p) => p.name.startsWith(REUSE_PREFIX)).length}**.`);
+say('');
+say(`**Provisioning state, read from the portal: ${provisioningState}.**`);
+say('');
+say('This run is a NO-OP precisely when that line says AFTER a complete pass — which is what makes running it again');
+say('after provisioning a proof rather than a formality. The state is READ rather than assumed: the first draft of');
+say('this file assumed it was always running BEFORE the creates and STOPped on every run after them, naming all 107');
+say('properties it had just correctly made. A guard tuned to fire constantly gets turned off ([R-10]). What it');
+say('actually needed to ask is whether any live name under this form\'s prefix is one this form does not declare,');
+say('and that question has the same answer before the creates and a useful one after.');
 say('');
 
 say('## REUSE — the nine, re-read from the portal');

@@ -81,6 +81,28 @@
    "the_measurement_that_would_settle_it": "How many phantoms adoption produces per registered regex. Twenty-four registrations produced one. If that ratio holds, hand disposition is cheaper than any mechanism; if a later cycle adopts widely and the count rises, the shape of the fix is a shared \"this is data, not code\" marker that every source scanner in the engine reads from one place, rather than four independent skip rules.",
    "reported_where": "guard-sweep.mjs [G-149] disposes the one live instance and says in its `why` that it is a probe string rather than an extraction.",
    "status": "OPEN - recorded, not built."
+  },
+  {
+   "id": "D-18",
+   "form": "engine-wide; found on 433-B, latent on every form with a reuse bucket",
+   "raised_in": "Prompt 50 commit 4, by adapters/hubspot/hs-dryrun-433b.mjs re-run after its own provisioning pass",
+   "subject": "THREE GUARDS IN THIS CYCLE ASKED A QUESTION WHOSE ANSWER CHANGES THE MOMENT THE PASS THEY GUARD SUCCEEDS, and each one was written from a predecessor that had only ever run on one side of that moment.",
+   "the_shape": "(1) hs-dryrun-433b.mjs asserted \"the irs433b_ prefix is unused\", true only before the first create, and STOPped on every run after the pass naming all 107 properties it had just correctly made. (2) hs-describe-reused-433b.mjs and hs-readback-433b.mjs tested \"does this description name both forms\" with /433-B\b/, which matches INSIDE \"433-B(OIC)\" — so every predecessor-only description read as naming both, and the tool reported all nine already done without sending a request. (3) The probe register's _count was overwritten with a bare integer where the register declares a five-field derived block, and register-ids.mjs caught it. All three were repaired in the same commit that raised this item.",
+   "why_it_is_a_problem_today": "THE REPAIRS ARE SPECIFIC AND THE CLASS IS NOT. Every one of the three was a guard that would have reported the right answer for the wrong reason, or the wrong answer, at exactly the moment it mattered — and in two of the three the failure direction was PASS. What is not yet built is anything that asks, of a new per-form portal tool, \"does this check still mean what it says after the pass it precedes has run\". 433-B is the first form with a reuse bucket, so it is the first where a post-pass run is a routine act rather than a curiosity; 433-D will have one too.",
+   "the_ruling": "RECORDED, NOT BUILT, and the reason is [R-12]. A guard over the guards is a new instrument, and writing it in the commit that provisions 107 permanent properties is the adjacent change that has twice reproduced the defect class it was meant to close. The three instances are repaired and each carries its own comment naming what it got wrong; what is carried is the QUESTION of whether the class deserves a sweep of its own, or whether three comments and a canary each is the right weight.",
+   "built_when": "Not built. To be decided before 433-D provisions, since that form will carry a mirror construct and a reuse bucket at once.",
+   "status": "OPEN — recorded, not built. The three instances are RESOLVED; the class is not."
+  },
+  {
+   "id": "D-19",
+   "form": "433b (the registry rows), engine-wide (the question)",
+   "raised_in": "Prompt 50 commit 4, reading adapters/hubspot/fields.registry.json against the portal after provisioning",
+   "subject": "adapters/hubspot/fields.registry.json DECLARES SEVEN PROPERTIES FOR FORM 433b THAT DO NOT EXIST ON THE PORTAL AND THAT THIS PASS DID NOT CREATE.",
+   "the_shape": "The rows are irs433b_biz_name, irs433b_biz_type, irs433b_ar_name, irs433b_ar_address, irs433b_ar_amount, irs433b_merch_bank and irs433b_merch_acct, keyed 433b_biz_name and so on. All seven were read from /crm/v3/properties/contacts after this pass provisioned: NOT ONE IS LIVE. They predate the 433-B map — short abbreviated names from the VLP-era intake sketch — and this pass derived full fact names (irs433b_business_name, irs433b_type_of_business) from the classification instead, so nothing collides and nothing was overwritten.",
+   "why_it_is_a_problem_today": "IT IS A SECOND DEFINITION SOURCE FOR ONE FORM, and the two disagree. adapters/pdf/render-review.mjs reads fields.<form>.json when there is one and FALLS BACK to the registry when there is not — so for most of this form's life the fallback would have named seven properties that do not exist. There is a fields.433b.json now, so the fallback is not reached today; that makes this latent rather than live, which is exactly the state that survives a long time. The registry also carries no _count block, so nothing derives or compares its per-form totals the way probe-register.json and the classification files are compared.",
+   "the_ruling": "RECORDED, NOT RESOLVED. Removing seven rows from a landed registry and creating seven properties are both decisions on permanent state, and neither is this prompt's scope — which is 433-B's classification, naming, provisioning, round trip and review page. What is carried is the choice: DELETE the seven as a superseded sketch (they name facts this pass now provisions under better names — biz_name is business_name, ar_* is the accounts/notes receivable table, merch_* is the credit-cards-accepted table), or keep them and declare in the registry why a form has two definition sources. The first is almost certainly right and it still needs saying out loud rather than doing quietly.",
+   "built_when": "Not built. Decide before anything else reads the registry for a mapped form.",
+   "status": "OPEN — recorded, not built."
   }
  ],
  "resolved": [
@@ -353,7 +375,7 @@
   }
  ],
  "_count": {
-  "open": 6,
+  "open": 8,
   "resolved": 11
  }
 }

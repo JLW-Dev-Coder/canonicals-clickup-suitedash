@@ -37,7 +37,10 @@
     "gate:433b": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
     "coverage:433b": "node adapters/pdf/declaration-coverage.mjs 433b",
     "recordshape:433b": "node adapters/pdf/assert-record-shape.mjs 433b",
-    "stress:433b": "node adapters/pdf/run-form-gate.mjs 433b --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433b"
+    "stress:433b": "node adapters/pdf/run-form-gate.mjs 433b --role stress --saturated && node adapters/pdf/assert-overflow.mjs 433b",
+    "crosswalk:433b": "node adapters/hubspot/derive-names-433b.mjs --portal && node adapters/hubspot/reclassify-against-backbone.mjs 433b && node adapters/hubspot/assert-intake-keys.mjs",
+    "dryrun:433b": "node adapters/hubspot/hs-dryrun-433b.mjs",
+    "readback:433b": "node adapters/hubspot/hs-readback-433b.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

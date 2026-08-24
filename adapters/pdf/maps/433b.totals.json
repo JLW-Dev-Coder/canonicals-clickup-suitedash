@@ -69,7 +69,8 @@
     }
    ],
    "_which_column_the_total_sums": "THE EQUITY COLUMN, ON THE CAPTION, AND THE RECTANGLE DISAGREES. This cell runs x 486.0..576.0 and therefore spans BOTH the Loan Balance column (x 486.0..525.6) and the Equity column (x 536.4..576.0), and its printed \"$\" at x 478.4 is the loan column's marker position. The caption says \"Total Equity\" in its own words and that is what this declaration follows. It is the only total on these pages whose two witnesses point at different columns, and it carries [B-06].",
-   "_and_the_page_skips_20d": "The printed markers on this block run 20a, 20b, 20c, 20e. No 20d is drawn anywhere on the form. Transcribed, not corrected."
+   "_and_the_page_skips_20d": "The printed markers on this block run 20a, 20b, 20c, 20e. No 20d is drawn anywhere on the form. Transcribed, not corrected.",
+   "review_page_advisory": "THE ENGINE VERIFIED THIS TOTAL AGAINST THE EQUITY COLUMN, AND THE PRINTED PAGE IS AMBIGUOUS ABOUT WHICH COLUMN THE CELL IS IN. The caption reads \"Total Equity of Digital Assets\" and the map follows those words. But the cell itself is drawn wide enough to span BOTH the Loan Balance column and the Equity column, and the printed $ marker beside it sits at the LOAN column position. This is the only total on the form whose caption and rectangle point at different columns; it is recorded as [B-06]. Arithmetic cannot settle it — the sum is correct for the equity column either way — so a preparer should confirm the figure printed here is equity and not loan balance before this page goes out."
   },
   {
    "line": "22e",
@@ -211,7 +212,8 @@
     "map_key": "s4_16a_total_cash_on_hand",
     "printed_caption": "CASH ON HAND — Include cash that is not in the bank — Total Cash on Hand",
     "printed_at": "page 2, y 308.3, x 57.6..248.3 with \"Total Cash on Hand\" at x 407.1..482.4",
-    "why_not_checkable": "IT ADDS NOTHING THE FORM PRINTS. The caption says \"Total Cash on Hand\" and the block draws no rows beneath it — no 16a(i), no list, nothing to sum. The word \"Total\" here means \"the whole of it\", not \"the sum of the lines above\". Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\"; this one does not, and where the form does not say what it adds, a computed figure would be this engine's assertion rather than the page's."
+    "why_not_checkable": "IT ADDS NOTHING THE FORM PRINTS. The caption says \"Total Cash on Hand\" and the block draws no rows beneath it — no 16a(i), no list, nothing to sum. The word \"Total\" here means \"the whole of it\", not \"the sum of the lines above\". Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\"; this one does not, and where the form does not say what it adds, a computed figure would be this engine's assertion rather than the page's.",
+    "review_page_advisory": "NOTHING ON THE PAGE VERIFIES THIS FIGURE, and the word \"Total\" in its caption is why a reader might think otherwise. Every printed total this engine checks says \"Add lines X, Y, Z\"; this one does not, and the block draws no rows beneath it to add. \"Total Cash on Hand\" here means \"the whole of it\", not \"the sum of the lines above\". The figure is whatever the record supplied, printed as given — so it is the filer's assertion rather than the engine's, and a preparer confirming this page should check it against the source the filer took it from."
    },
    {
     "map_key": "business_equipment[*].equity, intangible_assets[*].equity, and the equity column of every earlier table on this form",

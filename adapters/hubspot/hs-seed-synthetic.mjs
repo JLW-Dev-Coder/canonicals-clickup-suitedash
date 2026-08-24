@@ -55,12 +55,35 @@ const sample = JSON.parse(readFileSync(samplePath, 'utf8'));
 // synthetic, not a bare boolean — the 433-A sample's value names the placeholder ranges it
 // uses. Accept either shape, require it to be non-empty, and ECHO it, so the operator sees the
 // claim being relied on rather than just the fact that a key was present.
-const declaration = typeof sample._synthetic === 'string' ? sample._synthetic.trim() : sample._synthetic;
-if (!declaration) {
-  console.error(`REFUSING: ${samplePath} does not declare _synthetic. A round-trip probe is never built from a real contact.`);
+// THE DECLARATION LIVES IN ONE OF TWO PLACES, AND BOTH ARE READ.
+//
+// 433-A, 433-A(OIC), 433-B(OIC) and 433-F put `_synthetic` at the TOP level. All five 433-B
+// fixtures put it inside `_fixture`, beside the rest of that form's per-fixture prose — which is
+// a reasonable place for it and is where that form's generator has always written it.
+//
+// This file read only the top level, because when it was written no fixture used the other
+// shape. It would therefore have REFUSED every 433-B fixture with "does not declare _synthetic"
+// about a fixture that declares it in as many words. The failure would have been loud, which is
+// the good case; the bad case is the one this comment forecloses — someone reading that message
+// and adding a second top-level `_synthetic` to the fixture, leaving two spellings of one claim
+// that can later disagree.
+//
+// BOTH ARE READ, THE SOURCE IS PRINTED, AND CARRYING BOTH IS A STOP. A fixture declaring the
+// claim twice is the parallel-list defect, and the right time to refuse it is before it exists.
+const topDecl = typeof sample._synthetic === 'string' ? sample._synthetic.trim() : sample._synthetic;
+const nestedRaw = sample._fixture?._synthetic;
+const nestedDecl = typeof nestedRaw === 'string' ? nestedRaw.trim() : nestedRaw;
+if (topDecl && nestedDecl) {
+  console.error(`REFUSING: ${samplePath} declares _synthetic BOTH at the top level and inside _fixture. Two spellings of one claim can disagree; keep one.`);
   process.exit(2);
 }
-console.log(`source declares synthetic: ${typeof declaration === 'string' ? declaration.slice(0, 160) + (declaration.length > 160 ? '…' : '') : declaration}`);
+const declaration = topDecl || nestedDecl;
+const declaredAt = topDecl ? '_synthetic' : nestedDecl ? '_fixture._synthetic' : null;
+if (!declaration) {
+  console.error(`REFUSING: ${samplePath} declares _synthetic at neither the top level nor inside _fixture. A round-trip probe is never built from a real contact.`);
+  process.exit(2);
+}
+console.log(`source declares synthetic (at ${declaredAt}): ${typeof declaration === 'string' ? declaration.slice(0, 160) + (declaration.length > 160 ? '…' : '') : declaration}`);
 console.log('');
 
 // One normalized binding list per form: generated from the map for 433-A, crosswalked to the

@@ -14,6 +14,7 @@ samples/433f.from-hubspot-*.json
 samples/433a.from-hubspot-*.json
 samples/433aoi.from-hubspot-*.json
 samples/433boi.from-hubspot-*.json
+samples/433b.from-hubspot-*.json
 
 # HubSpot pre-reset backup — REAL CUSTOMER PII. Never enters git (VLP no-customer-PII rule).
 adapters/hubspot/backup/
