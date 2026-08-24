@@ -100,8 +100,16 @@ for (const c of CASES) {
   // which the step COLLAPSED prints no examined line at all, which is the state [FS-3] is
   // distinguishing, so presence is the right predicate and the count is carried beside it so a
   // zero stays visible instead of being absorbed into the word.
+  // EVERY OTHER ASSERTION IS EXPECTED TO RUN, AND THAT EXPECTATION IS DERIVED RATHER THAN
+  // ASSUMED. [FS-3] admits a line expected to FAIL only when the record names a dependency the
+  // tool's own declaration derives — 433-B's line 50 is computed from lines 36 and 49, so
+  // breaking either must move it. validate-crosswalk.mjs's assertions have no such structure:
+  // A1 to A10 are independent questions over the same rows, and none of them consumes another's
+  // verdict. So the dependency set here is EMPTY, derived from that fact and stated, and every
+  // other assertion is expected to run. An assertion that stopped running would mean the tool
+  // died partway rather than refusing one row.
   const others = assertionsIn(r.out).filter((a) => a.line !== c.assertion)
-    .map((a) => ({ line: a.line, verdict: 'ran', examined: a.examined }));
+    .map((a) => ({ line: a.line, verdict: 'ran', expected: 'ran', examined: a.examined }));
   console.log(`  exit ${r.status}`);
   console.log(`  ${msg.trim() || '(no message naming the planted row)'}`);
   console.log(`  other assertions in the same run: ${others.map((o) => `${o.line}:${o.examined}`).join(' ')}`);
@@ -127,6 +135,7 @@ for (const c of CASES) {
     failing_verdict: 'ALREADY EXISTS',
     passing_verdict: 'ran',
     other_declared_lines: others,
+    _no_declared_line_here_depends_on_another: 'validate-crosswalk.mjs runs A1 to A10 as independent questions over the same rows; no assertion consumes another assertion’s verdict, so the [FS-3] dependency set is EMPTY and every other line is expected to run. Derived from the tool’s structure and stated, not assumed by omission.',
     restored_digest_matches: afterSha === beforeSha,
     clean_after_revert: clean.status === 0,
     _clean_run: (clean.out.split('\n').find((l) => /^OK —/.test(l)) || `(exit ${clean.status})`).trim(),

@@ -97,12 +97,16 @@ export const CLAIMS = [
   {
     id: 'FP-01',
     form: '433b',
-    claim: 'the six printed arithmetic totals on 433-B each fire on a one-cent discrepancy, independently',
+    claim: 'EVERY printed arithmetic total 433-B declares fires on a one-cent discrepancy, independently of every other',
     class: 'break',
     prover: 'scratchpad/433b-prove-every-tripwire-fires.mjs',
     record: `${RECORD_DIR}/433b.tripwires.json`,
     verdict: 'proved',
-    evidence_shows: 'the step, the line and the verdict, on each of the six separately, with the other five reading yes in the same run',
+    // NO COUNT IN THIS ENTRY. The prover reads the declared lines out of 433b.totals.json and
+    // records how many it broke; the record's `declarations_on_this_tool` is compared against
+    // that number by this file. A count typed here would have read "six" until slice 4 made it
+    // eleven, and the entry would have gone on being true-looking about a smaller set ([R-07]).
+    evidence_shows: 'the step, the line and the verdict, on each declared line separately, with every other declared line reading yes in the same run',
   },
   {
     id: 'FP-02',

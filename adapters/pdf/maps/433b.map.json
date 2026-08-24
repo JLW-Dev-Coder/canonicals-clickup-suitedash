@@ -151,6 +151,18 @@
     "why_it_is_arguable": "The three other totals on these pages sit exactly over the column they total — 17d is x 499.6..576.0 against an Account Balance column of x 499.6..576.0, 18f is x 492.4..576.0 against x 492.4..576.0, 19c is x 492.5..576.0 against x 492.4..576.0. This one is the only one that does not, and the only one whose money marker is a different column's. If the reading were wrong the tripwire would compare the equity total against a loan-balance sum, and nothing else on the page would contradict it.",
     "what_would_settle_it": "A filled copy read back with three distinguishable figures in the three columns of both rows, which the slice-2 fixture does. That proves where the cell PRINTS; it does not prove what the IRS intends by drawing it there.",
     "status": "OPEN - recorded, not built."
+   },
+   {
+    "id": "B-07",
+    "raised_in": "Prompt 49 commit 2, while closing the map on pages 5 and 6",
+    "subject": "The EQUITY column header states a relation — \"Equity / FMV Minus Loan\" — and this engine treats it as a label rather than as a tripwire, on every table on the form that has one",
+    "the_shape": "Four tables draw an equity column under a header that names an arithmetic relation. Page 3: INVESTMENTS at y 413.7/403.7 (\"Equity / Value Minus Loan\") and DIGITAL ASSETS at y 227.2/217.6 (\"Equity Value / minus Loan\"). Page 4: REAL PROPERTY at y 696.3/688.3 and VEHICLES at y 350.7/342.7, both \"Equity / FMV Minus Loan\". Page 5: BUSINESS EQUIPMENT at y 703.5/695.5, the same words again. TWELVE ROW-LEVEL EQUITY CELLS have both operands drawn beside them — 19a, 19b, 20b, 20c, 22a-22d and 23a-23d, plus 24a-24d on page 5, which is sixteen; the twelve figure is what pages 3 and 4 carry and page 5 adds four more. Every one of them is bound as an INPUT and none is a tripwire.",
+    "why_it_is_arguable_rather_than_a_defect": "THE RELATION IS IN A COLUMN HEADER AND NOT ON A ROW. Every printed total this repo has ever made a tripwire says \"Add lines X, Y, Z\" or \"Line X minus Line Y\" ON THE LINE, between or beside the cells it governs. 433-B(OIC) is the contrast that makes the distinction real rather than convenient: it prints \"$ [Current market value] – $ [Minus loan balance] = (2a) $\" ON THE ROW, with the operator drawn between the two operands, and this engine DOES make that a tripwire. A column header describes what the column holds. Whether \"FMV Minus Loan\" is a description or an instruction is a reading of the page, and readings of the page are what this register exists to hold rather than settle in passing.",
+    "what_is_true_either_way": "The cells are bound, they are money, they are compared to the cent by gate step 12 against the record, and they feed the block totals that ARE tripwires — 19c, 20e, 22e, 23e and 24h. So an equity cell that disagreed with its own row would still have to disagree with its block total, unless the error were compensated by another row in the same block. What is NOT checked is the per-row relation itself.",
+    "the_three_intangible_rows_cannot_carry_it_at_all": "Rows 24e to 24g draw a description and an equity cell and NOTHING ELSE — no FMV, no loan balance. Whatever is decided for the sixteen cells that have both operands, these three have neither, and a relation with no operands drawn is not a relation the page states. Any resolution has to say so rather than sweeping the column.",
+    "why_it_is_not_settled_here": "Making a column header into sixteen row-level tripwires is a ruling, and it reaches BACK over pages 3 and 4, which are landed and whose gates have run. This prompt closes the map on pages 5 and 6; retro-fitting arithmetic onto three earlier pages inside it is the adjacent change that has twice reproduced the defect class it was meant to close ([R-12]). Recorded with its instances located so it cannot evaporate.",
+    "what_slice_4_did_do_about_it": "DECLARED THE ABSENCE. adapters/pdf/maps/433b.totals.json `not_checkable` gains an entry covering the equity columns of pages 3, 4 and 5 with this reason and this id. Pages 3 and 4 landed with equity columns and NO entry, which is exactly the state that block exists to end: a printed money cell holding a computed-looking figure that nobody had said anything about is indistinguishable from one nobody looked at.",
+    "status": "OPEN - recorded, not built."
    }
   ],
   "resolved": [
@@ -170,7 +182,7 @@
    }
   ],
   "_count": {
-   "open": 5,
+   "open": 6,
    "resolved": 1
   }
  },

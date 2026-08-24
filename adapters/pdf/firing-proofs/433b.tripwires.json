@@ -3,10 +3,10 @@
  "form": "433b",
  "_generated_by": "scratchpad/433b-prove-every-tripwire-fires.mjs",
  "tool_under_test": "adapters/pdf/run-form-gate.mjs 433b --saturated",
- "fixture": "samples/433b.slice3.sample.json",
- "fixture_sha256": "13DCC8874A2D5B356CB23DA790CFF71EF5250E6D4EE3C8E97AF8AC98B7D99B58",
+ "fixture": "samples/433b.slice4.sample.json",
+ "fixture_sha256": "69DF3687DAC8CBF8AC7D66CA36454D893D184B12785E847A54731A0BAEE0C7B0",
  "fixture_resolved_by": "adapters/pdf/resolve-fixture.mjs — role acceptance; never a named path ([R-22])",
- "declarations_on_this_tool": 6,
+ "declarations_on_this_tool": 11,
  "declarations_source": "adapters/pdf/maps/433b.totals.json — the totals list, read, not typed",
  "clean_run_after_every_revert": {
   "exit": 0,
@@ -34,27 +34,62 @@
     {
      "line": "18f",
      "verdict": "yes",
-     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "19c",
      "verdict": "yes",
-     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "20e",
      "verdict": "yes",
-     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "22e",
      "verdict": "yes",
-     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "23e",
      "verdict": "yes",
-     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -81,27 +116,62 @@
     {
      "line": "17d",
      "verdict": "yes",
-     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "19c",
      "verdict": "yes",
-     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "20e",
      "verdict": "yes",
-     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "22e",
      "verdict": "yes",
-     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "23e",
      "verdict": "yes",
-     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -128,27 +198,62 @@
     {
      "line": "17d",
      "verdict": "yes",
-     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "18f",
      "verdict": "yes",
-     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "20e",
      "verdict": "yes",
-     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "22e",
      "verdict": "yes",
-     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "23e",
      "verdict": "yes",
-     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -175,27 +280,62 @@
     {
      "line": "17d",
      "verdict": "yes",
-     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "18f",
      "verdict": "yes",
-     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "19c",
      "verdict": "yes",
-     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "22e",
      "verdict": "yes",
-     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "23e",
      "verdict": "yes",
-     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -222,27 +362,62 @@
     {
      "line": "17d",
      "verdict": "yes",
-     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "18f",
      "verdict": "yes",
-     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "19c",
      "verdict": "yes",
-     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "20e",
      "verdict": "yes",
-     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "23e",
      "verdict": "yes",
-     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -269,27 +444,474 @@
     {
      "line": "17d",
      "verdict": "yes",
-     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "18f",
      "verdict": "yes",
-     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "19c",
      "verdict": "yes",
-     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "20e",
      "verdict": "yes",
-     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     },
     {
      "line": "22e",
      "verdict": "yes",
-     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 24h",
+   "line": "24h",
+   "caption": "Total Equity (Add lines 24a through 24g and amounts from any attachments)",
+   "broke": {
+    "key": "s4_24h_total_equity_business_equipment",
+    "from": "194650.00",
+    "to": "194650.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "24h  |      194,650.01 |          194,650.00 | NO  (7 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 25c",
+   "line": "25c",
+   "caption": "Total Payments (Add lines 25a and 25b and amounts from any attachments)",
+   "broke": {
+    "key": "s4_25c_total_payments",
+    "from": "2665.00",
+    "to": "2665.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "25c  |        2,665.01 |            2,665.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 36",
+   "line": "36",
+   "caption": "Total Income (Add lines 26 through 35)",
+   "broke": {
+    "key": "s5_36_total_income",
+    "from": "89893.00",
+    "to": "89893.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "36   |       89,893.01 |           89,893.00 | NO  (10 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "NO",
+     "verbatim": "50   |       -1,467.00 |           -1,466.99 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "50 names s5_36_total_income among its own feeders in 433b.totals.json, so a one-cent break in 36 must move 50 too"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 49",
+   "line": "49",
+   "caption": "Total Expenses (Add lines 37 through 48)",
+   "broke": {
+    "key": "s5_49_total_expenses",
+    "from": "91360.00",
+    "to": "91360.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "49   |       91,360.01 |           91,360.00 | NO  (11 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "NO",
+     "verbatim": "50   |       -1,467.00 |           -1,467.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "50 names s5_49_total_expenses among its own feeders in 433b.totals.json, so a one-cent break in 49 must move 50 too"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 50",
+   "line": "50",
+   "caption": "Net Income (Line 36 minus Line 49)",
+   "broke": {
+    "key": "s5_50_net_income",
+    "from": "-1467.00",
+    "to": "-1466.99"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "50   |       -1,466.99 |           -1,467.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,

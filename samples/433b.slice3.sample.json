@@ -1,14 +1,16 @@
 {
  "_fixture": {
   "form": "433b",
-  "role": "acceptance",
+  "role": "superseded",
   "why": "Slice 3's acceptance record. SATURATED: every one of the 343 mapped cells across pages 1 to 4 carries a value, every one of the ten groups is filled to its printed row count, and every one of the 21 declared exclusive sets has exactly one option chosen. A cell left empty here would be a cell the gate never proved writable.",
   "superseded": "samples/433b.slice2.sample.json, which is now marked role \"superseded\" and names this file. Its 249 keys for pages 1 to 3 are CARRIED FORWARD VERBATIM rather than retyped — a retyped copy is 249 chances to differ from the record the slice-2 gate actually ran, and nothing would say which was meant.",
   "_the_six_totals_are_computed_from_the_rows_in_this_file": "scratchpad/433b-slice3-author-slice3-fixtures.mjs sums the printed rows and writes the result; the four page-2 and page-3 totals were computed the same way by slice 2 and are carried forward with the rows they sum. Gate step 11 then recomputes each one from what the FILLED PDF PRINTS and compares. Two computations over two different artefacts — one over the record, one over the drawn page — which is what makes the comparison worth making. A typed total would be asserting the arithmetic it is supposed to exercise.",
   "_page_4_draws_no_checkbox_so_this_slice_adds_no_option": "All 94 page-4 widgets are text fields. The 21 exclusive sets and every option value in this record are unchanged from slice 2, and that is a property of the page rather than of this fixture.",
   "_the_zero_rows_are_deliberate_and_they_are_not_empty_cells": "real_property[2] is a LEASED showroom, so its FMV, loan balance and equity are 0.00 and its monthly payment is the rent — which is what the printed column headers ask for on a row the block heading says to include (\"all real property and land contracts the business owns/leases/rents\"). vehicles[2] is owned outright, so its loan balance and monthly payment are 0.00 and its equity equals its FMV. A ZERO IS A WRITTEN VALUE AND AN EMPTY CELL IS NOT: both rows still carry a value in all ten and thirteen of their columns, so saturation is not weakened, and the two rows exercise the arithmetic at its boundary rather than only in its middle.",
   "_synthetic": "Every value is invented. No real taxpayer, no real EIN, no real bank, no real portal record. The telephone numbers are all 555-01xx, every VIN is marked NOTAREALVIN in its own text, and the addresses use street numbers that do not exist on the roads named. Nothing here identifies anybody.",
-  "_authored_by": "Prompt 48 commit 3, from adapters/pdf/maps/433b.map.json's binding list and samples/433b.slice2.sample.json."
+  "_authored_by": "Prompt 48 commit 3, from adapters/pdf/maps/433b.map.json's binding list and samples/433b.slice2.sample.json.",
+  "superseded_by": "samples/433b.slice4.sample.json",
+  "_why_superseded": "Slice 4 bound pages 5 and 6 and the acceptance fixture had to reach their 104 new cells. This record's keys are carried forward into the successor VERBATIM; it is kept rather than deleted because the slice-3 gate ran against it and a deleted fixture makes that run unreproducible."
  },
  "_generated_by": "scratchpad/433b-slice3-author-slice3-fixtures.mjs",
  "record_id": "INT-SAMPLE-433B-001",
@@ -412,5 +414,9 @@
    "lender_phone": "5550136"
   }
  ],
- "s4_23e_total_equity_vehicles": "49850.00"
+ "s4_23e_total_equity_vehicles": "49850.00",
+ "_co_authored_with_hand": {
+  "_fixture": "THE SUPERSESSION, WRITTEN BY scratchpad/433b-slice4-author-slice4-fixtures.mjs RATHER THAN BY HAND. Slice 3’s own generator writes role \"acceptance\" and knows nothing of a successor, because when it ran there was none. The role, superseded_by and _why_superseded keys are slice 4’s doing; the rest of this block is slice 3’s generator’s and is unchanged.",
+  "_co_authored_with_hand": "THIS DECLARATION ITSELF. Neither generator emits it — slice 3’s does not know it will be superseded, and slice 4’s writes it here — so the block enumerating the co-authored keys is one of them."
+ }
 }

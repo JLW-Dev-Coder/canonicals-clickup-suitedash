@@ -115,18 +115,41 @@ export const judge = (b) => {
     problems.push(`[FS-2] the broken line — the captured line ${JSON.stringify(b.broken_line_verbatim)} does not contain ${JSON.stringify(b.failing_verdict)}. ` +
       'The quoted evidence and the recorded verdict disagree.');
 
-  // [FS-3] THE OTHERS PASSED.
+  // ─────────────────────────────────────────────────────────────────────────────────────
+  // [FS-3] THE OTHERS READ WHAT THEY WERE EXPECTED TO — AND THE FIRST DRAFT SAID "PASSED"
+  // ─────────────────────────────────────────────────────────────────────────────────────
+  //
+  // The first draft required every other declared line to read passing, full stop. That is
+  // right whenever the declared lines are INDEPENDENT and wrong the moment one of them is
+  // computed FROM another. 433-B's printed line 50 is "Net Income (Line 36 minus Line 49)":
+  // breaking 36 or 49 makes 50 disagree too, correctly and by construction, and this judge
+  // reported both proofs as possible step collapses.
+  //
+  // IT WAS RIGHT TO REFUSE THEM AND WRONG ABOUT WHY, so the condition is sharpened rather
+  // than relaxed. A propagated failure is a THIRD state, not a tolerated second one, and the
+  // record must DERIVE it: each other line carries the verdict it was expected to read, and a
+  // line expected to fail is one the tool's own declaration says is fed by the broken one.
+  // Both directions are checked, and the dependent direction is the stronger claim — a
+  // dependent that read passing would mean the dependency is not live at all.
   if (!Array.isArray(b.other_declared_lines))
-    problems.push('[FS-3] the others passed — `other_declared_lines` is not a list, so the run cannot be distinguished from one where the step collapsed.');
+    problems.push('[FS-3] the others read as expected — `other_declared_lines` is not a list, so the run cannot be distinguished from one where the step collapsed.');
   else {
     if (!b.other_declared_lines.length)
-      problems.push('[FS-3] the others passed — the list is EMPTY. On a tool with one declared line that would be a checked absence and it must say so with `sole_declared_line: true`; here it is a silence.');
-    const notPassing = b.other_declared_lines.filter((o) => o.verdict !== b.passing_verdict);
-    for (const o of notPassing)
-      problems.push(`[FS-3] the others passed — line ${o.line} read ${JSON.stringify(o.verdict)} in the same run, not ${JSON.stringify(b.passing_verdict)}. ` +
-        'The step may have collapsed rather than compared, and a collapsed step proves nothing about the declaration under test.');
+      problems.push('[FS-3] the others read as expected — the list is EMPTY. On a tool with one declared line that would be a checked absence and it must say so with `sole_declared_line: true`; here it is a silence.');
+    for (const o of b.other_declared_lines) {
+      if (o.expected === undefined)
+        { problems.push(`[FS-3] the others read as expected — line ${o.line} carries no \`expected\` verdict. A record that does not say what a line was supposed to read cannot be asked whether it read it.`); continue; }
+      if (o.expected !== b.passing_verdict && o.expected !== b.failing_verdict)
+        { problems.push(`[FS-3] the others read as expected — line ${o.line} expects ${JSON.stringify(o.expected)}, which is neither the passing nor the failing verdict of this tool.`); continue; }
+      if (o.expected === b.failing_verdict && !o.depends_on_the_broken_line)
+        { problems.push(`[FS-3] the others read as expected — line ${o.line} is expected to FAIL and the record gives no derived dependency saying why. An expectation of failure with no stated cause is a tolerance wearing a field name.`); continue; }
+      if (o.verdict === o.expected) continue;
+      problems.push(o.expected === b.passing_verdict
+        ? `[FS-3] the others read as expected — line ${o.line} read ${JSON.stringify(o.verdict)} in the same run and nothing feeds it from line ${b.line}, so it was expected to read ${JSON.stringify(b.passing_verdict)}. The step may have collapsed rather than compared.`
+        : `[FS-3] the others read as expected — line ${o.line} is fed by line ${b.line} (${o.depends_on_the_broken_line}) and read ${JSON.stringify(o.verdict)} rather than ${JSON.stringify(b.failing_verdict)}. The dependency the record derives is not live: breaking an operand did not move the total computed from it.`);
+    }
     if (b.other_declared_lines.some((o) => o.line === b.line))
-      problems.push(`[FS-3] the others passed — line ${b.line} is in its own "other" list, so one of the two readings is of the wrong line.`);
+      problems.push(`[FS-3] the others read as expected — line ${b.line} is in its own "other" list, so one of the two readings is of the wrong line.`);
   }
 
   // [FS-4] ONE BREAK EACH. The shape IS the condition: `broke` names ONE key and the two values
@@ -197,7 +220,10 @@ const CONFORMING = () => ({
   broken_line_verdict: 'NO',
   failing_verdict: 'NO',
   passing_verdict: 'yes',
-  other_declared_lines: [{ line: '8y', verdict: 'yes' }],
+  other_declared_lines: [
+    { line: '8y', verdict: 'yes', expected: 'yes' },
+    { line: '7x', verdict: 'NO', expected: 'NO', depends_on_the_broken_line: '7x sums 9z, derived from the canary tool\'s own feeder list' },
+  ],
   restored_digest_matches: true,
   clean_after_revert: true,
 });
@@ -209,9 +235,21 @@ export const runCanary = () => {
     { want: '[FS-1]',  make: (e) => ({ ...e, tool_exit: 0 }) },
     { want: '[FS-2]',  make: (e) => ({ ...e, broken_line_verdict: 'yes' }) },
     { want: '[FS-2]',  make: (e) => ({ ...e, broken_line_verbatim: '  9z  |  10.00 |  10.01 | yes' }) },
-    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'NO' }] }) },
+    // an INDEPENDENT line that failed — the step may have collapsed
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'NO', expected: 'yes' }] }) },
     { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [] }) },
-    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '9z', verdict: 'yes' }] }) },
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '9z', verdict: 'yes', expected: 'yes' }] }) },
+    // a line with NO stated expectation at all — unaskable, not passing
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'yes' }] }) },
+    // a DEPENDENT line that passed — the dependency the record derives is not live. This is
+    // the direction the first draft could not even express, and it is the one that would let
+    // a total computed from a broken operand go on agreeing with itself.
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '7x', verdict: 'yes', expected: 'NO', depends_on_the_broken_line: '7x sums 9z' }] }) },
+    // an expectation of failure with no derived dependency behind it — a tolerance wearing a
+    // field name, which is exactly how this condition would be quietly turned off.
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'NO', expected: 'NO' }] }) },
+    // an expectation that is neither verdict of this tool
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'yes', expected: 'maybe' }] }) },
     { want: '[FS-4]',  make: (e) => ({ ...e, broke: { keys: { a: 1, b: 2 } } }) },
     { want: '[FS-5]',  make: (e) => ({ ...e, restored_digest_matches: false }) },
     { want: '[FS-5]',  make: (e) => ({ ...e, clean_after_revert: false }) },

@@ -1655,6 +1655,28 @@ export const COMPLETENESS = [
       return { universe: boxes.length, covered: boxes.length - uncovered.length, universeList: boxes, uncoveredList: uncovered };
     } }),
 
+  // [B-07]'s claim about the equity columns. Anchored and last, for the reason the three
+  // entries above it are.
+  C({ id: 'K-113', match: /^Every one of them is bound$/i,
+    kind: 'counter',
+    what: 'Every equity cell the 433-B map declares is an INPUT and none of them is a declared total cell. Universe: every (group, row) whose slot declares an equity column. Covered: those that are NOT named as a total_cell in 433b.totals.json — so the day a ruling makes one an arithmetic tripwire, the count moves and [B-07] stops being true out loud, which is the direction the carried item exists to watch.',
+    universe: { scoped_to: 'artefact', detail: 'every slot of every group in adapters/pdf/maps/433b.map.json that declares an `equity` column',
+      admits: (m) => typeof m === 'string' && /\[\d+\]\.equity$/.test(m) },
+    count: () => {
+      const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
+      const tot = JSON.parse(readFileSync('adapters/pdf/maps/433b.totals.json', 'utf8'));
+      const cells = [];
+      for (const [g, def] of Object.entries(map.groups || {}))
+        (def.slots || []).forEach((s, i) => { if (s.text && s.text.equity) cells.push(`${g}[${i}].equity`); });
+      const asTotal = new Set();
+      for (const t of (tot.totals || [])) {
+        const tc = t.total_cell;
+        if (tc && tc.group && tc.column === 'equity' && typeof tc.row === 'number') asTotal.add(`${tc.group}[${tc.row}].equity`);
+      }
+      const uncovered = cells.filter((c) => asTotal.has(c));
+      return { universe: cells.length, covered: cells.length - uncovered.length, universeList: cells, uncoveredList: uncovered };
+    } }),
+
 ];
 
 // THE TWO HELPERS THAT USED TO LIVE HERE ARE GONE. `engineInputKeys` and

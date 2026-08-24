@@ -628,7 +628,9 @@ tree records the tools that resulted, not the failure.
 ## [R-28] A firing proof asserts the step, the line and the verdict
 
 > A firing proof asserts the step, the line and the verdict — never a bare non-zero exit — and
-> every other declared line in the same run must still pass. Breaks are separate.
+> every other declared line in the same run reads what it was DERIVED to read: passing, unless
+> the tool's own declaration makes it depend on the broken one, in which case failing. Breaks
+> are separate.
 
 **The defect that earned it.** Two tripwires were reported PROVED on a run that never reached
 them. `scratchpad/433b-slice3-prove-tripwire-fires.mjs`'s first draft asserted only
@@ -662,6 +664,21 @@ inside its own process has no multi-step run, so "at the step" has no referent; 
 that stands in its place — the planted defect found BY NAME, and a conforming input still
 accepted — is already in force. The class is enumerated and its ground is written down as
 weaker, which is `[R-14]` rather than a hole.
+
+**The condition this rule got wrong on its first day, and how.** The blockquote above first read
+"every other declared line in the same run must still pass", and the judge enforcing it refused two
+of its own proofs. 433-B prints `Net Income (Line 36 minus Line 49)`, so a one-cent break in 36 or
+in 49 makes 50 disagree too — correctly, by construction — and the judge reported both as possible
+step collapses. **It was right to refuse them and wrong about why.**
+
+The repair sharpens the condition rather than relaxing it. A propagated failure is a THIRD state,
+not a tolerated second one: each other line carries the verdict it was expected to read, a line
+expected to FAIL must name a dependency **derived from the tool's own declaration** — on this form,
+from the feeder graph in `adapters/pdf/maps/433b.totals.json` — and both directions are checked. The
+dependent direction is the stronger claim, because a dependent that PASSED would mean a total
+computed from a broken operand went on agreeing with itself. An expectation of failure with no
+derived cause behind it is refused in as many words, since that field is exactly where a tolerance
+would hide. The canary plants both shapes, neither of which the first draft could express.
 
 **Roughly when.** Ruled 2026-08-23 on the prompt-48 report; the mechanism lands in this commit.
 Cycle-dated for the half with no hash yet.

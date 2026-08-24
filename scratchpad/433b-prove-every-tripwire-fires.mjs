@@ -58,6 +58,30 @@ console.log(`  sha256 ${beforeSha}`);
 // --- the declared lines, READ FROM THE TOTALS FILE, never listed here -----------------------
 const totals = JSON.parse(readFileSync(`adapters/pdf/maps/${FORM}.totals.json`, 'utf8'));
 const DECLARED = totals.totals.map((t) => ({ line: t.line, key: t.total_key, caption: t.caption }));
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// WHICH DECLARED LINES ARE FED BY WHICH — DERIVED FROM THE TOTALS FILE, NEVER TYPED
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// [FS-3] used to require that every OTHER declared line read passing in the same run. That is
+// right while the declared lines are independent, and 433-B stopped being that form at slice 4:
+// printed line 50 is "Net Income (Line 36 minus Line 49)", so breaking 36 or 49 makes 50
+// disagree too — correctly, by construction — and the judge reported both proofs as possible
+// step collapses. It was RIGHT to refuse them and wrong about why.
+//
+// So this file derives the feeder graph from the totals file itself: line Y depends on line X
+// when X's `total_key` appears in one of Y's `feeders[].keys`. A propagated failure is then an
+// EXPECTED failure with its cause named, and a dependent that did NOT fail is a defect — it
+// would mean a total computed from a broken operand went on agreeing with itself.
+const dependsOn = (yLine, xKey) => {
+  const y = totals.totals.find((t) => t.line === yLine);
+  for (const fd of (y?.feeders || [])) if (Array.isArray(fd.keys) && fd.keys.includes(xKey)) return true;
+  return false;
+};
+const deps = {};
+for (const d of DECLARED) deps[d.line] = DECLARED.filter((x) => x.line !== d.line && dependsOn(x.line, d.key)).map((x) => x.line);
+console.log('derived feeder graph among the declared lines:');
+for (const d of DECLARED) console.log(`  breaking ${d.line.padEnd(4)} must also move: ${deps[d.line].length ? deps[d.line].join(', ') : '(nothing — no declared line is fed by it)'}`);
 console.log(`declared total line(s) on ${FORM}: ${DECLARED.length} — ${DECLARED.map((d) => d.line).join(', ')}`);
 for (const d of DECLARED) if (!d.key) { console.error(`STOP — the totals file declares line ${d.line} with no total_key; this file cannot break it.`); process.exit(2); }
 
@@ -109,7 +133,12 @@ for (const d of DECLARED) {
   const brokenRow = rowFor(run.out, d.line);
   const others = DECLARED.filter((x) => x.line !== d.line).map((x) => {
     const row = rowFor(run.out, x.line);
-    return { line: x.line, verdict: verdictOf(row), verbatim: row.trim() };
+    const fed = deps[d.line].includes(x.line);
+    return {
+      line: x.line, verdict: verdictOf(row), verbatim: row.trim(),
+      expected: fed ? FAILING : PASSING,
+      ...(fed ? { depends_on_the_broken_line: `${x.line} names ${d.key} among its own feeders in ${FORM}.totals.json, so a one-cent break in ${d.line} must move ${x.line} too` } : {}),
+    };
   });
   console.log(`  gate exit ${run.status}, failed at step ${stepOf(run.out)}`);
   console.log(`  ${brokenRow.trim() || '(the step printed no row for this line)'}`);

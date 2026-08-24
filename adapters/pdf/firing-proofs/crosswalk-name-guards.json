@@ -30,39 +30,47 @@
     {
      "line": "A1",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 97
     },
     {
      "line": "A2",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 97
     },
     {
      "line": "A3",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 41
     },
     {
      "line": "A4",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 97
     },
     {
      "line": "A5",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 97
     },
     {
      "line": "A7",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 2
     },
     {
      "line": "A8",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 6
     }
    ],
+   "_no_declared_line_here_depends_on_another": "validate-crosswalk.mjs runs A1 to A10 as independent questions over the same rows; no assertion consumes another assertion’s verdict, so the [FS-3] dependency set is EMPTY and every other line is expected to run. Derived from the tool’s structure and stated, not assumed by omission.",
    "restored_digest_matches": true,
    "clean_after_revert": true,
    "_clean_run": "OK — authored shape, 8 assertion(s) run over 534 examined item(s), 0 declared gap(s)."
@@ -88,44 +96,53 @@
     {
      "line": "A1",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 113
     },
     {
      "line": "A2",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 113
     },
     {
      "line": "A3",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 0
     },
     {
      "line": "A9",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 113
     },
     {
      "line": "A10",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 2
     },
     {
      "line": "A4",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 113
     },
     {
      "line": "A5",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 113
     },
     {
      "line": "A7",
      "verdict": "ran",
+     "expected": "ran",
      "examined": 58
     }
    ],
+   "_no_declared_line_here_depends_on_another": "validate-crosswalk.mjs runs A1 to A10 as independent questions over the same rows; no assertion consumes another assertion’s verdict, so the [FS-3] dependency set is EMPTY and every other line is expected to run. Derived from the tool’s structure and stated, not assumed by omission.",
    "restored_digest_matches": true,
    "clean_after_revert": true,
    "_clean_run": "OK — derived shape, 9 assertion(s) run over 738 examined item(s), 0 declared gap(s)."
