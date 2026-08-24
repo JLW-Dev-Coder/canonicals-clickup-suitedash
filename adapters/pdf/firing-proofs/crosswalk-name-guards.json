@@ -1,0 +1,134 @@
+{
+ "_standard": "[R-28]",
+ "form": "cross-form (433f authored, 433boi derived)",
+ "_generated_by": "scratchpad/prove-crosswalk-name-guards-fire.mjs",
+ "tool_under_test": "adapters/hubspot/validate-crosswalk.mjs",
+ "what_is_proved": "that A6's create-a-name-that-exists direction fires on BOTH crosswalk shapes, naming the row and the file the name already lives in, while every other assertion in the same run still reports its own examined count.",
+ "planted_duplicate": "irs433_full_name",
+ "planted_duplicate_source": "adapters/hubspot/fields.433a.json properties[0].hs_name — a real name, not an invented one",
+ "declarations_on_this_tool": 2,
+ "declarations_source": "the two crosswalk shapes this tool splits on, one case each",
+ "breaks": [
+  {
+   "declaration": "A6 reuse-before-creating | 433f | authored shape",
+   "line": "A6",
+   "broke": {
+    "key": "433f_biz_name",
+    "from": "irs433_self_employment_business_name",
+    "to": "irs433_full_name"
+   },
+   "tool": "node adapters/hubspot/validate-crosswalk.mjs 433f",
+   "tool_exit": 2,
+   "failed_at_step": 1,
+   "step_the_declaration_lives_in": 1,
+   "_why_one_step": "validate-crosswalk.mjs runs one step, so [FS-1] is trivially met here and the work is done by [FS-2] and [FS-3]. Recorded, not dropped.",
+   "broken_line_verbatim": "433f_biz_name: classed new_shared but irs433_full_name ALREADY EXISTS in adapters/hubspot/fields.433a.json — reuse it. HubSpot does not delete a property.",
+   "broken_line_verdict": "ALREADY EXISTS",
+   "failing_verdict": "ALREADY EXISTS",
+   "passing_verdict": "ran",
+   "other_declared_lines": [
+    {
+     "line": "A1",
+     "verdict": "ran",
+     "examined": 97
+    },
+    {
+     "line": "A2",
+     "verdict": "ran",
+     "examined": 97
+    },
+    {
+     "line": "A3",
+     "verdict": "ran",
+     "examined": 41
+    },
+    {
+     "line": "A4",
+     "verdict": "ran",
+     "examined": 97
+    },
+    {
+     "line": "A5",
+     "verdict": "ran",
+     "examined": 97
+    },
+    {
+     "line": "A7",
+     "verdict": "ran",
+     "examined": 2
+    },
+    {
+     "line": "A8",
+     "verdict": "ran",
+     "examined": 6
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true,
+   "_clean_run": "OK — authored shape, 8 assertion(s) run over 534 examined item(s), 0 declared gap(s)."
+  },
+  {
+   "declaration": "A6 reuse-before-creating | 433boi | derived shape",
+   "line": "A6",
+   "broke": {
+    "key": "s1_business_name",
+    "from": "irs433boi_business_name",
+    "to": "irs433_full_name"
+   },
+   "tool": "node adapters/hubspot/validate-crosswalk.mjs 433boi",
+   "tool_exit": 2,
+   "failed_at_step": 1,
+   "step_the_declaration_lives_in": 1,
+   "_why_one_step": "validate-crosswalk.mjs runs one step, so [FS-1] is trivially met here and the work is done by [FS-2] and [FS-3]. Recorded, not dropped.",
+   "broken_line_verbatim": "s1_business_name: creates irs433_full_name, which ALREADY EXISTS in adapters/hubspot/fields.433a.json — reuse it. HubSpot does not delete a property and this portal's ceiling is hard.",
+   "broken_line_verdict": "ALREADY EXISTS",
+   "failing_verdict": "ALREADY EXISTS",
+   "passing_verdict": "ran",
+   "other_declared_lines": [
+    {
+     "line": "A1",
+     "verdict": "ran",
+     "examined": 113
+    },
+    {
+     "line": "A2",
+     "verdict": "ran",
+     "examined": 113
+    },
+    {
+     "line": "A3",
+     "verdict": "ran",
+     "examined": 0
+    },
+    {
+     "line": "A9",
+     "verdict": "ran",
+     "examined": 113
+    },
+    {
+     "line": "A10",
+     "verdict": "ran",
+     "examined": 2
+    },
+    {
+     "line": "A4",
+     "verdict": "ran",
+     "examined": 113
+    },
+    {
+     "line": "A5",
+     "verdict": "ran",
+     "examined": 113
+    },
+    {
+     "line": "A7",
+     "verdict": "ran",
+     "examined": 58
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true,
+   "_clean_run": "OK — derived shape, 9 assertion(s) run over 738 examined item(s), 0 declared gap(s)."
+  }
+ ]
+}

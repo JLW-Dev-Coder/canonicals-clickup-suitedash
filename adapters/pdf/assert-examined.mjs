@@ -150,6 +150,8 @@ export const REGISTER = {
   'adapters/pdf/assert-row-shape-spec.mjs': { kind: 'guard', universe: 'declared-row-shape-units', perForm: false, run: () => ['adapters/pdf/assert-row-shape-spec.mjs'] },
   'adapters/pdf/assert-row-class-routes.mjs': { kind: 'guard', universe: 'poisoned-routing-runs', perForm: false, run: () => ['adapters/pdf/assert-row-class-routes.mjs'] },
   'adapters/pdf/assert-fixture-authorship.mjs': { kind: 'guard', universe: 'fixtures-claiming-a-generator', perForm: false, run: () => ['adapters/pdf/assert-fixture-authorship.mjs'] },
+  'adapters/pdf/assert-firing-proofs.mjs': { kind: 'guard', universe: 'firing-proof-claims', perForm: false, run: () => ['adapters/pdf/assert-firing-proofs.mjs'],
+    note: 'It reports TWO lines per mapped form, under two universes, because its first draft put them in one and the figure that survived was the one that hid the finding ([R-07]). `firing-proof-claims` counts claims naming the form, cross-form claims included, and is non-zero everywhere. `declared-lines-proved-to-refuse` counts declared total lines a recorded break proof has actually shown to say no, and it is ZERO on 433-A, 433-F and 433-B(OIC) and 6 on 433-B. Those three zeros are the finding: [R-28] is about exactly the state where a comparison has only ever agreed.' },
   'adapters/hubspot/assert-intake-keys.mjs': { kind: 'guard', universe: 'option-values-plus-row-shapes', perForm: false, run: () => ['adapters/hubspot/assert-intake-keys.mjs'] },
   // THE UNIVERSE HERE IS NOT `crosswalk-rows`, AND SAYING SO IS [R-07] APPLIED TO THIS FILE'S
   // OWN OUTPUT. It was crosswalk-rows while the guard emitted ONE EXAMINED line per form. Since
@@ -171,10 +173,13 @@ export const REGISTER = {
     // counts, so a gap declaration here would be a citation to a closed item — which [SB-17]
     // catches one level out and which would have failed this file on its next run.
     //
-    // The four assertions a DERIVED crosswalk still cannot carry did not disappear; they moved
-    // to where they belong. validate-crosswalk.mjs prints them itself, per run, per form, with
-    // the reason and the tool that covers each instead, and it COUNTS them. They are that
-    // guard's standing statement about what its input shape can be asked, not an open defect.
+    // The four assertions a DERIVED crosswalk could not carry are CLOSED as of Prompt 49
+    // commit 1, not merely relocated. validate-crosswalk.mjs now reads them off
+    // adapters/hubspot/fields.<form>.json — the artefact the deriver itself writes, which does
+    // carry hs_name and a classification — after asserting the join to the crosswalk is total
+    // in both directions. Both derived forms now report NINE assertions and ZERO declared gaps
+    // (433-A(OIC) 1643 examined items, 433-B(OIC) 738). See [D-16]’s
+    // `the_four_declarations_closed`.
   },
 
   // ── not guards ───────────────────────────────────────────────────────────────────────────

@@ -57,6 +57,8 @@ import { OVERRIDES } from './success-sweep.mjs';
 import { ABSENCE_SHAPES } from './absence-sweep.mjs';
 import { DECLARED as ABSENCE_DECLARED } from './absence-declared.mjs';
 import { CONTROLS } from './control-char-scan.mjs';
+import { STANDARD as FIRING_STANDARD } from './firing-proofs.mjs';
+import { CLAIMS as FIRING_CLAIMS } from './assert-firing-proofs.mjs';
 import { REGISTRY as RX_REGISTRY, ADOPTERS as RX_ADOPTERS } from './regex-self-assert.mjs';
 // THE THREE ADOPTERS THIS FILE DOES NOT OTHERWISE PULL IN. A regex registers itself when its
 // module LOADS, so the size of that register depends on the importing tool's import graph — and
@@ -189,6 +191,8 @@ export const REGISTERS = () => {
   add('absence-sweep.mjs:ABSENCE_SHAPES', 'engine', idsOf('ABSENCE_SHAPES', ABSENCE_SHAPES));
   add('absence-declared.mjs:DECLARED',    'engine', idsOf('absence.DECLARED', ABSENCE_DECLARED));
   add('control-char-scan.mjs:CONTROLS',   'engine', idsOf('CONTROLS', CONTROLS));
+  add('firing-proofs.mjs:STANDARD',       'engine', idsOf('FIRING_STANDARD', FIRING_STANDARD));
+  add('assert-firing-proofs.mjs:CLAIMS',  'engine', idsOf('FIRING_CLAIMS', FIRING_CLAIMS));
   assertAdoptersLoaded();
   assertDeclaredSizes();
   add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));

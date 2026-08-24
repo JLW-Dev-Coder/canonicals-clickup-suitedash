@@ -350,6 +350,25 @@ export const BOUNDARIES = [
     } },
 
   // ─── the class nobody wrote an entry for ──────────────────────────────────────────────
+  { id: 'SB-20', sweep: 'every sweep', kind: 'scoped', path: 'adapters/pdf/firing-proofs/',
+    what: "A SUBDIRECTORY OF A SWEPT DIRECTORY, created in the commit that landed [R-28]. Every sweep in this engine reads non-recursively, so it would sit outside all of them by default — which is exactly the state samples/ was in when it held two wrong typed counts. [SB-90] found it on its first run after the directory appeared, which is that entry working rather than an oversight being noticed.",
+    claim: "It is not unswept. adapters/pdf/assert-firing-proofs.mjs reads every file in it, declares its directory, filter and classifier in three lines it then prints, and judges every break entry against the five conditions in adapters/pdf/firing-proofs.mjs. A file in here that the classifier does not recognise is a STOP, and a record naming no registered claim is a STOP, so the directory cannot grow a member nothing reads.",
+    assertedBy: "adapters/pdf/assert-firing-proofs.mjs — both directions: a record with no claim and a claim with no record are each a STOP.",
+    count: () => (isDir('adapters/pdf/firing-proofs') ? readdirSync('adapters/pdf/firing-proofs').length : 0),
+    crosscheck: () => {
+      const out = [];
+      const d = 'adapters/pdf/firing-proofs';
+      const reader = 'adapters/pdf/assert-firing-proofs.mjs';
+      if (!existsSync(reader)) { out.push('[SB-20] CONTRADICTED — the reader this entry names, ' + reader + ', is not in this tree. A scoped exclusion whose named cover is absent is an unregistered exclusion.'); return out; }
+      // THE HALF THAT COULD ROT: the reader could stop pointing at this directory and the
+      // claim above would go on being printed. So the path is read out of the reader's own
+      // declaration rather than compared against a second copy of the string.
+      if (!r(reader).includes('RECORD_DIR')) out.push('[SB-20] CONTRADICTED — ' + reader + ' no longer mentions RECORD_DIR, so nothing here says it reads this directory.');
+      if (!r('adapters/pdf/firing-proofs.mjs').includes("RECORD_DIR = '" + d + "'")) out.push('[SB-20] CONTRADICTED — firing-proofs.mjs no longer declares RECORD_DIR as ' + d + ', so the directory this entry excuses and the one the reader reads are two different places.');
+      if (isDir(d) && !readdirSync(d).length) out.push('[SB-20] EMPTY — the directory exists and holds nothing. A boundary over an empty set excuses nothing and hides the fact that no proof has been recorded.');
+      return out;
+    } },
+
   { id: 'SB-90', sweep: 'every sweep', kind: 'claiming', path: 'every SUBDIRECTORY of every swept directory',
     what: 'EVERY sweep in this engine reads its directories with a NON-RECURSIVE readdirSync, so every subdirectory of every swept directory is outside every sweep. Nobody wrote this exclusion; it is a property of the reading, and it is the exact shape `samples/` had.',
     claim: 'Every such subdirectory is either gitignored scratch, or a binary/asset directory that carries no prose claim.',
@@ -360,12 +379,12 @@ export const BOUNDARIES = [
     crosscheck: () => {
       const ignored = existsSync('.gitignore') ? r('.gitignore').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#')) : [];
       const covered = (p) => ignored.some((g) => p === g.replace(/\/$/, '') || p.startsWith(g.replace(/\/$/, '') + '/'));
-      const ASSET_DIRS = { 'adapters/pdf/forms': 'the blank PDFs and their SHA pin file — bytes and one checksum list, no prose', 'adapters/pdf/maps': 'the map artefacts, which count-sweep sweeps BY NAME rather than by directory: sweptFiles() lists four per form plus the shared three' };
+      const DECLARED_SUBDIRS = { 'adapters/pdf/forms': 'the blank PDFs and their SHA pin file — bytes and one checksum list, no prose', 'adapters/pdf/maps': 'the map artefacts, which count-sweep sweeps BY NAME rather than by directory: sweptFiles() lists four per form plus the shared three' , 'adapters/pdf/firing-proofs': 'the firing-proof records, read exhaustively by adapters/pdf/assert-firing-proofs.mjs with its directory, filter and classifier declared and printed — [SB-20]' };
       const out = [];
       for (const d of ['adapters/pdf', 'adapters/hubspot'])
         for (const sub of readdirSync(d).filter((x) => isDir(`${d}/${x}`))) {
           const p = `${d}/${sub}`;
-          if (covered(p) || ASSET_DIRS[p]) continue;
+          if (covered(p) || DECLARED_SUBDIRS[p]) continue;
           out.push(`[SB-90] UNREGISTERED SUBDIRECTORY — ${p} sits under a swept directory and no sweep reads it, because every sweep in this engine reads non-recursively. It is not gitignored and it is not a declared asset directory. Say which it is, or bring it into a sweep. This is how samples/ came to hold two wrong counts nothing would ever have read.`);
         }
       return out;

@@ -625,6 +625,50 @@ write whose failure is permanent and whose cause is invisible in the response.
 **Roughly when.** 2026-08-17/18, during the 433-F and 433-A provisioning runs. Cycle-dated: the
 tree records the tools that resulted, not the failure.
 
+## [R-28] A firing proof asserts the step, the line and the verdict
+
+> A firing proof asserts the step, the line and the verdict — never a bare non-zero exit — and
+> every other declared line in the same run must still pass. Breaks are separate.
+
+**The defect that earned it.** Two tripwires were reported PROVED on a run that never reached
+them. `scratchpad/433b-slice3-prove-tripwire-fires.mjs`'s first draft asserted only
+`run.status !== 0`; the gate had failed at **step 3**, on `adapters/pdf/assert-fixture-authorship.mjs`
+— a tampered record no longer matches its generator — and step 11, where the tripwires live,
+never ran at all. On a twelve-step gate the break is the act most likely to trip an EARLIER
+step, so "something failed" is the one thing a broken input reliably produces.
+
+That is the vacuous-guard defect living inside the instrument that certifies the other guards.
+The fix was also the shape of the rule: the break now **declares itself** in the record's
+`_co_authored_with_hand`, which is not a way around step 3 but the true statement that lets
+step 3 pass so step 11 can be reached.
+
+**The audit it forced, on all five forms.** Two break proofs existed and they were unequal.
+Slice 3's, once repaired, is the standard. Slice 2's asserted the bare exit, printed "PROVED:
+the tripwire fires", edited its fixture with no authorship declaration, and was therefore
+recording a step-3 failure under the word PROVED — for 19c, and by implication for three
+totals beside it that it never touched. It is registered UNPROVED and re-proved.
+
+**What the standard is enforced by.** `adapters/pdf/firing-proofs.mjs` holds five separately
+named conditions and judges one break entry; `adapters/pdf/assert-firing-proofs.mjs` holds the
+population, derived from the tree in both directions against a register, and judges the records.
+A prover writes what it SAW — the step, the line verbatim, the verdict, every other line's
+verdict — and does not decide; a prover that judged its own output is how the first draft came
+to report PROVED. A record omitting a field is refused in as many words rather than read as a
+pass, because `if (matches.length && mismatch)` is how a guard that could not read its input
+came to print PASS (`[R-17]`).
+
+**In-process canaries are a declared class, not an exemption.** A detector that plants a defect
+inside its own process has no multi-step run, so "at the step" has no referent; the convention
+that stands in its place — the planted defect found BY NAME, and a conforming input still
+accepted — is already in force. The class is enumerated and its ground is written down as
+weaker, which is `[R-14]` rather than a hole.
+
+**Roughly when.** Ruled 2026-08-23 on the prompt-48 report; the mechanism lands in this commit.
+Cycle-dated for the half with no hash yet.
+
+---
+
+
 ---
 
 # What is deliberately not in here

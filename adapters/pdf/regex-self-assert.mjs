@@ -460,6 +460,8 @@ export const loadAdopters = async () => { for (const m of ADOPTERS) await import
 export const NOT_ADOPTED = [
   { what: 'adapters/pdf/assert-overflow.mjs (NUMERIC)',
     why: 'script-shaped — its body runs on import, so it cannot be loaded to report a register. Its `rx` registration still asserts when the script itself runs, which is every gate stress run; what it cannot do is contribute to the count below.' },
+  { what: 'adapters/hubspot/gen-fields-from-map.mjs [RX-GF-01] — ADOPTED, but not loadable from here',
+    why: 'script-shaped: its body runs on import and WRITES fields.<form>.json, so importing it to report a register would rewrite an artefact. Its `rx` registration still asserts when the script itself runs, which is every generator run — the moment immediately before 186 permanent property definitions are written, and the only moment the assertion matters. Same ground as assert-overflow.mjs (NUMERIC) above. What it cannot do is contribute to the count below. Adopted for [D-17]: the alternative was a boundary exclusion on the ground that line_ref is display-only, and that ground is false — the same function composes the permanent property description on 168 of 186 rows.' },
   { what: 'adapters/hubspot/*.mjs classification heuristics',
     why: 'a wrong verdict changes a generated property type, which assert-intake-keys.mjs and generator-guard.mjs compare against the form engine on every run. Loud downstream — a weaker ground than the adopted set\'s, and stated as such.' },
   { what: 'regex literals inline at a call site rather than bound to a name',

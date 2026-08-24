@@ -143,6 +143,50 @@ const resolveBackboneKey = (key) => {
   return {};
 };
 
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// AND THE SAME QUESTION ASKED OF A NAME — the half [D-16] left open
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// [D-16]'s closing sentence is "A guard reading one field file cannot see a rebind [R-06]
+// licenses." It built resolveBackboneKey() for the KEY side and left the NAME side reading
+// backboneByName, which is fields.433a.json and nothing else. Two assertions ask a question
+// of a name and both were therefore half-blind:
+//
+//   A6 says an `exact` row must name a property that already exists. Reading one file, a row
+//      reusing a property 433-F created is reported as reusing nothing — a FALSE STOP on
+//      exactly the act [R-06] licenses.
+//   A6 also says a `new_shared` or `form_specific` row must NOT name one that already
+//      exists. Reading one file, a row about to create a SECOND property under a name another
+//      form already created passes — and HubSpot does not delete a property, so that is a
+//      permanent duplicate in a portal with a hard ceiling. This is the direction that costs.
+//   A7 says an option extension must target a real enumeration, and reads the same one file.
+//
+// THE UNIVERSE IS "NAMES THAT EXIST", AND A REUSE IS NOT AN EXISTENCE. A field file row that
+// cites a `backbone_key` is REUSING a name some other form created; counting it as a creation
+// would make 433-F look like a duplicator of the two properties 433-A(OIC) rebinds onto — the
+// rebind read backwards. So the universe is the backbone in full, plus every row in every other
+// provisioned field file that CREATES (cites no backbone_key). A name created in two
+// non-backbone files is a STOP rather than a first match, for resolveBackboneKey()'s reason.
+const creatorByName = new Map();   // hs_name -> [{ file, prop }] — creations only
+for (const p of OTHER_FIELD_FILES) {
+  const doc = JSON.parse(readFileSync(p, 'utf8'));
+  for (const prop of doc.properties || []) {
+    if (prop.backbone_key) continue;                     // a reuse, not a creation
+    if (backboneByName.has(prop.hs_name)) continue;      // the backbone has already settled it
+    if (!creatorByName.has(prop.hs_name)) creatorByName.set(prop.hs_name, []);
+    creatorByName.get(prop.hs_name).push({ file: p, prop });
+  }
+}
+
+/** The property an hs_name already names, and where, or a reason it names none. */
+const resolveName = (name) => {
+  if (backboneByName.has(name)) return { prop: backboneByName.get(name), where: BACKBONE_PATH };
+  const found = creatorByName.get(name) || [];
+  if (found.length > 1) return { ambiguous: found.map((f) => `${f.file} -> ${f.prop.key}`) };
+  if (found.length) return { prop: found[0].prop, where: found[0].file };
+  return {};
+};
+
 // A GROUP'S INPUT KEY IS ITS `array`, ITS `source`, OR THE GROUP'S OWN NAME — and the third
 // fallback is not a guess. It is what the fill engines actually do, read off each of them:
 //   fill-433a.mjs    data[def.source || gName]
@@ -293,23 +337,27 @@ if (AUTHORED) {
 
   // --- A6. reuse before creating, enforced -----------------------------------------------------
   for (const r of rows) {
+    const already = resolveName(r.hs_name);
+    if (already.ambiguous) errs.push(`${r.key}: ${r.hs_name} is CREATED in two field files — ${already.ambiguous.join(' | ')}. Two forms creating one name is a duplicate nobody can resolve by file order.`);
     if (r.classification === 'exact') {
-      if (!backboneByName.has(r.hs_name)) errs.push(`${r.key}: classed exact but ${r.hs_name} is not on the backbone`);
-      // The backbone owns the type. Restating it here is how the two drift.
-      if (r.type || r.fieldType) errs.push(`${r.key}: an exact row must not restate a type — the backbone owns it`);
+      if (!already.prop) errs.push(`${r.key}: classed exact but ${r.hs_name} exists in no provisioned field file`);
+      // The owning file owns the type. Restating it here is how the two drift.
+      if (r.type || r.fieldType) errs.push(`${r.key}: an exact row must not restate a type — ${already.where || 'the backbone'} owns it`);
     } else {
-      if (backboneByName.has(r.hs_name)) errs.push(`${r.key}: classed ${r.classification} but ${r.hs_name} ALREADY EXISTS on the backbone — reuse it`);
+      if (already.prop) errs.push(`${r.key}: classed ${r.classification} but ${r.hs_name} ALREADY EXISTS in ${already.where} — reuse it. HubSpot does not delete a property.`);
       if (!r.type || !r.fieldType) errs.push(`${r.key}: a ${r.classification} row must declare type + fieldType`);
       if (!r.why) errs.push(`${r.key}: no reason given for creating a permanent name`);
     }
   }
-  assertion('A6', 'every exact row reuses a backbone name; every new row declares a type and a reason', rows.length, 'classified-rows');
+  assertion('A6', 'every exact row reuses a name that exists in some provisioned field file; every new row names one that exists nowhere and declares a type and a reason', rows.length, 'classified-rows');
 
   // --- A7. option extensions must be additive, on a property that can take options -------------
   let optAdds = 0;
   for (const e of xw.option_extensions || []) {
-    const p = backboneByName.get(e.hs_name);
-    if (!p) { errs.push(`option_extension targets unknown property ${e.hs_name}`); continue; }
+    const hit = resolveName(e.hs_name);
+    if (hit.ambiguous) { errs.push(`option_extension targets ${e.hs_name}, which is created in two field files — ${hit.ambiguous.join(' | ')}`); continue; }
+    const p = hit.prop;
+    if (!p) { errs.push(`option_extension targets unknown property ${e.hs_name} — it exists in no provisioned field file`); continue; }
     if (p.type !== 'enumeration') { errs.push(`option_extension targets non-enumeration ${e.hs_name} (${p.type})`); continue; }
     for (const add of e.add) {
       optAdds++;
@@ -373,18 +421,110 @@ if (AUTHORED) {
   }
   assertion('A10', 'every declared count in meta.counts matches the rows', counted, 'declared-counts');
 
-  gap('A4', 'no hs_name used twice',
-    `The derived artefact carries no hs_name column at all. The name is derived downstream by adapters/hubspot/derive-names-${form}.mjs and lives in the naming-derivation report. Deriving it a SECOND time here would be a second implementation of the derivation — the shape [D-11] committed and its own sweep caught.`,
-    'adapters/hubspot/assert-intake-keys.mjs, and the naming-derivation report’s own dry-run and read-back records.');
-  gap('A5', 'names legal, lowercase, under 100 chars, prefix matching classification',
-    'Same cause — no hs_name, and no classification column either. The prefix half additionally has no meaning on this shape: [R-06] rules that a form-specific prefix records which form CREATED a name, not which form owns it, so a prefix-versus-classification test is not the question a derived crosswalk is asking.',
-    `adapters/hubspot/derive-names-${form}.mjs asserts name legality at derivation, and [R-23] admits no property before derive, assert and dry-run.`);
-  gap('A6', 'reuse before creating, enforced by classification',
-    'No classification column. The derived rows carry backbone_key instead, and that IS checked — as A3 above, which is the reuse question asked of the column this shape actually has.',
-    'A3 above, reported with its own count on this run, plus adapters/hubspot/reclassify-against-backbone.mjs.');
-  gap('A7', 'option extensions additive and targeting an enumeration',
-    'The derived artefact has no option_extensions key at all; its option values live in the naming-derivation report.',
-    'adapters/hubspot/assert-intake-keys.mjs, which examines this form’s option values and reports a non-zero count for it.');
+  // ═══════════════════════════════════════════════════════════════════════════════════════
+  // A4, A5, A6, A7 — THE FOUR [D-16] DECLARED UNASKABLE ON THIS SHAPE, AND WHAT CHANGED
+  // ═══════════════════════════════════════════════════════════════════════════════════════
+  //
+  // [D-16] weighed two options and took the second: split by shape and drop the three name
+  // assertions plus A7, because the derived crosswalk carries no hs_name and no classification.
+  // Both statements are still true OF THE CROSSWALK. What the item did not consider is a THIRD
+  // artefact: adapters/hubspot/fields.<form>.json, which the deriver itself writes, which is
+  // machine-readable JSON rather than the naming-derivation .md the item rejected as option 1,
+  // which carries hs_name, scope, backbone_key, type, fieldType and options on every row, and
+  // which declares its generator and is checked by generator-guard.mjs ([R-19]).
+  //
+  // READING IT IS NOT A SECOND DERIVATION. [D-16]'s objection to deriving the name here was
+  // that it would be "a second implementation of the derivation — the shape [D-11] committed".
+  // That objection is exactly right and it does not apply to reading the derivation's OUTPUT.
+  // No name is computed below; every one is read.
+  //
+  // AND THE STALENESS OBJECTION IS ANSWERED BY MAKING IT LOUD. The field file could lag the
+  // crosswalk. So the join is asserted TOTAL IN BOTH DIRECTIONS before any of the four runs: a
+  // crosswalk row with no property, or a property with no crosswalk row, is a STOP naming the
+  // regeneration command. A partial join is the one state under which "no name used twice"
+  // checks a subset and reports a pass — [D-16]'s own words about the mixed-shape crosswalk,
+  // one artefact along.
+  const FIELDS = `adapters/hubspot/fields.${form}.json`;
+  if (!existsSync(FIELDS)) {
+    // A form derived but never provisioned. Still four gaps, and now for a reason that names
+    // the missing artefact rather than the missing column.
+    for (const [id, what] of [['A4', 'no hs_name used twice'], ['A5', 'names legal, lowercase, under 100 chars, prefix matching classification'],
+      ['A6', 'reuse before creating'], ['A7', 'option sets additive against the property they reuse']])
+      gap(id, what, `${FIELDS} is not in this tree, so the names this form will provision do not exist yet in any artefact. Run adapters/hubspot/derive-names-${form}.mjs.`,
+        'nothing — this is a real gap, not a covered one, and it is named as such.');
+  } else {
+    const ff = JSON.parse(readFileSync(FIELDS, 'utf8'));
+    const props = ff.properties || [];
+    const propByKey = new Map(props.map((p) => [p.key, p]));
+    const rowKeys = new Set(rows.map((r) => r.key));
+    const noProp = rows.filter((r) => !propByKey.has(r.key)).map((r) => r.key);
+    const noRow = props.filter((p) => !rowKeys.has(p.key)).map((p) => p.key);
+    if (noProp.length || noRow.length)
+      errs.push(`${FIELDS} and the crosswalk do not join: ${noProp.length} crosswalk row(s) have no property (${noProp.slice(0, 5).join(', ')}${noProp.length > 5 ? ', …' : ''}) ` +
+        `and ${noRow.length} propert(ies) have no crosswalk row (${noRow.slice(0, 5).join(', ')}${noRow.length > 5 ? ', …' : ''}). ` +
+        `The field file is stale relative to the crosswalk; re-run adapters/hubspot/derive-names-${form}.mjs. Validating it in this state would check a subset and report a pass.`);
+
+    // --- A4. no hs_name used twice ------------------------------------------------------------
+    const seenName = new Map();
+    for (const p of props) {
+      if (seenName.has(p.hs_name)) errs.push(`${p.key}: hs_name ${p.hs_name} is already used by ${seenName.get(p.hs_name)} — one property cannot hold two facts about one filer`);
+      else seenName.set(p.hs_name, p.key);
+    }
+    assertion('A4', 'no hs_name used twice', props.length, 'named-rows');
+
+    // --- A5. legality and prefix --------------------------------------------------------------
+    // THE PREFIX HALF IS ASKED ONLY OF A CREATION, and that is [R-06] rather than a softening.
+    // A prefix records which form CREATED a name; a row REUSING one keeps the creator's prefix,
+    // so demanding this form's prefix of a rebind would forbid the rebind [R-06] licenses.
+    for (const p of props) {
+      if (p.hs_name !== p.hs_name.toLowerCase()) errs.push(`not lowercase: ${p.hs_name} — HubSpot lowercases silently and the registry would disagree with the portal forever`);
+      if (!/^[a-z][a-z0-9_]*$/.test(p.hs_name)) errs.push(`illegal HubSpot property name: ${p.hs_name}`);
+      if (p.hs_name.length > 100) errs.push(`name over 100 chars: ${p.hs_name}`);
+      if (p.backbone_key) continue;
+      const want = p.scope === 'form-specific' ? `irs${form}_` : 'irs433_';
+      if (!p.hs_name.startsWith(want)) errs.push(`${p.key}: scope ${p.scope} so a name this form CREATES must start ${want}, got ${p.hs_name}`);
+    }
+    assertion('A5', 'every name legal, lowercase, under 100 chars, and every name this form CREATES prefixed to match its scope', props.length, 'named-rows');
+
+    // --- A6. reuse before creating -------------------------------------------------------------
+    // Asked through the same resolveName() the authored path uses, so the two shapes cannot
+    // drift into two answers about one portal.
+    let creates = 0, reuses = 0;
+    for (const p of props) {
+      const already = resolveName(p.hs_name);
+      if (already.ambiguous) { errs.push(`${p.key}: ${p.hs_name} is CREATED in two field files — ${already.ambiguous.join(' | ')}`); continue; }
+      if (p.backbone_key) {
+        reuses++;
+        if (!already.prop) errs.push(`${p.key}: cites backbone_key ${p.backbone_key} and reuses ${p.hs_name}, which exists in no provisioned field file`);
+        else if (already.prop.hs_name !== p.hs_name) errs.push(`${p.key}: reuses ${p.hs_name} but ${p.backbone_key} names ${already.prop.hs_name}`);
+      } else {
+        creates++;
+        if (already.prop) errs.push(`${p.key}: creates ${p.hs_name}, which ALREADY EXISTS in ${already.where} — reuse it. HubSpot does not delete a property and this portal's ceiling is hard.`);
+        if (!p.type || !p.fieldType) errs.push(`${p.key}: a created property must declare type + fieldType`);
+        if (!p.type_basis) errs.push(`${p.key}: a created property must declare the ground its type was chosen on`);
+      }
+    }
+    assertion('A6', `every reuse names a property that exists (${reuses}) and every creation names one that does not (${creates})`, props.length, 'classified-rows');
+
+    // --- A7. option sets ------------------------------------------------------------------------
+    // The derived shape has no `option_extensions` key, and [D-16] read that as the assertion
+    // having no subject. It has one: a REUSED property carrying options is an option extension
+    // by another spelling, and the same two questions apply — is the target an enumeration, and
+    // is every value additive against what the owning file already declares?
+    let optValues = 0;
+    for (const p of props) {
+      if (!p.options) continue;
+      if (p.type !== 'enumeration') { errs.push(`${p.key}: declares options on a ${p.type} property, which cannot take them`); continue; }
+      optValues += p.options.length;
+      if (!p.backbone_key) continue;
+      const owner = resolveName(p.hs_name).prop;
+      if (!owner || !owner.options) continue;
+      const have = new Set(owner.options.map((o) => String(o.value)));
+      const removed = owner.options.filter((o) => !p.options.some((x) => String(x.value) === String(o.value)));
+      if (removed.length) errs.push(`${p.key}: reuses ${p.hs_name} and DROPS option(s) ${removed.map((o) => o.value).join(', ')} the owning file declares. An extension is additive; a removal breaks every record already carrying the value.`);
+    }
+    assertion('A7', 'every option set sits on an enumeration, and every reused property keeps every option value its owner declares', optValues, 'option-values');
+  }
 
   console.log(`form ${form}: ${engineInputs.size} engine input(s), ${rows.length} crosswalk row(s) — DERIVED shape (${shapeEvidence})`);
   console.log(`  rows citing a backbone_key: ${bkChecked}   rows citing none (to provision): ${rows.length - bkChecked}`);

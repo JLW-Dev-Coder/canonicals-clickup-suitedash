@@ -37,6 +37,7 @@
 
 import { readFileSync, writeFileSync } from 'fs';
 import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
+import { rx } from '../pdf/regex-self-assert.mjs';
 
 const form = process.argv[2];
 if (!form) {
@@ -73,12 +74,52 @@ const isProse = (k) => k.startsWith('_');  // `_why` / `_note` keys are document
 // The printed line marker a key carries as its prefix ("1a_full_name" -> "1a", "S7_..." -> "S7").
 // Reported as line_ref so a reviewer can find the cell on the page; null when the key names a
 // concept the form does not number (marital_status, the allowable inputs).
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE PRINTED-MARKER PATTERN, REGISTERED — [D-17]
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// [G-94] disposed of this regex as sound and ended: "A dead regex would make EVERY key report
+// null, and that is caught one level out: adapters/hubspot/validate-crosswalk.mjs compares the
+// generated file against the crosswalk." IT DOES NOT. validate-crosswalk.mjs joins by `key`
+// and `hs_name`; the string "line_ref" does not occur in it, on any form. That was an unproved
+// forward reference asserting a backstop that does not exist, which is [R-13].
+//
+// TWO DISPOSITIONS WERE OPEN AND THIS IS THE ONE TAKEN: adopt it. The other was a boundary
+// exclusion on the ground [D-17] itself offered — "line_ref is a display column and no
+// downstream check reads it" — and THAT GROUND IS FALSE OF THIS REGEX. It is not read only by
+// lineRef(). describe() calls lineRef() too, and its output is the permanent HubSpot property
+// DESCRIPTION: 168 of the 186 rows in fields.433a.json carry "433-A line <ref>" in a
+// description field that is written to the portal and that HubSpot will not let anyone rename
+// the property behind. stripMarker() uses the same pattern to derive the FACT NAME, which is
+// most of the property name itself. An exclusion is a claim ([R-14]) and this one would have
+// been a false claim about the file it excused.
+//
+// AND THE REGEX IS NOT DEAD. Measured, not assumed: on the 186 keys of fields.433a.json it
+// resolves 168 and returns null for 18, the 18 being the facts the form does not number
+// (marital_status, the allowable-standards inputs). Every one of the 168 stored `line_ref`
+// values equals a live re-derivation. So "what has it failed to catch since it died" has no
+// referent: it did not die. What it lacked was any instrument that would notice if it did —
+// and the eaten-backslash form of this exact source, /^(S?d+[a-z]?)_/i, is a legal regex that
+// matches nothing here and would return null on all 186 with nothing to say so.
+//
+// CAPTURES, NOT JUST MATCHES. This regex is read for its GROUP, and a group can go on being
+// returned while spanning the wrong text — `[\w$]*` arriving as `[w$]*` still matches. The
+// probes therefore state what must be captured out of what, and the assertion compares the
+// span exactly.
+const MARKER = rx('RX-GF-01', /^(S?\d+[a-z]?)_/i, {
+  why: 'the printed line marker a 433 input key carries as its prefix. Read for its group by lineRef(), which composes the permanent HubSpot property description, and by stripMarker(), which composes the fact name.',
+  matches: ['1a_full_name', 'S7_accounting_method', '20_total_income', 'S12_other_info'],
+  rejects: ['marital_status', 'allowable_food_clothing', '_why', 'sa_not_a_marker'],
+  captures: [['1a_full_name', ['1a']], ['S7_accounting_method', ['S7']], ['20_total_income', ['20']], ['9b_trust_ein', ['9b']]],
+});
+
 const lineRef = (key) => {
-  const m = /^(S?\d+[a-z]?)_/i.exec(key);
+  const m = MARKER.exec(key);
   return m ? m[1] : null;
 };
 
-const stripMarker = (key) => key.replace(/^(S?\d+[a-z]?)_/i, '');
+const stripMarker = (key) => key.replace(MARKER, '');
 
 // --- facts whose stripped name is NOT yet a usable series name ----------------------------
 // Two failure modes, both of which only bite after the name is permanent:

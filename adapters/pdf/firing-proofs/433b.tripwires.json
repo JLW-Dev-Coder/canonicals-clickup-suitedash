@@ -1,0 +1,299 @@
+{
+ "_standard": "[R-28]",
+ "form": "433b",
+ "_generated_by": "scratchpad/433b-prove-every-tripwire-fires.mjs",
+ "tool_under_test": "adapters/pdf/run-form-gate.mjs 433b --saturated",
+ "fixture": "samples/433b.slice3.sample.json",
+ "fixture_sha256": "13DCC8874A2D5B356CB23DA790CFF71EF5250E6D4EE3C8E97AF8AC98B7D99B58",
+ "fixture_resolved_by": "adapters/pdf/resolve-fixture.mjs — role acceptance; never a named path ([R-22])",
+ "declarations_on_this_tool": 6,
+ "declarations_source": "adapters/pdf/maps/433b.totals.json — the totals list, read, not typed",
+ "clean_run_after_every_revert": {
+  "exit": 0,
+  "verdict_line": "GATE PASSED — all 12 steps for 433b, saturated."
+ },
+ "breaks": [
+  {
+   "declaration": "arithmetic tripwire | 433b | 17d",
+   "line": "17d",
+   "caption": "Total Cash in Banks (Add lines 17a through 17c and amounts from any attachments)",
+   "broke": {
+    "key": "s4_17d_total_cash_in_banks",
+    "from": "56735.65",
+    "to": "56735.66"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "17d  |       56,735.66 |           56,735.65 | NO  (3 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 18f",
+   "line": "18f",
+   "caption": "Outstanding Balance (Add lines 18a through 18e and amounts from any attachments)",
+   "broke": {
+    "key": "s4_18f_outstanding_balance",
+    "from": "179476.00",
+    "to": "179476.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "18f  |      179,476.01 |          179,476.00 | NO  (5 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 19c",
+   "line": "19c",
+   "caption": "Total Investments (Add lines 19a, 19b, and amounts from any attachments)",
+   "broke": {
+    "key": "s4_19c_total_investments",
+    "from": "78500.00",
+    "to": "78500.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "19c  |       78,500.01 |           78,500.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 20e",
+   "line": "20e",
+   "caption": "Total Equity of Digital Assets (Add lines 20b, 20c, and amounts from any attachments)",
+   "broke": {
+    "key": "s4_20e_total_equity_of_digital_assets",
+    "from": "67000.00",
+    "to": "67000.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "20e  |       67,000.01 |           67,000.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 22e",
+   "line": "22e",
+   "caption": "Total Equity (Add lines 22a through 22d and amounts from any attachments)",
+   "broke": {
+    "key": "s4_22e_total_equity_real_property",
+    "from": "471050.00",
+    "to": "471050.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "22e  |      471,050.01 |          471,050.00 | NO  (4 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 23e",
+   "line": "23e",
+   "caption": "Total Equity (Add lines 23a through 23d and amounts from any attachments)",
+   "broke": {
+    "key": "s4_23e_total_equity_vehicles",
+    "from": "49850.00",
+    "to": "49850.01"
+   },
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "23e  |       49,850.01 |           49,850.00 | NO  (4 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  }
+ ]
+}
