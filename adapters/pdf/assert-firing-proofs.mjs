@@ -99,7 +99,7 @@ export const CLAIMS = [
     form: '433b',
     claim: 'EVERY printed arithmetic total 433-B declares fires on a one-cent discrepancy, independently of every other',
     class: 'break',
-    prover: 'scratchpad/433b-prove-every-tripwire-fires.mjs',
+    prover: 'scratchpad/prove-tripwires-fire.mjs',
     record: `${RECORD_DIR}/433b.tripwires.json`,
     verdict: 'proved',
     // NO COUNT IN THIS ENTRY. The prover reads the declared lines out of 433b.totals.json and
@@ -137,6 +137,71 @@ export const CLAIMS = [
     record: `${RECORD_DIR}/crosswalk-name-guards.json`,
     verdict: 'proved',
     evidence_shows: 'the failing message naming the planted row AND the field file the name already lives in, on the authored shape (433-F) and the derived shape (433-B(OIC)) separately, with every other assertion in the same run still printing its own examined count. The [D-16] widening from one field file to the whole provisioned universe changed no verdict on any form — that is the guard being blind rather than wrong — so this is what stands in for a verdict change.',
+  },
+  // ─────────────────────────────────────────────────────────────────────────────────────
+  // THE FOUR FORMS THAT CARRIED NO BREAK PROOF AT ALL, AND NOW DO.
+  //
+  // Until this commit, 433-A's 16 declared lines, 433-F's 5, 433-A(OIC)'s 51 and
+  // 433-B(OIC)'s 31 had passed on every run ever made and had never once been seen to say no.
+  // This file was printing those four zeros on every run, by name, under
+  // `declared-lines-proved-to-refuse` — which is what a checked absence is for and is not a
+  // substitute for the proof.
+  //
+  // ONE PROVER FOR ALL FIVE FORMS. A class fixed on one form and copied to its neighbours is
+  // how the same defect arrives four more times ([R-12]), so scratchpad/prove-tripwires-fire.mjs
+  // reads the fixture from its declared role, the declared lines from the totals file, the
+  // feeder graph from the same file, and each line's address from the gate's own per-line
+  // result. Five entries name it, one per form, because a FORM is what a reader asks about and
+  // what `declared-lines-proved-to-refuse` is counted per.
+  {
+    id: 'FP-06',
+    form: '433a',
+    claim: 'every printed arithmetic total 433-A declares fires on a one-cent discrepancy, independently of every other',
+    class: 'break',
+    prover: 'scratchpad/prove-tripwires-fire.mjs',
+    record: `${RECORD_DIR}/433a.tripwires.json`,
+    verdict: 'proved',
+    evidence_shows: 'the step, the line and the verdict, on each declared line separately, with every other declared line reading the verdict the feeder graph derives for it in the same run. 433-A declares no `when` predicate, so no line on it is ever out of class and the fourth state never arises.',
+  },
+  {
+    id: 'FP-07',
+    form: '433f',
+    claim: 'every printed arithmetic total 433-F declares fires on a one-cent discrepancy, independently of every other',
+    class: 'break',
+    prover: 'scratchpad/prove-tripwires-fire.mjs',
+    record: `${RECORD_DIR}/433f.tripwires.json`,
+    verdict: 'proved',
+    evidence_shows: 'the step, the line and the verdict, on each of the five declared lines separately. The five are mutually independent — no total on this form feeds another — so every other line reads passing in every run, which is the original [FS-3] and not the amendment.',
+  },
+  {
+    id: 'FP-08',
+    form: '433aoi',
+    claim: 'every printed arithmetic total 433-A(OIC) declares fires on a one-cent discrepancy, independently of every other',
+    class: 'break',
+    prover: 'scratchpad/prove-tripwires-fire.mjs',
+    record: `${RECORD_DIR}/433aoi.tripwires.json`,
+    verdict: 'proved',
+    evidence_shows: 'the step, the line and the verdict on each declared line, with every other line reading its derived verdict — passing, failing where the feeder graph makes it a dependent of the broken line, or SKIPPED where this form\'s printed lease/own conditional puts it on the other branch of the record it was broken in. TWO of its declared lines are in class on NO fixture this form had, and samples/433aoi.branch.sample.json is what puts them there.',
+  },
+  {
+    id: 'FP-09',
+    form: '433boi',
+    claim: 'every printed arithmetic total 433-B(OIC) declares fires on a one-cent discrepancy, independently of every other',
+    class: 'break',
+    prover: 'scratchpad/prove-tripwires-fire.mjs',
+    record: `${RECORD_DIR}/433boi.tripwires.json`,
+    verdict: 'proved',
+    evidence_shows: 'the step, the line and the verdict on each declared line. THIS IS WHERE THE AMENDED [FS-3] FIRST BITES ON A FORM OTHER THAN 433-B: Box D feeds the two page-5 payment rows, those feed Box E and Box F, and Box A feeds the offer row which feeds the Offer Amount — so a one-cent break high in that chain is DERIVED to move everything below it, and a dependent that stayed passing would be the defect. THREE of its 31 declared lines are in class on no fixture this form had, and samples/433boi.branch.sample.json is what puts them there.',
+  },
+  {
+    id: 'FP-10',
+    form: '433b',
+    claim: 'the eleven 433-B lines proved by the form-specific prover this one generalises',
+    class: 'break',
+    prover: 'scratchpad/433b-prove-every-tripwire-fires.mjs',
+    record: null,
+    verdict: 'superseded-by-generalisation',
+    evidence_shows: 'EVERYTHING [FP-01] SHOWS, AND ON A SMALLER SET. It is the file scratchpad/prove-tripwires-fire.mjs was written from, and it is kept rather than deleted because the finding in its header — the slice-3 first draft that reported PROVED on a gate that died at step 3 — is the defect [R-28] is named for, quoted verbatim there and again in its successor ([R-21]). It is registered here rather than left in the tree unnamed: a prover the derivation catches and the register does not name is a proof nobody judged, and this file makes that a STOP.',
   },
   {
     id: 'FP-04',
@@ -190,6 +255,8 @@ export const deriveCanaryTools = () => {
 
 /** Provers the derivation catches that are NOT firing proofs. An exclusion is a claim. */
 export const NOT_A_PROVER = [
+  { path: 'scratchpad/author-branch-fixtures.mjs',
+    why: 'IT AUTHORS AN INPUT, IT DOES NOT PROVE ANYTHING. The classifier catches it because it writes a file, spawns the gate, and its header speaks of lines that would otherwise never fire — but what it produces is samples/<form>.branch.sample.json, a committed record that puts the other branch of each printed conditional in class. It makes five declared lines askable on two forms; asking them is [FP-08] and [FP-09]. Disposed by name rather than by narrowing the classifier, because a classifier tuned until it happened to miss this would also miss the next real prover that resembles it.' },
   { path: 'adapters/pdf/run-form-gate.mjs',
     why: 'it is the tool a break proof spawns, not a proof. It writes filled PDFs and spawns its own steps; the word "fires" in it is prose about a floor.' },
   { path: 'adapters/pdf/assert-firing-proofs.mjs',

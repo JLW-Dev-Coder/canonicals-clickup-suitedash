@@ -1,0 +1,295 @@
+{
+ "_standard": "[R-28]",
+ "form": "433f",
+ "_generated_by": "scratchpad/prove-tripwires-fire.mjs",
+ "tool_under_test": "adapters/pdf/run-form-gate.mjs 433f <the record chosen for the line> --saturated",
+ "records_swept": "samples/ — name starts with \"433f.\" and ends \".json\"; classified by _fixture.role declared in the file; breakable roles acceptance, branch, negative, stress ([R-22]: resolved from the tree, never a named path)",
+ "records": [
+  {
+   "path": "samples/433f.multi.sample.json",
+   "role": "acceptance",
+   "sha256": "B69728E2472AD9287E42A847A13DA1CA2FD04629E89333F8D4EDA557971621D1",
+   "lines_broken_in_it": 5
+  },
+  {
+   "path": "samples/433f.overmax.sample.json",
+   "role": "stress",
+   "sha256": "A2330120C9A12D3B10CAA9C9003201E9E69119B144C430DC13B0AA647852B9E8",
+   "lines_broken_in_it": 0
+  }
+ ],
+ "declarations_on_this_tool": 5,
+ "declarations_source": "adapters/pdf/maps/433f.totals.json — the totals list, read, not typed",
+ "clean_run_after_every_revert": {
+  "samples/433f.multi.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433f, saturated."
+  },
+  "samples/433f.overmax.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433f, saturated."
+  }
+ },
+ "breaks": [
+  {
+   "declaration": "arithmetic tripwire | 433f | H1",
+   "line": "H1",
+   "caption": "1. Food / Personal Care > Total",
+   "record": "samples/433f.multi.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "433f_exp_food_total",
+    "from": "1245",
+    "to": "1245.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "H1   |        1,245.01 |            1,245.00 | NO  (5 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "H2",
+     "verdict": "yes",
+     "verbatim": "H2   |          380.00 |              380.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H3",
+     "verdict": "yes",
+     "verbatim": "H3   |        2,575.00 |            2,575.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H4",
+     "verdict": "yes",
+     "verbatim": "H4   |          503.00 |              503.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H5",
+     "verdict": "yes",
+     "verbatim": "H5   |        1,880.00 |            1,880.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433f | H2",
+   "line": "H2",
+   "caption": "2. Transportation > Total",
+   "record": "samples/433f.multi.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "433f_exp_transport_total",
+    "from": "380",
+    "to": "380.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "H2   |          380.01 |              380.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "H1",
+     "verdict": "yes",
+     "verbatim": "H1   |        1,245.00 |            1,245.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H3",
+     "verdict": "yes",
+     "verbatim": "H3   |        2,575.00 |            2,575.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H4",
+     "verdict": "yes",
+     "verbatim": "H4   |          503.00 |              503.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H5",
+     "verdict": "yes",
+     "verbatim": "H5   |        1,880.00 |            1,880.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433f | H3",
+   "line": "H3",
+   "caption": "3. Housing & Utilities > Total",
+   "record": "samples/433f.multi.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "433f_exp_housing_total",
+    "from": "2575",
+    "to": "2575.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "H3   |        2,575.01 |            2,575.00 | NO  (5 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "H1",
+     "verdict": "yes",
+     "verbatim": "H1   |        1,245.00 |            1,245.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H2",
+     "verdict": "yes",
+     "verbatim": "H2   |          380.00 |              380.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H4",
+     "verdict": "yes",
+     "verbatim": "H4   |          503.00 |              503.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H5",
+     "verdict": "yes",
+     "verbatim": "H5   |        1,880.00 |            1,880.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433f | H4",
+   "line": "H4",
+   "caption": "4. Medical > Total",
+   "record": "samples/433f.multi.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "433f_exp_medical_total",
+    "from": "503",
+    "to": "503.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "H4   |          503.01 |              503.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "H1",
+     "verdict": "yes",
+     "verbatim": "H1   |        1,245.00 |            1,245.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H2",
+     "verdict": "yes",
+     "verbatim": "H2   |          380.00 |              380.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H3",
+     "verdict": "yes",
+     "verbatim": "H3   |        2,575.00 |            2,575.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H5",
+     "verdict": "yes",
+     "verbatim": "H5   |        1,880.00 |            1,880.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433f | H5",
+   "line": "H5",
+   "caption": "5. Other > Total",
+   "record": "samples/433f.multi.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "433f_exp_other_total",
+    "from": "1880",
+    "to": "1880.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433f samples/433f.multi.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "H5   |        1,880.01 |            1,880.00 | NO  (14 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "H1",
+     "verdict": "yes",
+     "verbatim": "H1   |        1,245.00 |            1,245.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H2",
+     "verdict": "yes",
+     "verbatim": "H2   |          380.00 |              380.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H3",
+     "verdict": "yes",
+     "verbatim": "H3   |        2,575.00 |            2,575.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "H4",
+     "verdict": "yes",
+     "verbatim": "H4   |          503.00 |              503.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  }
+ ]
+}

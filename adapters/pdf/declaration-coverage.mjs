@@ -68,7 +68,14 @@ import { examined } from './examined.mjs';
 // replaced. The two "stops" fixtures in that set are included too: a fixture whose gate run
 // FAILS still reaches every declaration up to the point it failed, and the union is over what
 // was exercised rather than over what passed.
-const EXERCISING_ROLES = ['acceptance', 'stress', 'negative', 'record_shape'];
+// `branch` IS AN EXERCISING ROLE AND IT HAD TO BE. It is the acceptance record with every
+// declared two-branch predicate flipped, so it reaches the total lines and the printed
+// constants the acceptance record leaves SKIPPED — on 433-B(OIC) three of them and on
+// 433-A(OIC) two, none of which any fixture in this tree had ever put in class. Leaving it
+// out would have made this union report those branches as proved nowhere while the fixture
+// that proves them sat beside it, and exclusion-sweep [EX-35] refuses exactly that: a
+// fixture measured by nothing.
+const EXERCISING_ROLES = ['acceptance', 'stress', 'negative', 'record_shape', 'branch'];
 const [form, ...named] = process.argv.slice(2);
 if (!form) {
   console.error('usage: node adapters/pdf/declaration-coverage.mjs <form> [<fixture.json> ...]');

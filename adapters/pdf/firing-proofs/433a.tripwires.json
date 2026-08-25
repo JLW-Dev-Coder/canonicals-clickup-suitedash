@@ -1,0 +1,1927 @@
+{
+ "_standard": "[R-28]",
+ "form": "433a",
+ "_generated_by": "scratchpad/prove-tripwires-fire.mjs",
+ "tool_under_test": "adapters/pdf/run-form-gate.mjs 433a <the record chosen for the line> --saturated",
+ "records_swept": "samples/ — name starts with \"433a.\" and ends \".json\"; classified by _fixture.role declared in the file; breakable roles acceptance, branch, negative, stress ([R-22]: resolved from the tree, never a named path)",
+ "records": [
+  {
+   "path": "samples/433a.sample.json",
+   "role": "acceptance",
+   "sha256": "0910AFEA798134722C5119EEDC3A27530CE89BC2B57ED09DE21B502BE2EAFE4D",
+   "lines_broken_in_it": 16
+  },
+  {
+   "path": "samples/433a.overmax.sample.json",
+   "role": "stress",
+   "sha256": "77DA4C0D4DB985E9E564256243C4F6F85E95B185B7CA6E3A128611CCD72DAB6A",
+   "lines_broken_in_it": 0
+  }
+ ],
+ "declarations_on_this_tool": 16,
+ "declarations_source": "adapters/pdf/maps/433a.totals.json — the totals list, read, not typed",
+ "clean_run_after_every_revert": {
+  "samples/433a.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433a, saturated."
+  },
+  "samples/433a.overmax.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433a, saturated."
+  }
+ },
+ "breaks": [
+  {
+   "declaration": "arithmetic tripwire | 433a | 13e",
+   "line": "13e",
+   "caption": "Total Cash (Add lines 13a, 13b, 13c, 13d and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "13e_total_cash",
+    "from": "19100",
+    "to": "19100.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "13e  |       19,100.01 |           19,100.00 | NO  (4 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 15e",
+   "line": "15e",
+   "caption": "Total Equity (Add lines 15a, 15b, 15c and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "15e_total_digital_asset_equity",
+    "from": "6105",
+    "to": "6105.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "15e  |        6,105.01 |            6,105.00 | NO  (4 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 16e",
+   "line": "16e",
+   "caption": "Total Available Credit (Add lines 16a, 16b, 16c, 16d and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "16e_total_available_credit",
+    "from": "5500",
+    "to": "5500.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "16e  |        5,500.01 |            5,500.00 | NO  (4 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 17f",
+   "line": "17f",
+   "caption": "Total Available Cash (Subtract amounts on line 17e from line 17d and include amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "17f_total_life_insurance_equity",
+    "from": "17000",
+    "to": "17000.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "17f  |       17,000.01 |           17,000.00 | NO  (6 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 18d",
+   "line": "18d",
+   "caption": "Total Equity (Add lines 18a, 18b, 18c and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "18d_total_equity_real_property",
+    "from": "150000",
+    "to": "150000.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "18d  |      150,000.01 |          150,000.00 | NO  (3 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 19d",
+   "line": "19d",
+   "caption": "Total Equity (Add lines 19a, 19b, 19c and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "19d_total_equity_vehicles",
+    "from": "18000",
+    "to": "18000.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "19d  |       18,000.01 |           18,000.00 | NO  (3 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 20c",
+   "line": "20c",
+   "caption": "Total Equity (Add lines 20a, 20b and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "20c_total_equity_property_line_20",
+    "from": "12500",
+    "to": "12500.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "20c  |       12,500.01 |           12,500.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 35",
+   "line": "35",
+   "caption": "Total Income (add lines 21-34)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "35_total_income",
+    "from": "12545",
+    "to": "12545.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "35   |       12,545.01 |           12,545.00 | NO  (14 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "NO",
+     "verbatim": "51   |           68.00 |               68.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "51 names 35_total_income among its own feeders in 433a.totals.json, so a break of one cent in 35 must move 51 too"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 50",
+   "line": "50",
+   "caption": "Total Living Expenses (add lines 36-49)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "50_total_living_expenses",
+    "from": "12477",
+    "to": "12477.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "50   |       12,477.01 |           12,477.00 | NO  (14 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "NO",
+     "verbatim": "51   |           68.00 |               67.99 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "51 names 50_total_living_expenses among its own feeders in 433a.totals.json, so a break of one cent in 50 must move 51 too"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 51",
+   "line": "51",
+   "caption": "Net difference (Line 35 minus 50)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "51_net_difference",
+    "from": "68",
+    "to": "68.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "51   |           68.01 |               68.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 65c",
+   "line": "65c",
+   "caption": "Total Cash in Banks (Add lines 65a, 65b and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "65c_total_business_bank_balance",
+    "from": "24705",
+    "to": "24705.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "65c  |       24,705.01 |           24,705.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 66f",
+   "line": "66f",
+   "caption": "Total Outstanding Balance (Add lines 66a through 66e and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "66f_total_receivable_amount_due",
+    "from": "37785",
+    "to": "37785.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "66f  |       37,785.01 |           37,785.00 | NO  (5 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 67c",
+   "line": "67c",
+   "caption": "Total Equity (Add lines 67a, 67b and amounts from any attachments)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "67c_total_business_property_equity",
+    "from": "167000",
+    "to": "167000.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "67c  |      167,000.01 |          167,000.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "yes",
+     "verbatim": "90   |        9,520.00 |            9,520.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 77",
+   "line": "77",
+   "caption": "Total Income (Add lines 68 through 76)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "77_bizinc_total_income",
+    "from": "59585",
+    "to": "59585.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "77   |       59,585.01 |           59,585.00 | NO  (9 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "NO",
+     "verbatim": "90   |        9,520.00 |            9,520.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "90 names 77_bizinc_total_income among its own feeders in 433a.totals.json, so a break of one cent in 77 must move 90 too"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 89",
+   "line": "89",
+   "caption": "Total Expenses (Add lines 78 through 88)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "89_bizexp_total_expenses",
+    "from": "50065",
+    "to": "50065.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "89   |       50,065.01 |           50,065.00 | NO  (11 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "90",
+     "verdict": "NO",
+     "verbatim": "90   |        9,520.00 |            9,519.99 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "90 names 89_bizexp_total_expenses among its own feeders in 433a.totals.json, so a break of one cent in 89 must move 90 too"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433a | 90",
+   "line": "90",
+   "caption": "Net Business Income (Line 77 minus 89)",
+   "record": "samples/433a.sample.json",
+   "record_role": "acceptance",
+   "broke": {
+    "key": "90_biz_net_business_income",
+    "from": "9520",
+    "to": "9520.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433a samples/433a.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "90   |        9,520.01 |            9,520.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "13e",
+     "verdict": "yes",
+     "verbatim": "13e  |       19,100.00 |           19,100.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "15e",
+     "verdict": "yes",
+     "verbatim": "15e  |        6,105.00 |            6,105.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "16e",
+     "verdict": "yes",
+     "verbatim": "16e  |        5,500.00 |            5,500.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "17f",
+     "verdict": "yes",
+     "verbatim": "17f  |       17,000.00 |           17,000.00 | yes  (6 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18d",
+     "verdict": "yes",
+     "verbatim": "18d  |      150,000.00 |          150,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19d",
+     "verdict": "yes",
+     "verbatim": "19d  |       18,000.00 |           18,000.00 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       12,500.00 |           12,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "35",
+     "verdict": "yes",
+     "verbatim": "35   |       12,545.00 |           12,545.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       12,477.00 |           12,477.00 | yes  (14 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "51",
+     "verdict": "yes",
+     "verbatim": "51   |           68.00 |               68.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "65c",
+     "verdict": "yes",
+     "verbatim": "65c  |       24,705.00 |           24,705.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "66f",
+     "verdict": "yes",
+     "verbatim": "66f  |       37,785.00 |           37,785.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "67c",
+     "verdict": "yes",
+     "verbatim": "67c  |      167,000.00 |          167,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "77",
+     "verdict": "yes",
+     "verbatim": "77   |       59,585.00 |           59,585.00 | yes  (9 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "89",
+     "verdict": "yes",
+     "verbatim": "89   |       50,065.00 |           50,065.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  }
+ ]
+}

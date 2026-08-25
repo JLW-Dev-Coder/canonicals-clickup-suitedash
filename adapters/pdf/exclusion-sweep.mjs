@@ -621,8 +621,8 @@ export const PREDICATES = [
 
   // ─── the declaration-coverage union ───────────────────────────────────────────────────
   { id: 'EX-35', pred: 'exercises', definedIn: 'adapters/pdf/declaration-coverage.mjs', kind: 'claiming',
-    what: 'Separates a fixture that EXERCISES the form — acceptance, stress, negative, and the "holds" half of the record_shape set — from one that does not: production, superseded, and the "stops" half of the record_shape set.',
-    count: () => FIXTURE_FORMS().reduce((n, f) => n + candidatesFor(f).rows.filter((r) => !r.unreadable && !r.undeclared && !['acceptance', 'stress', 'negative'].includes(r.role) && !(r.role === 'record_shape' && r.recordShape?.expect === 'holds')).length, 0),
+    what: 'Separates a fixture that EXERCISES the form — acceptance, stress, negative, branch, and the "holds" half of the record_shape set — from one that does not: production, superseded, and the "stops" half of the record_shape set.',
+    count: () => FIXTURE_FORMS().reduce((n, f) => n + candidatesFor(f).rows.filter((r) => !r.unreadable && !r.undeclared && !['acceptance', 'stress', 'negative', 'branch'].includes(r.role) && !(r.role === 'record_shape' && r.recordShape?.expect === 'holds')).length, 0),
     // THE CROSS-CHECK. Every fixture this predicate keeps out of the coverage union must be out
     // for one of three stated reasons: `production` is a portrait of one taxpayer and says
     // nothing about which declared behaviours a run reached; `superseded` is history; a
@@ -634,7 +634,7 @@ export const PREDICATES = [
       const out = [];
       for (const f of FIXTURE_FORMS()) for (const r of candidatesFor(f).rows) {
         if (r.unreadable || r.undeclared) continue;
-        if (['acceptance', 'stress', 'negative'].includes(r.role)) continue;
+        if (['acceptance', 'stress', 'negative', 'branch'].includes(r.role)) continue;
         if (r.role === 'record_shape' && r.recordShape?.expect === 'holds') continue;
         if (['production', 'superseded'].includes(r.role)) continue;
         if (r.role === 'record_shape' && r.recordShape?.expect === 'stops') continue;

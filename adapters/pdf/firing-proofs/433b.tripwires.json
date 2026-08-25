@@ -1,28 +1,51 @@
 {
  "_standard": "[R-28]",
  "form": "433b",
- "_generated_by": "scratchpad/433b-prove-every-tripwire-fires.mjs",
- "tool_under_test": "adapters/pdf/run-form-gate.mjs 433b --saturated",
- "fixture": "samples/433b.slice4.sample.json",
- "fixture_sha256": "69DF3687DAC8CBF8AC7D66CA36454D893D184B12785E847A54731A0BAEE0C7B0",
- "fixture_resolved_by": "adapters/pdf/resolve-fixture.mjs — role acceptance; never a named path ([R-22])",
+ "_generated_by": "scratchpad/prove-tripwires-fire.mjs",
+ "tool_under_test": "adapters/pdf/run-form-gate.mjs 433b <the record chosen for the line> --saturated",
+ "records_swept": "samples/ — name starts with \"433b.\" and ends \".json\"; classified by _fixture.role declared in the file; breakable roles acceptance, branch, negative, stress ([R-22]: resolved from the tree, never a named path)",
+ "records": [
+  {
+   "path": "samples/433b.slice4.sample.json",
+   "role": "acceptance",
+   "sha256": "A3626090F9731DC42523FFDF83FACF8C90DA35B82BE3CE2B0B00476CF3979576",
+   "lines_broken_in_it": 0
+  },
+  {
+   "path": "samples/433b.overmax.sample.json",
+   "role": "stress",
+   "sha256": "352001AC3AF43EC0159412DDED36194F755FDEDFDAA47437E701DF1C580AF006",
+   "lines_broken_in_it": 11
+  }
+ ],
  "declarations_on_this_tool": 11,
  "declarations_source": "adapters/pdf/maps/433b.totals.json — the totals list, read, not typed",
  "clean_run_after_every_revert": {
-  "exit": 0,
-  "verdict_line": "GATE PASSED — all 12 steps for 433b, saturated."
+  "samples/433b.slice4.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433b, saturated."
+  },
+  "samples/433b.overmax.sample.json": {
+   "exit": 0,
+   "verdict_line": "GATE PASSED — all 12 steps for 433b, saturated."
+  }
  },
  "breaks": [
   {
    "declaration": "arithmetic tripwire | 433b | 17d",
    "line": "17d",
    "caption": "Total Cash in Banks (Add lines 17a through 17c and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_17d_total_cash_in_banks",
     "from": "56735.65",
     "to": "56735.66"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -30,6 +53,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "18f",
@@ -99,12 +123,17 @@
    "declaration": "arithmetic tripwire | 433b | 18f",
    "line": "18f",
    "caption": "Outstanding Balance (Add lines 18a through 18e and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_18f_outstanding_balance",
     "from": "179476.00",
     "to": "179476.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -112,6 +141,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -181,12 +211,17 @@
    "declaration": "arithmetic tripwire | 433b | 19c",
    "line": "19c",
    "caption": "Total Investments (Add lines 19a, 19b, and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_19c_total_investments",
     "from": "78500.00",
     "to": "78500.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -194,6 +229,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -263,12 +299,17 @@
    "declaration": "arithmetic tripwire | 433b | 20e",
    "line": "20e",
    "caption": "Total Equity of Digital Assets (Add lines 20b, 20c, and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_20e_total_equity_of_digital_assets",
     "from": "67000.00",
     "to": "67000.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -276,6 +317,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -345,12 +387,17 @@
    "declaration": "arithmetic tripwire | 433b | 22e",
    "line": "22e",
    "caption": "Total Equity (Add lines 22a through 22d and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_22e_total_equity_real_property",
     "from": "471050.00",
     "to": "471050.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -358,6 +405,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -427,12 +475,17 @@
    "declaration": "arithmetic tripwire | 433b | 23e",
    "line": "23e",
    "caption": "Total Equity (Add lines 23a through 23d and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_23e_total_equity_vehicles",
     "from": "49850.00",
     "to": "49850.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -440,6 +493,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -509,12 +563,17 @@
    "declaration": "arithmetic tripwire | 433b | 24h",
    "line": "24h",
    "caption": "Total Equity (Add lines 24a through 24g and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_24h_total_equity_business_equipment",
     "from": "194650.00",
     "to": "194650.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -522,6 +581,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -591,12 +651,17 @@
    "declaration": "arithmetic tripwire | 433b | 25c",
    "line": "25c",
    "caption": "Total Payments (Add lines 25a and 25b and amounts from any attachments)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s4_25c_total_payments",
     "from": "2665.00",
     "to": "2665.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -604,6 +669,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -673,12 +739,17 @@
    "declaration": "arithmetic tripwire | 433b | 36",
    "line": "36",
    "caption": "Total Income (Add lines 26 through 35)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s5_36_total_income",
     "from": "89893.00",
     "to": "89893.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -686,6 +757,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -746,7 +818,7 @@
      "verdict": "NO",
      "verbatim": "50   |       -1,467.00 |           -1,466.99 | NO  (2 feeder cells)",
      "expected": "NO",
-     "depends_on_the_broken_line": "50 names s5_36_total_income among its own feeders in 433b.totals.json, so a one-cent break in 36 must move 50 too"
+     "depends_on_the_broken_line": "50 names s5_36_total_income among its own feeders in 433b.totals.json, so a break of one cent in 36 must move 50 too"
     }
    ],
    "restored_digest_matches": true,
@@ -756,12 +828,17 @@
    "declaration": "arithmetic tripwire | 433b | 49",
    "line": "49",
    "caption": "Total Expenses (Add lines 37 through 48)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s5_49_total_expenses",
     "from": "91360.00",
     "to": "91360.01"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -769,6 +846,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",
@@ -829,7 +907,7 @@
      "verdict": "NO",
      "verbatim": "50   |       -1,467.00 |           -1,467.01 | NO  (2 feeder cells)",
      "expected": "NO",
-     "depends_on_the_broken_line": "50 names s5_49_total_expenses among its own feeders in 433b.totals.json, so a one-cent break in 49 must move 50 too"
+     "depends_on_the_broken_line": "50 names s5_49_total_expenses among its own feeders in 433b.totals.json, so a break of one cent in 49 must move 50 too"
     }
    ],
    "restored_digest_matches": true,
@@ -839,12 +917,17 @@
    "declaration": "arithmetic tripwire | 433b | 50",
    "line": "50",
    "caption": "Net Income (Line 36 minus Line 49)",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
    "broke": {
     "key": "s5_50_net_income",
     "from": "-1467.00",
     "to": "-1466.99"
    },
-   "tool": "node adapters/pdf/run-form-gate.mjs 433b --saturated",
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
    "tool_exit": 2,
    "failed_at_step": 11,
    "step_the_declaration_lives_in": 11,
@@ -852,6 +935,7 @@
    "broken_line_verdict": "NO",
    "failing_verdict": "NO",
    "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
    "other_declared_lines": [
     {
      "line": "17d",

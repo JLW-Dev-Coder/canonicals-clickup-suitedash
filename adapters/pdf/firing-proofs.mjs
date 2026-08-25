@@ -220,8 +220,42 @@ export const judge = (b) => {
     for (const o of b.other_declared_lines) {
       if (o.expected === undefined)
         { problems.push(`${FS3}line ${o.line} carries no \`expected\` verdict. A record that does not say what a line was supposed to read cannot be asked whether it read it.`); continue; }
-      if (o.expected !== b.passing_verdict && o.expected !== b.failing_verdict)
-        { problems.push(`${FS3}line ${o.line} expects ${JSON.stringify(o.expected)}, which is neither the passing nor the failing verdict of this tool.`); continue; }
+      // ─────────────────────────────────────────────────────────────────────────────────
+      // THE FOURTH STATE: NOT IN CLASS ON THIS RECORD.
+      //
+      // A declared line can carry a `when` predicate, and a record puts each printed
+      // conditional on ONE of its branches — so on 433-B(OIC) three of the 31 declared lines
+      // read SKIPPED on every run against the acceptance record, and the other three of those
+      // pairs read SKIPPED on every run against the branch record. A line the step never asked
+      // says nothing about whether the step compared or collapsed, and it also did not pass.
+      //
+      // The amendment that admitted propagated failures added a THIRD state and required it to
+      // NAME A DERIVED CAUSE. This is the same discipline for the fourth: `skipped_verdict`
+      // must be declared on the entry, and the line must carry `not_in_class_because` naming
+      // the predicate — read from the totals file — that is false on this record. AN
+      // EXPECTATION OF "SKIPPED" WITH NO DERIVED CAUSE IS REFUSED IN AS MANY WORDS, for exactly
+      // the reason the failing case is: it would otherwise be the one place an inconvenient
+      // line could be parked, which is a tolerance wearing a field name ([R-09]).
+      //
+      // OPTIONAL BY CONSTRUCTION. `skipped_verdict` is not in REQUIRED_FIELDS, so a tool with
+      // no conditional lines — every form before 433-A(OIC) — is judged exactly as before and
+      // an entry that never mentions it cannot accidentally acquire a fourth state.
+      if (o.expected !== b.passing_verdict && o.expected !== b.failing_verdict) {
+        if (b.skipped_verdict === undefined || o.expected !== b.skipped_verdict) {
+          problems.push(`${FS3}line ${o.line} expects ${JSON.stringify(o.expected)}, which is neither the passing nor the failing verdict of this tool` +
+            `${b.skipped_verdict === undefined ? ' and the entry declares no `skipped_verdict`' : `, nor its declared skipped verdict ${JSON.stringify(b.skipped_verdict)}`}.`);
+          continue;
+        }
+        if (!o.not_in_class_because) {
+          problems.push(`${FS3}line ${o.line} is expected to read ${JSON.stringify(b.skipped_verdict)} and the record gives no derived reason why it is not in class on this record. ` +
+            'An expectation of "the step never asked" with no stated cause is a tolerance wearing a field name.');
+          continue;
+        }
+        if (o.verdict !== o.expected)
+          problems.push(`${FS3}line ${o.line} was derived to be out of class on this record (${o.not_in_class_because}) and read ${JSON.stringify(o.verdict)} rather than ${JSON.stringify(b.skipped_verdict)}. ` +
+            'The predicate the record derives is not the one the run took.');
+        continue;
+      }
       if (o.expected === b.failing_verdict && !o.depends_on_the_broken_line)
         { problems.push(`${FS3}line ${o.line} is expected to FAIL and the record gives no derived dependency saying why. An expectation of failure with no stated cause is a tolerance wearing a field name.`); continue; }
       if (o.verdict === o.expected) continue;
@@ -345,8 +379,19 @@ export const runCanary = () => {
     // an expectation of failure with no derived dependency behind it — a tolerance wearing a
     // field name, which is exactly how this condition would be quietly turned off.
     { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'NO', expected: 'NO' }] }) },
-    // an expectation that is neither verdict of this tool
+    // an expectation that is neither verdict of this tool, on an entry declaring no fourth state
     { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'yes', expected: 'maybe' }] }) },
+    // THE FOURTH STATE, PLANTED IN ALL THREE DIRECTIONS.
+    //
+    // (i) an out-of-class expectation with NO derived reason — the tolerance-wearing-a-field-name
+    //     shape, refused for the same reason "expected to fail" is;
+    { want: '[FS-3]',  make: (e) => ({ ...e, skipped_verdict: 'SKIPPED', other_declared_lines: [{ line: '8y', verdict: 'SKIPPED', expected: 'SKIPPED' }] }) },
+    // (ii) a line derived to be out of class that WAS asked — the predicate the record derives
+    //      is not the one the run took, which is the direction that would let a proof describe
+    //      a different record from the one it ran against;
+    { want: '[FS-3]',  make: (e) => ({ ...e, skipped_verdict: 'SKIPPED', other_declared_lines: [{ line: '8y', verdict: 'yes', expected: 'SKIPPED', not_in_class_because: '8y is fed only when the canary flag is set, and this record does not set it' }] }) },
+    // (iii) an entry naming a fourth verdict it never declared.
+    { want: '[FS-3]',  make: (e) => ({ ...e, other_declared_lines: [{ line: '8y', verdict: 'SKIPPED', expected: 'SKIPPED', not_in_class_because: 'stated' }] }) },
     { want: '[FS-4]',  make: (e) => ({ ...e, broke: { keys: { a: 1, b: 2 } } }) },
     { want: '[FS-5]',  make: (e) => ({ ...e, restored_digest_matches: false }) },
     { want: '[FS-5]',  make: (e) => ({ ...e, clean_after_revert: false }) },
@@ -381,6 +426,21 @@ export const runCanary = () => {
   if (soleOK.length)
     dead.push(`a CONFORMING sole-declared-line record was refused: ${soleOK.join(' | ')}. ` +
       'The `sole_declared_line` exemption is inert, so a tool with one declared line cannot state a checked absence.');
+  // AND THE FOURTH STATE MUST BE ACCEPTED WHEN IT IS FULLY DECLARED. Three refusals above and
+  // no acceptance would pass on a judge that refused every out-of-class line, which is the
+  // shape the `sole_declared_line` exemption already got caught in once.
+  const fourthOK = judgeEntry({
+    ...CONFORMING(),
+    skipped_verdict: 'SKIPPED',
+    other_declared_lines: [
+      { line: '8y', verdict: 'yes', expected: 'yes' },
+      { line: '6w', verdict: 'SKIPPED', expected: 'SKIPPED', not_in_class_because: '6w carries a `when` predicate the canary record puts on the other branch, read from the canary tool\'s own totals' },
+    ],
+  });
+  if (fourthOK.length)
+    dead.push(`a CONFORMING out-of-class line was refused: ${fourthOK.join(' | ')}. ` +
+      'The fourth state is inert, so a form with a printed conditional cannot state that a line was never asked.');
+
   const soleUndeclared = judgeEntry({ ...CONFORMING(), other_declared_lines: [] });
   if (!soleUndeclared.some((p) => p.startsWith(FS3)))
     dead.push('an empty `other_declared_lines` WITHOUT `sole_declared_line` was accepted. ' +
