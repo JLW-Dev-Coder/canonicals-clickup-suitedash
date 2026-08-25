@@ -15,10 +15,10 @@
    "path": "samples/433b.overmax.sample.json",
    "role": "stress",
    "sha256": "352001AC3AF43EC0159412DDED36194F755FDEDFDAA47437E701DF1C580AF006",
-   "lines_broken_in_it": 11
+   "lines_broken_in_it": 27
   }
  ],
- "declarations_on_this_tool": 11,
+ "declarations_on_this_tool": 27,
  "declarations_source": "adapters/pdf/maps/433b.totals.json — the totals list, read, not typed",
  "clean_run_after_every_revert": {
   "samples/433b.slice4.sample.json": {
@@ -114,6 +114,102 @@
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
      "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -201,6 +297,102 @@
      "line": "50",
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
      "expected": "yes"
     }
    ],
@@ -290,6 +482,102 @@
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
      "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -377,6 +665,102 @@
      "line": "50",
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
      "expected": "yes"
     }
    ],
@@ -466,6 +850,102 @@
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
      "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -553,6 +1033,102 @@
      "line": "50",
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
      "expected": "yes"
     }
    ],
@@ -642,6 +1218,102 @@
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
      "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -729,6 +1401,102 @@
      "line": "50",
      "verdict": "yes",
      "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
      "expected": "yes"
     }
    ],
@@ -819,6 +1587,102 @@
      "verbatim": "50   |       -1,467.00 |           -1,466.99 | NO  (2 feeder cells)",
      "expected": "NO",
      "depends_on_the_broken_line": "50 names s5_36_total_income among its own feeders in 433b.totals.json, so a break of one cent in 36 must move 50 too"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -908,6 +1772,102 @@
      "verbatim": "50   |       -1,467.00 |           -1,467.01 | NO  (2 feeder cells)",
      "expected": "NO",
      "depends_on_the_broken_line": "50 names s5_49_total_expenses among its own feeders in 433b.totals.json, so a break of one cent in 49 must move 50 too"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
     }
    ],
    "restored_digest_matches": true,
@@ -995,6 +1955,3062 @@
      "line": "49",
      "verdict": "yes",
      "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 19a",
+   "line": "19a",
+   "caption": "Equity / Value Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "investments[0].equity_value_minus_loan",
+    "from": "53000.00",
+    "to": "53000.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "19a  |       53,000.01 |           53,000.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "NO",
+     "verbatim": "19c  |       78,500.00 |           78,500.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "19c sums the whole column investments.equity_value_minus_loan in 433b.totals.json, and 19a IS a cell of that column, so a break of one cent in 19a must move 19c too"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 19b",
+   "line": "19b",
+   "caption": "Equity / Value Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "investments[1].equity_value_minus_loan",
+    "from": "25500.00",
+    "to": "25500.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "19b  |       25,500.01 |           25,500.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "NO",
+     "verbatim": "19c  |       78,500.00 |           78,500.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "19c sums the whole column investments.equity_value_minus_loan in 433b.totals.json, and 19b IS a cell of that column, so a break of one cent in 19b must move 19c too"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 20b",
+   "line": "20b",
+   "caption": "Equity Value / minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "digital_assets[0].equity_value_minus_loan",
+    "from": "46200.00",
+    "to": "46200.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "20b  |       46,200.01 |           46,200.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "NO",
+     "verbatim": "20e  |       67,000.00 |           67,000.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "20e sums the whole column digital_assets.equity_value_minus_loan in 433b.totals.json, and 20b IS a cell of that column, so a break of one cent in 20b must move 20e too"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 20c",
+   "line": "20c",
+   "caption": "Equity Value / minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "digital_assets[1].equity_value_minus_loan",
+    "from": "20800.00",
+    "to": "20800.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "20c  |       20,800.01 |           20,800.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "NO",
+     "verbatim": "20e  |       67,000.00 |           67,000.01 | NO  (2 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "20e sums the whole column digital_assets.equity_value_minus_loan in 433b.totals.json, and 20c IS a cell of that column, so a break of one cent in 20c must move 20e too"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 22a",
+   "line": "22a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "real_property[0].equity",
+    "from": "346600.00",
+    "to": "346600.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "22a  |      346,600.01 |          346,600.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "NO",
+     "verbatim": "22e  |      471,050.00 |          471,050.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "22e sums the whole column real_property.equity in 433b.totals.json, and 22a IS a cell of that column, so a break of one cent in 22a must move 22e too"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 22b",
+   "line": "22b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "real_property[1].equity",
+    "from": "92250.00",
+    "to": "92250.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "22b  |       92,250.01 |           92,250.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "NO",
+     "verbatim": "22e  |      471,050.00 |          471,050.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "22e sums the whole column real_property.equity in 433b.totals.json, and 22b IS a cell of that column, so a break of one cent in 22b must move 22e too"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 22c",
+   "line": "22c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "real_property[2].equity",
+    "from": "0.00",
+    "to": "0.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "22c  |            0.01 |                0.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "NO",
+     "verbatim": "22e  |      471,050.00 |          471,050.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "22e sums the whole column real_property.equity in 433b.totals.json, and 22c IS a cell of that column, so a break of one cent in 22c must move 22e too"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 22d",
+   "line": "22d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "real_property[3].equity",
+    "from": "32200.00",
+    "to": "32200.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "22d  |       32,200.01 |           32,200.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "NO",
+     "verbatim": "22e  |      471,050.00 |          471,050.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "22e sums the whole column real_property.equity in 433b.totals.json, and 22d IS a cell of that column, so a break of one cent in 22d must move 22e too"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 23a",
+   "line": "23a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "vehicles[0].equity",
+    "from": "14550.00",
+    "to": "14550.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "23a  |       14,550.01 |           14,550.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "NO",
+     "verbatim": "23e  |       49,850.00 |           49,850.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "23e sums the whole column vehicles.equity in 433b.totals.json, and 23a IS a cell of that column, so a break of one cent in 23a must move 23e too"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 23b",
+   "line": "23b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "vehicles[1].equity",
+    "from": "17700.00",
+    "to": "17700.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "23b  |       17,700.01 |           17,700.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "NO",
+     "verbatim": "23e  |       49,850.00 |           49,850.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "23e sums the whole column vehicles.equity in 433b.totals.json, and 23b IS a cell of that column, so a break of one cent in 23b must move 23e too"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 23c",
+   "line": "23c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "vehicles[2].equity",
+    "from": "13750.00",
+    "to": "13750.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "23c  |       13,750.01 |           13,750.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "NO",
+     "verbatim": "23e  |       49,850.00 |           49,850.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "23e sums the whole column vehicles.equity in 433b.totals.json, and 23c IS a cell of that column, so a break of one cent in 23c must move 23e too"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 23d",
+   "line": "23d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "vehicles[3].equity",
+    "from": "3850.00",
+    "to": "3850.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "23d  |        3,850.01 |            3,850.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "NO",
+     "verbatim": "23e  |       49,850.00 |           49,850.01 | NO  (4 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "23e sums the whole column vehicles.equity in 433b.totals.json, and 23d IS a cell of that column, so a break of one cent in 23d must move 23e too"
+    },
+    {
+     "line": "24h",
+     "verdict": "yes",
+     "verbatim": "24h  |      194,650.00 |          194,650.00 | yes  (7 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 24a",
+   "line": "24a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "business_equipment[0].equity",
+    "from": "31250.00",
+    "to": "31250.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "24a  |       31,250.01 |           31,250.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "NO",
+     "verbatim": "24h  |      194,650.00 |          194,650.01 | NO  (7 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "24h sums the whole column business_equipment.equity in 433b.totals.json, and 24a IS a cell of that column, so a break of one cent in 24a must move 24h too"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 24b",
+   "line": "24b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "business_equipment[1].equity",
+    "from": "92300.00",
+    "to": "92300.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "24b  |       92,300.01 |           92,300.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "NO",
+     "verbatim": "24h  |      194,650.00 |          194,650.01 | NO  (7 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "24h sums the whole column business_equipment.equity in 433b.totals.json, and 24b IS a cell of that column, so a break of one cent in 24b must move 24h too"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 24c",
+   "line": "24c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "business_equipment[2].equity",
+    "from": "0.00",
+    "to": "0.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "24c  |            0.01 |                0.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "NO",
+     "verbatim": "24h  |      194,650.00 |          194,650.01 | NO  (7 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "24h sums the whole column business_equipment.equity in 433b.totals.json, and 24c IS a cell of that column, so a break of one cent in 24c must move 24h too"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24d",
+     "verdict": "yes",
+     "verbatim": "24d  |       12,850.00 |           12,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "arithmetic tripwire | 433b | 24d",
+   "line": "24d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "record": "samples/433b.overmax.sample.json",
+   "record_role": "stress",
+   "broke": {
+    "key": "business_equipment[3].equity",
+    "from": "12850.00",
+    "to": "12850.01"
+   },
+   "break_size": "0.01",
+   "break_size_derived_from": "the gate reports rounding_mode null for this line and for every line derived to move with it, so all of them print to the cent and one cent is the smallest discrepancy expressible.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433b samples/433b.overmax.sample.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 11,
+   "step_the_declaration_lives_in": 11,
+   "broken_line_verbatim": "24d  |       12,850.01 |           12,850.00 | NO  (2 feeder cells)",
+   "broken_line_verdict": "NO",
+   "failing_verdict": "NO",
+   "passing_verdict": "yes",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "17d",
+     "verdict": "yes",
+     "verbatim": "17d  |       56,735.65 |           56,735.65 | yes  (3 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "18f",
+     "verdict": "yes",
+     "verbatim": "18f  |      179,476.00 |          179,476.00 | yes  (5 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19c",
+     "verdict": "yes",
+     "verbatim": "19c  |       78,500.00 |           78,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20e",
+     "verdict": "yes",
+     "verbatim": "20e  |       67,000.00 |           67,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22e",
+     "verdict": "yes",
+     "verbatim": "22e  |      471,050.00 |          471,050.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23e",
+     "verdict": "yes",
+     "verbatim": "23e  |       49,850.00 |           49,850.00 | yes  (4 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24h",
+     "verdict": "NO",
+     "verbatim": "24h  |      194,650.00 |          194,650.01 | NO  (7 feeder cells)",
+     "expected": "NO",
+     "depends_on_the_broken_line": "24h sums the whole column business_equipment.equity in 433b.totals.json, and 24d IS a cell of that column, so a break of one cent in 24d must move 24h too"
+    },
+    {
+     "line": "25c",
+     "verdict": "yes",
+     "verbatim": "25c  |        2,665.00 |            2,665.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "36",
+     "verdict": "yes",
+     "verbatim": "36   |       89,893.00 |           89,893.00 | yes  (10 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "49",
+     "verdict": "yes",
+     "verbatim": "49   |       91,360.00 |           91,360.00 | yes  (11 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "50",
+     "verdict": "yes",
+     "verbatim": "50   |       -1,467.00 |           -1,467.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19a",
+     "verdict": "yes",
+     "verbatim": "19a  |       53,000.00 |           53,000.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "19b",
+     "verdict": "yes",
+     "verbatim": "19b  |       25,500.00 |           25,500.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20b",
+     "verdict": "yes",
+     "verbatim": "20b  |       46,200.00 |           46,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "20c",
+     "verdict": "yes",
+     "verbatim": "20c  |       20,800.00 |           20,800.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22a",
+     "verdict": "yes",
+     "verbatim": "22a  |      346,600.00 |          346,600.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22b",
+     "verdict": "yes",
+     "verbatim": "22b  |       92,250.00 |           92,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22c",
+     "verdict": "yes",
+     "verbatim": "22c  |            0.00 |                0.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "22d",
+     "verdict": "yes",
+     "verbatim": "22d  |       32,200.00 |           32,200.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23a",
+     "verdict": "yes",
+     "verbatim": "23a  |       14,550.00 |           14,550.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23b",
+     "verdict": "yes",
+     "verbatim": "23b  |       17,700.00 |           17,700.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23c",
+     "verdict": "yes",
+     "verbatim": "23c  |       13,750.00 |           13,750.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "23d",
+     "verdict": "yes",
+     "verbatim": "23d  |        3,850.00 |            3,850.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24a",
+     "verdict": "yes",
+     "verbatim": "24a  |       31,250.00 |           31,250.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24b",
+     "verdict": "yes",
+     "verbatim": "24b  |       92,300.00 |           92,300.00 | yes  (2 feeder cells)",
+     "expected": "yes"
+    },
+    {
+     "line": "24c",
+     "verdict": "yes",
+     "verbatim": "24c  |            0.00 |                0.00 | yes  (2 feeder cells)",
      "expected": "yes"
     }
    ],

@@ -804,6 +804,37 @@ export const completenessClaimsIn = (text, where) => {
 // nine page-2 and page-3 totals slice 2 added are refused BY THE SCOPE and the run stops
 // saying the universe widened — instead of reporting nine defects that were not defects.
 const C = (o) => o;
+// EVERY EQUITY CELL ON 433-B, SPLIT BY WHETHER ITS ROW DRAWS BOTH OPERANDS. Shared by [K-113]
+// and [K-114] so the two halves are cut from ONE reading of the map: two readings of one
+// population is two answers to the question the split exists to give one answer to.
+const countEquityCells = (withOperands) => {
+  const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
+  const tot = JSON.parse(readFileSync('adapters/pdf/maps/433b.totals.json', 'utf8'));
+  const EQUITY = /equity/i;
+  const FMV = /^(current_fmv|current_value|current_value_usd)$/;
+  const LOAN = /^(current_loan_balance|loan_balance)$/;
+  const cells = [];
+  for (const [g, def] of Object.entries(map.groups || {})) {
+    (def.slots || []).forEach((s, i) => {
+      const cols = Object.keys(s.text || {});
+      const eq = cols.find((c) => EQUITY.test(c));
+      if (!eq) return;
+      const hasBoth = cols.some((c) => FMV.test(c)) && cols.some((c) => LOAN.test(c));
+      if (hasBoth !== withOperands) return;
+      cells.push(`${g}[${i}].${eq}`);
+    });
+  }
+  const asTotal = new Set();
+  for (const t of (tot.totals || [])) {
+    const tc = t.total_cell;
+    if (tc && tc.group && EQUITY.test(String(tc.column)) && typeof tc.row === 'number') asTotal.add(`${tc.group}[${tc.row}].${tc.column}`);
+  }
+  // [K-114] counts the ones that ARE declared; [K-113] the ones that are NOT.
+  const uncovered = withOperands ? cells.filter((c) => !asTotal.has(c)) : cells.filter((c) => asTotal.has(c));
+  return { universe: cells.length, covered: cells.length - uncovered.length, universeList: cells, uncoveredList: uncovered };
+};
+
+
 export const COMPLETENESS = [
 
   // ── the one that failed, now with the counter it needed ────────────────────────────────
@@ -1681,27 +1712,48 @@ export const COMPLETENESS = [
       return { universe: boxes.length, covered: boxes.length - uncovered.length, universeList: boxes, uncoveredList: uncovered };
     } }),
 
-  // [B-07]'s claim about the equity columns. Anchored and last, for the reason the three
-  // entries above it are.
-  C({ id: 'K-113', match: /^Every one of them is bound$/i,
+  // [B-07]'s two halves, RESOLVED, and each half gets the counter it needs.
+  //
+  // THE UNIVERSE IS EVERY EQUITY-SHAPED COLUMN AND NOT THE ONES SPELLED "equity". The first
+  // draft admitted `<group>[<i>].equity` and counted 15 cells; investments and digital assets
+  // name theirs `equity_value_minus_loan`, so the four page-3 cells [B-07] itself counted were
+  // outside the instrument watching [B-07]. An equity column is one whose name carries the word
+  // equity, and both spellings do.
+  // THE MATCH IS THE PHRASE THE DETECTOR EXTRACTS, NOT THE SENTENCE A READER SEES. It cuts
+  // from a quantifier (every/each/all/any) to the first assertion verb, so "Neither operand
+  // is drawn on them" is not a claim it can find — `neither` is not a quantifier it knows.
+  // A counter whose match no claim carries is a disposition standing over nothing, which is
+  // this whole cycle's subject; the prose it stands over says `each of the three is bound`.
+  // THE SUPERSEDED FINDING, KEPT VERBATIM UNDER [R-21], AND NOW FALSE. [B-07]'s `the_shape`
+  // recorded that every equity cell was bound as an INPUT and none was a tripwire; sixteen of
+  // the nineteen are tripwires as of this commit, which is what resolving the item MEANT. The
+  // sentence stays word for word because the finding is what the resolution answers, and it is
+  // declared not-coverage on exactly the ground [K-31] uses: the set it quantifies over is the
+  // map as it stood BEFORE the resolution, which is not in this tree. What is live is measured
+  // beside it — [K-115] counts the sixteen that draw both operands and asserts every one IS a
+  // declared total cell, and [K-113] counts the three that draw neither and asserts none is.
+  C({ id: 'K-116', match: /^Every one of them is bound$/i,
+    kind: 'not-coverage',
+    reason: 'PROSE ABOUT A PAST STATE, WHICH IS THIS DISPOSITION\'S OWN GROUND. It is the `the_shape` clause of [B-07], a carried item this commit RESOLVES, kept verbatim under [R-21] because a superseded finding is what its resolution is an answer to. It described a tree in which all nineteen equity cells on 433-B were inputs and none was an arithmetic tripwire; sixteen of them are tripwires now. Counting that set would mean carrying a copy of the pre-resolution map solely so a counter could compare against it. THE LIVE GUARANTEE IS HELD BESIDE IT AND IN BOTH DIRECTIONS: [K-115] enumerates every equity cell whose row draws both operands and asserts each is named as a total_cell in 433b.totals.json, and [K-113] enumerates the three whose row draws neither and asserts none is. Together those two partition the population this sentence was about, and both run on every audit.' }),
+
+  C({ id: 'K-113', match: /^each of the three is bound$/i,
     kind: 'counter',
-    what: 'Every equity cell the 433-B map declares is an INPUT and none of them is a declared total cell. Universe: every (group, row) whose slot declares an equity column. Covered: those that are NOT named as a total_cell in 433b.totals.json — so the day a ruling makes one an arithmetic tripwire, the count moves and [B-07] stops being true out loud, which is the direction the carried item exists to watch.',
-    universe: { scoped_to: 'artefact', detail: 'every slot of every group in adapters/pdf/maps/433b.map.json that declares an `equity` column',
-      admits: (m) => typeof m === 'string' && /\[\d+\]\.equity$/.test(m) },
-    count: () => {
-      const map = JSON.parse(readFileSync('adapters/pdf/maps/433b.map.json', 'utf8'));
-      const tot = JSON.parse(readFileSync('adapters/pdf/maps/433b.totals.json', 'utf8'));
-      const cells = [];
-      for (const [g, def] of Object.entries(map.groups || {}))
-        (def.slots || []).forEach((s, i) => { if (s.text && s.text.equity) cells.push(`${g}[${i}].equity`); });
-      const asTotal = new Set();
-      for (const t of (tot.totals || [])) {
-        const tc = t.total_cell;
-        if (tc && tc.group && tc.column === 'equity' && typeof tc.row === 'number') asTotal.add(`${tc.group}[${tc.row}].equity`);
-      }
-      const uncovered = cells.filter((c) => asTotal.has(c));
-      return { universe: cells.length, covered: cells.length - uncovered.length, universeList: cells, uncoveredList: uncovered };
-    } }),
+    what: 'The three intangible rows draw an equity cell and NEITHER operand, and none of them is a declared total cell. Universe: every (group, row) whose slot declares an equity-shaped column and NO fair-market-value or loan cell. Covered: those that are NOT named as a total_cell in 433b.totals.json. A ruling that swept the column would move this count, which is the direction [B-07] said any resolution had to keep honest.',
+    universe: { scoped_to: 'artefact', detail: 'every slot of every group in adapters/pdf/maps/433b.map.json that declares an equity-shaped column and neither operand of the relation its header names',
+      admits: (m) => typeof m === 'string' && /\[\d+\]\.equity/.test(m) },
+    count: () => countEquityCells(false),
+  }),
+
+  // THE OTHER HALF, WHICH NOTHING WOULD OTHERWISE WATCH: the sixteen with both operands drawn
+  // are declared lines, and if one were quietly un-declared only the totals file would know.
+  C({ id: 'K-115', match: /^every other equity cell on th(?:e|is) form is checked$/i,
+    kind: 'counter',
+    what: 'Every equity cell on 433-B that draws BOTH operands of the relation its column header names IS a declared total cell. Universe: every (group, row) whose slot declares an equity-shaped column and a fair-market-value and a loan cell. Covered: those named as a total_cell in 433b.totals.json.',
+    universe: { scoped_to: 'artefact', detail: 'every slot of every group in adapters/pdf/maps/433b.map.json that declares an equity-shaped column and both operands',
+      admits: (m) => typeof m === 'string' && /\[\d+\]\.equity/.test(m) },
+    count: () => countEquityCells(true),
+  }),
+
 
 ];
 

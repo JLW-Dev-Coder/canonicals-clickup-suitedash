@@ -203,6 +203,406 @@
    ],
    "_the_first_difference_on_this_form": "The six totals through slice 3 and the four above it are sums. This one is not, and the page states the operator and the order: \"(Line 36 minus Line 49)\". The construct is the one 433-B(OIC) Box D uses — Box B minus Box C in the printed order — and the order is load-bearing, because the two operands are not interchangeable.",
    "_no_floor": "The page draws no \"do not enter a negative number\" sentence anywhere on it — \"negative\" returns zero across all six drawn pages of this form — so net income is allowed to be negative and a floor here would be this engine's policy rather than the page's."
+  },
+  {
+   "line": "19a",
+   "caption": "Equity / Value Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 3, the two header runs \"Equity\" y 413.7 x 517.3 and \"Value Minus Loan\" y 403.7 x 497.4, over the row the page marks 19a at y 390.9. Operand headers: \"Current Value\" y 408.6 x 328.4..377.2 and \"Loan Balance\" y 408.7 x 414.8..463.6.",
+   "relation": "row",
+   "total_cell": {
+    "group": "investments",
+    "column": "equity_value_minus_loan",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "investments",
+     "column": "current_value",
+     "row": 0
+    },
+    {
+     "group": "investments",
+     "column": "loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "19b",
+   "caption": "Equity / Value Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 3, the two header runs \"Equity\" y 413.7 x 517.3 and \"Value Minus Loan\" y 403.7 x 497.4, over the row the page marks 19b at y 347.7. Operand headers: \"Current Value\" y 408.6 x 328.4..377.2 and \"Loan Balance\" y 408.7 x 414.8..463.6.",
+   "relation": "row",
+   "total_cell": {
+    "group": "investments",
+    "column": "equity_value_minus_loan",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "investments",
+     "column": "current_value",
+     "row": 1
+    },
+    {
+     "group": "investments",
+     "column": "loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "20b",
+   "caption": "Equity Value / minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 3, the two header runs \"Equity Value\" y 227.2 x 528.6 and \"minus Loan\" y 217.6 x 530, over the row the page marks 20b at y 194.8. Operand headers: \"Current value US\" y 235.4 x 409.7..470.7 above the value column, and the loan-balance column bound as digital_assets[i].loan_balance in this map's own page-3 evidence table.",
+   "relation": "row",
+   "total_cell": {
+    "group": "digital_assets",
+    "column": "equity_value_minus_loan",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "digital_assets",
+     "column": "current_value_usd",
+     "row": 0
+    },
+    {
+     "group": "digital_assets",
+     "column": "loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "20c",
+   "caption": "Equity Value / minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 3, the two header runs \"Equity Value\" y 227.2 x 528.6 and \"minus Loan\" y 217.6 x 530, over the row the page marks 20c at y 170.8. Operand headers: \"Current value US\" y 235.4 x 409.7..470.7 above the value column, and the loan-balance column bound as digital_assets[i].loan_balance in this map's own page-3 evidence table.",
+   "relation": "row",
+   "total_cell": {
+    "group": "digital_assets",
+    "column": "equity_value_minus_loan",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "digital_assets",
+     "column": "current_value_usd",
+     "row": 1
+    },
+    {
+     "group": "digital_assets",
+     "column": "loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "22a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 696.3 x 531.7 and \"FMV Minus Loan\" y 688.3 x 513.4, over the row the page marks 22a at y 669.1. Operand headers: \"Current Loan\" y 696.3 x 333.0..379.8 over the loan column, in the six-run header stack this block shares with VEHICLES at identical x.",
+   "relation": "row",
+   "total_cell": {
+    "group": "real_property",
+    "column": "equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "real_property",
+     "column": "current_fmv",
+     "row": 0
+    },
+    {
+     "group": "real_property",
+     "column": "current_loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "22b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 696.3 x 531.7 and \"FMV Minus Loan\" y 688.3 x 513.4, over the row the page marks 22b at y 600.7. Operand headers: \"Current Loan\" y 696.3 x 333.0..379.8 over the loan column, in the six-run header stack this block shares with VEHICLES at identical x.",
+   "relation": "row",
+   "total_cell": {
+    "group": "real_property",
+    "column": "equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "real_property",
+     "column": "current_fmv",
+     "row": 1
+    },
+    {
+     "group": "real_property",
+     "column": "current_loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "22c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 696.3 x 531.7 and \"FMV Minus Loan\" y 688.3 x 513.4, over the row the page marks 22c at y 532.3. Operand headers: \"Current Loan\" y 696.3 x 333.0..379.8 over the loan column, in the six-run header stack this block shares with VEHICLES at identical x.",
+   "relation": "row",
+   "total_cell": {
+    "group": "real_property",
+    "column": "equity",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "group": "real_property",
+     "column": "current_fmv",
+     "row": 2
+    },
+    {
+     "group": "real_property",
+     "column": "current_loan_balance",
+     "row": 2,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "22d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 696.3 x 531.7 and \"FMV Minus Loan\" y 688.3 x 513.4, over the row the page marks 22d at y 463.9. Operand headers: \"Current Loan\" y 696.3 x 333.0..379.8 over the loan column, in the six-run header stack this block shares with VEHICLES at identical x.",
+   "relation": "row",
+   "total_cell": {
+    "group": "real_property",
+    "column": "equity",
+    "row": 3
+   },
+   "feeders": [
+    {
+     "group": "real_property",
+     "column": "current_fmv",
+     "row": 3
+    },
+    {
+     "group": "real_property",
+     "column": "current_loan_balance",
+     "row": 3,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "23a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 350.7 x 531.7 and \"FMV Minus Loan\" y 342.7 x 513.4, over the row the page marks 23a at y 323.5. Operand headers: \"Current Loan\" y 350.7 x 333.0..379.8, the same six-run header stack redrawn over this block.",
+   "relation": "row",
+   "total_cell": {
+    "group": "vehicles",
+    "column": "equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "vehicles",
+     "column": "current_fmv",
+     "row": 0
+    },
+    {
+     "group": "vehicles",
+     "column": "current_loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "23b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 350.7 x 531.7 and \"FMV Minus Loan\" y 342.7 x 513.4, over the row the page marks 23b at y 255.1. Operand headers: \"Current Loan\" y 350.7 x 333.0..379.8, the same six-run header stack redrawn over this block.",
+   "relation": "row",
+   "total_cell": {
+    "group": "vehicles",
+    "column": "equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "vehicles",
+     "column": "current_fmv",
+     "row": 1
+    },
+    {
+     "group": "vehicles",
+     "column": "current_loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "23c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 350.7 x 531.7 and \"FMV Minus Loan\" y 342.7 x 513.4, over the row the page marks 23c at y 186.7. Operand headers: \"Current Loan\" y 350.7 x 333.0..379.8, the same six-run header stack redrawn over this block.",
+   "relation": "row",
+   "total_cell": {
+    "group": "vehicles",
+    "column": "equity",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "group": "vehicles",
+     "column": "current_fmv",
+     "row": 2
+    },
+    {
+     "group": "vehicles",
+     "column": "current_loan_balance",
+     "row": 2,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "23d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 4, the two header runs \"Equity\" y 350.7 x 531.7 and \"FMV Minus Loan\" y 342.7 x 513.4, over the row the page marks 23d at y 118.3. Operand headers: \"Current Loan\" y 350.7 x 333.0..379.8, the same six-run header stack redrawn over this block.",
+   "relation": "row",
+   "total_cell": {
+    "group": "vehicles",
+    "column": "equity",
+    "row": 3
+   },
+   "feeders": [
+    {
+     "group": "vehicles",
+     "column": "current_fmv",
+     "row": 3
+    },
+    {
+     "group": "vehicles",
+     "column": "current_loan_balance",
+     "row": 3,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "24a",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 5, the two header runs \"Equity\" y 703.5 x 531.7 and \"FMV Minus Loan\" y 695.5 x 513.4, over the row the page marks 24a at y 675.3. Operand headers: \"Current Loan\" y 703.5 x 333.0..379.8, the same header stack again.",
+   "relation": "row",
+   "total_cell": {
+    "group": "business_equipment",
+    "column": "equity",
+    "row": 0
+   },
+   "feeders": [
+    {
+     "group": "business_equipment",
+     "column": "current_fmv",
+     "row": 0
+    },
+    {
+     "group": "business_equipment",
+     "column": "current_loan_balance",
+     "row": 0,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "24b",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 5, the two header runs \"Equity\" y 703.5 x 531.7 and \"FMV Minus Loan\" y 695.5 x 513.4, over the row the page marks 24b at y 596.1. Operand headers: \"Current Loan\" y 703.5 x 333.0..379.8, the same header stack again.",
+   "relation": "row",
+   "total_cell": {
+    "group": "business_equipment",
+    "column": "equity",
+    "row": 1
+   },
+   "feeders": [
+    {
+     "group": "business_equipment",
+     "column": "current_fmv",
+     "row": 1
+    },
+    {
+     "group": "business_equipment",
+     "column": "current_loan_balance",
+     "row": 1,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "24c",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 5, the two header runs \"Equity\" y 703.5 x 531.7 and \"FMV Minus Loan\" y 695.5 x 513.4, over the row the page marks 24c at y 516.9. Operand headers: \"Current Loan\" y 703.5 x 333.0..379.8, the same header stack again.",
+   "relation": "row",
+   "total_cell": {
+    "group": "business_equipment",
+    "column": "equity",
+    "row": 2
+   },
+   "feeders": [
+    {
+     "group": "business_equipment",
+     "column": "current_fmv",
+     "row": 2
+    },
+    {
+     "group": "business_equipment",
+     "column": "current_loan_balance",
+     "row": 2,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
+  },
+  {
+   "line": "24d",
+   "caption": "Equity / FMV Minus Loan — the column header states the relation and both operands are drawn on this row",
+   "caption_at": "page 5, the two header runs \"Equity\" y 703.5 x 531.7 and \"FMV Minus Loan\" y 695.5 x 513.4, over the row the page marks 24d at y 437.7. Operand headers: \"Current Loan\" y 703.5 x 333.0..379.8, the same header stack again.",
+   "relation": "row",
+   "total_cell": {
+    "group": "business_equipment",
+    "column": "equity",
+    "row": 3
+   },
+   "feeders": [
+    {
+     "group": "business_equipment",
+     "column": "current_fmv",
+     "row": 3
+    },
+    {
+     "group": "business_equipment",
+     "column": "current_loan_balance",
+     "row": 3,
+     "sign": -1
+    }
+   ],
+   "_why_this_is_a_tripwire_and_not_a_label": "THE PAGE STATES THE RELATION AND BOTH OPERANDS ARE DRAWN ON THIS ROW. [B-07] hesitated because the relation is in a COLUMN HEADER rather than on the row, and every printed total this repo had made a tripwire said \"Add lines X, Y, Z\" on the line. What settles it is the contrast [B-07] itself names: 433-B(OIC) prints \"$ [Current market value] - $ [Minus loan balance] = (2a) $\" on the row and this engine already makes that a tripwire, through `total_cell` — the same schema this entry uses. A relation the page states and the engine can compute is not a label."
   }
  ],
  "not_checkable": {
@@ -216,13 +616,15 @@
     "review_page_advisory": "NOTHING ON THE PAGE VERIFIES THIS FIGURE, and the word \"Total\" in its caption is why a reader might think otherwise. Every printed total this engine checks says \"Add lines X, Y, Z\"; this one does not, and the block draws no rows beneath it to add. \"Total Cash on Hand\" here means \"the whole of it\", not \"the sum of the lines above\". The figure is whatever the record supplied, printed as given — so it is the filer's assertion rather than the engine's, and a preparer confirming this page should check it against the source the filer took it from."
    },
    {
-    "map_key": "business_equipment[*].equity, intangible_assets[*].equity, and the equity column of every earlier table on this form",
-    "printed_caption": "Equity / FMV Minus Loan (pages 4 and 5) and Equity / Value Minus Loan (page 3)",
-    "printed_at": "page 3 y 413.7 x 517.3 and y 403.7 x 497.4; page 3 y 227.2 x 528.6 and y 217.6 x 530.0; page 4 y 696.3 x 531.7 and y 688.3 x 513.4, repeated at y 350.7 and y 342.7; page 5 y 703.5 x 531.7 and y 695.5 x 513.4",
-    "why_not_checkable": "THE RELATION IS IN A COLUMN HEADER, NOT ON A ROW, AND THIS IS ARGUABLE — see [B-07], which is raised rather than resolved. The header names what the column holds; it is not an instruction drawn on a row between two cells the way 433-B(OIC) prints \"$ [Current market value] – $ [Minus loan balance] = (2a) $\" with the operator between the operands. Every printed total this repo has made a tripwire says \"Add lines X, Y, Z\" or \"Line X minus Line Y\" ON THE LINE. Making a column header into twelve row-level tripwires is a ruling, and it would reach back over pages 3 and 4, which are landed. Declared here rather than left silent because a cell absent from this file is indistinguishable from one nobody looked at.",
-    "_the_intangible_rows_cannot_carry_it_at_all": "Rows 24e to 24g draw an equity cell and NO fmv and NO loan cell. Whatever is decided for the twelve cells that have both operands, these three have neither, and a relation with no operands drawn is not a relation the page states."
+    "map_key": "intangible_assets[0].equity, intangible_assets[1].equity, intangible_assets[2].equity",
+    "printed_caption": "Equity / FMV Minus Loan, over rows the page marks 24e, 24f and 24g",
+    "printed_at": "page 5, the header runs \"Equity\" y 703.5 x 531.7..555.5 and \"FMV Minus Loan\" y 695.5 x 513.4..573.8; the three rows at y 358.5, 333.3 and 308.1",
+    "why_not_checkable": "NEITHER OPERAND IS DRAWN ON THESE ROWS. They draw a description and an equity cell and nothing else — no purchase date, no FMV, no loan balance, no monthly payment, no final payment date, no location and no lender. The column header names a relation over two cells, and on these three rows the form draws neither of them, so there is nothing on the page to recompute the figure from. THIS IS [B-07]'s OWN REASONING, KEPT: the item said \"whatever is decided for the sixteen cells that have both operands, these three have neither, and a relation with no operands drawn is not a relation the page states\", and the resolution that made the sixteen tripwires had to say so rather than sweeping the column. The map re-derives it on every run — adapters/pdf/blanket-audit.mjs [K-113] counts the equity cells whose slot draws no operand and asserts none of them is a declared total cell. Stated so an instrument can hold it rather than a reader: each of the three is bound as an input, and none of them is a declared total cell — adapters/pdf/blanket-audit.mjs [K-113] enumerates that set from the map and asserts it on every run, beside [K-115], which enumerates the sixteen whose rows DO draw both operands and asserts every one of them IS one.",
+    "_what_changed_here": "[B-07] RESOLVED. This entry used to cover the equity column of EVERY table on this form — sixteen cells with both operands drawn, plus these three with neither. The sixteen are now declared lines; only the three remain, and they remain for a reason that is about the page rather than about caution.",
+    "review_page_advisory": "THE EQUITY FIGURE ON THIS ROW IS NOT VERIFIED BY ANYTHING ON THE PAGE. The column header reads \"Equity / FMV Minus Loan\", but these three intangible rows draw no fair market value and no loan balance — only a description and this figure. Every other equity cell on this form IS checked against its own two operands. This one is whatever the record supplied, so it is the filer's assertion rather than the engine's, and a preparer confirming this page should check it against the valuation it came from."
    }
   ]
  },
- "authored_from_page5_6": "The printed page text of adapters/pdf/forms/f433b.pdf pages 5 and 6, extracted from the content streams. Each caption below is quoted verbatim from the drawn page and each names its own addends."
+ "authored_from_page5_6": "The printed page text of adapters/pdf/forms/f433b.pdf pages 5 and 6, extracted from the content streams. Each caption below is quoted verbatim from the drawn page and each names its own addends.",
+ "_two_classes_of_declared_line": "THE ELEVEN AND THE SIXTEEN ARE DIFFERENT OBJECTS AND THE FILE SAYS SO. A BLOCK TOTAL carries `total_key` and its caption names its own addends on the line — \"Add lines 22a through 22d\". A ROW RELATION carries `relation: \"row\"` and `total_cell`, and the relation it computes is stated by the COLUMN HEADER over the cell rather than by a caption beside it. Both are printed arithmetic this engine can recompute from cells the page draws, and gate step 11 treats them identically; they are distinguished because adapters/pdf/count-sweep.mjs makes claims about \"printed totals\" per page that were authored about the first class, and a figure that silently absorbs a second class is a figure whose universe moved without anybody saying so ([R-07])."
 }

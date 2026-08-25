@@ -702,6 +702,33 @@ hash yet.
 
 ---
 
+## [R-29] Subject coincidence is a correctness gate, not a volume predictor
+
+> Two forms can describe the same legal person and still ask almost entirely different
+> questions of it. A coinciding subject says which reuses are PERMISSIBLE. It says nothing about
+> how many there will be.
+
+**The defect that earned it.** `[R-06]` established that the naming test runs on the SUBJECT and
+not on the question, and `adapters/pdf/maps/_subjects.cross-form.json` records that axis. Prompt
+47 then over-read it in the other direction, writing that if the subject coincided, *"the reuse
+picture is nothing like what eleven shared leaf names suggested"*.
+
+It was, in fact, quite like it. 433-B and 433-B(OIC) describe the same legal person — the
+business entity — and of **116** classified keys exactly **NINE** bind an existing property.
+
+The axis was still the right instrument and `[R-06]` is still the right rule: each of those nine
+is the same fact about the same legal person, and every one would have been a permanent
+duplicate under any other reading. What was wrong was expecting the axis to predict a VOLUME.
+The prediction was made from leaf-name overlap — the measurement `[R-06]` exists to separate
+from this one — arriving back through the sentence that separated them.
+
+**Roughly when.** Ruled 2026-08-25 on the prompt-51 report, from the prompt-50 provisioning
+figures. Recorded beside the axis sentence in `_subjects.cross-form.json` in the same commit.
+Cycle-dated: the commit that lands it is the commit this rule is written in, so it has no hash yet.
+
+---
+
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

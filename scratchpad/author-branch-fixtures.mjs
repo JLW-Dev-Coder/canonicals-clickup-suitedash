@@ -107,7 +107,11 @@ const at = (doc, key) => {
   const m = ADDR.exec(key);
   if (!m) return null;
   const [, group, idx, col] = m;
-  const src = mapDoc.groups?.[group]?.source;
+  // A GROUP THAT DECLARES NO `source` IS KEYED IN THE RECORD BY ITS OWN NAME. Latent here
+  // rather than live — every form carrying a `when` predicate declares one — and repaired in
+  // the same commit as the prover, where the identical assumption was live on all sixteen of
+  // [B-07]'s new lines and made the run STOP over a cell the gate had just reported verified.
+  const src = mapDoc.groups?.[group]?.source ?? group;
   if (typeof src !== 'string') return null;
   const rows = doc[src];
   if (!Array.isArray(rows)) return null;
@@ -235,8 +239,8 @@ const OUT = `samples/${FORM}.branch-${SIDE.suffix}.sample.json`;
       const m = CELL.exec(addr);
       if (!m) { console.error(`STOP — line ${l.line} is addressed as ${JSON.stringify(addr)}, which is neither "key:<k>" nor "cell:<group>.<column>#<row>". This file cannot write its figure into the record.`); process.exit(2); }
       const [, group, col, idx] = m;
-      const src = mapDoc.groups?.[group]?.source;
-      if (typeof src !== 'string') { console.error(`STOP — the map declares no \`source\` for group ${group}, so line ${l.line}'s cell has no address in the record.`); process.exit(2); }
+      const src = mapDoc.groups?.[group]?.source ?? group;
+      if (typeof src !== 'string') { console.error(`STOP — the map declares no \`source\` for group ${group} and its own name is not usable as a record key, so line ${l.line}'s cell has no address in the record.`); process.exit(2); }
       const row = (doc[src] || [])[Number(idx)];
       if (!row || typeof row !== 'object') { console.error(`STOP — the record's ${src}[${idx}] is not a row, so line ${l.line}'s cell cannot be written.`); process.exit(2); }
       const was = row[col];

@@ -397,7 +397,13 @@ const mapDoc = JSON.parse(readFileSync(`adapters/pdf/maps/${FORM}.map.json`, 'ut
 const siteOf = (doc, d) => {
   const a = cellAddrOf.get(d.line);
   if (a && a.kind === 'cell') {
-    const src = mapDoc.groups?.[a.group]?.source;
+    // A GROUP THAT DECLARES NO `source` IS KEYED IN THE RECORD BY ITS OWN NAME. 433-B(OIC)
+    // declares one on every group — `4ac_vehicles` reads from `vehicles` — and 433-B declares
+    // none on any, so reading `source` and stopping there resolved to undefined and this
+    // function returned null for all sixteen of [B-07]'s new lines. The caller then fell back
+    // to `total_key`, which a `total_cell` line does not have, and STOPped saying the record
+    // carried no cell for line 19a — a cell the gate had just reported verified.
+    const src = mapDoc.groups?.[a.group]?.source ?? a.group;
     const row = (doc[src] || [])[a.idx];
     if (!row || typeof row !== 'object') return null;
     return { get: () => row[a.column], set: (v) => { row[a.column] = v; }, name: `${src}[${a.idx}].${a.column}` };

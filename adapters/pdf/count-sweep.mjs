@@ -467,9 +467,16 @@ export const MANIFEST = [
       // the row is SCOPED to them rather than the claim being bumped to 6: a figure that
       // silently tracks whatever the file happens to hold checks nothing. [R-07] — the
       // universe is part of the figure.
-      rows.push({ what: 'printed totals declared for 433-B on pages 2 and 3', claimed: 4,
-        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [23],/.test(t.caption_at || '')).length,
-        from: "adapters/pdf/maps/433b.totals.json, filtered by the page each total's own caption_at names" });
+      // THE UNIVERSE IS BLOCK TOTALS AND IT SAYS SO. [B-07] made sixteen row-level equity
+      // relations declared lines, four of them on page 3, and this row's 4 is about the
+      // totals whose caption names its own addends — 17d, 18f, 19c and 20e. The row
+      // relations are counted beside it rather than folded into it.
+      rows.push({ what: 'printed BLOCK totals declared for 433-B on pages 2 and 3', claimed: 4,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [23],/.test(t.caption_at || '')).filter((t) => !t.relation).length,
+        from: "adapters/pdf/maps/433b.totals.json, filtered by the page each total's own caption_at names and by carrying no `relation` key" });
+      rows.push({ what: 'row-level equity relations declared on page 3', claimed: 4,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 3,/.test(t.caption_at || '') && t.relation === 'row').length,
+        from: 'the same file, filtered to the lines declaring `relation: "row"` — [B-07]: 19a, 19b, 20b and 20c' });
       const { readPrintedText } = await import('./page-geometry.mjs');
       const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
       const joined23 = [1, 2].map((i) => pages[i].items.map((t) => t.str).join(' ')).join(' ');
@@ -637,13 +644,28 @@ export const MANIFEST = [
       // makes it false of the FORM while leaving it true of THE PAGES IT NAMES. The row is
       // retargeted to that set rather than the claim being edited down to match a wider file,
       // and the whole-file count moves to a row of its own beside it so neither is unwatched.
-      rows.push({ what: 'printed totals declared on pages 2, 3 and 4', claimed: 6,
-        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [234],/.test(t.caption_at || '')).length,
+      rows.push({ what: 'printed BLOCK totals declared on pages 2, 3 and 4', claimed: 6,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [234],/.test(t.caption_at || '')).filter((t) => !t.relation).length,
         from: "the totals file's own caption_at, which names the page each total is drawn on" });
-      rows.push({ what: 'printed totals declared for 433-B, whole file', claimed: 11, derived: (ctx.totalsDoc?.totals || []).length,
+      // TWO FIGURES WHERE THERE WAS ONE, AND THE OLD ONE KEEPS ITS UNIVERSE. 11 block
+      // totals and 16 row relations, 27 declared lines. Bumping the 11 to 27 would have
+      // made this row true again and stopped it checking anything ([R-07]).
+      rows.push({ what: 'printed BLOCK totals declared for 433-B, whole file', claimed: 11,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => !t.relation).length,
         from: 'adapters/pdf/maps/433b.totals.json — six through page 4 and five more on pages 5 and 6' });
-      rows.push({ what: 'totals declared for page 4', claimed: 2,
-        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 4,/.test(t.caption_at || '')).length,
+      rows.push({ what: 'row-level equity relations declared for 433-B, whole file', claimed: 16,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => t.relation === 'row').length,
+        from: 'the same file — [B-07]: 2 on INVESTMENTS, 2 on DIGITAL ASSETS, 4 on REAL PROPERTY, 4 on VEHICLES and 4 on BUSINESS EQUIPMENT' });
+      rows.push({ what: 'declared lines of BOTH classes for 433-B, whole file', claimed: 27, derived: (ctx.totalsDoc?.totals || []).length,
+        from: 'adapters/pdf/maps/433b.totals.json, unfiltered — the figure gate step 11 reports as "of N declared lines"' });
+      rows.push({ what: 'equity cells declared NOT checkable on 433-B', claimed: 3,
+        derived: ((ctx.totalsDoc?.not_checkable?.entries || []).find((e) => /intangible_assets/.test(e.map_key || ''))?.map_key || '').split(',').filter((s) => s.trim()).length,
+        from: 'the not_checkable entry [B-07] narrowed from the whole equity column to the three intangible rows, counted from the map keys it names' });
+      rows.push({ what: 'BLOCK totals declared for page 4', claimed: 2,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 4,/.test(t.caption_at || '')).filter((t) => !t.relation).length,
+        from: "the totals file's own caption_at, which names the page each total is drawn on" });
+      rows.push({ what: 'row-level equity relations declared on page 4', claimed: 8,
+        derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 4,/.test(t.caption_at || '') && t.relation === 'row').length,
         from: "the totals file's own caption_at, which names the page each total is drawn on" });
       const { readPrintedText } = await import('./page-geometry.mjs');
       const pages = await readPrintedText(readFileSync(ctx.mapDoc.pdf));
@@ -681,10 +703,13 @@ export const MANIFEST = [
           from: "the evidence table's own second_witness field — the claim is that EVERY one of the 104 carries one" },
         { what: 'every checkbox option on both pages recording a PDF on-state', claimed: 6, derived: ev.filter((e) => e.on_state).length,
           from: 'the evidence table' },
-        { what: 'printed totals declared on pages 5 and 6', claimed: 5,
-          derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [56],/.test(t.caption_at || '')).length,
+        { what: 'printed BLOCK totals declared on pages 5 and 6', claimed: 5,
+          derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page [56],/.test(t.caption_at || '')).filter((t) => !t.relation).length,
           from: "the totals file's own caption_at" },
-        { what: 'declared total lines on 433-B now', claimed: 11, derived: (ctx.totalsDoc?.totals || []).length,
+        { what: 'row-level equity relations declared on page 5', claimed: 4,
+          derived: (ctx.totalsDoc?.totals || []).filter((t) => /^page 5,/.test(t.caption_at || '') && t.relation === 'row').length,
+          from: 'the totals file, filtered to `relation: "row"` — [B-07]: 24a to 24d. 24e, 24f and 24g draw NEITHER operand and stay declared not checkable' },
+        { what: 'declared BLOCK total lines on 433-B now', claimed: 11, derived: (ctx.totalsDoc?.totals || []).filter((t) => !t.relation).length,
           from: 'adapters/pdf/maps/433b.totals.json' },
       ];
       // THE PAIRING-RULE COUNTS, derived from the evidence table's own verdicts. The prose names
