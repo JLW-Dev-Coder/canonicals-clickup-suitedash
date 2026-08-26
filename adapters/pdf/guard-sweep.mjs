@@ -889,6 +889,48 @@ export const VACUOUS = [
 
   { id: 'G-88', file: 'count-sweep.mjs', anchor: 'for (const m of str.matchAll(new RegExp(String.raw`widget\\s+0\\s+of\\s+(${N})`', verdict: 'guarded', family: true,
     why: 'THE QUOTED "widget 0 of N" HALF OF [S-30], with the same disposition and the same `recognised` flag. The two halves are separate loops rather than one alternation because they compare against DIFFERENT derived figures - the first against how many of the four named fields carry exactly one widget, the second against the largest per-field widget count among them - and a single loop would have to pick one.' },
+
+  // ─── the mirror construct ──────────────────────────────────────────────────────────────
+  //
+  // Nine sites across the two files that build and hold 433-D's mirror declaration. A TENTH was
+  // reported on this file's first sweep and is NOT here: `containerOf` in gen-mirror.mjs, a
+  // silent extraction whose result nothing read. It was DELETED rather than disposed, because a
+  // disposition explaining why a dead extraction is safe is the sentence that keeps dead code
+  // alive. An eleventh, the two `catch` clauses in readFilledValues, was REWRITTEN rather than
+  // disposed — see [G-221].
+  { id: 'G-220', file: 'assert-mirror.mjs', anchor: 'catch (e) { return { stop: `${p} will not parse', verdict: 'sound',
+    why: 'THE LOUD DIRECTION. An unreadable mirror declaration returns `{ stop }`, which report() turns into a problem naming the file and the parse error, and the run exits 2. The vacuous shape would be returning `{ doc: null }` or an empty pairs array — either of which would make every [M-07] and [M-08] loop iterate zero times and print OK. The catch says so in its own message: "An unreadable declaration is not an absent one."' },
+
+  { id: 'G-221', file: 'assert-mirror.mjs', anchor: "if (typeof f.getText === 'function') { try { out[n] = f.getText() ?? ''; } catch (e) { out[n] = UNREADABLE(n, e); }", verdict: 'sound', family: true,
+    why: 'THE SITE THIS SWEEP CORRECTED, and it is the one that mattered most on this form. The first draft was `catch { out[n] = \'\' }`. Under it, two copies of one mirrored stem that BOTH failed to read would both become the empty string, compare EQUAL, and SATISFY [M-08] — the mirror\'s central clause reporting agreement because it had read neither side. It now yields a sentinel carrying the field name and the error message, assertValues tests for it BEFORE the equality test and reports "could not be READ" rather than a disagreement, and the canary plants exactly that state and requires it to fire. The checkbox branch beside it is the same construct with the same disposition and is covered by this entry.' },
+
+  { id: 'G-223', file: 'assert-mirror.mjs', anchor: "if (!oneSided.problems.some((p) => p.startsWith('[M-07]')))", verdict: 'sound', family: true,
+    why: 'THE CANARY\'S OWN NEGATED `some`, AND EMPTY IS THE FAILING DIRECTION. `problems` empty means assertBindings returned nothing for a deliberately one-sided binding; `.some` is then false, `!` makes it true, and the canary is reported DEAD with the planted condition named before any verdict is printed. A plain `.some` would be the vacuous shape — an empty list satisfying "it was caught". The conforming direction is judged separately three lines below (a both-copies binding must raise NOTHING), so a checker that refused every input fails too. The five other negated `some`s in this canary — the page-b one-sided binding, the disagreeing values, the one-sided value, the both-unreadable pair, and the exclusion plants — are the identical construct and are covered by this entry.' },
+
+  // The siblings of [G-221] and [G-223], each anchored on its own line. They are listed
+  // individually rather than folded into a family because an anchor loose enough to match all of
+  // them would also match a future negated `some` nobody had looked at — and a disposition that
+  // silently adopts the next site is the shape this whole register exists to refuse.
+  { id: 'G-222', file: 'assert-mirror.mjs', anchor: "else if (typeof f.isChecked === 'function') { try { out[n] = f.isChecked() ? 'on' : 'off'; } catch (e) { out[n] = UNREADABLE(n, e); }", verdict: 'sound',
+    why: 'THE CHECKBOX BRANCH OF [G-221], with the identical disposition: a state that cannot be read yields a sentinel carrying the field name, never a default of "off". Two boxes that both failed to read would otherwise both become "off", compare equal, and satisfy [M-08] — and on this form that means an unticked IRS copy agreeing with an unticked taxpayer copy because neither could be read.' },
+
+  { id: 'G-224', file: 'assert-mirror.mjs', anchor: "if (!otherSide.problems.some((p) => p.startsWith('[M-07]')))", verdict: 'sound',
+    why: 'THE SECOND DIRECTION OF [G-223] and the reason both are planted: a check that fires when the IRS copy is bound alone but not when the TAXPAYER copy is, is worse than one that never fires, because it reads as working. Empty is the failing direction here exactly as it is there.' },
+
+  { id: 'G-225', file: 'assert-mirror.mjs', anchor: "if (!disagree.problems.some((p) => p.startsWith('[M-08]')))", verdict: 'sound',
+    why: '[G-223]\'s construct on the VALUE clause. The plant is a one-character difference — "Ada Lovelace" against "Ada Lovelacf" — because that is what a fill engine writing each copy separately actually produces, and an empty `problems` means assertValues let it through.' },
+
+  { id: 'G-226', file: 'assert-mirror.mjs', anchor: "if (!half.problems.some((p) => p.startsWith('[M-08]')))", verdict: 'sound',
+    why: '[G-223]\'s construct on the half-filled document: one copy present, the other absent from the filled PDF entirely. Distinct from the disagreement plant because it exercises the `!hasA || !hasB` branch rather than the equality test, and an empty `problems` means that branch is unreachable.' },
+
+  { id: 'G-227', file: 'assert-mirror.mjs', anchor: "if (!bothUnreadable.problems.some((p) => p.includes('could not be READ')))", verdict: 'sound',
+    why: '[G-223]\'s construct pointed at [G-221]\'s defect. It plants the exact state the first draft of readFilledValues produced — both copies unreadable — and requires the report to say "could not be READ". An empty `problems` here means the two sentinels compared equal, which is the original defect returning, so this plant is the regression test for a bug this sweep found in this file.' },
+
+  { id: 'G-228', file: 'assert-mirror.mjs', anchor: 'if (!r.problems.some((p) => p.startsWith(clause)))', verdict: 'sound',
+    why: '[G-223]\'s construct in the exclusion canary, parameterised over four plants and two clauses. Empty is the failing direction for every one of them: a stale exclusion, a reasonless one, one hiding a real cross-page pair, and a missing one must each raise their clause, and the conforming declaration is rebuilt and required to raise NOTHING after every plant is restored — so a builder that refused all input fails here too.' },
+
+  { id: 'G-229', file: 'gen-mirror.mjs', anchor: 'const orphanB = B.filter((r) => !A.some((a) => a.stem === r.stem))', verdict: 'sound',
+    why: 'THE LOUD DIRECTION AGAIN, and it is the second half of a pair. The loop above it walks page A and reports any stem with no page-B copy; this walks page B and reports any with no page-A copy. If A were empty — the state a dead read of page A produces — EVERY row of B lands here and the build returns 83 [M-03] problems, not zero. The vacuous shape would be checking only one direction, which is exactly what the first half alone would be.' },
 ];
 
 // ---------------------------------------------------------------------------------------

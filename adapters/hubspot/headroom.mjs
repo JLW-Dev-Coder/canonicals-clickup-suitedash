@@ -106,18 +106,54 @@ export const projectedBound = (form) => {
   // the bound is taken over stems rather than over the 168 fields a mirrored form enumerates.
   const stemOf = (name) => String(name).split('.').pop().replace(/\[\d+\]$/, '');
   const stems = new Set(rows.map((r) => stemOf(r.name ?? r.fullName ?? r.field ?? '')).filter(Boolean));
-  return { form, state: 'unclassified', fields: rows.length, bound: stems.size, floor: 0 };
+
+  // ── A STEM THE MIRROR EXCLUDES IS NOT A FILLABLE CELL, AND ITS FIRST DRAFT COUNTED IT ────
+  //
+  // This function's first run projected 84 for 433-D. The right figure is 83. The 84th stem is
+  // `hyperlink` — two PDFButtons in the page-4 instructions that no filer fills and no property
+  // could ever hold — and adapters/pdf/maps/433d.mirror.json already excludes it BY NAME, with
+  // its reason and with [M-05] asserting the exclusion is true. So the exclusion is READ here
+  // rather than restated: a second list of non-cells maintained in this file would be the
+  // parallel list that drifts, and it would drift in the direction of over-projecting, which on
+  // a headroom of 116 is the direction that stops work that could have gone ahead.
+  //
+  // A form with no mirror declaration has nothing excluded and the bound is every stem. That is
+  // the correct reading and not a fallback: without a declaration nothing has SAID which stems
+  // are not cells, and the bound is an upper bound.
+  const mirrorFile = `adapters/pdf/maps/${form}.mirror.json`;
+  let excluded = [], mirrorNote = `no mirror declaration at ${mirrorFile}, so no stem is excluded and the bound is every stem`;
+  if (existsSync(mirrorFile)) {
+    try {
+      const m = JSON.parse(readFileSync(mirrorFile, 'utf8'));
+      excluded = Object.keys(m.exclusions || {});
+      mirrorNote = `${mirrorFile} excludes ${excluded.length} stem(s) by name (${excluded.join(', ') || 'none'}); each is asserted by [M-05] to have no occurrence on a mirrored page`;
+    } catch (e) { return { form, state: `${mirrorFile} will not parse: ${e.message}. An unreadable declaration is not an empty one.`, bound: null }; }
+  }
+  for (const x of excluded) stems.delete(x);
+  return { form, state: 'unclassified', fields: rows.length, bound: stems.size, floor: 0, excluded, mirrorNote };
 };
 
+/**
+ * Every registered subject verdict naming this form.
+ *
+ * ITS FIRST DRAFT READ THE PAIR TABLE AS AN OBJECT KEYED BY FORM PAIR. It is an ARRAY of
+ * `{ a, b, relation }` rows, so `Object.entries(...).filter(([k]) => k.includes(form))` filtered
+ * on the array INDICES — "0", "1", "2" — matched nothing, and the projection printed "the subject
+ * register carries no verdict naming this form yet" over a register holding FIVE verdicts about
+ * it. A reading that finds nothing and a set that is empty are the same output and different
+ * facts, so the shape is now checked rather than assumed: a pairs value that is not an array is
+ * REPORTED, never silently treated as carrying no verdicts.
+ */
 export const subjectVerdicts = (form) => {
   const p = 'adapters/pdf/maps/_subjects.cross-form.json';
-  if (!existsSync(p)) return null;
-  try {
-    const doc = JSON.parse(readFileSync(p, 'utf8'));
-    const pairs = doc.pairs || doc.verdicts || null;
-    if (!pairs) return null;
-    return Object.entries(pairs).filter(([k]) => k.includes(form)).map(([k, v]) => `${k}: ${typeof v === 'string' ? v : v.verdict ?? JSON.stringify(v).slice(0, 80)}`);
-  } catch { return null; }
+  if (!existsSync(p)) return { stop: `no subject register at ${p}` };
+  let doc;
+  try { doc = JSON.parse(readFileSync(p, 'utf8')); } catch (e) { return { stop: `${p} will not parse: ${e.message}` }; }
+  if (!Array.isArray(doc.pairs)) return { stop: `${p} holds no \`pairs\` ARRAY — its shape is ${typeof doc.pairs}. This function cannot read it, which is not the same as it holding no verdict.` };
+  if (!doc.forms?.[form]) return { rows: [], why: `${p} registers no subject for ${form} at all, so there is nothing to be verdicted against.` };
+  const rows = doc.pairs.filter((x) => x.a === form || x.b === form)
+    .map((x) => `${x.a} / ${x.b}  ${x.relation}`);
+  return { rows, why: rows.length ? null : `${p} registers ${form} and carries no pair naming it, which S3 in adapters/pdf/assert-subject-register.mjs would refuse — so this is a reading problem, not an empty set.` };
 };
 
 export const report = async () => {
@@ -147,13 +183,15 @@ export const report = async () => {
     console.log(`  PROJECTION for ${projectTo} — an UNCLASSIFIED form, so this is a BOUND and not a count:`);
     if (p.bound === null) { console.log(`    ${p.state}`); problems.push(`NO PROJECTION  ${projectTo}: ${p.state}`); }
     else {
-      console.log(`    ${p.fields} enumerated field(s) over ${p.bound} distinct leaf stem(s)`);
-      console.log(`    UPPER BOUND ${p.bound} new propert(ies) — one per stem, which is the most a form can cost`);
+      console.log(`    ${p.fields} enumerated field(s) over ${p.bound + p.excluded.length} distinct leaf stem(s), of which ${p.excluded.length} excluded`);
+      console.log(`      ${p.mirrorNote}`);
+      console.log(`    UPPER BOUND ${p.bound} new propert(ies) — one per non-excluded stem, which is the most a form can cost`);
       console.log(`    FLOOR       ${p.floor} — every stem could bind an existing property`);
       console.log('    No single number between the two is printed. A reuse rate invented here is the over-read [R-29] records.');
       const v = subjectVerdicts(projectTo);
-      if (v?.length) { console.log('    subject verdicts bearing on which reuses are PERMISSIBLE (they bear on the FLOOR, never on the bound):'); for (const x of v) console.log(`      ${x}`); }
-      else console.log('    subject register carries no verdict naming this form yet, so the floor rests on nothing and the bound is the only figure.');
+      if (v.stop) { console.log(`    SUBJECT REGISTER NOT READ — ${v.stop}`); problems.push(`SUBJECT REGISTER UNREADABLE  ${v.stop}`); }
+      else if (v.rows.length) { console.log(`    ${v.rows.length} subject verdict(s) bearing on which reuses are PERMISSIBLE — they bear on the FLOOR and never on the bound ([R-29]):`); for (const x of v.rows) console.log(`      ${x}`); }
+      else console.log(`    ${v.why}`);
       console.log('');
       if (p.bound > headroom) { console.log(`    STOP — the upper bound ${p.bound} EXCEEDS the headroom ${headroom}. This is a decision for Principal, not a partial provisioning run.`); problems.push(`PROJECTION EXCEEDS HEADROOM  ${projectTo}: bound ${p.bound} against headroom ${headroom}`); }
       else console.log(`    FITS — the upper bound ${p.bound} is within the headroom ${headroom}, leaving at least ${headroom - p.bound} even if NOTHING is reused.`);
