@@ -729,6 +729,132 @@ Cycle-dated: the commit that lands it is the commit this rule is written in, so 
 ---
 
 
+## [R-30] Every finished form's tools are exercised in the full regression
+
+> A finished form's tools are re-run on every full regression, in a mode that writes nothing, so
+> a tool broken by a NEIGHBOUR's pass fails on the next run rather than the next time somebody
+> needs it.
+
+**The defect that earned it.** `[D-18]`'s fourth instance, and it is the fourth that earned this
+and not the first three. The three recorded instances were all self-inflicted — a tool broken by
+the pass IT precedes — and somebody hits those the next time they run the tool, which is soon.
+The fourth was `derive-names-433boi.mjs` broken by the **433-B pass, seven prompts later**,
+rewriting nine shared property descriptions out from under a `startsWith` predicate. Nobody
+re-runs a finished form's deriver, so there was no natural moment at which it would surface, and
+it was found only because that cycle happened to need the regeneration. That item's own closing
+sentence is the argument: *"what the sweep buys is that the population is enumerated and no
+member can be added silently; what caught the fourth instance was RUNNING THE TOOL."*
+
+**What it found on its first run**, which is the reason the rule is not merely tidy:
+`adapters/pdf/assert-row-class-routes.mjs` had been **exiting 2 for two prompts**. It held five
+typed `(form, fixture, engine)` triples and two of the fixture paths were stale — 433-B(OIC) at
+slice 1 when its acceptance record had been slice 3, 433-B at slice 1 when its had been slice 4.
+Slice 1 of 433-B(OIC) feeds no rows to six groups later slices bound, so it reported six UNPROVED
+groups and a canary yield of 33 against an expected 39. It is in no npm script and in no gate
+step, so nothing had run it. It is the exact class `adapters/pdf/resolve-fixture.mjs` was written
+for — *"a path in a script is a fact nobody re-derives"* — and that file's header names a gate
+script and a prompt as the two instances while a third sat one directory away with five more
+paths in it.
+
+**Roughly when.** Ruled 2026-08-25, prompt 52 commit 1. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet.
+`adapters/hubspot/rerun-regression.mjs` holds it, wired into `npm run sweeps`.
+
+---
+
+## [R-31] Prefer the structural assertion over the current reading
+
+> Where both are available, run both and say which would have fired first. A check that a row
+> **cannot be read by anything** beats a reading of what is true on the portal now, because the
+> first is about structure and the second is about a moment.
+
+**The defect that earned it.** `[D-19]`'s resolution. `assert-registry-targets.mjs` carries five
+conditions; `[RT-1]` — no generated rival — is OFFLINE, needs no credential and no network, and
+found **334 unreadable rows** in `fields.registry.json`. `[RT-5]` asks the portal whether an
+`hs_name` is live, and is the tier a reader instinctively trusts more. The item's own sentence is
+the ruling: *"a portal read establishes what is true NOW; `[RT-1]` establishes that the row
+CANNOT BE READ by anything — and it would have fired the day the first generated file landed"*,
+three forms and many prompts before anybody read the portal against the registry.
+
+**And the size of the miss is what makes it a rule rather than a preference.** The item that
+raised it recorded a figure of seven where the true figure was 334 — a factor of forty-eight —
+and the reason is the whole lesson: *the count was of what someone had just looked at*. The other
+three forms had been in the identical state for longer and nothing in the tree could have said so.
+
+**Roughly when.** Ruled 2026-08-25 on the prompt-51 report, from `[D-19]`'s first-run figures.
+Cycle-dated: the commit that lands it is the commit this rule is written in, so it has no hash yet.
+
+---
+
+## [R-32] Headroom is a planning constraint, projected before the first name is derived
+
+> The ceiling is checked before a create and **projected before a classification**. A projection
+> that exceeds the headroom is a STOP and a decision for the Principal, never a partial
+> provisioning run.
+
+**Attribution: none —** it is a policy, ruled forward rather than earned by a defect, and that is
+declared here rather than left as a silence. What it rests on is arithmetic rather than an
+incident: the portal held **884 custom contact properties against a documented ceiling of 1,000**
+when this was ruled, leaving **116**, and the four provisioned forms cost 186, 239, 116 and 113.
+Any one of them would not fit today. The next form to be classified is therefore the first for
+which "may I create this name", asked property by property after the crosswalk exists, is the
+wrong question at the wrong time — by the time `[R-23]`'s A12 speaks, the work of deciding what
+the properties ARE is done, and a form that turns out not to fit becomes a partial run against a
+portal that will not free a name.
+
+**How the projection is stated, and what it deliberately does not state.** A bound, not a count:
+the most a form can cost is one property per distinct leaf **stem**, and the floor is zero. No
+single number between the two is printed, because a number between them is an invented reuse
+rate — and `[R-29]` is the rule that a coinciding subject says which reuses are PERMISSIBLE and
+nothing whatever about how many there will be. 433-B and 433-B(OIC) coincide and **nine of 116**
+keys reused.
+
+**Roughly when.** Ruled 2026-08-25, prompt 52 commit 1, ahead of 433-D's classification.
+Cycle-dated: the commit that lands it is the commit this rule is written in, so it has no hash yet.
+`adapters/hubspot/headroom.mjs` holds it.
+
+---
+
+## [R-33] When a scope line and a ruling conflict, the ruling governs
+
+> A prompt's scope line and a prompt's own rulings can disagree. When they do, **the ruling
+> governs**, the wider action is taken only where it has been established to be safe, and the
+> conflict is reported back as a **prompt defect**. `[R-03]` is the same collision against a
+> standing guard and resolves the same way; this is the collision INSIDE one document.
+
+**The defect that earned it.** Three occurrences, each quotable.
+
+**One.** The prompt that landed 433-B slice 1 required in its §4 that *"all five forms pass their
+gates"* while its scope line excluded the artefacts that makes possible — no fill engine, no
+fixtures, an empty crosswalk. That instance is `[R-03]`, and it is listed here too because it is
+the same shape seen from the other side: there the ruling collided with a GUARD, here with the
+document's own scope sentence.
+
+**Two.** Prompt 51's scope line described one form's expectation; its ruling text required every
+declared line on **every mapped form** to be proved to refuse a wrong value. The ruling was
+followed: **130 lines were proved, not 52**. Had the scope line governed, 433-A(OIC) would have
+stayed at **0 of 51** while the report recorded a stated expectation met — which is the wrong
+shape of obedience, and is the reason this is a rule rather than a judgement call.
+
+**Three.** Prompt 52 — the one that ruled this — states in its own scope line that 433-D's
+crosswalk and provisioning are *"not in this prompt"*, and then requires in its §5 report a
+figure derived from them: *"433-D's expected new-property count and what it leaves"*. The ruling
+governed, and what was reported was the strongest thing the scope permits: an **upper bound over
+distinct leaf stems with a floor of zero**, with the classification-time count named as still
+owed. A count reported where only a bound is available would have been the invented figure
+`[R-07]` and `[R-29]` each name from a different side.
+
+**Why the ruling and not the scope line.** A scope line is a plan for the work and a ruling is a
+statement about what makes the work correct. When the two disagree, one of them is describing an
+engine that does not exist. The wider action is not automatic, though: it is taken **only where
+it has been established to be safe**, and where it has not, the conflict is reported and nothing
+is guessed.
+
+**Roughly when.** Ruled 2026-08-25, prompt 52 ruling 1. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet.
+
+---
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

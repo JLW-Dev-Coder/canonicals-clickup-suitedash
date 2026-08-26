@@ -49,26 +49,45 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { examined } from './examined.mjs';
 
-/** Form -> the acceptance fixture and the engine that consumes it. */
-export const FORMS = [
-  { form: '433a',   sample: 'samples/433a.sample.json',       engine: 'adapters/pdf/fill-433a.mjs' },
-  { form: '433f',   sample: 'samples/433f.multi.sample.json', engine: 'adapters/pdf/fill-433f.mjs' },
-  { form: '433aoi', sample: 'samples/433aoi.sample.json',     engine: 'adapters/pdf/fill-433aoi.mjs' },
-  // 433-B(OIC) JOINS AT ITS SLICE 1. A form absent from this list has its refusal path unproved
-  // and nothing says so — the same exclusion-by-omission that kept it out of
-  // assert-row-shape-spec's FORMS and out of blanket-audit's marker union. Its one group,
-  // `partners`, accepts the business_principal class declared for it in the same commit.
-  { form: '433boi', sample: 'samples/433boi.slice1.sample.json', engine: 'adapters/pdf/fill-433boi.mjs' },
-  // 433-B JOINS AT ITS SLICE 1 AND CONTRIBUTES ZERO DECLARING GROUPS, WHICH IS THE POINT.
-  // adapters/pdf/assert-examined.mjs reported this file emitting NO examined line for 433-B at
-  // all - not a zero, an absence - because the form was simply not in this list. A form absent
-  // from here has its refusal path unproved and nothing says so, which is the same
-  // exclusion-by-omission recorded above for 433-B(OIC). Its three page-1 groups
-  // (payment_processors, credit_cards_accepted, personnel) declare no row_class, so
-  // routingScope() yields nothing for it and the count is a CHECKED zero rather than a silence.
-  // It becomes non-zero the moment a slice declares one.
-  { form: '433b', sample: 'samples/433b.slice1.sample.json', engine: 'adapters/pdf/fill-433b.mjs' },
-];
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE FORM LIST IS DISCOVERED, AND IT USED TO BE TYPED — WHICH IS THE DEFECT THIS RECORDS
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// Until this commit the five (form, fixture, engine) triples below were a LITERAL ARRAY, and
+// two of its five fixture paths were STALE: `samples/433boi.slice1.sample.json` when that
+// form's acceptance record had been slice 3 for two prompts, and
+// `samples/433b.slice1.sample.json` when 433-B's had been slice 4 for one. Slice 1 of 433-B(OIC)
+// feeds no rows to six of the groups later slices bound, so this file reported six UNPROVED
+// groups and a CANARY yield of 33 against an expected 39, and EXITED 2.
+//
+// It had been exiting 2 since the slice that moved the path, and nobody saw it, because this
+// file is in no npm script and in no gate step: it is a per-form tool of a finished form, and
+// [R-30] "every finished form's tools are exercised in the full regression" is the rule that
+// found it. It is exactly the class adapters/pdf/resolve-fixture.mjs was written for — "a path
+// in a script is a fact nobody re-derives" — and that file's own header names a gate script and
+// a prompt as the two instances, while a third sat one directory away with five more paths in it.
+//
+// So there is no list. MAPPED_FORMS() yields the forms; resolveFixture() yields each form's
+// acceptance record from the record's OWN declaration; the engine is derived from the form id
+// and its absence is a STOP rather than a skip. A new form joins with no edit here, and a
+// re-sliced fixture cannot leave this file pointing at the record it superseded.
+import { MAPPED_FORMS, resolveFixture } from './resolve-fixture.mjs';
+
+/**
+ * Form -> the acceptance fixture and the engine that consumes it, DERIVED on every run.
+ *
+ * A form whose acceptance fixture will not resolve, or whose engine is not on disk, is carried
+ * through as `unreadable` and reported by reportRouting as a STOP. It is never dropped: a form
+ * this file cannot read is not a form with no declaring groups, and collapsing the two is the
+ * exclusion-by-omission the two comments beneath the old array already recorded twice.
+ */
+export const FORMS = MAPPED_FORMS().map((form) => {
+  const engine = `adapters/pdf/fill-${form}.mjs`;
+  const res = resolveFixture(form, 'acceptance');
+  if (res.problems?.length) return { form, engine, sample: null, unreadable: `acceptance fixture did not resolve: ${res.problems.join('; ')}` };
+  if (!existsSync(engine)) return { form, engine, sample: res.path, unreadable: `no fill engine at ${engine}` };
+  return { form, sample: res.path, engine };
+});
 
 const CANARY = '__canary_not_a_class__';
 
@@ -77,7 +96,11 @@ export const routingScope = () => {
   const out = [];
   for (const f of FORMS) {
     const mapPath = `adapters/pdf/maps/${f.form}.map.json`;
-    if (!existsSync(mapPath) || !existsSync(f.sample)) { out.push({ ...f, unreadable: true }); continue; }
+    // f.unreadable is already set when the form's acceptance fixture would not resolve or its
+    // engine is missing; that verdict carries its own sentence and is not overwritten with `true`.
+    if (f.unreadable) { out.push({ ...f }); continue; }
+    if (!existsSync(mapPath)) { out.push({ ...f, unreadable: `no map at ${mapPath}` }); continue; }
+    if (!existsSync(f.sample)) { out.push({ ...f, unreadable: `resolved acceptance fixture ${f.sample} is not on disk` }); continue; }
     const map = JSON.parse(readFileSync(mapPath, 'utf8'));
     for (const [group, def] of Object.entries(map.groups || {})) {
       const rc = def?.row_class;
@@ -135,7 +158,7 @@ export const reportRouting = ({ verbose = false } = {}) => {
   console.log(`row-class routing: ${groups.length} declaring group(s) across ${FORMS.length} form(s), ${allClasses.length} class(es) in play, ${results.length} poisoned run(s)`);
   if (verbose) for (const r of results) console.log(`    ${(r.form + '.' + r.group).padEnd(36)} ${r.label.padEnd(12)} poison=${String(r.poison).padEnd(24)} ${r.verdict}`);
 
-  for (const u of unreadable) console.error(`  UNREADABLE ${u.form}: map or fixture missing (${u.sample}). An input this file cannot read is a STOP, not a skip.`);
+  for (const u of unreadable) console.error(`  UNREADABLE ${u.form}: ${u.unreadable}. An input this file cannot read is a STOP, not a skip.`);
   for (const u of unproved) console.error(`  UNPROVED ${u.form}.${u.group}: the fixture feeds it no rows, so nothing could be poisoned. Zero rows refused is not zero rows wrong.`);
   for (const b of broken) console.error(`  DID NOT STOP ${b.form}.${b.group} (${b.label}, poison "${b.poison}"): exit ${b.code}, group named in output: ${b.named}. This declaration routes nothing.`);
 

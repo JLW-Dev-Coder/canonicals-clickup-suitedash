@@ -125,6 +125,16 @@ export const classify = (path) => {
  * `wouldVerify` is the RUN's own answer — whether this run read the portal — and never a
  * re-reading of the file about to be replaced.
  */
+// THE REFUSAL'S OWN TOKEN, EXPORTED SO A CALLER CAN RECOGNISE IT WITHOUT RE-TYPING IT.
+//
+// adapters/hubspot/rerun-regression.mjs runs every deriver in an offline tier, where all three
+// correctly hit the refusal below. It must tell "this tool is guarded" apart from "this tool is
+// broken", and the only signal it has is the child process's stderr. A copy of the sentence in
+// that file would be a second place the wording lives, and the two would part company on the
+// first rewording — which is [R-02]'s parallel-list shape, and it is cheaper to export the token
+// than to argue about which copy is current.
+export const REFUSAL = 'REFUSING TO DOWNGRADE';
+
 export const refuseDowngrade = ({ path, wouldVerify, argv = process.argv, label = path }) => {
   const explicit = argv.includes('--downgrade');
   const cur = classify(path);
@@ -139,7 +149,7 @@ export const refuseDowngrade = ({ path, wouldVerify, argv = process.argv, label 
   if (cur.state === 'verified' && !wouldVerify) {
     if (!explicit)
       throw new Error(
-        `REFUSING TO DOWNGRADE — ${label} records a portal-verified run and this run did not read the portal.\n` +
+        `${REFUSAL} — ${label} records a portal-verified run and this run did not read the portal.\n` +
         `  ${cur.detail ? `${cur.detail}\n  ` : ''}Writing now would replace every live verdict in it with "portal not read", which is what happened to 433-A(OIC) (238 rows) and then to 433-B(OIC) (113 rows).\n` +
         '  This run did not look at the portal; it did not find it empty. Re-run with `--portal`, or pass `--downgrade` to discard those verdicts on purpose.');
     lines.push(`  DOWNGRADING ON PURPOSE — --downgrade was passed. The live verdicts in ${label} are being replaced with "portal not read".`);

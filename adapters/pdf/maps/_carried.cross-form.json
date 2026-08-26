@@ -81,6 +81,20 @@
    "the_measurement_that_would_settle_it": "How many phantoms adoption produces per registered regex. Twenty-four registrations produced one. If that ratio holds, hand disposition is cheaper than any mechanism; if a later cycle adopts widely and the count rises, the shape of the fix is a shared \"this is data, not code\" marker that every source scanner in the engine reads from one place, rather than four independent skip rules.",
    "reported_where": "guard-sweep.mjs [G-149] disposes the one live instance and says in its `why` that it is a probe string rather than an extraction.",
    "status": "OPEN - recorded, not built."
+  },
+  {
+   "id": "D-20",
+   "form": "engine-wide; every portal tool in adapters/hubspot/",
+   "raised_in": "Prompt 52 commit 1, by adapters/hubspot/rerun-regression.mjs on its first portal-tier run",
+   "subject": "EVERY DECLARED STOP CODE IN EVERY PORTAL TOOL IS LOST. process.exit(n) called after an hs() request ABORTS the process on this node build instead of exiting with n.",
+   "the_shape": "hs-fetch-433boi.mjs, run against a live contact, correctly reached its own \"REFUSING TO WRITE - 1 problem(s)\" and called process.exit(3). What the caller saw was 3221226505 through spawnSync and 127 through a shell, preceded by \"Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c, line 76\". The declared code never leaves the process. It is NOT a defect in that fetcher: it reproduces in five lines with no fetcher present — import hs, await one request, call process.exit(3) — so the fetcher is only the first tool this cycle happened to drive down a post-portal STOP path.",
+   "the_measured_population": "SEVENTY-TWO process.exit() sites across TWENTY-TWO files in adapters/hubspot/, counted by grep over every file importing hs-lib.mjs on 2026-08-25. Not all are post-portal — a usage exit before the first request is safe, and the reproduction needed a completed request — but that split has NOT been measured, and the figure quoted here is the one that has been: 72 is the population an audit would have to walk, not the count of broken sites. Quoting a smaller unmeasured number would be the figure without its universe that [R-07] names.",
+   "why_it_is_a_problem_today": "THE SCARY HALF IS NOT THE FETCHERS. hs-provision.mjs, hs-purge-properties.mjs, hs-purge-contacts.mjs and hs-teardown-contact.mjs are permanent or destructive, and each carries post-portal STOP paths whose declared code is what a caller would branch on. A caller testing `status === 2` sees 127 and takes the wrong branch; a caller testing `status !== 0` still catches it, which is why nothing has surfaced. An abort is also not a clean stop — whatever the tool had not flushed is gone — and \"it exited non-zero\" is a weaker fact than the one the tool was written to state.",
+   "what_was_proved": "THE FIX IS KNOWN AND IT WAS MEASURED RATHER THAN GUESSED, WHICH IS WHY THIS ITEM IS SAFE TO CARRY. Candidate A — `process.exitCode = 3` with no process.exit() call — exits with the real code 3 after a natural drain of 382 ms. Candidate B — close the global undici dispatcher and then call process.exit(3) — STILL ABORTS, so the obvious repair is the wrong one and an unmeasured fix would have shipped it. A third shape also works and preserves the halting semantics the call sites rely on: set process.exitCode, throw a sentinel, and swallow only that sentinel in an unhandledRejection handler.",
+   "the_ruling": "REPORTED IN FULL AND NOT RESOLVED, under [R-20], and the reason is [R-12]. Repairing only the five fetchers — the population this prompt’s ruling 3 puts in scope — would be a class repaired on one tool kind and left on five others, which is exactly the reproduction [R-12] says to expect and which [D-18] records happening. Repairing all 72 means changing the control flow of every destructive portal tool in the same cycle that sizes a provisioning run for 433-D, which is the adjacent change that has twice reproduced the defect class it was meant to close.",
+   "what_stands_in_the_meantime": "adapters/hubspot/rerun-regression.mjs NAMES IT ON EVERY RUN: any child whose output carries UV_HANDLE_CLOSING is reported under [D-20] with the code the caller actually saw, and that run’s verdict is read from the tool’s own OUTPUT rather than from its exit code. So the fact cannot go quiet between now and the repair, and no verdict in this engine currently rests on a lost code.",
+   "built_when": "Not built. To be decided BEFORE the next provisioning run — 433-D — because that run drives hs-provision.mjs and a new hs-dryrun-433d.mjs down exactly these paths, and a partial provisioning run that reports the wrong reason for stopping is the one outcome a portal that will not free a name cannot absorb.",
+   "status": "OPEN"
   }
  ],
  "resolved": [
@@ -391,7 +405,7 @@
   }
  ],
  "_count": {
-  "open": 6,
+  "open": 7,
   "resolved": 13
  }
 }

@@ -21,7 +21,7 @@
     "gate:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --saturated",
     "fixtures": "node adapters/pdf/resolve-fixture.mjs",
     "coverage:433boi": "node adapters/pdf/declaration-coverage.mjs 433boi",
-    "sweeps": "node adapters/pdf/control-char-scan.mjs && node adapters/pdf/regex-self-assert.mjs && node adapters/pdf/absence-sweep.mjs && node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs && node adapters/hubspot/assert-intake-keys.mjs && node adapters/hubspot/assert-registry-targets.mjs && node adapters/hubspot/post-pass-sweep.mjs",
+    "sweeps": "node adapters/pdf/control-char-scan.mjs && node adapters/pdf/regex-self-assert.mjs && node adapters/pdf/absence-sweep.mjs && node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs && node adapters/hubspot/assert-intake-keys.mjs && node adapters/hubspot/assert-registry-targets.mjs && node adapters/hubspot/post-pass-sweep.mjs && node adapters/hubspot/rerun-regression.mjs --canary",
     "recordshape:433aoi": "node adapters/pdf/assert-record-shape.mjs 433aoi",
     "recordshape:433boi": "node adapters/pdf/assert-record-shape.mjs 433boi",
     "recordshape": "node adapters/pdf/assert-record-shape.mjs 433aoi && node adapters/pdf/assert-record-shape.mjs 433boi",
@@ -42,7 +42,10 @@
     "dryrun:433b": "node adapters/hubspot/hs-dryrun-433b.mjs",
     "readback:433b": "node adapters/hubspot/hs-readback-433b.mjs",
     "sweep:registry": "node adapters/hubspot/assert-registry-targets.mjs --portal",
-    "sweep:postpass": "node adapters/hubspot/post-pass-sweep.mjs --verbose"
+    "sweep:postpass": "node adapters/hubspot/post-pass-sweep.mjs --verbose",
+    "rerun": "node adapters/hubspot/rerun-regression.mjs --canary",
+    "rerun:portal": "node adapters/hubspot/rerun-regression.mjs --portal --canary",
+    "headroom": "node adapters/hubspot/headroom.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
