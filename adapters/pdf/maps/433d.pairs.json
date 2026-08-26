@@ -1,0 +1,608 @@
+{
+ "_what_this_is": "THE ESTABLISHED PAIR STRUCTURE OF 433-D, derived from the pinned blank by scratchpad/p52-433d-pairs.mjs and re-derivable by re-running it. Not an expectation: adapters/pdf/maps/433d.pairs.txt is the same derivation in prose with what it disagreed with.",
+ "_generator": "scratchpad/p52-433d-pairs.mjs",
+ "_source_pdf": "adapters/pdf/forms/f433d.pdf",
+ "_source_sha256": "7383b4dba64599092e9e3ea9e533ffdba7d0c68ccfa7d7ec035f095e25d96c00",
+ "_pair_key": "THE LEAF STEM, and its precondition is asserted rather than assumed: a stem must be unique WITHIN a page or two cells would collapse into one pair. The full field path is NOT the key — 17 of the 83 pairs differ at the intermediate subform (AccountNumber on page 1, AccountingNumber on page 3, which is a typo in the IRS form) and a path key pairs only 66.",
+ "_excluded_by_name": {
+  "hyperlink": "Two PDFButtons on page 4, form1[0].Page4_Part2[0].agree_to[0].item[8].hyperlink[0] and form1[0].Page4_Part2[0].installment_payments[0].item8[0].hyperlink[0]. This stem appears exactly twice and is NOT a mirror pair: both occurrences are on the same page and neither is a cell a filer fills. It is excluded from the mirror by name, so that \"every stem appears exactly twice\" cannot be mistaken for \"every stem is a mirrored fact\"."
+ },
+ "counts": {
+  "pages": 4,
+  "widgets": 168,
+  "widgets_by_page": {
+   "1": 83,
+   "2": 0,
+   "3": 83,
+   "4": 2
+  },
+  "distinct_leaf_stems": 84,
+  "mirror_pairs": 83,
+  "pairs_whose_paths_differ": 17,
+  "checkbox_pairs": 13,
+  "text_pairs": 70
+ },
+ "pairs": [
+  {
+   "stem": "NameAndAddress",
+   "page1": "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].NameAndAddress[0]",
+   "page3": "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].NameAndAddress[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "SubmitANew",
+   "page1": "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].SubmitANew[0]",
+   "page3": "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].SubmitANew[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Taxpayer",
+   "page1": "form1[0].Page1_Part1[0].SSN_EIN[0].Taxpayer[0]",
+   "page3": "form1[0].Page3_Part2[0].SSN_EIN[0].Taxpayer[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Spouse",
+   "page1": "form1[0].Page1_Part1[0].SSN_EIN[0].Spouse[0]",
+   "page3": "form1[0].Page3_Part2[0].SSN_EIN[0].Spouse[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Home",
+   "page1": "form1[0].Page1_Part1[0].SSN_EIN[0].Home[0]",
+   "page3": "form1[0].Page3_Part2[0].SSN_EIN[0].Home[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "WorkCellBusiness",
+   "page1": "form1[0].Page1_Part1[0].SSN_EIN[0].WorkCellBusiness[0]",
+   "page3": "form1[0].Page3_Part2[0].SSN_EIN[0].WorkCellBusiness[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "OrWrite",
+   "page1": "form1[0].Page1_Part1[0].SSN_EIN[0].OrWrite[0]",
+   "page3": "form1[0].Page3_Part2[0].SSN_EIN[0].OrWrite[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "KindsOfTaxes",
+   "page1": "form1[0].Page1_Part1[0].KindsOfTaxes[0]",
+   "page3": "form1[0].Page3_Part2[0].KindsOfTaxes[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "TaxPeriods",
+   "page1": "form1[0].Page1_Part1[0].TaxPeriods[0]",
+   "page3": "form1[0].Page3_Part2[0].TaxPeriods[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AsOf",
+   "page1": "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AsOf[0]",
+   "page3": "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AsOf[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AmountOwed",
+   "page1": "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AmountOwed[0]",
+   "page3": "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AmountOwed[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "DollarAmount",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].DollarAmount[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].DollarAmount[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "DatePaid",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].DatePaid[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].DatePaid[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AndDollarAmount",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].AndDollarAmount[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].AndDollarAmount[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "OnThe",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].OnThe[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].OnThe[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "date1",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "amount1",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "payment1",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "date2",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "amount2",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "payment2",
+   "page1": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Initial",
+   "page1": "form1[0].Page1_Part1[0].Initial[0]",
+   "page3": "form1[0].Page3_Part2[0].Initial[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AdditionalConditions",
+   "page1": "form1[0].Page1_Part1[0].AdditionalConditions[0]",
+   "page3": "form1[0].Page3_Part2[0].AdditionalConditions[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber1",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber2",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber3",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber3[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber4",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber4[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber5",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber5[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber6",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber6[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber7",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber7[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber8",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber8[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RoutingNumber9",
+   "page1": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+   "page3": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber9[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AccountNumber1",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber2",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber3",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber3[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber4",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber4[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber5",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber5[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber6",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber6[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber7",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber7[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber8",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber8[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber9",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber9[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber10",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber10[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber11",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber11[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber12",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber12[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber13",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber13[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber14",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber14[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber15",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber15[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber16",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber16[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "AccountNumber17",
+   "page1": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+   "page3": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber17[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": true
+  },
+  {
+   "stem": "unable_to_make",
+   "page1": "form1[0].Page1_Part1[0].unable_to_make[0]",
+   "page3": "form1[0].Page3_Part2[0].unable_to_make[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "YourSignature",
+   "page1": "form1[0].Page1_Part1[0].YourSignature[0]",
+   "page3": "form1[0].Page3_Part2[0].YourSignature[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Date1",
+   "page1": "form1[0].Page1_Part1[0].Date1[0]",
+   "page3": "form1[0].Page3_Part2[0].Date1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "TitleIf",
+   "page1": "form1[0].Page1_Part1[0].TitleIf[0]",
+   "page3": "form1[0].Page3_Part2[0].TitleIf[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Date2",
+   "page1": "form1[0].Page1_Part1[0].Date2[0]",
+   "page3": "form1[0].Page3_Part2[0].Date2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "SpouseSignature",
+   "page1": "form1[0].Page1_Part1[0].SpouseSignature[0]",
+   "page3": "form1[0].Page3_Part2[0].SpouseSignature[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementLocatorNumber1",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementLocatorNumber2",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementLocatorNumber3",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementLocatorNumber4",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RSI1",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].RSI1[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AI0",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AI0[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AI0[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RSI5",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].RSI5[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AI1",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AI1[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "RSI6",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].RSI6[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AI2",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AI2[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle1",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle2",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle3",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle4",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle5",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementReviewCycle6",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "EarliestCSED",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].EarliestCSED[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].EarliestCSED[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "CheckBoxIf",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].CheckBoxIf[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].CheckBoxIf[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "OriginatorID",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].OriginatorID[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].OriginatorID[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "OriginatorCode",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].OriginatorCode[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].OriginatorCode[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Name",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].Name[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].Name[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Title",
+   "page1": "form1[0].Page1_Part1[0].Agreement[0].Title[0]",
+   "page3": "form1[0].Page3_Part2[0].Agreement[0].Title[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "HasAlready",
+   "page1": "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]",
+   "page3": "form1[0].Page3_Part2[0].Notice[0].HasAlready[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "FiledImmediately",
+   "page1": "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+   "page3": "form1[0].Page3_Part2[0].Notice[0].FiledImmediately[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "FiledWhen",
+   "page1": "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+   "page3": "form1[0].Page3_Part2[0].Notice[0].FiledWhen[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "MayBe",
+   "page1": "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+   "page3": "form1[0].Page3_Part2[0].Notice[0].MayBe[0]",
+   "type": "PDFCheckBox",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "AgreementExamined",
+   "page1": "form1[0].Page1_Part1[0].AgreementExamined[0]",
+   "page3": "form1[0].Page3_Part2[0].AgreementExamined[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  },
+  {
+   "stem": "Date3",
+   "page1": "form1[0].Page1_Part1[0].Date3[0]",
+   "page3": "form1[0].Page3_Part2[0].Date3[0]",
+   "type": "PDFTextField",
+   "tailsDiffer": false
+  }
+ ]
+}

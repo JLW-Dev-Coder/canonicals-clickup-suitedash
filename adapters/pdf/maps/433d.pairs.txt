@@ -1,0 +1,91 @@
+433-D PAIR STRUCTURE — ESTABLISHED FROM THE PAGE, NOT FROM THE REGISTER'S EXPECTATION
+
+Derived by scratchpad/p52-433d-pairs.mjs from adapters/pdf/forms/f433d.pdf, pinned at
+sha256 7383b4dba64599092e9e3ea9e533ffdba7d0c68ccfa7d7ec035f095e25d96c00 in forms.sha256.
+4 pages, 168 widgets read through adapters/pdf/page-geometry.mjs.
+
+1. WHAT EACH PAGE ACTUALLY CARRIES
+
+   page 1:  83 widget(s)  {"PDFTextField":70,"PDFCheckBox":13}  container(s): Page1_Part1
+   page 2:   0 widget(s)  {}  container(s): (none)
+   page 3:  83 widget(s)  {"PDFTextField":70,"PDFCheckBox":13}  container(s): Page3_Part2
+   page 4:   2 widget(s)  {"PDFButton":2}  container(s): Page4_Part2
+
+   PAGE 2 CARRIES NO WIDGETS AT ALL. That is established, not inferred from a low count:
+   the geometry reader returns every widget on every page and page 2 contributes none.
+   PAGE 4 CARRIES TWO, AND NEITHER IS A DATA CELL. Both in full:
+     PDFButton      form1[0].Page4_Part2[0].agree_to[0].item[8].hyperlink[0]
+     PDFButton      form1[0].Page4_Part2[0].installment_payments[0].item8[0].hyperlink[0]
+
+2. THE PAIRING KEY — AND WHY THE OBVIOUS ONE IS WRONG
+
+   Keyed on the FULL FIELD PATH with the page container removed, pages 1 and 3 do NOT
+   correspond: 66 tails match, 17 are on page 1 only and 17 on page 3 only.
+
+   The 17 unmatched on each side are the same 17 cells. The intermediate subform is spelled
+   differently on the two pages:
+
+     page 1   form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]
+     page 3   form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber1[0]
+
+   AccountNumber[0] on page 1, AccountingNumber[0] on page 3 — a typo in the IRS form's own
+   field naming, on the taxpayer copy. It is RECORDED, never normalised away: an engine that
+   silently repaired it would be deciding that the two names mean the same thing, which is
+   the judgement [R-08] reserves for the printed page. The LEAF names are identical on both
+   sides (AccountNumber1 .. AccountNumber17), which is why the stem key below pairs them and
+   the tail key does not.
+
+3. THE STEM KEY, AND ITS PRECONDITION
+
+   A stem is only a legitimate pair key if it is UNIQUE WITHIN A PAGE. Otherwise two cells on
+   one page would collapse into one pair and the mirror would be declared over a merge.
+     page 1: 83 widget(s), 83 distinct stem(s), 0 repeated within the page
+     page 3: 83 widget(s), 83 distinct stem(s), 0 repeated within the page
+     stems on page 1 only: 0
+     stems on page 3 only: 0
+
+4. IS EVERY PAIR A TRUE MIRROR?
+
+   A shared stem is not yet a mirror. The two copies must be the same KIND of cell, or a
+   value written to both would not mean the same thing on both.
+     page-1/page-3 pairs formed:                       83
+     pairs whose copies differ in type or maxLen:      0
+     pairs whose FULL PATHS differ (the typo above):   17
+     of which checkbox pairs:                          13
+     of which text pairs:                              70
+
+5. LEAF STEMS ACROSS THE WHOLE FORM, AND THE ONE THAT LOOKS LIKE A PAIR AND IS NOT
+
+   distinct leaf stems:        84
+   appearing exactly twice:    84
+   appearing exactly once:     0
+   appearing more than twice:  0
+
+   STEMS APPEARING TWICE THAT ARE NOT PAGE-1/PAGE-3 PAIRS: 1
+     "hyperlink" — both occurrences on the SAME page:
+        page 4  PDFButton      form1[0].Page4_Part2[0].agree_to[0].item[8].hyperlink[0]
+        page 4  PDFButton      form1[0].Page4_Part2[0].installment_payments[0].item8[0].hyperlink[0]
+
+   THIS IS THE FINDING THAT MATTERS FOR THE MIRROR CONSTRUCT. A naive assertion of the form
+   "every stem appears exactly twice" is TRUE of this form and proves nothing, because one of
+   the 84 is a pair of buttons sitting side by side on page 4 rather than a fact printed once
+   on each of two pages. The mirror is therefore declared over the 83 page-1/page-3 pairs and
+   the hyperlink stem is excluded BY NAME, as a declared exclusion rather than a silence.
+
+6. VERDICT — what the page shows, set beside what was expected
+
+   register expected:  168 fields over 84 leaf stems, page 3 the taxpayer copy of page 1
+
+   fields                168        established 168                     AGREES
+   leaf stems            84         established 84                      AGREES
+   page 3 copies page 1  yes        established 83 of page 1's 83 cells   AGREES
+
+   AND THE THREE THINGS THE EXPECTATION DID NOT SAY, EACH OF WHICH CHANGES WHAT MAY BE BUILT:
+
+     a  The 84 stems are NOT 84 mirrored facts. 83 are; the 84th is "hyperlink", two
+        PDFButtons on page 4 that no filer fills. The mirrorable population is 83 pairs.
+     b  Page 3 is a copy of page 1 in its LEAF names and not in its full paths: 17 of the
+        83 pairs differ at the intermediate subform, AccountNumber vs AccountingNumber.
+        A construct keyed on the full path would pair 66 of 83 and silently drop 17.
+     c  Page 2 carries no widgets and page 4 carries no data cells, so every fillable cell on
+        433-D is on page 1 or page 3, and the mirror covers ALL of them rather than most.

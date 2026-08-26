@@ -22,6 +22,11 @@
 //   S2  EVERY MAPPED FORM HAS A SUBJECT. The form list is DERIVED from adapters/pdf/maps/
 //       (`<form>.map.json`), never typed here. A form with a map and no subject entry is a
 //       STOP — that is exactly the state 433-B(OIC) was crosswalked in.
+//       THE OTHER DIRECTION TAKES A DECLARATION. A register entry for a form with no map is a
+//       claim about nothing UNLESS it declares `_pre_map` with a reason, because this register
+//       exists to be filled in BEFORE the crosswalk and therefore before the map. Both halves
+//       are checked: a declared pre-map form must really have no map, and a form that has one
+//       and still declares it is a STOP.
 //
 //   S3  EVERY PAIR IS DECIDED. C(n,2) unordered pairs are derived from the register's own
 //       form list and each must carry a relation. A pair nobody decided is the gap the
@@ -100,10 +105,28 @@ export const subjectRegisterProblems = async () => {
   for (const f of mappedForms())
     if (!forms.includes(f))
       problems.push(`S2 NO SUBJECT  ${f} has a map at adapters/pdf/maps/${f}.map.json and no entry in ${REGISTER}. A form is crosswalked against the subject axis, and a form whose subject nobody derived is crosswalked against leaf names — which is the conflation this register exists to end.`);
-  // And the other way: a register entry for a form with no map is a claim about nothing.
-  for (const f of forms)
-    if (!mappedForms().includes(f))
-      problems.push(`S2 ORPHAN ENTRY  ${REGISTER} registers ${f} and adapters/pdf/maps holds no ${f}.map.json.`);
+  // And the other way: a register entry for a form with no map is a claim about nothing —
+  // UNLESS the entry declares itself PRE-MAP, which is a state this register explicitly asks for.
+  //
+  // THE DEFECT THIS PARAGRAPH REPAIRS. The register's own `_how_to_use_it` reads "BEFORE any
+  // crosswalk. Derive the new form's subject from its printed eligibility text, add it here, and
+  // compare it against every form already registered." Before the crosswalk is before the map.
+  // So the file INSTRUCTS a state that this direction of S2 refused, and 433-D following the
+  // instruction turned the tree red the first time anybody did it. A guard and the document it
+  // guards disagreeing about what the document is for is a defect in the guard.
+  //
+  // AND IT IS A DECLARATION, NOT AN EXEMPTION. `_pre_map` is asserted in both directions: a form
+  // that declares it must really have no map, and a form that HAS a map and declares it anyway
+  // is a STOP — otherwise the phrase would survive the map landing and switch this direction off
+  // permanently for that form, which is the stale-excusal shape [R-14] enumerates.
+  for (const f of forms) {
+    const hasMap = mappedForms().includes(f);
+    const declared = typeof doc.forms[f]?._pre_map === 'string' && doc.forms[f]._pre_map.trim().length > 0;
+    if (!hasMap && !declared)
+      problems.push(`S2 ORPHAN ENTRY  ${REGISTER} registers ${f} and adapters/pdf/maps holds no ${f}.map.json. If the subject was derived ahead of the map — which is what this register's own _how_to_use_it asks for — say so in a \`_pre_map\` key on that form's entry, giving the reason. A silence and a deliberate pre-map derivation must not look the same.`);
+    if (hasMap && declared)
+      problems.push(`S2 STALE PRE-MAP  ${REGISTER} entry for ${f} declares \`_pre_map\` and adapters/pdf/maps/${f}.map.json EXISTS. The declaration has outlived its reason and is now switching off the orphan check for a form that no longer needs it. Remove it.`);
+  }
 
   // ── S3  every unordered pair is decided ───────────────────────────────────────────────
   const key = (a, b) => [a, b].sort().join('|');

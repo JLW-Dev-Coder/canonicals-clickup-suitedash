@@ -380,6 +380,40 @@ const PROBES = {
     { label: 'Page6 Interest_Dividends[1] -> nearest LEFT is printed line marker (33)',
       field: 'topmostSubform[0].F433-A-OIC_Page6[0].Interest_Dividends[1]', wantNearestLeft: /^\(33\)/ },
   ],
+
+  // 433-D. THIS FORM DOES NOT USE topmostSubform[0] AT ALL — its root is form1[0], and its
+  // second component is the PAGE-AND-PART container (Page1_Part1[0], Page3_Part2[0]). Each
+  // probe gives the full path from that root, for the reason the note above this object gives:
+  // reconstructing a prefix from a fragment is where two rounds of 433-F defects entered.
+  //
+  // All three are chosen where the FIELD PATH would give a different answer from the page.
+  '433d': [
+    // THE PROBE THAT MATTERS ON THIS FORM. The intermediate subform is spelled `SSN_EIN` and
+    // this cell is A HOME TELEPHONE NUMBER. The page prints "Your telephone numbers (including
+    // area code)" as the column head and "(Home)" as the row label at y 681.3, x 302.4 — the
+    // same left edge as the widget (x 302.4..442.8) and 3.06pt above its top edge at y 678.24.
+    // A correlation that read the PATH would answer "a social security or employer
+    // identification number", and would be wrong about a cell whose whole content is a phone
+    // number. Two rows of this subform are SSNs and three are not.
+    { label: 'Page1 SSN_EIN[0].Home[0] -> "(Home)", a telephone number, NOT an SSN or EIN',
+      field: 'form1[0].Page1_Part1[0].SSN_EIN[0].Home[0]', want: /^\(Home\)$/ },
+    // "b. Account number" prints at y 375.4, x 18.0..93.5 — its baseline INSIDE the widget's
+    // rectangle (y 372.96..383.04) and to its LEFT, the widget starting at x 122.4. The row
+    // above is "a. Routing number" at y 389.8, a full 14.4pt away, so an off-by-one row here is
+    // visible rather than plausible. Chosen because the page-3 copy of this same cell sits under
+    // a subform spelled `AccountingNumber` (see adapters/pdf/maps/433d.pairs.json): the printed
+    // caption is the same on both pages, which is the fact the mirror rests on and the field
+    // path is the thing that disagrees.
+    { label: 'Page1 AccountNumber[0].AccountNumber1[0] -> "b. Account number"',
+      field: 'form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]', want: /account\s*number/i },
+    // The Debit Payments Self-Identifier box. The leaf name `unable_to_make` is a sentence
+    // fragment that stops before the thing it is about; the page finishes it. "I am unable to
+    // make debit payments." prints at y 260.2, x 36.0 — baseline inside the box's rectangle
+    // (y 258.3..267.3) and 9.0pt to its RIGHT, which is the caption-right layout every checkbox
+    // on this form uses and which no other form in this engine is dominated by.
+    { label: 'Page1 unable_to_make[0] -> "I am unable to make debit payments."',
+      field: 'form1[0].Page1_Part1[0].unable_to_make[0]', want: /unable to make debit payments/i },
+  ],
 };
 
 const allText = (rec) =>

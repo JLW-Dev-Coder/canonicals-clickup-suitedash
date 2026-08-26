@@ -1,0 +1,116 @@
+{
+ "_what_this_is": "The lineage of 433-D's AcroForm leaf names against every form already in this engine, judged PER OCCURRENCE.",
+ "_the_rule": "[R-08]. An inherited leaf name is evidence of nothing; a verdict is per occurrence, never per name.",
+ "_every_figure_here_is_derived": "scratchpad/p52-433d-lineage.mjs, from adapters/pdf/forms/f433d.pdf's widget geometry and each other form's own adapters/pdf/maps/<form>.fields.json. The form list comes from MAPPED_FORMS() and is not typed. The VERDICTS are authored from captions printed near the cell ON BOTH FORMS, produced by scratchpad/p52-433d-lineage-context.mjs and quoted with their coordinates in each row.",
+ "_the_headline": "TWO INHERITED LEAF NAMES, FOUR OCCURRENCES — and the four are two facts, each drawn twice, because every cell on this form is mirrored. Against 433-B's eleven names and seventeen occurrences this is a small intersection, and its SIZE is the least interesting thing about it: one of the two names is attached to the wrong cell in both directions at once.",
+ "_the_intersection_is_small_for_a_structural_reason": "Every other form in this engine roots its fields at `topmostSubform[0]` and names its leaves positionally after the printed line marker — `p1_1_1a`, `p2_t11_13a`, `Line19c`. 433-D roots at `form1[0]` and names its leaves SEMANTICALLY, after what the cell holds: NameAndAddress, RoutingNumber1, unable_to_make, SubmitANew, FiledImmediately. Two schemes that are not the same kind of name can only collide where BOTH happen to have used an English word, which is exactly where they did: `Title` and `YourSignature`. So the small intersection is a fact about the form's ORIGIN — different hands, a different generation of IRS form tooling — and not a fact about its content.",
+ "_a_correction_recorded_rather_than_quietly_fixed": "THIS FILE'S FIRST DRAFT ASSERTED ZERO, and its prose explained at length why zero was the structurally inevitable answer. The derivation returned two. The explanation had been written before the number, was entirely plausible, and was wrong — the two schemes DO meet, on the two leaves where the positional scheme happened to use a word. [R-02]: a correction is a claim and carries the same standard as what it corrects, so the wrong reading is recorded here rather than replaced silently, and the count below is the derived one.",
+ "_and_a_small_intersection_licenses_nothing_either": "[R-08] cuts both ways and the second direction is the one that bites here. Eleven shared names on 433-B licensed nothing, and two shared names on 433-D forbid nothing: 433-D asks for a taxpayer's name and address, an SSN or EIN, and a spouse's signature, and every one of those facts is already a property in this portal under a name derived from another form — under leaf names that share not one character with 433-D's. The reuse question is settled on the SUBJECT axis in adapters/pdf/maps/_subjects.cross-form.json and NOT here, and on that axis 433-D COINCIDES with all five. A pass that read this small intersection as \"almost no reuse\" would be making the identical mistake prompt 47 made in the other direction, which [R-29] records.",
+ "_what_this_report_does_not_establish": [
+  "It says nothing about the 82 leaf names 433-D does not share. Those are judged when their page is read, on the printed page, like everything else.",
+  "It does not license or forbid reuse. That is the subject axis, and it is settled elsewhere.",
+  "The YourSignature MATCHES is a match of PRINTED QUESTIONS and not of subjects — see `the_subject_caveat` on those two rows. It may not be promoted to a reuse on its own.",
+  "No binding was authored in the intake that produced this file, so nothing here has yet been acted on."
+ ],
+ "counts": {
+  "d_fields": 168,
+  "d_distinct_leaf_names": 84,
+  "forms_compared": 5,
+  "forms_unreadable": 0,
+  "shared_leaf_names": 2,
+  "registry_files_read": 2,
+  "registry_entries_searched": 68,
+  "registry_echoes": 0,
+  "occurrences_judged": 4
+ },
+ "_the_registry_intersection": "Name-lie registries exist on 433-A(OIC) (adapters/pdf/maps/433aoi.name-lies.json) and 433-B(OIC) (433boi.name-lies.json). Both were READ on this run and no entry in either names any of the 2 shared leaf name(s) (Title, YourSignature). That is a checked absence over 68 registry entr(ies), not a set that was never opened.",
+ "_unreadable_inputs": [],
+ "occurrences": [
+  {
+   "id": "DLN-01",
+   "leaf": "Title",
+   "path": "form1[0].Page1_Part1[0].Agreement[0].Title[0]",
+   "page": 1,
+   "rect": "y 66.96..77.04, x 226.8..342",
+   "type": "PDFTextField",
+   "verdict": "CONTRADICTS — all four of the other forms' occurrences, and it is the sharpest instance of [R-08] in the tree.",
+   "this_form": "\"Title\" prints at y 69.9, x 201.6..218.6 — baseline INSIDE the cell's rectangle and 8.2pt to its left. It is in the FOR IRS USE ONLY block: the row above is \"Originator’s ID number\" / \"Originator Code\", the row beside it is \"Name\", and two rows below is \"Agreement examined or approved by (Signature, title, function)\". THIS CELL HOLDS THE TITLE OF THE IRS EMPLOYEE WHO ORIGINATES THE AGREEMENT. No taxpayer ever fills it.",
+   "the_other_form": [
+    "433a: topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0] (PDFTextField)",
+    "433aoi: topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page6[0].Title[0] (PDFTextField)"
+   ],
+   "why": "Four occurrences of one leaf name across three forms, every one of them a taxpayer-side title, and the 433-D cell wearing that name is an IRS employee’s. A binding that carried the name across would put an IRS originator’s job title into a property holding a filer’s business role.",
+   "and_the_name_points_the_wrong_way_TWICE": "433-D DOES print the fact the other four are about — \"Title (if Corporate Officer or Partner)\" at y 223.8, x 237.6..367.5, in the taxpayer signature row. ITS WIDGET IS NAMED `TitleIf[0]`, NOT `Title[0]`. So on this form the inherited name is attached to the cell that does NOT correspond, and the cell that DOES correspond carries a name no other form uses. A pass keyed on leaf names would inherit the wrong cell and miss the right one, in a single stroke, and both halves of that are invisible without the printed page.",
+   "inherited_from": [
+    "433a",
+    "433aoi",
+    "433boi"
+   ]
+  },
+  {
+   "id": "DLN-02",
+   "leaf": "Title",
+   "path": "form1[0].Page3_Part2[0].Agreement[0].Title[0]",
+   "page": 3,
+   "rect": "y 66.96..77.04, x 226.803..342.003",
+   "type": "PDFTextField",
+   "verdict": "CONTRADICTS — all four of the other forms' occurrences, and it is the sharpest instance of [R-08] in the tree.",
+   "this_form": "\"Title\" prints at y 69.9, x 201.6..218.6 — baseline INSIDE the cell's rectangle and 8.2pt to its left. It is in the FOR IRS USE ONLY block: the row above is \"Originator’s ID number\" / \"Originator Code\", the row beside it is \"Name\", and two rows below is \"Agreement examined or approved by (Signature, title, function)\". THIS CELL HOLDS THE TITLE OF THE IRS EMPLOYEE WHO ORIGINATES THE AGREEMENT. No taxpayer ever fills it.",
+   "the_other_form": [
+    "433a: topmostSubform[0].Page1[0].c2[0].Line3a[0].tab_order[0].Title[0] (PDFTextField)",
+    "433aoi: topmostSubform[0].F433-A-OIC_Page4[0].Section4[0].OtherBusinessInterests[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo1[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo2[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page1[0].PartnerInfo3[0].Title[0] (PDFTextField)",
+    "433boi: topmostSubform[0].F433-B-OIC_Page6[0].Title[0] (PDFTextField)"
+   ],
+   "why": "Four occurrences of one leaf name across three forms, every one of them a taxpayer-side title, and the 433-D cell wearing that name is an IRS employee’s. A binding that carried the name across would put an IRS originator’s job title into a property holding a filer’s business role.",
+   "and_the_name_points_the_wrong_way_TWICE": "433-D DOES print the fact the other four are about — \"Title (if Corporate Officer or Partner)\" at y 223.8, x 237.6..367.5, in the taxpayer signature row. ITS WIDGET IS NAMED `TitleIf[0]`, NOT `Title[0]`. So on this form the inherited name is attached to the cell that does NOT correspond, and the cell that DOES correspond carries a name no other form uses. A pass keyed on leaf names would inherit the wrong cell and miss the right one, in a single stroke, and both halves of that are invisible without the printed page.",
+   "inherited_from": [
+    "433a",
+    "433aoi",
+    "433boi"
+   ]
+  },
+  {
+   "id": "DLN-03",
+   "leaf": "YourSignature",
+   "path": "form1[0].Page1_Part1[0].YourSignature[0]",
+   "page": 1,
+   "rect": "y 208.8..221.04, x 18..176.4",
+   "type": "PDFTextField",
+   "verdict": "MATCHES on the printed question — and the match settles nothing about the subject, which is the caveat this form makes unavoidable.",
+   "this_form": "\"Your signature\" prints at y 223.8, x 18.0..76.5 — directly above the cell (y 208.8..221.04, x 18.0..176.4), sharing its left edge to within 0.003pt.",
+   "the_other_form": [
+    "433f: topmostSubform[0].Page2[0].YourSignature[0] (PDFTextField)"
+   ],
+   "why": "Both cells hold the signature of the person filing the form, captioned identically. As a printed question these are the same question.",
+   "the_subject_caveat": "AND [R-06] RUNS ON THE SUBJECT, NOT THE QUESTION. On 433-F the filer is a wage earner or self-employed individual and can be nothing else. On 433-D the very next cell in the same printed row is \"Title (if Corporate Officer or Partner)\", so the person signing may be an individual OR an officer signing FOR an entity — the per-record subject recorded in _subjects.cross-form.json under `the_thing_this_form_does_that_no_other_registered_form_does`. So this MATCHES cannot be promoted to a reuse on its own: the printed questions agree and the legal persons may not. Recorded here rather than resolved, because resolving it is the crosswalk’s job and no crosswalk exists.",
+   "inherited_from": [
+    "433f"
+   ]
+  },
+  {
+   "id": "DLN-04",
+   "leaf": "YourSignature",
+   "path": "form1[0].Page3_Part2[0].YourSignature[0]",
+   "page": 3,
+   "rect": "y 208.8..221.04, x 18.003..176.40299999999996",
+   "type": "PDFTextField",
+   "verdict": "MATCHES on the printed question — and the match settles nothing about the subject, which is the caveat this form makes unavoidable.",
+   "this_form": "\"Your signature\" prints at y 223.8, x 18.0..76.5 — directly above the cell (y 208.8..221.04, x 18.0..176.4), sharing its left edge to within 0.003pt.",
+   "the_other_form": [
+    "433f: topmostSubform[0].Page2[0].YourSignature[0] (PDFTextField)"
+   ],
+   "why": "Both cells hold the signature of the person filing the form, captioned identically. As a printed question these are the same question.",
+   "the_subject_caveat": "AND [R-06] RUNS ON THE SUBJECT, NOT THE QUESTION. On 433-F the filer is a wage earner or self-employed individual and can be nothing else. On 433-D the very next cell in the same printed row is \"Title (if Corporate Officer or Partner)\", so the person signing may be an individual OR an officer signing FOR an entity — the per-record subject recorded in _subjects.cross-form.json under `the_thing_this_form_does_that_no_other_registered_form_does`. So this MATCHES cannot be promoted to a reuse on its own: the printed questions agree and the legal persons may not. Recorded here rather than resolved, because resolving it is the crosswalk’s job and no crosswalk exists.",
+   "inherited_from": [
+    "433f"
+   ]
+  }
+ ]
+}

@@ -452,6 +452,145 @@
      "text": "Under penalties of perjury, I declare that to the best of my knowledge and belief this statement of assets, liabilities, and other"
     }
    }
+  },
+  "433d": {
+   "form_file": "adapters/pdf/forms/f433d.pdf",
+   "subject": "BOTH LEGAL PERSONS, AND THE FORM DOES NOT PARTITION THEM — a natural person (alone, or jointly with a spouse) OR a business entity. 433-D is the first form in this register whose subject is not fixed by the form.",
+   "the_legal_person": "whichever one the filer identifies: the taxpayer named by an SSN or ITIN, or the entity named by an EIN. The form offers both on one printed line and asks the filer to supply one.",
+   "_no_eligibility_text": "THERE IS NO ELIGIBILITY SENTENCE ANYWHERE ON THIS FORM — not on page 1, and not in the INSTRUCTIONS TO TAXPAYER on page 4. This is the same absence 433-B has, and it was settled the same way, by reading the drawn page rather than by asking what a map reaches.",
+   "_the_absence_was_verified_against_the_drawn_page": "Every drawn run of all four pages was joined and searched for six eligibility phrases — \"sole propri\", \"do not use\", \"complete this form if\", \"use this form\", \"who should\", \"purpose of this form\". ALL SIX RETURN ZERO ON ALL FOUR PAGES. Page 2 draws no runs at all and so returns zero for the trivial reason, which is stated rather than counted as evidence. The phrases that DO hit — \"individual\", \"business\", \"wage earner\", \"self-employed\", \"corporat\", \"employer identification\", \"joint\" — hit inside the identity block, the assistance line, the signature block and the IRS-use review codes, which are the four places the subject is read from below. None of them is a sentence about who may file.",
+   "_so_the_subject_is_read_from": "FOUR PRINTED PLACES, the same four kinds 433-B was read from, and on this form they point BOTH ways rather than one way. (1) THE IDENTITY BLOCK: \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\" over \"(Taxpayer)\" and \"(Spouse)\" — an SSN or ITIN names a natural person, an EIN names an entity, and the form prints them on one line as alternatives. (2) THE SIGNATURE BLOCK: \"Your signature\", \"Title (if Corporate Officer or Partner)\" and \"Spouse’s signature (if a joint liability)\" — an officer or partner signs FOR an entity, a spouse signs for a joint individual liability, and both are provided for on one row. (3) THE ASSISTANCE LINE, which names both in as many words: \"1-800-829-3903 (Individual - Self-Employed/Business Owners, Businesses)\" and \"1-800-829-7650 (Individuals - Wage Earners)\". (4) THE IRS-USE REVIEW CODES: \"RSI “5” PPIA IMF 2 year review\" and \"RSI “6” PPIA BMF 2 year review\" — the Individual Master File and the Business Master File, so the form’s own processing provides for an account of either kind. THE TITLE, unusually, names no subject at all: \"Installment Agreement\" is a statement about what the document does and not about who it is about, which is why it is quoted and then not relied on.",
+   "read_from": [
+    "title.1",
+    "who.taxpayers",
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "_two_of_those_are_cited_for_what_they_do_not_say": "title.1 is \"433-D\" and who.taxpayers is \"Name and address of taxpayer(s)\". NEITHER NAMES A KIND OF LEGAL PERSON. They are in read_from because the subject reading rests partly on their SILENCE — every other form in this register names its subject in its title or in a bullet list, and this one has a masthead that names only the form number and an identity caption that says \"taxpayer(s)\" and stops. An absence load-bearing enough to be reasoned from is quoted and cited like any other evidence; leaving it uncited would make it an unstated premise.",
+   "_pre_map": "THIS FORM HAS NO adapters/pdf/maps/433d.map.json AND THAT IS DELIBERATE. This register's own `_how_to_use_it` says to derive a new form's subject and add it here BEFORE any crosswalk, which necessarily means before the map. adapters/pdf/assert-subject-register.mjs S2 asserts both directions of the map/register correspondence and its ORPHAN direction refused exactly this state, so following the register's instruction turned the tree red — recorded and repaired in the same commit. The declaration is CHECKED, not an exemption: S2 requires that a form declaring `_pre_map` really has no map, and a form that has one and declares this anyway is a STOP.",
+   "the_thing_this_form_does_that_no_other_registered_form_does": "THE SUBJECT IS PER RECORD, NOT PER FORM. Every other form in this register fixes its subject in print: 433-A(OIC) opens six bullets all beginning \"An individual\", 433-B(OIC) opens \"Complete this form if your business is a\" and expels the sole proprietorship by name. 433-D draws no such gate in either direction. One filed 433-D is about a natural person; the next is about a corporation; the form is the same form and nothing printed on it distinguishes them except which identifier the filer wrote. [R-06]’s naming test runs on the SUBJECT — and on this form the subject is not a property of the form, so the test cannot be answered once for the whole form the way it was for the other five. That is a finding about what may be built and it is recorded before any crosswalk exists, which is what this register is for.",
+   "where_the_business_facts_sit": "NOWHERE, and that is the reason the ambiguity above is survivable. 433-D collects no financial statement at all — it is an agreement, not a collection information statement. Its cells are identity, the tax periods and amount owed, the payment schedule, bank routing and account numbers, signatures, and an IRS-use block. There is no section whose subject switches, because there is only ever one subject per filed copy and every cell takes it.",
+   "where_read_from": [
+    "agreement.stem",
+    "title.2",
+    "part.1",
+    "part.2"
+   ],
+   "the_copy_structure_and_why_it_is_in_this_file": "THE FACTS SIT ON TWO COPIES, WHICH IS THE OTHER HALF OF \"where they sit\". The two page footers are quoted because the mirror construct rests on them: page 1 is \"Part 1 — IRS Copy\" and page 3 is \"Part 2 — Taxpayer’s Copy\". The two copies carry the SAME 83 cells about the SAME subject — established cell by cell, not inferred from the footers — which is what makes a one-sided binding an error rather than a choice. The full pair structure is in adapters/pdf/maps/433d.pairs.json and is not restated here.",
+   "quotes": {
+    "title.1": {
+     "page": 1,
+     "y": 752.1,
+     "x1": 63.3,
+     "x2": 106.8,
+     "text": "433-D"
+    },
+    "title.2": {
+     "page": 1,
+     "y": 745.3,
+     "x1": 273.8,
+     "x2": 446.2,
+     "text": "Installment Agreement"
+    },
+    "who.taxpayers": {
+     "page": 1,
+     "y": 717.2,
+     "x1": 18,
+     "x2": 151.6,
+     "text": "Name and address of taxpayer(s)"
+    },
+    "who.ssn_or_ein": {
+     "page": 1,
+     "y": 717.2,
+     "x1": 302.4,
+     "x2": 564.5,
+     "text": "Social Security or Employer Identification Number (SSN/ITIN/EIN)"
+    },
+    "who.taxpayer": {
+     "page": 1,
+     "y": 705.8,
+     "x1": 302.4,
+     "x2": 341.1,
+     "text": "(Taxpayer)"
+    },
+    "who.spouse": {
+     "page": 1,
+     "y": 705.8,
+     "x1": 450,
+     "x2": 482.5,
+     "text": "(Spouse)"
+    },
+    "who.assistance_business": {
+     "page": 1,
+     "y": 648.8,
+     "x1": 302.4,
+     "x2": 591.7,
+     "text": "1-800-829-3903 (Individual - Self-Employed/Business Owners, Businesses), or"
+    },
+    "who.assistance_wage": {
+     "page": 1,
+     "y": 640.8,
+     "x1": 302.4,
+     "x2": 465.8,
+     "text": "1-800-829-7650 (Individuals - Wage Earners)"
+    },
+    "signer.title": {
+     "page": 1,
+     "y": 223.8,
+     "x1": 256.8,
+     "x2": 367.5,
+     "text": "(if Corporate Officer or Partner)"
+    },
+    "signer.spouse": {
+     "page": 1,
+     "y": 223.8,
+     "x1": 460.4,
+     "x2": 519.5,
+     "text": "(if a joint liability)"
+    },
+    "irs.rsi5_imf": {
+     "page": 1,
+     "y": 141.4,
+     "x1": 36,
+     "x2": 161.5,
+     "text": "RSI “5” PPIA IMF 2 year review"
+    },
+    "irs.rsi6_bmf": {
+     "page": 1,
+     "y": 127,
+     "x1": 36,
+     "x2": 165,
+     "text": "RSI “6” PPIA BMF 2 year review"
+    },
+    "agreement.stem": {
+     "page": 1,
+     "y": 562.4,
+     "x1": 18,
+     "x2": 498.2,
+     "text": "I / We agree to pay the federal taxes shown above, PLUS PENALTIES AND INTEREST PROVIDED BY LAW, as follows"
+    },
+    "part.1": {
+     "page": 1,
+     "y": 11.8,
+     "x1": 294.7,
+     "x2": 344.8,
+     "text": "— IRS Copy"
+    },
+    "part.2": {
+     "page": 3,
+     "y": 11.8,
+     "x1": 280.2,
+     "x2": 359.3,
+     "text": "— Taxpayer’s Copy"
+    }
+   }
   }
  },
  "pairs": [
@@ -620,17 +759,136 @@
    "why": "THE SAME FOUR ENTITY KINDS, NAMED IN THE SAME WORDS ON BOTH PAGES. 433-B(OIC) prints \"Complete this form if your business is a\" over Corporation, Limited Liability Company (LLC) classified as a corporation, Partnership, Other LLC. 433-B prints \"Type of entity (Check appropriate box below)\" over Partnership, Corporation, Limited Liability Company (LLC) classified as a corporation, Other LLC - Include number of members. Both are signed for the entity rather than by it — 433-B by an \"Officer, Partner or LLC Member\". A fact shared between these two can take one property.",
    "the_open_edge_carried_rather_than_smoothed": "THE LISTS ARE NOT IDENTICAL. 433-B prints a fifth box, \"Other\" (page 1, y 628.7, x 466.7..486.7), with a free-text cell beside it; 433-B(OIC) has no such box, and expels the sole proprietorship by name where 433-B says nothing. So on 433-B's OWN printed evidence there is no sentence closing the \"Other\" box against a sole proprietorship, and the only text that closes it is printed on 433-A. The four named kinds coincide and that is what the verdict rests on; the fifth box is an open edge, carried as [B-02] and NOT resolved.",
    "what_this_answers": "The register's own `the_next_question` asked whether 433-B shares 433-B(OIC)'s subject and recorded that it had not been shown. It is now shown, from both forms' own pages, subject to the open edge above."
+  },
+  {
+   "a": "433d",
+   "b": "433a",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "basis_b": [
+    "title.1",
+    "title.2",
+    "who.wage_earners",
+    "who.self_employed"
+   ],
+   "why": "COINCIDE, AND IT IS THE WEAKER KIND OF COINCIDENCE — 433-D ADMITS this subject rather than being ABOUT it. 433-D prints \"(Taxpayer)\" and \"(Spouse)\" beneath \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\", provides a spouse signature line \"(if a joint liability)\", and routes wage earners to their own assistance number, \"1-800-829-7650 (Individuals - Wage Earners)\". Its IRS-use block provides for an IMF — Individual Master File — review. So a natural person is unambiguously one of the legal persons this form can be about, and a fact shared with it can take one property. What it does NOT establish is the converse: 433-D also admits an entity, so a 433-D record is only about this subject when the filer supplied an SSN or ITIN. See `the_asymmetry_this_pair_carries`.",
+   "the_asymmetry_this_pair_carries": "THIS IS NOT THE SAME RELATION AS THE FIVE COINCIDENCES ALREADY IN THIS REGISTER, AND FLATTENING IT WOULD BE THE SENTENCE-SOFTENING THIS FILE REFUSES. 433-A and 433-F coincide because BOTH forms are about the individual and neither admits anything else. 433-D coincides with 433-A AND with 433-B, which are MUTUALLY EXCLUSIVE with each other — a triangle no other three forms here form. That is not a contradiction: it is what a form with no printed eligibility gate produces. The operational consequence is stated at 433-D’s `the_thing_this_form_does_that_no_other_registered_form_does`: the subject is per record, so a 433-D key’s reuse verdict cannot be settled by this axis ALONE the way the other five were. Recorded before any crosswalk, and NOT resolved here."
+  },
+  {
+   "a": "433d",
+   "b": "433f",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "basis_b": [
+    "who.1",
+    "who.2",
+    "who.3"
+   ],
+   "why": "COINCIDE, AND IT IS THE WEAKER KIND OF COINCIDENCE — 433-D ADMITS this subject rather than being ABOUT it. 433-D prints \"(Taxpayer)\" and \"(Spouse)\" beneath \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\", provides a spouse signature line \"(if a joint liability)\", and routes wage earners to their own assistance number, \"1-800-829-7650 (Individuals - Wage Earners)\". Its IRS-use block provides for an IMF — Individual Master File — review. So a natural person is unambiguously one of the legal persons this form can be about, and a fact shared with it can take one property. What it does NOT establish is the converse: 433-D also admits an entity, so a 433-D record is only about this subject when the filer supplied an SSN or ITIN. See `the_asymmetry_this_pair_carries`.",
+   "the_asymmetry_this_pair_carries": "THIS IS NOT THE SAME RELATION AS THE FIVE COINCIDENCES ALREADY IN THIS REGISTER, AND FLATTENING IT WOULD BE THE SENTENCE-SOFTENING THIS FILE REFUSES. 433-A and 433-F coincide because BOTH forms are about the individual and neither admits anything else. 433-D coincides with 433-A AND with 433-B, which are MUTUALLY EXCLUSIVE with each other — a triangle no other three forms here form. That is not a contradiction: it is what a form with no printed eligibility gate produces. The operational consequence is stated at 433-D’s `the_thing_this_form_does_that_no_other_registered_form_does`: the subject is per record, so a 433-D key’s reuse verdict cannot be settled by this axis ALONE the way the other five were. Recorded before any crosswalk, and NOT resolved here."
+  },
+  {
+   "a": "433d",
+   "b": "433aoi",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "basis_b": [
+    "who.stem",
+    "who.b1",
+    "who.b6"
+   ],
+   "why": "COINCIDE, AND IT IS THE WEAKER KIND OF COINCIDENCE — 433-D ADMITS this subject rather than being ABOUT it. 433-D prints \"(Taxpayer)\" and \"(Spouse)\" beneath \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\", provides a spouse signature line \"(if a joint liability)\", and routes wage earners to their own assistance number, \"1-800-829-7650 (Individuals - Wage Earners)\". Its IRS-use block provides for an IMF — Individual Master File — review. So a natural person is unambiguously one of the legal persons this form can be about, and a fact shared with it can take one property. What it does NOT establish is the converse: 433-D also admits an entity, so a 433-D record is only about this subject when the filer supplied an SSN or ITIN. See `the_asymmetry_this_pair_carries`.",
+   "the_asymmetry_this_pair_carries": "THIS IS NOT THE SAME RELATION AS THE FIVE COINCIDENCES ALREADY IN THIS REGISTER, AND FLATTENING IT WOULD BE THE SENTENCE-SOFTENING THIS FILE REFUSES. 433-A and 433-F coincide because BOTH forms are about the individual and neither admits anything else. 433-D coincides with 433-A AND with 433-B, which are MUTUALLY EXCLUSIVE with each other — a triangle no other three forms here form. That is not a contradiction: it is what a form with no printed eligibility gate produces. The operational consequence is stated at 433-D’s `the_thing_this_form_does_that_no_other_registered_form_does`: the subject is per record, so a 433-D key’s reuse verdict cannot be settled by this axis ALONE the way the other five were. Recorded before any crosswalk, and NOT resolved here."
+  },
+  {
+   "a": "433d",
+   "b": "433b",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "basis_b": [
+    "entity.b1",
+    "entity.b2",
+    "entity.b4",
+    "entity.b5",
+    "signer.print_name"
+   ],
+   "why": "COINCIDE, AND IT IS THE WEAKER KIND OF COINCIDENCE — 433-D ADMITS this subject rather than being ABOUT it. 433-D offers an \"Employer Identification Number (EIN)\" on the same printed line as the SSN, provides a signature Title \"(if Corporate Officer or Partner)\" — a person signing FOR another legal person, which is the same evidence 433-B’s subject was read from — and routes \"Business Owners, Businesses\" to their own assistance number. Its IRS-use block provides for a BMF — Business Master File — review. So a business entity is unambiguously one of the legal persons this form can be about, and a fact shared with it can take one property. See `the_asymmetry_this_pair_carries`.",
+   "the_asymmetry_this_pair_carries": "THIS IS NOT THE SAME RELATION AS THE FIVE COINCIDENCES ALREADY IN THIS REGISTER, AND FLATTENING IT WOULD BE THE SENTENCE-SOFTENING THIS FILE REFUSES. 433-A and 433-F coincide because BOTH forms are about the individual and neither admits anything else. 433-D coincides with 433-A AND with 433-B, which are MUTUALLY EXCLUSIVE with each other — a triangle no other three forms here form. That is not a contradiction: it is what a form with no printed eligibility gate produces. The operational consequence is stated at 433-D’s `the_thing_this_form_does_that_no_other_registered_form_does`: the subject is per record, so a 433-D key’s reuse verdict cannot be settled by this axis ALONE the way the other five were. Recorded before any crosswalk, and NOT resolved here."
+  },
+  {
+   "a": "433d",
+   "b": "433boi",
+   "relation": "COINCIDE",
+   "basis_a": [
+    "who.ssn_or_ein",
+    "who.taxpayer",
+    "who.spouse",
+    "signer.title",
+    "signer.spouse",
+    "who.assistance_business",
+    "who.assistance_wage",
+    "irs.rsi5_imf",
+    "irs.rsi6_bmf"
+   ],
+   "basis_b": [
+    "who.stem",
+    "who.b1",
+    "who.b2",
+    "who.b3",
+    "who.b4"
+   ],
+   "why": "COINCIDE, AND IT IS THE WEAKER KIND OF COINCIDENCE — 433-D ADMITS this subject rather than being ABOUT it. 433-D offers an \"Employer Identification Number (EIN)\" on the same printed line as the SSN, provides a signature Title \"(if Corporate Officer or Partner)\" — a person signing FOR another legal person, which is the same evidence 433-B’s subject was read from — and routes \"Business Owners, Businesses\" to their own assistance number. Its IRS-use block provides for a BMF — Business Master File — review. So a business entity is unambiguously one of the legal persons this form can be about, and a fact shared with it can take one property. See `the_asymmetry_this_pair_carries`.",
+   "the_asymmetry_this_pair_carries": "THIS IS NOT THE SAME RELATION AS THE FIVE COINCIDENCES ALREADY IN THIS REGISTER, AND FLATTENING IT WOULD BE THE SENTENCE-SOFTENING THIS FILE REFUSES. 433-A and 433-F coincide because BOTH forms are about the individual and neither admits anything else. 433-D coincides with 433-A AND with 433-B, which are MUTUALLY EXCLUSIVE with each other — a triangle no other three forms here form. That is not a contradiction: it is what a form with no printed eligibility gate produces. The operational consequence is stated at 433-D’s `the_thing_this_form_does_that_no_other_registered_form_does`: the subject is per record, so a 433-D key’s reuse verdict cannot be settled by this axis ALONE the way the other five were. Recorded before any crosswalk, and NOT resolved here. AND THIS PAIR CARRIES ONE MORE THING: 433-B(OIC) EXPELS THE SOLE PROPRIETORSHIP BY NAME and 433-D expels nothing, so a sole proprietor who may not use 433-B(OIC) may use 433-D. The coincidence is over the four named entity kinds only."
   }
  ],
  "_not_in_this_register": {
-  "433-B": "NOT DERIVED. Its subject is what decides whether 433-B(OIC)'s 113 form-specific properties were the right answer or an artefact of reading one form. Derive it from 433-B's own printed eligibility text when 433-B opens, and compare it against all four here BEFORE any crosswalk reasoning. If it shares a subject with 433-B(OIC), the reuse picture is nothing like what eleven shared leaf names suggested. Deriving it now was excluded by the prompt's scope line.",
-  "433-D": "NOT DERIVED. No map, and its mirror construct ([D-01]) is a page problem rather than a subject one — but the subject is still derived before its crosswalk, not after.",
-  "433-H": "NOT DERIVED. Zero AcroForm fields; a feasibility question rather than a form."
+  "433-H": "NOT DERIVED. Zero AcroForm fields; a feasibility question rather than a form. Its subject cannot be established the way every entry here was, because the method is to quote a locator on a drawn page and re-read it on every run, and an XFA-only document has no drawn page this engine reads.",
+  "_and_the_two_that_left_this_list": "ENTRIES ARE REMOVED FROM HERE ONLY WHEN THEY APPEAR ABOVE, never because they stopped being interesting. 433-B was derived in prompt 46 and 433-D in prompt 52, and each is now a full entry with its own quotes. This note exists because both sat in this list, marked NOT DERIVED, for a cycle AFTER they had been derived — the register on disk carried a 433-B entry and a \"433-B: NOT DERIVED\" line at the same time — which is a list contradicting the document that holds it."
  },
- "the_next_question": "ANSWERED FOR 433-B, and its answer is recorded in the 433b/433boi pair above: the two coincide on the four entity kinds both pages name, with 433-B's fifth \"Other\" box carried as [B-02] because nothing 433-B prints closes it. WHAT IS STILL OPEN: 433-D and 433-H have no subject entry. 433-D is an instalment agreement rather than a collection information statement and may not have a subject in this register's sense at all; 433-H carries zero AcroForm fields and cannot be read by this engine, so its subject cannot be established the way every entry here was.",
+ "the_next_question": "CAN A FORM WITH NO PRINTED ELIGIBILITY GATE BE CROSSWALKED ON THIS AXIS AT ALL? 433-D COINCIDES WITH ALL FIVE other registered forms, including with two — 433-A and 433-B — that are MUTUALLY EXCLUSIVE with each other. That is not a contradiction in the register; it is what a form that partitions nobody produces, and 433-D partitions nobody: it offers an SSN or an EIN on one printed line, a spouse signature and a corporate-officer title in one row, and IMF and BMF review codes in one block. THE CONSEQUENCE IS OPERATIONAL AND IT IS NOT SETTLED HERE. [R-06]'s naming test runs on the SUBJECT, and every previous form fixed its subject in print, so the test could be answered once for the whole form. On 433-D the subject is fixed by the FILER, per record. So a 433-D key that looks like an existing individual property and a 433-D key that looks like an existing entity property may BOTH be right, for different filers, through the same cell. What decides a 433-D reuse is therefore not this axis alone, and the thing that decides it has not been built. It is carried as [D-21] and must be answered BEFORE 433-D's crosswalk, not during it.",
  "_count": {
-  "forms": 5,
-  "quotes": 47,
-  "pairs": 10
+  "forms": 6,
+  "quotes": 62,
+  "pairs": 15
  }
 }

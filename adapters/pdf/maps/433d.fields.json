@@ -1,0 +1,679 @@
+{
+  "form": "433d",
+  "source": "adapters/pdf/forms/f433d.pdf",
+  "count": 168,
+  "fields": [
+    {
+      "name": "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].NameAndAddress[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].SubmitANew[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SSN_EIN[0].Taxpayer[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SSN_EIN[0].Spouse[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SSN_EIN[0].Home[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SSN_EIN[0].WorkCellBusiness[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SSN_EIN[0].OrWrite[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].KindsOfTaxes[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].TaxPeriods[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AsOf[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AmountOwed[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].DollarAmount[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].DatePaid[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].AndDollarAmount[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].OnThe[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Initial[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AdditionalConditions[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].unable_to_make[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].YourSignature[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Date1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].TitleIf[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Date2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].SpouseSignature[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AI0[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].EarliestCSED[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].CheckBoxIf[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].OriginatorID[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].OriginatorCode[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].Name[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Agreement[0].Title[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].AgreementExamined[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page1_Part1[0].Date3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].NameAndAddress[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].SubmitANew[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SSN_EIN[0].Taxpayer[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SSN_EIN[0].Spouse[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SSN_EIN[0].Home[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SSN_EIN[0].WorkCellBusiness[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SSN_EIN[0].OrWrite[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].KindsOfTaxes[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].TaxPeriods[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AsOf[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AmountOwed[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].DollarAmount[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].DatePaid[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].AndDollarAmount[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].OnThe[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Initial[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AdditionalConditions[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber7[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber8[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber9[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber7[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber8[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber9[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber10[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber11[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber12[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber13[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber14[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber15[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber16[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber17[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].unable_to_make[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].YourSignature[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Date1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].TitleIf[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Date2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].SpouseSignature[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].RSI1[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AI0[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].RSI5[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AI1[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].RSI6[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AI2[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].EarliestCSED[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].CheckBoxIf[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].OriginatorID[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].OriginatorCode[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].Name[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Agreement[0].Title[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Notice[0].HasAlready[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Notice[0].FiledImmediately[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Notice[0].FiledWhen[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Notice[0].MayBe[0]",
+      "type": "PDFCheckBox"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].AgreementExamined[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page3_Part2[0].Date3[0]",
+      "type": "PDFTextField"
+    },
+    {
+      "name": "form1[0].Page4_Part2[0].agree_to[0].item[8].hyperlink[0]",
+      "type": "PDFButton"
+    },
+    {
+      "name": "form1[0].Page4_Part2[0].installment_payments[0].item8[0].hyperlink[0]",
+      "type": "PDFButton"
+    }
+  ]
+}
