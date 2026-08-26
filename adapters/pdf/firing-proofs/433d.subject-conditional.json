@@ -1,0 +1,327 @@
+{
+ "_standard": "[R-28]",
+ "_standard_is": "adapters/pdf/firing-proofs.mjs STANDARD — [FS-1] at the step, [FS-2] the broken line, [FS-3] the others read as expected, [FS-4] one break each, [FS-5] it stops firing.",
+ "form": "433d",
+ "_generated_by": "scratchpad/p54-433d-prove-sc7-fires.mjs",
+ "tool_under_test": "adapters/pdf/fill-433d.mjs, reached through gate step 7",
+ "_what_the_declared_lines_ARE": "THE SUBJECT-CONDITIONAL CELLS, one declared line each, printed by the fill engine as `SC7 <stem> <verdict>` on every run whether it passes or fails. They are read out of adapters/pdf/maps/433d.map.json rather than listed here, so a sixth conditional cell is broken the day it is declared and a cell that stops being conditional stops being broken.",
+ "_why_the_step_is_7": "The declaration lives in the FILL engine, which is gate step 7. That is asserted rather than assumed: [FS-1] compares the step the run failed at against the step declared here, and a break that tripped an earlier step — a tampered fixture at step 3, the shape that once produced two false PROVED reports — fails this condition rather than passing it.",
+ "records_swept": [
+  "samples/433d.sample.json",
+  "samples/433d.entity.sample.json"
+ ],
+ "declarations_on_this_tool": 5,
+ "declarations_source": "adapters/pdf/maps/433d.map.json subject_classes, filtered to class === \"conditional\"",
+ "_both_sides_broken": "The five declarations split 3 individual / 2 entity, and every one is broken separately. A proof that only ever broke one side would prove the assertion fires on individual-only cells and say nothing about entity-only ones — which is the direction the binary discriminator got wrong.",
+ "clean_run_after_every_revert": true,
+ "_the_revert": {
+  "sandbox": "adapters/pdf/tmp/p54-sc7",
+  "sandbox_removed": true,
+  "committed_fixtures_unchanged": true,
+  "digests_before": {
+   "samples/433d.sample.json": "543dfca49f8861b2c652e71b10f7d82c60e25393dc66bcfae0e04192d1df2abf",
+   "samples/433d.entity.sample.json": "16fdae6566eb277a505a62336709e465371e5cd242e19209b9a37d6251523f49"
+  },
+  "digests_after": {
+   "samples/433d.sample.json": "543dfca49f8861b2c652e71b10f7d82c60e25393dc66bcfae0e04192d1df2abf",
+   "samples/433d.entity.sample.json": "16fdae6566eb277a505a62336709e465371e5cd242e19209b9a37d6251523f49"
+  },
+  "clean_runs": [
+   {
+    "fixture": "samples/433d.sample.json",
+    "exit": 0,
+    "passed": true
+   },
+   {
+    "fixture": "samples/433d.entity.sample.json",
+    "exit": 0,
+    "passed": true
+   }
+  ],
+  "_why_digests_at_all": "No committed byte is edited by this prover — the broken records are synthesised into a gitignored sandbox. The digests are taken anyway, because \"I did not touch it\" is a claim by the thing being checked, and [FS-5] exists so that the failure above is the break rather than a difference in the input."
+ },
+ "breaks": [
+  {
+   "declaration": "subject-conditional emptiness | 433d | Spouse",
+   "line": "Spouse",
+   "caption": "(Spouse)",
+   "record": "adapters/pdf/tmp/p54-sc7/Spouse.json",
+   "record_role": "synthesised in a gitignored sandbox; no committed byte was edited",
+   "record_built_from": "samples/433d.entity.sample.json",
+   "record_subject": "entity",
+   "broke": {
+    "key": "433d_spouse",
+    "from": "",
+    "to": "X"
+   },
+   "break_size": "one character",
+   "break_size_derived_from": "the cell is a TEXT FIELD and the assertion compares presence against absence rather than magnitude, so the smallest expressible break is ONE CHARACTER. The coarsest unit among everything any break in this record moves is one tick, from the two checkbox cells; the text breaks are held to one character so that no break is larger than the coarsest unit demands.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433d adapters/pdf/tmp/p54-sc7/Spouse.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 7,
+   "step_the_declaration_lives_in": 7,
+   "broken_line_verbatim": "SC7 Spouse               NOT EMPTY  exists only for the individual subject; this record declares entity",
+   "broken_line_verdict": "NOT EMPTY",
+   "failing_verdict": "NOT EMPTY",
+   "passing_verdict": "empty",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "TitleIf",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 TitleIf              SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.TitleIf.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "SpouseSignature",
+     "verdict": "empty",
+     "verbatim": "SC7 SpouseSignature      empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "RSI5",
+     "verdict": "empty",
+     "verbatim": "SC7 RSI5                 empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "RSI6",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 RSI6                 SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.RSI6.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "subject-conditional emptiness | 433d | TitleIf",
+   "line": "TitleIf",
+   "caption": "(if Corporate Officer or Partner)",
+   "record": "adapters/pdf/tmp/p54-sc7/TitleIf.json",
+   "record_role": "synthesised in a gitignored sandbox; no committed byte was edited",
+   "record_built_from": "samples/433d.sample.json",
+   "record_subject": "individual",
+   "broke": {
+    "key": "433d_title_if",
+    "from": "",
+    "to": "X"
+   },
+   "break_size": "one character",
+   "break_size_derived_from": "the cell is a TEXT FIELD and the assertion compares presence against absence rather than magnitude, so the smallest expressible break is ONE CHARACTER. The coarsest unit among everything any break in this record moves is one tick, from the two checkbox cells; the text breaks are held to one character so that no break is larger than the coarsest unit demands.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433d adapters/pdf/tmp/p54-sc7/TitleIf.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 7,
+   "step_the_declaration_lives_in": 7,
+   "broken_line_verbatim": "SC7 TitleIf              NOT EMPTY  exists only for the entity subject; this record declares individual",
+   "broken_line_verdict": "NOT EMPTY",
+   "failing_verdict": "NOT EMPTY",
+   "passing_verdict": "empty",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "Spouse",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 Spouse               SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.Spouse.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "SpouseSignature",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 SpouseSignature      SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.SpouseSignature.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "RSI5",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 RSI5                 SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.RSI5.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "RSI6",
+     "verdict": "empty",
+     "verbatim": "SC7 RSI6                 empty      exists only for the entity subject; this record declares individual",
+     "expected": "empty"
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "subject-conditional emptiness | 433d | SpouseSignature",
+   "line": "SpouseSignature",
+   "caption": "Spouse’s signature",
+   "record": "adapters/pdf/tmp/p54-sc7/SpouseSignature.json",
+   "record_role": "synthesised in a gitignored sandbox; no committed byte was edited",
+   "record_built_from": "samples/433d.entity.sample.json",
+   "record_subject": "entity",
+   "broke": {
+    "key": "433d_spouse_signature",
+    "from": "",
+    "to": "X"
+   },
+   "break_size": "one character",
+   "break_size_derived_from": "the cell is a TEXT FIELD and the assertion compares presence against absence rather than magnitude, so the smallest expressible break is ONE CHARACTER. The coarsest unit among everything any break in this record moves is one tick, from the two checkbox cells; the text breaks are held to one character so that no break is larger than the coarsest unit demands.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433d adapters/pdf/tmp/p54-sc7/SpouseSignature.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 7,
+   "step_the_declaration_lives_in": 7,
+   "broken_line_verbatim": "SC7 SpouseSignature      NOT EMPTY  exists only for the individual subject; this record declares entity",
+   "broken_line_verdict": "NOT EMPTY",
+   "failing_verdict": "NOT EMPTY",
+   "passing_verdict": "empty",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "Spouse",
+     "verdict": "empty",
+     "verbatim": "SC7 Spouse               empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "TitleIf",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 TitleIf              SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.TitleIf.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "RSI5",
+     "verdict": "empty",
+     "verbatim": "SC7 RSI5                 empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "RSI6",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 RSI6                 SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.RSI6.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "subject-conditional emptiness | 433d | RSI5",
+   "line": "RSI5",
+   "caption": "RSI “5” PPIA IMF 2 year review",
+   "record": "adapters/pdf/tmp/p54-sc7/RSI5.json",
+   "record_role": "synthesised in a gitignored sandbox; no committed byte was edited",
+   "record_built_from": "samples/433d.entity.sample.json",
+   "record_subject": "entity",
+   "broke": {
+    "key": "433d_review_status_indicator",
+    "from": "6",
+    "to": "5"
+   },
+   "break_size": "one tick",
+   "break_size_derived_from": "the cell is a CHECKBOX, and a tick has no smaller half. An emptiness assertion compares presence against absence rather than magnitude, so the smallest expressible break is one unit of what the cell holds.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433d adapters/pdf/tmp/p54-sc7/RSI5.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 7,
+   "step_the_declaration_lives_in": 7,
+   "broken_line_verbatim": "SC7 RSI5                 NOT EMPTY  exists only for the individual subject; this record declares entity",
+   "broken_line_verdict": "NOT EMPTY",
+   "failing_verdict": "NOT EMPTY",
+   "passing_verdict": "empty",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "Spouse",
+     "verdict": "empty",
+     "verbatim": "SC7 Spouse               empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "TitleIf",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 TitleIf              SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.TitleIf.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "SpouseSignature",
+     "verdict": "empty",
+     "verbatim": "SC7 SpouseSignature      empty      exists only for the individual subject; this record declares entity",
+     "expected": "empty"
+    },
+    {
+     "line": "RSI6",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 RSI6                 SKIPPED    exists only for the entity subject; this record declares entity, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.RSI6.empty_unless = \"entity\", and this record declares itself \"entity\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  },
+  {
+   "declaration": "subject-conditional emptiness | 433d | RSI6",
+   "line": "RSI6",
+   "caption": "RSI “6” PPIA BMF 2 year review",
+   "record": "adapters/pdf/tmp/p54-sc7/RSI6.json",
+   "record_role": "synthesised in a gitignored sandbox; no committed byte was edited",
+   "record_built_from": "samples/433d.sample.json",
+   "record_subject": "individual",
+   "broke": {
+    "key": "433d_review_status_indicator",
+    "from": "5",
+    "to": "6"
+   },
+   "break_size": "one tick",
+   "break_size_derived_from": "the cell is a CHECKBOX, and a tick has no smaller half. An emptiness assertion compares presence against absence rather than magnitude, so the smallest expressible break is one unit of what the cell holds.",
+   "rounding_mode": null,
+   "tool": "node adapters/pdf/run-form-gate.mjs 433d adapters/pdf/tmp/p54-sc7/RSI6.json --saturated",
+   "tool_exit": 2,
+   "failed_at_step": 7,
+   "step_the_declaration_lives_in": 7,
+   "broken_line_verbatim": "SC7 RSI6                 NOT EMPTY  exists only for the entity subject; this record declares individual",
+   "broken_line_verdict": "NOT EMPTY",
+   "failing_verdict": "NOT EMPTY",
+   "passing_verdict": "empty",
+   "skipped_verdict": "SKIPPED",
+   "other_declared_lines": [
+    {
+     "line": "Spouse",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 Spouse               SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.Spouse.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "TitleIf",
+     "verdict": "empty",
+     "verbatim": "SC7 TitleIf              empty      exists only for the entity subject; this record declares individual",
+     "expected": "empty"
+    },
+    {
+     "line": "SpouseSignature",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 SpouseSignature      SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.SpouseSignature.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    },
+    {
+     "line": "RSI5",
+     "verdict": "SKIPPED",
+     "verbatim": "SC7 RSI5                 SKIPPED    exists only for the individual subject; this record declares individual, so the assertion was not asked",
+     "expected": "SKIPPED",
+     "not_in_class_because": "adapters/pdf/maps/433d.map.json declares subject_classes.RSI5.empty_unless = \"individual\", and this record declares itself \"individual\" — the cell exists for THIS record's subject, so the emptiness assertion is not asked of it."
+    }
+   ],
+   "restored_digest_matches": true,
+   "clean_after_revert": true
+  }
+ ]
+}

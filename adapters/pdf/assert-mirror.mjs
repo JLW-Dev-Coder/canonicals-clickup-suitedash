@@ -58,6 +58,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { build, mirrorPath, EXCLUSIONS } from './gen-mirror.mjs';
 import { readWidgetGeometry } from './page-geometry.mjs';
+import { walkTargets } from './verify-form-coverage.mjs';
 import { examined } from './examined.mjs';
 
 const argv = process.argv.slice(2);
@@ -245,18 +246,35 @@ export const report = async () => {
     if (!same) problems.push(`[M-09] ${form}: ${path} does not match what the page produces now. Regenerate with \`node adapters/pdf/gen-mirror.mjs ${form}\` and read the difference before committing it.`);
 
     // ── [M-07] against the map, if there is one ────────────────────────────────────────────
+    // THE TARGETS COME FROM walkTargets(), THE WALK THE GATE ITSELF USES, AND THE HAND-WRITTEN
+    // WALK THIS REPLACES HAD NEVER FOUND ONE.
+    //
+    // It looked for `node.target === 'string'` — an object with a `target` KEY — and no map in
+    // this repository has ever had that shape. A map binds `key -> "form1[0]..."` and
+    // `slot.column -> "topmostSubform[0]..."`; there is no `target` property anywhere in any of
+    // the six. So [M-07] extracted ZERO bound targets from every map it was ever pointed at, and
+    // reported "0 bound stem(s) from 0 map target(s)" — which reads as "this form has no map
+    // yet", the state 433-D really was in when the clause was written and the state that made
+    // the zero look right.
+    //
+    // The clause it guards is the one the mirror construct exists for and the one no exemption
+    // could have stated: A STEM BOUND TO ONLY ONE COPY IS A STOP. On a form binding 83 mirrored
+    // pairs it was standing over nothing, and what held it up in the meantime was the canary —
+    // eleven planted directions against the real declaration, which is why this was found by
+    // reading a zero rather than by a filed document coming out half-blank.
+    //
+    // walkTargets() is imported rather than reimplemented, from adapters/pdf/verify-form-coverage
+    // .mjs, so this clause and the gate's own coverage step address the same set: a second walk
+    // is a second answer to the question the first one exists to have one answer to. It resolves
+    // a target by the roots derived in adapters/pdf/target-root.mjs, which is what makes it work
+    // on a form rooted at `form1[0].` as well as one rooted at `topmostSubform[0].`.
     const mapPath = `adapters/pdf/maps/${form}.map.json`;
     let boundTargets = null;
     if (existsSync(mapPath)) {
       const map = JSON.parse(readFileSync(mapPath, 'utf8'));
-      boundTargets = [];
-      const walk = (node) => {
-        if (!node || typeof node !== 'object') return;
-        if (Array.isArray(node)) { for (const x of node) walk(x); return; }
-        if (typeof node.target === 'string') boundTargets.push(node.target);
-        for (const v of Object.values(node)) walk(v);
-      };
-      walk(map);
+      boundTargets = walkTargets(map).map((t) => t.target);
+      if (!boundTargets.length)
+        problems.push(`[M-07] ${form}: ${mapPath} exists and walkTargets() extracted ZERO targets from it. A map that binds nothing would satisfy this clause vacuously, which is the state the hand-written walk this replaced was in on every form it ever ran against.`);
     }
     const b = boundTargets ? assertBindings(decl, boundTargets) : { problems: [], examinedStems: 0 };
     problems.push(...b.problems);

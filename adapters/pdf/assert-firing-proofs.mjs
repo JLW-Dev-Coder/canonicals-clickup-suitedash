@@ -95,6 +95,27 @@ export const deriveProvers = () => {
 // ---------------------------------------------------------------------------------------
 export const CLAIMS = [
   {
+    id: 'FP-11',
+    form: '433d',
+    claim: 'EVERY subject-conditional cell 433-D declares fires on the smallest expressible break, independently of every other, on BOTH sides of the subject',
+    class: 'break',
+    prover: 'scratchpad/p54-433d-prove-sc7-fires.mjs',
+    record: `${RECORD_DIR}/433d.subject-conditional.json`,
+    verdict: 'proved',
+    // NO COUNT IN THIS ENTRY, for the reason [FP-01] gives: the prover reads the conditional
+    // cells out of the map and records how many it broke, and this file compares that number
+    // against `declarations_on_this_tool`. A count typed here would read "five" until a sixth
+    // conditional cell was declared, and the entry would go on being true-looking about a
+    // smaller set ([R-07]).
+    //
+    // THE BREAK SIZE IS NOT A CENT AND SAYS SO. An emptiness assertion compares presence against
+    // absence rather than magnitude, so the smallest expressible break is one unit of what the
+    // cell holds: one character in a text cell, one tick in a checkbox. The coarsest unit among
+    // everything any break here moves is one TICK, because two of the five conditional cells are
+    // the Master File review-code boxes.
+    evidence_shows: 'the step (7, the fill engine, reached through the gate), the line (one SC7 verdict line per conditional cell, printed on every run whether it passes or fails), and the verdict (NOT EMPTY against a passing "empty"), with every other declared line reading either "empty" or "SKIPPED" \u2014 and every SKIPPED naming the derived cause, which is the map\'s own empty_unless beside the record\'s declared subject',
+  },
+  {
     id: 'FP-01',
     form: '433b',
     claim: 'EVERY printed arithmetic total 433-B declares fires on a one-cent discrepancy, independently of every other',
@@ -257,6 +278,8 @@ export const deriveCanaryTools = () => {
 export const NOT_A_PROVER = [
   { path: 'scratchpad/author-branch-fixtures.mjs',
     why: 'IT AUTHORS AN INPUT, IT DOES NOT PROVE ANYTHING. The classifier catches it because it writes a file, spawns the gate, and its header speaks of lines that would otherwise never fire — but what it produces is samples/<form>.branch.sample.json, a committed record that puts the other branch of each printed conditional in class. It makes five declared lines askable on two forms; asking them is [FP-08] and [FP-09]. Disposed by name rather than by narrowing the classifier, because a classifier tuned until it happened to miss this would also miss the next real prover that resembles it.' },
+  { path: 'scratchpad/p54-433d-retire-pre-map.mjs',
+    why: 'IT RETIRES A DECLARATION AND REGENERATES AN ARTEFACT; IT PROVES NOTHING ABOUT A GUARD. The classifier catches it because it rewrites a source file, spawns a tool twice, and its header speaks of a check that FIRED. What fired was adapters/pdf/assert-subject-register.mjs [S2], on the run in which 433-D got a map, reporting the form\'s `_pre_map` declaration STALE \u2014 and this script is the response to that firing rather than a demonstration of it. It breaks no input, asserts no step and no verdict, and the run it describes happened before it existed. What it does assert is the pair of things a generated-artefact edit owes: that the SOURCE was patched and not the output, and that the output re-derives from its generator afterwards. Disposed by name rather than by narrowing the classifier, because a classifier tuned until it happened to miss a script that patches a generator would also miss the next real prover that patches one.' },
   { path: 'adapters/pdf/run-form-gate.mjs',
     why: 'it is the tool a break proof spawns, not a proof. It writes filled PDFs and spawns its own steps; the word "fires" in it is prose about a floor.' },
   { path: 'adapters/hubspot/rerun-regression.mjs',
