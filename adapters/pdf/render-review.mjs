@@ -25,6 +25,14 @@
 
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+// THE TARGET ROOTS, DERIVED. Two predicates here read `topmostSubform[0].` as a literal and
+// 433-D's fields are rooted at `form1[0].`, so on that form both would have selected nothing:
+// the review page would render with no checkbox and no bound cell and would look like a
+// correctly rendered empty form. See adapters/pdf/target-root.mjs.
+import { rootPrefixForForm, FIELD_FORMS } from './target-root.mjs';
+const TARGET_ROOTS = [...new Set(FIELD_FORMS().map((f) => rootPrefixForForm(f)).filter((r) => r.root).map((r) => r.root))];
+if (!TARGET_ROOTS.length) throw new Error('render-review.mjs: no target root could be derived from any form field list, so every bound cell would be invisible here.');
+const isTarget = (s) => TARGET_ROOTS.some((r) => s.startsWith(r));
 import { createHash } from 'node:crypto';
 import { verifyFormCoverage } from './verify-form-coverage.mjs';
 
@@ -316,7 +324,7 @@ for (const [g, def] of Object.entries(mapDoc.groups || {})) {
 // 5. checkboxes — every target the map binds, with its state read off the page
 const cbTargets = [];
 (function walkCb(node, path) {
-  if (typeof node === 'string' && node.startsWith('topmostSubform[0].')) { cbTargets.push({ path, target: node }); return; }
+  if (typeof node === 'string' && isTarget(node)) { cbTargets.push({ path, target: node }); return; }
   if (Array.isArray(node)) return node.forEach((v, i) => walkCb(v, `${path}[${i}]`));
   if (node && typeof node === 'object') Object.entries(node).forEach(([k, v]) => walkCb(v, `${path}.${k}`));
 })(mapDoc.checkboxes || {}, 'checkboxes');
@@ -356,7 +364,7 @@ for (const [key, def] of Object.entries(mapDoc.check_here || {})) {
 // 6. the IRS allowable column — computed, not supplied, so it is shown with its arithmetic
 const allowedRows = [];
 (function walkAllowed(node, path) {
-  if (typeof node === 'string' && node.startsWith('topmostSubform[0].')) {
+  if (typeof node === 'string' && isTarget(node)) {
     const t = readTarget(node);
     allowedRows.push({ path: path.replace(/^allowed\./, ''), target: node, value: t.kind === 'text' ? t.value : null });
     return;

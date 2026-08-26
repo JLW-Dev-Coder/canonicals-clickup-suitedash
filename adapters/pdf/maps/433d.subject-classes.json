@@ -1,0 +1,4981 @@
+{
+ "_what_this_is": "THE SUBJECT CLASS OF EVERY CELL 433-D DRAWS, in three classes, derived from the printed caption that governs each. Written by scratchpad/p54-433d-derive-classes.mjs and re-derivable by re-running it with --check. NOTHING HERE IS TYPED except which directional candidate governs each cell; every caption, gap, marker, class and count comes out of the PDF on every run.",
+ "_generator": "scratchpad/p54-433d-derive-classes.mjs",
+ "_source_pdf": "adapters/pdf/forms/f433d.pdf",
+ "_the_three_classes": {
+  "dependent": "the caption admits BOTH legal persons and the cell’s value changes kind with the one the record declares. It ROUTES: two properties and a declared discriminator between them.",
+  "conditional": "the cell EXISTS FOR ONE SUBJECT ONLY and the caption says so. It gets an EMPTINESS ASSERTION and no second property: on a record declaring the other subject the cell must be empty, and a value there is a STOP. A conditional cell is one fact that is sometimes absent, not two facts.",
+  "independent": "the caption names no subject and states no condition. It BINDS ONCE.",
+  "_and_a_fourth_state": "A CELL WITH NO CLASS IS A STOP. There is no default and no silence: a stem this file cannot derive a chain for stops the run, which is why the count below is 83 and not \"the ones that worked\"."
+ },
+ "_no_labels_file": "THERE IS NO adapters/pdf/maps/433d.labels.json AND NOTHING HERE CITES ONE. correlate-labels.mjs refused to write for this form -- [D-22] records it answering the \"b. Account number\" probe with the DIRECT DEBIT banner one row up, because 28.6pt above beat 28.9pt left on one shared distance scale. The probes stay as they are. What is used instead is adapters/pdf/caption-candidates.mjs, which ranks each direction WITHIN ITSELF and never across, and returns all four rather than picking one; which one governs is declared per cell and bounded by the band.",
+ "_the_band": {
+  "row_pitch_pt": 12.3,
+  "derived_from": "the MEDIAN of 61 gap(s) between 68 distinct printed baselines on page 1 -- derived from this form’s own layout, never typed",
+  "above_pt": 24.6,
+  "below_pt": 12.3,
+  "side_pt": 120,
+  "_not_retuned": "UNCHANGED FROM THE DERIVATION THAT PRECEDED THIS ONE. The band was reported before the classes were known and it is the band used here. Choosing a constant because it yields the classification already believed is fitting the instrument to the wanted answer, and it is what [D-22] refuses to do to the correlator’s own probes.",
+  "_what_it_is_for": "A BOUND, not a reading. A declared caption must be a printed run inside the band of its own cell or of a member of its printed series; it is never chosen by the band."
+ },
+ "counts": {
+  "stems": 83,
+  "widgets_on_page_1": 83,
+  "printed_runs": 107,
+  "by_class": {
+   "dependent": 1,
+   "conditional": 5,
+   "independent": 77
+  },
+  "conditional_by_side": {
+   "individual": 3,
+   "entity": 2
+  },
+  "determinate_pairings": 58,
+  "second_witness_pairings": 25,
+  "printed_series": 19
+ },
+ "markers": {
+  "individual": [
+   {
+    "phrase": "Social Security",
+    "quoted_from": "the identity block -- \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\""
+   },
+   {
+    "phrase": "SSN",
+    "quoted_from": "the identity block -- \"(SSN/ITIN/EIN)\""
+   },
+   {
+    "phrase": "ITIN",
+    "quoted_from": "the identity block -- \"(SSN/ITIN/EIN)\""
+   },
+   {
+    "phrase": "Spouse",
+    "quoted_from": "the identity sub-caption \"(Spouse)\" and the signature block \"Spouse’s signature\""
+   },
+   {
+    "phrase": "joint liability",
+    "quoted_from": "the signature block -- \"(if a joint liability)\""
+   },
+   {
+    "phrase": "Wage Earner",
+    "quoted_from": "the assistance line -- \"1-800-829-7650 (Individuals - Wage Earners)\""
+   },
+   {
+    "phrase": "IMF",
+    "quoted_from": "the IRS-use review codes -- \"RSI “5” PPIA IMF 2 year review\", the Individual Master File"
+   },
+   {
+    "phrase": "Individual",
+    "quoted_from": "the assistance line -- \"1-800-829-3903 (Individual - Self-Employed/Business Owners, Businesses)\""
+   }
+  ],
+  "entity": [
+   {
+    "phrase": "Employer Identification",
+    "quoted_from": "the identity block -- \"Social Security or Employer Identification Number\""
+   },
+   {
+    "phrase": "EIN",
+    "quoted_from": "the identity block -- \"(SSN/ITIN/EIN)\""
+   },
+   {
+    "phrase": "Corporate Officer",
+    "quoted_from": "the signature block -- \"Title (if Corporate Officer or Partner)\""
+   },
+   {
+    "phrase": "Partner",
+    "quoted_from": "the signature block -- \"Title (if Corporate Officer or Partner)\""
+   },
+   {
+    "phrase": "BMF",
+    "quoted_from": "the IRS-use review codes -- \"RSI “6” PPIA BMF 2 year review\", the Business Master File"
+   },
+   {
+    "phrase": "Business Owner",
+    "quoted_from": "the assistance line -- \"(Individual - Self-Employed/Business Owners, Businesses)\""
+   },
+   {
+    "phrase": "Businesses",
+    "quoted_from": "the assistance line -- \"(Individual - Self-Employed/Business Owners, Businesses)\""
+   }
+  ],
+  "_matched_how": "each phrase on word boundaries with an optional trailing plural, case-insensitively, against ONE PRINTED RUN AT A TIME. Never against a join of the neighbourhood: joining \"Title (if Corporate Officer or Partner)\" to \"Spouse’s signature (if a joint liability)\" produces a string that names both legal persons out of two captions neither of which does, and that join is the defect the three classes replace."
+ },
+ "printed_series": [
+  {
+   "axis": "row",
+   "pitch_pt": 18,
+   "gap_pt": 7.2,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "RoutingNumber1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber5",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber6",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber7",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber8",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    },
+    {
+     "stem": "RoutingNumber9",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "row",
+   "pitch_pt": 18,
+   "gap_pt": 7.2,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber5",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber6",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber7",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber8",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber9",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber10",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber11",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber12",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber13",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber14",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber15",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber16",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "AccountNumber17",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "row",
+   "pitch_pt": 18,
+   "gap_pt": 7.2,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AgreementLocatorNumber1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AGREEMENT LOCATOR NUMBER:"
+    },
+    {
+     "stem": "AgreementLocatorNumber2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AGREEMENT LOCATOR NUMBER:"
+    },
+    {
+     "stem": "AgreementLocatorNumber3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AGREEMENT LOCATOR NUMBER:"
+    },
+    {
+     "stem": "AgreementLocatorNumber4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AGREEMENT LOCATOR NUMBER:"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "row",
+   "pitch_pt": 18,
+   "gap_pt": 7.2,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AgreementReviewCycle1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    },
+    {
+     "stem": "AgreementReviewCycle2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    },
+    {
+     "stem": "AgreementReviewCycle3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    },
+    {
+     "stem": "AgreementReviewCycle4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    },
+    {
+     "stem": "AgreementReviewCycle5",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    },
+    {
+     "stem": "AgreementReviewCycle6",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Agreement Review Cycle"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 5.4,
+   "size": "9x9",
+   "members": [
+    {
+     "stem": "RSI6",
+     "class": "conditional",
+     "side": "entity",
+     "decided_by": "RSI “6” PPIA BMF 2 year review"
+    },
+    {
+     "stem": "RSI5",
+     "class": "conditional",
+     "side": "individual",
+     "decided_by": "RSI “5” PPIA IMF 2 year review"
+    },
+    {
+     "stem": "RSI1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "RSI “1” no further review"
+    }
+   ],
+   "classes": [
+    "conditional",
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "SPLIT ON DISTINCT CAPTIONS"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 0,
+   "size": "190.8x14.4",
+   "members": [
+    {
+     "stem": "date2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Date of increase"
+    },
+    {
+     "stem": "date1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Date of increase"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 0,
+   "size": "187.2x14.4",
+   "members": [
+    {
+     "stem": "amount2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Amount of increase"
+    },
+    {
+     "stem": "amount1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "Amount of increase"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 0,
+   "size": "183.6x14.4",
+   "members": [
+    {
+     "stem": "payment2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "New installment payment amount"
+    },
+    {
+     "stem": "payment1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "New installment payment amount"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": true,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber3",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber4",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber5",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber5",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber6",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber6",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber7",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber7",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber8",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber8",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 4.3,
+   "size": "10.8x10.1",
+   "members": [
+    {
+     "stem": "AccountNumber9",
+     "class": "independent",
+     "side": null,
+     "decided_by": "b. Account number"
+    },
+    {
+     "stem": "RoutingNumber9",
+     "class": "independent",
+     "side": null,
+     "decided_by": "a. Routing number"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 5.4,
+   "size": "9x9",
+   "members": [
+    {
+     "stem": "AI2",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AI “2” All other PPIAs"
+    },
+    {
+     "stem": "AI1",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AI “1” Field Asset PPIA"
+    },
+    {
+     "stem": "AI0",
+     "class": "independent",
+     "side": null,
+     "decided_by": "AI “0” Not a PPIA"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  },
+  {
+   "axis": "column",
+   "pitch_pt": 14.4,
+   "gap_pt": 5.4,
+   "size": "9x9",
+   "members": [
+    {
+     "stem": "MayBe",
+     "class": "independent",
+     "side": null,
+     "decided_by": "MAY BE FILED IF THIS AGREEMENT DEFAULTS"
+    },
+    {
+     "stem": "FiledWhen",
+     "class": "independent",
+     "side": null,
+     "decided_by": "WILL BE FILED WHEN TAX IS ASSESSED"
+    },
+    {
+     "stem": "FiledImmediately",
+     "class": "independent",
+     "side": null,
+     "decided_by": "WILL BE FILED IMMEDIATELY"
+    },
+    {
+     "stem": "HasAlready",
+     "class": "independent",
+     "side": null,
+     "decided_by": "HAS ALREADY BEEN FILED"
+    }
+   ],
+   "classes": [
+    "independent"
+   ],
+   "shares_one_caption": false,
+   "verdict": "AGREE"
+  }
+ ],
+ "stems": [
+  {
+   "stem": "NameAndAddress",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    644.4,
+    295.2,
+    712.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Name and address of taxpayer(s)",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 4.4,
+     "caption": "Name and address of taxpayer(s)",
+     "candidates_in_direction": 7
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Name and address of taxpayer(s)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+     "class": "dependent",
+     "side": null
+    },
+    {
+     "caption": "1-800-829-3903 (Individual - Self-Employed/Business Owners, Businesses), or",
+     "class": "dependent",
+     "side": null
+    },
+    {
+     "caption": "1-800-829-7650 (Individuals - Wage Earners)",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "witness": [
+    "the runners-up in this direction are MASTHEAD runs -- the form number, the revision date and the instruction pointer -- which sit above the rule that opens the identity block and caption no cell.",
+    "the printed COLUMN BOUNDARY. Every in-row candidate for this cell begins at x=302.4, which is where the right-hand column of the identity block starts; this cell ends at x=295.2 and is the whole of the left-hand column. A run in the other column is not this cell’s caption."
+   ],
+   "band_runs": 10
+  },
+  {
+   "stem": "SubmitANew",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    618.3,
+    27,
+    627.3
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Submit a new Form W-4 to your employer to increase your",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "Submit a new Form W-4 to your employer to increase your",
+     "candidates_in_direction": 4
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Submit a new Form W-4 to your employer to increase your",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "competitors": [
+    {
+     "direction": "right",
+     "gap_pt": 9,
+     "caption": "withholding.",
+     "edge_pt": 21.3
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap.",
+    "the runners-up in this direction are the SECOND AND THIRD LINES OF THE SAME PRINTED SENTENCE, at the same gap. Naming the first line names the sentence."
+   ],
+   "band_runs": 2
+  },
+  {
+   "stem": "Taxpayer",
+   "type": "PDFTextField",
+   "rect": [
+    349.2,
+    702,
+    442.8,
+    714.2
+   ],
+   "class": "dependent",
+   "side": null,
+   "decided_by": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+   "individual_markers": [
+    "Social Security",
+    "SSN",
+    "ITIN"
+   ],
+   "entity_markers": [
+    "Employer Identification",
+    "EIN"
+   ],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 3,
+     "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+     "candidates_in_direction": 4
+    },
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 8.1,
+     "caption": "(Taxpayer)",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+     "class": "dependent",
+     "side": null
+    },
+    {
+     "caption": "(Taxpayer)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "(See Instructions on the back of this page)",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(Spouse)",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "Your telephone numbers",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(including area code)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "the runners-up in this direction are MASTHEAD runs -- the form number, the revision date and the instruction pointer -- which sit above the rule that opens the identity block and caption no cell."
+   ],
+   "band_runs": 6
+  },
+  {
+   "stem": "Spouse",
+   "type": "PDFTextField",
+   "rect": [
+    496.8,
+    702,
+    594,
+    714.2
+   ],
+   "class": "conditional",
+   "side": "individual",
+   "decided_by": "(Spouse)",
+   "individual_markers": [
+    "Spouse"
+   ],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 3,
+     "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 14.3,
+     "caption": "(Spouse)",
+     "candidates_in_direction": 4
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+     "class": "dependent",
+     "side": null
+    },
+    {
+     "caption": "(Spouse)",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "pairing": "second_witness",
+   "competitors": [
+    {
+     "direction": "left",
+     "gap_pt": 18.6,
+     "caption": "(including area code)",
+     "edge_pt": 26.6
+    }
+   ],
+   "dissent": [
+    {
+     "caption": "(See Instructions on the back of this page)",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "Your telephone numbers",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(including area code)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "the printed SUB-CAPTION ROW. The runners-up are the captions of the telephone block one printed row below, which caption the two telephone cells and not this one."
+   ],
+   "band_runs": 5
+  },
+  {
+   "stem": "Home",
+   "type": "PDFTextField",
+   "rect": [
+    302.4,
+    666,
+    442.8,
+    678.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "(Home)",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 3.1,
+     "caption": "(Home)",
+     "candidates_in_direction": 8
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 13.8,
+     "caption": "Your telephone numbers",
+     "candidates_in_direction": 8
+    },
+    {
+     "ref": "above:3",
+     "direction": "above",
+     "rank": 3,
+     "gap_pt": 13.8,
+     "caption": "(including area code)",
+     "candidates_in_direction": 8
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "(Home)",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "Your telephone numbers",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(including area code)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  },
+  {
+   "stem": "WorkCellBusiness",
+   "type": "PDFTextField",
+   "rect": [
+    450,
+    666,
+    594,
+    678.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "(Work, cell or business)",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 3.1,
+     "caption": "(Work, cell or business)",
+     "candidates_in_direction": 6
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 13.8,
+     "caption": "(including area code)",
+     "candidates_in_direction": 6
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "(Work, cell or business)",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(including area code)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 4
+  },
+  {
+   "stem": "OrWrite",
+   "type": "PDFTextField",
+   "rect": [
+    338.4,
+    622.8,
+    594,
+    633.6
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Or write",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 4.5,
+     "caption": "Or write",
+     "candidates_in_direction": 3
+    },
+    {
+     "ref": "below:1",
+     "direction": "below",
+     "rank": 1,
+     "gap_pt": 1.9,
+     "caption": "(City, State, and ZIP Code)",
+     "candidates_in_direction": 43
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Or write",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(City, State, and ZIP Code)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "1-800-829-3903 (Individual - Self-Employed/Business Owners, Businesses), or",
+     "class": "dependent",
+     "side": null
+    },
+    {
+     "caption": "1-800-829-7650 (Individuals - Wage Earners)",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "witness": [
+    "the printed INSTRUCTION STRUCTURE. The nearest run above is one of two telephone numbers drawn under the heading \"For assistance, call:\" -- that heading captions the numbers, and this cell is the object of the NEXT instruction, whose opening words sit 4.5pt to its left and whose parenthetical (\"City, State, and ZIP Code\") sits 1.9pt below it. The two links of this chain are the two halves of one printed sentence and the run above belongs to a different one."
+   ],
+   "band_runs": 6
+  },
+  {
+   "stem": "KindsOfTaxes",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    572.4,
+    136.8,
+    595.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Kinds of taxes",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Kinds of taxes",
+     "candidates_in_direction": 8
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 2.8,
+     "caption": "(form numbers)",
+     "candidates_in_direction": 8
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Kinds of taxes",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(form numbers)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  },
+  {
+   "stem": "TaxPeriods",
+   "type": "PDFTextField",
+   "rect": [
+    144,
+    572.4,
+    453.6,
+    595.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Tax periods",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Tax periods",
+     "candidates_in_direction": 18
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Tax periods",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 8
+  },
+  {
+   "stem": "AsOf",
+   "type": "PDFTextField",
+   "rect": [
+    547.2,
+    594,
+    594,
+    606.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Amount owed as of",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 9.4,
+     "caption": "Amount owed as of",
+     "candidates_in_direction": 4
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Amount owed as of",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 2
+  },
+  {
+   "stem": "AmountOwed",
+   "type": "PDFTextField",
+   "rect": [
+    469,
+    572.4,
+    594,
+    588.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Amount owed as of",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 9.8,
+     "caption": "Amount owed as of",
+     "candidates_in_direction": 7
+    },
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 3.2,
+     "caption": "$",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Amount owed as of",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "$",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 3
+  },
+  {
+   "stem": "DollarAmount",
+   "type": "PDFTextField",
+   "rect": [
+    28.8,
+    545.8,
+    122.4,
+    555.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "$",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 5.8,
+     "caption": "$",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 6.6,
+     "caption": "I / We agree to pay the federal taxes shown above, PLUS PENALTIES AND INTEREST PROVIDED BY LAW, as follows",
+     "candidates_in_direction": 9
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "$",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "I / We agree to pay the federal taxes shown above, PLUS PENALTIES AND INTEREST PROVIDED BY LAW, as follows",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the runner-up in this direction is the printed \"$\" that opens the money cell, which is a currency glyph rather than a caption; it is named in the chain as well so that nothing in the row is silently dropped."
+   ],
+   "band_runs": 5
+  },
+  {
+   "stem": "DatePaid",
+   "type": "PDFTextField",
+   "rect": [
+    144,
+    545.8,
+    230.4,
+    555.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "on",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 4.4,
+     "caption": "on",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "on",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  },
+  {
+   "stem": "AndDollarAmount",
+   "type": "PDFTextField",
+   "rect": [
+    262.8,
+    545.8,
+    338.4,
+    555.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "and $",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 2.7,
+     "caption": "and $",
+     "candidates_in_direction": 3
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "and $",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  },
+  {
+   "stem": "OnThe",
+   "type": "PDFTextField",
+   "rect": [
+    374.4,
+    545.8,
+    446.4,
+    555.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "on the",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 3.8,
+     "caption": "on the",
+     "candidates_in_direction": 4
+    },
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 7.2,
+     "caption": "of each month thereafter",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "on the",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "of each month thereafter",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 6
+  },
+  {
+   "stem": "date1",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    500.4,
+    208.8,
+    514.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Date of increase",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 4.6,
+     "caption": "Date of increase",
+     "candidates_in_direction": 15
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 4.6,
+     "caption": "(or decrease)",
+     "candidates_in_direction": 15
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Date of increase",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(or decrease)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]"
+   ]
+  },
+  {
+   "stem": "amount1",
+   "type": "PDFTextField",
+   "rect": [
+    216,
+    500.4,
+    403.2,
+    514.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Amount of increase",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 4.6,
+     "caption": "Amount of increase",
+     "candidates_in_direction": 19
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 4.6,
+     "caption": "(or decrease)",
+     "candidates_in_direction": 19
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Amount of increase",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(or decrease)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]"
+   ]
+  },
+  {
+   "stem": "payment1",
+   "type": "PDFTextField",
+   "rect": [
+    410.4,
+    500.4,
+    594,
+    514.8
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "New installment payment amount",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 4.6,
+     "caption": "New installment payment amount",
+     "candidates_in_direction": 15
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "New installment payment amount",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]"
+   ]
+  },
+  {
+   "stem": "date2",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    486,
+    208.8,
+    500.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Date of increase",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 19,
+     "caption": "Date of increase",
+     "candidates_in_direction": 15
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 19,
+     "caption": "(or decrease)",
+     "candidates_in_direction": 15
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Date of increase",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(or decrease)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]"
+   ]
+  },
+  {
+   "stem": "amount2",
+   "type": "PDFTextField",
+   "rect": [
+    216,
+    486,
+    403.2,
+    500.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Amount of increase",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 19,
+     "caption": "Amount of increase",
+     "candidates_in_direction": 19
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 19,
+     "caption": "(or decrease)",
+     "candidates_in_direction": 19
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Amount of increase",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(or decrease)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]"
+   ]
+  },
+  {
+   "stem": "payment2",
+   "type": "PDFTextField",
+   "rect": [
+    410.4,
+    486,
+    594,
+    500.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "New installment payment amount",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 19,
+     "caption": "New installment payment amount",
+     "candidates_in_direction": 15
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "New installment payment amount",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+    "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]"
+   ]
+  },
+  {
+   "stem": "Initial",
+   "type": "PDFTextField",
+   "rect": [
+    20.2,
+    459.4,
+    44.6,
+    469.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 5.8,
+     "caption": "By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 2
+  },
+  {
+   "stem": "AdditionalConditions",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    421.2,
+    403.2,
+    444.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Additional Conditions / Terms",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Additional Conditions / Terms",
+     "candidates_in_direction": 35
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 2.8,
+     "caption": "(To be completed by IRS)",
+     "candidates_in_direction": 35
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Additional Conditions / Terms",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(To be completed by IRS)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 9
+  },
+  {
+   "stem": "RoutingNumber1",
+   "type": "PDFTextField",
+   "rect": [
+    122.4,
+    387.4,
+    133.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 30.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber2",
+   "type": "PDFTextField",
+   "rect": [
+    140.4,
+    387.4,
+    151.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 48.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber3",
+   "type": "PDFTextField",
+   "rect": [
+    158.4,
+    387.4,
+    169.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 66.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber4",
+   "type": "PDFTextField",
+   "rect": [
+    176.4,
+    387.4,
+    187.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 84.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber5",
+   "type": "PDFTextField",
+   "rect": [
+    194.4,
+    387.4,
+    205.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 102.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber6",
+   "type": "PDFTextField",
+   "rect": [
+    212.4,
+    387.4,
+    223.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 120.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 2,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber7",
+   "type": "PDFTextField",
+   "rect": [
+    230.4,
+    387.4,
+    241.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 138.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber8",
+   "type": "PDFTextField",
+   "rect": [
+    248.4,
+    387.4,
+    259.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 156.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]"
+   ]
+  },
+  {
+   "stem": "RoutingNumber9",
+   "type": "PDFTextField",
+   "rect": [
+    266.4,
+    387.4,
+    277.2,
+    397.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "a. Routing number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 174.4,
+     "caption": "a. Routing number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "a. Routing number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber1",
+   "type": "PDFTextField",
+   "rect": [
+    122.4,
+    373,
+    133.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 28.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber2",
+   "type": "PDFTextField",
+   "rect": [
+    140.4,
+    373,
+    151.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 46.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber3",
+   "type": "PDFTextField",
+   "rect": [
+    158.4,
+    373,
+    169.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 64.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber4",
+   "type": "PDFTextField",
+   "rect": [
+    176.4,
+    373,
+    187.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 82.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber5",
+   "type": "PDFTextField",
+   "rect": [
+    194.4,
+    373,
+    205.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 100.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber6",
+   "type": "PDFTextField",
+   "rect": [
+    212.4,
+    373,
+    223.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 118.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 2,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber7",
+   "type": "PDFTextField",
+   "rect": [
+    230.4,
+    373,
+    241.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 136.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber8",
+   "type": "PDFTextField",
+   "rect": [
+    248.4,
+    373,
+    259.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 154.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber9",
+   "type": "PDFTextField",
+   "rect": [
+    266.4,
+    373,
+    277.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 172.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+    "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber10",
+   "type": "PDFTextField",
+   "rect": [
+    284.4,
+    373,
+    295.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 190.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber11",
+   "type": "PDFTextField",
+   "rect": [
+    302.4,
+    373,
+    313.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 208.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber12",
+   "type": "PDFTextField",
+   "rect": [
+    320.4,
+    373,
+    331.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 226.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber13",
+   "type": "PDFTextField",
+   "rect": [
+    338.4,
+    373,
+    349.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 244.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber14",
+   "type": "PDFTextField",
+   "rect": [
+    356.4,
+    373,
+    367.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 262.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber15",
+   "type": "PDFTextField",
+   "rect": [
+    374.4,
+    373,
+    385.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 280.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber16",
+   "type": "PDFTextField",
+   "rect": [
+    392.4,
+    373,
+    403.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 298.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "AccountNumber17",
+   "type": "PDFTextField",
+   "rect": [
+    410.4,
+    373,
+    421.2,
+    383
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "b. Account number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 316.9,
+     "caption": "b. Account number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "b. Account number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 1,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+    "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]"
+   ]
+  },
+  {
+   "stem": "unable_to_make",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    258.3,
+    27,
+    267.3
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "I am unable to make debit payments.",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "I am unable to make debit payments.",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "I am unable to make debit payments.",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 4
+  },
+  {
+   "stem": "YourSignature",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    208.8,
+    176.4,
+    221
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Your signature",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Your signature",
+     "candidates_in_direction": 38
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Your signature",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "(if Corporate Officer or Partner)",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the SIGNATURE ROW draws five separately captioned cells side by side, each with its own caption drawn directly above it and horizontally over its own extent. The band reaches 120pt either side and therefore takes in the NEIGHBOURING cells’ captions -- which is exactly the over-inclusion it is declared to have. The chain names the run or runs above THIS cell and over THIS cell’s extent; every dissenting run is the caption of a different cell between 61pt and 145pt away along the same printed row, and each of those cells binds it in its own chain."
+   ],
+   "band_runs": 6
+  },
+  {
+   "stem": "Date1",
+   "type": "PDFTextField",
+   "rect": [
+    183.6,
+    208.8,
+    230.4,
+    221
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Date",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Date",
+     "candidates_in_direction": 20
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Date",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "(if Corporate Officer or Partner)",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the SIGNATURE ROW draws five separately captioned cells side by side, each with its own caption drawn directly above it and horizontally over its own extent. The band reaches 120pt either side and therefore takes in the NEIGHBOURING cells’ captions -- which is exactly the over-inclusion it is declared to have. The chain names the run or runs above THIS cell and over THIS cell’s extent; every dissenting run is the caption of a different cell between 61pt and 145pt away along the same printed row, and each of those cells binds it in its own chain."
+   ],
+   "band_runs": 6
+  },
+  {
+   "stem": "TitleIf",
+   "type": "PDFTextField",
+   "rect": [
+    237.6,
+    208.8,
+    374.4,
+    221
+   ],
+   "class": "conditional",
+   "side": "entity",
+   "decided_by": "(if Corporate Officer or Partner)",
+   "individual_markers": [],
+   "entity_markers": [
+    "Corporate Officer",
+    "Partner"
+   ],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Title",
+     "candidates_in_direction": 32
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 2.8,
+     "caption": "(if Corporate Officer or Partner)",
+     "candidates_in_direction": 32
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Title",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(if Corporate Officer or Partner)",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "Date",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "the SIGNATURE ROW draws five separately captioned cells side by side, each with its own caption drawn directly above it and horizontally over its own extent. The band reaches 120pt either side and therefore takes in the NEIGHBOURING cells’ captions -- which is exactly the over-inclusion it is declared to have. The chain names the run or runs above THIS cell and over THIS cell’s extent; every dissenting run is the caption of a different cell between 61pt and 145pt away along the same printed row, and each of those cells binds it in its own chain."
+   ],
+   "band_runs": 5
+  },
+  {
+   "stem": "Date2",
+   "type": "PDFTextField",
+   "rect": [
+    543.6,
+    208.8,
+    594,
+    221
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Date",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Date",
+     "candidates_in_direction": 19
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Date",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "Spouse’s signature",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "(if a joint liability)",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "witness": [
+    "the SIGNATURE ROW draws five separately captioned cells side by side, each with its own caption drawn directly above it and horizontally over its own extent. The band reaches 120pt either side and therefore takes in the NEIGHBOURING cells’ captions -- which is exactly the over-inclusion it is declared to have. The chain names the run or runs above THIS cell and over THIS cell’s extent; every dissenting run is the caption of a different cell between 61pt and 145pt away along the same printed row, and each of those cells binds it in its own chain."
+   ],
+   "band_runs": 3
+  },
+  {
+   "stem": "SpouseSignature",
+   "type": "PDFTextField",
+   "rect": [
+    381.6,
+    208.8,
+    536.4,
+    221
+   ],
+   "class": "conditional",
+   "side": "individual",
+   "decided_by": "Spouse’s signature",
+   "individual_markers": [
+    "Spouse"
+   ],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Spouse’s signature",
+     "candidates_in_direction": 33
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 2.8,
+     "caption": "(if a joint liability)",
+     "candidates_in_direction": 33
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Spouse’s signature",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "(if a joint liability)",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "Date",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "the SIGNATURE ROW draws five separately captioned cells side by side, each with its own caption drawn directly above it and horizontally over its own extent. The band reaches 120pt either side and therefore takes in the NEIGHBOURING cells’ captions -- which is exactly the over-inclusion it is declared to have. The chain names the run or runs above THIS cell and over THIS cell’s extent; every dissenting run is the caption of a different cell between 61pt and 145pt away along the same printed row, and each of those cells binds it in its own chain."
+   ],
+   "band_runs": 4
+  },
+  {
+   "stem": "AgreementLocatorNumber1",
+   "type": "PDFTextField",
+   "rect": [
+    172.8,
+    182.2,
+    183.6,
+    192.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AGREEMENT LOCATOR NUMBER:",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 7.8,
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]"
+   ]
+  },
+  {
+   "stem": "AgreementLocatorNumber2",
+   "type": "PDFTextField",
+   "rect": [
+    190.8,
+    182.2,
+    201.6,
+    192.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AGREEMENT LOCATOR NUMBER:",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 25.8,
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]"
+   ]
+  },
+  {
+   "stem": "AgreementLocatorNumber3",
+   "type": "PDFTextField",
+   "rect": [
+    208.8,
+    182.2,
+    219.6,
+    192.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AGREEMENT LOCATOR NUMBER:",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 43.8,
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]"
+   ]
+  },
+  {
+   "stem": "AgreementLocatorNumber4",
+   "type": "PDFTextField",
+   "rect": [
+    226.8,
+    182.2,
+    237.6,
+    192.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AGREEMENT LOCATOR NUMBER:",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 61.8,
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]"
+   ]
+  },
+  {
+   "stem": "RSI1",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    153.9,
+    27,
+    162.9
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "RSI “1” no further review",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "RSI “1” no further review",
+     "candidates_in_direction": 3
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "RSI “1” no further review",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]"
+   ]
+  },
+  {
+   "stem": "AI0",
+   "type": "PDFCheckBox",
+   "rect": [
+    180,
+    153.9,
+    189,
+    162.9
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AI “0” Not a PPIA",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "AI “0” Not a PPIA",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AI “0” Not a PPIA",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 4,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI0[0]"
+   ]
+  },
+  {
+   "stem": "RSI5",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    139.5,
+    27,
+    148.5
+   ],
+   "class": "conditional",
+   "side": "individual",
+   "decided_by": "RSI “5” PPIA IMF 2 year review",
+   "individual_markers": [
+    "IMF"
+   ],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "candidates_in_direction": 3
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “1” no further review",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "Check the appropriate boxes:",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]"
+   ]
+  },
+  {
+   "stem": "AI1",
+   "type": "PDFCheckBox",
+   "rect": [
+    180,
+    139.5,
+    189,
+    148.5
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AI “1” Field Asset PPIA",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "AI “1” Field Asset PPIA",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AI “1” Field Asset PPIA",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI0[0]"
+   ]
+  },
+  {
+   "stem": "RSI6",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    125.1,
+    27,
+    134.1
+   ],
+   "class": "conditional",
+   "side": "entity",
+   "decided_by": "RSI “6” PPIA BMF 2 year review",
+   "individual_markers": [],
+   "entity_markers": [
+    "BMF"
+   ],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "candidates_in_direction": 3
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “1” no further review",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "Check the appropriate boxes:",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "AGREEMENT LOCATOR NUMBER:",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]"
+   ]
+  },
+  {
+   "stem": "AI2",
+   "type": "PDFCheckBox",
+   "rect": [
+    180,
+    125.1,
+    189,
+    134.1
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "AI “2” All other PPIAs",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "AI “2” All other PPIAs",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "AI “2” All other PPIAs",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AI0[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle1",
+   "type": "PDFTextField",
+   "rect": [
+    126,
+    110.2,
+    136.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 7,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle2",
+   "type": "PDFTextField",
+   "rect": [
+    144,
+    110.2,
+    154.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 25,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle3",
+   "type": "PDFTextField",
+   "rect": [
+    162,
+    110.2,
+    172.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 43,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle4",
+   "type": "PDFTextField",
+   "rect": [
+    180,
+    110.2,
+    190.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 61,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle5",
+   "type": "PDFTextField",
+   "rect": [
+    198,
+    110.2,
+    208.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 79,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "AgreementReviewCycle6",
+   "type": "PDFTextField",
+   "rect": [
+    216,
+    110.2,
+    226.8,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement Review Cycle",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 97,
+     "caption": "Agreement Review Cycle",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement Review Cycle",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “5” PPIA IMF 2 year review",
+     "class": "conditional",
+     "side": "individual"
+    },
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "the cell is a member of a PRINTED SERIES and this is the series caption, which every member of the series has as its unique left-hand candidate. The runs above vary from member to member -- for this series three members have \"RSI 6 PPIA BMF 2 year review\" 6.8pt above them and three do not -- so the above direction cannot be captioning a field the page draws once."
+   ],
+   "band_runs": 8,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+    "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+   ]
+  },
+  {
+   "stem": "EarliestCSED",
+   "type": "PDFTextField",
+   "rect": [
+    295.2,
+    110.2,
+    338.4,
+    120.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Earliest CSED",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 3.7,
+     "caption": "Earliest CSED",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Earliest CSED",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 8
+  },
+  {
+   "stem": "CheckBoxIf",
+   "type": "PDFCheckBox",
+   "rect": [
+    18,
+    96.3,
+    27,
+    105.3
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Check box if pre-assessed modules included.",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 9,
+     "caption": "Check box if pre-assessed modules included.",
+     "candidates_in_direction": 3
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Check box if pre-assessed modules included.",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "RSI “6” PPIA BMF 2 year review",
+     "class": "conditional",
+     "side": "entity"
+    }
+   ],
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap."
+   ],
+   "band_runs": 4
+  },
+  {
+   "stem": "OriginatorID",
+   "type": "PDFTextField",
+   "rect": [
+    115.2,
+    81.4,
+    194.4,
+    91.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Originator’s ID number",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 6.7,
+     "caption": "Originator’s ID number",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Originator’s ID number",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 7
+  },
+  {
+   "stem": "OriginatorCode",
+   "type": "PDFTextField",
+   "rect": [
+    270,
+    81.4,
+    342,
+    91.4
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Originator Code",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 4.9,
+     "caption": "Originator Code",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Originator Code",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "REPRESENTS AN INDIVIDUAL SHARED RESPONSIBILITY",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "witness": [
+    "the dissenting run is one line of the four-line NOTE printed in the lien column -- \"NOTE: A NOTICE OF FEDERAL TAX LIEN WILL NOT BE FILED ON ANY PORTION OF YOUR LIABILITY WHICH REPRESENTS AN INDIVIDUAL SHARED RESPONSIBILITY PAYMENT UNDER THE AFFORDABLE CARE ACT.\" It is prose about the lien, drawn from x=345.6 rightwards, and it captions NO CELL on this form: no widget on the page lies under it or beside it in that column. This cell ends at x=342 and belongs to the IRS-use block of the left column."
+   ],
+   "band_runs": 8
+  },
+  {
+   "stem": "Name",
+   "type": "PDFTextField",
+   "rect": [
+    50.4,
+    67,
+    194.4,
+    77
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Name",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 8.4,
+     "caption": "Name",
+     "candidates_in_direction": 1
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Name",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  },
+  {
+   "stem": "Title",
+   "type": "PDFTextField",
+   "rect": [
+    226.8,
+    67,
+    342,
+    77
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Title",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "left:1",
+     "direction": "left",
+     "rank": 1,
+     "gap_pt": 8.2,
+     "caption": "Title",
+     "candidates_in_direction": 2
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Title",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "second_witness",
+   "dissent": [
+    {
+     "caption": "REPRESENTS AN INDIVIDUAL SHARED RESPONSIBILITY",
+     "class": "conditional",
+     "side": "individual"
+    }
+   ],
+   "witness": [
+    "the dissenting run is one line of the four-line NOTE printed in the lien column -- \"NOTE: A NOTICE OF FEDERAL TAX LIEN WILL NOT BE FILED ON ANY PORTION OF YOUR LIABILITY WHICH REPRESENTS AN INDIVIDUAL SHARED RESPONSIBILITY PAYMENT UNDER THE AFFORDABLE CARE ACT.\" It is prose about the lien, drawn from x=345.6 rightwards, and it captions NO CELL on this form: no widget on the page lies under it or beside it in that column. This cell ends at x=342 and belongs to the IRS-use block of the left column."
+   ],
+   "band_runs": 8
+  },
+  {
+   "stem": "HasAlready",
+   "type": "PDFCheckBox",
+   "rect": [
+    345.6,
+    153.9,
+    354.6,
+    162.9
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "HAS ALREADY BEEN FILED",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 5.4,
+     "caption": "HAS ALREADY BEEN FILED",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 7.1,
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "candidates_in_direction": 25
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "HAS ALREADY BEEN FILED",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap.",
+    "the printed COLUMN HEADING \"A NOTICE OF FEDERAL TAX LIEN (Check one box below)\" stands over all four boxes of this column, and each box’s own option is the run 5.4pt to its right. Both are named in the chain."
+   ],
+   "band_runs": 3,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+    "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]"
+   ]
+  },
+  {
+   "stem": "FiledImmediately",
+   "type": "PDFCheckBox",
+   "rect": [
+    345.6,
+    139.5,
+    354.6,
+    148.5
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "WILL BE FILED IMMEDIATELY",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 5.4,
+     "caption": "WILL BE FILED IMMEDIATELY",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 21.5,
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "candidates_in_direction": 25
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "WILL BE FILED IMMEDIATELY",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap.",
+    "the printed COLUMN HEADING \"A NOTICE OF FEDERAL TAX LIEN (Check one box below)\" stands over all four boxes of this column, and each box’s own option is the run 5.4pt to its right. Both are named in the chain."
+   ],
+   "band_runs": 5,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+    "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]"
+   ]
+  },
+  {
+   "stem": "FiledWhen",
+   "type": "PDFCheckBox",
+   "rect": [
+    345.6,
+    125.1,
+    354.6,
+    134.1
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "WILL BE FILED WHEN TAX IS ASSESSED",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 5.4,
+     "caption": "WILL BE FILED WHEN TAX IS ASSESSED",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 35.9,
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "candidates_in_direction": 25
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "WILL BE FILED WHEN TAX IS ASSESSED",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap.",
+    "the printed COLUMN HEADING \"A NOTICE OF FEDERAL TAX LIEN (Check one box below)\" stands over all four boxes of this column, and each box’s own option is the run 5.4pt to its right. Both are named in the chain."
+   ],
+   "band_runs": 7,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+    "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]"
+   ]
+  },
+  {
+   "stem": "MayBe",
+   "type": "PDFCheckBox",
+   "rect": [
+    345.6,
+    110.7,
+    354.6,
+    119.7
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "MAY BE FILED IF THIS AGREEMENT DEFAULTS",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "right:1",
+     "direction": "right",
+     "rank": 1,
+     "gap_pt": 5.4,
+     "caption": "MAY BE FILED IF THIS AGREEMENT DEFAULTS",
+     "candidates_in_direction": 1
+    },
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 50.3,
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "candidates_in_direction": 25
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "MAY BE FILED IF THIS AGREEMENT DEFAULTS",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "A NOTICE OF FEDERAL TAX LIEN",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "witness": [
+    "THE FORM’S OWN CAPTION-RIGHT CONVENTION FOR CHECKBOXES, which is derived on every run rather than asserted: all 13 checkboxes on this page carry a printed run beginning within 9.1pt to their right, and none of the 13 is captioned from any other direction at a comparable gap.",
+    "the printed COLUMN HEADING \"A NOTICE OF FEDERAL TAX LIEN (Check one box below)\" stands over all four boxes of this column, and each box’s own option is the run 5.4pt to its right. Both are named in the chain."
+   ],
+   "band_runs": 6,
+   "printed_series": [
+    "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+    "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+    "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]"
+   ]
+  },
+  {
+   "stem": "AgreementExamined",
+   "type": "PDFTextField",
+   "rect": [
+    18,
+    36,
+    500.4,
+    48.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Agreement examined or approved by",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Agreement examined or approved by",
+     "candidates_in_direction": 98
+    },
+    {
+     "ref": "above:2",
+     "direction": "above",
+     "rank": 2,
+     "gap_pt": 2.8,
+     "caption": "(Signature, title, function)",
+     "candidates_in_direction": 98
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Agreement examined or approved by",
+     "class": "independent",
+     "side": null
+    },
+    {
+     "caption": "(Signature, title, function)",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 11
+  },
+  {
+   "stem": "Date3",
+   "type": "PDFTextField",
+   "rect": [
+    507.6,
+    36,
+    594,
+    48.2
+   ],
+   "class": "independent",
+   "side": null,
+   "decided_by": "Date",
+   "individual_markers": [],
+   "entity_markers": [],
+   "chain": [
+    {
+     "ref": "above:1",
+     "direction": "above",
+     "rank": 1,
+     "gap_pt": 2.8,
+     "caption": "Date",
+     "candidates_in_direction": 31
+    }
+   ],
+   "per_link_class": [
+    {
+     "caption": "Date",
+     "class": "independent",
+     "side": null
+    }
+   ],
+   "pairing": "determinate",
+   "band_runs": 5
+  }
+ ]
+}

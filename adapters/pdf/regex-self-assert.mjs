@@ -443,6 +443,7 @@ export const scannerCanary = () => {
 // ---------------------------------------------------------------------------------------
 export const ADOPTERS = [
   './assert-y-convention.mjs',
+  './subject-class.mjs',
   './blanket-audit.mjs',
   './enumerate-shadowing.mjs',
   './exclusion-sweep.mjs',

@@ -63,6 +63,7 @@ import { STANDARD as FIRING_STANDARD } from './firing-proofs.mjs';
 // [D-07] gives: a citation can otherwise be paid by the wrong disposition.
 import { QUESTIONS as POST_PASS_QUESTIONS } from '../hubspot/post-pass-sweep.mjs';
 import { CLAIMS as FIRING_CLAIMS } from './assert-firing-proofs.mjs';
+import { CLAUSES as SUBJECT_CLASS_CLAUSES } from './assert-subject-class.mjs';
 import { REGISTRY as RX_REGISTRY, ADOPTERS as RX_ADOPTERS } from './regex-self-assert.mjs';
 // THE THREE ADOPTERS THIS FILE DOES NOT OTHERWISE PULL IN. A regex registers itself when its
 // module LOADS, so the size of that register depends on the importing tool's import graph — and
@@ -78,6 +79,10 @@ import './assert-y-convention.mjs';
 import './rounding.mjs';
 import './line-markers.mjs';
 import './enumerate-shadowing.mjs';
+// ADOPTED BY regex-self-assert.mjs, imported here for the same reason the four above are: a
+// register whose size depends on who is looking is not a register, and assertAdoptersLoaded()
+// below refuses the run if an adopter contributed nothing. It fired on exactly this file.
+import './subject-class.mjs';
 import { parseRules, RULES_PATH } from './assert-rules.mjs';
 
 const MAPS = 'adapters/pdf/maps';
@@ -198,6 +203,7 @@ export const REGISTERS = () => {
   add('firing-proofs.mjs:STANDARD',       'engine', idsOf('FIRING_STANDARD', FIRING_STANDARD));
   add('assert-firing-proofs.mjs:CLAIMS',  'engine', idsOf('FIRING_CLAIMS', FIRING_CLAIMS));
   add('post-pass-sweep.mjs:QUESTIONS', 'engine', idsOf('POST_PASS_QUESTIONS', POST_PASS_QUESTIONS));
+  add('assert-subject-class.mjs:CLAUSES', 'engine', idsOf('SUBJECT_CLASS_CLAUSES', SUBJECT_CLASS_CLAUSES));
   assertAdoptersLoaded();
   assertDeclaredSizes();
   add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));

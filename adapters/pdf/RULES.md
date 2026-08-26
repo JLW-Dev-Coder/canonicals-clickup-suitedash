@@ -904,6 +904,96 @@ the commit this rule is written in, so it has no hash yet.
 
 ---
 
+## [R-35] A binary that does not partition its subject is a defect, not a simplification
+
+> A cell that exists for ONE SUBJECT ONLY is not a cell whose subject does not matter. A test
+> with two outcomes over a subject that has three states does not simplify it — it reports one
+> of the three under another's name, and the report is unfalsifiable because the third name was
+> never available to write down.
+
+**The defect that earned it.** A ruling established the subject discriminator as a binary: a cell
+whose printed caption admits BOTH legal persons is subject-DEPENDENT and routes to one of two
+properties; every other cell is subject-INDEPENDENT and binds once. 433-D does not partition
+under it. The form draws a third relation and draws it twice in one printed row — `Title (if
+Corporate Officer or Partner)` and `Spouse’s signature (if a joint liability)`. **Neither
+caption admits both subjects. Each admits exactly one.** So the binary's own test classified both
+as subject-independent, which is the exact opposite of the truth about them, and it did so by
+construction rather than by accident: the exclusive-or fell out of `individual.length &&
+entity.length` into an else branch where it was indistinguishable from a caption naming nobody.
+
+**Both failure directions are real and they point opposite ways**, which is what makes this a
+defect rather than a coarse reading. Routing a conditional cell spends portal headroom on a
+property that can only ever be empty — a hard ceiling, and HubSpot does not free a name.
+Binding it once loses the emptiness assertion, and an entity record carrying a spouse's signature
+then passes unchecked onto a document signed under penalty of perjury. A binary can be wrong in
+only one direction at a time; this one was wrong in both at once.
+
+The remedy is three classes, each with an obligation the engine can check: DEPENDENT routes,
+CONDITIONAL asserts emptiness on the other subject, INDEPENDENT binds once. **All three are
+declarations and a cell with NO class is a STOP** — the fourth state is refused rather than
+defaulted, because "everything else" was the shape that produced this.
+
+**What it cost to find, and what it did not.** The stop happened before any binding was authored
+against the binary, so the price was one derivation re-run rather than 83 bindings and a
+provisioning pass. The rule is written for the next binary, which will also look like a
+simplification.
+
+**Roughly when.** Ruled 2026-08-26, prompt 54 ruling 1, on the finding raised as `[D-23]` in
+`adapters/pdf/maps/_carried.cross-form.json` and adopted as written.
+`adapters/pdf/subject-class.mjs` holds the three classes and
+`adapters/pdf/assert-subject-class.mjs` holds them to their obligations. Cycle-dated: the commit
+that lands it is the commit this rule is written in, so it has no hash yet.
+
+---
+
+## [R-36] Classify from the caption's own words; proximity answers a different question
+
+> Which caption governs a cell is a question about GEOMETRY. What that caption says about the
+> subject is a question about WORDS, and the caption answers it directly. Never join a
+> neighbourhood into one string and classify the string. And cells the page draws as repetitions
+> of one field, under one caption, must share a class — whichever class that is.
+
+**The defect that earned it.** Two halves, one derivation.
+
+*The join.* The first derivation collected every printed run within a declared band of a cell,
+**concatenated them**, and asked whether the resulting string named both legal persons. Joining
+destroys the caption boundary. `Title (if Corporate Officer or Partner)` and `Spouse’s
+signature (if a joint liability)` are two captions each naming exactly one subject, and their
+concatenation is a string naming both — so two cells that exist for one subject each came back
+DEPENDENT, out of an operation that has nothing to do with either caption. The unit of
+classification is one printed run, and the join is planted in
+`adapters/pdf/subject-class.mjs`'s canary as the defect it was: those four captions concatenated
+must still read `dependent`, or the plant has stopped reproducing what it stands for.
+
+*The split.* `RSI5` and `RSI6` are one printed pair drawn a row apart — the Individual Master
+File and the Business Master File — and the derivation returned RSI6 dependent and RSI5
+INDEPENDENT, purely by where a 120pt band happened to fall. **That is a defect regardless of
+which class is correct**, and it is derivable without settling the classes at all. Read from the
+captions, both are conditional, one on each side; the band never asked. Four more items arrived
+the same way, `AgreementReviewCycle1`–`6`, `AI2` and `OrWrite`, and the six Agreement Review
+Cycle boxes are the sharpest: three of them have `RSI “6” PPIA BMF 2 year review` 6.8pt above
+them and three do not, so one printed field drawn as six boxes under one caption split three
+against three on nothing but position.
+
+**The band was not retuned.** Choosing a constant because it yields the classification already
+believed is fitting the instrument to the wanted answer, which is what `[D-22]` refuses to do to
+the label correlator's own probes. The band that was reported before the classes were known is
+the band still in use; what changed is that it answers only the pairing question, bounds a
+DECLARED caption chain rather than choosing one, and never classifies.
+
+**The assertion this rule requires.** `[SC-4]` in `adapters/pdf/assert-subject-class.mjs`:
+members of a printed series — derived from the drawn geometry, same size, common axis, constant
+pitch, adjacent — that share one governing caption must share a class, and members carrying
+DISTINCT captions are reported with each caption rather than failed. The scope is derived, not
+asserted: `RSI 1`, `RSI 5` and `RSI 6` are one drawn column at one pitch saying three different
+things about the subject, and refusing the page for that would make the clause unsatisfiable,
+which is `[R-10]`.
+
+**Roughly when.** Ruled 2026-08-26, prompt 54 ruling 2 and ruling 3. Cycle-dated: the commit that
+lands it is the commit this rule is written in, so it has no hash yet.
+
+---
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

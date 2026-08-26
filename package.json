@@ -21,7 +21,7 @@
     "gate:433boi": "node adapters/pdf/run-form-gate.mjs 433boi --saturated",
     "fixtures": "node adapters/pdf/resolve-fixture.mjs",
     "coverage:433boi": "node adapters/pdf/declaration-coverage.mjs 433boi",
-    "sweeps": "node adapters/pdf/control-char-scan.mjs && node adapters/pdf/regex-self-assert.mjs && node adapters/pdf/absence-sweep.mjs && node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs && node adapters/pdf/gen-subject-register.mjs --check && node adapters/pdf/assert-subject-register.mjs && node adapters/pdf/assert-mirror.mjs --canary && node adapters/hubspot/assert-intake-keys.mjs && node adapters/hubspot/assert-registry-targets.mjs && node adapters/hubspot/post-pass-sweep.mjs && node adapters/hubspot/rerun-regression.mjs --canary && node adapters/pdf/assert-rules.mjs && node adapters/pdf/assert-reachability.mjs && node adapters/hubspot/assert-exit-codes.mjs && node adapters/pdf/assert-firing-proofs.mjs && node adapters/pdf/assert-completeness-counters.mjs && node adapters/pdf/blanket-audit.mjs && node adapters/pdf/count-sweep.mjs && node adapters/hubspot/no-downgrade.mjs",
+    "sweeps": "node adapters/pdf/control-char-scan.mjs && node adapters/pdf/regex-self-assert.mjs && node adapters/pdf/absence-sweep.mjs && node adapters/pdf/guard-sweep.mjs 433boi && node adapters/pdf/exclusion-sweep.mjs && node adapters/pdf/enumerate-shadowing.mjs && node adapters/pdf/success-sweep.mjs && node adapters/pdf/register-ids.mjs && node adapters/pdf/sweep-boundary.mjs && node adapters/pdf/assert-y-convention.mjs && node adapters/pdf/gen-subject-register.mjs --check && node adapters/pdf/assert-subject-register.mjs && node adapters/pdf/assert-mirror.mjs --canary && node adapters/pdf/target-root.mjs && node adapters/pdf/subject-class.mjs --canary && node adapters/pdf/assert-subject-class.mjs && node adapters/hubspot/assert-intake-keys.mjs && node adapters/hubspot/assert-registry-targets.mjs && node adapters/hubspot/post-pass-sweep.mjs && node adapters/hubspot/rerun-regression.mjs --canary && node adapters/pdf/assert-rules.mjs && node adapters/pdf/assert-reachability.mjs && node adapters/hubspot/assert-exit-codes.mjs && node adapters/pdf/assert-firing-proofs.mjs && node adapters/pdf/assert-completeness-counters.mjs && node adapters/pdf/blanket-audit.mjs && node adapters/pdf/count-sweep.mjs && node adapters/hubspot/no-downgrade.mjs",
     "recordshape:433aoi": "node adapters/pdf/assert-record-shape.mjs 433aoi",
     "recordshape:433boi": "node adapters/pdf/assert-record-shape.mjs 433boi",
     "recordshape": "node adapters/pdf/assert-record-shape.mjs 433aoi && node adapters/pdf/assert-record-shape.mjs 433boi",
@@ -48,9 +48,14 @@
     "headroom": "node adapters/hubspot/headroom.mjs",
     "mirror": "node adapters/pdf/assert-mirror.mjs --canary",
     "mirror:433d": "node adapters/pdf/gen-mirror.mjs 433d --check && node adapters/pdf/assert-mirror.mjs 433d --canary",
-    "sweeps:deep": "node adapters/pdf/assert-examined.mjs && node adapters/pdf/assert-fixture-authorship.mjs && node adapters/pdf/assert-row-class-routes.mjs && node adapters/pdf/assert-row-shape-spec.mjs",
+    "sweeps:deep": "node adapters/pdf/assert-examined.mjs && node adapters/pdf/assert-fixture-authorship.mjs && node adapters/pdf/assert-row-class-routes.mjs && node adapters/pdf/assert-row-shape-spec.mjs && node scratchpad/p54-433d-derive-classes.mjs --check",
     "reachability": "node adapters/pdf/assert-reachability.mjs --verbose",
-    "exitcodes": "node adapters/hubspot/assert-exit-codes.mjs --portal --verbose"
+    "exitcodes": "node adapters/hubspot/assert-exit-codes.mjs --portal --verbose",
+    "subjectclass": "node adapters/pdf/subject-class.mjs --canary && node adapters/pdf/assert-subject-class.mjs",
+    "subjectclass:433d": "node scratchpad/p54-433d-derive-classes.mjs --check && node adapters/pdf/assert-subject-class.mjs 433d",
+    "markers:433d": "node adapters/pdf/subject-class.mjs --markers 433d",
+    "captions:433d": "node adapters/pdf/caption-candidates.mjs 433d",
+    "targetroot": "node adapters/pdf/target-root.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

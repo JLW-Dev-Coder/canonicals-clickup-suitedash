@@ -76,8 +76,29 @@ import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
 import { readFileSync } from 'fs';
 import { pathToFileURL } from 'url';
 import { examined } from './examined.mjs';
+import { rootPrefixForForm, FIELD_FORMS } from './target-root.mjs';
 
-const TARGET_PREFIX = 'topmostSubform[0].';
+// EVERY ROOT THIS TREE'S FORMS ACTUALLY USE, DERIVED AT LOAD FROM THEIR OWN FIELD LISTS.
+//
+// This was the literal 'topmostSubform[0].' and that is not 433-D's root: its 168 field names
+// all begin `form1[0].`. Under the literal, classifyMapTargets() would have found no writable,
+// deferred or never-autofill target on that form at all -- so the gate's partition would report
+// every field UNACCOUNTED while the map bound all of them, and validate-map would report a pass
+// over the empty set. See adapters/pdf/target-root.mjs for the whole account.
+//
+// The UNION rather than a per-form root, because walkTargets() is exported and called from four
+// places that pass a map document and no form argument; threading a parameter through all of
+// them is a change to four call sites in a commit about a fifth thing. The union is the same
+// answer for every form this tree holds -- the roots are disjoint prefixes of real AcroForm
+// paths -- and it is DERIVED, so a seventh form joins by having a field list rather than by
+// somebody editing this line. An empty derivation is a STOP at load: it is the input that makes
+// this predicate select nothing, which is the whole defect.
+const TARGET_ROOTS = (() => {
+  const roots = [...new Set(FIELD_FORMS().map((f) => rootPrefixForForm(f)).filter((r) => r.root).map((r) => r.root))];
+  if (!roots.length) throw new Error('verify-form-coverage.mjs: no target root could be derived from any form field list, so every map target would be invisible to this module. See adapters/pdf/target-root.mjs.');
+  return roots;
+})();
+const isTarget = (s) => TARGET_ROOTS.some((r) => s.startsWith(r));
 
 // Guard constructs vs writing constructs.
 //
@@ -109,7 +130,7 @@ const GUARD_NEVER     = ['allowed._never_autofill', '_never_autofill'];
 // key when a cell comes back empty.
 export function walkTargets(node, path = '', out = []) {
   if (typeof node === 'string') {
-    if (node.startsWith(TARGET_PREFIX)) out.push({ path, target: node });
+    if (isTarget(node)) out.push({ path, target: node });
     return out;
   }
   if (Array.isArray(node)) { node.forEach((v, i) => walkTargets(v, `${path}[${i}]`, out)); return out; }

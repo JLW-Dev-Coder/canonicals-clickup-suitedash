@@ -234,6 +234,12 @@ export const Y_REPORTERS = {
     also: 'widget-rect',
     how: 'readPrintedText returns y1 (baseline) and y2 (run top) on every item; readWidgetGeometry returns the four-tuple. It is the source, so it reports both and names both.',
   },
+  'caption-candidates.mjs': {
+    reports: 'text-baseline',
+    also: 'widget-rect',
+    how: 'IT REPORTS NO ABSOLUTE y AT ALL. Every number it emits about a run is a GAP -- the distance from a widget edge to a run edge, in one named direction -- and a gap is a difference between two quantities of the same convention, so it survives a convention swap that would move both. The widget rectangle it prints is the four-tuple, labelled x= and y= as a rect. Where it does touch a baseline it does so through baselineOfRun() from this module, in two places and nowhere else: rowPitch(), which takes the MEDIAN gap between adjacent distinct baselines, and bandFor(), which tests a baseline against a widget rect. BOTH ARE THE MIXED COMPARISON [B11] IS ABOUT -- a run baseline against a widget edge -- and both are declared here rather than left as a silence: the band is a deliberately loose BOUND on what a caption chain may name and never a reading of which caption governs, which is why an eight-point convention error would widen or narrow it rather than move a binding. The tight reading is the directional candidate list, and that is gaps only.',
+    converts_at: 'baselineOfRun(), imported from this module, so no second instrument can disagree with the first about where a run sits.',
+  },
   'verify-headings.mjs': {
     reports: 'text-baseline',
     how: 'A heading record is `{ id, page, y: t.y1, x1, x2, text }` and the band test compares that baseline against a widget\'s vertical CENTRE. Conforming since it was written.',

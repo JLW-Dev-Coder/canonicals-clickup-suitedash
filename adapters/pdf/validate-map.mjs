@@ -30,6 +30,7 @@ import { runSuccessSweep, reportSuccessSweep } from './success-sweep.mjs';
 import { runBlanketAudit, reportBlanketAudit } from './blanket-audit.mjs';
 import { reclassify, report as reportReclassify } from '../hubspot/reclassify-against-backbone.mjs';
 import { examined } from './examined.mjs';
+import { rootPrefixOf } from './target-root.mjs';
 
 const form      = process.argv[2] || '433f';
 const mapPath   = `adapters/pdf/maps/${form}.map.json`;
@@ -39,7 +40,21 @@ const names     = new Set(fieldsDoc.fields.map(f => f.name));
 
 // A target is any string rooted at the AcroForm's top-level subform. Prose notes,
 // file paths and revision pins never start that way, so nothing needs an exclusion list.
-const TARGET_PREFIX = 'topmostSubform[0].';
+//
+// THE ROOT IS DERIVED FROM THIS FORM'S OWN FIELD LIST, NEVER TYPED. It was the literal
+// 'topmostSubform[0].', which is the root of the five forms that existed when this line was
+// written and is NOT 433-D's: every one of that form's 168 field names begins `form1[0].`. The
+// literal would have selected NOTHING on it, and the failing direction reads as the strongest
+// line this tool prints -- "0 target reference(s)" followed by "OK - every target in the map
+// exists verbatim in the PDF field list", which is true of the empty set. A guard that examines
+// nothing has not been tested ([R-04]) and a literal in a reader is a fact nobody re-derives
+// ([R-22]). adapters/pdf/target-root.mjs derives it and requires EVERY field to be under it.
+const rootInfo = rootPrefixOf([...names]);
+if (rootInfo.stop) {
+  console.error(`STOP - the target root for ${form} could not be derived: ${rootInfo.stop}`);
+  process.exit(2);
+}
+const TARGET_PREFIX = rootInfo.root;
 const targets = [];
 (function walk(node, path) {
   if (typeof node === 'string') {
@@ -52,7 +67,14 @@ const targets = [];
 })(mapDoc, '');
 
 const unique = new Set(targets.map(([, v]) => v));
-console.log(`form ${form}: ${targets.length} target reference(s), ${unique.size} unique, from ${mapPath}; PDF fields: ${names.size}`);
+console.log(`form ${form}: ${targets.length} target reference(s), ${unique.size} unique, from ${mapPath}; PDF fields: ${names.size}; target root ${JSON.stringify(TARGET_PREFIX)} DERIVED from the field list, all ${rootInfo.under} field(s) under it`);
+// ZERO TARGETS IS NOT A PASS. A map binding nothing satisfies every check below vacuously,
+// and that is exactly the state a wrong root produced. The run stops at the site rather
+// than two tools later with a clean-looking verdict.
+if (targets.length === 0) {
+  console.error(`STOP - ${mapPath} yields ZERO target reference(s) under the derived root ${JSON.stringify(TARGET_PREFIX)}. Every check in this file would pass over the empty set.`);
+  process.exit(2);
+}
 examined('validate-map', form, targets.length, 'map-target-references');
 
 const missing = targets.filter(([, v]) => !names.has(v));

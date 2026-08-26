@@ -235,6 +235,53 @@ export const BOUNDARIES = [
     },
     observe: () => ['[SB-13] 433boi.lineage-433aoi.json is the file [B11] came out of: it quotes printed runs at their RUN TOPS where every map in this repo quotes baselines. It is left unedited on purpose — it is the intake record, and correcting it in place would erase what intake concluded. The correction belongs in the map and is carried as [B11].'] },
 
+  { id: 'SB-23', sweep: 'count-sweep.mjs', kind: 'scoped',
+    path: 'adapters/pdf/maps/*.mirror.json, *.subject-classes.json',
+    what: 'Removes the two DERIVED CONSTRUCT declarations 433-D carries. Neither is in count-sweep.mjs sweptFiles(), which names eight file kinds and these are not among them, so both would sit outside every count sweep by default -- the state samples/ was in when it held two wrong typed counts, and the state 433d.mirror.json was in for the two prompts between it landing and this entry.',
+    claim: 'They are not unswept, and the cover is STRONGER than the manifest rather than weaker. Every scalar in each is written by a generator that also runs in --check mode, re-deriving the whole file from the pinned PDF and comparing it BYTE FOR BYTE; a difference is a STOP. The manifest disposes a number as derived or declares it underivable, and these files have no third category to fall into because no number in them was typed at all.',
+    assertedBy: 'adapters/pdf/gen-mirror.mjs --check and adapters/pdf/assert-mirror.mjs, which rebuilds the declaration from the widget geometry on every `npm run sweeps`; and scratchpad/p54-433d-derive-classes.mjs --check, wired into `npm run sweeps:deep`, which re-reads the PDF, re-runs the classifier over every caption and refuses any difference from the committed bytes.',
+    count: () => readdirSync('adapters/pdf/maps').filter((f) => /\.(mirror|subject-classes)\.json$/.test(f)).length,
+    // THE HALF THAT COULD ROT is the claim that something re-derives them, so it is read out of
+    // the file's OWN declaration of its generator and then out of package.json, rather than
+    // trusted from the sentence above. A construct file whose generator is not named in it, or
+    // whose generator no standing script runs, is an unregistered exclusion wearing this one's
+    // words -- which is [R-34] exactly: a tool nobody runs is a tool nobody knows is broken, and
+    // a re-derivation nobody runs is a claim nobody knows is false.
+    crosscheck: () => {
+      const out = [];
+      const scripts = (() => { try { return JSON.stringify(JSON.parse(r('package.json')).scripts || {}); } catch { return ''; } })();
+      for (const f of readdirSync('adapters/pdf/maps').filter((x) => /\.(mirror|subject-classes)\.json$/.test(x))) {
+        let gen = null;
+        try { const d = JSON.parse(r(`adapters/pdf/maps/${f}`)); gen = d._generator || d.meta?.generator || null; } catch { gen = null; }
+        if (!gen) { out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} is excused as re-derived on every run and names no generator of its own. An artefact that does not say what wrote it cannot be checked against it.`); continue; }
+        if (!existsSync(gen)) { out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} names ${gen} as its generator and that file is not in this tree.`); continue; }
+        if (!scripts.includes(gen)) out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} is excused on the ground that ${gen} re-derives it, and no npm script runs ${gen}. Nothing re-derives it, so every figure in it is a typed count outside every sweep.`);
+      }
+      return out;
+    } },
+
+  { id: 'SB-24', sweep: 'count-sweep.mjs', kind: 'claiming',
+    path: 'adapters/pdf/maps/433d.pairs.json, 433d.pairs.txt, 433d.lineage.json',
+    what: "Removes 433-D's INTAKE RECORD, which [SB-13] does not reach: that entry's pattern takes *.intake.json and *.lineage-*.json, and these three are spelled pairs.* and lineage.json with no hyphen. They were outside every sweep and outside every boundary from the commit that landed them until this one, and the reason is the spelling rather than a decision anybody made -- which is [R-15]'s shape, an exclusion that is a property of the reading and that nobody wrote.",
+    claim: "Same ground as [SB-13] and no wider: an intake record is a statement about one moment, superseded by the construct built from it rather than maintained alongside it. 433d.pairs.json is the pair structure as first read; adapters/pdf/maps/433d.mirror.json is what supersedes it and is re-derived from the page on every sweep at [SB-23]. 433d.lineage.json is the leaf-name lineage against the other five forms, read once before any binding existed.",
+    count: () => readdirSync('adapters/pdf/maps').filter((f) => /^433d\.(pairs\.(json|txt)|lineage\.json)$/.test(f)).length,
+    // THE CHECKABLE HALF of "superseded" is that the successor EXISTS. [SB-13] checks the same
+    // thing by requiring a map; here the successor named is the mirror declaration, because
+    // that is what the pair structure became and it is the file a binding is checked against.
+    // WRITTEN AS A LOOP RATHER THAN AS `if (files.length && !existsSync(...))`, WHICH IS WHAT
+    // IT WAS. That expression is `nums.length && mismatch` -- the shape [R-17] is named for --
+    // and the guard sweep reported it undisposed on the first run of this entry. A loop over
+    // the files has no empty branch to fall into: no files means no rows, the count above
+    // prints the same zero, and each file that IS there is checked on its own.
+    crosscheck: () => {
+      const out = [];
+      for (const f of readdirSync('adapters/pdf/maps').filter((x) => /^433d[.](pairs[.](json|txt)|lineage[.]json)$/.test(x)))
+        if (!existsSync('adapters/pdf/maps/433d.mirror.json'))
+          out.push(`[SB-24] CONTRADICTED - adapters/pdf/maps/${f} is excused as an intake record superseded by adapters/pdf/maps/433d.mirror.json, and that file is not in this tree. Nothing has superseded it, so its figures are the only statement this repo holds about the pair structure.`);
+      return out;
+    },
+    observe: () => ['[SB-24] These three sat outside every sweep and every boundary for two prompts, not by an exclusion anybody wrote but because [SB-13]\'s pattern is spelled with a hyphen and 433-D\'s files are not. It was found by adding a fourth file to the same directory and asking what covered it.'] },
+
   { id: 'SB-14', sweep: 'count-sweep.mjs', kind: 'claiming', path: 'adapters/hubspot/*.md, adapters/pdf/**/*.md — EXCEPT what [SB-19] takes',
     what: 'Removes every markdown document under adapters/ — naming derivations, provisioning dry-runs and read-backs, style notes — SAVE for the files [SB-19] names, which are not run reports and are removed from this entry rather than absorbed by it.',
     claim: 'These are RUN REPORTS: each describes one execution against a live external system and is not re-derivable from this tree, because the tree does not hold the state the run was against.',
