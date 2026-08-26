@@ -19,28 +19,28 @@
 // survive, and the PDF read-back at the end does not share it.
 
 import { readFileSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 import { loadBindings } from './bindings.mjs';
 
 const [action, arg] = process.argv.slice(2);
 
 if (action === 'delete') {
-  if (!arg) { console.error('usage: ... delete <contactId>'); process.exit(1); }
+  if (!arg) { console.error('usage: ... delete <contactId>'); stop(1); }
   await hs(`/crm/v3/objects/contacts/${arg}`, { method: 'DELETE' });
   // Verified rather than assumed: a 2xx on the archive call is HubSpot accepting the request.
   let gone = false;
   try {
     await hs(`/crm/v3/objects/contacts/${arg}`);
-  } catch (e) {
+  } catch (e) { if (isStop(e)) throw e;
     gone = e.status === 404;
   }
   console.log(gone ? `deleted ${arg} — verified gone (GET returns 404)` : `DELETE returned 2xx but ${arg} is still readable. Check the portal.`);
-  process.exit(gone ? 0 : 3);
+  stop(gone ? 0 : 3);
 }
 
 if (action !== 'seed') {
   console.error('usage: node adapters/hubspot/hs-seed-synthetic.mjs seed|delete [arg]');
-  process.exit(1);
+  stop(1);
 }
 
 // `seed [form] [samplePath]`. The original call was `seed [samplePath]` with 433-A implied, so
@@ -75,13 +75,13 @@ const nestedRaw = sample._fixture?._synthetic;
 const nestedDecl = typeof nestedRaw === 'string' ? nestedRaw.trim() : nestedRaw;
 if (topDecl && nestedDecl) {
   console.error(`REFUSING: ${samplePath} declares _synthetic BOTH at the top level and inside _fixture. Two spellings of one claim can disagree; keep one.`);
-  process.exit(2);
+  stop(2);
 }
 const declaration = topDecl || nestedDecl;
 const declaredAt = topDecl ? '_synthetic' : nestedDecl ? '_fixture._synthetic' : null;
 if (!declaration) {
   console.error(`REFUSING: ${samplePath} declares _synthetic at neither the top level nor inside _fixture. A round-trip probe is never built from a real contact.`);
-  process.exit(2);
+  stop(2);
 }
 console.log(`source declares synthetic (at ${declaredAt}): ${typeof declaration === 'string' ? declaration.slice(0, 160) + (declaration.length > 160 ? '…' : '') : declaration}`);
 console.log('');

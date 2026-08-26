@@ -63,6 +63,7 @@
 
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { examined } from '../pdf/examined.mjs';
+import { stop, isStop } from './hs-lib.mjs';
 
 const DIR = 'adapters/hubspot';
 const VERBOSE = process.argv.includes('--verbose');
@@ -106,7 +107,7 @@ export const readRegisters = () => {
     const path = `${REGISTER_DIR}/${name}`;
     let doc = null, unreadable = null;
     try { doc = JSON.parse(readFileSync(path, 'utf8')); }
-    catch (e) { unreadable = e.message; }
+    catch (e) { if (isStop(e)) throw e; unreadable = e.message; }
     out.push({ path, name, doc, unreadable, classified: REGISTER_CLASSIFIER(doc) });
   }
   return out;
@@ -352,4 +353,4 @@ export const run = async ({ portal = false } = {}) => {
   return 0;
 };
 
-if (import.meta.main) process.exit(await run({ portal: process.argv.includes('--portal') }));
+if (import.meta.main) stop(await run({ portal: process.argv.includes('--portal') }));

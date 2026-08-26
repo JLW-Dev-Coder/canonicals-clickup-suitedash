@@ -32,13 +32,13 @@
 //   `map_option_by_value`, which the generator wrote when it chose the option values.
 
 import { readFileSync, writeFileSync } from 'fs';
-import { hs, chunk } from './hs-lib.mjs';
+import { hs, chunk, stop, isStop } from './hs-lib.mjs';
 import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
 
 const contactId = process.argv[2];
 if (!contactId) {
   console.error('usage: node adapters/hubspot/hs-fetch-433a.mjs <contactId>');
-  process.exit(1);
+  stop(1);
 }
 
 const form = '433a';
@@ -57,7 +57,7 @@ const res = await hs('/crm/v3/objects/contacts/batch/read', {
 const found = (res.results || [])[0];
 if (!found) {
   console.error(`No contact ${contactId} (or it holds none of the ${props.length} requested properties).`);
-  process.exit(2);
+  stop(2);
 }
 const hsProps = found.properties || {};
 
@@ -74,7 +74,7 @@ for (const p of defs.properties) {
     let parsed;
     try {
       parsed = JSON.parse(raw);
-    } catch (e) {
+    } catch (e) { if (isStop(e)) throw e;
       errors.push(`${p.hs_name} (-> ${p.key}): not valid JSON. A repeatable table is stored as a JSON array; the fill engine would have printed ZERO rows for it without saying so. ${e.message}`);
       continue;
     }
@@ -143,7 +143,7 @@ if (orphans.length) {
 if (errors.length) {
   console.error(`REFUSING TO WRITE — ${errors.length} problem(s):`);
   for (const e of errors) console.error(`  ${e}`);
-  process.exit(3);
+  stop(3);
 }
 
 const out = `samples/${form}.from-hubspot-${contactId}.json`;

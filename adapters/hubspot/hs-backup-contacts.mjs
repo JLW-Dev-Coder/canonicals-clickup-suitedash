@@ -13,7 +13,7 @@
 // record count this script writes.
 
 import { writeFileSync, mkdirSync, statSync } from 'fs';
-import { hs, listAll, chunk } from './hs-lib.mjs';
+import { hs, listAll, chunk, stop } from './hs-lib.mjs';
 
 const OUT_DIR = 'adapters/hubspot/backup';
 const OUT = `${OUT_DIR}/contacts-pre-reset.json`;
@@ -43,7 +43,7 @@ console.log('');
 
 if (records.length !== ids.length) {
   console.error(`ABORT: read back ${records.length} of ${ids.length} contacts. Backup incomplete.`);
-  process.exit(2);
+  stop(2);
 }
 
 mkdirSync(OUT_DIR, { recursive: true });

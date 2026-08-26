@@ -9,7 +9,7 @@
 // three forms in, with names that cannot be withdrawn.
 
 import { readFileSync } from 'node:fs';
-import { hs, listAll } from './hs-lib.mjs';
+import { hs, listAll, stop, isStop } from './hs-lib.mjs';
 
 const line = (s) => console.log(s);
 
@@ -24,7 +24,7 @@ const census = async (label, path) => {
     const rows = await listAll(path, { limit: 100 });
     line(`${label}: ${rows.length}`);
     return rows;
-  } catch (e) {
+  } catch (e) { if (isStop(e)) throw e;
     if (e.status === 403) {
       line(`${label}: UNREADABLE - 403 MISSING_SCOPES (this key cannot read ${label}; count not verified)`);
       return null;
@@ -67,7 +67,7 @@ line('=== CEILING (probed) ===');
 try {
   const acct = await hs('/account-info/v3/details');
   line(`portalId: ${acct.portalId}  tier: ${acct.accountType}  currency: ${acct.companyCurrency}  tz: ${acct.timeZone}`);
-} catch (e) {
+} catch (e) { if (isStop(e)) throw e;
   line(`account-info/v3/details -> ${e.status} (${e.detail?.slice(0, 120)})`);
 }
 
@@ -84,7 +84,7 @@ for (const path of LIMIT_ENDPOINTS) {
   try {
     const r = await hs(path);
     line(`${path} -> ${JSON.stringify(r).slice(0, 600)}`);
-  } catch (e) {
+  } catch (e) { if (isStop(e)) throw e;
     line(`${path} -> ${e.status}`);
   }
 }
@@ -159,7 +159,7 @@ const stops = [];
     checked++;
     let present = false, status = null;
     try { await hs(`/crm/v3/objects/contacts/${p.id}`); present = true; }
-    catch (e) { status = e.status; }
+    catch (e) { if (isStop(e)) throw e; status = e.status; }
     if (present) { resurrected++; stops.push(`probe ${p.id} (${p.form}) is recorded torn_down and IS READABLE from the portal right now. The teardown did not happen, or the record was restored.`); }
     else if (status !== 404) stops.push(`probe ${p.id} (${p.form}) read back ${status}, which is not a 404 and is therefore not evidence of absence. An error reading the portal is not a confirmation that the record is gone.`);
   }
@@ -187,7 +187,7 @@ if (stops.length) {
   line('');
   console.error(`PRE-FLIGHT STOP — ${stops.length} probe-register problem(s):`);
   for (const s of stops) console.error(`  ${s}`);
-  process.exit(3);
+  stop(3);
 }
 line('');
 line('probe register: every recorded probe re-read from the portal and confirmed absent, and every synthetic-looking contact on the portal is a registered probe.');

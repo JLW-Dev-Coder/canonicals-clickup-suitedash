@@ -31,13 +31,13 @@
 //
 // And the state is read back FROM THE PORTAL after the write, never from the response to it.
 
-import { hs } from './hs-lib.mjs';
+import { hs, stop } from './hs-lib.mjs';
 
 const [name, replacement, why, ...flags] = process.argv.slice(2);
 const apply = flags.includes('--apply') || process.argv.includes('--apply');
 if (!name || !replacement || !why) {
   console.error('usage: node adapters/hubspot/hs-deprecate-property.mjs <name> <replacement> "<why>" [--apply]');
-  process.exit(2);
+  stop(2);
 }
 
 const PATH = `/crm/v3/properties/contacts/${name}`;
@@ -52,7 +52,7 @@ console.log(`  live description BEFORE: ${JSON.stringify(before.description)}`);
 
 if (/^DEPRECATED\b/.test(before.description)) {
   console.log('  already deprecated. Nothing to do, and nothing claimed about a write that did not happen.');
-  process.exit(0);
+  stop(0);
 }
 
 const next = `DEPRECATED - do not bind. Superseded by ${replacement}. ${why} Original: ${before.description}`.slice(0, 500);
@@ -72,13 +72,13 @@ if (JSON.stringify(afterDry) !== JSON.stringify(before)) {
   console.error('  STOP - the dry-run path CHANGED the live property. It is not a no-op, and the real write is not starting.');
   console.error(`    before: ${JSON.stringify(before)}`);
   console.error(`    after:  ${JSON.stringify(afterDry)}`);
-  process.exit(2);
+  stop(2);
 }
 console.log('  dry run proved no-op against the live portal: property byte-for-byte unchanged after it.');
 
 if (!apply) {
   console.log('  DRY RUN ONLY. Nothing was written. Re-run with --apply.');
-  process.exit(0);
+  stop(0);
 }
 
 await hs(PATH, { method: 'PATCH', body: { description: next } });
@@ -88,9 +88,9 @@ const after = await read();
 console.log(`  live description AFTER (read back from the portal): ${JSON.stringify(after.description)}`);
 if (after.description !== next) {
   console.error('  STOP - the portal did not store what was sent. The property is in an unknown state.');
-  process.exit(2);
+  stop(2);
 }
 for (const k of ['label', 'type', 'fieldType', 'groupName']) {
-  if (after[k] !== before[k]) { console.error(`  STOP - ${k} changed from ${JSON.stringify(before[k])} to ${JSON.stringify(after[k])}. Only the description was meant to move.`); process.exit(2); }
+  if (after[k] !== before[k]) { console.error(`  STOP - ${k} changed from ${JSON.stringify(before[k])} to ${JSON.stringify(after[k])}. Only the description was meant to move.`); stop(2); }
 }
 console.log('  OK - description updated, and label, type, fieldType and group are unchanged.');

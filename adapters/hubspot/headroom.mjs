@@ -61,6 +61,7 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { MAPPED_FORMS } from '../pdf/resolve-fixture.mjs';
+import { stop, isStop } from './hs-lib.mjs';
 
 // THE ONE PLACE THE CEILING IS WRITTEN. Everything below names this constant.
 export const CEILING = 1000;
@@ -81,7 +82,7 @@ export const classifiedCost = (form, liveNames) => {
   const defs = `adapters/hubspot/fields.${form}.json`;
   if (!existsSync(defs)) return { form, state: 'no definitions file', cost: null };
   let doc;
-  try { doc = JSON.parse(readFileSync(defs, 'utf8')); } catch (e) { return { form, state: `definitions will not parse: ${e.message}`, cost: null }; }
+  try { doc = JSON.parse(readFileSync(defs, 'utf8')); } catch (e) { if (isStop(e)) throw e; return { form, state: `definitions will not parse: ${e.message}`, cost: null }; }
   // The definitions are held under whichever key the generator chose; both shapes are read and a
   // file matching neither is REPORTED, never counted as zero. A form costing zero because this
   // file could not find its list is the vacuous pass [R-04] names.
@@ -98,7 +99,7 @@ export const projectedBound = (form) => {
   const fieldsPath = `adapters/pdf/maps/${form}.fields.json`;
   if (!existsSync(fieldsPath)) return { form, state: `no enumeration at ${fieldsPath}, so there is nothing to project from. A form with no enumeration has no bound, not a bound of zero.`, bound: null };
   let doc;
-  try { doc = JSON.parse(readFileSync(fieldsPath, 'utf8')); } catch (e) { return { form, state: `enumeration will not parse: ${e.message}`, bound: null }; }
+  try { doc = JSON.parse(readFileSync(fieldsPath, 'utf8')); } catch (e) { if (isStop(e)) throw e; return { form, state: `enumeration will not parse: ${e.message}`, bound: null }; }
   const rows = Array.isArray(doc) ? doc : (doc.fields || doc.results || null);
   if (!Array.isArray(rows)) return { form, state: `enumeration holds no field array — its shape is ${Object.keys(doc).join(', ')}`, bound: null };
   // THE STEM IS THE LAST NAMED COMPONENT OF THE FULL FIELD PATH, WITHOUT ITS OCCURRENCE INDEX.
@@ -127,7 +128,7 @@ export const projectedBound = (form) => {
       const m = JSON.parse(readFileSync(mirrorFile, 'utf8'));
       excluded = Object.keys(m.exclusions || {});
       mirrorNote = `${mirrorFile} excludes ${excluded.length} stem(s) by name (${excluded.join(', ') || 'none'}); each is asserted by [M-05] to have no occurrence on a mirrored page`;
-    } catch (e) { return { form, state: `${mirrorFile} will not parse: ${e.message}. An unreadable declaration is not an empty one.`, bound: null }; }
+    } catch (e) { if (isStop(e)) throw e; return { form, state: `${mirrorFile} will not parse: ${e.message}. An unreadable declaration is not an empty one.`, bound: null }; }
   }
   for (const x of excluded) stems.delete(x);
   return { form, state: 'unclassified', fields: rows.length, bound: stems.size, floor: 0, excluded, mirrorNote };
@@ -148,7 +149,7 @@ export const subjectVerdicts = (form) => {
   const p = 'adapters/pdf/maps/_subjects.cross-form.json';
   if (!existsSync(p)) return { stop: `no subject register at ${p}` };
   let doc;
-  try { doc = JSON.parse(readFileSync(p, 'utf8')); } catch (e) { return { stop: `${p} will not parse: ${e.message}` }; }
+  try { doc = JSON.parse(readFileSync(p, 'utf8')); } catch (e) { if (isStop(e)) throw e; return { stop: `${p} will not parse: ${e.message}` }; }
   if (!Array.isArray(doc.pairs)) return { stop: `${p} holds no \`pairs\` ARRAY — its shape is ${typeof doc.pairs}. This function cannot read it, which is not the same as it holding no verdict.` };
   if (!doc.forms?.[form]) return { rows: [], why: `${p} registers no subject for ${form} at all, so there is nothing to be verdicted against.` };
   const rows = doc.pairs.filter((x) => x.a === form || x.b === form)
@@ -229,5 +230,5 @@ export const canary = () => {
 if (process.argv[1] && /headroom\.mjs$/.test(process.argv[1].replace(/\\/g, '/'))) {
   const pre = argv.includes('--canary') ? canary() : [];
   for (const p of pre) console.error(`  ${p}`);
-  report().then((n) => process.exit((n + pre.length) ? 2 : 0)).catch((e) => { console.error(`headroom STOPPED: ${e.message}`); process.exit(2); });
+  report().then((n) => stop((n + pre.length) ? 2 : 0)).catch((e) => { if (isStop(e)) throw e; console.error(`headroom STOPPED: ${e.message}`); stop(2); });
 }

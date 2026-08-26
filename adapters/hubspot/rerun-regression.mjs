@@ -108,6 +108,7 @@ import { join, dirname, relative } from 'node:path';
 import { MAPPED_FORMS } from '../pdf/resolve-fixture.mjs';
 import { examined } from '../pdf/examined.mjs';
 import { REFUSAL } from './no-downgrade.mjs';
+import { stop, isStop } from './hs-lib.mjs';
 
 const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
@@ -170,7 +171,7 @@ export const buildSandbox = () => {
   }
   if (existsSync('.env')) copyFileSync('.env', join(dir, '.env'));
   try { symlinkSync(join(process.cwd(), 'node_modules'), join(dir, 'node_modules'), 'junction'); }
-  catch (e) { throw new Error(`sandbox could not link node_modules: ${e.message}`); }
+  catch (e) { if (isStop(e)) throw e; throw new Error(`sandbox could not link node_modules: ${e.message}`); }
   return dir;
 };
 
@@ -206,7 +207,7 @@ export const population = () => {
     if (!existsSync(defs)) rows.push({ form, kind: 'generator', stop: `no ${defs}, so nothing in the tree declares this form's generator ([R-19])` });
     else {
       let gen = null, err = null;
-      try { gen = JSON.parse(readFileSync(defs, 'utf8'))?.meta?.generator ?? null; } catch (e) { err = e.message; }
+      try { gen = JSON.parse(readFileSync(defs, 'utf8'))?.meta?.generator ?? null; } catch (e) { if (isStop(e)) throw e; err = e.message; }
       if (err) rows.push({ form, kind: 'generator', stop: `${defs} will not parse: ${err}. An unreadable declaration is not an absent one.` });
       else if (!gen) rows.push({ form, kind: 'generator', stop: `${defs} declares no meta.generator, so the artefact does not name what makes it ([R-19])` });
       else if (!existsSync(gen)) rows.push({ form, kind: 'generator', tool: gen, stop: `${defs} names ${gen} as its generator and that file is not on disk` });
@@ -225,7 +226,7 @@ export const provePruning = (rows) => {
   for (const r of rows) {
     if (!r.tool) continue;
     let src;
-    try { src = readFileSync(r.tool, 'utf8'); } catch (e) { bad.push(`UNREADABLE ${r.tool}: ${e.message}`); continue; }
+    try { src = readFileSync(r.tool, 'utf8'); } catch (e) { if (isStop(e)) throw e; bad.push(`UNREADABLE ${r.tool}: ${e.message}`); continue; }
     for (const p of PRUNED) if (src.includes(p)) bad.push(`PRUNED ROOT READ  ${r.tool} names "${p}", which this file prunes from the sandbox on the ground that no discovered tool reads it. The ground is false; either stop pruning that root or say here why this mention is not a read.`);
   }
   return bad;
@@ -474,5 +475,5 @@ export const report = async () => {
 };
 
 if (process.argv[1] && /rerun-regression\.mjs$/.test(process.argv[1].replace(/\\/g, '/'))) {
-  report().then((n) => process.exit(n ? 2 : 0)).catch((e) => { console.error(`rerun-regression STOPPED: ${e.message}`); process.exit(2); });
+  report().then((n) => stop(n ? 2 : 0)).catch((e) => { if (isStop(e)) throw e; console.error(`rerun-regression STOPPED: ${e.message}`); stop(2); });
 }

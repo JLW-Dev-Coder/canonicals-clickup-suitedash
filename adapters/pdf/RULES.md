@@ -855,6 +855,55 @@ the commit this rule is written in, so it has no hash yet.
 
 ---
 
+## [R-34] A tool nobody runs is a tool nobody knows is broken
+
+> Every assertion tool in the tree is reachable from `npm run sweeps` or a gate step, or is
+> registered as deliberately manual with a reason that is true of it.
+
+**The defect that earned it.** Three instances inside four prompts, and the third is what turned
+a pattern into a rule.
+
+*One.* `[D-18]`'s fourth instance. `derive-names-433boi.mjs` asked "did THIS pass create this live
+property?" as a `startsWith` against a live description; the 433-B pass rewrote nine shared
+descriptions **seven prompts later**, the predicate went false, and 433-B(OIC) could not
+regenerate its own definitions file. It was found only because that cycle happened to need the
+regeneration. `[R-30]` and `adapters/hubspot/rerun-regression.mjs` are that instance's remedy.
+
+*Two.* `adapters/pdf/assert-row-class-routes.mjs` **had been exiting 2 for two prompts.** Two of
+its five typed fixture paths were stale, so it reported six UNPROVED groups and a canary yield of
+33 against an expected 39. It is in no npm script and in no gate step, so nothing had run it.
+
+*Three.* `gen-subject-register.mjs --check` **existed all along and was in no script**, standing
+over a `meta.generator` whose mis-aim would have destroyed a form's content.
+
+`[R-30]` closed the shape for a finished form's **derivers and fetchers** — that is its declared
+population, discovered from `meta.generator` and from the `hs-fetch-<form>.mjs` glob. An asserter
+is neither, which is why running every finished form's tools surfaced instance two as a
+*bystander* rather than as a member. This rule is the question one level out.
+
+**What it found on its own first run**, which is the reason it is not merely tidy: of 85 tools
+derived from the tree, **20 were run by nothing**. Among them `assert-rules.mjs` — the asserter
+over *this file* — and `assert-examined.mjs`, `assert-firing-proofs.mjs`,
+`assert-completeness-counters.mjs`, `blanket-audit.mjs` and `count-sweep.mjs`. Twelve were wired;
+the rest are registered manual with a ground derived from their own source, and four of those are
+destructive. `assert-firing-proofs.mjs`, on its first wired run, reported `rerun-regression.mjs`
+**undisposed** — a tool that landed one prompt earlier and had never been judged, because the
+judge was itself one of the tools nobody ran.
+
+**And the graph is the guard, so the graph is what has to be right.** Two drafts of it each
+certified `correlate-labels.mjs` — the one tool `[D-22]` records as being in no script and no gate
+step — as reachable: the first by accepting an *import* edge for a tool whose body sits behind a
+CLI guard, the second by reading spawn edges from every `.mjs` string in any file that spawns, so
+that `guard-sweep.mjs`'s register quoting `spawnSync(process.execPath, ['-e'` as an anchor became
+a call site. A graph that certifies the tool the rule was written about certifies nothing, and
+both directions are now planted in `adapters/pdf/assert-reachability.mjs`'s canary.
+
+**Roughly when.** Ruled 2026-08-26, prompt 53 ruling 2. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet.
+`adapters/pdf/assert-reachability.mjs` holds it, wired into `npm run sweeps`.
+
+---
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

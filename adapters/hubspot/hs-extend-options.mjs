@@ -20,20 +20,20 @@
 // every value that was already there. It never reorders and never relabels.
 
 import { readFileSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop } from './hs-lib.mjs';
 
 const form = process.argv[2];
 const apply = process.argv.includes('--apply');
 if (!form) {
   console.error('usage: node adapters/hubspot/hs-extend-options.mjs <form> [--apply]');
-  process.exit(2);
+  stop(2);
 }
 
 const xw = JSON.parse(readFileSync(`adapters/hubspot/crosswalk.${form}.json`, 'utf8'));
 const extensions = xw.option_extensions || [];
 if (!extensions.length) {
   console.log(`crosswalk.${form}.json declares no option extensions. Nothing to do.`);
-  process.exit(0);
+  stop(0);
 }
 
 console.log(`${apply ? 'APPLY' : 'DRY RUN'} — ${extensions.length} option extension(s) from crosswalk.${form}.json`);
@@ -69,7 +69,7 @@ for (const ext of extensions) {
   const lost = [...haveValues].filter((v) => !merged.some((o) => o.value === v));
   if (lost.length) {
     console.error(`  REFUSING — the merged list would drop existing option(s): ${lost.join(', ')}`);
-    process.exit(3);
+    stop(3);
   }
 
   console.log(`  + ${missing.map((a) => a.value).join(', ')}   (why: ${ext.why.split('.')[0]}.)`);

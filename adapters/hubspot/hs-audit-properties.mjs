@@ -25,7 +25,7 @@
 //                 real use; says nothing about whether anything still writes to it.
 
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, isStop } from './hs-lib.mjs';
 
 const OUT = 'adapters/hubspot/backup/property-audit.json';
 const BACKUP = 'adapters/hubspot/backup/contacts-pre-reset.json';
@@ -65,7 +65,7 @@ try {
     walk(f.fieldGroups);
   }
   console.log(`live forms read: ${formsRead}; distinct properties referenced by them: ${formBound.size}`);
-} catch (e) {
+} catch (e) { if (isStop(e)) throw e;
   console.log(`forms API -> ${e.status} (${String(e.detail).slice(0, 160)})`);
   console.log('  ! form binding UNKNOWN — treat name-prose properties with extra care.');
 }

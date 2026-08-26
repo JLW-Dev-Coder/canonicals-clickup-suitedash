@@ -38,7 +38,7 @@
 // fixture is out of every list, every export and every fetch — and it is stated rather than
 // implied so nobody reads "confirmed absent" as "unrecoverable".
 
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 
 // NO `process.exit` ON A SUCCESS PATH. `process.exit` immediately after a `fetch` trips a libuv
 // assertion on Windows — "!(handle->flags & UV_HANDLE_CLOSING)" — printed AFTER the success
@@ -88,7 +88,7 @@ const id = args.find(a => /^\d+$/.test(a));
 const dryRun = args.includes('--dry-run');
 const confirmed = args.includes('--confirm-delete');
 
-const STOP = (...lines) => { lines.forEach(l => console.error(l)); process.exit(2); };
+const STOP = (...lines) => { lines.forEach(l => console.error(l)); stop(2); };
 
 if (!id) STOP('usage: node adapters/hubspot/hs-teardown-contact.mjs <contactId> [--dry-run | --confirm-delete]');
 if (!dryRun && !confirmed) STOP(`Refusing to run. Pass --dry-run, or --confirm-delete to archive contact ${id}.`);
@@ -99,7 +99,7 @@ const main = async () => {
   let before = null;
   try {
     before = await hs(`/crm/v3/objects/contacts/${id}?properties=email,firstname,lastname,createdate`);
-  } catch (e) {
+  } catch (e) { if (isStop(e)) throw e;
     if (e.status === 404) {
       console.log(`contact ${id}: already absent from the portal (404 on a direct object read).`);
       console.log('Nothing to delete. This is a pass — the end state this command exists to produce is the state it found.');
@@ -136,7 +136,7 @@ const main = async () => {
   dryRunPath();
   let stillThere = null;
   try { stillThere = await hs(`/crm/v3/objects/contacts/${id}`); }
-  catch (e) { stillThere = null; if (e.status !== 404) STOP(`STOP - could not re-read contact ${id} after the dry-run path (${e.message}). An unreadable portal is not evidence that the dry run was harmless, and the delete is not starting on a guess.`); }
+  catch (e) { if (isStop(e)) throw e; stillThere = null; if (e.status !== 404) STOP(`STOP - could not re-read contact ${id} after the dry-run path (${e.message}). An unreadable portal is not evidence that the dry run was harmless, and the delete is not starting on a guess.`); }
   if (!stillThere) STOP(
     `STOP - contact ${id} is GONE after the dry-run path, which is the one path that must never remove anything.`,
     '  The dry run is not a no-op. Nothing further is being deleted; fix the branch first.');
@@ -150,7 +150,7 @@ const main = async () => {
   // --- AFTER: the only evidence that counts ---------------------------------------------------
   let after = null, readErr = null;
   try { after = await hs(`/crm/v3/objects/contacts/${id}?properties=email`); }
-  catch (e) { readErr = e; }
+  catch (e) { if (isStop(e)) throw e; readErr = e; }
 
   if (after) STOP('',
     `STOP: the delete was accepted and contact ${id} is STILL READABLE from the portal.`,

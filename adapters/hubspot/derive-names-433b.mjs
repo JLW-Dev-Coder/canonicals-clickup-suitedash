@@ -53,6 +53,7 @@ import { refuseDowngrade, stampFor } from './no-downgrade.mjs';
 import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 import { keySpaceOf, coverageOf, ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
+import { isStop } from './hs-lib.mjs';
 
 const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
@@ -329,7 +330,7 @@ for (const lie of activeLies) {
 // ---------------------------------------------------------------------------------------
 const backbone = new Map();
 for (const [file, form] of [['fields.433a.json', '433a'], ['fields.433f.json', '433f'], ['fields.433aoi.json', '433aoi']]) {
-  let doc; try { doc = R(`adapters/hubspot/${file}`); } catch { continue; }
+  let doc; try { doc = R(`adapters/hubspot/${file}`); } catch (e) { if (isStop(e)) throw e; continue; }
   for (const p of (doc.properties || [])) if (String(p.hs_name).startsWith('irs433_')) backbone.set(p.hs_name, [...(backbone.get(p.hs_name) || []), form]);
 }
 if (backbone.size < 50) STOP('A8', `the backbone read only ${backbone.size} shared irs433_ names out of the three per-form definition files. That is not a series with three provisioned forms; refusing to run the twin check against an input this file could not read.`);

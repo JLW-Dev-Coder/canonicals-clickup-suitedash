@@ -28,7 +28,7 @@
 // values the engine cannot resolve, and the definition file would still look right.
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop } from './hs-lib.mjs';
 import { DIVERGENCE_DECISIONS } from './433boi.divergence-decisions.mjs';
 import { loadRecordShape, statesOf } from '../pdf/record-shape.mjs';
 
@@ -39,7 +39,7 @@ const MAP = JSON.parse(readFileSync('adapters/pdf/maps/433boi.map.json', 'utf8')
 const all = (await hs('/crm/v3/properties/contacts')).results || [];
 if (all.length < 100) {
   console.error(`STOP - the portal returned ${all.length} contact properties. That read failed; it did not find an empty portal. Refusing to report "nothing came back" as "nothing was created".`);
-  process.exit(3);
+  stop(3);
 }
 const live = new Map(all.map((p) => [p.name, p]));
 const custom = all.filter((p) => !p.hubspotDefined);
@@ -160,6 +160,6 @@ console.log(`  portal now: ${custom.length} custom contact properties, headroom 
 console.log('  report -> adapters/hubspot/433boi.provisioning-readback.md');
 if (missing.length || wrong.length || optionProblems.length) {
   console.error(`\nSTOP - ${missing.length} missing, ${wrong.length} wrong, ${optionProblems.length} option problem(s). A property name cannot be renamed, so a wrong one is fixed by deciding what to do about it, not by re-running this.`);
-  process.exit(3);
+  stop(3);
 }
 console.log('every definition read back from the portal matches what was asked for, and every live option value resolves against the engine.');

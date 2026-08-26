@@ -33,14 +33,14 @@
 // left blank is a discounted asset figure the offer calculation is built on.
 
 import { readFileSync, writeFileSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 import { loadBindings, consumableKeys } from './bindings.mjs';
 import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
 
 const contactId = process.argv[2];
 if (!contactId) {
   console.error('usage: node adapters/hubspot/hs-fetch-433aoi.mjs <contactId>');
-  process.exit(1);
+  stop(1);
 }
 
 const form = '433aoi';
@@ -65,7 +65,7 @@ const res = await hs('/crm/v3/objects/contacts/batch/read', {
 const found = (res.results || [])[0];
 if (!found) {
   console.error(`No contact ${contactId} (or it holds none of the ${props.length} requested properties).`);
-  process.exit(2);
+  stop(2);
 }
 const hsProps = found.properties || {};
 
@@ -82,7 +82,7 @@ for (const b of bindings) {
     let parsed;
     try {
       parsed = JSON.parse(raw);
-    } catch (e) {
+    } catch (e) { if (isStop(e)) throw e;
       errors.push(`${b.hs_name} (-> ${b.key}): not valid JSON. A repeatable table is stored as a JSON array; the fill engine would have printed ZERO rows for it without saying so. ${e.message}`);
       continue;
     }
@@ -141,7 +141,7 @@ const filled = Object.keys(record).length - 1;
 if (errors.length) {
   console.error(`REFUSING TO WRITE - ${errors.length} problem(s):`);
   for (const e of errors) console.error(`  ${e}`);
-  process.exit(3);
+  stop(3);
 }
 
 const out = `samples/${form}.from-hubspot-${contactId}.json`;

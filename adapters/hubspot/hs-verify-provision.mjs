@@ -11,7 +11,7 @@
 // remaining six forms is on the record rather than inferred later from a stale number.
 
 import { readFileSync, readdirSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop } from './hs-lib.mjs';
 
 const form = process.argv[2] || '433a';
 const doc = JSON.parse(readFileSync(`adapters/hubspot/fields.${form}.json`, 'utf8'));
@@ -97,6 +97,6 @@ console.log('no endpoint on this portal publishes the number — see hs-prefligh
 console.log('probes four candidates and gets 404 from all of them.');
 console.log(`  headroom at 1,000: ${1000 - custom.length}`);
 
-if (missing.length || mismatched.length) process.exit(3);
+if (missing.length || mismatched.length) stop(3);
 console.log('');
 console.log('verified: portal matches the definition file.');

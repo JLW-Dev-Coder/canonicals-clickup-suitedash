@@ -31,7 +31,7 @@
 // em-dashes by design.
 
 import { readFileSync } from 'node:fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 
 const dryRun = process.argv.includes('--dry-run');
 const defs = JSON.parse(readFileSync('adapters/hubspot/fields.433b.json', 'utf8'));
@@ -39,14 +39,14 @@ const reuses = defs.properties.filter((p) => p.scope === 'reuse');
 
 if (!reuses.length) {
   console.error('STOP — fields.433b.json declares no reuse rows. This tool exists for them; running it against none would report success over an empty set.');
-  process.exit(3);
+  stop(3);
 }
 
 // READ THE LIVE STATE FIRST, and refuse to act on a read that plainly failed.
 const all = (await hs('/crm/v3/properties/contacts')).results || [];
 if (all.length < 100) {
   console.error(`STOP — the portal returned ${all.length} contact properties. A portal with 400+ HubSpot-defined properties cannot answer that, so this read failed rather than finding an empty portal.`);
-  process.exit(3);
+  stop(3);
 }
 const live = new Map(all.map((p) => [p.name, p]));
 
@@ -69,7 +69,7 @@ const namesBoth = (d) => namesOwnForm(d) && namesPredecessor(d);
   const dead = [];
   if (namesBoth(onlyPredecessor)) dead.push('a description naming ONLY 433-B(OIC) was read as naming both.');
   if (!namesBoth(both)) dead.push('a description naming BOTH forms was read as naming one.');
-  if (dead.length) { console.error('STOP — the both-forms test is dead:\n  ' + dead.join('\n  ')); process.exit(3); }
+  if (dead.length) { console.error('STOP — the both-forms test is dead:\n  ' + dead.join('\n  ')); stop(3); }
 }
 
 const plan = [], already = [], missing = [];
@@ -83,7 +83,7 @@ for (const p of reuses) {
 if (missing.length) {
   console.error(`STOP — ${missing.length} reused propert(ies) are not live on the portal: ${missing.map((p) => p.hs_name).join(', ')}.`);
   console.error('  A reuse must bind a property that exists. Run adapters/hubspot/hs-dryrun-433b.mjs, which reports this as a STOP with its reason.');
-  process.exit(3);
+  stop(3);
 }
 
 console.log(`433-B reused-property descriptions${dryRun ? ' — DRY RUN, nothing sent' : ''}`);
@@ -94,8 +94,8 @@ for (const { p, l } of plan) {
   console.log(`    would: ${p.description.slice(0, 150)}`);
 }
 
-if (dryRun) { console.log('\nDRY RUN — nothing was sent.'); process.exit(0); }
-if (!plan.length) { console.log('\nNothing to do: every reused property already names both forms.'); process.exit(0); }
+if (dryRun) { console.log('\nDRY RUN — nothing was sent.'); stop(0); }
+if (!plan.length) { console.log('\nNothing to do: every reused property already names both forms.'); stop(0); }
 
 // --- patch, one at a time, description only ----------------------------------------------------
 const patched = [];
@@ -106,7 +106,7 @@ for (const { p } of plan) {
       body: { description: p.description },     // description ONLY. No name, no type, no options.
     });
     patched.push(p);
-  } catch (e) {
+  } catch (e) { if (isStop(e)) throw e;
     console.error(`  ! PATCH ${p.hs_name} failed: ${e.status ?? ''} ${e.message}`);
   }
 }

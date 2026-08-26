@@ -37,7 +37,7 @@
 // That is a checked absence, printed on every run, not a section quietly omitted ([R-04]).
 
 import { readFileSync, writeFileSync } from 'fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 import { loadBindings, consumableKeys } from './bindings.mjs';
 import { slotColumnsOf } from '../pdf/check-row-shape.mjs';
 import { loadRecordShape, statesOf } from '../pdf/record-shape.mjs';
@@ -45,7 +45,7 @@ import { loadRecordShape, statesOf } from '../pdf/record-shape.mjs';
 const contactId = process.argv[2];
 if (!contactId) {
   console.error('usage: node adapters/hubspot/hs-fetch-433b.mjs <contactId>');
-  process.exit(1);
+  stop(1);
 }
 
 const form = '433b';
@@ -63,7 +63,7 @@ const nameless = bindings.filter((b) => !b.hs_name);
 if (nameless.length) {
   console.error(`STOP — ${nameless.length} of ${bindings.length} binding(s) carry no hs_name: ${nameless.slice(0, 5).map((b) => b.key).join(', ')}${nameless.length > 5 ? ' …' : ''}`);
   console.error('  The batch read would request a nameless property and report an empty contact. See bindings.mjs bindingSourceOf().');
-  process.exit(3);
+  stop(3);
 }
 
 // AND THE NINE REUSED NAMES MUST ACTUALLY BE IN THE REQUEST, under the predecessor's prefix.
@@ -73,7 +73,7 @@ const missingReuse = [...reuseNames].filter((n) => !requested.has(n));
 if (missingReuse.length) {
   console.error(`STOP — ${missingReuse.length} reused propert(ies) are not in the batch read: ${missingReuse.join(', ')}.`);
   console.error('  Those cells would come back empty and read as a contact that left them blank.');
-  process.exit(3);
+  stop(3);
 }
 
 // 433-B's groups declare neither `array` nor `source`; fill-433b.mjs reads `input(g)`, the group
@@ -93,7 +93,7 @@ const res = await hs('/crm/v3/objects/contacts/batch/read', {
 const found = (res.results || [])[0];
 if (!found) {
   console.error(`No contact ${contactId} (or it holds none of the ${props.length} requested properties).`);
-  process.exit(2);
+  stop(2);
 }
 const hsProps = found.properties || {};
 
@@ -111,7 +111,7 @@ for (const b of bindings) {
   if (b.kind === 'group') {
     let parsed;
     try { parsed = JSON.parse(raw); }
-    catch (e) {
+    catch (e) { if (isStop(e)) throw e;
       errors.push(`${b.hs_name} (-> ${b.key}): not valid JSON. A repeatable table is stored as a JSON array; the fill engine would have printed ZERO rows for it without saying so. ${e.message}`);
       continue;
     }
@@ -165,7 +165,7 @@ const filled = Object.keys(record).length - 1;
 if (errors.length) {
   console.error(`REFUSING TO WRITE — ${errors.length} problem(s):`);
   for (const e of errors) console.error(`  ${e}`);
-  process.exit(3);
+  stop(3);
 }
 
 const out = `samples/${form}.from-hubspot-${contactId}.json`;

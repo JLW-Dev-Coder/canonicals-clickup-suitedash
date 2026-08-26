@@ -31,20 +31,20 @@
 // this ran, because the whole provisioning step downstream depends on it.
 
 import { existsSync, readFileSync } from 'fs';
-import { hs, chunk } from './hs-lib.mjs';
+import { hs, chunk, stop } from './hs-lib.mjs';
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const confirmed = args.includes('--confirm-delete-433-properties');
 if (!dryRun && !confirmed) {
   console.error('Refusing to run. Pass --dry-run, or --confirm-delete-433-properties to delete.');
-  process.exit(2);
+  stop(2);
 }
 
 const AUDIT = 'adapters/hubspot/backup/property-audit.json';
 if (!existsSync(AUDIT)) {
   console.error(`ABORT: no audit at ${AUDIT}. Run hs-audit-properties.mjs first.`);
-  process.exit(2);
+  stop(2);
 }
 const audit = JSON.parse(readFileSync(AUDIT, 'utf8'));
 
@@ -84,7 +84,7 @@ console.log(`  by namespace: ${Object.entries(byPrefix).map(([k, v]) => `${k} ${
 
 if (dryRun) {
   console.log(`[dry run] would archive ${targets.length} properties; ${customBefore - targets.length} custom would survive.`);
-  process.exit(0);
+  stop(0);
 }
 
 let done = 0;
@@ -110,6 +110,6 @@ if (seriesLeft.length) console.log(`   ${seriesLeft.join(', ')}`);
 
 if (customAfter !== customBefore - targets.length) {
   console.error('STOP: surviving custom count does not match the expected figure.');
-  process.exit(3);
+  stop(3);
 }
 console.log('verified.');

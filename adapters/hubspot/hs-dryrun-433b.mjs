@@ -35,7 +35,7 @@
 // as a person looking at the portal goes.
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 import { DIVERGENCE_DECISIONS as DECISIONS } from './433b.divergence-decisions.mjs';
 
 const CEILING = 1000;
@@ -44,12 +44,12 @@ const REUSE_PREFIX = 'irs433boi_';
 
 const defs = JSON.parse(readFileSync('adapters/hubspot/fields.433b.json', 'utf8'));
 const props = defs.properties;
-if (!props.length) { console.error('STOP - fields.433b.json defines no properties. Re-run derive-names-433b.mjs --portal --emit.'); process.exit(3); }
+if (!props.length) { console.error('STOP - fields.433b.json defines no properties. Re-run derive-names-433b.mjs --portal --emit.'); stop(3); }
 
 const all = (await hs('/crm/v3/properties/contacts')).results || [];
 if (all.length < 100) {
   console.error(`STOP - the portal returned ${all.length} contact properties. A portal with 400+ HubSpot-defined properties cannot answer that, so this read failed rather than finding an empty portal. Refusing to report "everything is new".`);
-  process.exit(3);
+  stop(3);
 }
 const live = new Map(all.map((p) => [p.name, p]));
 const custom = all.filter((p) => !p.hubspotDefined);
@@ -59,10 +59,10 @@ const liveGroups = new Map(((await hs('/crm/v3/properties/contacts/groups')).res
 const probes = [];
 for (const path of ['/crm/v3/properties/contacts/limits', '/properties/v2/contacts/properties/limits', '/account-info/v3/usage-limits']) {
   try { probes.push(`${path} -> ${JSON.stringify(await hs(path)).slice(0, 300)}`); }
-  catch (e) { probes.push(`${path} -> ${e.status}`); }
+  catch (e) { if (isStop(e)) throw e; probes.push(`${path} -> ${e.status}`); }
 }
 let tier = '(not read)';
-try { const a = await hs('/account-info/v3/details'); tier = `portalId ${a.portalId}, tier ${a.accountType}`; } catch (e) { tier = `account-info/v3/details -> ${e.status}`; }
+try { const a = await hs('/account-info/v3/details'); tier = `portalId ${a.portalId}, tier ${a.accountType}`; } catch (e) { if (isStop(e)) throw e; tier = `account-info/v3/details -> ${e.status}`; }
 
 // --- classify ----------------------------------------------------------------------------------
 const optVals = (o) => (o || []).map((x) => x.value).sort().join('|');

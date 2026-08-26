@@ -28,7 +28,7 @@
 // including their 403s and 404s, which are reported as 403s and 404s.
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop, isStop } from './hs-lib.mjs';
 // EVERY DIVERGENCE NEEDS A RECORDED DECISION, and a divergence without one is a STOP below.
 // Not because the provisioner would do the wrong thing - it skips existing properties and so
 // does nothing at all here - but because "the provisioner does nothing" and "we decided the
@@ -45,7 +45,7 @@ const props = defs.properties;
 const all = (await hs('/crm/v3/properties/contacts')).results || [];
 if (all.length < 100) {
   console.error(`STOP - the portal returned ${all.length} contact properties. A portal with 400+ HubSpot-defined properties cannot answer that, so this read failed rather than finding an empty portal. Refusing to report "everything is new".`);
-  process.exit(3);
+  stop(3);
 }
 const live = new Map(all.map((p) => [p.name, p]));
 const custom = all.filter((p) => !p.hubspotDefined);
@@ -55,10 +55,10 @@ const liveGroups = new Map(((await hs('/crm/v3/properties/contacts/groups')).res
 const probes = [];
 for (const path of ['/crm/v3/properties/contacts/limits', '/properties/v2/contacts/properties/limits', '/account-info/v3/usage-limits']) {
   try { probes.push(`${path} -> ${JSON.stringify(await hs(path)).slice(0, 300)}`); }
-  catch (e) { probes.push(`${path} -> ${e.status}`); }
+  catch (e) { if (isStop(e)) throw e; probes.push(`${path} -> ${e.status}`); }
 }
 let tier = '(not read)';
-try { const a = await hs('/account-info/v3/details'); tier = `portalId ${a.portalId}, tier ${a.accountType}`; } catch (e) { tier = `account-info/v3/details -> ${e.status}`; }
+try { const a = await hs('/account-info/v3/details'); tier = `portalId ${a.portalId}, tier ${a.accountType}`; } catch (e) { if (isStop(e)) throw e; tier = `account-info/v3/details -> ${e.status}`; }
 
 // --- classify ----------------------------------------------------------------------------------
 const optVals = (o) => (o || []).map((x) => x.value).sort().join('|');
@@ -208,6 +208,6 @@ for (const n of stale) stops.push(`a decision is recorded for "${n}", which no l
 if (stops.length) {
   console.error(`\nSTOP - ${stops.length} unresolved item(s):`);
   for (const s of stops) console.error('  ' + s);
-  process.exit(3);
+  stop(3);
 }
 console.log(`  every divergence has a recorded decision (${Object.keys(DECISIONS).length}).`);

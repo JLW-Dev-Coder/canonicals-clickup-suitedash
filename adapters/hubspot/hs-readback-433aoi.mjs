@@ -21,7 +21,7 @@
 // search, which runs off an index that lags writes.
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { hs } from './hs-lib.mjs';
+import { hs, stop } from './hs-lib.mjs';
 // The SAME list the dry run adjudicated against, imported rather than restated. A property
 // that differs because a decision was recorded about it and a property that this pass created
 // wrongly are two different failures, and only one of them is a defect. Without the list this
@@ -35,7 +35,7 @@ const props = defs.properties;
 const all = (await hs('/crm/v3/properties/contacts')).results || [];
 if (all.length < 100) {
   console.error(`STOP - the portal returned ${all.length} contact properties. That read failed; it did not find an empty portal. Refusing to report "nothing came back" as "nothing was created".`);
-  process.exit(3);
+  stop(3);
 }
 const live = new Map(all.map((p) => [p.name, p]));
 const custom = all.filter((p) => !p.hubspotDefined);
@@ -118,6 +118,6 @@ console.log(`  portal now: ${custom.length} custom contact properties, headroom 
 console.log(`  report -> adapters/hubspot/433aoi.provisioning-readback.md`);
 if (missing.length || wrong.length) {
   console.error(`\nSTOP - ${missing.length} missing and ${wrong.length} wrong. A property name cannot be renamed, so a wrong one is fixed by deciding what to do about it, not by re-running this.`);
-  process.exit(3);
+  stop(3);
 }
 console.log('every definition read back from the portal matches what was asked for.');

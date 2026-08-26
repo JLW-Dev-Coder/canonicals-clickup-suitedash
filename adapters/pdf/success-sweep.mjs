@@ -220,8 +220,27 @@ export const enclosingCondition = (lines, idx, _depth = 0) => {
 // Scope: back to the start of the enclosing block, so a failure path in a DIFFERENT function
 // cannot vouch for this one.
 // ---------------------------------------------------------------------------------------
+// AND THE SAME DISCRIMINATION HAD TO BE MADE AGAIN, FOR A SECOND SPELLING OF THE JUMP.
+//
+// [D-20]: `process.exit(n)` after a portal request ABORTS instead of exiting, so all 74 call
+// sites under adapters/hubspot/ became `stop(n)` from hs-lib.mjs — which sets process.exitCode
+// and THROWS a sentinel that only its own handler swallows. It jumps, by exactly the mechanism
+// the last entry in this list already recognises.
+//
+// This file did not know that, and on the first run after the repair it reported TWENTY-FOUR
+// success messages as UNCONDITIONAL — every terminal sentence in this engine sitting below a
+// failure branch that now ends in a stop(). Not one of them had moved. A guard repaired one
+// directory away turned a jump into a fall-through in the eyes of the guard that watches for
+// fall-throughs, which is [R-12] for the third time in one commit: assert-examined.mjs's
+// population signature and this list were narrowed by the same edit, and each said so LOUDLY
+// rather than going quiet, which is the only reason either was found.
+//
+// The clause is written the way the first one is — the CALL form only, and `stop` required to be
+// a whole word not preceded by a dot, so `timer.stop()` is not a jump. Both directions are
+// asserted by the canary.
 const JUMPS = [
   /process\.exit\s*\(/,                    // process.exit(…) — the CALL. `process.exitCode =` does not match.
+  /(^|[^\w.])stop\s*\(/,                   // stop(…) from hs-lib.mjs — sets the code and THROWS. `x.stop()` does not match.
   /^\s*return\s+[1-9]/,                    // return 2
   /^\s*(?:\breturn\s+)?STOP\s*\(/,         // a STOP helper that exits
   /\bSTOP\s*\([`'"A-Z]/,                   // STOP('A12', …) mid-line
@@ -258,7 +277,14 @@ export const nearestFailureGuard = (lines, idx) => {
     if (depth !== 0) continue;            // inside a block we are walking over, not a sibling
 
     const m = lines[i].match(/^\s*(?:\}\s*else\s+)?if\s*\((.+?)\)\s*\{?\s*$/)
-           || lines[i].match(/^\s*if\s*\((.+?)\)\s*(?:process\.exit|return|STOP|throw|console\.error)/);
+           // `stop` is in this alternation for the same reason `process.exit` is, and it was
+           // added for the same reason the JUMPS clause above was: after [D-20]'s repair,
+           // hs-verify-provision.mjs's `if (missing.length || mismatched.length) stop(3);` — a
+           // BRACELESS single-statement guard, unchanged but for the spelling — stopped being
+           // recognised as a conditional at all, and the terminal sentence beneath it reported
+           // as having no failure accumulation above it. Two separate places in this file had to
+           // learn the new spelling, and the second was reached only by fixing the first.
+           || lines[i].match(/^\s*if\s*\((.+?)\)\s*(?:process\.exit|(?:^|[^\w.])stop\s*\(|return|STOP|throw|console\.error)/);
     if (!m) continue;
 
     // Read the block body forward and ask two questions of it, in this order: does it report a
@@ -412,14 +438,28 @@ export const CANARY_SRC = [
   '}',                                                          // 12
   "console.log('all assertions passed.');",                     // 13 -> UNCONDITIONAL  <-- the defect
   'console.log(`${stops.length} wrong, ${problems.length} missing.`);', // 14 -> narrative
+  // [D-20]'S SPELLING OF THE JUMP, PLANTED IN BOTH DIRECTIONS. Line 16 is stop(2) — a real
+  // jump, so line 18 is TERMINAL; line 20 is `timer.stop()`, which is a method call on an
+  // object and no jump at all, so line 22 must still read UNCONDITIONAL. A clause that
+  // recognised neither would report 24 false relapses, which is what happened; a clause that
+  // recognised both would certify a success message under a guard that falls straight through.
+  'if (problems.length) {',                                     // 15
+  '  stop(2);',                                                 // 16
+  '}',                                                          // 17
+  "console.log('OK - canary stop() terminal site.');",           // 18 -> terminal
+  'if (stops.length) {',                                        // 19
+  "  console.error('stops: ' + stops.length);",                  // 20  reports, so this IS the nearest accumulation
+  '  timer.stop();',                                            // 21  a METHOD call — not a jump
+  '}',                                                          // 22
+  "console.log('every check passed.');",                        // 23 -> UNCONDITIONAL
 ];
-const CANARY_EXPECT = [[3, 'guarded'], [8, 'terminal'], [13, 'UNCONDITIONAL'], [14, 'narrative']];
+const CANARY_EXPECT = [[3, 'guarded'], [8, 'terminal'], [13, 'UNCONDITIONAL'], [14, 'narrative'], [18, 'terminal'], [23, 'UNCONDITIONAL']];
 
 // FOUR CLASSES, ASSERTED TO BE FOUR. `out.every(…)` is vacuously true on an empty array, so
 // a canary list that lost its entries would report "the classifier still sees everything" by
 // seeing nothing — the exact shape guard-sweep.mjs [G-01] exists to forbid, committed inside
 // the canary written to prevent this file going blind. The arity is checked before the loop.
-const CANARY_CLASSES = 4;
+const CANARY_CLASSES = 6;
 export const runCanary = () => {
   const out = [];
   if (CANARY_EXPECT.length !== CANARY_CLASSES)
