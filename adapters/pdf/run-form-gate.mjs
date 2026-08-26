@@ -579,7 +579,13 @@ const steps = [
       : fail('verify-headings.mjs exited non-zero — a group row prints under a heading it does not belong under, or the form has no heading declaration')],
 
   ['verify-form-coverage', async () =>
-    runTool('verify-form-coverage.mjs', [form, outPath, ...(saturated ? ['--saturated'] : [])])
+    // THE RECORD IS PASSED TOO, and it is inert on every form whose map declares no
+    // subject_classes. Where one does, it supplies the discriminator that the conditional
+    // emptiness exemption -- and the two-directional check that goes with it -- is asked
+    // against. Passing the resolved path rather than re-resolving it keeps step 10 judging the
+    // same record step 7 filled from; two reads of one command line that could disagree is the
+    // shape a stale path lives in.
+    runTool('verify-form-coverage.mjs', [form, outPath, samplePath, ...(saturated ? ['--saturated'] : [])])
       ? ok(`the whole-form accounting closes (${saturated ? 'saturated' : 'production'} mode)`)
       : fail('verify-form-coverage.mjs exited non-zero')],
 

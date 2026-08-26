@@ -73,7 +73,7 @@
 // have exactly ZERO checked instead.
 
 import { PDFDocument, PDFTextField, PDFCheckBox } from 'pdf-lib';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { pathToFileURL } from 'url';
 import { examined } from './examined.mjs';
 import { rootPrefixForForm, FIELD_FORMS } from './target-root.mjs';
@@ -170,7 +170,71 @@ export function classifyMapTargets(mapDoc) {
 export const mapClaimsComplete = (mapDoc) =>
   typeof mapDoc.slice === 'string' && /^\s*complete\b/i.test(mapDoc.slice);
 
-export async function verifyFormCoverage(form, filledPath, { saturated = false } = {}) {
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE SATURATION RULE AND A FORM NO RECORD CAN SATURATE
+// ═══════════════════════════════════════════════════════════════════════════════════════
+//
+// Saturated mode fails on any mapped text cell an acceptance record left empty, and that rule is
+// right: a count quietly coming in low is indistinguishable from the map being wrong.
+//
+// 433-D is the first form where the rule and the PAGE disagree. Five of its cells are
+// subject-CONDITIONAL -- three exist only for an individual filer, two only for a business
+// entity -- so on ANY record at least two mapped text cells are REQUIRED to be empty. No single
+// record can reach them all, and that is a property of the form rather than a gap in the fixture.
+//
+// THE EXEMPTION IS DERIVED FROM THE MAP'S OWN DECLARATIONS, NOT LISTED HERE, and it is
+// TWO-DIRECTIONAL, which is what keeps it from being the hole an exemption usually is:
+//
+//   a cell required empty on this record's subject is not counted as a saturation failure,
+//   AND IS REPORTED BY NAME with the printed caption that made it conditional;
+//   a cell required empty that CARRIES A VALUE is a FAILURE at this step -- [SC-7] asked again
+//   of the filed document rather than only of the fill engine that produced it.
+//
+// So the saturation rule is not weakened for this form. It is stated for a form whose cells are
+// not all reachable at once, and the second direction is a check the other five forms do not
+// have. A form declaring no `subject_classes`, or a run given no record, reaches none of this
+// and behaves exactly as before.
+const conditionalEmpties = (mapDoc, recordPath) => {
+  const sc = mapDoc.subject_classes;
+  // A FORM DECLARING NO SUBJECT CLASSES REACHES NONE OF THIS, which is the five forms that
+  // preceded 433-D and is the only inactive case there is.
+  if (!sc || !Object.values(sc).some((e) => e.class === 'conditional')) return { active: false, required: new Map(), subject: null };
+  // FROM HERE EVERY FAILURE IS A THROW, and the first draft of this function returned
+  // `{ active: false }` for each of them. Under that shape an unparseable record, a record
+  // carrying no subject, or a map naming no mirror would all switch off BOTH halves of this
+  // construct -- and one of those halves is the check that a cell required to be empty is
+  // empty. The exemption going quiet is safe, because saturation then fails louder; the CHECK
+  // going quiet is the entity record carrying a spouse's signature passing unnoticed. They are
+  // not separable by a flag, so neither is optional.
+  if (!recordPath || !existsSync(recordPath))
+    throw new Error(`verify-form-coverage: ${mapDoc.form} declares subject-conditional cells and no record was given (${JSON.stringify(recordPath)}). The conditional emptiness check cannot be asked without the record's declared subject, and skipping it would switch off the one check that stops a cell existing for one legal person carrying a value on the other.`);
+  let rec;
+  try { rec = JSON.parse(readFileSync(recordPath, 'utf8')); }
+  catch (e) { throw new Error(`verify-form-coverage: ${recordPath} will not parse: ${e.message}. It is the record this document was filled from and step 7 read it successfully, so an unreadable one here is a contradiction rather than a missing input.`); }
+  const subject = String(rec[`${mapDoc.form}_subject`] ?? rec.subject ?? '').trim().toLowerCase();
+  if (!subject)
+    throw new Error(`verify-form-coverage: ${recordPath} declares no ${mapDoc.form}_subject and ${mapDoc.form} declares subject-conditional cells. The fill engine refuses such a record outright, so a filled document that came from one is a contradiction.`);
+  const mirrorPath = mapDoc._the_mirror?.declaration;
+  if (!mirrorPath || !existsSync(mirrorPath))
+    throw new Error(`verify-form-coverage: ${mapDoc.form} declares subject-conditional cells and names no readable mirror declaration (${JSON.stringify(mirrorPath ?? null)}) to resolve their targets against.`);
+  const mirror = JSON.parse(readFileSync(mirrorPath, 'utf8'));
+  const required = new Map();
+  const unresolved = [];
+  for (const [stem, e] of Object.entries(sc)) {
+    if (e.class !== 'conditional' || e.empty_unless === subject) continue;
+    const pair = mirror.pairs.find((x) => x.stem === stem);
+    // A CONDITIONAL CELL WHOSE TARGETS CANNOT BE RESOLVED IS A STOP, not a cell quietly dropped
+    // from the required set. `continue` here would mean the more conditional cells the mirror
+    // stopped describing, the fewer this check asked about.
+    if (!pair) { unresolved.push(stem); continue; }
+    for (const t of [pair.page1, pair.page3]) required.set(t, { stem, side: e.empty_unless, caption: e.caption });
+  }
+  if (unresolved.length)
+    throw new Error(`verify-form-coverage: ${unresolved.length} subject-conditional stem(s) the map declares have no pair in ${mirrorPath}: ${unresolved.join(', ')}. A cell whose targets cannot be resolved is a cell this check would silently stop asking about.`);
+  return { active: true, required, subject };
+};
+
+export async function verifyFormCoverage(form, filledPath, { saturated = false, recordPath = null } = {}) {
   const mapPath   = `adapters/pdf/maps/${form}.map.json`;
   const mapDoc    = JSON.parse(readFileSync(mapPath, 'utf8'));
   const fieldsPath = mapDoc.fields_source || `adapters/pdf/maps/${form}.fields.json`;
@@ -265,6 +329,29 @@ export async function verifyFormCoverage(form, filledPath, { saturated = false }
     return { set, targets, allDeferred, checked, expect, ok: checked.length === expect };
   });
 
+  // The conditional exemption, computed from the map and the record, and applied to the empty
+  // bucket by MOVING cells rather than by dropping them -- the accounting must still close, so
+  // a cell required empty stays counted, in a bucket that says why it is empty.
+  const cond = conditionalEmpties(mapDoc, recordPath);
+  const condRequiredEmpty = [], condWronglyFilled = [];
+  if (cond.active) {
+    for (let i = bucket.text_empty.length - 1; i >= 0; i--) {
+      const e = bucket.text_empty[i];
+      const req = cond.required.get(e.name);
+      if (!req) continue;
+      bucket.text_empty.splice(i, 1);
+      condRequiredEmpty.push({ ...e, ...req });
+    }
+    for (const e of [...bucket.text_written, ...bucket.cb_checked_exclusive, ...bucket.cb_checked_independent]) {
+      const name = typeof e === 'string' ? e : e.name;
+      const req = cond.required.get(name);
+      if (req) condWronglyFilled.push({ name, ...req });
+    }
+    // Cells required empty that are moved out of text_empty leave the partition short, so they
+    // are re-added to a bucket of their own and the total below counts them.
+    bucket.cond_required_empty = condRequiredEmpty;
+  }
+
   const total = Object.values(bucket).reduce((n, a) => n + a.length, 0);
 
   return {
@@ -272,6 +359,7 @@ export async function verifyFormCoverage(form, filledPath, { saturated = false }
     fieldCount: enumerated.length, liveCount: liveNames.length,
     missingFromPdf, extraInPdf,
     bucket, violations, setFindings, total,
+    conditional: { ...cond, requiredEmpty: condRequiredEmpty, wronglyFilled: condWronglyFilled },
     counts: {
       writableTargets: writable.size, neverTargets: never.size, deferredTargets: deferred.size,
       exclusiveSets: exclusiveSets.length,
@@ -348,6 +436,22 @@ export function reportFormCoverage(r) {
     }
   }
 
+  if (r.conditional?.active) {
+    console.log('');
+    console.log(`  SUBJECT-CONDITIONAL — this record declares itself ${JSON.stringify(r.conditional.subject)}, and ${r.conditional.requiredEmpty.length} mapped text cell(s) exist only for the other subject.`);
+    console.log('  They are REQUIRED empty and are therefore not saturation failures. Each is named with the printed caption that made it conditional:');
+    for (const e of r.conditional.requiredEmpty)
+      console.log(`    ${e.stem} (${e.side} only) -> ${e.name}\n      ${JSON.stringify(e.caption.slice(0, 70))}`);
+    if (!r.conditional.requiredEmpty.length) console.log('    (none — this record\'s subject reaches every conditional cell the map declares)');
+  }
+  if (r.conditional?.wronglyFilled?.length) {
+    failed++;
+    console.error('');
+    console.error(`SUBJECT-CONDITIONAL CELL CARRIES A VALUE — ${r.conditional.wronglyFilled.length}. [SC-7], asked of the FILED DOCUMENT.`);
+    for (const e of r.conditional.wronglyFilled)
+      console.error(`  ${e.stem} -> ${e.name}: exists only for the ${e.side} subject and this record declares itself ${r.conditional.subject}. The page says so at ${JSON.stringify(e.caption.slice(0, 70))}.`);
+  }
+
   const badSets = r.setFindings.filter(s => !s.ok);
   if (badSets.length) {
     failed++;
@@ -394,10 +498,14 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const saturated = argv.includes('--saturated');
   const [form, filled] = argv.filter(a => !a.startsWith('--'));
   if (!form || !filled) {
-    console.error('usage: node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf> [--saturated]');
+    console.error('usage: node adapters/pdf/verify-form-coverage.mjs <form> <filled.pdf> [record.json] [--saturated]');
+    console.error('  record.json  the record the PDF was filled from. Only used where the map declares');
+    console.error('               subject_classes: it supplies the discriminator the conditional');
+    console.error('               emptiness exemption and its two-directional check are asked against.');
     console.error('  --saturated  acceptance sample: an empty mapped text cell FAILS the run.');
     console.error('  (default)    production record: empty mapped text cells are reported, not failed.');
     process.exit(2);
   }
-  process.exit(reportFormCoverage(await verifyFormCoverage(form, filled, { saturated })));
+  const recordPath = argv.filter(a => !a.startsWith('--'))[2] || null;
+  process.exit(reportFormCoverage(await verifyFormCoverage(form, filled, { saturated, recordPath })));
 }

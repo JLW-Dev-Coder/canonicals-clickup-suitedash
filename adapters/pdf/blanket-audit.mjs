@@ -105,6 +105,9 @@
 // the register carries family entries for the wide part.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { rootPrefixForForm, FIELD_FORMS } from './target-root.mjs';
+import { CLAUSES as SUBJECT_CLASS_CLAUSES } from './assert-subject-class.mjs';
+const MAPS_DIR = 'adapters/pdf/maps';
 import { classifyCoordinates } from './absence-sweep.mjs';
 import { MANIFEST, sweptFiles, claimsIn, runCountSweep } from './count-sweep.mjs';
 import { markerPairing } from './line-markers.mjs';
@@ -414,6 +417,26 @@ export const EMPTY_DEMAND = [
   // [S-25] covers and where align-block's demand is emphatically not empty. Recorded rather
   // than quietly amended, because the mistake was assuming which region a blanket covered
   // instead of reading what the prover extracted from it.
+  // ── [S-18] on 433-D: five of its citations demand nothing, and each absence is the PAGE ──
+  //
+  // [S-18] covers this map's `map.`, `checkboxes.`, `exclusive.` and `_carried.` regions. On
+  // 433-D those regions quote no coordinate, no printed line marker, no group and no printed
+  // money constant, and they quote no full AcroForm path either -- which is deliberate and is
+  // the same discipline [S-18]'s 433-B(OIC) entry records. What the map's evidence carries
+  // instead is the printed CAPTION of every cell, in `subject_classes`, which is a different
+  // kind of atom from any of the five provers below and is checked by a different instrument:
+  // adapters/pdf/assert-subject-class.mjs [SC-2] recomputes every class from the caption and
+  // [SC-3] requires every caption to be a printed run inside its own cell's derived band.
+  { blanket: 'S-18', instrument: 'align-block.mjs', forms: ['433d'],
+    why: 'THE MAP QUOTES NO COORDINATE AT ALL. Every geometric fact about 433-D lives in a generated sidecar rather than in the map: the target pairs in 433d.mirror.json, the rectangles, gaps and band in 433d.subject-classes.json. Both are re-derived from the pinned PDF on every run -- the mirror by assert-mirror.mjs rebuilding it from the widget geometry, the class table byte for byte by its generator under `npm run sweeps:deep`. A coordinate retyped into the map beside them would be a second copy of the same fact, which is what [B11] cost when the second copy was in the other y convention.' },
+  { blanket: 'S-18', instrument: 'line-markers.mjs', forms: ['433d'],
+    why: 'THE FORM PRINTS NO LINE MARKER AND NO BOX MARKER ANYWHERE, on any of its four pages. 433-D is an agreement, not a collection information statement: it has no numbered lines to cross-reference, which is the same absence that leaves its totals file empty. A non-empty demand here would be the finding.' },
+  { blanket: 'S-18', instrument: 'check-row-shape.mjs', forms: ['433d'],
+    why: 'THE MAP DECLARES NO GROUP, so there is no row shape to resolve. 433-D draws no repeatable table on either copy; its two increase/decrease rows are bound as scalars because the page prints exactly two and prints them as two captioned rows rather than as a repeating unit. `groups` is absent from this map entirely rather than present and empty, and the fill engine declares the absence with its consequence: no group means no overflow, so nothing can be dropped.' },
+  { blanket: 'S-18', instrument: 'validate-map.mjs', forms: ['433d'],
+    why: 'THE COVERED REGIONS QUOTE NO FULL ACROFORM PATH IN PROSE, AND THAT IS DELIBERATE. A `form1[0]...` path written into an evidence sentence counts as a second binding and trips the duplicate-write gate -- the same reason [S-18]\'s 433-B(OIC) entry gives -- so this map\'s prose names the LEAF STEM or the INPUT KEY instead. The paths themselves are TARGET VALUES, and validate-map.mjs proves all 188 of them at gate step 3 as targets rather than as quoted evidence; [K-02] and [K-14] count exactly that set and both hold on this form.' },
+  { blanket: 'S-18', instrument: 'gate step 11', forms: ['433d'],
+    why: 'THE FORM PRINTS NO TOTAL, so there is no printed money constant for a total to fold in. That absence is not assumed: adapters/pdf/maps/433d.totals.json declares three claimed zeros -- runs matching /Add lines?/, /\\bTotals?\\b/ and /minus/ across every drawn page -- and count-sweep [S-50] derives all three from the joined page text on every run, with [S-51] as the positive control that proves the reading is alive. Step 11 therefore runs over an empty totals declaration rather than skipping, which is the difference between a checked absence and a missing file.' },
   { blanket: 'S-18', instrument: 'check-row-shape.mjs', forms: ['433boi'],
     why: 'The covered sites are the carried ledger, and no entry in it names a GROUP. B1 to B5 are findings about inherited leaf names across two forms, B6 to B8 are about three page-1 scalars, and B9 is about where the coverage table is built. The map DOES declare a group and check-row-shape.mjs does resolve its columns — reporting 3 slotted rows across 1 declaring group on the fill this slice runs — but that happens under `groups.partners`, which is a different region from the one this blanket covers. The demand is empty because the ledger discusses cells and names, not row shapes.' },
   { blanket: 'S-18', instrument: 'validate-map.mjs', forms: ['433boi'],
@@ -484,6 +507,38 @@ export const EMPTY_DEMAND = [
 
 const P = (o) => o;
 export const FORWARD = [
+
+  // ── THE TWO 433-D CONSTRUCTS, PROVED BY THE CLAUSE IDS A CITATION NAMES ───────────────
+  //
+  // A blanket citing "assert-mirror.mjs holds this" is a forward reference, and the atom that
+  // makes it checkable is the CLAUSE ID. Each of these instruments defines a numbered set of
+  // clauses and each clause is what a report prints when it fires; a blanket naming [M-09] or
+  // [SC-8] would be citing coverage nobody has written, and that is precisely the shape [R-13]
+  // is about -- a completeness blanket "true of 207 keys and false of 31" that survived because
+  // the sweep watching it counted a different set from the one the blanket named.
+  //
+  // The supplied set is read out of each instrument's OWN declaration, imported rather than
+  // re-listed here, so a clause that is renamed or removed takes its citations down with it.
+  P({ instrument: 'assert-mirror.mjs',
+    how: 'Every [M-nn] clause id quoted in the covered sites must be a clause the mirror construct actually declares — read from adapters/pdf/maps/<form>.mirror.json\'s own `_clauses_checked_here` and `_clauses_checked_elsewhere`, which gen-mirror.mjs writes and assert-mirror.mjs judges against, so this proves something about that construct and not about a copy of it.',
+    prove: (ctx, sites) => {
+      const demanded = [...new Set(sites.flatMap((x) => [...String(x.value).matchAll(/\[(M-\d{2})\]/g)].map((m) => m[1])))];
+      const supplied = new Set();
+      for (const f of readdirSync(MAPS_DIR).filter((n) => n.endsWith('.mirror.json'))) {
+        const d = JSON.parse(readFileSync(`${MAPS_DIR}/${f}`, 'utf8'));
+        for (const k of Object.keys(d.meta?._clauses_checked_here || {})) supplied.add(k);
+        for (const k of Object.keys(d.meta?._clauses_checked_elsewhere || {})) supplied.add(k);
+      }
+      return { demanded, supplied: supplied.size, uncovered: demanded.filter((d) => !supplied.has(d)) };
+    } }),
+
+  P({ instrument: 'assert-subject-class.mjs',
+    how: 'Every [SC-n] clause id quoted in the covered sites must be a clause the subject discriminator actually declares — read from adapters/pdf/assert-subject-class.mjs\'s own CLAUSES register, imported, which is also the register adapters/pdf/register-ids.mjs holds against every other id-keyed register in the tree.',
+    prove: (ctx, sites) => {
+      const demanded = [...new Set(sites.flatMap((x) => [...String(x.value).matchAll(/\[(SC-\d+)\]/g)].map((m) => m[1])))];
+      const supplied = new Set(SUBJECT_CLASS_CLAUSES.map((c) => c.id));
+      return { demanded, supplied: supplied.size, uncovered: demanded.filter((d) => !supplied.has(d)) };
+    } }),
 
   P({ instrument: 'line-markers.mjs',
     how: 'Every printed line marker and Box marker quoted in the covered sites must appear in `markerPairing(form).rows` — the marker list line-markers.mjs itself produces, IMPORTED rather than re-derived, so this proves something about that instrument and not about a copy of it.',
@@ -716,6 +771,21 @@ const RX_DETECTOR_STOPS = rx('RX-BA-03', /process\.exit(Code)?\b/, {
   rejects: ['processXexit', 'process.exiting'],
 });
 const DETECTOR_SIG = (src) => RX_DETECTOR_READS.test(src) && RX_DETECTOR_STOPS.test(src);
+
+// WHAT COUNTS AS AN ACROFORM PATH, DERIVED FROM THE FORMS THEMSELVES.
+//
+// Three counter universes here admitted a member by `startsWith('topmostSubform[0]')`, which is
+// the root of the five forms that existed when they were written and is NOT 433-D's -- all 168
+// of that form's field names begin `form1[0].`. The symptom is the one [K-14] printed on its
+// first 433-D run: "its universe holds 168 of 168 member(s) OUTSIDE the scope it declares", a
+// counter whose universe had gone empty while the map it counts bound every field on the form.
+// adapters/pdf/target-root.mjs derives the roots from each form's own enumerated field list, so
+// a seventh form joins by having one rather than by somebody editing three predicates. An empty
+// derivation is a STOP at load: it is the input that makes all three universes admit nothing.
+const TARGET_ROOTS = [...new Set(FIELD_FORMS().map((f) => rootPrefixForForm(f)).filter((r) => r.root).map((r) => r.root))];
+if (!TARGET_ROOTS.length) throw new Error('blanket-audit.mjs: no AcroForm target root could be derived from any form field list, so three counter universes would admit nothing and report full coverage over the empty set.');
+const TARGET_ROOT_STEMS = TARGET_ROOTS.map((r) => (r.endsWith('.') ? r.slice(0, -1) : r));
+const isFormTarget = (m) => TARGET_ROOT_STEMS.some((r) => m.startsWith(r));
 
 export const DETECTORS = {
   'regex-self-assert.mjs': { canary: 'THREE, because it holds three separable detectors and each one\'s failure mode is silence in a different place. (a) assertionCanary(), eight planted registrations through the SAME assertSpec() the live path calls: a source carrying a literal backspace must be refused as shape 1, an eaten `\\s` must be caught by its own match probe, an eaten `\\)` by its own reject probe, an eaten `\\w` that still matches and still captures by its CAPTURE probe, a backslash-carrying regex declaring no probes must be refused outright — and, in the same call, three sound registrations must be ACCEPTED, because a detector that refused everything would satisfy a refusal-only canary and stop the whole engine on its next run. (b) scannerCanary(), thirteen planted cases through the hand-written lexer: a regex literal in each of eight syntactic positions must be found with its exact source, and a division expression, a line comment, a block comment, a string literal and a template literal must NOT be mistaken for one. A lexer that missed literals would report a small population and call it a whole one, so the false-negative half is the half that matters and the false-positive half is there so the lexer cannot pass by calling every slash a regex. (c) controlPopulationCanary(), which compares this file\'s derived shape-1 byte set against control-char-scan.mjs\'s CONTROLS register in BOTH directions, byte for byte — the two are one population with one register and one derived copy, and a disagreement between them is the duplicate-register defect. No verdict is printed on a run whose canaries did not pass, and none of the planted inputs is drawn from the artefacts.' },
@@ -1026,7 +1096,7 @@ export const COMPLETENESS = [
     kind: 'counter',
     what: 'every target the map declares exists verbatim in the fields file',
     universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names, under any construct',
-      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
+      admits: (m) => typeof m === 'string' && isFormTarget(m) },
     count: (ctx) => {
       const targets = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
       const covered = targets.filter(t => ctx.names.has(t));
@@ -1219,7 +1289,7 @@ export const COMPLETENESS = [
     kind: 'counter',
     what: 'the local binding claims: every target the map declares is classified as writable, excluded or deferred by classifyMapTargets — the partition the gate\'s step 6 closes',
     universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names, under any construct',
-      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
+      admits: (m) => typeof m === 'string' && isFormTarget(m) },
     count: (ctx) => {
       const { deferred, never, writable } = classifyMapTargets(ctx.mapDoc);
       const all = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
@@ -1246,11 +1316,51 @@ export const COMPLETENESS = [
         note: `page 3 declares ${cells.length} money cell(s): ${cells.join(', ')}` };
     } }),
 
+  C({ id: 'K-117', match: /each class owes the map a different thing/i,
+    kind: 'counter',
+    what: '[SC-6]: every stem the derived class table declares carries an obligation in the map, and the obligation matches its class',
+    universe: { scoped_to: 'form', detail: 'every stem in adapters/pdf/maps/<form>.subject-classes.json — the derived table, not the map, so a map that dropped an entry shrinks the COVERED set and never the universe',
+      admits: (m) => typeof m === 'string' && m.length > 0 },
+    count: (ctx) => {
+      const p = `${MAPS_DIR}/${ctx.form}.subject-classes.json`;
+      if (!existsSync(p)) return { universe: 0, covered: 0, universeList: [], uncoveredList: [] };
+      const tbl = JSON.parse(readFileSync(p, 'utf8'));
+      const sc = ctx.mapDoc.subject_classes || {};
+      const stems = tbl.stems.map((x) => x.stem);
+      const ok = tbl.stems.filter((x) => sc[x.stem] && sc[x.stem].class === x.class
+        && (x.class !== 'conditional' || sc[x.stem].empty_unless === x.side)
+        && (x.class !== 'dependent' || (sc[x.stem].route && sc[x.stem].route.discriminator))).map((x) => x.stem);
+      return { universe: stems.length, covered: ok.length, universeList: stems, uncoveredList: stems.filter((x) => !ok.includes(x)) };
+    } }),
+
+  C({ id: 'K-118', match: /ALL\s*[—-]\s*that is derived/i,
+    kind: 'not-coverage',
+    reason: 'A CLAIM ABOUT ONE PAGE OF ONE FORM, NOT THAT A SET HAS BEEN COVERED. The sentence says page 2 of 433-D draws no widget, and "at all" is emphasis on a single derived fact rather than a quantifier over a population. THE FACT IS DERIVED AND COMPARED ON EVERY RUN, and by the counter that owns it: count-sweep [S-01] reads widget geometry per page and compares the partition\'s own scalars against it, so a page that started drawing widgets would fail there rather than here. The COVERAGE half of the same block — that every field is in exactly one state and the states sum to the field count — is a real completeness claim and is counted by [K-02] and by gate step 10, which reports 168 of 168 accounted on this form.' }),
+
+  C({ id: 'K-119', match: /ALL OF IT IS CHECKED/i,
+    kind: 'counter',
+    what: '[S-52]: the 433-D construct files are re-derived byte for byte by their own generators, so no scalar in them can drift from the page without a run stopping',
+    universe: { scoped_to: 'engine', detail: 'every 433-D artefact [S-52] disposes — the map, the totals file and the headings file — each of which must name a generator that exists and that a standing npm script runs',
+      admits: (m) => typeof m === 'string' && /433d\.(map|totals|headings)\.json$/.test(m) },
+    count: () => {
+      const files = ['433d.map.json', '433d.totals.json', '433d.headings.json'].map((f) => `${MAPS_DIR}/${f}`).filter((f) => existsSync(f));
+      let scripts = '';
+      try { scripts = JSON.stringify(JSON.parse(readFileSync('package.json', 'utf8')).scripts || {}); } catch { scripts = ''; }
+      const covered = files.filter((f) => {
+        // The map names its generator; the totals and headings files are written by the same
+        // run and are covered by the map's --check, which regenerates all three and compares.
+        let gen = null;
+        try { gen = JSON.parse(readFileSync(f, 'utf8'))._generator || JSON.parse(readFileSync(`${MAPS_DIR}/433d.map.json`, 'utf8'))._generator; } catch { gen = null; }
+        return !!gen && existsSync(gen) && scripts.includes(gen);
+      });
+      return { universe: files.length, covered: covered.length, universeList: files, uncoveredList: files.filter((f) => !covered.includes(f)) };
+    } }),
+
   C({ id: 'K-14', match: /every target exists verbatim|every target exists/i,
     kind: 'counter',
     what: '[S-18] cites validate-map.mjs proving every target exists verbatim — the same universe [K-02] counts, asserted here against the blanket that cites it',
     universe: { scoped_to: 'form', detail: 'every distinct AcroForm path THIS form\'s map names — DELIBERATELY the same universe as [K-02], because the point is that the blanket citing validate-map.mjs is held to the same set the direct counter uses',
-      admits: (m) => typeof m === 'string' && m.startsWith('topmostSubform[0]') },
+      admits: (m) => typeof m === 'string' && isFormTarget(m) },
     count: (ctx) => {
       const targets = [...new Set(walkTargets(ctx.mapDoc).map(t => t.target))];
       return { universe: targets.length, covered: targets.filter(t => ctx.names.has(t)).length,

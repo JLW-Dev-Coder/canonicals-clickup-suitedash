@@ -1,0 +1,18 @@
+{
+ "form": "433d",
+ "form_revision": "7-2024",
+ "catalog": "16644M",
+ "_why": "A TOTALS FILE DECLARING NO TOTALS, WHICH HAS TO BE SAID OUT LOUD. run-form-gate.mjs step 11 FAILS a map that declares itself COMPLETE and carries no totals file — it promised the whole form and cannot prove its own arithmetic — and SKIPS a partial slice that carries none. 433-D declares COMPLETE and prints no total anywhere, so the honest artefact is this one: the declaration that the absence was read rather than the absence of a declaration, which reads identically from outside and proves nothing.",
+ "authored_from": "the printed page text of all four pages of adapters/pdf/forms/f433d.pdf, extracted from the content streams. THE ABSENCE IS DERIVED AND RE-DERIVED: adapters/pdf/count-sweep.mjs compares the claimed zero below against the drawn page on every run.",
+ "_what_this_form_is": "433-D is an AGREEMENT, not a collection information statement. It collects identity, the kinds of taxes and periods, one amount owed, a payment schedule, bank routing and account digits, signatures and an IRS-use block. Nothing on it is computed from anything else on it, which is why there is no arithmetic to trip a wire.",
+ "totals": [],
+ "_none_printed": {
+  "claimed_add_lines_runs": 0,
+  "claimed_total_runs": 0,
+  "claimed_minus_runs": 0,
+  "_how": "Every drawn run of all four pages joined and searched for /Add lines?/, /\\bTotals?\\b/ and /minus/, case-insensitively. All three return zero. Page 2 draws no runs at all and returns zero for the trivial reason, which is stated rather than counted as evidence."
+ },
+ "not_checkable": {
+  "entries": []
+ }
+}

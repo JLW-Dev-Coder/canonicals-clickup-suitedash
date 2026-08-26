@@ -204,6 +204,30 @@ export const population = () => {
   const rows = [];
   for (const form of MAPPED_FORMS()) {
     const defs = `adapters/hubspot/fields.${form}.json`;
+    // ── A MAPPED FORM THAT HAS NOT BEEN CLASSIFIED IS A STAGE, NOT A STOP ────────────────
+    //
+    // [R-30]'s population is A FINISHED FORM'S derivers and fetchers, re-run so a tool broken by
+    // a NEIGHBOUR'S pass fails on the next run rather than the next time somebody needs it. A
+    // form that has a map and no crosswalk has neither a deriver nor a fetcher, because neither
+    // has been authored yet -- and reporting that as "nothing in the tree declares this form's
+    // generator" is this guard demanding an artefact the work has not reached, which is [R-03].
+    //
+    // 433-D is the first form this engine has held between the map and the crosswalk, and the
+    // reason both rows fired at once is that MAPPED_FORMS() is derived from the maps directory:
+    // the moment a map lands, the form joins this population whole.
+    //
+    // IT IS A DECLARED STAGE AND NOT A SKIP, and the two directions are what make that true.
+    // The predicate is BOTH artefacts being absent: a form with a definitions file and no
+    // fetcher, or a fetcher and no definitions file, is HALF finished and each missing half is a
+    // STOP exactly as before -- which is the state that would mean somebody stopped partway. And
+    // the row is not dropped: it is carried as `preCrosswalk` and NAMED in the report on every
+    // run, so a form sitting in this stage forever is visible rather than absent.
+    const fetcherPath = `adapters/hubspot/hs-fetch-${form}.mjs`;
+    if (!existsSync(defs) && !existsSync(fetcherPath)) {
+      rows.push({ form, kind: 'generator', preCrosswalk: `${form} has a map and no crosswalk: neither ${defs} nor ${fetcherPath} exists, so there is no deriver to re-run. A form between the map and the crosswalk owes this guard nothing, and it owes it everything the day either artefact appears.` });
+      rows.push({ form, kind: 'fetcher', preCrosswalk: `${form} has a map and no crosswalk: no ${fetcherPath}, and no ${defs} either. Both halves absent is a stage; ONE half absent is a STOP, and this branch requires both.` });
+      continue;
+    }
     if (!existsSync(defs)) rows.push({ form, kind: 'generator', stop: `no ${defs}, so nothing in the tree declares this form's generator ([R-19])` });
     else {
       let gen = null, err = null;
@@ -328,7 +352,7 @@ export const runOne = (row, dir, contactId) => {
 // has never seen a violation is the thing it is a proof against.
 export const canary = () => {
   const problems = [];
-  const rows = population().filter((r) => !r.stop && r.kind === 'generator');
+  const rows = population().filter((r) => !r.stop && !r.preCrosswalk && r.kind === 'generator');
   if (!rows.length) return ['CANARY DEAD  no generator was discovered, so there is nothing to plant against. An empty canary is the failure it exists to catch.'];
   const row = rows[0];
 
@@ -370,6 +394,14 @@ export const canary = () => {
 
 export const report = async () => {
   const rows = population();
+  // THE DECLARED STAGE IS PRINTED BEFORE THE PROBLEMS, so a form owing this guard nothing is a
+  // line somebody reads rather than a row that quietly is not there.
+  const staged = rows.filter((r) => r.preCrosswalk);
+  if (staged.length) {
+    console.log('');
+    console.log(`  MAPPED, NOT YET CROSSWALKED — ${staged.length} row(s) across ${new Set(staged.map((r) => r.form)).size} form(s), owing nothing and named rather than absent:`);
+    for (const r of staged) console.log(`    ${r.form}/${r.kind}: ${r.preCrosswalk}`);
+  }
   const problems = rows.filter((r) => r.stop).map((r) => `STOP  ${r.form}/${r.kind}: ${r.stop}`);
   problems.push(...provePruning(rows));
 
@@ -387,8 +419,8 @@ export const report = async () => {
     else console.log(`  contact for every fetcher: ${contact.id} — the lowest of ${contact.of} live contact id(s) read from the portal on this run`);
   }
 
-  const runnable = rows.filter((r) => !r.stop && (r.kind === 'generator' || (r.kind === 'fetcher' && usePortal)));
-  const skipped = rows.filter((r) => !r.stop && r.kind === 'fetcher' && !usePortal);
+  const runnable = rows.filter((r) => !r.stop && !r.preCrosswalk && (r.kind === 'generator' || (r.kind === 'fetcher' && usePortal)));
+  const skipped = rows.filter((r) => !r.stop && !r.preCrosswalk && r.kind === 'fetcher' && !usePortal);
 
   const before = manifest();
   const results = [];

@@ -1,0 +1,887 @@
+{
+ "form": "433d",
+ "form_revision": "7-2024",
+ "catalog": "16644M",
+ "hs_name_rule": "HubSpot property = 'irs' + <key> (e.g. 433d_routing_number1 -> irs433d_routing_number1). NOT SETTLED HERE: 433-D's crosswalk classification decides which keys bind an EXISTING property and which create one, and no property is created until its name is derived, asserted and dry-run ([R-23]).",
+ "pdf": "adapters/pdf/forms/f433d.pdf",
+ "fields_source": "adapters/pdf/maps/433d.fields.json",
+ "slice": "COMPLETE - every field on 433-D is mapped or explicitly excluded",
+ "_generator": "scratchpad/p54-433d-author-map.mjs",
+ "_authored_from": {
+  "targets": "adapters/pdf/maps/433d.mirror.json — every target pair, from the widget geometry of the pinned blank. NO TARGET IS TYPED IN THIS MAP.",
+  "classes": "adapters/pdf/maps/433d.subject-classes.json — every class, side and printed caption, re-derived byte for byte on every `npm run sweeps:deep`.",
+  "exclusive_sets": "the printed series derivation in adapters/pdf/caption-candidates.mjs, filtered to series whose members are all checkboxes."
+ },
+ "_key_overrides": {
+  "Date1": "433d_signature_row_date_left",
+  "Date2": "433d_signature_row_date_right"
+ },
+ "_key_overrides_why": "THE SNAKE-CASE KEY IS NOT INJECTIVE ON THIS FORM. 433-D draws `Date1` in the signature row and `date1` in the increase table, and the same for 2 -- four stems, two keys, once lowercased. The first draft of the generator bound 68 text stems instead of 70 and the DERIVED PARTITION is what reported it: 162 bound of 168 with 4 unaccounted. The override names the printed ROW rather than a meaning, and injectivity is asserted over every stem on every run, in both directions -- a collision is a STOP and so is an override naming a stem the mirror does not declare.",
+ "_the_input_key_is_an_identifier": "It is `433d_` plus the leaf stem in snake case and it CARRIES NO CLAIM ABOUT THE CELL. [R-08]: a leaf name is evidence of nothing. What identifies the cell is the target pair, from the geometry; what says what the cell is, is the `caption` carried beside every binding in `subject_classes`, read off the printed page. 433-D's stems are unusually descriptive and that is a reason for this sentence rather than a reason to relax — 433-A's leaf names are swapped against its printed columns.",
+ "_the_mirror": {
+  "declaration": "adapters/pdf/maps/433d.mirror.json",
+  "_why_every_binding_is_a_pair": "THIS FORM DRAWS EVERY CELL TWICE — page 1 is \"Part 1 — IRS Copy\" and page 3 is \"Part 2 — Taxpayer’s Copy\" — and both copies of one fact must carry one value. Every binding below names BOTH targets. A stem bound to one copy only is a STOP at [M-07], and a filled document whose two copies disagree is a STOP at [M-08], read from the filled bytes rather than from the fill engine’s report.",
+  "_why_this_is_not_a_duplicate_write": "The duplicate-write guard is keyed on the TARGET: it refuses a target written by more than one key. Each key here writes two DIFFERENT targets, so the guard stays fully on for this form and needs no exemption. The mirror is a declaration that owes MORE than the guard did, not less: [M-07] refuses a stem bound to one copy only, in both directions, and [M-08] refuses a filled document whose two copies disagree, read from the saved bytes rather than from the fill engine’s own report."
+ },
+ "map": {
+  "433d_name_and_address": [
+   "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].NameAndAddress[0]",
+   "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].NameAndAddress[0]"
+  ],
+  "433d_taxpayer": [
+   "form1[0].Page1_Part1[0].SSN_EIN[0].Taxpayer[0]",
+   "form1[0].Page3_Part2[0].SSN_EIN[0].Taxpayer[0]"
+  ],
+  "433d_spouse": [
+   "form1[0].Page1_Part1[0].SSN_EIN[0].Spouse[0]",
+   "form1[0].Page3_Part2[0].SSN_EIN[0].Spouse[0]"
+  ],
+  "433d_home": [
+   "form1[0].Page1_Part1[0].SSN_EIN[0].Home[0]",
+   "form1[0].Page3_Part2[0].SSN_EIN[0].Home[0]"
+  ],
+  "433d_work_cell_business": [
+   "form1[0].Page1_Part1[0].SSN_EIN[0].WorkCellBusiness[0]",
+   "form1[0].Page3_Part2[0].SSN_EIN[0].WorkCellBusiness[0]"
+  ],
+  "433d_or_write": [
+   "form1[0].Page1_Part1[0].SSN_EIN[0].OrWrite[0]",
+   "form1[0].Page3_Part2[0].SSN_EIN[0].OrWrite[0]"
+  ],
+  "433d_kinds_of_taxes": [
+   "form1[0].Page1_Part1[0].KindsOfTaxes[0]",
+   "form1[0].Page3_Part2[0].KindsOfTaxes[0]"
+  ],
+  "433d_tax_periods": [
+   "form1[0].Page1_Part1[0].TaxPeriods[0]",
+   "form1[0].Page3_Part2[0].TaxPeriods[0]"
+  ],
+  "433d_as_of": [
+   "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AsOf[0]",
+   "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AsOf[0]"
+  ],
+  "433d_amount_owed": [
+   "form1[0].Page1_Part1[0].AmountsOwedAsOf[0].AmountOwed[0]",
+   "form1[0].Page3_Part2[0].AmountsOwedAsOf[0].AmountOwed[0]"
+  ],
+  "433d_dollar_amount": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].DollarAmount[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].DollarAmount[0]"
+  ],
+  "433d_date_paid": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].DatePaid[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].DatePaid[0]"
+  ],
+  "433d_and_dollar_amount": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].AndDollarAmount[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].AndDollarAmount[0]"
+  ],
+  "433d_on_the": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].OnThe[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].OnThe[0]"
+  ],
+  "433d_date1": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].date1[0]"
+  ],
+  "433d_amount1": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].amount1[0]"
+  ],
+  "433d_payment1": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row1[0].payment1[0]"
+  ],
+  "433d_date2": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].date2[0]"
+  ],
+  "433d_amount2": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].amount2[0]"
+  ],
+  "433d_payment2": [
+   "form1[0].Page1_Part1[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]",
+   "form1[0].Page3_Part2[0].AgreeTo[0].agreeTo[0].Row2[0].payment2[0]"
+  ],
+  "433d_initial": [
+   "form1[0].Page1_Part1[0].Initial[0]",
+   "form1[0].Page3_Part2[0].Initial[0]"
+  ],
+  "433d_additional_conditions": [
+   "form1[0].Page1_Part1[0].AdditionalConditions[0]",
+   "form1[0].Page3_Part2[0].AdditionalConditions[0]"
+  ],
+  "433d_routing_number1": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber1[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber1[0]"
+  ],
+  "433d_routing_number2": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber2[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber2[0]"
+  ],
+  "433d_routing_number3": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber3[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber3[0]"
+  ],
+  "433d_routing_number4": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber4[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber4[0]"
+  ],
+  "433d_routing_number5": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber5[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber5[0]"
+  ],
+  "433d_routing_number6": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber6[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber6[0]"
+  ],
+  "433d_routing_number7": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber7[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber7[0]"
+  ],
+  "433d_routing_number8": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber8[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber8[0]"
+  ],
+  "433d_routing_number9": [
+   "form1[0].Page1_Part1[0].RoutingNumber[0].RoutingNumber9[0]",
+   "form1[0].Page3_Part2[0].RoutingNumber[0].RoutingNumber9[0]"
+  ],
+  "433d_account_number1": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber1[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber1[0]"
+  ],
+  "433d_account_number2": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber2[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber2[0]"
+  ],
+  "433d_account_number3": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber3[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber3[0]"
+  ],
+  "433d_account_number4": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber4[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber4[0]"
+  ],
+  "433d_account_number5": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber5[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber5[0]"
+  ],
+  "433d_account_number6": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber6[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber6[0]"
+  ],
+  "433d_account_number7": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber7[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber7[0]"
+  ],
+  "433d_account_number8": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber8[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber8[0]"
+  ],
+  "433d_account_number9": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber9[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber9[0]"
+  ],
+  "433d_account_number10": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber10[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber10[0]"
+  ],
+  "433d_account_number11": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber11[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber11[0]"
+  ],
+  "433d_account_number12": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber12[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber12[0]"
+  ],
+  "433d_account_number13": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber13[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber13[0]"
+  ],
+  "433d_account_number14": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber14[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber14[0]"
+  ],
+  "433d_account_number15": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber15[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber15[0]"
+  ],
+  "433d_account_number16": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber16[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber16[0]"
+  ],
+  "433d_account_number17": [
+   "form1[0].Page1_Part1[0].AccountNumber[0].AccountNumber17[0]",
+   "form1[0].Page3_Part2[0].AccountingNumber[0].AccountNumber17[0]"
+  ],
+  "433d_your_signature": [
+   "form1[0].Page1_Part1[0].YourSignature[0]",
+   "form1[0].Page3_Part2[0].YourSignature[0]"
+  ],
+  "433d_signature_row_date_left": [
+   "form1[0].Page1_Part1[0].Date1[0]",
+   "form1[0].Page3_Part2[0].Date1[0]"
+  ],
+  "433d_title_if": [
+   "form1[0].Page1_Part1[0].TitleIf[0]",
+   "form1[0].Page3_Part2[0].TitleIf[0]"
+  ],
+  "433d_signature_row_date_right": [
+   "form1[0].Page1_Part1[0].Date2[0]",
+   "form1[0].Page3_Part2[0].Date2[0]"
+  ],
+  "433d_spouse_signature": [
+   "form1[0].Page1_Part1[0].SpouseSignature[0]",
+   "form1[0].Page3_Part2[0].SpouseSignature[0]"
+  ],
+  "433d_agreement_locator_number1": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber1[0]"
+  ],
+  "433d_agreement_locator_number2": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber2[0]"
+  ],
+  "433d_agreement_locator_number3": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber3[0]"
+  ],
+  "433d_agreement_locator_number4": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementLocatorNumber[0].AgreementLocatorNumber4[0]"
+  ],
+  "433d_agreement_review_cycle1": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle1[0]"
+  ],
+  "433d_agreement_review_cycle2": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle2[0]"
+  ],
+  "433d_agreement_review_cycle3": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle3[0]"
+  ],
+  "433d_agreement_review_cycle4": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle4[0]"
+  ],
+  "433d_agreement_review_cycle5": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle5[0]"
+  ],
+  "433d_agreement_review_cycle6": [
+   "form1[0].Page1_Part1[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AgreementReviewCycle[0].AgreementReviewCycle6[0]"
+  ],
+  "433d_earliest_csed": [
+   "form1[0].Page1_Part1[0].Agreement[0].EarliestCSED[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].EarliestCSED[0]"
+  ],
+  "433d_originator_id": [
+   "form1[0].Page1_Part1[0].Agreement[0].OriginatorID[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].OriginatorID[0]"
+  ],
+  "433d_originator_code": [
+   "form1[0].Page1_Part1[0].Agreement[0].OriginatorCode[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].OriginatorCode[0]"
+  ],
+  "433d_name": [
+   "form1[0].Page1_Part1[0].Agreement[0].Name[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].Name[0]"
+  ],
+  "433d_title": [
+   "form1[0].Page1_Part1[0].Agreement[0].Title[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].Title[0]"
+  ],
+  "433d_agreement_examined": [
+   "form1[0].Page1_Part1[0].AgreementExamined[0]",
+   "form1[0].Page3_Part2[0].AgreementExamined[0]"
+  ],
+  "433d_date3": [
+   "form1[0].Page1_Part1[0].Date3[0]",
+   "form1[0].Page3_Part2[0].Date3[0]"
+  ]
+ },
+ "checkboxes": {
+  "_binds_why": "THREE OPTION SETS AND 3 LONE TICKS, and which is which is DERIVED. An option set is a printed series every member of which is a checkbox — the same geometric series derivation the class table uses, which knows nothing about widget types. The lone ticks are the checkboxes in no such series: CheckBoxIf, SubmitANew, unable_to_make. Each option key is the printed value of the indicator, never a widget name.",
+  "433d_submit_a_new": [
+   "form1[0].Page1_Part1[0].NameAddressTaxpayer[0].SubmitANew[0]",
+   "form1[0].Page3_Part2[0].NameAddressTaxpayer[0].SubmitANew[0]"
+  ],
+  "433d_unable_to_make": [
+   "form1[0].Page1_Part1[0].unable_to_make[0]",
+   "form1[0].Page3_Part2[0].unable_to_make[0]"
+  ],
+  "433d_check_box_if": [
+   "form1[0].Page1_Part1[0].Agreement[0].CheckBoxIf[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].CheckBoxIf[0]"
+  ],
+  "433d_review_status_indicator": {
+   "1": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].RSI1[0]"
+   ],
+   "5": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].RSI5[0]"
+   ],
+   "6": [
+    "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].RSI6[0]"
+   ],
+   "_ground": "The three captions of this drawn column are three VALUES OF ONE NAMED INDICATOR — \"RSI “1” no further review\", \"RSI “5” PPIA IMF 2 year review\", \"RSI “6” PPIA BMF 2 year review\". One indicator cannot hold two values, and that is readable from the captions themselves. The heading printed over the block is \"Check the appropriate boxes:\", PLURAL, which is what licenses one tick in this column AND one in the AI column and is quoted here because it does NOT by itself say one per column."
+  },
+  "433d_agreement_indicator": {
+   "0": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI0[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].AI0[0]"
+   ],
+   "1": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].AI1[0]"
+   ],
+   "2": [
+    "form1[0].Page1_Part1[0].Agreement[0].AI2[0]",
+    "form1[0].Page3_Part2[0].Agreement[0].AI2[0]"
+   ],
+   "_ground": "The same ground as the RSI column: \"AI “0” Not a PPIA\", \"AI “1” Field Asset PPIA\", \"AI “2” All other PPIAs\" are three values of one named indicator, and the block heading \"Check the appropriate boxes:\" is plural."
+  },
+  "433d_lien_determination": {
+   "_ground": "PRINTED VERBATIM, and it is the only one of the three sets whose exclusivity the page states in as many words: \"A NOTICE OF FEDERAL TAX LIEN\" over \"(Check one box below)\", above the four options HAS ALREADY BEEN FILED / WILL BE FILED IMMEDIATELY / WILL BE FILED WHEN TAX IS ASSESSED / MAY BE FILED IF THIS AGREEMENT DEFAULTS.",
+   "filedimmediately": [
+    "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+    "form1[0].Page3_Part2[0].Notice[0].FiledImmediately[0]"
+   ],
+   "filedwhen": [
+    "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+    "form1[0].Page3_Part2[0].Notice[0].FiledWhen[0]"
+   ],
+   "hasalready": [
+    "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]",
+    "form1[0].Page3_Part2[0].Notice[0].HasAlready[0]"
+   ],
+   "maybe": [
+    "form1[0].Page1_Part1[0].Notice[0].MayBe[0]",
+    "form1[0].Page3_Part2[0].Notice[0].MayBe[0]"
+   ]
+  }
+ },
+ "exclusive": {
+  "433d_review_status_indicator__irs_copy": [
+   "form1[0].Page1_Part1[0].Agreement[0].RSI1[0]",
+   "form1[0].Page1_Part1[0].Agreement[0].RSI5[0]",
+   "form1[0].Page1_Part1[0].Agreement[0].RSI6[0]"
+  ],
+  "433d_review_status_indicator__taxpayer_copy": [
+   "form1[0].Page3_Part2[0].Agreement[0].RSI1[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].RSI5[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].RSI6[0]"
+  ],
+  "433d_agreement_indicator__irs_copy": [
+   "form1[0].Page1_Part1[0].Agreement[0].AI0[0]",
+   "form1[0].Page1_Part1[0].Agreement[0].AI1[0]",
+   "form1[0].Page1_Part1[0].Agreement[0].AI2[0]"
+  ],
+  "433d_agreement_indicator__taxpayer_copy": [
+   "form1[0].Page3_Part2[0].Agreement[0].AI0[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AI1[0]",
+   "form1[0].Page3_Part2[0].Agreement[0].AI2[0]"
+  ],
+  "433d_lien_determination__irs_copy": [
+   "form1[0].Page1_Part1[0].Notice[0].FiledImmediately[0]",
+   "form1[0].Page1_Part1[0].Notice[0].FiledWhen[0]",
+   "form1[0].Page1_Part1[0].Notice[0].HasAlready[0]",
+   "form1[0].Page1_Part1[0].Notice[0].MayBe[0]"
+  ],
+  "433d_lien_determination__taxpayer_copy": [
+   "form1[0].Page3_Part2[0].Notice[0].FiledImmediately[0]",
+   "form1[0].Page3_Part2[0].Notice[0].FiledWhen[0]",
+   "form1[0].Page3_Part2[0].Notice[0].HasAlready[0]",
+   "form1[0].Page3_Part2[0].Notice[0].MayBe[0]"
+  ]
+ },
+ "_exclusive_why": "SIX SETS FOR THREE PRINTED COLUMNS: one per column per COPY. Both copies of a mirrored cell receive the same value, so a set spanning both pages would hold two checked boxes on every correctly filled form and fail by construction. A set is a claim about one printed column on one printed page and this form draws each column twice.",
+ "subject_classes": {
+  "NameAndAddress": {
+   "class": "independent",
+   "caption": "Name and address of taxpayer(s)",
+   "pairing": "second_witness"
+  },
+  "SubmitANew": {
+   "class": "independent",
+   "caption": "Submit a new Form W-4 to your employer to increase your",
+   "pairing": "second_witness"
+  },
+  "Taxpayer": {
+   "class": "dependent",
+   "caption": "Social Security or Employer Identification Number (SSN/ITIN/EIN)",
+   "pairing": "second_witness",
+   "route": {
+    "individual": "433d_tin_ssn_itin",
+    "entity": "433d_tin_ein",
+    "discriminator": "433d_subject"
+   },
+   "_why": "ONE PRINTED BOX, TWO KINDS OF VALUE. The caption over it offers a Social Security or ITIN number OR an Employer Identification Number, and which one a filed 433-D carries is the whole of what makes its subject an individual or an entity. One property would have to hold two facts about two legal persons for one filer at one moment."
+  },
+  "Spouse": {
+   "class": "conditional",
+   "caption": "(Spouse)",
+   "pairing": "second_witness",
+   "empty_unless": "individual",
+   "_why": "THE PAGE SAYS THIS CELL EXISTS FOR THE INDIVIDUAL SUBJECT ONLY, at \"(Spouse)\". It gets an emptiness assertion and no second property: it is one fact that is sometimes absent, not two facts. On a record declaring the other subject a value here is a STOP."
+  },
+  "Home": {
+   "class": "independent",
+   "caption": "(Home)",
+   "pairing": "determinate"
+  },
+  "WorkCellBusiness": {
+   "class": "independent",
+   "caption": "(Work, cell or business)",
+   "pairing": "determinate"
+  },
+  "OrWrite": {
+   "class": "independent",
+   "caption": "Or write",
+   "pairing": "second_witness"
+  },
+  "KindsOfTaxes": {
+   "class": "independent",
+   "caption": "Kinds of taxes",
+   "pairing": "determinate"
+  },
+  "TaxPeriods": {
+   "class": "independent",
+   "caption": "Tax periods",
+   "pairing": "determinate"
+  },
+  "AsOf": {
+   "class": "independent",
+   "caption": "Amount owed as of",
+   "pairing": "determinate"
+  },
+  "AmountOwed": {
+   "class": "independent",
+   "caption": "Amount owed as of",
+   "pairing": "determinate"
+  },
+  "DollarAmount": {
+   "class": "independent",
+   "caption": "$",
+   "pairing": "determinate"
+  },
+  "DatePaid": {
+   "class": "independent",
+   "caption": "on",
+   "pairing": "determinate"
+  },
+  "AndDollarAmount": {
+   "class": "independent",
+   "caption": "and $",
+   "pairing": "determinate"
+  },
+  "OnThe": {
+   "class": "independent",
+   "caption": "on the",
+   "pairing": "determinate"
+  },
+  "date1": {
+   "class": "independent",
+   "caption": "Date of increase",
+   "pairing": "determinate"
+  },
+  "amount1": {
+   "class": "independent",
+   "caption": "Amount of increase",
+   "pairing": "determinate"
+  },
+  "payment1": {
+   "class": "independent",
+   "caption": "New installment payment amount",
+   "pairing": "determinate"
+  },
+  "date2": {
+   "class": "independent",
+   "caption": "Date of increase",
+   "pairing": "determinate"
+  },
+  "amount2": {
+   "class": "independent",
+   "caption": "Amount of increase",
+   "pairing": "determinate"
+  },
+  "payment2": {
+   "class": "independent",
+   "caption": "New installment payment amount",
+   "pairing": "determinate"
+  },
+  "Initial": {
+   "class": "independent",
+   "caption": "By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.",
+   "pairing": "determinate"
+  },
+  "AdditionalConditions": {
+   "class": "independent",
+   "caption": "Additional Conditions / Terms",
+   "pairing": "determinate"
+  },
+  "RoutingNumber1": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber2": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber3": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber4": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber5": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber6": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber7": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber8": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "RoutingNumber9": {
+   "class": "independent",
+   "caption": "a. Routing number",
+   "pairing": "determinate"
+  },
+  "AccountNumber1": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber2": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber3": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber4": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber5": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber6": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber7": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber8": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber9": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber10": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber11": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber12": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber13": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber14": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber15": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber16": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "AccountNumber17": {
+   "class": "independent",
+   "caption": "b. Account number",
+   "pairing": "determinate"
+  },
+  "unable_to_make": {
+   "class": "independent",
+   "caption": "I am unable to make debit payments.",
+   "pairing": "determinate"
+  },
+  "YourSignature": {
+   "class": "independent",
+   "caption": "Your signature",
+   "pairing": "second_witness"
+  },
+  "Date1": {
+   "class": "independent",
+   "caption": "Date",
+   "pairing": "second_witness"
+  },
+  "TitleIf": {
+   "class": "conditional",
+   "caption": "(if Corporate Officer or Partner)",
+   "pairing": "second_witness",
+   "empty_unless": "entity",
+   "_why": "THE PAGE SAYS THIS CELL EXISTS FOR THE ENTITY SUBJECT ONLY, at \"(if Corporate Officer or Partner)\". It gets an emptiness assertion and no second property: it is one fact that is sometimes absent, not two facts. On a record declaring the other subject a value here is a STOP."
+  },
+  "Date2": {
+   "class": "independent",
+   "caption": "Date",
+   "pairing": "second_witness"
+  },
+  "SpouseSignature": {
+   "class": "conditional",
+   "caption": "Spouse’s signature",
+   "pairing": "second_witness",
+   "empty_unless": "individual",
+   "_why": "THE PAGE SAYS THIS CELL EXISTS FOR THE INDIVIDUAL SUBJECT ONLY, at \"Spouse’s signature\". It gets an emptiness assertion and no second property: it is one fact that is sometimes absent, not two facts. On a record declaring the other subject a value here is a STOP."
+  },
+  "AgreementLocatorNumber1": {
+   "class": "independent",
+   "caption": "AGREEMENT LOCATOR NUMBER:",
+   "pairing": "determinate"
+  },
+  "AgreementLocatorNumber2": {
+   "class": "independent",
+   "caption": "AGREEMENT LOCATOR NUMBER:",
+   "pairing": "determinate"
+  },
+  "AgreementLocatorNumber3": {
+   "class": "independent",
+   "caption": "AGREEMENT LOCATOR NUMBER:",
+   "pairing": "determinate"
+  },
+  "AgreementLocatorNumber4": {
+   "class": "independent",
+   "caption": "AGREEMENT LOCATOR NUMBER:",
+   "pairing": "determinate"
+  },
+  "RSI1": {
+   "class": "independent",
+   "caption": "RSI “1” no further review",
+   "pairing": "second_witness"
+  },
+  "AI0": {
+   "class": "independent",
+   "caption": "AI “0” Not a PPIA",
+   "pairing": "second_witness"
+  },
+  "RSI5": {
+   "class": "conditional",
+   "caption": "RSI “5” PPIA IMF 2 year review",
+   "pairing": "second_witness",
+   "empty_unless": "individual",
+   "_why": "THE PAGE SAYS THIS CELL EXISTS FOR THE INDIVIDUAL SUBJECT ONLY, at \"RSI “5” PPIA IMF 2 year review\". It gets an emptiness assertion and no second property: it is one fact that is sometimes absent, not two facts. On a record declaring the other subject a value here is a STOP."
+  },
+  "AI1": {
+   "class": "independent",
+   "caption": "AI “1” Field Asset PPIA",
+   "pairing": "second_witness"
+  },
+  "RSI6": {
+   "class": "conditional",
+   "caption": "RSI “6” PPIA BMF 2 year review",
+   "pairing": "second_witness",
+   "empty_unless": "entity",
+   "_why": "THE PAGE SAYS THIS CELL EXISTS FOR THE ENTITY SUBJECT ONLY, at \"RSI “6” PPIA BMF 2 year review\". It gets an emptiness assertion and no second property: it is one fact that is sometimes absent, not two facts. On a record declaring the other subject a value here is a STOP."
+  },
+  "AI2": {
+   "class": "independent",
+   "caption": "AI “2” All other PPIAs",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle1": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle2": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle3": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle4": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle5": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "AgreementReviewCycle6": {
+   "class": "independent",
+   "caption": "Agreement Review Cycle",
+   "pairing": "second_witness"
+  },
+  "EarliestCSED": {
+   "class": "independent",
+   "caption": "Earliest CSED",
+   "pairing": "determinate"
+  },
+  "CheckBoxIf": {
+   "class": "independent",
+   "caption": "Check box if pre-assessed modules included.",
+   "pairing": "second_witness"
+  },
+  "OriginatorID": {
+   "class": "independent",
+   "caption": "Originator’s ID number",
+   "pairing": "determinate"
+  },
+  "OriginatorCode": {
+   "class": "independent",
+   "caption": "Originator Code",
+   "pairing": "second_witness"
+  },
+  "Name": {
+   "class": "independent",
+   "caption": "Name",
+   "pairing": "determinate"
+  },
+  "Title": {
+   "class": "independent",
+   "caption": "Title",
+   "pairing": "second_witness"
+  },
+  "HasAlready": {
+   "class": "independent",
+   "caption": "HAS ALREADY BEEN FILED",
+   "pairing": "determinate"
+  },
+  "FiledImmediately": {
+   "class": "independent",
+   "caption": "WILL BE FILED IMMEDIATELY",
+   "pairing": "determinate"
+  },
+  "FiledWhen": {
+   "class": "independent",
+   "caption": "WILL BE FILED WHEN TAX IS ASSESSED",
+   "pairing": "determinate"
+  },
+  "MayBe": {
+   "class": "independent",
+   "caption": "MAY BE FILED IF THIS AGREEMENT DEFAULTS",
+   "pairing": "determinate"
+  },
+  "AgreementExamined": {
+   "class": "independent",
+   "caption": "Agreement examined or approved by",
+   "pairing": "determinate"
+  },
+  "Date3": {
+   "class": "independent",
+   "caption": "Date",
+   "pairing": "determinate"
+  }
+ },
+ "_subject_classes_why": "THE THREE-CLASS DISCRIMINATOR, and each class owes the map a different thing — asserted at [SC-6] in adapters/pdf/assert-subject-class.mjs. DEPENDENT declares a route with two input keys and a discriminator. CONDITIONAL declares `empty_unless` and may NOT declare a route: a cell that exists for one subject only has no second subject to route to, and the second property could only ever be empty. INDEPENDENT declares neither: an emptiness assertion over an independent cell would fire on a correctly filled form.",
+ "allowed": {
+  "_why": "433-D prints no IRS-allowable expense column and no collection financial standards. The block exists solely to carry the never-autofill list, which is the convention 433-A(OIC) established for a form with no `allowed` column.",
+  "_never_autofill": [
+   "form1[0].Page4_Part2[0].agree_to[0].item[8].hyperlink[0]",
+   "form1[0].Page4_Part2[0].installment_payments[0].item8[0].hyperlink[0]"
+  ],
+  "_never_autofill_why": "THE TWO PDFButtons ON PAGE 4, and neither is a cell a filer fills: they are hyperlinks inside the INSTRUCTIONS TO TAXPAYER prose. They are also the reason the mirror declares an exclusion by name — this stem appears exactly twice, so a completeness check phrased as \"every stem appears twice\" would have counted them as the 84th mirrored fact and been satisfied by a pair of buttons."
+ },
+ "_deferred": {
+  "_why": "EMPTY, AND SAID SO RATHER THAN OMITTED. A deferred target is one the map has bound to nothing because the reading is unresolved; 433-D has none, because the mirror accounts for all 166 data cells and the two page-4 buttons are understood and deliberately blank, which is the stronger claim and belongs under `_never_autofill`."
+ },
+ "_partition": {
+  "_why": "Declared as the map is authored, mandatory in validate-map.mjs, and every figure derived by this generator from the field list, the mirror and this map’s own targets rather than counted by hand.",
+  "form_fields_total": 168,
+  "in_this_slice": 168,
+  "bound_writable": 166,
+  "excluded_never_autofill": 2,
+  "deferred": 0,
+  "unaccounted": 0,
+  "_check": "166 + 2 + 0 = 168, against 168 enumerated fields. 168 - 168 = 0 unaccounted. The 166 bound targets are 83 mirrored pairs; page-geometry.mjs reports 83 widgets on page 1, 0 on page 2, 83 on page 3 and 2 on page 4.",
+  "_unaccounted_by_page": "0 unaccounted. ZERO UNACCOUNTED, AND THE BREAKDOWN IS STATED RATHER THAN LEFT EMPTY. Page 1: 83 bound. PAGE 2 CARRIES NO WIDGETS AT ALL — that is derived from the geometry reader returning every widget on every page and page 2 contributing none, not inferred from a low count. Page 3: 83 bound. Page 4: 2, both excluded by name above."
+ },
+ "_carried": {
+  "_why": "The questions this map raised and no slice has answered. An arguable item is reported in full, carries an id and is not resolved ([R-20]).",
+  "open": [
+   {
+    "id": "DM-1",
+    "subject": "THE RECORD DECLARES ITS OWN SUBJECT AND NOTHING ON THE FILED PAGE CONFIRMS IT. `433d_subject` is what routes the identifier cell and what every emptiness assertion is asked against, and it is supplied by the record rather than read from the document.",
+    "why_it_is_not_a_defect_today": "The engine has no other source for it. The subject register records that 433-D is the first form whose subject is NOT a property of the form: \"One filed 433-D is about a natural person; the next is about a corporation; the form is the same form and nothing printed on it distinguishes them except which identifier the filer wrote.\" The discriminator therefore cannot be derived from the blank, and a record that declares nothing is refused rather than defaulted.",
+    "what_would_settle_it": "A cross-check against the identifier the record supplies: an SSN or ITIN is nine digits in one printed shape and an EIN in another, so a record declaring `entity` and supplying an SSN-shaped identifier is contradicting itself. That is a second witness the engine could hold and does not, and it is not built here because inventing a format predicate for a taxpayer identification number in the commit that lands the map is exactly the adjacent change that has twice reproduced the defect class it was meant to close.",
+    "status": "OPEN"
+   },
+   {
+    "id": "DM-2",
+    "subject": "NO SINGLE RECORD CAN SATURATE THIS FORM, and that is a property of the form rather than of the fixture. Five cells are subject-CONDITIONAL — three exist only for an individual, two only for an entity — so on any record at least two mapped text cells are REQUIRED to be empty.",
+    "why_it_matters": "Gate step 10 in saturated mode fails on any mapped text cell an acceptance record left empty, and that rule is right: a count quietly coming in low is indistinguishable from the map being wrong. On this form the rule and the page disagree, and the disagreement is real rather than a gap in the fixture.",
+    "what_stands_in_the_meantime": "The exemption is DERIVED from this map’s own `empty_unless` declarations against the record’s declared subject, reported BY NAME on every run, and it is two-directional: a cell required to be empty that carries a value FAILS at the same step. So the saturation rule is not weakened for this form, it is stated for a form whose cells are not all reachable at once.",
+    "status": "OPEN"
+   }
+  ],
+  "resolved": [],
+  "_count": {
+   "open": 2,
+   "resolved": 0
+  }
+ }
+}

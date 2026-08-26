@@ -39,6 +39,18 @@ export const DECLARED = [
        + 'a consequence of a set this tree derives, not a second reading of the page.',
   },
   {
+    id: 'AB-D07',
+    kind: 'asserted-elsewhere',
+    at: /^adapters\/pdf\/maps\/433d\.totals\.json :: _why$/,
+    why: 'THE CLAIM IS THAT 433-D PRINTS NO TOTAL ANYWHERE, and it is not asserted here — it is DERIVED against the drawn page on every run. adapters/pdf/count-sweep.mjs [S-50] joins every drawn run of all four pages and counts matches for /Add lines?/, /\bTotals?\b/ and /minus/, comparing each against the zero this file claims; [S-51] runs the SAME joined text through the same matching with a required NON-ZERO answer, so a reading that had gone dead reports 0 against a required non-zero and takes the run down rather than confirming the absence by failing to look. That is drawn evidence, and it is stronger than a coordinate quoted beside the sentence would be: it is re-read on every run instead of transcribed once.',
+  },
+  {
+    id: 'AB-D08',
+    kind: 'asserted-elsewhere',
+    at: /^adapters\/pdf\/maps\/433d\.headings\.json :: _why_it_is_empty_and_that_is_a_declaration$/,
+    why: 'THE CLAIM IS THAT 433-D DRAWS NO REPEATABLE TABLE, so no group row exists for a printed heading to stand over. adapters/pdf/verify-headings.mjs checks it in BOTH directions on every gate run: the sentence is refused unless the map really declares zero groups, and a map declaring zero groups with no such sentence is still a STOP — so the declaration cannot outlive the state it describes, which is the [S2] STALE PRE-MAP shape that fired on this same form the day it got a map. The page-side half is visible in the partition the same map derives: 166 of 168 fields bound as 83 mirrored pairs, none of them a slot in a repeating unit.',
+  },
+  {
     id: 'AB-D02',
     kind: 'asserted-elsewhere',
     at: /^adapters\/hubspot\/asset-row-shapes\.json :: classes\.\d+\.printed_tables\./,

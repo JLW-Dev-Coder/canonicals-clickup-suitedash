@@ -464,9 +464,32 @@ if (!errors.length && !bad.length) {
   // indistinguishability is the defect. Printing the number is not the same as requiring one.
   // See adapters/pdf/guard-sweep.mjs [G-28].
   if (!nRows) {
+    // A FORM THAT DRAWS NO REPEATABLE TABLE IS A THIRD STATE, AND IT IS A DECLARATION RATHER
+    // THAN AN EXEMPTION. 433-D draws no table with a repeating unit on either of its copies, so
+    // there is no group for a heading to stand over and there never will be at this revision --
+    // which is a different fact from "the record fed no rows" and from "the groups stopped
+    // resolving", and reporting it as either of those would be false.
+    //
+    // WHAT MAKES IT A DECLARATION IS THAT IT IS CHECKED, in both directions. The headings file
+    // must say so in as many words, AND the map must actually declare no group; a form claiming
+    // this while its map declares a group is a STOP, and so is a form whose map declares none
+    // and whose headings file says nothing. So the declaration cannot outlive the state it
+    // describes -- which is the [S2] STALE PRE-MAP shape, caught the day 433-D got a map.
+    const declaresNone = typeof decl._why_it_is_empty_and_that_is_a_declaration === 'string'
+      && /declares no repeatable group/i.test(decl._why_it_is_empty_and_that_is_a_declaration);
+    const mapGroups = Object.keys(mapDoc.groups || {}).filter((k) => !k.startsWith('_')).length;
+    if (declaresNone && mapGroups === 0 && report.length === 0) {
+      examined('verify-headings', form, 0, 'group-rows-under-a-declared-heading');
+      console.log(`NO GROUP ON THIS FORM, DECLARED AND CHECKED — ${form}'s map declares ${mapGroups} repeatable group(s) and ${decl.headings.length} printed heading(s), and adapters/pdf/maps/${form}.headings.json says so in as many words.`);
+      console.log('  This is a checked absence, not a skip: the declaration is refused if the map declares any group, and a map declaring none with no such sentence in its headings file is still a STOP.');
+      console.log(`  0 group row(s) examined, which is the whole population and not a sample of it.`);
+      process.exit(0);
+    }
     console.error(`NOTHING TO ASSERT — ${form} declares ${report.length} group(s) and not one printed a row, so the heading assertion examined nothing.`);
     console.error('  Zero rows checked is not zero rows wrong. Either the record feeds no group rows (run --saturated),');
     console.error('  or the map\'s groups no longer resolve to slots — and both of those are findings, not passes.');
+    if (mapGroups === 0 && !declaresNone)
+      console.error(`  This map declares NO group at all. If that is the form rather than an omission, say so in adapters/pdf/maps/${form}.headings.json under \`_why_it_is_empty_and_that_is_a_declaration\`, in a sentence containing "declares no repeatable group" — it is then checked against the map on every run rather than believed.`);
     process.exit(2);
   }
   examined('verify-headings', form, nRows, 'group-rows-under-a-declared-heading');

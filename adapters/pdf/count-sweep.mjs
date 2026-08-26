@@ -1673,6 +1673,45 @@ export const MANIFEST = [
     reason: 'The shared row-class specification. Its numbers are printed line markers on 433-A and 433-F ("line 13", "18a-c", "Section E"), HubSpot property counts quoted from a provisioning run that already happened, and the migration-cost narrative for a migration that was completed. None counts a list this file holds; the lists it does hold — classes, columns, printed tables — are asserted structurally by adapters/pdf/assert-row-shape-spec.mjs: [A1] every class any map routes rows under is declared here, [A2] every contributed column is reachable on the group that accepts the class, and [A3] every printed table a class claims is either routed by a group or carries a live `unrouted` declaration, with a stale one a STOP. A count would be weaker than that check.',
     _reason_was: 'IT NAMED validate-crosswalk.mjs, "which fails when a declared column is missing from a claimed table", and validate-crosswalk.mjs has never read this file. What the old reason got RIGHT: that counting is the wrong instrument here, and that the load-bearing property of the file is structural reachability rather than cardinality. What it got WRONG: that the structural check was running. It was not, and the first run of the one that replaced it found fifteen problems — an undeclared live class, six unreachable columns, and eight printed tables no group routes.' }),
 
+  // ─────────────────────────────────────────────────────────────────────────────────────
+  // 433-D: A TOTALS FILE THAT DECLARES NO TOTALS, AND THE ZERO IS DERIVED
+  // ─────────────────────────────────────────────────────────────────────────────────────
+  //
+  // run-form-gate.mjs step 11 FAILS a map declaring itself COMPLETE that carries no totals file.
+  // 433-D declares COMPLETE and prints no total anywhere, so the honest artefact is a totals
+  // file whose `totals` array is empty and whose claimed zeros are CHECKED. An absence nobody
+  // derived and an absence nobody wrote read identically from outside.
+  D({ id: 'S-50', file: /433d\.totals\.json$/, at: /^_none_printed\.claimed_(add_lines|total|minus)_runs$/,
+    kind: 'derived',
+    derive: (ctx, value, at) => {
+      const which = /add_lines/.test(at) ? { re: /Add lines?/gi, name: '/Add lines?/' }
+        : /minus/.test(at) ? { re: /minus/gi, name: '/minus/' }
+        : { re: /\bTotals?\b/gi, name: '/\\bTotals?\\b/' };
+      return [{ what: `runs matching ${which.name} across every drawn page of 433-D`, claimed: value,
+        derived: (ctx.joinedAllPages.match(which.re) || []).length,
+        from: `every drawn run of pages ${ctx.pagesDrawingRuns.join(', ')}, joined` }];
+    } }),
+
+  D({ id: 'S-51', file: /433d\.totals\.json$/, at: /^_none_printed\._how$/,
+    kind: 'derived',
+    derive: (ctx) => [
+      // THE POSITIVE CONTROL FOR [S-50], and it is the reason the three zeros above are readable
+      // at all. Three required-zero rows and nothing else would report exactly the zero they are
+      // required to report if the matching had gone dead. This row runs the SAME joined text
+      // through the SAME kind of match with a required NON-ZERO answer: 433-D prints the word
+      // "Agreement" in its own title, so a reading that had stopped working reports 0 against a
+      // claimed 1-or-more and takes the run down.
+      { what: 'runs matching /Agreement/ across every drawn page of 433-D, the positive control that makes the three zeros above readable',
+        claimed: true, derived: (ctx.joinedAllPages.match(/Agreement/gi) || []).length > 0,
+        from: 'the same joined page text and the same matching as the three zero rows' },
+      { what: 'pages of 433-D that draw at least one run — page 2 draws none and returns zero for the trivial reason, which is stated rather than counted as evidence',
+        claimed: ctx.pagesDrawingRuns.join(','), derived: ctx.pagesDrawingRuns.join(','), from: 'the geometry reader' },
+    ] }),
+
+  D({ id: 'S-52', file: /433d\.(map|totals|headings)\.json$/, at: /./,
+    kind: 'underivable',
+    reason: 'PROSE ABOUT 433-D\'S CONSTRUCTS, and the numbers inside it are references to structure rather than counts of a list this file holds. "one per column per COPY" and "two DIFFERENT targets" describe the mirror; "two kinds of value" and "one printed box" describe the dependent route; "four stems, two keys" describes the key collision the derived partition already caught and re-derives on every run. WHAT IS CHECKABLE ABOUT ALL OF IT IS CHECKED AND IS STRONGER THAN A COUNT: [S-01] derives the whole partition from the field list and this map\'s own targets; adapters/pdf/assert-mirror.mjs rebuilds the 83 pairs from the widget geometry and refuses a one-sided binding at [M-07] and a two-copy disagreement at [M-08], in both directions; adapters/pdf/assert-subject-class.mjs recomputes every class from its own declared caption and holds each class to its obligation in this map at [SC-6]; and the whole map, totals file and headings file are re-derived BYTE FOR BYTE by their generator on every `npm run sweeps:deep`, so no scalar in any of them can drift from the page without the run stopping. The three claimed zeros in the totals file are excepted from this entry and derived at [S-50], because an absence is the one claim structure cannot carry.' }),
+
   D({ id: 'S-22', file: /crosswalk\.433f\.json$/, at: /./,
     kind: 'underivable',
     reason: 'The 433-F crosswalk. Every number in it is a printed line marker, a HubSpot property count from a completed provisioning run, or a figure inside an `arguable` item describing work not yet done ("five column-key renames", "six per-printed-row scalars") — a forecast, which by construction cannot be derived from a tree where the work has not happened. What IS checkable about this file is checked by adapters/hubspot/validate-crosswalk.mjs: every binding names a map key that exists and a property that exists, and no property is bound twice. That check is structural and does not need a count.' }),
@@ -1725,6 +1764,13 @@ export const runCountSweep = async (form) => {
     // counts these sentences and lists their pages - but a `y` on a record a person can read
     // is a reported y, and reporting the run top under that letter is what this commit is about.
     .map(t => ({ page: i + 1, y: baselineOfRun(t), y_convention: 'text-baseline', str: t.str })));
+
+  // EVERY DRAWN RUN OF EVERY PAGE, JOINED. [S-50] asks this whether the form prints a total
+  // anywhere, and the answer 433-D requires is ZERO -- which is the one shape a search cannot
+  // judge alone, so the positive control at [S-51] is asked through the same joined text and the
+  // same matching, and its required answer is non-zero.
+  ctx.joinedAllPages = text.map(pg => (pg.items || []).map(t => t.str).join(' ')).join(' ');
+  ctx.pagesDrawingRuns = text.map((pg, i) => ({ page: i + 1, runs: (pg.items || []).length })).filter(x => x.runs > 0).map(x => x.page);
 
   const rows = [], problems = [];
   const files = sweptFiles(form);

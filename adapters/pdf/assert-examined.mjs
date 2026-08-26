@@ -139,7 +139,10 @@ export const REGISTER = {
   'adapters/pdf/blanket-audit.mjs': { kind: 'guard', universe: 'sampled-blanket-sites', perForm: true, via: 'adapters/pdf/validate-map.mjs' },
   'adapters/pdf/assert-no-preset-boxes.mjs': { kind: 'guard', universe: 'blank-form-boxes', perForm: true, run: (f) => ['adapters/pdf/assert-no-preset-boxes.mjs', f] },
   'adapters/pdf/assert-record-shape.mjs': { kind: 'guard', universe: 'declared-record-shape-routes', perForm: true, run: (f) => ['adapters/pdf/assert-record-shape.mjs', f] },
-  'adapters/pdf/assert-overflow.mjs': { kind: 'guard', universe: 'declared-groups', perForm: true, run: (f) => ['adapters/pdf/assert-overflow.mjs', f] },
+  'adapters/pdf/assert-overflow.mjs': { kind: 'guard', universe: 'declared-groups', perForm: true, run: (f) => ['adapters/pdf/assert-overflow.mjs', f],
+    onlyWhen: (f) => { try { const m = JSON.parse(readFileSync(`adapters/pdf/maps/${f}.map.json`, 'utf8')); return Object.keys(m.groups || {}).filter((k) => !k.startsWith('_')).length > 0; } catch { return true; } },
+    note: 'ONLY FORMS WHOSE MAP DECLARES A REPEATABLE GROUP. The tool itself refuses a groupless form in as many words -- "adapters/pdf/maps/433d.map.json declares no groups. There is no overflow behaviour on this form to assert, and an empty assertion is not a pass" -- so without this predicate the matrix reports NOT REPORTED for a tool that is correctly refusing to report. The predicate is the MAP\'S OWN group count, derived on every run, so a form that grows a group is asserted the day it does; a map that cannot be read returns TRUE, because an unreadable map is a finding rather than an excuse.',
+  },
   'adapters/pdf/declaration-coverage.mjs': { kind: 'guard', universe: 'declarations-in-class-on-some-fixture', perForm: true, run: (f) => ['adapters/pdf/declaration-coverage.mjs', f], heavy: true,
     note: 'Heavy: it runs the whole gate once per fixture in the form\'s set, so a five-form pass is upwards of a dozen gate runs.' },
   'adapters/pdf/verify-headings.mjs': { kind: 'guard', universe: 'group-rows-under-a-declared-heading', perForm: true, via: 'adapters/pdf/run-form-gate.mjs' },
@@ -152,7 +155,9 @@ export const REGISTER = {
   'adapters/pdf/assert-fixture-authorship.mjs': { kind: 'guard', universe: 'fixtures-claiming-a-generator', perForm: false, run: () => ['adapters/pdf/assert-fixture-authorship.mjs'] },
   'adapters/pdf/assert-firing-proofs.mjs': { kind: 'guard', universe: 'firing-proof-claims', perForm: false, run: () => ['adapters/pdf/assert-firing-proofs.mjs'],
     note: 'It reports TWO lines per mapped form, under two universes, because its first draft put them in one and the figure that survived was the one that hid the finding ([R-07]). `firing-proof-claims` counts claims naming the form, cross-form claims included, and is non-zero everywhere. `declared-lines-proved-to-refuse` counts declared total lines a recorded break proof has actually shown to say no, and it is ZERO on 433-A, 433-F and 433-B(OIC) and 6 on 433-B. Those three zeros are the finding: [R-28] is about exactly the state where a comparison has only ever agreed.' },
-  'adapters/hubspot/assert-intake-keys.mjs': { kind: 'guard', universe: 'option-values-plus-row-shapes', perForm: false, run: () => ['adapters/hubspot/assert-intake-keys.mjs'] },
+  'adapters/hubspot/assert-intake-keys.mjs': { kind: 'guard', universe: 'option-values-plus-row-shapes', perForm: false, run: () => ['adapters/hubspot/assert-intake-keys.mjs'],
+    onlyWhen: (f) => existsSync(`adapters/pdf/maps/${f}.crosswalk-classification.json`),
+    note: 'ONLY FORMS THAT HAVE A CROSSWALK CLASSIFICATION, which is what this guard reads: it resolves every option value and row shape the classification declares against the map and the form engine. 433-D has a map and NO CLASSIFICATION -- its crosswalk is the next prompt’s work -- so this guard contributes nothing on it and reported NOT REPORTED, which is true and is not a finding. The predicate is the CLASSIFICATION FILE’S EXISTENCE rather than a list, so 433-D joins the matrix the day it is classified, with nothing to edit here. It is the same shape assert-mirror.mjs and assert-subject-class.mjs carry, and the reason all three need one is that this engine now holds a form at every stage of the pipeline at once.' },
   // THE UNIVERSE HERE IS NOT `crosswalk-rows`, AND SAYING SO IS [R-07] APPLIED TO THIS FILE'S
   // OWN OUTPUT. It was crosswalk-rows while the guard emitted ONE EXAMINED line per form. Since
   // [D-16] it emits one PER ASSERTION — eight on an authored crosswalk, five on a derived one —
@@ -201,6 +206,7 @@ export const REGISTER = {
   'adapters/pdf/fill-433a.mjs': { kind: 'engine', why: 'A fill engine. Gate steps 6, 7 and 10 count what it wrote against the map\'s partition and the PDF\'s field list.' },
   'adapters/pdf/fill-433aoi.mjs': { kind: 'engine', why: 'Same as fill-433a.mjs.' },
   'adapters/pdf/fill-433b.mjs': { kind: 'engine', why: 'Same as fill-433a.mjs.' },
+  'adapters/pdf/fill-433d.mjs': { kind: 'engine', why: 'Same as fill-433a.mjs, with one addition that is NOT an examined count and is reported in its own line on every run: it prints how many subject-CONDITIONAL cells this record is required to leave empty and names each one, so a run in which that number silently became zero says so. The population it works over is the map targets, enumerated and partitioned, and the partition is asserted against every field in the PDF at gate step 6.' },
   'adapters/pdf/fill-433boi.mjs': { kind: 'engine', why: 'Same as fill-433a.mjs.' },
   'adapters/pdf/fill-433f.mjs': { kind: 'engine', why: 'Same as fill-433a.mjs.' },
   'adapters/pdf/verify-appearances.mjs': { kind: 'instrument', why: 'It reads a filled PDF and reports values drawn without an appearance stream. Its universe is the filled fields, which verify-form-coverage.mjs counts and reports.' },

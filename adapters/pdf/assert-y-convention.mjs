@@ -266,7 +266,20 @@ const READINGS = [
     tool: 'verify-headings.mjs', kind: 'text-baseline', population: 'enumerated',
     how: 'node adapters/pdf/verify-headings.mjs <form> --emit-heading-ys, one HEADING-Y line per declared heading, parsed from the tool\'s own output rather than from its source.',
     read: async (form, ref) => {
-      if (!existsSync(`adapters/pdf/maps/${form}.headings.json`)) return [];
+      const hp = `adapters/pdf/maps/${form}.headings.json`;
+      if (!existsSync(hp)) return [];
+      // A HEADINGS FILE DECLARING ZERO HEADINGS IS A THIRD STATE, and it is not the same as a
+      // tool that emitted nothing. 433-D draws no repeatable table on either copy, so its map
+      // declares no group and its headings file declares no heading -- checked in BOTH
+      // directions by verify-headings.mjs, which refuses the declaration if the map declares any
+      // group and refuses a groupless map that does not carry it. There is no y to report
+      // because there is no heading, and reading that as "the tool went silent" would be the
+      // opposite of the distinction this file exists for. The population is EMPTY and derived,
+      // not unread: the emptiness is read out of the declaration itself, here, on every run.
+      try {
+        const d = JSON.parse(readFileSync(hp, 'utf8'));
+        if (Array.isArray(d.headings) && d.headings.length === 0) return [];
+      } catch { /* an unreadable declaration falls through to the spawn, which will report it */ }
       const r = spawnSync(process.execPath, ['adapters/pdf/verify-headings.mjs', form, '--emit-heading-ys'], { encoding: 'utf8' });
       const lines = String(r.stdout || '').split('\n').filter((l) => l.startsWith('HEADING-Y '));
       // AN UNREADABLE INPUT IS NOT A ZERO. A form with declared headings whose tool emitted

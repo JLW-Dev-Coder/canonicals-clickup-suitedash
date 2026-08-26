@@ -195,6 +195,7 @@ const LIST = forms.length ? forms : MAPPED_FORMS();
 // EVERY MAPPED FORM'S GROUPS, KEYED BY THE PROPERTY THEY BIND. Built before the per-form loop
 // because the row-shape universe is cross-form: see consumedColumnsFor above.
 const universeGaps = [];
+const preCrosswalk = [];   // mapped, not yet classified: a stage, named on every run
 const tablesByProperty = new Map();
 for (const form of MAPPED_FORMS()) {
   let MAP, bindings;
@@ -204,6 +205,29 @@ for (const form of MAPPED_FORMS()) {
   // per-form loop below reports the same failure for any form in LIST; this catch exists because
   // the pre-pass walks EVERY mapped form even when LIST is one of them, so a form outside LIST
   // would otherwise fail here and be reported nowhere at all.
+  // A FORM WITH A MAP AND NO CROSSWALK IS A STAGE, NOT A GAP, AND IT IS DECLARED AND COUNTED.
+  //
+  // This guard reads adapters/hubspot/fields.<form>.json, which a form acquires when it is
+  // CLASSIFIED — after the map and before provisioning. 433-D is the first form this engine has
+  // held between those two points, and without this branch its absent definitions file is
+  // reported as a UNIVERSE GAP: "this form could not be read into the cross-form table universe".
+  // That sentence is about a form that SHOULD be readable and is not. A form that has not been
+  // classified yet is a different fact, and reporting the second as the first is a standing guard
+  // demanding an artefact the work has not reached — which is [R-03].
+  //
+  // IT IS A DECLARATION AND NOT A SKIP: the predicate is the DEFINITIONS FILE THIS GUARD READS,
+  // adapters/hubspot/fields.<form>.json, so the day 433-D is classified it joins the universe with
+  // nothing to edit here; every form in this state is NAMED on every run in the report below
+  // rather than absorbed; and a form that HAS a definitions file and still cannot be read is a
+  // UNIVERSE GAP exactly as before.
+  //
+  // THE FIRST DRAFT KEYED ON THE CLASSIFICATION FILE AND WAS WRONG, and the guard caught it in
+  // one run: 433-A and 433-F carry no <form>.crosswalk-classification.json either -- their
+  // crosswalk is adapters/hubspot/crosswalk.433f.json and the 433-A backbone -- so both dropped
+  // out of the table and two live [F-04] registrations were reported STALE. A predicate for "has
+  // this form reached this stage" has to name the artefact the stage produces FOR THIS TOOL, not
+  // the one it produces for the tool next to it.
+  if (!existsSync(`adapters/hubspot/fields.${form}.json`)) { preCrosswalk.push(form); continue; }
   try { MAP = R(`adapters/pdf/maps/${form}.map.json`); bindings = loadBindings(form); }
   catch (e) { universeGaps.push(`${form}: ${e.message}`); continue; }
   const groupBy = {};
@@ -215,6 +239,11 @@ for (const form of MAPPED_FORMS()) {
 }
 
 const problems = [];
+if (preCrosswalk.length) {
+  console.log('');
+  console.log(`  MAPPED BUT NOT YET CLASSIFIED — ${preCrosswalk.length} form(s) contribute nothing to this guard, and are named rather than absorbed:`);
+  for (const f of preCrosswalk) console.log(`    ${f}  —  adapters/pdf/maps/${f}.map.json exists and adapters/hubspot/fields.${f}.json does not, so there is no binding set to resolve. Zero examined on this form is a stage, not a pass, and it ends the day the form is classified.`);
+}
 for (const g of universeGaps) problems.push(`UNIVERSE GAP  ${g}. This form could not be read into the cross-form table universe, so a column another form prints could be reported as a column nothing prints. A narrowed universe is not a smaller answer to the same question; it is an answer to a different one.`);
 const registered = new Set(KNOWN_UNRESOLVABLE.map((k) => `${k.form}|${k.key}|${k.value}`));
 const hitRegistrations = new Set();
@@ -223,6 +252,7 @@ const constructRows = [];
 
 for (const form of LIST) {
   let MAP, bindings;
+  if (!existsSync(`adapters/hubspot/fields.${form}.json`)) continue;   // named in the report below
   try { MAP = R(`adapters/pdf/maps/${form}.map.json`); } catch (e) { problems.push(`UNREADABLE MAP  ${form}: ${e.message}. A form whose map cannot be read is not a form with nothing to check.`); continue; }
   try { bindings = loadBindings(form); } catch (e) { problems.push(`UNREADABLE BINDINGS  ${form}: ${e.message}. Same reason.`); continue; }
 

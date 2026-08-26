@@ -1,0 +1,9 @@
+{
+ "form": "433d",
+ "form_revision": "7-2024",
+ "catalog": "16644M",
+ "_what": "The printed heading each mapped GROUP’s rows must sit beneath. Read by adapters/pdf/verify-headings.mjs.",
+ "_why_it_is_empty_and_that_is_a_declaration": "433-D DECLARES NO REPEATABLE GROUP, so there is no group row for a heading to stand over. That is not the absence of a reading: the form draws no table with more than one row anywhere on either copy. Its two increase/decrease rows are the closest thing and they are bound as SCALARS — date1/amount1/payment1 and date2/amount2/payment2 — because the page prints exactly two and prints them as two captioned rows rather than as a table with a repeating unit, so a group of maximum two would be a construct this page does not draw. The file exists so that step 9 runs and reports zero rather than failing for want of a heading declaration, and so that a later slice adding a group finds the mechanism here.",
+ "headings": [],
+ "groups": {}
+}
