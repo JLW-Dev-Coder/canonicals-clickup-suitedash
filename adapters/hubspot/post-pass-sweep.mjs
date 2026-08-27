@@ -94,6 +94,7 @@ export const NOT_A_PORTAL_TOOL = [
   { file: '433aoi.divergence-decisions.mjs', why: 'a table of per-property decisions, imported by the dry run. It reads no portal and reaches no verdict about live state.' },
   { file: '433b.divergence-decisions.mjs', why: 'the same, for 433-B.' },
   { file: '433boi.divergence-decisions.mjs', why: 'the same, for 433-B(OIC).' },
+  { file: '433d.divergence-decisions.mjs', why: 'the same, for 433-D. It is empty, and its `_why_this_is_empty` states the two reasons — an unused create prefix and A9R taking a reuse type divergence down at derivation time — rather than leaving emptiness to read as nobody having looked.' },
 ];
 
 export const sweptFiles = () => {
@@ -155,33 +156,33 @@ export const QUESTIONS = [
     why: 'The same, narrowed to custom properties. `hubspotDefined` is a property of the definition and not of any pass this repo runs.' },
 
   // ─── the dry runs ──────────────────────────────────────────────────────────────────────
-  { id: 'PP-03', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs'],
+  { id: 'PP-03', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs', 'hs-dryrun-433d.mjs'],
     anchor: 'const l = live.get(p.hs_name);', verdict: 'pass-sensitive',
     states: 'fresh.push(p); continue; }',
     why: 'THE CENTRAL QUESTION OF A DRY RUN — "does this definition already exist?" — and its answer flips from no to yes for every created property the moment the pass succeeds. That is not a defect; it is what a dry run is for. What makes it disposable is that the tool BRANCHES on it into named buckets and prints their sizes, so a post-pass run reports "exists and matches" for the same properties it previously reported as new, and a reader can tell the two runs apart from the report alone.' },
-  { id: 'PP-04', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs'],
+  { id: 'PP-04', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs', 'hs-dryrun-433d.mjs'],
     anchor: 'const groupsToCreate = defs.groups.filter((g) => !liveGroups.has(g.name));', verdict: 'pass-sensitive',
     states: "liveGroups.has(g.name) ? 'exists' : '**would be created**'",
     why: 'A group is created by the first pass that needs it and exists for every pass after. The tool prints each group as "exists" or "would be created" by name, so which side of the pass this run is on is readable from the report rather than inferred from a count.' },
-  { id: 'PP-05', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs'],
+  { id: 'PP-05', file: ['hs-dryrun-433aoi.mjs', 'hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs', 'hs-dryrun-433d.mjs'],
     anchor: "for (const g of defs.groups) say(", verdict: 'pass-sensitive',
     states: "liveGroups.has(g.name) ? 'exists' : '**would be created**'",
     why: 'The line that PRINTS [PP-04]\'s answer. It asks and states in one expression, which is the strongest form this disposition can take: there is no gap between the question and the record of which side it was asked on.' },
   { id: 'PP-06', file: ['hs-dryrun-433b.mjs', 'hs-dryrun-433boi.mjs'],
     anchor: 'if (live.has(twin)) twins.push(', verdict: 'pass-invariant',
     why: 'THE TWIN IS `irs433_<fact>`, THE SHARED BACKBONE, AND NO PASS IN THIS TOOL CREATES ONE. Every name this form would create carries this form\'s own prefix; the backbone was populated by earlier forms and is not touched. So the twin table reads the same before and after, which is what makes it usable as evidence about a name collision rather than as a report on the pass.' },
-  { id: 'PP-07', file: 'hs-dryrun-433b.mjs',
+  { id: 'PP-07', file: ['hs-dryrun-433b.mjs', 'hs-dryrun-433d.mjs'],
     anchor: 'const undeclaredLive = livePrefixed.filter((p) => !declaredNames.has(p.name));', verdict: 'pass-invariant',
     why: 'THE FIRST INSTANCE [D-18] RECORDS, AFTER ITS REPAIR, AND IT IS PASS-INVARIANT ONLY BECAUSE OF THE REPAIR. The first draft asked "is the irs433b_ prefix used at all", which is true only before the first create; it STOPped on every run after the pass it precedes, naming all 107 properties it had just correctly made. Subtracting the declared names makes the question "is any name under our prefix one we did NOT declare", whose answer is zero on both sides of a correct pass and non-zero only when something outside this repo created properties for this form.' },
-  { id: 'PP-08', file: 'hs-dryrun-433b.mjs',
+  { id: 'PP-08', file: ['hs-dryrun-433b.mjs', 'hs-dryrun-433d.mjs'],
     anchor: 'const livePrefixed = custom.filter((p) => p.name.startsWith(CREATE_PREFIX));', verdict: 'pass-sensitive',
     states: 'const provisioningState = declaredLive.length === 0',
     why: 'The count under this form\'s prefix goes from zero to the number created. It feeds a printed figure and [PP-07]\'s invariant question, and the tool names its own position with a three-valued `provisioningState` — BEFORE, AFTER, or PARTIAL — rather than leaving a reader to infer it from a number.' },
-  { id: 'PP-09', file: 'hs-dryrun-433b.mjs',
+  { id: 'PP-09', file: ['hs-dryrun-433b.mjs', 'hs-dryrun-433d.mjs'],
     anchor: 'const declaredLive = declaredCreates.filter((p) => live.has(p.hs_name));', verdict: 'pass-sensitive',
     states: 'const provisioningState = declaredLive.length === 0',
     why: 'This IS the side-of-the-pass measurement: zero declared names live is BEFORE, all of them is AFTER, and anything between is the state an interrupted create loop leaves. It is the repair that made [PP-07] possible, and it is the model the rest of this register is written against — a pass-sensitive question is disposable when the tool computes which side it is on and says so.' },
-  { id: 'PP-10', file: 'hs-dryrun-433b.mjs',
+  { id: 'PP-10', file: ['hs-dryrun-433b.mjs', 'hs-dryrun-433d.mjs'],
     anchor: '+ declaredCreates.filter((p) => !live.has(p.hs_name)).map(', verdict: 'pass-sensitive',
     states: 'PARTIAL PROVISIONING',
     why: 'Names the properties missing on a PARTIAL run. Before the pass that is every declared name and the branch is not taken; after a complete pass it is none. It is reached only in the partial state, which the line above computes and this one reports by name.' },
@@ -250,6 +251,22 @@ export const QUESTIONS = [
     states: 'A12',
     why: 'A12: HOW MANY PROPERTIES THIS PASS WOULD CREATE, read BEFORE the first create and compared against the live headroom. It is 75 before the pass and 0 after, and both are the truth about the moment they are read — which is the whole reason [R-32] requires the figure to be taken before the loop rather than inferred from it. The tool prints it as "this form would create N", which reads truthfully in both states, and the STOP it guards is the one that stops a partial provisioning run against a hard ceiling.' },
 
+
+  // ─── the three sites only 433-D has, because it is the first form with TWO reuse prefixes ─
+  //
+  // 433-B could hold its predecessor's prefix in a constant and test the pair by hand. 433-D
+  // reuses from two creators, so the prefixes are DERIVED from the rows and the disjointness is
+  // a loop over a derived set rather than one hand-written comparison.
+  { id: 'PP-33', file: 'hs-dryrun-433d.mjs',
+    anchor: 'const prefixCounts = allPrefixes.map((pre) => ({ pre, n: custom.filter((p) => p.name.startsWith(pre)).length }));', verdict: 'pass-sensitive',
+    states: 'const provisioningState = declaredLive.length === 0',
+    why: 'THE PER-PREFIX LIVE COUNT, one row per prefix this form creates under or reuses from. The irs433d_ row goes from 0 to 75 when the pass succeeds and the irs433_ and irs433boi_ rows do not move, because no pass in this tool creates a name under another form\'s prefix. The moving figure is never printed alone: the table sits directly above the three-valued provisioningState line, which names BEFORE, AFTER or PARTIAL outright. [PP-08] is the same disposition on the predecessor, where there was one prefix to count instead of three.' },
+  { id: 'PP-34', file: 'hs-dryrun-433d.mjs',
+    anchor: 'const both = custom.filter((p) => p.name.startsWith(a) && p.name.startsWith(b));', verdict: 'pass-invariant',
+    why: 'A STRUCTURAL CLAIM ABOUT STRINGS, asked of every ordered pair of this form\'s prefixes rather than of one hand-written pair. Every prefix in this series begins "irs433" and only the character at index 6 separates them, so a test written without the separator would count all 884 custom properties as this form\'s. The claim is false on every portal in every state and cannot move when a pass runs — which is exactly [PP-11] on the predecessor, generalised from one comparison to a loop over a derived set because this form has three prefixes and not two.' },
+  { id: 'PP-35', file: 'hs-dryrun-433d.mjs',
+    anchor: 'if (twin !== p.hs_name && live.has(twin)) twins.push({ p, twin, l: live.get(twin) });', verdict: 'pass-invariant',
+    why: 'THE TWIN IS irs433_<fact>, THE SHARED BACKBONE, AND NO PASS IN THIS TOOL CREATES ONE — [PP-06]\'s ground, with one addition this form needs. Two of 433-D\'s reuses bind irs433_ names themselves, so without the `twin !== p.hs_name` guard a row would be reported as colliding with the very property it binds. The guard is structural and its answer does not move across a pass. What the table then surfaces is the finding [D-28] records: W-02 binds irs433boi_employer_identification_number while irs433_employer_identification_number is also live, and the twin check is the only instrument in the tree that could have said so, because A8\'s universe is form-specific rows.' },
   // ─── the reuse describer ───────────────────────────────────────────────────────────────
   { id: 'PP-24', file: 'hs-describe-reused-433b.mjs',
     anchor: 'const l = live.get(p.hs_name);', verdict: 'pass-invariant',

@@ -121,6 +121,18 @@
    "the_shape_of_a_fix": "A whole-directory advisory lock taken before the snapshot and released after the restore-and-verify, so a second invocation waits rather than interleaving; and the restore verification extended to compare against the file's git-committed bytes where the file is tracked, so a hold that captured someone else's output fails loudly rather than blessing it. Both are checkable and both would have fired on the run above.",
    "what_this_item_is_NOT": "It is NOT a claim that the tree was ever corrupted by a committed run. Every recorded pass of this engine has been serial, and the working-tree damage above was caused by this cycle's own pre-flight running things in parallel to save wall clock. What the item records is that nothing in the engine would have said so — the corruption was found by `git status`, and `git status` is not a check this engine runs.",
    "status": "OPEN - observed and reported, not fixed."
+  },
+  {
+   "id": "D-28",
+   "form": "engine-wide",
+   "raised_in": "Prompt 57, by 433-D's provisioning dry run",
+   "subject": "the twin check adjudicates form-specific rows only, so a REUSE that chose between two live near-identical names carries no recorded ruling",
+   "the_shape": "derive-names-<form>.mjs A8 asks, for every derived name, whether the shared twin `irs433_<fact>` is live on the backbone, and STOPs when a FORM-SPECIFIC row's twin is live under a category that adjudicates nothing. Its universe is form-specific rows. A REUSE row is skipped, on the reasoning that a reuse has already been adjudicated — it names its target explicitly in the entry's own `reuse_of` and A9R asserts the target is live and type-compatible.",
+   "why_it_is_a_problem_today": "A REUSE NAMES THE PROPERTY IT TAKES AND SAYS NOTHING ABOUT THE ONES IT DID NOT. On 433-D, W-02 binds `irs433boi_employer_identification_number` and the portal ALSO holds `irs433_employer_identification_number`, contributed by 433-A line 54 and 433-A(OIC) s4_business_ein. Two live properties, names differing by one prefix segment, and the entry recorded a reason for the one it took and no reason for declining the other. A8 could not have raised it because the row is a reuse; the reclassifier could not have raised it either, because its token matcher scores `433d_tin_ein` against `employer identification number` below the 0.25 threshold. It was surfaced by the DRY RUN's twin table, which reads the portal and does not care what scope a row declares — [R-31], the structural reading and the live reading disagreeing about which instrument sees a thing.",
+   "the_ruling_on_the_instance": "MADE AND LANDED, so this item is about the instrument and not about the binding. `irs433_employer_identification_number` holds the EIN of a business a NATURAL PERSON taxpayer owns — 433-A's sole proprietorship at line 54, 433-A(OIC)'s business at s4 — where the business is not the taxpayer. `irs433boi_employer_identification_number` holds the EIN of the entity that IS the taxpayer. 433-D's entity branch means the taxpayer is the entity, so the second is the fact and the first is not, and the state of the world in which they differ is ordinary: a sole proprietor with an EIN files a 433-A, their company later files a 433-D, and one property would have to hold both at one moment. The ruling is now in W-02's scope_reason in adapters/pdf/maps/433d.crosswalk-classification.json and reaches adapters/hubspot/433d.naming-derivation.md through the crosswalk. fields.433d.json is byte-identical across the change: no name moved, because the ruling is a reason and not a binding.",
+   "why_it_is_not_fixed_here": "EXTENDING A8's UNIVERSE TO REUSE ROWS IS A CHANGE TO A GUARD THAT STANDS OVER FOUR PROVISIONED FORMS, and it would land in the same cycle as this form's first create. [R-12] is the rule that a refactor of a guard is a change to the guard, and [D-11]'s precedent is explicit that this exact adjacent-change shape has twice reproduced the class it was meant to close. The fix also needs somewhere for the ruling to live that the deriver can READ — a `rejected_candidates` array on the entry — and inventing a schema field mid-provisioning is the second half of the same objection. Recorded with its instance so it cannot evaporate ([R-20]).",
+   "the_shape_of_a_fix": "A8's universe widened from form-specific rows to ALL rows, with a reuse row's twin required to carry an explicit per-row ruling naming the rejected property rather than being skipped; the ruling held in a declared `rejected_candidates: [{ name, why }]` on the classification entry, so the deriver reads a structure instead of matching prose; and the same widening applied to the other three derivers, whose reuse rows have never been asked the question either. It should land in a cycle whose scope is guards, with the four provisioned forms re-derived and their definitions proved byte-identical before and after.",
+   "where_it_would_have_been_caught_earlier": "NOWHERE IN THIS TREE, and that is the finding. 433-B is the only other form with a reuse bucket; its nine reuses all bind `irs433boi_` names whose `irs433_<fact>` twins do not exist, so the question never arose and the gap never showed. A gap that only opens on the SECOND form to do a thing is invisible on the first, which is [R-04]'s shape one level out: the check ran and had nothing to look at."
   }
  ],
  "resolved": [
@@ -537,7 +549,7 @@
   }
  ],
  "_count": {
-  "open": 9,
+  "open": 10,
   "resolved": 18
  }
 }

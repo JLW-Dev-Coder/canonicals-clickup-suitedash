@@ -65,7 +65,8 @@
     "xfa:433h": "node adapters/pdf/xfa-fieldset.mjs 433h --check",
     "keyspace": "node adapters/hubspot/assert-key-space.mjs --verbose",
     "crosswalk:433d": "node adapters/hubspot/derive-names-433d.mjs --portal && node adapters/hubspot/reclassify-against-backbone.mjs 433d && node adapters/hubspot/assert-intake-keys.mjs",
-    "classify:433d": "node scratchpad/p55-433d-author-classification.mjs --check && node scratchpad/p57-433d-crosswalk-author.mjs --check"
+    "classify:433d": "node scratchpad/p55-433d-author-classification.mjs --check && node scratchpad/p57-433d-crosswalk-author.mjs --check",
+    "dryrun:433d": "node adapters/hubspot/hs-dryrun-433d.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
