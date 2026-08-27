@@ -92,17 +92,112 @@ export const ENGINE_EXTRA_INPUTS = {
 
 /**
  * THE KEY SPACE THE FILL ENGINE CAN CONSUME, derived from the map and never typed.
- * `map` scalars, `checkboxes` option sets, `check_here` boxes, and one source key per group.
+ * `map` scalars, `checkboxes` option sets AND LONE TICKS, `check_here` boxes, one source key
+ * per group.
+ *
+ * ═══════════════════════════════════════════════════════════════════════════════════════
+ * THE CHECKBOX PREDICATE, AND THE DEFECT IT CARRIED UNTIL THIS COMMIT
+ * ═══════════════════════════════════════════════════════════════════════════════════════
+ *
+ * The predicate was `typeof v === 'object' && !Array.isArray(v)`, which admits an OPTION SET —
+ * a value-to-target object — and nothing else. That is not a statement about which checkbox
+ * constructs are engine inputs; it is a statement about ONE of the shapes they are written in,
+ * and the other shapes were dropped in silence. [R-14]: an exclusion that is a property of the
+ * reading is not an exclusion.
+ *
+ * WHAT IT DROPPED, MEASURED RATHER THAN FEARED. 433-D draws its whole agreement twice — an IRS
+ * copy on page 1 and a taxpayer copy on page 3 — so a LONE TICK on that form is one key with
+ * TWO targets, written as an array. Three of its six checkbox constructs are lone ticks:
+ * `433d_submit_a_new`, `433d_unable_to_make`, `433d_check_box_if`. All three vanished from the
+ * key space, and the classification's own one-key-one-entry assertion then STOPped naming them
+ * as "not an engine input on this form" — an assertion firing correctly against an input that
+ * was wrong. The classification was right; the key space was reporting a mirrored tick as a
+ * cell that does not exist. [R-05] in the small: what the reader cannot see and what the page
+ * does not print are different facts.
+ *
+ * THE FOUR DECLARED SHAPES. Each is a shape the maps in this tree actually use, and a value in
+ * none of them is a STOP rather than a silent drop — the fourth state is refused, [R-35].
+ *
+ *   object, not array   an OPTION SET: printed option value -> target(s). One property holding
+ *                       which option was ticked. Every form in the tree has these.
+ *   array of strings    a LONE TICK with one target per drawn copy. 433-D's three (two targets
+ *                       each, the mirror); 433-F's would be here but for `_binds`, below.
+ *   string              a LONE TICK with a single target. 433-F's `address_differs`.
+ *   anything else       STOP. It is not classified and it is not dropped.
+ *
+ * THE ONE DECLARED EXCLUSION, AND IT IS READ OUT OF THE MAP. `checkboxes._binds` declares which
+ * checkbox constructs are ROW-LEVEL — a column of a repeatable group rather than a scalar input.
+ * On 433-F that is `account_business_bank`, `account_business_investments` and `real_estate`,
+ * each declared `{group, column}`. Their fact reaches the engine through the GROUP'S SOURCE KEY,
+ * which this function already adds, so admitting them as scalars would put a second key in the
+ * key space for a fact the group already carries — a duplicate property on a portal with a hard
+ * ceiling, which is [X-17]'s class. The exclusion is therefore a DECLARATION in the map, checked
+ * against `groups`, and not a property of the predicate's shape test.
+ *
+ * THE ALIAS, AND WHY IT IS DERIVED. Every fill engine in this tree resolves an input as
+ * `data[name] ?? data[PREFIX + name]`, PREFIX being the map's own form id. So a bare map key and
+ * its prefixed spelling are ONE member under two spellings, not two members. 433-F is the only
+ * form where that bites: the map writes `address_differs` and ENGINE_EXTRA_INPUTS names
+ * `433f_address_differs`, which is the spelling `crosswalk.433f.json` binds and the live
+ * property `irs433_address_differs_from_last_return` is provisioned under. The PREFIXED spelling
+ * is therefore canonical — it is the one the registry, the fetch layer and the portal already
+ * agree on — and the bare one is recorded as its alias rather than admitted beside it. Before
+ * this commit that row in ENGINE_EXTRA_INPUTS was the only reason the key was in the key space
+ * at all; it is now a declared alias of a key the predicate can see, which is the stronger state.
  */
 export const keySpaceOf = (mapDoc) => {
+  const problems = [];
   const groupSource = {};
   for (const [g, d] of Object.entries(mapDoc.groups || {})) if (!g.startsWith('_')) groupSource[g] = d.source || g;
   const keySpace = new Map();
   for (const k of Object.keys(mapDoc.map || {})) if (!k.startsWith('_')) keySpace.set(k, 'map');
-  for (const [k, v] of Object.entries(mapDoc.checkboxes || {})) if (!k.startsWith('_') && v && typeof v === 'object' && !Array.isArray(v)) keySpace.set(k, 'checkboxes');
+
+  // THE ROW-LEVEL CONSTRUCTS, DECLARED IN THE MAP AND CHECKED AGAINST `groups`. A `_binds` row
+  // naming a group this map does not declare is a STOP: it would excuse a key on a claim about
+  // a group that is not there, which is the sentence-narrowing [R-14] exists to refuse.
+  const rowLevel = new Map();
+  for (const [k, d] of Object.entries((mapDoc.checkboxes || {})._binds || {})) {
+    if (!d || typeof d !== 'object' || typeof d.group !== 'string' || typeof d.column !== 'string')
+      problems.push(`checkboxes._binds["${k}"] does not declare both a group and a column.`);
+    else if (!Object.prototype.hasOwnProperty.call(groupSource, d.group))
+      problems.push(`checkboxes._binds["${k}"] names group "${d.group}", which this map does not declare. A row-level exclusion resting on a group that is not there excuses a key on nothing.`);
+    else rowLevel.set(k, d);
+  }
+
+  const shapeOf = (v) => (v && typeof v === 'object' && !Array.isArray(v)) ? 'option_set'
+    : (Array.isArray(v) && v.length && v.every((t) => typeof t === 'string')) ? 'lone_tick_multi_target'
+    : (typeof v === 'string' && v) ? 'lone_tick_single_target'
+    : null;
+
+  const checkboxShape = new Map();
+  for (const [k, v] of Object.entries(mapDoc.checkboxes || {})) {
+    if (k.startsWith('_')) continue;
+    if (rowLevel.has(k)) continue;                       // declared row-level; the group source key carries the fact
+    const shape = shapeOf(v);
+    if (!shape) { problems.push(`checkboxes["${k}"] is in none of the three declared shapes (option set, lone tick as array of targets, lone tick as a single target) and is not declared row-level in checkboxes._binds. It is refused rather than dropped.`); continue; }
+    checkboxShape.set(k, shape);
+    keySpace.set(k, 'checkboxes');
+  }
+
   for (const [k, v] of Object.entries(mapDoc.check_here || {})) if (!k.startsWith('_') && v && typeof v === 'object' && typeof v.target === 'string') keySpace.set(k, 'check_here');
   for (const src of Object.values(groupSource)) keySpace.set(src, 'groups');
-  return { keySpace, groupSource };
+
+  // THE PREFIX ALIAS. `data[name] ?? data[PREFIX + name]` in every fill engine makes these one
+  // member; the prefixed spelling wins where ENGINE_EXTRA_INPUTS declares it, because that is
+  // the spelling the crosswalk, the registry and the live portal are already provisioned under.
+  const PREFIX = `${mapDoc.form || ''}_`;
+  const aliases = new Map();
+  const extras = new Set(ENGINE_EXTRA_INPUTS[mapDoc.form] || []);
+  for (const k of [...keySpace.keys()]) {
+    if (k.startsWith(PREFIX)) continue;
+    const prefixed = PREFIX + k;
+    if (!extras.has(prefixed)) continue;
+    keySpace.set(prefixed, keySpace.get(k));
+    keySpace.delete(k);
+    aliases.set(k, prefixed);
+  }
+
+  return { keySpace, groupSource, rowLevel, checkboxShape, aliases, problems };
 };
 
 /**

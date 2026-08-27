@@ -153,6 +153,19 @@ export const sitesIn = (file) => {
 // the report, so a family cannot hide a member that needed its own reading.
 export const VACUOUS = [
 
+  // ── adapters/hubspot/assert-key-space.mjs ───────────────────────────────────────────────
+  // The guard over the POPULATION SELECTOR. Its three flagged sites are the three shapes this
+  // sweep is named for, and one of them is [R-17]’s own `matches.length && mismatch`.
+
+  { id: 'G-284', file: '../hubspot/assert-key-space.mjs', anchor: "if (!CLAUSES.some((c) => c.id === id)) throw new Error(", verdict: 'sound',
+    why: 'THE EMPTY DIRECTION THROWS, WHICH IS THE LOUD ONE. If CLAUSES were empty this predicate is false for every id and the FIRST call to P() throws — an uncaught exception, exit 1, no report written and no success sentence reachable. That is the opposite of the vacuous failure mode: the sweep asks whether an empty input can make this report SUCCESS, and here an empty input cannot make it report at all. It is deliberately a throw and not a push onto `problems`, because a clause table that has gone empty is a defect in this file rather than a finding about a form, and putting it in the form-findings list would file it under the wrong subject.' },
+
+  { id: 'G-285', file: '../hubspot/assert-key-space.mjs', anchor: "} catch (e) { P('KS-0', `${f} does not parse: ${e.message}", verdict: 'sound',
+    why: 'A CATCH THAT RECORDS A FINDING RATHER THAN SKIPPING ONE. The vacuous shape here would be `catch { continue; }` — a map that does not parse silently leaving the swept set, so a corrupted map reads as a form that is absent and every per-form assertion below has one fewer subject and says nothing about it. This catch pushes [KS-0] and THEN continues, so the unreadable file is in the problem list and the run exits 2. It is [R-04] at the level of the population: a form nothing could look at is a finding, not a form that passed. The `continue` is still correct — there is nothing to derive from bytes that did not parse — and it is safe only because the finding was recorded first.' },
+
+  { id: 'G-286', file: '../hubspot/assert-key-space.mjs', anchor: 'if (only.length && targets.length !== only.length)', verdict: 'sound',
+    why: 'THE `length &&` SHAPE, AND IT IS SOUND FOR A REASON THAT HAS TO BE STATED RATHER THAN ASSUMED. [R-17]’s first instance is `if (matches.length && mismatch)`, where a detector that could not read its input had `length === 0` and printed PASS — the `length` guarded the ASSERTION. Here `only` is not an input the tool reads; it is the ARGUMENT LIST the operator typed, and `only.length === 0` means “no form was named”, whose correct behaviour is to sweep every form, which is what the next lines do. The population is never narrowed by this line: `targets` falls back to the whole discovered set, so the empty direction examines MORE and not less. The direction that would matter — a named form the tree does not have — is exactly what this line refuses, and it refuses it by comparing two counts rather than by testing one for truthiness.' },
+
   // ── adapters/pdf/xfa-fieldset.mjs ───────────────────────────────────────────────────────
   // Five sites, and ONE OF THEM WAS A REAL VACUITY THAT THIS SWEEP FOUND. The tool derives a
   // field set from an XFA template packet and checks the derivation against a second, independent

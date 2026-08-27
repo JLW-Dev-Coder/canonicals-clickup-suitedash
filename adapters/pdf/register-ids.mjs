@@ -64,6 +64,7 @@ import { STANDARD as FIRING_STANDARD } from './firing-proofs.mjs';
 import { QUESTIONS as POST_PASS_QUESTIONS } from '../hubspot/post-pass-sweep.mjs';
 import { CLAIMS as FIRING_CLAIMS } from './assert-firing-proofs.mjs';
 import { CLAUSES as SUBJECT_CLASS_CLAUSES } from './assert-subject-class.mjs';
+import { CLAUSES as KEY_SPACE_CLAUSES } from '../hubspot/assert-key-space.mjs';
 import { REGISTRY as RX_REGISTRY, ADOPTERS as RX_ADOPTERS } from './regex-self-assert.mjs';
 // THE THREE ADOPTERS THIS FILE DOES NOT OTHERWISE PULL IN. A regex registers itself when its
 // module LOADS, so the size of that register depends on the importing tool's import graph — and
@@ -204,6 +205,7 @@ export const REGISTERS = () => {
   add('assert-firing-proofs.mjs:CLAIMS',  'engine', idsOf('FIRING_CLAIMS', FIRING_CLAIMS));
   add('post-pass-sweep.mjs:QUESTIONS', 'engine', idsOf('POST_PASS_QUESTIONS', POST_PASS_QUESTIONS));
   add('assert-subject-class.mjs:CLAUSES', 'engine', idsOf('SUBJECT_CLASS_CLAUSES', SUBJECT_CLASS_CLAUSES));
+  add('assert-key-space.mjs:CLAUSES',     'engine', idsOf('KEY_SPACE_CLAUSES', KEY_SPACE_CLAUSES));
   assertAdoptersLoaded();
   assertDeclaredSizes();
   add('regex-self-assert.mjs:REGISTRY',   'engine', idsOf('rx.REGISTRY', [...RX_REGISTRY.values()]));
