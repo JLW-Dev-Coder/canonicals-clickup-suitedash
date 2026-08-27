@@ -1,0 +1,2237 @@
+# Prompt 59 commit 1 — three export records, in full
+
+Rendered 2026-08-27T22:48:53.224Z from portal `20896460`. Population **959** live custom contact properties (`hubspotDefined === false`, `archived=false`).
+
+**Nothing was written to ClickUp. No export file was written.** 59-A item I moved the write to B2; this is the shape review only.
+
+Largest export record over the full population: `personal_income_tax__1040___select_tax_form` at **51651** bytes of JSON, 318 options.
+
+---
+
+## `personal_income_tax__1040___select_tax_form`
+
+**Why this one.** ENUMERATION WITH MANY OPTIONS — 318, the largest option set on the portal, and the record that sets the size ceiling for the whole export. It is also the maximally UNBOUND case: no field file names it, so created_by_form, bound_by_forms, crosswalk and backbone_key all take their not-derivable branch and each has to state a reason. It carries a no_prefix_class, which the other two do not.
+
+```json
+{
+ "name": "personal_income_tax__1040___select_tax_form",
+ "portal": {
+  "label": "Personal income tax (1040), select tax form",
+  "type": "enumeration",
+  "fieldType": "select",
+  "groupName": "contactinformation",
+  "description": "",
+  "description_present": false,
+  "options": [
+   {
+    "label": "No personal income tax prep needed",
+    "value": "No personal income tax prep needed",
+    "displayOrder": 0,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040 U.S. Individual Income Tax Return",
+    "value": "Form 1040 U.S. Individual Income Tax Return",
+    "displayOrder": 1,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040 MFS  Married Filling Separate - Form 1040 ",
+    "value": "Form 1040 MFS  Married Filling Separate - Form 1040",
+    "displayOrder": 2,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040ES April  Estimated Tax Voucher 1",
+    "value": "Form 1040ES April  Estimated Tax Voucher 1",
+    "displayOrder": 3,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040ES January  Estimated Tax Voucher 4",
+    "value": "Form 1040ES January  Estimated Tax Voucher 4",
+    "displayOrder": 4,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040ES June Estimated Tax Voucher 2",
+    "value": "Form 1040ES June Estimated Tax Voucher 2",
+    "displayOrder": 5,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040ES September Estimated Tax Voucher 3",
+    "value": "Form 1040ES September Estimated Tax Voucher 3",
+    "displayOrder": 6,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-NR U.S. Nonresident Income Tax Return ",
+    "value": "Form 1040-NR U.S. Nonresident Income Tax Return",
+    "displayOrder": 7,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-SR U.S. Tax Return for Seniors ",
+    "value": "Form 1040-SR U.S. Tax Return for Seniors",
+    "displayOrder": 8,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-SR pg 2  U.S. Tax Return for Seniors, page 2",
+    "value": "Form 1040-SR pg 2  U.S. Tax Return for Seniors, page 2",
+    "displayOrder": 9,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-SR pg 3  U.S. Tax Return for Seniors, page 3",
+    "value": "Form 1040-SR pg 3  U.S. Tax Return for Seniors, page 3",
+    "displayOrder": 10,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-SR pg 4  U.S. Tax Return for Seniors, page 4",
+    "value": "Form 1040-SR pg 4  U.S. Tax Return for Seniors, page 4",
+    "displayOrder": 11,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-V Payment Voucher",
+    "value": "Form 1040-V Payment Voucher",
+    "displayOrder": 12,
+    "hidden": false
+   },
+   {
+    "label": "Form 1040-X Amended Income Tax Return ",
+    "value": "Form 1040-X Amended Income Tax Return",
+    "displayOrder": 13,
+    "hidden": false
+   },
+   {
+    "label": "Form 1042-S Foreign Person's U.S. Source Income Subject to WH ",
+    "value": "Form 1042-S Foreign Person's U.S. Source Income Subject to WH",
+    "displayOrder": 14,
+    "hidden": false
+   },
+   {
+    "label": "Form 1045 AMT  Sch A - NOL for AMT",
+    "value": "Form 1045 AMT  Sch A - NOL for AMT",
+    "displayOrder": 15,
+    "hidden": false
+   },
+   {
+    "label": "Form 1045 pg 1-2 Application for Tentative Refund, pages 1 and 2 ",
+    "value": "Form 1045 pg 1-2 Application for Tentative Refund, pages 1 and 2",
+    "displayOrder": 16,
+    "hidden": false
+   },
+   {
+    "label": "Form 1045 pg 3 Application for Tentative Refund, page 3 ",
+    "value": "Form 1045 pg 3 Application for Tentative Refund, page 3",
+    "displayOrder": 17,
+    "hidden": false
+   },
+   {
+    "label": "Form 1045 pg 4 Application for Tentative Refund, page 4 ",
+    "value": "Form 1045 pg 4 Application for Tentative Refund, page 4",
+    "displayOrder": 18,
+    "hidden": false
+   },
+   {
+    "label": "Form 1045 pg 5 Application for Tentative Refund, page 5 ",
+    "value": "Form 1045 pg 5 Application for Tentative Refund, page 5",
+    "displayOrder": 19,
+    "hidden": false
+   },
+   {
+    "label": "Form 1095-A Health Insurance Marketplace Statement ",
+    "value": "Form 1095-A Health Insurance Marketplace Statement",
+    "displayOrder": 20,
+    "hidden": false
+   },
+   {
+    "label": "Form 1098-C Contribution of Motor Vehicles",
+    "value": "Form 1098-C Contribution of Motor Vehicles",
+    "displayOrder": 21,
+    "hidden": false
+   },
+   {
+    "label": "Form 1099-C Cancellation of Debt ",
+    "value": "Form 1099-C Cancellation of Debt",
+    "displayOrder": 22,
+    "hidden": false
+   },
+   {
+    "label": "Form 1099-G Certain Government Payments ",
+    "value": "Form 1099-G Certain Government Payments",
+    "displayOrder": 23,
+    "hidden": false
+   },
+   {
+    "label": "Form 1099-MISC Miscellaneous Income ",
+    "value": "Form 1099-MISC Miscellaneous Income",
+    "displayOrder": 24,
+    "hidden": false
+   },
+   {
+    "label": "Form 1099-NEC  Nonemployee Compensation",
+    "value": "Form 1099-NEC  Nonemployee Compensation",
+    "displayOrder": 25,
+    "hidden": false
+   },
+   {
+    "label": "Form 1099-R Distributions from Pensions ",
+    "value": "Form 1099-R Distributions from Pensions",
+    "displayOrder": 26,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Foreign Tax Credit ",
+    "value": "Form 1116 Foreign Tax Credit",
+    "displayOrder": 27,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 AMT  Foreign Tax Credit for AMT",
+    "value": "Form 1116 AMT  Foreign Tax Credit for AMT",
+    "displayOrder": 28,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch B  Foreign Tax Carryover Reconciliation ",
+    "value": "Form 1116 Sch B  Foreign Tax Carryover Reconciliation",
+    "displayOrder": 29,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch B AMT  Foreign Tax Carryover Reconciliation for AMT",
+    "value": "Form 1116 Sch B AMT  Foreign Tax Carryover Reconciliation for AMT",
+    "displayOrder": 30,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch B pg 2 Foreign Tax Carryover Reconciliation, page 2",
+    "value": "Form 1116 Sch B pg 2 Foreign Tax Carryover Reconciliation, page 2",
+    "displayOrder": 31,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch B pg 2 AMT  Foreign Tax Carryover Reconciliation for AMT",
+    "value": "Form 1116 Sch B pg 2 AMT  Foreign Tax Carryover Reconciliation for AMT",
+    "displayOrder": 32,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch C  Foreign Tax Redeterminations",
+    "value": "Form 1116 Sch C  Foreign Tax Redeterminations",
+    "displayOrder": 33,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch C AMT  Foreign Tax Redeterminations for AMT ",
+    "value": "Form 1116 Sch C AMT  Foreign Tax Redeterminations for AMT",
+    "displayOrder": 34,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch C pg 2 Foreign Tax Redeterminations, page 2 ",
+    "value": "Form 1116 Sch C pg 2 Foreign Tax Redeterminations, page 2",
+    "displayOrder": 35,
+    "hidden": false
+   },
+   {
+    "label": "Form 1116 Sch C pg 2 AMT  Foreign Tax Redeterminations for AMT, page 2",
+    "value": "Form 1116 Sch C pg 2 AMT  Foreign Tax Redeterminations for AMT, page 2",
+    "displayOrder": 36,
+    "hidden": false
+   },
+   {
+    "label": "Form 114  Report of Foreign Bank and Financial Accounts ",
+    "value": "Form 114  Report of Foreign Bank and Financial Accounts",
+    "displayOrder": 37,
+    "hidden": false
+   },
+   {
+    "label": "Form 114 pg 2  Financial Accounts Owned Separately",
+    "value": "Form 114 pg 2  Financial Accounts Owned Separately",
+    "displayOrder": 38,
+    "hidden": false
+   },
+   {
+    "label": "Form 114 pg 3  Financial Accounts Owned Jointly",
+    "value": "Form 114 pg 3  Financial Accounts Owned Jointly",
+    "displayOrder": 39,
+    "hidden": false
+   },
+   {
+    "label": "Form 114 pg 4  Financial Accounts Filer has Signature Authority",
+    "value": "Form 114 pg 4  Financial Accounts Filer has Signature Authority",
+    "displayOrder": 40,
+    "hidden": false
+   },
+   {
+    "label": "Form 114 pg 6  Late Filing Reason ",
+    "value": "Form 114 pg 6  Late Filing Reason",
+    "displayOrder": 41,
+    "hidden": false
+   },
+   {
+    "label": "Form 114A Authorization to Electronically File FBARs",
+    "value": "Form 114A Authorization to Electronically File FBARs",
+    "displayOrder": 42,
+    "hidden": false
+   },
+   {
+    "label": "Form 1310 Deceased Taxpayer Refund Claim",
+    "value": "Form 1310 Deceased Taxpayer Refund Claim",
+    "displayOrder": 43,
+    "hidden": false
+   },
+   {
+    "label": "Form 13844  App for Reduced Fee for Installment Agreements",
+    "value": "Form 13844  App for Reduced Fee for Installment Agreements",
+    "displayOrder": 44,
+    "hidden": false
+   },
+   {
+    "label": "Form 14039  Identity Theft Affidavit",
+    "value": "Form 14039  Identity Theft Affidavit",
+    "displayOrder": 45,
+    "hidden": false
+   },
+   {
+    "label": "Form 14039-B Business Identity Theft Affidavit",
+    "value": "Form 14039-B Business Identity Theft Affidavit",
+    "displayOrder": 46,
+    "hidden": false
+   },
+   {
+    "label": "Form 2106 Employee Business Expenses",
+    "value": "Form 2106 Employee Business Expenses",
+    "displayOrder": 47,
+    "hidden": false
+   },
+   {
+    "label": "Form 2120 Multiple Support Declaration",
+    "value": "Form 2120 Multiple Support Declaration",
+    "displayOrder": 48,
+    "hidden": false
+   },
+   {
+    "label": "Form 2210 Underpayment Penalty ",
+    "value": "Form 2210 Underpayment Penalty",
+    "displayOrder": 49,
+    "hidden": false
+   },
+   {
+    "label": "Form 2210 pg 2 Underpayment Penalty - Regular Method",
+    "value": "Form 2210 pg 2 Underpayment Penalty - Regular Method",
+    "displayOrder": 50,
+    "hidden": false
+   },
+   {
+    "label": "Form 2210 pg 3 Underpayment Penalty - Annualized Income ",
+    "value": "Form 2210 pg 3 Underpayment Penalty - Annualized Income",
+    "displayOrder": 51,
+    "hidden": false
+   },
+   {
+    "label": "Form 2210F  Underpayment Penalty - Farmers and Fishermen",
+    "value": "Form 2210F  Underpayment Penalty - Farmers and Fishermen",
+    "displayOrder": 52,
+    "hidden": false
+   },
+   {
+    "label": "Form 2350 Application for Extension of Time to File",
+    "value": "Form 2350 Application for Extension of Time to File",
+    "displayOrder": 53,
+    "hidden": false
+   },
+   {
+    "label": "Form 2439 Undistributed Long-Term Capital Gains",
+    "value": "Form 2439 Undistributed Long-Term Capital Gains",
+    "displayOrder": 54,
+    "hidden": false
+   },
+   {
+    "label": "Form 2441 Child and Dependent Care Expenses",
+    "value": "Form 2441 Child and Dependent Care Expenses",
+    "displayOrder": 55,
+    "hidden": false
+   },
+   {
+    "label": "Form 2555 pg 1-2 Foreign Earned Income Exclusion, pages 1 and 2",
+    "value": "Form 2555 pg 1-2 Foreign Earned Income Exclusion, pages 1 and 2",
+    "displayOrder": 56,
+    "hidden": false
+   },
+   {
+    "label": "Form 2555 pg 3 Foreign Earned Income Exclusion, page 3",
+    "value": "Form 2555 pg 3 Foreign Earned Income Exclusion, page 3",
+    "displayOrder": 57,
+    "hidden": false
+   },
+   {
+    "label": "Form 2848 Power of Attorney",
+    "value": "Form 2848 Power of Attorney",
+    "displayOrder": 58,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 Appl for Change in Accounting Method, page 1",
+    "value": "Form 3115 Appl for Change in Accounting Method, page 1",
+    "displayOrder": 59,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 2 Appl for Change in Accounting Method, page 2",
+    "value": "Form 3115 pg 2 Appl for Change in Accounting Method, page 2",
+    "displayOrder": 60,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 3 Appl for Change in Accounting Method, page 3",
+    "value": "Form 3115 pg 3 Appl for Change in Accounting Method, page 3",
+    "displayOrder": 61,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 4 Appl for Change in Accounting Method, page 4",
+    "value": "Form 3115 pg 4 Appl for Change in Accounting Method, page 4",
+    "displayOrder": 62,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 5 Appl for Change in Accounting Method, page 5",
+    "value": "Form 3115 pg 5 Appl for Change in Accounting Method, page 5",
+    "displayOrder": 63,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 6 Appl for Change in Accounting Method, page 6",
+    "value": "Form 3115 pg 6 Appl for Change in Accounting Method, page 6",
+    "displayOrder": 64,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 7 Appl for Change in Accounting Method, page 7",
+    "value": "Form 3115 pg 7 Appl for Change in Accounting Method, page 7",
+    "displayOrder": 65,
+    "hidden": false
+   },
+   {
+    "label": "Form 3115 pg 8 Appl for Change in Accounting Method, page 8",
+    "value": "Form 3115 pg 8 Appl for Change in Accounting Method, page 8",
+    "displayOrder": 66,
+    "hidden": false
+   },
+   {
+    "label": "Form 3468 pg 1-2 Investment Credit, pages 1 and 2",
+    "value": "Form 3468 pg 1-2 Investment Credit, pages 1 and 2",
+    "displayOrder": 67,
+    "hidden": false
+   },
+   {
+    "label": "Form 3468 pg 3 Investment Credit, page 3 ",
+    "value": "Form 3468 pg 3 Investment Credit, page 3",
+    "displayOrder": 68,
+    "hidden": false
+   },
+   {
+    "label": "Form 3800 Attachment General Business Credit Carryover Attachment",
+    "value": "Form 3800 Attachment General Business Credit Carryover Attachment",
+    "displayOrder": 69,
+    "hidden": false
+   },
+   {
+    "label": "Form 3800 pg 1-2 General Business Credit, pages 1 and 2 ",
+    "value": "Form 3800 pg 1-2 General Business Credit, pages 1 and 2",
+    "displayOrder": 70,
+    "hidden": false
+   },
+   {
+    "label": "Form 3800 pg 3 General Business Credit, page 3 ",
+    "value": "Form 3800 pg 3 General Business Credit, page 3",
+    "displayOrder": 71,
+    "hidden": false
+   },
+   {
+    "label": "Form 3903 Moving Expenses",
+    "value": "Form 3903 Moving Expenses",
+    "displayOrder": 72,
+    "hidden": false
+   },
+   {
+    "label": "Form 4136 Credit for Federal Tax Paid on Fuels, page 1",
+    "value": "Form 4136 Credit for Federal Tax Paid on Fuels, page 1",
+    "displayOrder": 73,
+    "hidden": false
+   },
+   {
+    "label": "Form 4136 pg 2 Credit for Federal Tax Paid on Fuels, page 2",
+    "value": "Form 4136 pg 2 Credit for Federal Tax Paid on Fuels, page 2",
+    "displayOrder": 74,
+    "hidden": false
+   },
+   {
+    "label": "Form 4136 pg 3 Credit for Federal Tax Paid on Fuels, page 3",
+    "value": "Form 4136 pg 3 Credit for Federal Tax Paid on Fuels, page 3",
+    "displayOrder": 75,
+    "hidden": false
+   },
+   {
+    "label": "Form 4136 pg 4 Credit for Federal Tax Paid on Fuels, page 4",
+    "value": "Form 4136 pg 4 Credit for Federal Tax Paid on Fuels, page 4",
+    "displayOrder": 76,
+    "hidden": false
+   },
+   {
+    "label": "Form 4137 Tax on Unreported Tip Income",
+    "value": "Form 4137 Tax on Unreported Tip Income",
+    "displayOrder": 77,
+    "hidden": false
+   },
+   {
+    "label": "Form 4255 Recapture of Investment Credit",
+    "value": "Form 4255 Recapture of Investment Credit",
+    "displayOrder": 78,
+    "hidden": false
+   },
+   {
+    "label": "Form 4506 Request for Copy of Tax Return",
+    "value": "Form 4506 Request for Copy of Tax Return",
+    "displayOrder": 79,
+    "hidden": false
+   },
+   {
+    "label": "Form 4506-F Request for Copy of Fraudulent Tax Return",
+    "value": "Form 4506-F Request for Copy of Fraudulent Tax Return",
+    "displayOrder": 80,
+    "hidden": false
+   },
+   {
+    "label": "Form 4506-T Request for Transcript of Tax Returns",
+    "value": "Form 4506-T Request for Transcript of Tax Returns",
+    "displayOrder": 81,
+    "hidden": false
+   },
+   {
+    "label": "Form 4562 Depreciation and Amortization ",
+    "value": "Form 4562 Depreciation and Amortization",
+    "displayOrder": 82,
+    "hidden": false
+   },
+   {
+    "label": "Form 461  Limitation on Business Losses ",
+    "value": "Form 461  Limitation on Business Losses",
+    "displayOrder": 83,
+    "hidden": false
+   },
+   {
+    "label": "Form 461 Allocation  Pre-CARES Act Business Loss Allocation ",
+    "value": "Form 461 Allocation  Pre-CARES Act Business Loss Allocation",
+    "displayOrder": 84,
+    "hidden": false
+   },
+   {
+    "label": "Form 461 AMT Limitation on Business Losses for AMT",
+    "value": "Form 461 AMT Limitation on Business Losses for AMT",
+    "displayOrder": 85,
+    "hidden": false
+   },
+   {
+    "label": "Form 4684 Casualties and Thefts, page 1 ",
+    "value": "Form 4684 Casualties and Thefts, page 1",
+    "displayOrder": 86,
+    "hidden": false
+   },
+   {
+    "label": "Form 4684 pg 2 Casualties and Thefts, page 2 ",
+    "value": "Form 4684 pg 2 Casualties and Thefts, page 2",
+    "displayOrder": 87,
+    "hidden": false
+   },
+   {
+    "label": "Form 4684 pg 3 Casualties and Thefts, page 3 ",
+    "value": "Form 4684 pg 3 Casualties and Thefts, page 3",
+    "displayOrder": 88,
+    "hidden": false
+   },
+   {
+    "label": "Form 4684 pg 4 Casualties and Thefts, page 4 ",
+    "value": "Form 4684 pg 4 Casualties and Thefts, page 4",
+    "displayOrder": 89,
+    "hidden": false
+   },
+   {
+    "label": "Form 4797 Sales of Business Property",
+    "value": "Form 4797 Sales of Business Property",
+    "displayOrder": 90,
+    "hidden": false
+   },
+   {
+    "label": "Form 4797 AMT  Sales of Business Property for AMT ",
+    "value": "Form 4797 AMT  Sales of Business Property for AMT",
+    "displayOrder": 91,
+    "hidden": false
+   },
+   {
+    "label": "Form 4797 AMT Stmt Form 4797 Stmt for AMT Calculations",
+    "value": "Form 4797 AMT Stmt Form 4797 Stmt for AMT Calculations",
+    "displayOrder": 92,
+    "hidden": false
+   },
+   {
+    "label": "Form 4835 Farm Rental Income and Expenses ",
+    "value": "Form 4835 Farm Rental Income and Expenses",
+    "displayOrder": 93,
+    "hidden": false
+   },
+   {
+    "label": "Form 4852 Substitute for W-2 or 1099-R",
+    "value": "Form 4852 Substitute for W-2 or 1099-R",
+    "displayOrder": 94,
+    "hidden": false
+   },
+   {
+    "label": "Form 4868 Application for Automatic Extension",
+    "value": "Form 4868 Application for Automatic Extension",
+    "displayOrder": 95,
+    "hidden": false
+   },
+   {
+    "label": "Form 4952 Investment Interest Expense Deduction",
+    "value": "Form 4952 Investment Interest Expense Deduction",
+    "displayOrder": 96,
+    "hidden": false
+   },
+   {
+    "label": "Form 4952 AMT  Investment Interest Expense Deduction for AMT ",
+    "value": "Form 4952 AMT  Investment Interest Expense Deduction for AMT",
+    "displayOrder": 97,
+    "hidden": false
+   },
+   {
+    "label": "Form 4970 Tax on Accumulation Distribution of Trusts",
+    "value": "Form 4970 Tax on Accumulation Distribution of Trusts",
+    "displayOrder": 98,
+    "hidden": false
+   },
+   {
+    "label": "Form 4972 Tax on Lump-Sum Distributions ",
+    "value": "Form 4972 Tax on Lump-Sum Distributions",
+    "displayOrder": 99,
+    "hidden": false
+   },
+   {
+    "label": "Form 5329 Additional Taxes on Retirement Distributions",
+    "value": "Form 5329 Additional Taxes on Retirement Distributions",
+    "displayOrder": 100,
+    "hidden": false
+   },
+   {
+    "label": "Form 5405 First-Time Homebuyer Credit ",
+    "value": "Form 5405 First-Time Homebuyer Credit",
+    "displayOrder": 101,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 U.S. Person with Certain Foreign Corps, page 1",
+    "value": "Form 5471 U.S. Person with Certain Foreign Corps, page 1",
+    "displayOrder": 102,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch E  Form 5471 - Schedule E, page 1",
+    "value": "Form 5471 - Sch E  Form 5471 - Schedule E, page 1",
+    "displayOrder": 103,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch E pg 2  Form 5471 - Schedule E, page 2",
+    "value": "Form 5471 - Sch E pg 2  Form 5471 - Schedule E, page 2",
+    "displayOrder": 104,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch E pg 3  Form 5471 - Schedule E, page 3",
+    "value": "Form 5471 - Sch E pg 3  Form 5471 - Schedule E, page 3",
+    "displayOrder": 105,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch G Line 19 Form 5471 - Schedule G, Line 19 Questions",
+    "value": "Form 5471 - Sch G Line 19 Form 5471 - Schedule G, Line 19 Questions",
+    "displayOrder": 106,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch G-1  Form 5471 - Schedule G-1",
+    "value": "Form 5471 - Sch G-1  Form 5471 - Schedule G-1",
+    "displayOrder": 107,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch H  Form 5471 - Schedule H ",
+    "value": "Form 5471 - Sch H  Form 5471 - Schedule H",
+    "displayOrder": 108,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch I-1  Form 5471 - Schedule I-1",
+    "value": "Form 5471 - Sch I-1  Form 5471 - Schedule I-1",
+    "displayOrder": 109,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch J  Form 5471 - Schedule J, page 1",
+    "value": "Form 5471 - Sch J  Form 5471 - Schedule J, page 1",
+    "displayOrder": 110,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch J pg 2  Form 5471 - Schedule J, page 2",
+    "value": "Form 5471 - Sch J pg 2  Form 5471 - Schedule J, page 2",
+    "displayOrder": 111,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch J pg 3  Form 5471 - Schedule J, page 3",
+    "value": "Form 5471 - Sch J pg 3  Form 5471 - Schedule J, page 3",
+    "displayOrder": 112,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch M  Form 5471 - Schedule M, page 1 and 2 ",
+    "value": "Form 5471 - Sch M  Form 5471 - Schedule M, page 1 and 2",
+    "displayOrder": 113,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch O  Form 5471 - Schedule O, page 1",
+    "value": "Form 5471 - Sch O  Form 5471 - Schedule O, page 1",
+    "displayOrder": 114,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch O pg 2  Form 5471 - Schedule O, page 2",
+    "value": "Form 5471 - Sch O pg 2  Form 5471 - Schedule O, page 2",
+    "displayOrder": 115,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch P  Form 5471 - Schedule P, page 1",
+    "value": "Form 5471 - Sch P  Form 5471 - Schedule P, page 1",
+    "displayOrder": 116,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch P pg 2  Form 5471 - Schedule P, page 2",
+    "value": "Form 5471 - Sch P pg 2  Form 5471 - Schedule P, page 2",
+    "displayOrder": 117,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch P pg 3  Form 5471 - Schedule P, page 3",
+    "value": "Form 5471 - Sch P pg 3  Form 5471 - Schedule P, page 3",
+    "displayOrder": 118,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch P pg 4  Form 5471 - Schedule P, page 4",
+    "value": "Form 5471 - Sch P pg 4  Form 5471 - Schedule P, page 4",
+    "displayOrder": 119,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch Q  Form 5471 - Schedule Q, page 1",
+    "value": "Form 5471 - Sch Q  Form 5471 - Schedule Q, page 1",
+    "displayOrder": 120,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch Q pg 2  Form 5471 - Schedule Q, page 2",
+    "value": "Form 5471 - Sch Q pg 2  Form 5471 - Schedule Q, page 2",
+    "displayOrder": 121,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch Q pg 3  Form 5471 - Schedule Q, page 3",
+    "value": "Form 5471 - Sch Q pg 3  Form 5471 - Schedule Q, page 3",
+    "displayOrder": 122,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch Q pg 4  Form 5471 - Schedule Q, page 4",
+    "value": "Form 5471 - Sch Q pg 4  Form 5471 - Schedule Q, page 4",
+    "displayOrder": 123,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 - Sch R  Form 5471 - Schedule R ",
+    "value": "Form 5471 - Sch R  Form 5471 - Schedule R",
+    "displayOrder": 124,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 pg 2 U.S. Person with Certain Foreign Corps, page 2",
+    "value": "Form 5471 pg 2 U.S. Person with Certain Foreign Corps, page 2",
+    "displayOrder": 125,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 pg 3 U.S. Person with Certain Foreign Corps, page 3",
+    "value": "Form 5471 pg 3 U.S. Person with Certain Foreign Corps, page 3",
+    "displayOrder": 126,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 pg 4 U.S. Person with Certain Foreign Corps, page 4",
+    "value": "Form 5471 pg 4 U.S. Person with Certain Foreign Corps, page 4",
+    "displayOrder": 127,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 pg 5 U.S. Person with Certain Foreign Corps, page 5",
+    "value": "Form 5471 pg 5 U.S. Person with Certain Foreign Corps, page 5",
+    "displayOrder": 128,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 pg 6 U.S. Person with Certain Foreign Corps, page 6",
+    "value": "Form 5471 pg 6 U.S. Person with Certain Foreign Corps, page 6",
+    "displayOrder": 129,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks A  Form 5471 - Worksheet A, page 1 ",
+    "value": "Form 5471 Wks A  Form 5471 - Worksheet A, page 1",
+    "displayOrder": 130,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks A pg 2 Form 5471 - Worksheet A, page 2 ",
+    "value": "Form 5471 Wks A pg 2 Form 5471 - Worksheet A, page 2",
+    "displayOrder": 131,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks A pg 3 Form 5471 - Worksheet A, page 3 ",
+    "value": "Form 5471 Wks A pg 3 Form 5471 - Worksheet A, page 3",
+    "displayOrder": 132,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks B  Form 5471 - Worksheet B",
+    "value": "Form 5471 Wks B  Form 5471 - Worksheet B",
+    "displayOrder": 133,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks C  Form 5471 - Worksheet C",
+    "value": "Form 5471 Wks C  Form 5471 - Worksheet C",
+    "displayOrder": 134,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks E-1  Form 5471 - Schedule E-1 in Functional Currency ",
+    "value": "Form 5471 Wks E-1  Form 5471 - Schedule E-1 in Functional Currency",
+    "displayOrder": 135,
+    "hidden": false
+   },
+   {
+    "label": "Form 5471 Wks E-1 pg 2  Form 5471 - Schedule E-1 in Functional Currency ",
+    "value": "Form 5471 Wks E-1 pg 2  Form 5471 - Schedule E-1 in Functional Currency",
+    "displayOrder": 136,
+    "hidden": false
+   },
+   {
+    "label": "Form 56 Notice Concerning Fiduciary Relationship ",
+    "value": "Form 56 Notice Concerning Fiduciary Relationship",
+    "displayOrder": 137,
+    "hidden": false
+   },
+   {
+    "label": "Form 5695 Residential Energy Credits",
+    "value": "Form 5695 Residential Energy Credits",
+    "displayOrder": 138,
+    "hidden": false
+   },
+   {
+    "label": "Form 5695 pg 2 Residential Energy Credits page 2",
+    "value": "Form 5695 pg 2 Residential Energy Credits page 2",
+    "displayOrder": 139,
+    "hidden": false
+   },
+   {
+    "label": "Form 5884 Work Opportunity Credit",
+    "value": "Form 5884 Work Opportunity Credit",
+    "displayOrder": 140,
+    "hidden": false
+   },
+   {
+    "label": "Form 5884-A Employee Retention Credit ",
+    "value": "Form 5884-A Employee Retention Credit",
+    "displayOrder": 141,
+    "hidden": false
+   },
+   {
+    "label": "Form 6198 At-Risk Limitations",
+    "value": "Form 6198 At-Risk Limitations",
+    "displayOrder": 142,
+    "hidden": false
+   },
+   {
+    "label": "Form 6198 AMT  At Risk Limitations for AMT ",
+    "value": "Form 6198 AMT  At Risk Limitations for AMT",
+    "displayOrder": 143,
+    "hidden": false
+   },
+   {
+    "label": "Form 6251 Alternative Minimum Tax",
+    "value": "Form 6251 Alternative Minimum Tax",
+    "displayOrder": 144,
+    "hidden": false
+   },
+   {
+    "label": "Form 6252 Installment Sale Income",
+    "value": "Form 6252 Installment Sale Income",
+    "displayOrder": 145,
+    "hidden": false
+   },
+   {
+    "label": "Form 6252 AMT  Installment Sale Income AMT ",
+    "value": "Form 6252 AMT  Installment Sale Income AMT",
+    "displayOrder": 146,
+    "hidden": false
+   },
+   {
+    "label": "Form 6478 Credit for Alcohol Used as Fuel ",
+    "value": "Form 6478 Credit for Alcohol Used as Fuel",
+    "displayOrder": 147,
+    "hidden": false
+   },
+   {
+    "label": "Form 6765 Credit for Increasing Research Activities",
+    "value": "Form 6765 Credit for Increasing Research Activities",
+    "displayOrder": 148,
+    "hidden": false
+   },
+   {
+    "label": "Form 6781 Gains and Losses from Contracts and Straddles ",
+    "value": "Form 6781 Gains and Losses from Contracts and Straddles",
+    "displayOrder": 149,
+    "hidden": false
+   },
+   {
+    "label": "Form 7202 Self-Employed Sick and Family Leave Credit, page 1",
+    "value": "Form 7202 Self-Employed Sick and Family Leave Credit, page 1",
+    "displayOrder": 150,
+    "hidden": false
+   },
+   {
+    "label": "Form 7202 pg 2 Self-Employed Sick and Family Leave Credit, page 2",
+    "value": "Form 7202 pg 2 Self-Employed Sick and Family Leave Credit, page 2",
+    "displayOrder": 151,
+    "hidden": false
+   },
+   {
+    "label": "Form 7202 pg 3 Self-Employed Sick and Family Leave Credit, page 3",
+    "value": "Form 7202 pg 3 Self-Employed Sick and Family Leave Credit, page 3",
+    "displayOrder": 152,
+    "hidden": false
+   },
+   {
+    "label": "Form 7203 S Corp Shareholder Stock and Debt Basis Limitation",
+    "value": "Form 7203 S Corp Shareholder Stock and Debt Basis Limitation",
+    "displayOrder": 153,
+    "hidden": false
+   },
+   {
+    "label": "Form 8082 Notice of Inconsistent Treatment",
+    "value": "Form 8082 Notice of Inconsistent Treatment",
+    "displayOrder": 154,
+    "hidden": false
+   },
+   {
+    "label": "Form 8275 Disclosure Statement ",
+    "value": "Form 8275 Disclosure Statement",
+    "displayOrder": 155,
+    "hidden": false
+   },
+   {
+    "label": "Form 8275_R Regulation Disclosure Statement ",
+    "value": "Form 8275_R Regulation Disclosure Statement",
+    "displayOrder": 156,
+    "hidden": false
+   },
+   {
+    "label": "Form 8283 Non-Cash Charitable Contributions",
+    "value": "Form 8283 Non-Cash Charitable Contributions",
+    "displayOrder": 157,
+    "hidden": false
+   },
+   {
+    "label": "Form 8283 Sale Form 8283 - Bargain Sale Calculation Worksheet",
+    "value": "Form 8283 Sale Form 8283 - Bargain Sale Calculation Worksheet",
+    "displayOrder": 158,
+    "hidden": false
+   },
+   {
+    "label": "Form 8288-A Wh on Disposition by Foreign Persons of U.S. Ints ",
+    "value": "Form 8288-A Wh on Disposition by Foreign Persons of U.S. Ints",
+    "displayOrder": 159,
+    "hidden": false
+   },
+   {
+    "label": "Form 8332 Release of Claim to Exemption for Child",
+    "value": "Form 8332 Release of Claim to Exemption for Child",
+    "displayOrder": 160,
+    "hidden": false
+   },
+   {
+    "label": "Form 8379 Injured Spouse Allocation ",
+    "value": "Form 8379 Injured Spouse Allocation",
+    "displayOrder": 161,
+    "hidden": false
+   },
+   {
+    "label": "Form 8396 Mortgage Interest Credit",
+    "value": "Form 8396 Mortgage Interest Credit",
+    "displayOrder": 162,
+    "hidden": false
+   },
+   {
+    "label": "Form 843  Claim for Refund and Request for Abatement",
+    "value": "Form 843  Claim for Refund and Request for Abatement",
+    "displayOrder": 163,
+    "hidden": false
+   },
+   {
+    "label": "Form 843 Attachment  Form 843 - Line 7 Explanation ",
+    "value": "Form 843 Attachment  Form 843 - Line 7 Explanation",
+    "displayOrder": 164,
+    "hidden": false
+   },
+   {
+    "label": "Form 8453 Tax Declaration for an IRS E-file Return ",
+    "value": "Form 8453 Tax Declaration for an IRS E-file Return",
+    "displayOrder": 165,
+    "hidden": false
+   },
+   {
+    "label": "Form 8582 AMT pg 1-2 Passive Activity Loss Limitations for AMT, pgs 1-2",
+    "value": "Form 8582 AMT pg 1-2 Passive Activity Loss Limitations for AMT, pgs 1-2",
+    "displayOrder": 166,
+    "hidden": false
+   },
+   {
+    "label": "Form 8582 AMT pg 3 Passive Activity Loss Limitations for AMT, page 3 ",
+    "value": "Form 8582 AMT pg 3 Passive Activity Loss Limitations for AMT, page 3",
+    "displayOrder": 167,
+    "hidden": false
+   },
+   {
+    "label": "Form 8582 pg 1-2 Passive Activity Loss Limitations, pages 1 and 2",
+    "value": "Form 8582 pg 1-2 Passive Activity Loss Limitations, pages 1 and 2",
+    "displayOrder": 168,
+    "hidden": false
+   },
+   {
+    "label": "Form 8582 pg 3 Passive Activity Loss Limitations, page 3",
+    "value": "Form 8582 pg 3 Passive Activity Loss Limitations, page 3",
+    "displayOrder": 169,
+    "hidden": false
+   },
+   {
+    "label": "Form 8582CR Passive Activity Credit Limitations",
+    "value": "Form 8582CR Passive Activity Credit Limitations",
+    "displayOrder": 170,
+    "hidden": false
+   },
+   {
+    "label": "Form 8586 Low-Income Housing Credit ",
+    "value": "Form 8586 Low-Income Housing Credit",
+    "displayOrder": 171,
+    "hidden": false
+   },
+   {
+    "label": "Form 8594 Asset Acquisition Statement ",
+    "value": "Form 8594 Asset Acquisition Statement",
+    "displayOrder": 172,
+    "hidden": false
+   },
+   {
+    "label": "Form 8606 Nondeductible IRAs ",
+    "value": "Form 8606 Nondeductible IRAs",
+    "displayOrder": 173,
+    "hidden": false
+   },
+   {
+    "label": "Form 8609 Low-Income Housing Credit Allocation and Certification ",
+    "value": "Form 8609 Low-Income Housing Credit Allocation and Certification",
+    "displayOrder": 174,
+    "hidden": false
+   },
+   {
+    "label": "Form 8609-A Annual Statement for Low-Income Housing Credit",
+    "value": "Form 8609-A Annual Statement for Low-Income Housing Credit",
+    "displayOrder": 175,
+    "hidden": false
+   },
+   {
+    "label": "Form 8611 Recapture of Low-Income Housing Credit ",
+    "value": "Form 8611 Recapture of Low-Income Housing Credit",
+    "displayOrder": 176,
+    "hidden": false
+   },
+   {
+    "label": "Form 8615 Tax for Certain Children Who Have Unearned Income ",
+    "value": "Form 8615 Tax for Certain Children Who Have Unearned Income",
+    "displayOrder": 177,
+    "hidden": false
+   },
+   {
+    "label": "Form 8621 PFIC or QEF Informational Return, page 1 ",
+    "value": "Form 8621 PFIC or QEF Informational Return, page 1",
+    "displayOrder": 178,
+    "hidden": false
+   },
+   {
+    "label": "Form 8621 pg 2 PFIC or QEF Informational Return, page 2 ",
+    "value": "Form 8621 pg 2 PFIC or QEF Informational Return, page 2",
+    "displayOrder": 179,
+    "hidden": false
+   },
+   {
+    "label": "Form 8697 Interest Computation Under Look-Back Method ",
+    "value": "Form 8697 Interest Computation Under Look-Back Method",
+    "displayOrder": 180,
+    "hidden": false
+   },
+   {
+    "label": "Form 8801 pg 1-2 Credit for Prior Year Minimum Tax, pages 1 and 2",
+    "value": "Form 8801 pg 1-2 Credit for Prior Year Minimum Tax, pages 1 and 2",
+    "displayOrder": 181,
+    "hidden": false
+   },
+   {
+    "label": "Form 8801 pg 3 Credit for Prior Year Minimum Tax, page 3",
+    "value": "Form 8801 pg 3 Credit for Prior Year Minimum Tax, page 3",
+    "displayOrder": 182,
+    "hidden": false
+   },
+   {
+    "label": "Form 8801 pg 4 Credit for Prior Year Minimum Tax, page 4",
+    "value": "Form 8801 pg 4 Credit for Prior Year Minimum Tax, page 4",
+    "displayOrder": 183,
+    "hidden": false
+   },
+   {
+    "label": "Form 8805 Foreign Partner's Information Statement",
+    "value": "Form 8805 Foreign Partner's Information Statement",
+    "displayOrder": 184,
+    "hidden": false
+   },
+   {
+    "label": "Form 8814 Parent's Election to Report Child's Int and Div ",
+    "value": "Form 8814 Parent's Election to Report Child's Int and Div",
+    "displayOrder": 185,
+    "hidden": false
+   },
+   {
+    "label": "Form 8815 Exclusion of Interest from U.S. Savings Bonds ",
+    "value": "Form 8815 Exclusion of Interest from U.S. Savings Bonds",
+    "displayOrder": 186,
+    "hidden": false
+   },
+   {
+    "label": "Form 8820 Orphan Drug Credit ",
+    "value": "Form 8820 Orphan Drug Credit",
+    "displayOrder": 187,
+    "hidden": false
+   },
+   {
+    "label": "Form 8821 Tax Information Authorization ",
+    "value": "Form 8821 Tax Information Authorization",
+    "displayOrder": 188,
+    "hidden": false
+   },
+   {
+    "label": "Form 8822 Change of Address",
+    "value": "Form 8822 Change of Address",
+    "displayOrder": 189,
+    "hidden": false
+   },
+   {
+    "label": "Form 8822-B Change of Address - Business",
+    "value": "Form 8822-B Change of Address - Business",
+    "displayOrder": 190,
+    "hidden": false
+   },
+   {
+    "label": "Form 8824 Like-Kind Exchanges",
+    "value": "Form 8824 Like-Kind Exchanges",
+    "displayOrder": 191,
+    "hidden": false
+   },
+   {
+    "label": "Form 8826 Disabled Access Credit ",
+    "value": "Form 8826 Disabled Access Credit",
+    "displayOrder": 192,
+    "hidden": false
+   },
+   {
+    "label": "Form 8828 Recapture of Federal Mortgage Subsidy",
+    "value": "Form 8828 Recapture of Federal Mortgage Subsidy",
+    "displayOrder": 193,
+    "hidden": false
+   },
+   {
+    "label": "Form 8829 Expenses for Business Use of Your Home ",
+    "value": "Form 8829 Expenses for Business Use of Your Home",
+    "displayOrder": 194,
+    "hidden": false
+   },
+   {
+    "label": "Form 8829 - Simplified  Office in Home - Simplified Method ",
+    "value": "Form 8829 - Simplified  Office in Home - Simplified Method",
+    "displayOrder": 195,
+    "hidden": false
+   },
+   {
+    "label": "Form 8833 Treaty-Based Return Position Disclosure",
+    "value": "Form 8833 Treaty-Based Return Position Disclosure",
+    "displayOrder": 196,
+    "hidden": false
+   },
+   {
+    "label": "Form 8834 Qualified Electric Vehicle Credit",
+    "value": "Form 8834 Qualified Electric Vehicle Credit",
+    "displayOrder": 197,
+    "hidden": false
+   },
+   {
+    "label": "Form 8835 Renewable Electricity Production Credit",
+    "value": "Form 8835 Renewable Electricity Production Credit",
+    "displayOrder": 198,
+    "hidden": false
+   },
+   {
+    "label": "Form 8839 Qualified Adoption Expenses ",
+    "value": "Form 8839 Qualified Adoption Expenses",
+    "displayOrder": 199,
+    "hidden": false
+   },
+   {
+    "label": "Form 8840 Closer Connection Exception Statement",
+    "value": "Form 8840 Closer Connection Exception Statement",
+    "displayOrder": 200,
+    "hidden": false
+   },
+   {
+    "label": "Form 8843 Statement for Exempt Individuals, page 1 ",
+    "value": "Form 8843 Statement for Exempt Individuals, page 1",
+    "displayOrder": 201,
+    "hidden": false
+   },
+   {
+    "label": "Form 8843 pg 2 Statement for Exempt Individuals, page 2 ",
+    "value": "Form 8843 pg 2 Statement for Exempt Individuals, page 2",
+    "displayOrder": 202,
+    "hidden": false
+   },
+   {
+    "label": "Form 8844 Empowerment Zone Employment Credit ",
+    "value": "Form 8844 Empowerment Zone Employment Credit",
+    "displayOrder": 203,
+    "hidden": false
+   },
+   {
+    "label": "Form 8845 Indian Employment Credit",
+    "value": "Form 8845 Indian Employment Credit",
+    "displayOrder": 204,
+    "hidden": false
+   },
+   {
+    "label": "Form 8846 Credit for Employer SS and Medicare Taxes",
+    "value": "Form 8846 Credit for Employer SS and Medicare Taxes",
+    "displayOrder": 205,
+    "hidden": false
+   },
+   {
+    "label": "Form 8853 Archer MSAs and Long-Term Care Ins Contracts",
+    "value": "Form 8853 Archer MSAs and Long-Term Care Ins Contracts",
+    "displayOrder": 206,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 Initial and Annual Expatriation Statement, page 1 ",
+    "value": "Form 8854 Initial and Annual Expatriation Statement, page 1",
+    "displayOrder": 207,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Assets Held In Trust ",
+    "value": "Form 8854 - Part 2, Sec B Assets Held In Trust",
+    "displayOrder": 208,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Beneficial Interests In Trusts",
+    "value": "Form 8854 - Part 2, Sec B Beneficial Interests In Trusts",
+    "displayOrder": 209,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Nonmarketable Stock and Securities - Foreign",
+    "value": "Form 8854 - Part 2, Sec B Nonmarketable Stock and Securities - Foreign",
+    "displayOrder": 210,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Other Assets",
+    "value": "Form 8854 - Part 2, Sec B Other Assets",
+    "displayOrder": 211,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Other Liabilities",
+    "value": "Form 8854 - Part 2, Sec B Other Liabilities",
+    "displayOrder": 212,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec B Partnership Interest ",
+    "value": "Form 8854 - Part 2, Sec B Partnership Interest",
+    "displayOrder": 213,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Eligible Deferred Compensation Items ",
+    "value": "Form 8854 - Part 2, Sec C Eligible Deferred Compensation Items",
+    "displayOrder": 214,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Gain After Allocation of Exclusion ",
+    "value": "Form 8854 - Part 2, Sec C Gain After Allocation of Exclusion",
+    "displayOrder": 215,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Ineligible Deferred Compensation Items ",
+    "value": "Form 8854 - Part 2, Sec C Ineligible Deferred Compensation Items",
+    "displayOrder": 216,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Interest in Nongrantor Trust",
+    "value": "Form 8854 - Part 2, Sec C Interest in Nongrantor Trust",
+    "displayOrder": 217,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Sale of Mark-to-Market Property ",
+    "value": "Form 8854 - Part 2, Sec C Sale of Mark-to-Market Property",
+    "displayOrder": 218,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Specified Tax Deferred Accounts ",
+    "value": "Form 8854 - Part 2, Sec C Specified Tax Deferred Accounts",
+    "displayOrder": 219,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 2, Sec C Tax Deferred",
+    "value": "Form 8854 - Part 2, Sec C Tax Deferred",
+    "displayOrder": 220,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 3 Distributions Received ",
+    "value": "Form 8854 - Part 3 Distributions Received",
+    "displayOrder": 221,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 - Part 3 Prior Year Tax Deferred",
+    "value": "Form 8854 - Part 3 Prior Year Tax Deferred",
+    "displayOrder": 222,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 pg 2 Initial and Annual Expatriation Statement, page 2 ",
+    "value": "Form 8854 pg 2 Initial and Annual Expatriation Statement, page 2",
+    "displayOrder": 223,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 pg 3 Initial and Annual Expatriation Statement, page 3 ",
+    "value": "Form 8854 pg 3 Initial and Annual Expatriation Statement, page 3",
+    "displayOrder": 224,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 pg 4 Initial and Annual Expatriation Statement, page 4 ",
+    "value": "Form 8854 pg 4 Initial and Annual Expatriation Statement, page 4",
+    "displayOrder": 225,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 pg 5 Initial and Annual Expatriation Statement, page 5 ",
+    "value": "Form 8854 pg 5 Initial and Annual Expatriation Statement, page 5",
+    "displayOrder": 226,
+    "hidden": false
+   },
+   {
+    "label": "Form 8854 pg 6 Initial and Annual Expatriation Statement, page 6 ",
+    "value": "Form 8854 pg 6 Initial and Annual Expatriation Statement, page 6",
+    "displayOrder": 227,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 Request for Innocent Spouse Relief, page 1",
+    "value": "Form 8857 Request for Innocent Spouse Relief, page 1",
+    "displayOrder": 228,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 - Attachment  Form 8857 - Additional Explanation Lines ",
+    "value": "Form 8857 - Attachment  Form 8857 - Additional Explanation Lines",
+    "displayOrder": 229,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 2 Request for Innocent Spouse Relief, page 2",
+    "value": "Form 8857 pg 2 Request for Innocent Spouse Relief, page 2",
+    "displayOrder": 230,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 3 Request for Innocent Spouse Relief, page 3",
+    "value": "Form 8857 pg 3 Request for Innocent Spouse Relief, page 3",
+    "displayOrder": 231,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 4 Request for Innocent Spouse Relief, page 4",
+    "value": "Form 8857 pg 4 Request for Innocent Spouse Relief, page 4",
+    "displayOrder": 232,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 5 Request for Innocent Spouse Relief, page 5",
+    "value": "Form 8857 pg 5 Request for Innocent Spouse Relief, page 5",
+    "displayOrder": 233,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 6 Request for Innocent Spouse Relief, page 6",
+    "value": "Form 8857 pg 6 Request for Innocent Spouse Relief, page 6",
+    "displayOrder": 234,
+    "hidden": false
+   },
+   {
+    "label": "Form 8857 pg 7 Request for Innocent Spouse Relief, page 7",
+    "value": "Form 8857 pg 7 Request for Innocent Spouse Relief, page 7",
+    "displayOrder": 235,
+    "hidden": false
+   },
+   {
+    "label": "Form 8859 D.C. First-Time Homebuyer Credit",
+    "value": "Form 8859 D.C. First-Time Homebuyer Credit",
+    "displayOrder": 236,
+    "hidden": false
+   },
+   {
+    "label": "Form 8862 Info to Claim Certain Credits After Disallowance",
+    "value": "Form 8862 Info to Claim Certain Credits After Disallowance",
+    "displayOrder": 237,
+    "hidden": false
+   },
+   {
+    "label": "Form 8863 Education Credits, page 1 ",
+    "value": "Form 8863 Education Credits, page 1",
+    "displayOrder": 238,
+    "hidden": false
+   },
+   {
+    "label": "Form 8863 pg 2 Education Credits, page 2 ",
+    "value": "Form 8863 pg 2 Education Credits, page 2",
+    "displayOrder": 239,
+    "hidden": false
+   },
+   {
+    "label": "Form 8864 Biodiesel and Renewable Diesel Fuels Credit ",
+    "value": "Form 8864 Biodiesel and Renewable Diesel Fuels Credit",
+    "displayOrder": 240,
+    "hidden": false
+   },
+   {
+    "label": "Form 8866 Look Back Method Computation",
+    "value": "Form 8866 Look Back Method Computation",
+    "displayOrder": 241,
+    "hidden": false
+   },
+   {
+    "label": "Form 8867 Paid Preparer's Due Diligence Checklist",
+    "value": "Form 8867 Paid Preparer's Due Diligence Checklist",
+    "displayOrder": 242,
+    "hidden": false
+   },
+   {
+    "label": "Form 8873 Extraterritorial Income Exclusion Credit ",
+    "value": "Form 8873 Extraterritorial Income Exclusion Credit",
+    "displayOrder": 243,
+    "hidden": false
+   },
+   {
+    "label": "Form 8874 New Markets Credit ",
+    "value": "Form 8874 New Markets Credit",
+    "displayOrder": 244,
+    "hidden": false
+   },
+   {
+    "label": "Form 8878 PIN for Extensions ",
+    "value": "Form 8878 PIN for Extensions",
+    "displayOrder": 245,
+    "hidden": false
+   },
+   {
+    "label": "Form 8879 E-File Signature Authorization",
+    "value": "Form 8879 E-File Signature Authorization",
+    "displayOrder": 246,
+    "hidden": false
+   },
+   {
+    "label": "Form 8880 Credit for Retirement Savings Contributions ",
+    "value": "Form 8880 Credit for Retirement Savings Contributions",
+    "displayOrder": 247,
+    "hidden": false
+   },
+   {
+    "label": "Form 8881 Small Employer Pension Plan Startup Cost ",
+    "value": "Form 8881 Small Employer Pension Plan Startup Cost",
+    "displayOrder": 248,
+    "hidden": false
+   },
+   {
+    "label": "Form 8882 Employer-Provided Child Care Facilities",
+    "value": "Form 8882 Employer-Provided Child Care Facilities",
+    "displayOrder": 249,
+    "hidden": false
+   },
+   {
+    "label": "Form 8885 Health Coverage Tax Credit",
+    "value": "Form 8885 Health Coverage Tax Credit",
+    "displayOrder": 250,
+    "hidden": false
+   },
+   {
+    "label": "Form 8889 Health Savings Accounts",
+    "value": "Form 8889 Health Savings Accounts",
+    "displayOrder": 251,
+    "hidden": false
+   },
+   {
+    "label": "Form 8896 Low Sulfur Diesel Fuel Production Credit ",
+    "value": "Form 8896 Low Sulfur Diesel Fuel Production Credit",
+    "displayOrder": 252,
+    "hidden": false
+   },
+   {
+    "label": "Form 8903 Domestic Production Activities Deduction ",
+    "value": "Form 8903 Domestic Production Activities Deduction",
+    "displayOrder": 253,
+    "hidden": false
+   },
+   {
+    "label": "Form 8908 Energy Efficient Home Credit",
+    "value": "Form 8908 Energy Efficient Home Credit",
+    "displayOrder": 254,
+    "hidden": false
+   },
+   {
+    "label": "Form 8910 Alternative Motor Vehicle Credit",
+    "value": "Form 8910 Alternative Motor Vehicle Credit",
+    "displayOrder": 255,
+    "hidden": false
+   },
+   {
+    "label": "Form 8911 Alternative Fuel Vehicle Refueling Property Cr",
+    "value": "Form 8911 Alternative Fuel Vehicle Refueling Property Cr",
+    "displayOrder": 256,
+    "hidden": false
+   },
+   {
+    "label": "Form 8912 Credit to Holders of Tax Credit Bonds, page 1 ",
+    "value": "Form 8912 Credit to Holders of Tax Credit Bonds, page 1",
+    "displayOrder": 257,
+    "hidden": false
+   },
+   {
+    "label": "Form 8912 pg 2 Credit to Holders of Tax Credit Bonds, page 2 ",
+    "value": "Form 8912 pg 2 Credit to Holders of Tax Credit Bonds, page 2",
+    "displayOrder": 258,
+    "hidden": false
+   },
+   {
+    "label": "Form 8912 pg 3 Credit to Holders of Tax Credit Bonds, page 3 ",
+    "value": "Form 8912 pg 3 Credit to Holders of Tax Credit Bonds, page 3",
+    "displayOrder": 259,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-B 2017 Disaster Retirement Plan Distributions ",
+    "value": "Form 8915-B 2017 Disaster Retirement Plan Distributions",
+    "displayOrder": 260,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-C 2018 Disaster Retirement Plan Distributions ",
+    "value": "Form 8915-C 2018 Disaster Retirement Plan Distributions",
+    "displayOrder": 261,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-D 2019 Disaster Retirement Plan Distributions ",
+    "value": "Form 8915-D 2019 Disaster Retirement Plan Distributions",
+    "displayOrder": 262,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-F Qualified Disaster Retirement Plan Distributions",
+    "value": "Form 8915-F Qualified Disaster Retirement Plan Distributions",
+    "displayOrder": 263,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-F pg 2 Qualified Disaster Retirement Plan Distributions",
+    "value": "Form 8915-F pg 2 Qualified Disaster Retirement Plan Distributions",
+    "displayOrder": 264,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-F pg 3 Qualified Disaster Retirement Plan Distributions",
+    "value": "Form 8915-F pg 3 Qualified Disaster Retirement Plan Distributions",
+    "displayOrder": 265,
+    "hidden": false
+   },
+   {
+    "label": "Form 8915-F pg 4 Qualified Disaster Retirement Plan Distributions",
+    "value": "Form 8915-F pg 4 Qualified Disaster Retirement Plan Distributions",
+    "displayOrder": 266,
+    "hidden": false
+   },
+   {
+    "label": "Form 8917 Tuition and Fees Deduction",
+    "value": "Form 8917 Tuition and Fees Deduction",
+    "displayOrder": 267,
+    "hidden": false
+   },
+   {
+    "label": "Form 8919 Uncollected SS and Med Tax on Wages",
+    "value": "Form 8919 Uncollected SS and Med Tax on Wages",
+    "displayOrder": 268,
+    "hidden": false
+   },
+   {
+    "label": "Form 8936 Qualified Plug-In Electric Motor Vehicle Cr ",
+    "value": "Form 8936 Qualified Plug-In Electric Motor Vehicle Cr",
+    "displayOrder": 269,
+    "hidden": false
+   },
+   {
+    "label": "Form 8938 Specified Foreign Financial Assets ",
+    "value": "Form 8938 Specified Foreign Financial Assets",
+    "displayOrder": 270,
+    "hidden": false
+   },
+   {
+    "label": "Form 8938 Cont'd Additional Foreign Accounts ",
+    "value": "Form 8938 Cont'd Additional Foreign Accounts",
+    "displayOrder": 271,
+    "hidden": false
+   },
+   {
+    "label": "Form 8941 Small Employer Health Insurance Premium Cr",
+    "value": "Form 8941 Small Employer Health Insurance Premium Cr",
+    "displayOrder": 272,
+    "hidden": false
+   },
+   {
+    "label": "Form 8948 Preparer Explanation for Not E-Filing",
+    "value": "Form 8948 Preparer Explanation for Not E-Filing",
+    "displayOrder": 273,
+    "hidden": false
+   },
+   {
+    "label": "Form 8949 Sale and Other Disposition of Capital Assets",
+    "value": "Form 8949 Sale and Other Disposition of Capital Assets",
+    "displayOrder": 274,
+    "hidden": false
+   },
+   {
+    "label": "Form 8949 AMT  Sale and Other Disposition of Capital Assets AMT",
+    "value": "Form 8949 AMT  Sale and Other Disposition of Capital Assets AMT",
+    "displayOrder": 275,
+    "hidden": false
+   },
+   {
+    "label": "Form 8958 MFS Community Property Allocation",
+    "value": "Form 8958 MFS Community Property Allocation",
+    "displayOrder": 276,
+    "hidden": false
+   },
+   {
+    "label": "Form 8958 - Attachment  Form 8958 - Overflow ",
+    "value": "Form 8958 - Attachment  Form 8958 - Overflow",
+    "displayOrder": 277,
+    "hidden": false
+   },
+   {
+    "label": "Form 8959 Additional Medicare Tax",
+    "value": "Form 8959 Additional Medicare Tax",
+    "displayOrder": 278,
+    "hidden": false
+   },
+   {
+    "label": "Form 8960 Net Investment Income Tax ",
+    "value": "Form 8960 Net Investment Income Tax",
+    "displayOrder": 279,
+    "hidden": false
+   },
+   {
+    "label": "Form 8960 - Attachment  Form 8960 - Overflow ",
+    "value": "Form 8960 - Attachment  Form 8960 - Overflow",
+    "displayOrder": 280,
+    "hidden": false
+   },
+   {
+    "label": "Form 8962 Premium Tax Credit, page 1",
+    "value": "Form 8962 Premium Tax Credit, page 1",
+    "displayOrder": 281,
+    "hidden": false
+   },
+   {
+    "label": "Form 8962 pg 2 Premium Tax Credit, page 2",
+    "value": "Form 8962 pg 2 Premium Tax Credit, page 2",
+    "displayOrder": 282,
+    "hidden": false
+   },
+   {
+    "label": "Form 8978 Partner's Additional Reporting Year Tax",
+    "value": "Form 8978 Partner's Additional Reporting Year Tax",
+    "displayOrder": 283,
+    "hidden": false
+   },
+   {
+    "label": "Form 8978 - Sch A  Form 8978 - Schedule A ",
+    "value": "Form 8978 - Sch A  Form 8978 - Schedule A",
+    "displayOrder": 284,
+    "hidden": false
+   },
+   {
+    "label": "Form 8990 pg 1-2 Business Interest Expense Limitation - Sec 163(j) ",
+    "value": "Form 8990 pg 1-2 Business Interest Expense Limitation - Sec 163(j)",
+    "displayOrder": 285,
+    "hidden": false
+   },
+   {
+    "label": "Form 8990 pg 3 Business Interest Expense Limitation - Sec 163(j) ",
+    "value": "Form 8990 pg 3 Business Interest Expense Limitation - Sec 163(j)",
+    "displayOrder": 286,
+    "hidden": false
+   },
+   {
+    "label": "Form 8992 U.S. Shareholder Calculation of GILTI",
+    "value": "Form 8992 U.S. Shareholder Calculation of GILTI",
+    "displayOrder": 287,
+    "hidden": false
+   },
+   {
+    "label": "Form 8992 - Sch A  Form 8992 - Schedule A, page 1",
+    "value": "Form 8992 - Sch A  Form 8992 - Schedule A, page 1",
+    "displayOrder": 288,
+    "hidden": false
+   },
+   {
+    "label": "Form 8992 - Sch A pg 2  Form 8992 - Schedule A, page 2",
+    "value": "Form 8992 - Sch A pg 2  Form 8992 - Schedule A, page 2",
+    "displayOrder": 289,
+    "hidden": false
+   },
+   {
+    "label": "Form 8994 Employer Credit for Paid Family and Medical Leave ",
+    "value": "Form 8994 Employer Credit for Paid Family and Medical Leave",
+    "displayOrder": 290,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995 Qualified Business Income Deduction - Simple",
+    "value": "Form 8995 Qualified Business Income Deduction - Simple",
+    "displayOrder": 291,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995, line 1  Form 8995, Line 1 Overflow",
+    "value": "Form 8995, line 1  Form 8995, Line 1 Overflow",
+    "displayOrder": 292,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A Qualified Business Income Deduction - Complex ",
+    "value": "Form 8995-A Qualified Business Income Deduction - Complex",
+    "displayOrder": 293,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch A  Form 8995-A - Schedule A",
+    "value": "Form 8995-A - Sch A  Form 8995-A - Schedule A",
+    "displayOrder": 294,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch B  Form 8995-A - Schedule B",
+    "value": "Form 8995-A - Sch B  Form 8995-A - Schedule B",
+    "displayOrder": 295,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch B Ln 3  Form 8995-A - Schedule B, Line 3 Overflow",
+    "value": "Form 8995-A - Sch B Ln 3  Form 8995-A - Schedule B, Line 3 Overflow",
+    "displayOrder": 296,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch C  Form 8995-A - Schedule C",
+    "value": "Form 8995-A - Sch C  Form 8995-A - Schedule C",
+    "displayOrder": 297,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch C Ln 1  Form 8995-A - Schedule C, Line 1 Overflow",
+    "value": "Form 8995-A - Sch C Ln 1  Form 8995-A - Schedule C, Line 1 Overflow",
+    "displayOrder": 298,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A - Sch D  Form 8995-A - Schedule D",
+    "value": "Form 8995-A - Sch D  Form 8995-A - Schedule D",
+    "displayOrder": 299,
+    "hidden": false
+   },
+   {
+    "label": "Form 8995-A pg 2 Qualified Business Income Deduction - Complex ",
+    "value": "Form 8995-A pg 2 Qualified Business Income Deduction - Complex",
+    "displayOrder": 300,
+    "hidden": false
+   },
+   {
+    "label": "Form 8997 Initial and Annual Statement of QOF Investments ",
+    "value": "Form 8997 Initial and Annual Statement of QOF Investments",
+    "displayOrder": 301,
+    "hidden": false
+   },
+   {
+    "label": "Form 8997 - Waiver Waiver of Benefits by Foreign Eligible Taxpayer ",
+    "value": "Form 8997 - Waiver Waiver of Benefits by Foreign Eligible Taxpayer",
+    "displayOrder": 302,
+    "hidden": false
+   },
+   {
+    "label": "Form 8997 pg 2 Initial and Annual Statement of QOF Investments ",
+    "value": "Form 8997 pg 2 Initial and Annual Statement of QOF Investments",
+    "displayOrder": 303,
+    "hidden": false
+   },
+   {
+    "label": "Form 9000 Alternative Media Preference",
+    "value": "Form 9000 Alternative Media Preference",
+    "displayOrder": 304,
+    "hidden": false
+   },
+   {
+    "label": "Form 911  Request for Taxpayer Advocate Service Assistance",
+    "value": "Form 911  Request for Taxpayer Advocate Service Assistance",
+    "displayOrder": 305,
+    "hidden": false
+   },
+   {
+    "label": "Form 9325 General Information for Electronic Filing",
+    "value": "Form 9325 General Information for Electronic Filing",
+    "displayOrder": 306,
+    "hidden": false
+   },
+   {
+    "label": "Form 9465 Installment Agreement Request ",
+    "value": "Form 9465 Installment Agreement Request",
+    "displayOrder": 307,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-A  Individual Report of Net 965 Tax Liability, page 1",
+    "value": "Form 965-A  Individual Report of Net 965 Tax Liability, page 1",
+    "displayOrder": 308,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-A pg 2  Individual Report of Net 965 Tax Liability, page 2",
+    "value": "Form 965-A pg 2  Individual Report of Net 965 Tax Liability, page 2",
+    "displayOrder": 309,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-A pg 3  Individual Report of Net 965 Tax Liability, page 3",
+    "value": "Form 965-A pg 3  Individual Report of Net 965 Tax Liability, page 3",
+    "displayOrder": 310,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-C  Transfer Agreement Under Section 965(h)(3)",
+    "value": "Form 965-C  Transfer Agreement Under Section 965(h)(3)",
+    "displayOrder": 311,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-D  Transfer Agreement Under Section 965(I)(2)",
+    "value": "Form 965-D  Transfer Agreement Under Section 965(I)(2)",
+    "displayOrder": 312,
+    "hidden": false
+   },
+   {
+    "label": "Form 965-E  Consent Agreement Under Section 965(I)(4)(D)",
+    "value": "Form 965-E  Consent Agreement Under Section 965(I)(4)(D)",
+    "displayOrder": 313,
+    "hidden": false
+   },
+   {
+    "label": "Form 970  Application to Use LIFO Inventory Method ",
+    "value": "Form 970  Application to Use LIFO Inventory Method",
+    "displayOrder": 314,
+    "hidden": false
+   },
+   {
+    "label": "Form 982  Reduction of Tax Attributes ",
+    "value": "Form 982  Reduction of Tax Attributes",
+    "displayOrder": 315,
+    "hidden": false
+   },
+   {
+    "label": "Form K-1  Ptr, Shareholder's, Beneficiary's Share",
+    "value": "Form K-1  Ptr, Shareholder's, Beneficiary's Share",
+    "displayOrder": 316,
+    "hidden": false
+   },
+   {
+    "label": "",
+    "value": "",
+    "displayOrder": 317,
+    "hidden": false
+   }
+  ],
+  "options_count": 318,
+  "createdAt": "2022-04-28T21:35:32.439Z",
+  "archived": false,
+  "calculated": false,
+  "hasUniqueValue": false,
+  "hidden": false,
+  "formField": true
+ },
+ "derived": {
+  "created_by_form": {
+   "derivable": false,
+   "reason": "this property appears in no field file in this repo, so no artefact here claims a form created it. See provenance below."
+  },
+  "bound_by_forms": {
+   "derivable": false,
+   "reason": "no field file in this repo holds a row for this property, so no form here binds it."
+  },
+  "crosswalk": {
+   "derivable": false,
+   "reason": "no field row names this property, so no crosswalk in this repo classifies it."
+  },
+  "backbone_key": {
+   "derivable": false,
+   "reason": "this property appears in no field file, so there is no row to declare a backbone key."
+  },
+  "reuse_status": {
+   "derivable": true,
+   "value": {
+    "is_reuse": false,
+    "by_forms": [],
+    "reuse_of": []
+   },
+   "source": "no field row names this property, so it is a reuse of nothing here"
+  },
+  "prefix_tag": "no-declared-prefix",
+  "prefix_tag_note": "A LEXICAL FACT ABOUT THE INTERNAL NAME, for filtering. NOT a provenance claim: read created_by_form for that.",
+  "no_prefix_class": {
+   "class": 1,
+   "label": "portal-authored",
+   "why": "portal-authored — group \"contactinformation\" also holds hubspotDefined properties, so it is a group HubSpot ships; created 2022-04-28T21:35:32.439Z, before the project epoch",
+   "mentioned_in_repo": false
+  },
+  "divergence": null,
+  "status_for_mirror": "active",
+  "status_basis": "the portal description carries no deprecation marker"
+ }
+}
+```
+
+---
+
+## `irs433boi_employer_identification_number`
+
+**Why this one.** REUSE BOUND BY MORE THAN ONE FORM — bound by 433b, 433boi and 433d; created by 433boi and reused by the other two. The crosswalk block appears three times, once per binding form, each with its own recorded reason, and reuse_status is populated rather than empty.
+
+```json
+{
+ "name": "irs433boi_employer_identification_number",
+ "portal": {
+  "label": "[433-B(OIC)] Employer identification number",
+  "type": "string",
+  "fieldType": "text",
+  "groupName": "irs433boic",
+  "description": "Serves BOTH Form 433-B (input key: s1_ein) and Form 433-B(OIC) (input key: s1_ein). Created by the 433-B(OIC) pass; bound by 433-B under [R-06] — the two forms share this fact about the same subject, the business entity, and the prefix records which form created the name rather than which form owns it. Crosswalk Z-02, classified exact. Also written by Form 433-D (input key: 433d_tin_ein), crosswalk W-02, classified exact; the cell is subject-dependent, so its subject is FIXED and cannot be the wrong legal person on the other branch of the record.",
+  "description_present": true,
+  "options": [],
+  "options_count": 0,
+  "createdAt": "2026-08-22T19:08:05.610Z",
+  "archived": false,
+  "calculated": false,
+  "hasUniqueValue": false,
+  "hidden": false,
+  "formField": false
+ },
+ "derived": {
+  "created_by_form": {
+   "derivable": true,
+   "value": "433boi",
+   "source": "adapters/hubspot/fields.433b.json + adapters/hubspot/fields.433boi.json + adapters/hubspot/fields.433d.json — declared by a field row via `created_by_form`"
+  },
+  "bound_by_forms": {
+   "derivable": true,
+   "value": [
+    "433b",
+    "433boi",
+    "433d"
+   ],
+   "source": "adapters/hubspot/fields.433b.json + adapters/hubspot/fields.433boi.json + adapters/hubspot/fields.433d.json — every field file holding a row for this internal name"
+  },
+  "crosswalk": {
+   "derivable": true,
+   "value": [
+    {
+     "form": "433b",
+     "class": "exact",
+     "class_not_derivable_reason": null,
+     "reason": null,
+     "reason_not_derivable_reason": "crosswalk.433b.json row \"s1_ein\" carries neither `scope_reason` nor `why`.",
+     "reuse_reason": "Z-02 rules this an EXACT correspondence: the same question, in the same shape, about the same legal person. [R-06] rules that where 433-B and 433-B(OIC) share a fact about the same subject, 433-B binds the EXISTING property, prefix and all — irs433boi_ records which form CREATED a name, not which form owns it. The fact is spelled to reproduce that name rather than to describe this form.",
+     "entry": "Z-02",
+     "arguable": null,
+     "source": "adapters/hubspot/crosswalk.433b.json"
+    },
+    {
+     "form": "433boi",
+     "class": "same-question-different-subject",
+     "class_not_derivable_reason": null,
+     "reason": null,
+     "reason_not_derivable_reason": "crosswalk.433boi.json row \"s1_ein\" carries neither `scope_reason` nor `why`.",
+     "reuse_reason": null,
+     "entry": "Y-01",
+     "arguable": null,
+     "source": "adapters/hubspot/crosswalk.433boi.json"
+    },
+    {
+     "form": "433d",
+     "class": "exact",
+     "class_not_derivable_reason": null,
+     "reason": null,
+     "reason_not_derivable_reason": "crosswalk.433d.json row \"433d_tin_ein\" carries neither `scope_reason` nor `why`.",
+     "reuse_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-B ever have to hold two different values for one taxpayer at one moment? NO, and for the mirror of W-01's reason. This key exists ONLY on the entity branch — an individual record routes to irs433_tp_ssn_itin and this cell is never written — so its subject is FIXED as the business entity, which is exactly the legal person 433-B and 433-B(OIC) are about. An entity does not have one EIN on its collection information statement and a different one on its instalment agreement. IT BINDS THE irs433boi_ NAME, PREFIX AND ALL, which is [R-06]'s prefix half: the prefix records which form CREATED a name and not which form owns it, and 433-B established the precedent by binding this very property. AND THE OTHER LIVE CANDIDATE IS REJECTED BY NAME RATHER THAN BY SILENCE, because the portal holds TWO properties whose names are all but identical. irs433_employer_identification_number is live, contributed by 433-A line 54 and by 433-A(OIC) s4_business_ein, and on both of those forms the taxpayer is a NATURAL PERSON and the EIN belongs to a business that person OWNS — the business is not the taxpayer. irs433boi_employer_identification_number is the EIN of the entity that IS the taxpayer. On this form the entity branch means the taxpayer is the entity, so its EIN is the second fact and not the first. The state of the world in which they differ is the ordinary one: a sole proprietor with an EIN of their own files a 433-A, and their company later files a 433-D; one property would then have to hold the proprietorship EIN and the company EIN at one moment. The two names differ by a prefix and the two facts differ by a legal person, which is exactly what [R-08] says a leaf name is worth as evidence.",
+     "entry": "W-02",
+     "arguable": null,
+     "source": "adapters/hubspot/crosswalk.433d.json"
+    }
+   ],
+   "source": "adapters/hubspot/crosswalk.<form>.json, joined on the field row key"
+  },
+  "backbone_key": {
+   "derivable": true,
+   "value": "s1_ein",
+   "source": "adapters/hubspot/fields.433b.json + adapters/hubspot/fields.433boi.json + adapters/hubspot/fields.433d.json — declared by the field row(s)"
+  },
+  "reuse_status": {
+   "derivable": true,
+   "value": {
+    "is_reuse": true,
+    "by_forms": [
+     "433b",
+     "433d"
+    ],
+    "reuse_of": [
+     "irs433boi_employer_identification_number"
+    ]
+   },
+   "source": "adapters/hubspot/fields.433b.json + adapters/hubspot/fields.433boi.json + adapters/hubspot/fields.433d.json — rows whose scope is \"reuse\" or which declare reuse_of"
+  },
+  "prefix_tag": "irs433boi",
+  "prefix_tag_note": "A LEXICAL FACT ABOUT THE INTERNAL NAME, for filtering. NOT a provenance claim: read created_by_form for that.",
+  "no_prefix_class": null,
+  "divergence": {
+   "kinds": [
+    "label",
+    "description"
+   ],
+   "side": "DISAGREEMENT",
+   "ruling": "GOVERNED-BY-P59",
+   "ruling_note": "Both sides carry an entry and differ. Prompt 59 governs: the portal is authority for definition, adapters/hubspot/fields.*.json for binding and classification. Recorded, not reconciled.",
+   "items": [
+    {
+     "kind": "label",
+     "detail": "portal \"[433-B(OIC)] Employer identification number\" vs fields.433b.json (433b) \"[433-B] Employer identification number\""
+    },
+    {
+     "kind": "description",
+     "detail": "portal and fields.433b.json (433b) hold different description text"
+    },
+    {
+     "kind": "description",
+     "detail": "portal and fields.433boi.json (433boi) hold different description text"
+    },
+    {
+     "kind": "label",
+     "detail": "portal \"[433-B(OIC)] Employer identification number\" vs fields.433d.json (433d) \"[433-D] Employer identification number\""
+    },
+    {
+     "kind": "description",
+     "detail": "portal and fields.433d.json (433d) hold different description text"
+    }
+   ]
+  },
+  "status_for_mirror": "active",
+  "status_basis": "the portal description carries no deprecation marker"
+ }
+}
+```
+
+---
+
+## `vlp_case_liab`
+
+**Why this one.** VLP ROUTING PROPERTY — organizer-only, a checkbox with 6 options, defined in fields.registry.json, the one definition file with no crosswalk beside it. It exercises the vlp path and the no-crosswalk reason, and it is the case where the portal holds NO description at all, so description_present is the field carrying that fact.
+
+```json
+{
+ "name": "vlp_case_liab",
+ "portal": {
+  "label": "Liability type(s) at issue",
+  "type": "enumeration",
+  "fieldType": "checkbox",
+  "groupName": "vlp",
+  "description": "",
+  "description_present": false,
+  "options": [
+   {
+    "label": "Individual 1040",
+    "value": "individual_1040",
+    "displayOrder": 0,
+    "hidden": false
+   },
+   {
+    "label": "Employment 941-940",
+    "value": "employment_941_940",
+    "displayOrder": 1,
+    "hidden": false
+   },
+   {
+    "label": "Business 1120-1065",
+    "value": "business_1120_1065",
+    "displayOrder": 2,
+    "hidden": false
+   },
+   {
+    "label": "TFRP",
+    "value": "tfrp",
+    "displayOrder": 3,
+    "hidden": false
+   },
+   {
+    "label": "Civil penalty",
+    "value": "civil_penalty",
+    "displayOrder": 4,
+    "hidden": false
+   },
+   {
+    "label": "Other",
+    "value": "other",
+    "displayOrder": 5,
+    "hidden": false
+   }
+  ],
+  "options_count": 6,
+  "createdAt": "2026-08-14T03:57:37.974Z",
+  "archived": false,
+  "calculated": false,
+  "hasUniqueValue": false,
+  "hidden": false,
+  "formField": false
+ },
+ "derived": {
+  "created_by_form": {
+   "derivable": true,
+   "value": "vlp",
+   "source": "adapters/hubspot/fields.registry.json — the one field file holding a non-reuse row for this name"
+  },
+  "bound_by_forms": {
+   "derivable": true,
+   "value": [
+    "vlp"
+   ],
+   "source": "adapters/hubspot/fields.registry.json — every field file holding a row for this internal name"
+  },
+  "crosswalk": {
+   "derivable": true,
+   "value": [
+    {
+     "form": "vlp",
+     "class": null,
+     "class_not_derivable_reason": "no adapters/hubspot/crosswalk.vlp.json exists in this tree. 433-A was provisioned from its map by gen-fields-from-map.mjs before the crosswalk vocabulary existed, so it is the form the later crosswalks classify AGAINST rather than one carrying a classification of its own.",
+     "reason": null,
+     "reason_not_derivable_reason": "same — there is no crosswalk row for vlp to record a reason in.",
+     "reuse_reason": null,
+     "entry": null,
+     "arguable": null,
+     "source": null
+    }
+   ],
+   "source": "adapters/hubspot/crosswalk.<form>.json, joined on the field row key"
+  },
+  "backbone_key": {
+   "derivable": false,
+   "reason": "no field row for this property declares a backbone_key. On a creator row that is expected — the property IS the backbone entry rather than sitting on one."
+  },
+  "reuse_status": {
+   "derivable": true,
+   "value": {
+    "is_reuse": false,
+    "by_forms": [],
+    "reuse_of": []
+   },
+   "source": "adapters/hubspot/fields.registry.json — rows whose scope is \"reuse\" or which declare reuse_of"
+  },
+  "prefix_tag": "vlp",
+  "prefix_tag_note": "A LEXICAL FACT ABOUT THE INTERNAL NAME, for filtering. NOT a provenance claim: read created_by_form for that.",
+  "no_prefix_class": null,
+  "divergence": null,
+  "status_for_mirror": "active",
+  "status_basis": "the portal description carries no deprecation marker"
+ }
+}
+```
+
+---

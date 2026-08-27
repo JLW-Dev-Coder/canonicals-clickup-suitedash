@@ -148,12 +148,34 @@ const SB24_FILES = () => {
 // by the mirror, and its generator is a one-shot in scratchpad/ that no standing script runs.
 // [SB-92] reports any file two entries claim, so a precedence that stops being true is a STOP
 // rather than a silence.
+// THE DECLARATION IS READ BY MEANING, NOT BY SPELLING — and this function is the third time
+// this file has had to learn that. [SB-24]'s first draft was spelled `433d.` and walked past
+// 433b.lineage.json; [SB-25]'s first draft was spelled `mirror.json`/`subject-classes.json` and
+// walked past _subjects.cross-form.json. This is the same failure a third time, one field name
+// over: the population read `_generator || meta.generator`, and FOUR artefacts in this directory
+// declare their generator as `_generated_by` instead. Three of them are claimed elsewhere, so
+// only adapters/pdf/maps/433h.projection.json surfaced — as [SB-92] UNCLAIMED, in the commit
+// that landed it (97c94a6), which left `npm run sweeps` red for a whole cycle. That is [R-38]'s
+// defect exactly: the cycle that broke it did not run it.
+//
+// `_generated_by` carries PROSE — "scratchpad/p58-433h-projection.mjs — re-run it and this file
+// regenerates byte for byte" — so the path is captured out of it rather than used whole, or the
+// crosscheck's existsSync() below would fail on a sentence and report every such file as
+// CONTRADICTED. Returns the generator PATH or null, for both the population and the crosscheck,
+// so the two cannot disagree about what counts as a declaration.
+const declaredGenerator = (d) => {
+  const raw = d?._generator || d?.meta?.generator || d?._generated_by || null;
+  if (typeof raw !== 'string' || !raw.trim()) return null;
+  const m = /^\s*([A-Za-z0-9_./-]+\.mjs)/.exec(raw);
+  return m ? m[1] : null;
+};
+
 const SB23_FILES = () => {
   const swept = new Set(MAPPED_FORMS().flatMap((f) => countSweptFiles(f)));
   const intake = new Set(SB24_FILES());
   return ls('adapters/pdf/maps').filter((p) => {
     if (!p.endsWith('.json') || swept.has(p) || intake.has(p)) return false;
-    try { const d = JSON.parse(r(p)); return !!(d._generator || d.meta?.generator); } catch { return false; }
+    try { return !!declaredGenerator(JSON.parse(r(p))); } catch { return false; }
   });
 };
 
@@ -440,7 +462,7 @@ export const BOUNDARIES = [
       for (const p of SB23_FILES()) {
         const f = p.split('/').pop();
         let gen = null;
-        try { const d = JSON.parse(r(p)); gen = d._generator || d.meta?.generator || null; } catch { gen = null; }
+        try { gen = declaredGenerator(JSON.parse(r(p))); } catch { gen = null; }
         if (!gen) { out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} is excused as re-derived on every run and names no generator of its own. An artefact that does not say what wrote it cannot be checked against it.`); continue; }
         if (!existsSync(gen)) { out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} names ${gen} as its generator and that file is not in this tree.`); continue; }
         if (!scripts.includes(gen)) out.push(`[SB-23] CONTRADICTED - adapters/pdf/maps/${f} is excused on the ground that ${gen} re-derives it, and no npm script runs ${gen}. Nothing re-derives it, so every figure in it is a typed count outside every sweep.`);
@@ -699,7 +721,7 @@ export const BOUNDARIES = [
       return [
         `[SB-18] ${files.length} script(s) in scratchpad/: ${files.join(', ')}.`,
         `[SB-18] ${files.filter((f) => cited.has(f)).length} of them is named by a fixture's _generated_by, which [SB-17] checks the other way round; the rest are read-back probes, which make no artefact and are cited from the commit that ran them.`,
-        `[SB-18] and ${others.length} non-script file(s): ${others.join(', ') || 'none'}. These are inert text blocks spliced into a swept file by one of the scripts above, kept beside it so the splice is readable. They were in no sweep, in no boundary and in this entry's OWN count of nothing until [SB-92] enumerated the residual — this entry counted .mjs and stood over a directory.`,
+        `[SB-18] and ${others.length} non-script file(s): ${others.join(', ') || 'none'}. TWO KINDS, and the distinction is stated because one sentence stopped covering both: the .txt blocks are inert text spliced into a swept file by one of the scripts above, kept beside it so the splice is readable; the .md and .json reports are STANDALONE ARTEFACTS, each written by a p59-* script above and each declaring that script as its generator, which is [R-19]'s ground rather than this one's. Neither kind is a definition source and nothing is provisioned from either. They were in no sweep, in no boundary and in this entry's OWN count of nothing until [SB-92] enumerated the residual — this entry counted .mjs and stood over a directory.`,
       ];
     } },
 
@@ -842,6 +864,28 @@ export const BOUNDARIES = [
         if (scripts !== null && scripts.includes(base))
           out.push(`[SB-27] CONTRADICTED — ${p} is excused as superseded and package.json still runs it. PowerShell 5.1's Invoke-RestMethod sends a string body as ISO-8859-1; that is [R-27], and it cost 27 permanent property creations.`);
       }
+      return out;
+    } },
+
+  { id: 'SB-28', sweep: 'every sweep', kind: 'claiming', path: 'adapters/clickup/*',
+    what: 'Removes the THIRD adapters subdirectory. Every sweep in this engine selects by path AND extension — guard-sweep, exclusion-sweep and success-sweep enumerate adapters/pdf and adapters/hubspot by name, count-sweep takes named .json artefacts under adapters/pdf/maps, [SB-14] takes *.md under those two directories — so adapters/clickup is outside all of them by the shape of every selector, which is [R-15] a third time. It is registered on the run that creates it rather than found in a residual two prompts later, which is what happened to 433d.pairs.json and to 433b.lineage.json.',
+    claim: 'These tools READ the live HubSpot portal and this repo\u2019s field files and WRITE one artefact set, adapters/hubspot/cf-mirror-export.*, whose renderings are re-derived from their own JSON and compared byte for byte by adapters/clickup/assert-mirror-export.mjs on every run of npm run sweeps. Nothing here is a definition source and nothing here is provisioned from: the export is downstream of adapters/hubspot/fields.*.json, which [SB-15] and [SB-16] already claim. THE ONE THING THIS ENTRY DOES NOT CLAIM, stated rather than left as a silence: these files are NOT yet inside guard-sweep\u2019s vacuous-guard sweep. Their catches and empty-set predicates are undisposed, and disposing them is a cycle of its own rather than a line in this one. That is an [R-14] exclusion — declared, sized, and owed.',
+    assertedBy: 'adapters/clickup/assert-prefix-not-provenance.mjs, wired into npm run sweeps, which asserts over the LIVE population that no derived provenance anywhere rests on a name prefix, that every derived creator and binding names a form a field file declares and cites a field-row source, and that the eight prefix tags partition the population exactly — disjoint and total. No forward reference is made here to a checker that does not yet exist ([R-13]); when the export lands, its own checker is added to this list and to the sweep in the same commit.',
+    count: () => ls('adapters/clickup').length,
+    claims: () => ls('adapters/clickup'),
+    // THE HALF THAT COULD ROT is the [R-19] declaration each tool carries and the probe
+    // register\u2019s claim that nothing was left behind on the ClickUp list. Both are read out of
+    // the files rather than trusted from the sentence above.
+    crosscheck: () => {
+      const out = [];
+      for (const p of ls('adapters/clickup').filter((f) => f.endsWith('.mjs'))) {
+        if (!r(p).includes('GENERATOR DECLARATION')) out.push(`[SB-28] ${p} carries no [R-19] GENERATOR DECLARATION. A tool that does not say what it writes cannot be checked against it.`);
+      }
+      try {
+        const reg = JSON.parse(r('adapters/clickup/write-probe.json'));
+        const open = (reg.probes || []).filter((x) => x.state !== 'torn_down');
+        if (open.length) out.push(`[SB-28] ${open.length} ClickUp write probe(s) are not torn down: ${open.map((x) => x.task_id).join(', ')}. A probe left live is synthetic state on a target this repo does not own.`);
+      } catch (e) { out.push('[SB-28] adapters/clickup/write-probe.json will not parse, so the claim that every probe was torn down cannot be checked. An unreadable register is not an empty one.'); }
       return out;
     } },
 

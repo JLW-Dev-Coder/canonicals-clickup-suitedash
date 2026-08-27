@@ -1,0 +1,113 @@
+{
+ "_what": "Every write probe ever created on a ClickUp list by this tool, and its torn-down verdict re-read from ClickUp. A probe with state \"live\" or \"unknown\" is a STOP for the next run.",
+ "probes": [
+  {
+   "task_id": "86e30h45g",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30h45g",
+   "created_at_ms": 1787864783922,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:06:26.715Z"
+   }
+  },
+  {
+   "task_id": "86e30hb7w",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30hb7w",
+   "created_at_ms": null,
+   "state": "torn_down",
+   "registered_retrospectively": "YES — written after the fact. This probe was created by the body-size run, and the first draft of cu-write-probe.mjs ran its body check BEFORE the register push, so the STOP path deleted the task without ever recording it. The ordering is fixed in that file and the reason is in its header. The teardown read below was performed by hand against the live API immediately afterwards, not inferred from the DELETE.",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:19:00.000Z"
+   }
+  },
+  {
+   "task_id": "86e30hcgx",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30hcgx",
+   "created_at_ms": 1787865577427,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:20:44.120Z",
+    "settled_by": "--resolve"
+   }
+  },
+  {
+   "task_id": "86e30hcxh",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30hcxh",
+   "created_at_ms": 1787865646215,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:20:49.128Z"
+   }
+  },
+  {
+   "task_id": "86e30hf2u",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30hf2u",
+   "created_at_ms": 1787865973285,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:26:17.629Z"
+   }
+  },
+  {
+   "task_id": "86e30hfj9",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30hfj9",
+   "created_at_ms": 1787866049648,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T21:27:36.045Z"
+   }
+  },
+  {
+   "task_id": "86e30jctm",
+   "name": "_vlp_projection_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30jctm",
+   "created_at_ms": 1787870118678,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T22:35:21.438Z"
+   },
+   "purpose": "item E of prompt 59-A: establish what the ClickUp round trip and the mark-stripped projection preserve, per content class."
+  },
+  {
+   "task_id": "86e30jd44",
+   "name": "_vlp_projection_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30jd44",
+   "created_at_ms": 1787870159285,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T22:36:02.346Z"
+   },
+   "purpose": "item E of prompt 59-A: establish what the ClickUp round trip and the mark-stripped projection preserve, per content class."
+  }
+ ]
+}
