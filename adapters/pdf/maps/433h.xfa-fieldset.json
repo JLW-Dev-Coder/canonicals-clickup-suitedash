@@ -1,0 +1,2714 @@
+{
+ "_what_this_is": "THE FIELD SET A FORM WITH NO ACROFORM ASKS FOR, read out of its XFA template packet. IT IS NOT A MAP: nothing here is bound to a widget, because there is no widget to bind to. The generator named below carries the whole argument.",
+ "_generator": "adapters/pdf/xfa-fieldset.mjs",
+ "_source_pdf": "adapters/pdf/forms/f433h.pdf",
+ "_source_sha256": "1da60f64ce39800219859be71dda7c7b29d1695e12998a3f061d65402fa154f8",
+ "_why_it_is_not_a_map": "A map in this engine binds an input key to a widget on a pinned page, and every binding is proved against the drawn page bytes. This form draws ONE static page and that page is the Adobe Reader placeholder. Every caption, every field name and the revision itself come out of the template packet, which is a description of a form rather than a form, and [D-02] recorded that as a scope change rather than as a mapping problem.",
+ "_the_revision_cannot_be_pinned_the_way_every_other_form_pins_it": "The standing rule is that a form revision is never asserted from anything but its DRAWN PAGE BYTES. On this form the drawn bytes are the placeholder sentence and carry no revision, no catalogue number and no form number at all. Anything this file or any other records about this form revision is read from a packet, and that is evidence of a different kind. It is recorded as what it is and is not upgraded by being written down.",
+ "packets": [
+  {
+   "name": "preamble",
+   "bytes": 163
+  },
+  {
+   "name": "config",
+   "bytes": 2998
+  },
+  {
+   "name": "template",
+   "bytes": 535811
+  },
+  {
+   "name": "localeSet",
+   "bytes": 5694
+  },
+  {
+   "name": "xmpmeta",
+   "bytes": 1735
+  },
+  {
+   "name": "xfdf",
+   "bytes": 85
+  },
+  {
+   "name": "postamble",
+   "bytes": 11
+  }
+ ],
+ "_what_the_packet_list_settles": "A form whose packet list carries `datasets` and `form` ships MERGED: a viewer has a pre-computed form DOM and, beside it, an AcroForm shadow it can fill without an XFA engine at all. A form whose list carries neither ships UNMERGED and must be laid out by an XFA processor at open time. That difference is the whole of why five forms in this tree fill and this one does not.",
+ "acroform": {
+  "field_entries": 0,
+  "drawn_pages": 1,
+  "_what_those_two_numbers_mean": "The number of top-level entries in /AcroForm /Fields on the pinned blank, and the number of pages a reader that ignores XFA reports. A form this engine can fill has a populated AcroForm beside its XFA; a form it cannot has an empty one and a single placeholder page."
+ },
+ "dynamic_render": "required",
+ "_dynamic_render_is_the_form_declaring_its_own_kind": "The config packet <dynamicRender> is the form saying whether a viewer may render it statically. `forbidden` is a form with a pre-generated AcroForm shadow, which is what every form this engine fills declares. `required` is a form with no shadow, which must be laid out by an XFA processor at open time.",
+ "counts": {
+  "fields": 331,
+  "by_ui": {
+   "numericEdit": 172,
+   "textEdit": 130,
+   "checkButton": 26,
+   "signature": 2,
+   "dateTimeEdit": 1
+  },
+  "by_bind_directive": {
+   "none": 186,
+   "(no bind element)": 119,
+   "global": 26
+  },
+  "fields_a_datasets_packet_could_reach": 145,
+  "fields_the_template_refuses_to_bind": 186
+ },
+ "_what_the_bind_counts_bound": "fields_a_datasets_packet_could_reach is a CEILING on any route that fills this form by writing data into it, and it is a ceiling rather than an achieved figure: a field whose directive admits data still has to be reached by a data hierarchy that matches it, and that is a separate question this file does not answer. fields_the_template_refuses_to_bind is EXACT in the other direction — <bind match=\"none\"/> is the template declining, and no conforming processor overrides it.",
+ "fields": [
+  {
+   "som": "form1.CurrentPageNumber",
+   "name": "CurrentPageNumber",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": ""
+  },
+  {
+   "som": "form1.page_1.address.NamesAddress",
+   "name": "NamesAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Name(s) and address",
+   "assist": "Page 1. Tip If you owe $50,000 or less, you may be able to establish a simple payment plan online, even if you have not yet received a bill for your taxes. Go to I R S.gov to apply to pay online. Caution Do not use this form if you can pay your balance in full within 180 days. Instead, call the number on your most recent notice. If you are in bankruptcy or we have accepted your offer-in-compromise, see Bankruptcy or Offer-in-Compromise, in the instructions. Name(s) and Address."
+  },
+  {
+   "som": "form1.page_1.address.If_address_provided_above_is_different_then_last_r",
+   "name": "If_address_provided_above_is_different_then_last_r",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "If address provided above is different than last return filed, please check here."
+  },
+  {
+   "som": "form1.page_1.address.CountyResidence",
+   "name": "CountyResidence",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "County of Residence",
+   "assist": "County of Residence."
+  },
+  {
+   "som": "form1.page_1.ssn.YourSocialSecurityNu",
+   "name": "YourSocialSecurityNu",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Your Social Security Number or Individual Taxpayer Identification Number",
+   "assist": "Your Social Security Number or Individual Taxpayer Identification Number."
+  },
+  {
+   "som": "form1.page_1.ssn.YourSpousesSocialSec",
+   "name": "YourSpousesSocialSec",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Your Spouse’s Social Security Number or Individual Taxpayer Identification Number",
+   "assist": "Your Spouse’s Social Security Number or Individual Taxpayer Identification Number."
+  },
+  {
+   "som": "form1.page_1.your_telephone.Home11",
+   "name": "Home11",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Home:",
+   "assist": "Your telephone numbers. Home."
+  },
+  {
+   "som": "form1.page_1.your_telephone.Work11",
+   "name": "Work11",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Work:",
+   "assist": "Work"
+  },
+  {
+   "som": "form1.page_1.your_telephone.Cell11",
+   "name": "Cell11",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Cell:",
+   "assist": "Cell"
+  },
+  {
+   "som": "form1.page_1.spouses_telephone.Home21",
+   "name": "Home21",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Home:",
+   "assist": "Spouse's telephone numbers. Home."
+  },
+  {
+   "som": "form1.page_1.spouses_telephone.Work21",
+   "name": "Work21",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Work:",
+   "assist": "Work."
+  },
+  {
+   "som": "form1.page_1.spouses_telephone.Cell21",
+   "name": "Cell21",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Cell:",
+   "assist": "Cell."
+  },
+  {
+   "som": "form1.page_1.Under65",
+   "name": "Under65",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Enter the number of people in the household who can be claimed on this year’s tax return including you and your spouse under 65."
+  },
+  {
+   "som": "form1.page_1._65Over",
+   "name": "_65Over",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "65 and over."
+  },
+  {
+   "som": "form1.page_1.line_1.form_tp.form",
+   "name": "form",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Part 1 - INSTALLMENT AGREEMENT REQUEST Complete to request an installment agreement. 1. Enter the total amount you owe as shown on your tax return(s) (or notices(s) Form."
+  },
+  {
+   "som": "form1.page_1.line_1.form_tp.tp_fill",
+   "name": "tp_fill",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Tax Period."
+  },
+  {
+   "som": "form1.page_1.line_1.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Amount."
+  },
+  {
+   "som": "form1.page_1.line_2.f_tp.form_fill",
+   "name": "form_fill",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. If you have additional balances due that are not reflected on Line 1, list the total here (even if they are included in an existing installment agreement) Form."
+  },
+  {
+   "som": "form1.page_1.line_2.f_tp.tp_fill",
+   "name": "tp_fill",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Tax Period(s)."
+  },
+  {
+   "som": "form1.page_1.line_2.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Amount."
+  },
+  {
+   "som": "form1.page_1.line_3.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "3. Add lines 1 & 2 and enter the result."
+  },
+  {
+   "som": "form1.page_1.line_4.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Enter the amount of the payment you are making with this request (See instructions.)."
+  },
+  {
+   "som": "form1.page_1.line_5.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "5. Subtract line 4 from line 3 and enter the result."
+  },
+  {
+   "som": "form1.page_1.line_6.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "6. Enter the amount you can pay each month. Make your payments as large as possible to limit interest and penalty charges, since these charges will continue to accrue until you pay in full. (If you have an existing installment agreement, this amount should represent your total proposed monthly payment amount for all your liabilities.) If no payment amount is listed on line 6, a payment will be determined for you by analyzing the information you provided on your financial statement."
+  },
+  {
+   "som": "form1.page_1.line_7.amount",
+   "name": "amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "7. Enter the date (between 1st and 28th) you want to make your payment each month. Do not enter a date later than the 28th."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber1",
+   "name": "RoutingNumber1",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8. If you want to make your payments by direct debit from your checking account, see the instructions and fill in lines 8a and 8b. This is the most convenient way to make your payments and it will ensure that they are made on time. a. Routing number. Digit 1 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber2",
+   "name": "RoutingNumber2",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 2 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber3",
+   "name": "RoutingNumber3",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 3 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber4",
+   "name": "RoutingNumber4",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 4 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber5",
+   "name": "RoutingNumber5",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 5 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber6",
+   "name": "RoutingNumber6",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 6 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber7",
+   "name": "RoutingNumber7",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 7 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber8",
+   "name": "RoutingNumber8",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 8 of 9."
+  },
+  {
+   "som": "form1.page_1.RoutingNumber.RoutingNumber9",
+   "name": "RoutingNumber9",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8a. Digit 9 of 9."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber1",
+   "name": "AccountNumber1",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8. If you want to make your payments by direct debit from your checking account, see the instructions and fill in lines 8a and 8b. This is the most convenient way to make your payments and it will ensure that they are made on time. b. Digit 1 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber2",
+   "name": "AccountNumber2",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 2 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber3",
+   "name": "AccountNumber3",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 3 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber4",
+   "name": "AccountNumber4",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 4 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber5",
+   "name": "AccountNumber5",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 5 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber6",
+   "name": "AccountNumber6",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 6 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber7",
+   "name": "AccountNumber7",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 7 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber8",
+   "name": "AccountNumber8",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 8 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber9",
+   "name": "AccountNumber9",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 9 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber10",
+   "name": "AccountNumber10",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 10 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber11",
+   "name": "AccountNumber11",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 11 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber12",
+   "name": "AccountNumber12",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 12 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber13",
+   "name": "AccountNumber13",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 13 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber14",
+   "name": "AccountNumber14",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 14 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber15",
+   "name": "AccountNumber15",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 15 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber16",
+   "name": "AccountNumber16",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 16 of 17."
+  },
+  {
+   "som": "form1.page_1.AccountNumber.AccountNumber17",
+   "name": "AccountNumber17",
+   "ui": "textEdit",
+   "bind": "global",
+   "caption": "",
+   "assist": "8b. Digit 17 of 17."
+  },
+  {
+   "som": "form1.page_1.If_address_provided_above_is_different_then_last_r",
+   "name": "If_address_provided_above_is_different_then_last_r",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "8c. I am unable to make debit payments."
+  },
+  {
+   "som": "form1.page_1.line_9.If_address_provided_above_is_different_then_last_r",
+   "name": "If_address_provided_above_is_different_then_last_r",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "9. If you want to make your payments by payroll deduction, check this box and attach a completed Form 2159, Payroll Deduction Agreement."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row1.nameAddress",
+   "name": "nameAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "A. ACCOUNTS / LINES OF CREDIT. PERSONAL BANK ACCOUNTS Include checking, online, mobile (e.g., PayPal), savings accounts, money market accounts. (Use additional sheets if necessary.). Row 1. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row1.accountNumber",
+   "name": "accountNumber",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Account Number."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row1.typeAccount",
+   "name": "typeAccount",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row1.currentBalance",
+   "name": "currentBalance",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 1. Column: Current Balance/Value."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row1.checkIfBusiness",
+   "name": "checkIfBusiness",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Check if Business Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row2.nameAddress",
+   "name": "nameAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row2.accountNumber",
+   "name": "accountNumber",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Account Number."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row2.typeAccount",
+   "name": "typeAccount",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row2.currentBalance",
+   "name": "currentBalance",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 2. Column: Current Balance/Value."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row2.checkIfBusiness",
+   "name": "checkIfBusiness",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Check if Business Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row3.nameAddress",
+   "name": "nameAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row3.accountNumber",
+   "name": "accountNumber",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Account Number."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row3.typeAccount",
+   "name": "typeAccount",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row3.currentBalance",
+   "name": "currentBalance",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 3. Column: Current Balance/Value."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row3.checkIfBusiness",
+   "name": "checkIfBusiness",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Check if Business Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row4.nameAddress",
+   "name": "nameAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row4.accountNumber",
+   "name": "accountNumber",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Account Number."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row4.typeAccount",
+   "name": "typeAccount",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row4.currentBalance",
+   "name": "currentBalance",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 4. Column: Current Balance/Value."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row4.checkIfBusiness",
+   "name": "checkIfBusiness",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Check if Business Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row5.nameAddress",
+   "name": "nameAddress",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row5.accountNumber",
+   "name": "accountNumber",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Account Number."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row5.typeAccount",
+   "name": "typeAccount",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row5.currentBalance",
+   "name": "currentBalance",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 5. Column: Current Balance/Value."
+  },
+  {
+   "som": "form1.page_1.AccountsTable.Row5.checkIfBusiness",
+   "name": "checkIfBusiness",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Check if Business Account."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.description.description",
+   "name": "description",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "B. REAL ESTATE Include home, vacation property, timeshares, vacant land and other real estate. (Use additional sheets if necessary.) 1. Description / Location / County."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.description.PR1",
+   "name": "PR1",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Primary Residence",
+   "assist": "1. Primary Residence."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.description.CO1",
+   "name": "CO1",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Other",
+   "assist": "1. Other."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.MonthlyPayments",
+   "name": "MonthlyPayments",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Monthly Payment(s)."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.financing.YearPurchased",
+   "name": "YearPurchased",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Purchased",
+   "assist": "1. Financing. Year Purchased."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.financing.Purchase_Price",
+   "name": "Purchase_Price",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Purchase Price",
+   "assist": "1. Financing. Purchase Price."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.financing.Year_Refinanced",
+   "name": "Year_Refinanced",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Refinanced",
+   "assist": "1. Financing. Year Financed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.financing.Refinance_Amount",
+   "name": "Refinance_Amount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Refinance Amount",
+   "assist": "1. Financing. Refinance Amount."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.CurrentValue",
+   "name": "CurrentValue",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Current value."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.BalanceOwed",
+   "name": "BalanceOwed",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Balance Owed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row1.Equity",
+   "name": "Equity",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "1. Equity"
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.description.description",
+   "name": "description",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Description / Location / County."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.description.PR2",
+   "name": "PR2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Primary Residence",
+   "assist": "2. Primary Residence."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.description.CO2",
+   "name": "CO2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Other",
+   "assist": "2. Other."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.MonthlyPayments",
+   "name": "MonthlyPayments",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Monthly Payment(s)."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.financing.YearPurchased",
+   "name": "YearPurchased",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Purchased",
+   "assist": "2. Financing. Year Purchased."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.financing.PurchasePrice",
+   "name": "PurchasePrice",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Purchase Price",
+   "assist": "2. Financing. Purchase Price."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.financing.YearRefinanced",
+   "name": "YearRefinanced",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Refinanced",
+   "assist": "2. Financing. Year Financed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.financing.RefinanceAmount",
+   "name": "RefinanceAmount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Refinance Amount",
+   "assist": "2. Financing. Refinance Amount."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.CurrentValue",
+   "name": "CurrentValue",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Current value."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.BalanceOwed",
+   "name": "BalanceOwed",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Balance Owed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row2.Equity",
+   "name": "Equity",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Equity"
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.description.description",
+   "name": "description",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "3. Description / Location / County."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.description.PR2",
+   "name": "PR2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Primary Residence",
+   "assist": "3. Primary Residence."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.description.CO2",
+   "name": "CO2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Other",
+   "assist": "3. Other."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.MonthlyPayments",
+   "name": "MonthlyPayments",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Monthly Payment(s)."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.financing.YearPurchased",
+   "name": "YearPurchased",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Purchased",
+   "assist": "3. Financing. Year Purchased."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.financing.PurchasePrice",
+   "name": "PurchasePrice",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Purchase Price",
+   "assist": "3. Financing. Purchase Price."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.financing.YearRefinanced",
+   "name": "YearRefinanced",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Refinanced",
+   "assist": "3. Financing. Year Financed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.financing.RefinanceAmount",
+   "name": "RefinanceAmount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Refinance Amount",
+   "assist": "3. Financing. Refinance Amount."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.CurrentValue",
+   "name": "CurrentValue",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "3. Current value."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.BalanceOwed",
+   "name": "BalanceOwed",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "3. Balance Owed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row3.Equity",
+   "name": "Equity",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "3. Equity"
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.description.description",
+   "name": "description",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Description / Location / County."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.description.PR2",
+   "name": "PR2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Primary Residence",
+   "assist": "4. Primary Residence."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.description.CO2",
+   "name": "CO2",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "Other",
+   "assist": "4. Other."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.MonthlyPayments",
+   "name": "MonthlyPayments",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "2. Monthly Payment(s)."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.financing.YearPurchased",
+   "name": "YearPurchased",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Purchased",
+   "assist": "4. Financing. Year Purchased."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.financing.PurchasePrice",
+   "name": "PurchasePrice",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Purchase Price",
+   "assist": "4. Financing. Purchase Price."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.financing.YearRefinanced",
+   "name": "YearRefinanced",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Year Refinanced",
+   "assist": "4. Financing. Year Financed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.financing.RefinanceAmount",
+   "name": "RefinanceAmount",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Refinance Amount",
+   "assist": "4. Financing. Refinance Amount."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.CurrentValue",
+   "name": "CurrentValue",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Current value."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.BalanceOwed",
+   "name": "BalanceOwed",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Balance Owed."
+  },
+  {
+   "som": "form1.page_2.real_estate.row4.Equity",
+   "name": "Equity",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "4. Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Description1",
+   "name": "Description1",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "C. OTHER ASSETS Include cars, boats, recreational vehicles, whole life policies, etc. Include make, model and year of vehicles and name of life insurance company in Description. (Use additional sheets if necessary.) Row: 1. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Monthly_Payment1",
+   "name": "Monthly_Payment1",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Year_Purchased1",
+   "name": "Year_Purchased1",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.month1",
+   "name": "month1",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.year1",
+   "name": "year1",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Current_Value1",
+   "name": "Current_Value1",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Balance_Owed1",
+   "name": "Balance_Owed1",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform1.Equity1",
+   "name": "Equity1",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Description2",
+   "name": "Description2",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Monthly_Payment2",
+   "name": "Monthly_Payment2",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Year_Purchased2",
+   "name": "Year_Purchased2",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.month2",
+   "name": "month2",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.year2",
+   "name": "year2",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Current_Value2",
+   "name": "Current_Value2",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Balance_Owed2",
+   "name": "Balance_Owed2",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform2.Equity2",
+   "name": "Equity2",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Description3",
+   "name": "Description3",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Monthly_Payment3",
+   "name": "Monthly_Payment3",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Year_Purchased3",
+   "name": "Year_Purchased3",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.month3",
+   "name": "month3",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.year3",
+   "name": "year3",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Current_Value3",
+   "name": "Current_Value3",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Balance_Owed3",
+   "name": "Balance_Owed3",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform3.Equity3",
+   "name": "Equity3",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 3. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Description4",
+   "name": "Description4",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Monthly_Payment4",
+   "name": "Monthly_Payment4",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Year_Purchased4",
+   "name": "Year_Purchased4",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.month4",
+   "name": "month4",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.year4",
+   "name": "year4",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Current_Value4",
+   "name": "Current_Value4",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Balance_Owed4",
+   "name": "Balance_Owed4",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform4.Equity4",
+   "name": "Equity4",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 4. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Description5",
+   "name": "Description5",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Monthly_Payment5",
+   "name": "Monthly_Payment5",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Year_Purchased5",
+   "name": "Year_Purchased5",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.month5",
+   "name": "month5",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.year5",
+   "name": "year5",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Current_Value5",
+   "name": "Current_Value5",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Balance_Owed5",
+   "name": "Balance_Owed5",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform5.Equity5",
+   "name": "Equity5",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 5. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Description6",
+   "name": "Description6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Monthly_Payment6",
+   "name": "Monthly_Payment6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Year_Purchased6",
+   "name": "Year_Purchased6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.month6",
+   "name": "month6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.year6",
+   "name": "year6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Current_Value6",
+   "name": "Current_Value6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Balance_Owed6",
+   "name": "Balance_Owed6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform6.Equity6",
+   "name": "Equity6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 6. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Description6",
+   "name": "Description6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Monthly_Payment6",
+   "name": "Monthly_Payment6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Year_Purchased6",
+   "name": "Year_Purchased6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.month6",
+   "name": "month6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.year6",
+   "name": "year6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Current_Value6",
+   "name": "Current_Value6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Balance_Owed6",
+   "name": "Balance_Owed6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform7.Equity6",
+   "name": "Equity6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 7. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Description6",
+   "name": "Description6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Description."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Monthly_Payment6",
+   "name": "Monthly_Payment6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Year_Purchased6",
+   "name": "Year_Purchased6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Year Purchased."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.month6",
+   "name": "month6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Final Payment (mo/yr). 2 Digit Month."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.year6",
+   "name": "year6",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Final Payment (mo/yr). 2 Digit Year."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Current_Value6",
+   "name": "Current_Value6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Current Value."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Balance_Owed6",
+   "name": "Balance_Owed6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.OtherAssetsTableSubform.RowSubform8.Equity6",
+   "name": "Equity6",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 8. Column: Equity."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row1.I_ype",
+   "name": "I_ype",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "D. CREDIT CARDS (Visa, MasterCard, American Express, Department Stores, etc.) Row: 1. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row1.Crad_i_L_m_t",
+   "name": "Crad_i_L_m_t",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 1. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row1.BalanLe_Owea",
+   "name": "BalanLe_Owea",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 1. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row1.M_n_mim_Mon_hly_Payment",
+   "name": "M_n_mim_Mon_hly_Payment",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 1. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row2.I_ype1",
+   "name": "I_ype1",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 2. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row2.Crad_i_L_m_t1",
+   "name": "Crad_i_L_m_t1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 2. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row2.BalanLe_Owea1",
+   "name": "BalanLe_Owea1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 2. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row2.M_n_mim_Mon_hly_Payment1",
+   "name": "M_n_mim_Mon_hly_Payment1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 2. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row3.I_ype2",
+   "name": "I_ype2",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 3. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row3.Crad_i_L_m_t2",
+   "name": "Crad_i_L_m_t2",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 3. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row3.BalanLe_Owea2",
+   "name": "BalanLe_Owea2",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 3. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row3.M_n_mim_Mon_hly_Payment2",
+   "name": "M_n_mim_Mon_hly_Payment2",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 3. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row4.I_ype3",
+   "name": "I_ype3",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 4. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row4.Crad_i_L_m_t3",
+   "name": "Crad_i_L_m_t3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 4. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row4.BalanLe_Owea3",
+   "name": "BalanLe_Owea3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 4. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row4.M_n_mim_Mon_hly_Payment3",
+   "name": "M_n_mim_Mon_hly_Payment3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 4. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row5.I_ype3",
+   "name": "I_ype3",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 5. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row5.Crad_i_L_m_t3",
+   "name": "Crad_i_L_m_t3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 5. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row5.BalanLe_Owea3",
+   "name": "BalanLe_Owea3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 5. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row5.M_n_mim_Mon_hly_Payment3",
+   "name": "M_n_mim_Mon_hly_Payment3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 5. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row6.I_ype3",
+   "name": "I_ype3",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 6. Column: Type."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row6.Crad_i_L_m_t3",
+   "name": "Crad_i_L_m_t3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 6. Column: Credit Limit."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row6.BalanLe_Owea3",
+   "name": "BalanLe_Owea3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 6. Column: Balance Owed."
+  },
+  {
+   "som": "form1.page_2.SECTION_D.credit_cards.row6.M_n_mim_Mon_hly_Payment3",
+   "name": "M_n_mim_Mon_hly_Payment3",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: 6. Column: Minimum Monthly Payment."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Name_and_Address_of_Institution",
+   "name": "Name_and_Address_of_Institution",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Page 2. INVESTMENTS Include Certificates of Deposit, Trusts, Individual Retirement Accounts (I R As), Keogh Plans, Simplified Employee Pensions, 401(k) Plans, Profit Sharing Plans, Mutual Funds, Stocks, Bonds, Commodities (Silver, Gold, etc.), and other investments. If applicable, include business accounts. (Use additional sheets if necessary.). Row 1. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Account_Number",
+   "name": "Account_Number",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Account Number."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Type_of_Accour_I",
+   "name": "Type_of_Accour_I",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.(unnamed)",
+   "name": "(unnamed)",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": ""
+  },
+  {
+   "som": "form1.page_2.AccountsTable.CheckBox11",
+   "name": "CheckBox11",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Check if Business Account ."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Name_and_Address_of_Institution",
+   "name": "Name_and_Address_of_Institution",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Name and Address of Institution."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Account_Number",
+   "name": "Account_Number",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Account Number."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.Type_of_Accour_I",
+   "name": "Type_of_Accour_I",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Type of Account."
+  },
+  {
+   "som": "form1.page_2.AccountsTable.(unnamed)",
+   "name": "(unnamed)",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": ""
+  },
+  {
+   "som": "form1.page_2.AccountsTable.CheckBox11",
+   "name": "CheckBox11",
+   "ui": "checkButton",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Check if Business Account ."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13a.Line13A",
+   "name": "Line13A",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "DIGITAL ASSETS (CRYPTOCURRENCY) List all digital assets you own or in which you have a financial interest (e.g., Bitcoin, Ethereum, Litecoin, Ripple, etc.). (Use additional sheets if necessary.). Row: 1. Column: Type of Digital Currency."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13a.(unnamed)",
+   "name": "(unnamed)",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Name of Digital Assets Wallet, Exchange or Digital Currency Exchange (D C E)."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13a.p2_t13_13a",
+   "name": "p2_t13_13a",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Email Address Used to Set-up With the Digital Currency Exchange or D C E."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13a.p2_t12_13a",
+   "name": "p2_t12_13a",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Location(s) of Digital Assets (Mobile Wallet, Online, and/or External Hardware storage)."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13a.p2_t11_13a",
+   "name": "p2_t11_13a",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 1. Column: Digital Assets Amount and Value in U S dollars as of today (e.g., 10 Bitcoins $64,600 U S D)."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13b.Line13B",
+   "name": "Line13B",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Type of Digital Currency."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13b.(unnamed)",
+   "name": "(unnamed)",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Name of Digital Assets Wallet, Exchange or Digital Currency Exchange (D C E)."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13b.p2_t17_13b",
+   "name": "p2_t17_13b",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Email Address Used to Set-up With the Digital Currency Exchange or D C E."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13b.p2_t16_13b",
+   "name": "p2_t16_13b",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Location(s) of Digital Assets (Mobile Wallet, Online, and/or External Hardware storage)."
+  },
+  {
+   "som": "form1.page_2.Table_Line14.Row13b.p2_t15_13b",
+   "name": "p2_t15_13b",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Row: 2. Column: Digital Assets Amount and Value in U S dollars as of today (e.g., 10 Bitcoins $64,600 U S D)."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row1.food_monthly",
+   "name": "food_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "G. MONTHLY NECESSARY LIVING EXPENSES List monthly amounts. (For expenses paid other than monthly, see instructions.). 1. Food / Personal Care See instructions. If you do not spend more than the standard allowable amount for your family size, fill in the Total amount only. Row: Food. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row1.food_allowed",
+   "name": "food_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Food. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row2.housekeeping_monthly",
+   "name": "housekeeping_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Housekeeping Supplies. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row2.housekeeping_allowed",
+   "name": "housekeeping_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Housekeeping Supplies. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row3.clothing_monthly",
+   "name": "clothing_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Clothing and Clothing Services. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row3.clothing_allowed",
+   "name": "clothing_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Clothing and Clothing Services. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row4.personal_care_monthly",
+   "name": "personal_care_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Personal Care Products and Services. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row4.personal_care_allowed",
+   "name": "personal_care_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Personal Care Products and Services. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row5.miscellaneous_monthly",
+   "name": "miscellaneous_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Miscellaneous. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row5.miscellaneous_allowed",
+   "name": "miscellaneous_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Miscellaneous. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row6.total_monthly",
+   "name": "total_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: Actual Monthly Expenses"
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.food_personal_care.food_personal_care.Row6.total_allowed",
+   "name": "total_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row1.gas_monthly",
+   "name": "gas_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "2. Transportation. Row: Gas / Insurance / Licenses / Parking / Maintenance etcetera. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row1.gas_allowed",
+   "name": "gas_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Gas / Insurance / Licenses / Parking / Maintenance etcetera. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row2.transportation_monthly",
+   "name": "transportation_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Public Transportation. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row2.transportation_allowed",
+   "name": "transportation_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Public Transportation. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row3.total_monthly",
+   "name": "total_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: Actual Monthly Expenses"
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.transportation.Row3.total_allowed",
+   "name": "total_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row1.rent_monthly",
+   "name": "rent_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "3. Housing and Utilities. Row: Rent. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row1.rent_allowed",
+   "name": "rent_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Rent. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row2.electric_monthly",
+   "name": "electric_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Electric, Oil / Gas, Water / Trash. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row2.electric_allowed",
+   "name": "electric_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Electric, Oil / Gas, Water / Trash. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row3.telephone_monthly",
+   "name": "telephone_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Telephone / Cell / Cable / Internet. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row3.telephone_allowed",
+   "name": "telephone_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Telephone / Cell / Cable / Internet. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row4.real_estate_monthly",
+   "name": "real_estate_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Real Estate Taxes and Insurance (if not included in B above). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row4.real_estate_allowed",
+   "name": "real_estate_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Real Estate Taxes and Insurance (if not included in B above). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row5.maintenance_monthly",
+   "name": "maintenance_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Maintenance and Repairs. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row5.maintenance_allowed",
+   "name": "maintenance_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Maintenance and Repairs. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row6.total_monthly",
+   "name": "total_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_1.column_1.housing_utilities.Row6.total_allowed",
+   "name": "total_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row1.health_monthly",
+   "name": "health_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "4. Medical. Row: Health Insurance. Column: Actual Monthly Expenses"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row1.health_allowed",
+   "name": "health_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Health Insurance. Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row2.out_of_monthly",
+   "name": "out_of_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Out of Pocket Health Care Expenses. Column: Actual Monthly Expenses"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row2.out_of_allowed",
+   "name": "out_of_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Out of Pocket Health Care Expenses. Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row3.total_monthly",
+   "name": "total_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: Actual Monthly Expenses"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.medical.Row3.total_allowed",
+   "name": "total_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row1.child_monthly",
+   "name": "child_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "5. Other. Row: Child / Dependent Care. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row1.child_allowed",
+   "name": "child_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Child / Dependent Care. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row2.tax_payments_monthly",
+   "name": "tax_payments_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Estimated Tax Payments. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row2.tax_payments_allowed",
+   "name": "tax_payments_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Estimated Tax Payments. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row3.term_life_monthly",
+   "name": "term_life_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Term Life Insurance. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row3.term_life_allowed",
+   "name": "term_life_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Term Life Insurance. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row4.required_retirement_monthly",
+   "name": "required_retirement_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Retirement (Employer Required). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row4.required_retirement_allowed",
+   "name": "required_retirement_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Retirement (Employer Required). Column: I R S Allowed"
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row5.voluntary_retirement_monthly",
+   "name": "voluntary_retirement_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Retirement (Voluntary). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row5.voluntary_retirement_allowed",
+   "name": "voluntary_retirement_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Retirement (Voluntary). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row6.union_monthly",
+   "name": "union_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Union Dues. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row6.union_allowed",
+   "name": "union_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Union Dues. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row7.delinquent_monthly",
+   "name": "delinquent_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Delinquent State and Local Taxes (minimum payment). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row7.delinquent_allowed",
+   "name": "delinquent_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Delinquent State and Local Taxes (minimum payment). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row8.student_loans_monthly",
+   "name": "student_loans_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Student Loans (minimum payment). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row8.student_loans_allowed",
+   "name": "student_loans_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Student Loans (minimum payment). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row9.support_monthly",
+   "name": "support_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Court Ordered Child Support. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row9.support_allowed",
+   "name": "support_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Court Ordered Child Support. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row10.alimony_monthly",
+   "name": "alimony_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Court Ordered Alimony. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row10.alimony_allowed",
+   "name": "alimony_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Court Ordered Alimony. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row11.court_ordered_monthly",
+   "name": "court_ordered_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other Court Ordered Payments. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row11.court_ordered_allowed",
+   "name": "court_ordered_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other Court Ordered Payments. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row13.other",
+   "name": "other",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "Other (specify)",
+   "assist": "Other (specify)."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row13.other_monthly",
+   "name": "other_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other (specify). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row13.other_allowed",
+   "name": "other_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other (specify). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row14.other",
+   "name": "other",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "Other (specify)",
+   "assist": "Other (specify)."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row14.other_monthly",
+   "name": "other_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other (specify). Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row14.other_allowed",
+   "name": "other_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Other (specify). Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row15.total_monthly",
+   "name": "total_monthly",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: Actual Monthly Expenses."
+  },
+  {
+   "som": "form1.page_3.column_2.column_2.other.Row15.total_allowed",
+   "name": "total_allowed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Row: Total. Column: I R S Allowed."
+  },
+  {
+   "som": "form1.page_3.YourSignature",
+   "name": "YourSignature",
+   "ui": "signature",
+   "bind": "none",
+   "caption": "Your Signature",
+   "assist": "Your Signature."
+  },
+  {
+   "som": "form1.page_3.SpousesSignature",
+   "name": "SpousesSignature",
+   "ui": "signature",
+   "bind": "none",
+   "caption": "Spouse’s Signature",
+   "assist": "Spouse’s Signature."
+  },
+  {
+   "som": "form1.page_3.DateReview",
+   "name": "DateReview",
+   "ui": "dateTimeEdit",
+   "bind": "(no bind element)",
+   "caption": "Date",
+   "assist": "Date."
+  },
+  {
+   "som": "form1.page_3.CountyResidence",
+   "name": "CountyResidence",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Notes",
+   "assist": "Notes."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.fieldXmlnshttpwwwxfa",
+   "name": "fieldXmlnshttpwwwxfa",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Page 3. E. EMPLOYMENT INFORMATION If you have more than one employer, include the information on another sheet of paper. (If attaching a copy of current pay stub, you do not need to complete the lines regarding gross pay and taxes.) Your current employer (name and address)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.weekly",
+   "name": "weekly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Weekly",
+   "assist": "How often are you paid (Check one). Weekly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.biweekly",
+   "name": "biweekly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Biweekly",
+   "assist": "Biweekly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.semi",
+   "name": "semi",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Semi-monthly",
+   "assist": "Semi-monthly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.monthly",
+   "name": "monthly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Monthly",
+   "assist": "Monthly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.GrossPerPayPeriod",
+   "name": "GrossPerPayPeriod",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "Gross per pay period",
+   "assist": "Gross per pay period."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.TaxesPerPayPeriodFed",
+   "name": "TaxesPerPayPeriodFed",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "Taxes per pay period (Fed)",
+   "assist": "Taxes per pay period (Fed)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.State",
+   "name": "State",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "(State)",
+   "assist": "(State)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.Local",
+   "name": "Local",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "(Local)",
+   "assist": "(Local)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_1.HowLongAtCurrentEmpl",
+   "name": "HowLongAtCurrentEmpl",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "How long at current employer",
+   "assist": "How long at current employer."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.FillText65",
+   "name": "FillText65",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "",
+   "assist": "Spouse’s current employer (name and address)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.weekly",
+   "name": "weekly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Weekly",
+   "assist": "How often are you paid? (Check one) Weekly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.biweekly",
+   "name": "biweekly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Biweekly",
+   "assist": "Biweekly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.semi",
+   "name": "semi",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Semi-monthly",
+   "assist": "Semi-monthly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.monthly",
+   "name": "monthly",
+   "ui": "checkButton",
+   "bind": "(no bind element)",
+   "caption": "Monthly",
+   "assist": "Monthly."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.Gross1",
+   "name": "Gross1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "Gross per pay period",
+   "assist": "Gross per pay period."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.Fed1",
+   "name": "Fed1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "Taxes per pay period (Fed)",
+   "assist": "Taxes per pay period (Fed)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.State1",
+   "name": "State1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "(State)",
+   "assist": "(State)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.Local1",
+   "name": "Local1",
+   "ui": "numericEdit",
+   "bind": "(no bind element)",
+   "caption": "(Local)",
+   "assist": "(Local)."
+  },
+  {
+   "som": "form1.page_3.sectionE.column_2.How_long_at_current_employer",
+   "name": "How_long_at_current_employer",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "How long at current employer",
+   "assist": "How long at current employer."
+  },
+  {
+   "som": "form1.page_3.nri",
+   "name": "nri",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Net Rental Income",
+   "assist": "Net Rental Income."
+  },
+  {
+   "som": "form1.page_3.ui",
+   "name": "ui",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Unemployment Income",
+   "assist": "Unemployment Income."
+  },
+  {
+   "som": "form1.page_3.pi",
+   "name": "pi",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Pension Income",
+   "assist": "Pension Income."
+  },
+  {
+   "som": "form1.page_3.ai",
+   "name": "ai",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Alimony Income",
+   "assist": "F. NON-WAGE HOUSEHOLD INCOME List monthly amounts. Alimony Income."
+  },
+  {
+   "som": "form1.page_3.csi",
+   "name": "csi",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Child Support Income",
+   "assist": "Child Support Income."
+  },
+  {
+   "som": "form1.page_3.nsei",
+   "name": "nsei",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Net Self Employment Income",
+   "assist": "Net Self Employment Income."
+  },
+  {
+   "som": "form1.page_3.idi",
+   "name": "idi",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Interest/Dividends Income",
+   "assist": "Interest/Dividends Income."
+  },
+  {
+   "som": "form1.page_3.ssi",
+   "name": "ssi",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "Social Security Income",
+   "assist": "Social Security Income."
+  },
+  {
+   "som": "form1.page_3.o",
+   "name": "o",
+   "ui": "textEdit",
+   "bind": "none",
+   "caption": "Other",
+   "assist": "Other."
+  },
+  {
+   "som": "form1.page_3.oa",
+   "name": "oa",
+   "ui": "numericEdit",
+   "bind": "none",
+   "caption": "",
+   "assist": "Social Security Income."
+  },
+  {
+   "som": "form1.page_7.column_1.sample_check.sample_check.dollars",
+   "name": "dollars",
+   "ui": "textEdit",
+   "bind": "(no bind element)",
+   "caption": "$",
+   "assist": ""
+  }
+ ]
+}
