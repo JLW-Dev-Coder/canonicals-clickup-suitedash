@@ -994,6 +994,39 @@ lands it is the commit this rule is written in, so it has no hash yet.
 
 ---
 
+## [R-37] A pin nobody checks is a pin in name only
+
+> A declared hash, revision or SHA that no tool opens is a claim, not a check. And where a pin
+> cannot be taken from the evidence the standing rule requires, say so and pin what can be
+> pinned — never let a weaker source stand in the stronger one's place because it agrees.
+
+**The defect that earned it.** `adapters/pdf/forms/forms.sha256` held **six typed SHA-256 hashes
+and nothing under `adapters/` ever opened the file**. Not one tool. The gate pins its document by
+revision and catalogue number read from the drawn page — which is real, and is a different
+check — and separately prints a sha it compares to nothing. The pinning was nonetheless being
+done, by hand, every cycle, by the person running the work; so what was false was not the hashes
+but the claim that the TREE held them. `[R-30]` names the same distinction from the other side: a
+thing that is true because somebody remembers to do it is not a thing the engine knows. It was
+found by `[SB-92]`'s residual, which asked which files no boundary claimed, and the answer
+included the pin file itself. `[SB-26]` now recomputes every hash on every run and checks BOTH
+directions — a pinned name with no file, and a file with no pinned name.
+
+**The second half is 433-H and it is why this is a rule rather than a fix.** That form's single
+drawn page is the Adobe Reader placeholder: no revision, no catalogue number, no form number.
+Four sources agree on `Rev. 3-2025` and `71232U` — the template's `product_id` draw, its
+`assist`/`speak`, the PDF `/Info` title, and the config packet's build path — and **four
+agreeing sources written by one authoring tool into one file are not four witnesses.** The
+honest move is the one `[D-02]` already required and this rule generalises: declare that the
+revision cannot be pinned from drawn bytes, and pin the **document** instead, by the SHA the
+tree now actually checks. A pin that answers a weaker question loudly beats a pin that answers
+the right question silently.
+
+**Roughly when.** The `forms.sha256` half: found and closed prompt 55, landed 2026-08-26,
+`137a22b`. The 433-H half: ruled 2026-08-26, prompt 56 ruling 3. Cycle-dated: the commit that
+lands it is the commit this rule is written in, so it has no hash yet.
+
+---
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in
