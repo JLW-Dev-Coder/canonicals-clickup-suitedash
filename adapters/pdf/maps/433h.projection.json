@@ -1,0 +1,81 @@
+{
+ "form": "433-H",
+ "_generated_by": "scratchpad/p58-433h-projection.mjs — re-run it and this file regenerates byte for byte; `--check` asserts that. Declared because it is generated ([R-19]).",
+ "_what_this_is": "THE NEW-PROPERTY PROJECTION for 433-H, derived BEFORE any classification and before any name is derived. [R-32]: the ceiling is checked before a create and projected before a classification, and a projection that exceeds the headroom is a STOP and a decision for the Principal, never a partial provisioning run.",
+ "_it_is_a_bound_and_a_floor_and_nothing_between_them": "A COUNT IS NOT AVAILABLE AND WOULD BE INVENTED. The most a form can cost is one property per distinct leaf stem; the floor is zero, because every stem could in principle bind a property that already exists. No number between the two is printed: a number between them is an invented reuse rate, and [R-29] is the rule that a coinciding subject says which reuses are PERMISSIBLE and nothing whatever about how many there will be. 433-B and 433-B(OIC) coincide on their subject and NINE of 116 keys reused.",
+ "source": {
+  "fieldset": "adapters/pdf/maps/433h.xfa-fieldset.json",
+  "fieldset_generator": "adapters/pdf/xfa-fieldset.mjs",
+  "document_sha256": "1da60f64ce39800219859be71dda7c7b29d1695e12998a3f061d65402fa154f8",
+  "_the_document_is_pinned_and_not_the_revision": "433-H's single drawn page is the Adobe Reader placeholder: no revision, no catalogue number, no form number, so the standing check — revision and catalogue number read from the drawn page — has nothing to read. Four sources agree on Rev. 3-2025 and 71232U and all four were written by ONE authoring tool into ONE file in one build, which is one statement quoted four times ([R-39]). The DOCUMENT is pinned instead, by the SHA-256 above, which adapters/pdf/xfa-fieldset.mjs recomputes from the bytes on every run ([R-37])."
+ },
+ "universe": {
+  "fields": 331,
+  "distinct_leaf_stems": 172,
+  "_how_a_stem_is_derived": "The leaf NAME, with a trailing instance digit stripped ONLY inside a Row / RowSubform table, where Row1.Description1 and Row2.Description2 are the same column of one printed table. A BOXED-DIGIT RUN IS NOT A TABLE and is not collapsed: 433-D prints the same direct-debit block and this engine gave it twenty-six properties for twenty-six drawn boxes (irs433d_routing_number_digit_1..9, irs433d_account_number_digit_1..17). Collapsing 433-H's identical block would project a cost this engine has never paid for that construct."
+ },
+ "exclusion": {
+  "what": "The IRS Allowed column.",
+  "ground": "COMPUTED, NOT STORED.",
+  "leaf_stems_excluded": 27,
+  "leaf_stems": [
+   "alimony_allowed",
+   "child_allowed",
+   "clothing_allowed",
+   "court_ordered_allowed",
+   "delinquent_allowed",
+   "electric_allowed",
+   "food_allowed",
+   "gas_allowed",
+   "health_allowed",
+   "housekeeping_allowed",
+   "maintenance_allowed",
+   "miscellaneous_allowed",
+   "other_allowed",
+   "out_of_allowed",
+   "personal_care_allowed",
+   "real_estate_allowed",
+   "rent_allowed",
+   "required_retirement_allowed",
+   "student_loans_allowed",
+   "support_allowed",
+   "tax_payments_allowed",
+   "telephone_allowed",
+   "term_life_allowed",
+   "total_allowed",
+   "transportation_allowed",
+   "union_allowed",
+   "voluntary_retirement_allowed"
+  ],
+  "_stated_as_a_claim_and_checked": "THE CLAIM is that the IRS Allowed column costs no property because it is computed. THE CHECK is whether the computation needs a stored input that is not already held — which is the shape that gets missed. 433-F prints the same two-column table and this engine has already ruled on it in adapters/pdf/maps/433f.map.json `allowed`: SIX cells are auto-filled from adapters/pdf/maps/irs-standards-2026.json (the five National Standards food-group rows plus their Total, by household size; and Out of Pocket Health Care, by age band), and the other TWENTY-SIX are declared under `allowed._never_autofill`, each with its own reason — Local Standards varying by county or census region for which no table is held, a greater-of judgement against the taxpayer's own vehicle costs, and sums only meaningful once an examiner has completed the cells above them.",
+  "_the_two_inputs_the_computed_half_needs_are_already_live": "irs433_allowable_household_size (created by 433-A, bound by 433-F as 433f_hh_size) and irs433_taxpayer_age_band (created by 433-F, bound as 433f_age_band). Neither is printed on either form — each exists because the standards lookup needs it. So excluding this column hides no stored input inside a computation, and the exclusion is SOUND.",
+  "_and_a_zero_here_is_a_STOP": "The generator throws if no leaf stem ends \"_allowed\". An exclusion that matches nothing removes nothing, and a bound that quietly grew because a reading failed reads as a WORSE projection rather than as a broken instrument ([R-04])."
+ },
+ "projection": {
+  "bound": 145,
+  "floor": 0,
+  "_what_the_bound_means": "145 is the MOST 433-H can cost: one new property for every distinct leaf stem outside the excluded column, i.e. the figure that obtains if not one fact on this form is already held anywhere in the series.",
+  "_what_the_floor_means": "0 is the LEAST it can cost: the figure that obtains if every fact on this form is already held by a live property that a classification rules it may bind. Nothing between the two is derivable before the classification exists."
+ },
+ "headroom_at_the_time_of_this_projection": {
+  "_this_is_an_OBSERVATION_and_not_a_derivation": "Read from the live portal by adapters/hubspot/headroom.mjs on 2026-08-27, in the run that produced this file. It is recorded here rather than re-read, because a portal reading inside a --check-ed artefact would make the artefact non-reproducible. Re-read it before acting on this projection.",
+  "custom_contact_properties": 959,
+  "documented_ceiling": 1000,
+  "headroom": 41,
+  "_the_ceiling_is_documented_and_not_probed": "hs-preflight.mjs probes four endpoints for a live figure and all four 404. HubSpot publishes the number only inside the 400 returned by a create that would cross it, so nothing short of crossing it reads it."
+ },
+ "verdict": {
+  "fits": false,
+  "_the_arithmetic": "bound 145 against headroom 41.",
+  "_and_this_is_a_decision_and_not_an_engineering_trade_off": "[R-32]: a projection that exceeds the headroom is a STOP and a decision for the Principal, never a partial provisioning run. HubSpot does not delete a property; a name created is a name that cannot be withdrawn, and a run that provisions until it runs out leaves a form half-named against a ceiling that will not free anything."
+ },
+ "_what_this_file_does_NOT_say": [
+  "IT DOES NOT SAY WHICH FACTS ARE ALREADY HELD. That is a classification, it does not exist for this form, and producing a figure from an informal reading of it is precisely the invented reuse rate [R-32] refuses. The bound and the floor are what is derivable today.",
+  "IT DOES NOT SAY 433-H CANNOT BE RENDERED. The render route and the property cost are different questions: a rendering that leaves cells blank still renders. What the bound governs is whether the FACTS this form asks for can be stored under new names on this portal.",
+  "IT DOES NOT RULE ON THE FILING QUESTION. [D-26] is open and names Principal and JLW: whether a document this engine produces may be filed in place of the IRS form, and whether a pdfjs rendering of the IRS template counts as the form or as a copy of it. Nothing here bears on that."
+ ],
+ "_the_shape_of_the_answer_if_the_ceiling_moves": [
+  "THE BOUND IS NOT THE EXPECTED COST AND SAYING SO IS NOT HEDGING. 433-H is the individual instalment-agreement request bolted to a collection information statement, and this series has already provisioned both halves: 433-F is the same statement (its crosswalk binds 97 keys, most of them to irs433_ names 433-A and 433-A(OIC) created) and 433-D is the instalment agreement. A classification would very likely land far below the bound.",
+  "WHAT IT WOULD NOT LAND BELOW IS THE PART-1 REQUEST BLOCK AND THE TWENTY-SIX DIRECT-DEBIT BOXES, and those alone are the reason this is close rather than comfortable. Each of the twenty-six boxes has a 433-D twin one prefix segment away, and every one of them is exactly the [R-40] question: an account PROPOSED on a request the Service may refuse is not the same fact as the account on an agreement it has accepted, and the two can differ at one moment. That is a per-row ruling, it is classification work, and it is not derivable here."
+ ]
+}
