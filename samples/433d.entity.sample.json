@@ -1,6 +1,7 @@
 {
  "_fixture": {
   "role": "branch",
+  "subject_state": "entity",
   "why": "THE SAME RECORD ON THE OTHER SUBJECT. It reaches the two entity-only cells and is required to leave the three individual-only ones empty — the spouse identifier, the spouse signature and the IMF review code. Between this and the acceptance record every one of the 83 cells is reached by SOME record, which is the strongest saturation claim this form admits."
  },
  "_generated_by": "scratchpad/p54-433d-author-fixtures.mjs",

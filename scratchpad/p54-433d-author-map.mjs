@@ -198,21 +198,37 @@ const doc = {
     _unaccounted_by_page: '0 unaccounted. ZERO UNACCOUNTED, AND THE BREAKDOWN IS STATED RATHER THAN LEFT EMPTY. Page 1: 83 bound. PAGE 2 CARRIES NO WIDGETS AT ALL — that is derived from the geometry reader returning every widget on every page and page 2 contributing none, not inferred from a low count. Page 3: 83 bound. Page 4: 2, both excluded by name above.',
   },
   _carried: {
-    _why: 'The questions this map raised and no slice has answered. An arguable item is reported in full, carries an id and is not resolved ([R-20]).',
-    open: [
-      { id: 'DM-1',
-        subject: 'THE RECORD DECLARES ITS OWN SUBJECT AND NOTHING ON THE FILED PAGE CONFIRMS IT. `433d_subject` is what routes the identifier cell and what every emptiness assertion is asked against, and it is supplied by the record rather than read from the document.',
-        why_it_is_not_a_defect_today: 'The engine has no other source for it. The subject register records that 433-D is the first form whose subject is NOT a property of the form: "One filed 433-D is about a natural person; the next is about a corporation; the form is the same form and nothing printed on it distinguishes them except which identifier the filer wrote." The discriminator therefore cannot be derived from the blank, and a record that declares nothing is refused rather than defaulted.',
-        what_would_settle_it: 'A cross-check against the identifier the record supplies: an SSN or ITIN is nine digits in one printed shape and an EIN in another, so a record declaring `entity` and supplying an SSN-shaped identifier is contradicting itself. That is a second witness the engine could hold and does not, and it is not built here because inventing a format predicate for a taxpayer identification number in the commit that lands the map is exactly the adjacent change that has twice reproduced the defect class it was meant to close.',
-        status: 'OPEN' },
-      { id: 'DM-2',
-        subject: 'NO SINGLE RECORD CAN SATURATE THIS FORM, and that is a property of the form rather than of the fixture. Five cells are subject-CONDITIONAL — three exist only for an individual, two only for an entity — so on any record at least two mapped text cells are REQUIRED to be empty.',
-        why_it_matters: 'Gate step 10 in saturated mode fails on any mapped text cell an acceptance record left empty, and that rule is right: a count quietly coming in low is indistinguishable from the map being wrong. On this form the rule and the page disagree, and the disagreement is real rather than a gap in the fixture.',
-        what_stands_in_the_meantime: 'The exemption is DERIVED from this map’s own `empty_unless` declarations against the record’s declared subject, reported BY NAME on every run, and it is two-directional: a cell required to be empty that carries a value FAILS at the same step. So the saturation rule is not weakened for this form, it is stated for a form whose cells are not all reachable at once.',
-        status: 'OPEN' },
-    ],
-    resolved: [],
-    _count: { open: 2, resolved: 0 },
+   "_why": "The questions this map raised and no slice has answered. An arguable item is reported in full, carries an id and is not resolved ([R-20]).",
+   "open": [
+    {
+     "id": "DM-1",
+     "subject": "THE RECORD DECLARES ITS OWN SUBJECT AND NOTHING ON THE FILED PAGE CONFIRMS IT. `433d_subject` is what routes the identifier cell and what every emptiness assertion is asked against, and it is supplied by the record rather than read from the document.",
+     "why_it_is_not_a_defect_today": "The engine has no other source for it. The subject register records that 433-D is the first form whose subject is NOT a property of the form: \"One filed 433-D is about a natural person; the next is about a corporation; the form is the same form and nothing printed on it distinguishes them except which identifier the filer wrote.\" The discriminator therefore cannot be derived from the blank, and a record that declares nothing is refused rather than defaulted.",
+     "what_would_settle_it": "A cross-check against the identifier the record supplies: an SSN or ITIN is nine digits in one printed shape and an EIN in another, so a record declaring `entity` and supplying an SSN-shaped identifier is contradicting itself. That is a second witness the engine could hold and does not, and it is not built here because inventing a format predicate for a taxpayer identification number in the commit that lands the map is exactly the adjacent change that has twice reproduced the defect class it was meant to close.",
+     "status": "OPEN"
+    }
+   ],
+   "resolved": [
+    {
+     "id": "DM-2",
+     "subject": "NO SINGLE RECORD CAN SATURATE THIS FORM, and that is a property of the form rather than of the fixture. Five cells are subject-CONDITIONAL — three exist only for an individual, two only for an entity — so on any record at least two mapped text cells are REQUIRED to be empty.",
+     "why_it_matters": "Gate step 10 in saturated mode fails on any mapped text cell an acceptance record left empty, and that rule is right: a count quietly coming in low is indistinguishable from the map being wrong. On this form the rule and the page disagree, and the disagreement is real rather than a gap in the fixture.",
+     "what_stands_in_the_meantime": "The exemption is DERIVED from this map’s own `empty_unless` declarations against the record’s declared subject, reported BY NAME on every run, and it is two-directional: a cell required to be empty that carries a value FAILS at the same step. So the saturation rule is not weakened for this form, it is stated for a form whose cells are not all reachable at once.",
+     "status": "RESOLVED",
+     "resolved_in": "prompt 55 commit 1",
+     "what_this_item_got_RIGHT": "ALL OF IT, AND THE PART THAT MATTERED WAS THE DIAGNOSIS OF WHOSE PROPERTY THE PROBLEM IS. \"No single record can saturate this form, and that is a property of the FORM rather than of the fixture\" is the sentence the resolution is built on: an individual record cannot fill the entity cells because the page does not draw them for an individual, so no fixture anybody could author would close the gap. An item that had read this as a missing fixture would have sent the next cycle looking for one.",
+     "what_the_item_LEFT_OPEN": "The exemption it describes is CORRECT AND INCOMPLETE, and the incompleteness is not visible from inside one run. Per record, verify-form-coverage.mjs exempts the cells that record’s subject requires empty, names each with its printed caption, and FAILS if one carries a value — both directions, as the item says. What no run could ask is the question the exemption leaves behind: IS EVERY MAPPED CELL REACHED BY SOME RECORD? A cell exempted on the individual record and exempted again on the entity record is a cell NOTHING fills — a map binding a cell the form never draws — and every single-record saturated run passes over it.",
+     "how_it_was_resolved": "THE UNIT OF SATURATION FOR A FORM WITH MUTUALLY EXCLUSIVE SUBJECT CLASSES IS THE UNION OVER ITS DECLARED SUBJECT SET, held by adapters/pdf/saturation-union.mjs and run over every form on `npm run sweeps`. The set is DERIVED from this map’s own subject_classes — the distinct empty_unless values — never listed. The members are the acceptance record plus every `branch` fixture declaring a subject, and the set must cover each declared subject EXACTLY ONCE in both directions.",
+     "why_the_branch_ROLE_and_not_a_new_mechanism": "adapters/pdf/resolve-fixture.mjs already carries a role that is a SET rather than a singleton, for this exact structural reason: a record takes ONE side of each printed conditional, so one fixture exercises one side and the claim is that both are reached. A subject is a second axis of the same fact, so the role took a SECOND DECLARED DIMENSION — `_fixture.subject_state` beside `_fixture.branch_state` — rather than a second role being invented beside it. A branch member declaring NEITHER is a STOP, which is [R-35] applied to the fixture register: the fourth state is refused rather than defaulted, because assuming a dimension would admit a predicate-side fixture to the subject union and the union would then report a subject as covered by a record that never declared it.",
+     "what_the_union_reads_on_433D": "TWO MEMBERS. samples/433d.sample.json (acceptance, individual) writes 138 text cells and is required empty in 2; samples/433d.entity.sample.json (branch, subject_state entity) writes 136 and is required empty in 4. SIX cells are empty on one member and fed by the other — the Spouse identifier, the Spouse signature and the conditional signature Title, each in both mirror copies — and ZERO are empty on every member. Every mapped text cell on this form is reached by SOME record, which is the strongest saturation claim the printed page admits.",
+     "and_the_other_five_forms_are_not_skipped": "[R-16]. A form declaring no mutually exclusive subject classes has a declared subject set of size one, its union is the acceptance record alone, and the union residual MUST equal what the single-record saturated run says. That equality is ASSERTED on every run rather than assumed, so a union that had drifted out of agreement with the gate would fail on the five inert forms rather than waiting for the sixth. All five report it holding.",
+     "the_canary_and_why_this_construct_needed_one_more_than_most": "The union’s one interesting output is the set of cells empty on EVERY member, and on a healthy tree that set is EMPTY — so the live run prints 0 whether the arithmetic works or not, which is the vacuous-guard shape inside the tool written to close a coverage gap. AND IT CANNOT BE PLANTED FROM THE MAP: a cell carries one empty_unless, so being required empty on both subjects needs a THIRD declared subject, and a third subject with no fixture is refused earlier and louder by NO MEMBER FOR SUBJECT. That is the right precedence and it is why the branch has no map-level firing proof. It is the in-process class [R-28] declares, and both directions are planted: a synthetic cell required empty on both members must come back BY NAME, and the same pair with that cell fed by one member must come back empty."
+    }
+   ],
+   "_count": {
+    "open": 1,
+    "resolved": 1
+   }
   },
 };
 

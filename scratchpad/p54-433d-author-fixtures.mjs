@@ -95,9 +95,15 @@ const valueFor = (stem) => {
   return null;
 };
 
-const build = ({ subject, intake_id, role, why, tin, overmax = false, plantSpouse = false }) => {
+const build = ({ subject, intake_id, role, why, tin, overmax = false, plantSpouse = false, subject_state = null }) => {
   const rec = {
-    _fixture: { role, why },
+    // THE `branch` ROLE CARRIES TWO DIMENSIONS AND A MEMBER SAYS WHICH ONE IT VARIES —
+    // `branch_state` for the side of the printed PREDICATES, `subject_state` for the declared
+    // SUBJECT. adapters/pdf/saturation-union.mjs refuses a branch member declaring neither,
+    // rather than assuming it is either: a predicate-side fixture silently admitted to the
+    // subject union would make the union report a subject as covered by a record that never
+    // declared it. Written only where one is given, so the singleton roles are unchanged.
+    _fixture: subject_state ? { role, subject_state, why } : { role, why },
     _generated_by: 'scratchpad/p54-433d-author-fixtures.mjs',
     _synthetic: 'EVERY VALUE IN THIS FILE IS INVENTED. No real taxpayer, no real employer identification number, no real financial institution. [R-24]: synthetic data only, registered, torn down with absence verified — and a fixture is the one place synthetic data lives permanently, so it says so at the top rather than in a commit message.',
     intake_id,
@@ -156,7 +162,7 @@ write('samples/433d.sample.json', build({
 }));
 
 write('samples/433d.entity.sample.json', build({
-  subject: 'entity', intake_id: 'INT-SAMPLE-433D-002', role: 'branch', tin: '40-0001234',
+  subject: 'entity', intake_id: 'INT-SAMPLE-433D-002', role: 'branch', subject_state: 'entity', tin: '40-0001234',
   why: 'THE SAME RECORD ON THE OTHER SUBJECT. It reaches the two entity-only cells and is required to leave the three individual-only ones empty — the spouse identifier, the spouse signature and the IMF review code. Between this and the acceptance record every one of the 83 cells is reached by SOME record, which is the strongest saturation claim this form admits.',
 }));
 

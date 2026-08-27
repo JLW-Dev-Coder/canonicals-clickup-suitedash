@@ -69,10 +69,30 @@
 //                reading it off disk, and a break held in it makes all five drift from the
 //                generator they name, taking the gate down at step 3 on files nobody touched.
 //                So the set carries BOTH sides and neither member is anything else's input.
-//                Each declares `_fixture.branch_state`, naming the side it takes.
-//                A form declaring no `when` predicate needs no branch set and has none; that is
-//                a checked absence, and the authoring script STOPs rather than writing an empty
-//                one.
+//                Each member declares WHICH DIMENSION IT VARIES, and there are now TWO.
+//
+//                  `_fixture.branch_state`   the side of the printed two-branch PREDICATES
+//                  `_fixture.subject_state`  the declared SUBJECT the record is filed under
+//
+//                THE SECOND DIMENSION IS AN EXTENSION AND NOT A SECOND ROLE, because it is the
+//                same structural fact seen on a different axis: a record takes ONE side of each
+//                printed conditional, and it is filed under ONE subject, so one fixture can
+//                exercise one of each and the claim in both cases is that ALL of them are
+//                reached. 433-D is the form that needed it — three of its cells exist only for
+//                an individual filer and two only for a business entity, so no single record
+//                can reach them all and saturation over one record is unsatisfiable by
+//                construction. adapters/pdf/saturation-union.mjs is what makes the UNION the
+//                unit, and it requires exactly one member per declared subject in both
+//                directions: a subject with no member is a gap, and two members on one subject
+//                means another declared subject is unrepresented while the count looks right.
+//
+//                A MEMBER DECLARING NEITHER DIMENSION IS A STOP. The fourth state is refused
+//                rather than defaulted — [R-35] — because assuming a dimension would admit a
+//                predicate-side fixture to the subject union, and the union would then report a
+//                subject as covered by a record that never declared it.
+//                A form declaring no `when` predicate and no mutually exclusive subject classes
+//                needs no branch set and has none; that is a checked absence, and the authoring
+//                script STOPs rather than writing an empty one.
 //
 // ZERO acceptance fixtures is a STOP. TWO is a STOP naming both. A `superseded_by` that names
 // a file which is not here is a STOP. There is no state in which this returns a guess.
@@ -86,8 +106,9 @@ export const ROLES = ['acceptance', 'stress', 'negative', 'production', 'superse
 // for the contract, and the `branch` entry above for why that role joined this set.
 //
 // `branch` IS A SET FOR THE SAME STRUCTURAL REASON `record_shape` IS. A record puts each printed
-// conditional on ONE of its branches, so one fixture can exercise one side of each; the claim
-// the role exists to support is that BOTH sides are reached. One branch fixture could only ever
+// conditional on ONE of its branches AND is filed under ONE subject, so one fixture can
+// exercise one side of each; the claim the role exists to support is that ALL sides are
+// reached — on both dimensions, since [DM-2]. One branch fixture could only ever
 // prove half of it, and on 433-B(OIC) that half was not even the missing half: the acceptance
 // record holds the other side and IS UNSAFE TO BREAK, because five other fixtures are generated
 // by reading it off disk. So the set carries one member per side, and neither is anything else's
