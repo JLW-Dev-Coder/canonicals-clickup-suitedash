@@ -130,6 +130,31 @@ for (const b of bindings) {
   if (reuseNames.has(b.hs_name)) fromReused++;
 
   if (b.kind === 'option') {
+    // THE LONE TICK, WHICH CARRIES NO TRANSLATION TABLE.
+    //
+    // `map_option_by_value` inverts an OPTION SET — the map's `checkboxes.<key>` index of
+    // option word to widget target. A lone tick has no index: the map names one target, or a
+    // list of targets where the form is mirrored, and the only question is whether the box is
+    // ticked. The definition therefore carries `map_option_by_value: null`, and the branch
+    // below reported the stored value as "not one of the provisioned option values []" — an
+    // EMPTY list, which is the tell that the check was reading nothing rather than finding a
+    // mismatch. All three of this form's lone ticks failed that way on the first live fetch.
+    //
+    // The engine reads a lone tick through `truthy()` — fill-433d.mjs line 152, which accepts
+    // true / yes / 1 / y / on — so "yes" and "no" are emitted: spellings that engine accepts,
+    // and the spellings the committed fixtures already use, so a round trip compares equal
+    // rather than compares equivalent. A stored value in neither set is an ERROR and not a
+    // skip, for the same reason the option-set branch treats one as an error: a box left blank
+    // where the filer ticked it is a form asserting nothing where they said something.
+    if (!b.map_option_by_value) {
+      const s = String(raw).trim().toLowerCase();
+      const asWord = s === 'true' || s === 'yes' ? 'yes' : s === 'false' || s === 'no' ? 'no' : null;
+      if (!asWord) { errors.push(`${b.hs_name} (-> ${b.key}): stored value ${JSON.stringify(raw)} is a LONE TICK and is neither of [true, false]. A lone tick answers whether the box is ticked and nothing else, and fill-433d.mjs would read anything else as untrue — filing a blank where the record holds a value.`); continue; }
+      record[b.key] = asWord;
+      coerced.options++;
+      continue;
+    }
+
     const mapped = b.map_option_by_value?.[String(raw)];
     if (mapped === undefined) {
       errors.push(`${b.hs_name} (-> ${b.key}): stored value ${JSON.stringify(raw)} is not one of the provisioned option values [${Object.keys(b.map_option_by_value || {}).join(', ')}]. fill-433d.mjs treats an unrecognised option as a HARD FAILURE, so this stops here rather than filing a form that asserts nothing where the filer said something.`);

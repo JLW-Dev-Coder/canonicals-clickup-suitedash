@@ -134,7 +134,17 @@ if (!existsSync(tripwirePath)) {
 } else {
   try {
     const t = JSON.parse(readFileSync(tripwirePath, 'utf8'));
-    if (t.filled_sha256 !== filledSha) tripWhy = `${tripwirePath} records a run against a DIFFERENT document (its SHA-256 is ${String(t.filled_sha256).slice(0, 12)}…, this PDF is ${filledSha.slice(0, 12)}…). A stale result read as a fresh one is the failure this check exists for.`;
+    // A FORM WITH NO ARITHMETIC IS NOT A FORM WITH A STALE RESULT.
+    //
+    // The engine stamps `filled_sha256` on a tripwires file it wrote a VERIFICATION into. A form
+    // that prints no total has nothing to verify, so its engine writes the run's own record —
+    // subject, route taken, conditional cells proved empty — and no arithmetic and no stamp. This
+    // branch read the missing stamp as a stamp that disagreed, and told a preparer the result was
+    // stale on a form for which no result was ever possible. `${t.totals ?? ''}` is not the test:
+    // the form's own totals declaration is, and it is read here rather than inferred from silence.
+    const printsArithmetic = (JSON.parse(readFileSync(`adapters/pdf/maps/${form}.totals.json`, 'utf8')).totals || []).length > 0;
+    if (t.filled_sha256 === undefined && !printsArithmetic) tripWhy = `${form.toUpperCase()} prints no arithmetic — adapters/pdf/maps/${form}.totals.json declares zero totals — so there is no sum on this document for the engine to have checked. The Arithmetic column reads "not a total" on every row because every row IS one, not because a check was skipped.`;
+    else if (t.filled_sha256 !== filledSha) tripWhy = `${tripwirePath} records a run against a DIFFERENT document (its SHA-256 is ${String(t.filled_sha256).slice(0, 12)}…, this PDF is ${filledSha.slice(0, 12)}…). A stale result read as a fresh one is the failure this check exists for.`;
     else trip = t;
   } catch (e) { tripWhy = `${tripwirePath} could not be read: ${e.message}`; }
 }
@@ -227,6 +237,28 @@ if (existsSync(totalsPath)) {
 // --- collect every binding the map declares -------------------------------------------------
 const rows = [];
 const add = (r) => {
+  // A MIRRORED FORM BINDS ONE INPUT TO TWO TARGETS, AND THIS PAGE COULD NOT OPEN ONE.
+  //
+  // Every map before 433-D binds an input key to ONE target string. 433-D draws the whole
+  // agreement TWICE — an IRS copy and a taxpayer copy — so its map binds each key to a LIST of
+  // two, and `seg()` got an array and threw "target.replace is not a function" on the first row
+  // it built. The review page has therefore never rendered for this form at all: not a wrong
+  // page, no page.
+  //
+  // THE FIRST COPY IS THE ONE SHOWN AND THE SECOND IS PROVED TO AGREE WITH IT, which is the
+  // only honest way to put two cells on one row. Showing the first alone would let the two
+  // copies of a filed agreement disagree with a green tick beside them; and the copies
+  // disagreeing is a real failure mode on a mirrored form, not a hypothetical, because the fill
+  // engine writes each copy separately.
+  const targets = Array.isArray(r.target) ? r.target : [r.target];
+  if (targets.length > 1) {
+    const reads = targets.map((t) => readTarget(t));
+    const val = (x) => (x.kind === 'checkbox' ? (x.value ? 'checked' : '') : (x.kind === 'missing' ? null : x.value));
+    const first = val(reads[0]);
+    const disagree = reads.slice(1).some((x) => norm(val(x)) !== norm(first));
+    r = { ...r, target: targets[0], mirrorCopies: targets.length, mirrorDisagree: disagree,
+      mirrorUnreadable: reads.filter((x) => x.kind === 'missing').length };
+  } else r = { ...r, target: targets[0] };
   const t = readTarget(r.target);
   const pdfValue = t.kind === 'checkbox' ? (t.value ? 'checked' : '') : (t.kind === 'missing' ? null : t.value);
   const v = verifyFor(r.addr, r.addrColumn);
@@ -431,6 +463,19 @@ for (const bare of ['household_size', 'age_band', 'pay_freq', 'spouse_pay_freq',
 }
 consumed.add(`${mapDoc.form}_hh_size`);
 consumed.add(`${mapDoc.form}_addr_differs`);
+// THE ROUTE KEYS ARE CONSUMED, AND THE DISCRIMINATOR IS CONSUMED WITHOUT BEING PRINTED.
+//
+// A subject-DEPENDENT cell is fed by one of two keys chosen at fill time, and neither of those
+// keys is in `mapDoc.map` — the PRINTED key is, and the engine never reads it. The discriminator
+// is read too and names no printed cell at all. So this page reported the identifier that IS on
+// the document, and the word that decided which one it is, as "values that reach no printed
+// cell" — the label it reserves for a dropped value, which is the worse of the two quiet
+// failures it exists to catch. Both are consumed, and the discriminator has a section of its own
+// above rather than a line in a list of things that went nowhere.
+for (const [s, d] of Object.entries(mapDoc.subject_classes || {})) {
+  if (s.startsWith('_') || !d || d.class !== 'dependent' || !d.route) continue;
+  for (const k of Object.values(d.route)) consumed.add(k);
+}
 
 const orphans = Object.keys(data)
   // `_`-prefixed keys are the sample's own prose (why a fixture holds the values it holds),
@@ -439,9 +484,70 @@ const orphans = Object.keys(data)
   .map(k => ({ key: k, value: typeof data[k] === 'object' ? JSON.stringify(data[k]) : data[k], property: hsNameFor(k) }));
 
 // --- coverage accounting for the header ------------------------------------------------------
-const cov = await verifyFormCoverage(form, filledPath, { saturated: false });
+// THE RECORD IS PASSED, AND ON A SUBJECT-CONDITIONAL FORM IT IS REQUIRED. verify-form-coverage
+// refuses to compute the emptiness exemption without the record’s declared subject rather than
+// skipping it, so this call omitting the record made the whole page unrenderable for 433-D. It
+// was never wrong for the five forms before it — none declares a conditional cell — which is why
+// nothing said so.
+const cov = await verifyFormCoverage(form, filledPath, { saturated: false, recordPath });
 
 // --- render ------------------------------------------------------------------------------------
+// ══ THE DECLARED SUBJECT, AND WHAT IT DECIDED ═════════════════════════════════════════════════════════════════
+//
+// A form whose SUBJECT IS A PROPERTY OF THE RECORD rather than of the form decides two things
+// from one declared word, and both are permanent on the filed page: which property the printed
+// identifier box was filled from, and which of the subject-CONDITIONAL boxes may be ticked.
+//
+// [DM-1] IS THE REASON THIS BLOCK IS HERE AND IT STAYS OPEN. The engine fills the page FROM the
+// declaration, so the page agreeing with the declaration proves nothing about whether the
+// declaration is right — an entity record with a natural person's name in it fills perfectly.
+// Nothing in this repo can check it. So it is put in front of the one reader who can, at the top
+// of the page, with the consequence of getting it wrong stated rather than implied.
+//
+// NO FORM IS NAMED HERE. The route comes from `subject_classes.<stem>.route`, the conditional
+// boxes from `empty_unless`, and the ticked/untouched verdicts are read OFF THE FILLED PDF like
+// every other value on this page. A form declaring no route renders nothing at all.
+const subjectRoutes = Object.entries(mapDoc.subject_classes || {})
+  .filter(([s, d]) => !s.startsWith('_') && d && d.class === 'dependent' && d.route);
+let subjectBlock = null;
+if (subjectRoutes.length) {
+  const [stem, decl] = subjectRoutes[0];
+  const declared = String(data[decl.route.discriminator] ?? '').trim().toLowerCase();
+  const sides = Object.keys(decl.route).filter((k) => k !== 'discriminator');
+  const other = sides.find((s) => s !== declared) ?? null;
+  const branchRow = (side) => {
+    const key = decl.route[side];
+    return { side, key, hs: hsNameFor(key), value: data[key], taken: side === declared };
+  };
+  // The printed box itself, read off the PDF: one cell, and the value in it came from whichever
+  // branch the declaration chose.
+  const printed = (mapDoc.map || {})[Object.keys(mapDoc.map || {}).find((k) => {
+    const camel = stem.replace(/([a-z0-9])([A-Z])/g, '$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/_+/g, '_').toLowerCase();
+    return k === ((mapDoc._key_overrides || {})[stem] || `${mapDoc.form}_${camel}`);
+  })] || [];
+  const printedRead = printed.length ? readTarget(printed[0]) : { kind: 'missing' };
+  // The subject-CONDITIONAL boxes, and which one the page actually carries. Read off the PDF.
+  const condBoxes = [];
+  for (const [cstem, cdecl] of Object.entries(mapDoc.subject_classes || {})) {
+    if (cstem.startsWith('_') || !cdecl || cdecl.class !== 'conditional') continue;
+    for (const [cbKey, cbDef] of Object.entries(mapDoc.checkboxes || {})) {
+      if (cbKey.startsWith('_') || !cbDef || typeof cbDef !== 'object' || Array.isArray(cbDef)) continue;
+      for (const [opt, targets] of Object.entries(cbDef)) {
+        if (opt.startsWith('_')) continue;
+        const list = Array.isArray(targets) ? targets : [targets];
+        if (!list.some((t) => String(t).split('.').pop().replace(/\[\d+\]$/, '') === cstem)) continue;
+        const reads = list.map((t) => readTarget(t));
+        condBoxes.push({ stem: cstem, key: cbKey, option: opt, caption: cdecl.caption, forSubject: cdecl.empty_unless,
+          ticked: reads.some((r) => r.kind === 'checkbox' && r.value === true),
+          copies: reads.length, unreadable: reads.filter((r) => r.kind === 'missing').length });
+      }
+    }
+  }
+  subjectBlock = { stem, declared, sides, other, caption: decl.caption,
+    discriminatorKey: decl.route.discriminator, discriminatorHs: hsNameFor(decl.route.discriminator),
+    branches: sides.map(branchRow), printedTarget: printed[0] ?? null, printedRead, condBoxes };
+}
+
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const mismatches = rows.filter(r => r.verdict === 'MISMATCH');
@@ -596,6 +702,48 @@ const html = `<title>433 Form Review — ${esc(form.toUpperCase())} ${esc(data.i
   ${mismatches.length
     ? `<div class="alarm"><strong>${mismatches.length} row${mismatches.length === 1 ? '' : 's'} disagree between the CRM and the PDF.</strong> They are highlighted below and listed in full in the next table.</div>`
     : `<div class="good"><strong>No disagreements.</strong> Every cell the record fed reads back off the PDF with the same value.</div>`}
+
+  ${subjectBlock ? `
+  <h2>The declared subject, and what it decided</h2>
+  <div class="alarm"><strong>This form does not say whose it is &mdash; the record does.</strong> Nothing printed on the blank
+  distinguishes a natural person from a business entity, so one declared word decides which taxpayer identifier
+  the page carries and which boxes may be ticked. <strong>The engine filled this page FROM that word, so the page
+  agreeing with it proves nothing.</strong> It is the one input on this document that only you can check.</div>
+  <div class="card">
+    <div class="grid">
+      <div class="kv"><div class="k">Declared subject</div><div class="v">${esc(subjectBlock.declared || '(NONE DECLARED)')}</div></div>
+      <div class="kv"><div class="k">Declared in</div><div class="v"><code>${esc(subjectBlock.discriminatorHs ?? subjectBlock.discriminatorKey)}</code></div></div>
+      <div class="kv"><div class="k">Printed caption</div><div class="v">${esc(subjectBlock.caption ?? '')}</div></div>
+      <div class="kv"><div class="k">Value in the printed box</div><div class="v">${esc(subjectBlock.printedRead.kind === 'text' ? (subjectBlock.printedRead.value || '(blank)') : subjectBlock.printedRead.kind)}</div></div>
+    </div>
+    <p class="sub" style="margin:12px 0 0">One printed box; two properties it could have come from. The branch the
+    declaration did not take must be <strong>empty</strong>, and the engine refuses a record that fills both.</p>
+    <table>
+      <thead><tr><th>Branch</th><th>CRM property</th><th>Value in the record</th><th>Routed here</th></tr></thead>
+      <tbody>
+      ${subjectBlock.branches.map(b => `<tr${b.taken ? ' style="background:#f1faf3"' : ''}>
+        <td>${esc(b.side)}</td>
+        <td><code>${esc(b.hs ?? b.key)}</code></td>
+        <td>${esc(b.value ?? '(empty)')}</td>
+        <td>${b.taken ? '<span class="badge ok">yes &mdash; this is the value on the page</span>' : '<span class="muted">no &mdash; asserted empty</span>'}</td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+    ${subjectBlock.condBoxes.length ? `
+    <p class="sub" style="margin:16px 0 6px"><strong>The boxes this subject decided</strong> &mdash; each exists for one
+    subject only, and each verdict below is read off this PDF rather than from the record.</p>
+    <table>
+      <thead><tr><th>Box</th><th>Printed caption</th><th>Exists for</th><th>On this document</th></tr></thead>
+      <tbody>
+      ${subjectBlock.condBoxes.map(c => `<tr>
+        <td><code>${esc(c.key)} = ${esc(c.option)}</code></td>
+        <td>${esc(c.caption ?? '')}</td>
+        <td>${esc(c.forSubject)}</td>
+        <td>${c.unreadable ? '<span class="badge bad">unreadable</span>' : c.ticked ? '<span class="badge ok">TICKED</span>' : '<span class="muted">not ticked</span>'}${c.copies > 1 ? ` <span class="muted">(${c.copies} copies)</span>` : ''}</td>
+      </tr>`).join('')}
+      </tbody>
+    </table>` : ''}
+  </div>` : ''}
 
   <div class="card">
     <div class="grid">

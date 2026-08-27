@@ -66,7 +66,8 @@
     "keyspace": "node adapters/hubspot/assert-key-space.mjs --verbose",
     "crosswalk:433d": "node adapters/hubspot/derive-names-433d.mjs --portal && node adapters/hubspot/reclassify-against-backbone.mjs 433d && node adapters/hubspot/assert-intake-keys.mjs",
     "classify:433d": "node scratchpad/p55-433d-author-classification.mjs --check && node scratchpad/p57-433d-crosswalk-author.mjs --check",
-    "dryrun:433d": "node adapters/hubspot/hs-dryrun-433d.mjs"
+    "dryrun:433d": "node adapters/hubspot/hs-dryrun-433d.mjs",
+    "readback:433d": "node adapters/hubspot/hs-readback-433d.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -97,7 +97,19 @@ console.log(`bindings: ${bindings.length} for ${form} (from ${bindings[0]?.origi
 // stronger choice, but HubSpot validates the TLD against a public list and rejects it outright
 // (INVALID_EMAIL) — so the reserved DOMAIN is the strongest form that survives the API.
 const properties = {
-  email: `synthetic-${form}-roundtrip@example.com`,
+  // ONE FORM CAN NEED MORE THAN ONE PROBE, AND THE ADDRESS USED TO SAY OTHERWISE.
+  //
+  // `synthetic-${form}-roundtrip@example.com` is one address per form, and HubSpot treats email
+  // as the contact identity: the second seed for a form returns 409 CONFLICT naming the first
+  // probe's id. That was invisible for five forms because each is saturated by ONE record.
+  // 433-D is not — its subject is a property of the RECORD, so proving the form needs an
+  // individual record AND an entity record, and the branch that cannot be seeded is the branch
+  // that does not get round-tripped.
+  //
+  // The discriminator is the FIXTURE, so the address carries the fixture's own basename. Every
+  // one still ends in the reserved @example.com domain and still contains "synthetic", which is
+  // both halves of the signature hs-preflight.mjs uses to find a probe nobody registered.
+  email: `synthetic-${form}-${samplePath.split('/').pop().replace(/\.json$/, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase()}@example.com`,
   firstname: 'Synthetic',
   lastname: `Roundtrip Probe ${form.toUpperCase()}`,
 };
@@ -132,6 +144,31 @@ for (const p of bindings) {
     // The sample speaks the MAP's option keys ("yes"). HubSpot stores the provisioned option
     // VALUE ("true"). Invert the recorded table rather than re-deriving the rule.
     const want = normalizeOption(v);
+
+    // A LONE TICK CARRIES NO TRANSLATION TABLE, AND UNTIL 433-D NO FORM HAD ONE THE SEEDER COULD SEE.
+    //
+    // `map_option_by_value` inverts a map `checkboxes.<key>` OPTION INDEX — a table of option
+    // key to widget target. A LONE TICK has no index: the map names one target, or a list of
+    // targets where the form is mirrored, and the answer is simply whether the box is ticked.
+    // So the definition carries `map_option_by_value: null` and there is nothing to invert.
+    //
+    // This line used to be `Object.entries(p.map_option_by_value)` unguarded, and on 433-D it
+    // threw "Cannot convert undefined or null to object" — loudly, which is the good case. It
+    // was unreachable before because every option row on the other five forms is an option set:
+    // measured, 21 / 42 / 20 / 29 / 4 option rows on 433-A, 433-A(OIC), 433-B, 433-B(OIC) and
+    // 433-F, and NOT ONE of them without a table. 433-D has three, and they are exactly the
+    // three keys the mirrored-lone-tick key-space fix admitted.
+    //
+    // The booleans are the check_here spellings the engines already accept in both directions,
+    // and a value in neither set is SKIPPED BY NAME rather than written as a string HubSpot
+    // would reject or, worse, store.
+    if (!p.map_option_by_value) {
+      const asBool = want === 'yes' || want === 'true' ? 'true' : want === 'no' || want === 'false' ? 'false' : null;
+      if (!asBool) { skipped.push(`${source}: lone-tick value ${JSON.stringify(v)} is neither of [yes, no, true, false]. A lone tick answers whether the box is ticked and nothing else.`); continue; }
+      properties[p.hs_name] = asBool;
+      written.checkboxes++;
+      continue;
+    }
     const toHs = Object.entries(p.map_option_by_value).find(([, mapKey]) => String(mapKey).toLowerCase() === want);
     if (!toHs) { skipped.push(`${source}: sample value ${JSON.stringify(v)} is not one of [${Object.values(p.map_option_by_value).join(', ')}]`); continue; }
     properties[p.hs_name] = toHs[0];

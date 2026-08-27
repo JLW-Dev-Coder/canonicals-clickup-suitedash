@@ -268,16 +268,16 @@ export const QUESTIONS = [
     anchor: 'if (twin !== p.hs_name && live.has(twin)) twins.push({ p, twin, l: live.get(twin) });', verdict: 'pass-invariant',
     why: 'THE TWIN IS irs433_<fact>, THE SHARED BACKBONE, AND NO PASS IN THIS TOOL CREATES ONE — [PP-06]\'s ground, with one addition this form needs. Two of 433-D\'s reuses bind irs433_ names themselves, so without the `twin !== p.hs_name` guard a row would be reported as colliding with the very property it binds. The guard is structural and its answer does not move across a pass. What the table then surfaces is the finding [D-28] records: W-02 binds irs433boi_employer_identification_number while irs433_employer_identification_number is also live, and the twin check is the only instrument in the tree that could have said so, because A8\'s universe is form-specific rows.' },
   // ─── the reuse describer ───────────────────────────────────────────────────────────────
-  { id: 'PP-24', file: 'hs-describe-reused-433b.mjs',
+  { id: 'PP-24', file: ['hs-describe-reused-433b.mjs', 'hs-describe-reused-433d.mjs'],
     anchor: 'const l = live.get(p.hs_name);', verdict: 'pass-invariant',
     why: 'EVERY PROPERTY THIS TOOL TOUCHES WAS CREATED BY THE PREDECESSOR FORM, so it is live before this form\'s pass and live after it. A reuse target that is missing is a STOP in both states and for the same reason — a reuse must bind something that exists. What IS pass-sensitive in this file is the description CONTENT, and that is the second instance [D-18] records: the both-forms test was /433-B\\b/, which matches inside "433-B(OIC)", so every predecessor-only description read as already naming both forms and the tool reported all nine done without sending a request. It is guarded now by a dead-test canary that runs before the loop.' },
 
   // ─── the readbacks ─────────────────────────────────────────────────────────────────────
-  { id: 'PP-25', file: ['hs-readback-433aoi.mjs', 'hs-readback-433b.mjs', 'hs-readback-433boi.mjs'],
+  { id: 'PP-25', file: ['hs-readback-433aoi.mjs', 'hs-readback-433b.mjs', 'hs-readback-433boi.mjs', 'hs-readback-433d.mjs'],
     anchor: 'const l = live.get(p.hs_name);', verdict: 'pass-sensitive',
     states: '${missing.length} missing',
     why: 'A READBACK IS A POST-PASS TOOL AND ITS QUESTION IS PASS-SENSITIVE BY DESIGN: before the pass every definition is missing and the tool STOPs, which is the correct answer to "did the pass create these" asked before it ran. What makes it disposable rather than a defect is that the STOP names the missing count, so the pre-pass state is reported as itself and never as a portal problem.' },
-  { id: 'PP-26', file: ['hs-readback-433aoi.mjs', 'hs-readback-433b.mjs', 'hs-readback-433boi.mjs'],
+  { id: 'PP-26', file: ['hs-readback-433aoi.mjs', 'hs-readback-433b.mjs', 'hs-readback-433boi.mjs', 'hs-readback-433d.mjs'],
     anchor: "const createdHere = ok.concat(wrong, decided).filter(({ l }) => (l.description || '').startsWith(", verdict: 'pass-sensitive',
     states: '${missing.length} missing',
     why: 'Counts the properties whose live description names this form as their creator — zero before the pass, the created count after. `startsWith` IS THE RIGHT READING HERE and `includes` would be wrong, which is why this is not the [PP-15] repair applied twice: a reused property\'s description names two forms and BEGINS with the creator, so "created here" is exactly what the leading token says. Read against the portal today it separates 107 created from 9 reused on 433-B, which is the distinction the table exists to draw.' },
@@ -289,6 +289,26 @@ export const QUESTIONS = [
     anchor: "? 'created here' : '-';", verdict: 'pass-sensitive',
     states: '${missing.length} missing',
     why: 'The same per-row answer on the one form that has reuses, where the third column can read "reused" instead. Same disposition as [PP-26] and [PP-27], on the form where the distinction between created-here and reused actually has two populations.' },
+
+  // ─── 433-D adds a read-back with a route in it, and a describer that APPENDS ───────────
+  { id: 'PP-36', file: 'hs-readback-433d.mjs',
+    anchor: 'const discLive = discRow && live.get(discRow.hs_name);', verdict: 'pass-sensitive',
+    states: '${missing.length} missing',
+    why: 'THE SUBJECT DISCRIMINATOR, WHICH NO PREDECESSOR HAS. It is a property this form CREATES, so it is absent before the pass and present after — the same side-of-the-pass question every other row in this file asks, reported through the same `missing` count in the STOP line. What the row then asserts is pass-invariant: the option set the portal holds must equal the branch names the map declares, because the engine reads this value BARE and a third option would be a value it cannot route stored under a name saying it can.' },
+  { id: 'PP-37', file: 'hs-readback-433d.mjs',
+    anchor: 'const l = row && live.get(row.hs_name);', verdict: 'pass-sensitive',
+    states: '${missing.length} missing',
+    why: 'The two BRANCH properties of the route, read back one per side. One of the two is created by this pass and the other two are reuses created by 433-A and 433-B(OIC) — so this line is pass-sensitive for one row and invariant for the others, and it is registered pass-sensitive because the weaker claim is the honest one for a line that reads both. The route section names each row\'s scope and creating form beside it, so which side of the pass a row is on is readable from the report.' },
+  { id: 'PP-38', file: 'hs-readback-433d.mjs',
+    anchor: "? 'created here' : '-';", verdict: 'pass-sensitive',
+    states: '${missing.length} missing',
+    why: '[PP-28]\'s disposition on the second form with two populations in that column. Here the third value names the CREATING FORM rather than a fixed predecessor, because this form\'s three reuses come from two different creators and "reused" alone would not say which.' },
+  { id: 'PP-39', file: 'hs-describe-reused-433d.mjs',
+    anchor: "const okKept = !row.existing || String(back.description || '').includes(row.existing);", verdict: 'pass-invariant',
+    why: 'THE APPEND ASSERTION, AND IT IS THE ONE THING THIS TOOL DOES THAT ITS PREDECESSOR DID NOT. 433-B\'s describer REPLACED a live description with the definition file\'s; it could, because all nine of its targets used the same enumerating convention. Two of 433-D\'s three are backbone properties whose descriptions say "Shared across the 433 series - named for the fact, not the form", and overwriting that to enumerate forms would erase a landed convention to satisfy a later one ([R-21]). So this line reads the portal back and requires the PRIOR text to still be there. It is invariant across the pass because it is a claim about this tool\'s own write and not about which properties exist: a replacement would satisfy the equality test above it and fail this one, in either state.' },
+  { id: 'PP-40', file: 'hs-describe-reused-433d.mjs',
+    anchor: 'if (back.groupName !== (live.get(p.hs_name) || {}).groupName) console.log(', verdict: 'pass-invariant',
+    why: 'THE THINGS A DESCRIPTION PATCH MUST NOT HAVE CHANGED, checked on the same read-back. A property\'s group is set by the form that CREATED it and [R-06] forbids demanding this form\'s group of a rebind, so the test is against what was live BEFORE this tool ran rather than against what this form would have chosen. That comparison has the same answer on both sides of any provisioning pass: this tool sends `description` and nothing else, so the group it finds must be the group it started with.' },
 ];
 
 // ---------------------------------------------------------------------------------------

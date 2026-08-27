@@ -125,13 +125,31 @@
    "absence_read": "GET /crm/v3/objects/contacts/243992818996 -> 404, taken AFTER the delete and on a SEPARATE request from it. A 2xx on the archive call is the request being accepted, which is a different fact from the object being gone, and HubSpot search lags writes — so the evidence is a direct object GET, never a search miss ([R-23]).",
    "gated": "samples/433b.from-hubspot-243992818996.json passed the 433-B gate at all 12 steps, saturated, before teardown; adapters/pdf/out/433b_review_HS-243992818996.html was rendered from that record and the filled PDF, bound to it by SHA-256.",
    "registered_when": "AT SEED TIME. This row was written to the register while the contact was live and its teardown fields were empty, then completed here — which is [R-24]: a list written at teardown time can only contain what someone remembered to tear down."
+  },
+  {
+   "id": "244748171910",
+   "form": "433d",
+   "purpose": "433-D round trip on the INDIVIDUAL branch of the subject route: seed the 78 bindings from samples/433d.sample.json, fetch them back through hs-fetch-433d.mjs, fill the PDF and read every value off the filled page. The individual branch is the one that routes the identifier to irs433_tp_ssn_itin and asserts the two entity-only cells empty.",
+   "fixture": "samples/433d.from-hubspot-244748171910.json",
+   "subject_branch": "individual",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/244748171910 -> 404, read 2026-08-27 by adapters/hubspot/hs-teardown-contact.mjs --confirm-delete IN THE SAME RUN THAT SEEDED IT. The dry-run path was proved a no-op against the live record immediately before the delete, so the delete that followed is the only act that removed it."
+  },
+  {
+   "id": "244754742650",
+   "form": "433d",
+   "purpose": "433-D round trip on the ENTITY branch of the subject route: the same agreement filed by a business entity. It routes the identifier to irs433boi_employer_identification_number, reaches the two entity-only cells (the signatory title and the BMF review code) and is required to leave the three individual-only ones empty. One record cannot saturate this form, so the second branch is a second probe rather than a second reading of the first.",
+   "fixture": "samples/433d.from-hubspot-244754742650.json",
+   "subject_branch": "entity",
+   "teardown": "torn_down",
+   "absence_read": "GET /crm/v3/objects/contacts/244754742650 -> 404, read 2026-08-27 by adapters/hubspot/hs-teardown-contact.mjs --confirm-delete IN THE SAME RUN THAT SEEDED IT. The dry-run path was proved a no-op against the live record immediately before the delete, so the delete that followed is the only act that removed it."
   }
  ],
  "_retrospective_rows_are_weaker": "8 of the 10 rows were reconstructed after the fact, from working-tree fixtures that embed a contact id in their filename. Their `absence_read` is a live 404 taken during the Prompt 39 pre-flight, which is real evidence that they are gone NOW. What it is not is evidence of what happened at the time, and it could not have been: a probe seeded and never recorded is invisible to any reconstruction that starts from the fixtures, because such a reconstruction can only find probes that left a fixture behind. A probe seeded for a run that failed before the fetch leaves nothing at all. That gap closes going forward and cannot be closed backwards.",
  "_count": {
-  "probes": 12,
+  "probes": 14,
   "live": 0,
-  "torn_down": 12,
+  "torn_down": 14,
   "unknown": 0,
   "registered_retrospectively": 8,
   "_derived_by": "python over probes[]; adapters/hubspot/hs-preflight.mjs re-derives all five on every run and a typed figure that disagrees is a STOP."

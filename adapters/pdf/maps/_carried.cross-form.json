@@ -133,6 +133,16 @@
    "why_it_is_not_fixed_here": "EXTENDING A8's UNIVERSE TO REUSE ROWS IS A CHANGE TO A GUARD THAT STANDS OVER FOUR PROVISIONED FORMS, and it would land in the same cycle as this form's first create. [R-12] is the rule that a refactor of a guard is a change to the guard, and [D-11]'s precedent is explicit that this exact adjacent-change shape has twice reproduced the class it was meant to close. The fix also needs somewhere for the ruling to live that the deriver can READ — a `rejected_candidates` array on the entry — and inventing a schema field mid-provisioning is the second half of the same objection. Recorded with its instance so it cannot evaporate ([R-20]).",
    "the_shape_of_a_fix": "A8's universe widened from form-specific rows to ALL rows, with a reuse row's twin required to carry an explicit per-row ruling naming the rejected property rather than being skipped; the ruling held in a declared `rejected_candidates: [{ name, why }]` on the classification entry, so the deriver reads a structure instead of matching prose; and the same widening applied to the other three derivers, whose reuse rows have never been asked the question either. It should land in a cycle whose scope is guards, with the four provisioned forms re-derived and their definitions proved byte-identical before and after.",
    "where_it_would_have_been_caught_earlier": "NOWHERE IN THIS TREE, and that is the finding. 433-B is the only other form with a reuse bucket; its nine reuses all bind `irs433boi_` names whose `irs433_<fact>` twins do not exist, so the question never arose and the gap never showed. A gap that only opens on the SECOND form to do a thing is invisible on the first, which is [R-04]'s shape one level out: the check ran and had nothing to look at."
+  },
+  {
+   "id": "D-29",
+   "form": "engine-wide",
+   "raised_in": "Prompt 57, by writing a probe-register row that said No",
+   "subject": "the probe register counts `registered_retrospectively` by TRUTHINESS, so a row that answers the question with \"No\" is counted as a Yes",
+   "the_shape": "adapters/hubspot/hs-preflight.mjs line 138 derives the figure as `probes.filter((p) => p.registered_retrospectively).length`. The field holds PROSE — the existing rows say \"Yes.\" and then explain what is and is not recoverable about a probe reconstructed after the fact — and the convention is that a row written at seed time simply omits it. Under that convention the truthiness test is correct, and it is correct only under it.",
+   "why_it_is_a_problem_today": "OBSERVED, NOT REASONED. This cycle's two 433-D probes were registered at seed time and their rows answered the field honestly: \"No. Written by the run that seeded it, before the fetch it exists for.\" The register then reported 10 registered retrospectively where 8 is the truth, and hs-preflight STOPped on its own derived figure disagreeing with the typed one — which is the guard working, one field along from the thing it was watching. The rows were changed to follow the convention and the field now says what the count means. But the next person to answer the question in words rather than by omission reproduces it, and the failure is not loud: a wrong count of how many rows are RECONSTRUCTED is a wrong statement about how much of this register is evidence and how much is memory, and [R-24] exists because a claim made from memory is what left probe 242795652507 live and unrecorded.",
+   "why_it_is_not_fixed_here": "IT IS A ONE-LINE PREDICATE ON THE REGISTER THIS RUN IS WRITING TO, in the commit that provisions a form. [R-12] is the rule that a refactor of a guard is a change to the guard, and a predicate change here would want its own canary — a planted \"No\" row and a planted \"Yes\" row, each required to be counted correctly — which is a second instrument in a provisioning commit. Recorded with its live instance rather than fixed beside the work it interrupted.",
+   "the_shape_of_a_fix": "Either make the field a BOOLEAN with the prose moved to a sibling, so no predicate has to read English; or keep the prose and test it explicitly — `/^\\s*yes/i` — with two planted rows proving the test in both directions. The first is the better shape: a count derived from prose is a count that can be argued with."
   }
  ],
  "resolved": [
@@ -549,7 +559,7 @@
   }
  ],
  "_count": {
-  "open": 10,
+  "open": 11,
   "resolved": 18
  }
 }

@@ -29,7 +29,7 @@
 // and the seeder from each re-deriving it and drifting apart.
 
 import { readFileSync } from 'fs';
-import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
+import { ENGINE_EXTRA_INPUTS, keySpaceOf } from './classification-coverage.mjs';
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
 // THE WRITER-RESOLVER BOUNDARY — ONE CONSTRUCT VOCABULARY, DECLARED AND ASSERTED
@@ -260,7 +260,21 @@ export function consumableKeys(form, mapDoc) {
       .filter(([, v]) => v && typeof v === 'object' && Array.isArray(v.parts))
       .map(([k]) => k),
     ...Object.entries(mapDoc.checkboxes || {})
-      .filter(([, v]) => v && typeof v === 'object' && !Array.isArray(v) && !v.index)
+      // A LONE TICK IS CONSUMED, AND THIS FILTER USED TO DROP IT. Four shapes reach `checkboxes`, and every fill engine consumes three of
+      // them: an OPTION SET (an object of option word to target), a LONE TICK AS A LIST of
+      // targets, and a LONE TICK AS ONE target. The engines read the first through the option
+      // words and the other two through `truthy(input(key))` — fill-433d.mjs line 191,
+      // `if (Array.isArray(def)) { if (truthy(input(...))) checkBoth(def, name); continue; }`.
+      // The fourth is `_binds`, a ROW-LEVEL declaration whose fact belongs to a group's source
+      // key, and underscore-prefixed prose beside it; those are not inputs.
+      //
+      // `!Array.isArray(v)` dropped the list shape and `typeof v === 'object'` dropped the
+      // single-target shape — the SAME EXCLUSION, in a second place, that ba75290 removed from
+      // the key-space predicate. It had never bitten because every checkbox construct on the
+      // five earlier forms is an option set (measured: 21/42/20/29/4 option rows, none without
+      // a translation table) and 433-F's one lone tick is declared in ENGINE_EXTRA_INPUTS under
+      // its prefixed spelling. 433-D has three, and they are the three keys that fix admitted.
+      .filter(([k, v]) => !k.startsWith('_') && v && (typeof v === 'string' || Array.isArray(v) || (typeof v === 'object' && !v.index)))
       .map(([k]) => k),
     // `check_here` — the lone box with no counterpart cell, a construct 433-A(OIC) needs and
     // neither earlier map declares. Filtered the same way the fill engine skips it: an entry
@@ -300,5 +314,34 @@ export function consumableKeys(form, mapDoc) {
   // had been added to the table since. 433-B(OIC)'s `business_income_expense_route` is the
   // addition that would have split them: the fetch layer would emit a key this function calls
   // unconsumable, and hs-fetch would report the route as an ORPHAN and refuse to write.
-  return new Set([...base, ...(ENGINE_EXTRA_INPUTS[form] || [])]);
+  // THE SUBJECT ROUTE, APPLIED HERE BY THE ONE FUNCTION THAT DECIDES IT.
+  //
+  // A SUBJECT-DEPENDENT CELL DOES NOT REACH ONE INPUT. `mapDoc.map` holds the PRINTED key —
+  // one box on the page — and the engine never reads it: fill-433d.mjs resolves the map entry
+  // through `subject_classes[stem].route`, taking the value from the individual key or the
+  // entity key according to the discriminator, and reading the discriminator itself as a bare
+  // input. So the printed key is not consumable and three keys that are not in `mapDoc.map`
+  // are.
+  //
+  // THIS IS THE PARALLEL LIST THE COMMENT ABOVE WARNS ABOUT, ARRIVING. keySpaceOf() learned the
+  // route and this function did not, and the two disagreed the first time a fetcher ran against
+  // a provisioned 433-D portal: hs-fetch-433d.mjs emitted `433d_subject` and `433d_tin_ssn_itin`
+  // and this set called both ORPHANS — "not consumed by the fill engine" — about two keys the
+  // engine reads and one it does not. It refused to write, which is the loud failure and the
+  // good case; the quiet one would have been the printed key emitted instead and never filled.
+  //
+  // So the substitution is TAKEN FROM keySpaceOf() rather than re-derived. That function already
+  // owns the stem-to-printed-key resolution, the incomplete-route refusal and the "printed key
+  // is not in the key space" refusal, and a second copy of any of those here is the defect this
+  // comment is about, committed by the fix for it.
+  const { routes, problems } = keySpaceOf(mapDoc);
+  if (problems.length) throw new Error(`consumableKeys(${form}): the key space could not be read — ${problems[0]}. An unreadable input is not an empty one ([R-04]).`);
+  const consumable = new Set([...base, ...(ENGINE_EXTRA_INPUTS[form] || [])]);
+  for (const r of routes) {
+    if (r.replaced) consumable.delete(r.replaced);
+    consumable.add(r.individual);
+    consumable.add(r.entity);
+    consumable.add(r.discriminator);
+  }
+  return consumable;
 }
