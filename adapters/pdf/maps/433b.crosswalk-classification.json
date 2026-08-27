@@ -70,6 +70,16 @@
     "irs433boi_business_name",
     "irs433boi_employer_identification_number"
    ],
+   "rejected_candidates": [
+    {
+     "name": "irs433_business_name",
+     "why": "DECLINED, AND THE DECLINE IS RULED RATHER THAN SILENT. irs433_business_name is live, contributed by 433-A line 3b and 433-A(OIC) s4_other_business_name. On 433-A that cell sits under line 3a’s printed question — \"any interest in an LLC, LLP, corporation, partnership, etc.\" with a percentage of ownership and a Title drawn beside it — so it names a business the natural-person taxpayer holds an INTEREST IN, and that business is not the taxpayer. On 433-B the business IS the taxpayer. One filer can hold an interest in one company and file this form for another at the same moment, so one property would have to hold two legal names at once."
+    },
+    {
+     "name": "irs433_employer_identification_number",
+     "why": "DECLINED. irs433_employer_identification_number is live, contributed by 433-A line 54 and 433-A(OIC) s4_business_ein. THE CREATING FORM PRINTS THE RULING ON ITS OWN PAGE. 433-A page 7 draws \"Sections 6 and 7 must be completed only if you are SELF-EMPLOYED.\" directly beside \"No, Complete Form 433-B.\" — so every shared name 433-A Section 6 contributed holds a fact about a business a NATURAL PERSON operates, and the form itself says that a filer who is not that person files THIS form instead. On 433-B the business IS the taxpayer. An EIN is issued once per legal person, which is Z-02’s own ground for binding the entity property confidently — and it is issued once PER PERSON, which is why the proprietorship EIN and the company EIN are two values. AND THE STATE OF THE WORLD IN WHICH THEY DIFFER IS THE ORDINARY ONE: a self-employed individual files a 433-A for their own proprietorship while a company they also own files a 433-B, and one property would have to hold both values at one moment. [R-29]: a coinciding subject says which reuses are PERMISSIBLE and compels none, and the cost of the wrong one is not a collision but a wrong value read back forever under a name that denies it."
+    }
+   ],
    "scope_reason": "THE RULING-2 QUESTION ANSWERS NO. A business filing both forms has one legal name and one EIN, and they are the same on both documents at the same moment — an EIN is issued once and does not vary by which form asks for it. This is the first `exact` in the series and it is a consequence of the subject axis: [R-06] rules that `irs433boi_` records WHICH FORM CREATED A NAME, not which form owns it, so binding the existing property prefix and all is the rule applying rather than an exception to it.",
    "compared_against": [
     "433a",
@@ -174,6 +184,12 @@
    "reuse_of": [
     "irs433boi_total_number_of_employees"
    ],
+   "rejected_candidates": [
+    {
+     "name": "irs433_total_number_of_employees",
+     "why": "DECLINED. irs433_total_number_of_employees is live, contributed by 433-A line 58 and 433-A(OIC) s4_total_number_of_employees. THE CREATING FORM PRINTS THE RULING ON ITS OWN PAGE. 433-A page 7 draws \"Sections 6 and 7 must be completed only if you are SELF-EMPLOYED.\" directly beside \"No, Complete Form 433-B.\" — so every shared name 433-A Section 6 contributed holds a fact about a business a NATURAL PERSON operates, and the form itself says that a filer who is not that person files THIS form instead. On 433-B the business IS the taxpayer. A headcount is a fact ABOUT a business, so two businesses are two headcounts. AND THE STATE OF THE WORLD IN WHICH THEY DIFFER IS THE ORDINARY ONE: a self-employed individual files a 433-A for their own proprietorship while a company they also own files a 433-B, and one property would have to hold both values at one moment. [R-29]: a coinciding subject says which reuses are PERMISSIBLE and compels none, and the cost of the wrong one is not a collision but a wrong value read back forever under a name that denies it."
+    }
+   ],
    "scope_reason": "The word \"Total\" on the other form distinguishes nothing here — 433-B prints no partial employee count anywhere on the form for it to be a total OF, so the two cells hold the same number for one business at one moment.",
    "compared_against": [
     "433a",
@@ -204,6 +220,12 @@
    "scope": "reuse",
    "reuse_of": [
     "irs433boi_frequency_of_tax_deposits"
+   ],
+   "rejected_candidates": [
+    {
+     "name": "irs433_frequency_of_tax_deposits",
+     "why": "DECLINED. irs433_frequency_of_tax_deposits is live, contributed by 433-A line 60 and 433-A(OIC) s4_frequency_of_tax_deposits. THE CREATING FORM PRINTS THE RULING ON ITS OWN PAGE. 433-A page 7 draws \"Sections 6 and 7 must be completed only if you are SELF-EMPLOYED.\" directly beside \"No, Complete Form 433-B.\" — so every shared name 433-A Section 6 contributed holds a fact about a business a NATURAL PERSON operates, and the form itself says that a filer who is not that person files THIS form instead. On 433-B the business IS the taxpayer. A deposit schedule is assigned to an employer by lookback on that employer’s own liability, so two employers can sit on two schedules — monthly for the proprietorship, semi-weekly for the company — with neither figure wrong. AND THE STATE OF THE WORLD IN WHICH THEY DIFFER IS THE ORDINARY ONE: a self-employed individual files a 433-A for their own proprietorship while a company they also own files a 433-B, and one property would have to hold both values at one moment. [R-29]: a coinciding subject says which reuses are PERMISSIBLE and compels none, and the cost of the wrong one is not a collision but a wrong value read back forever under a name that denies it."
+    }
    ],
    "scope_reason": "The same question in the same words about the same business, and a deposit schedule is a standing fact rather than a period figure, so the two documents state it identically at one moment.",
    "compared_against": [
@@ -392,6 +414,12 @@
    "scope": "reuse",
    "reuse_of": [
     "irs433boi_federal_contractor"
+   ],
+   "rejected_candidates": [
+    {
+     "name": "irs433_federal_contractor",
+     "why": "DECLINED. irs433_federal_contractor is live, contributed by 433-A line 56. THE CREATING FORM PRINTS THE RULING ON ITS OWN PAGE. 433-A page 7 draws \"Sections 6 and 7 must be completed only if you are SELF-EMPLOYED.\" directly beside \"No, Complete Form 433-B.\" — so every shared name 433-A Section 6 contributed holds a fact about a business a NATURAL PERSON operates, and the form itself says that a filer who is not that person files THIS form instead. On 433-B the business IS the taxpayer. Being a Federal Government Contractor is a standing fact about ONE business, which is Z-24’s own ground for the reuse it takes and is equally the ground for this refusal: a proprietorship holding no federal contract and a company holding one are two answers, and folding them into one boolean would print a \"Yes\" onto a document signed under penalty of perjury on the strength of a different legal person’s contract. AND THE STATE OF THE WORLD IN WHICH THEY DIFFER IS THE ORDINARY ONE: a self-employed individual files a 433-A for their own proprietorship while a company they also own files a 433-B, and one property would have to hold both values at one moment. [R-29]: a coinciding subject says which reuses are PERMISSIBLE and compels none, and the cost of the wrong one is not a collision but a wrong value read back forever under a name that denies it."
+    }
    ],
    "scope_reason": "THE PARENTHETICAL IS AN INSTRUCTION, NOT A QUALIFIER — it tells the filer where to list the contracts, and changes nothing about who answers yes. Being a Federal Government Contractor is a standing fact about one business and both forms ask it as one boolean. This is the one reuse on the form whose two captions are not near-identical, and it is ruled on what the sentences ASK rather than on how alike they read, which is the same reasoning that refused Z-20 where the captions were nearly identical and the questions were not.",
    "compared_against": [

@@ -10,6 +10,12 @@
 
 import { readFileSync } from 'node:fs';
 import { hs, listAll, stop, isStop } from './hs-lib.mjs';
+// [D-29]: THE PROBE-REGISTER FIGURES ARE NOT DERIVED HERE ANY MORE. They were, by a truthiness
+// test over a field holding English, and a row answering "No." counted as a Yes while a row that
+// said nothing counted as a No when the truth was Yes. The predicate now lives in ONE place,
+// beside its own canary, and this file imports it — because two readers of one field is how the
+// two readings drift apart, which is the second half of what [D-29] found.
+import { auditTypedCount } from './probe-register-count.mjs';
 
 const line = (s) => console.log(s);
 
@@ -129,19 +135,12 @@ const stops = [];
   const probes = reg.probes || [];
 
   // NO COUNT IS TYPED. The declared tally is re-derived from probes[] and a disagreement is a
-  // STOP, on the same rule that governs every other count in this repo.
-  const derived = {
-    probes: probes.length,
-    live: probes.filter((p) => p.teardown === 'live').length,
-    torn_down: probes.filter((p) => p.teardown === 'torn_down').length,
-    unknown: probes.filter((p) => p.teardown === 'unknown').length,
-    registered_retrospectively: probes.filter((p) => p.registered_retrospectively).length,
-  };
-  for (const [k, v] of Object.entries(derived)) {
-    const claimed = reg._count?.[k];
-    if (String(claimed) !== String(v)) stops.push(`probe-register.json _count.${k} says ${claimed}; probes[] gives ${v}.`);
-  }
-  line(`register: ${derived.probes} probe(s) — ${derived.torn_down} torn_down, ${derived.live} live, ${derived.unknown} unknown; ${derived.registered_retrospectively} registered retrospectively`);
+  // STOP, on the same rule that governs every other count in this repo. The derivation itself is
+  // adapters/hubspot/probe-register-count.mjs — imported, never restated here ([D-29]).
+  const { counts: derived, contemporaneous, stops: countStops } = auditTypedCount(reg);
+  stops.push(...countStops);
+  line(`register: ${derived.probes} probe(s) — ${derived.torn_down} torn_down, ${derived.live} live, ${derived.unknown} unknown`);
+  line(`  registered_retrospectively: ${derived.registered_retrospectively} written after the seeding run, ${contemporaneous} written at seed time, ${derived.registered_retrospectively_unrecoverable} not recoverable from this tree`);
 
   // A probe with no teardown record is a STOP whatever the portal says. The register is the
   // list of things that must be absent, and `unknown` means it cannot vouch for one of them.

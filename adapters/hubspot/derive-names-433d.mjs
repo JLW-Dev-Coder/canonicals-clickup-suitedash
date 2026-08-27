@@ -58,6 +58,7 @@ import { refuseDowngrade, stampFor } from './no-downgrade.mjs';
 import { keySpaceOf, coverageOf, ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
 import { assertGenerator, generatorMeta, selfPath } from './generator-guard.mjs';
 import { isStop, stop as halt } from './hs-lib.mjs';
+import { auditReuseTwins, reuseTwinReport, deriveBackbone } from './twin-check.mjs';
 
 const argv = process.argv.slice(2);
 const usePortal = argv.includes('--portal');
@@ -389,6 +390,16 @@ for (const d of derived) {
 }
 
 // ---------------------------------------------------------------------------------------
+// A8R  THE OTHER HALF OF A8, AND IT WAS MISSING. A8 above asks a FORM-SPECIFIC row whether
+//      the shared twin is live. A REUSE row was skipped, on the reasoning that a reuse has
+//      already been adjudicated because it names its target. IT NAMES THE PROPERTY IT TAKES
+//      AND SAYS NOTHING ABOUT THE ONES IT DID NOT. [D-28]. The ruling lives in the entry as
+//      a `rejected_candidates` STRUCTURE, read by name — never prose matched for a name.
+// ---------------------------------------------------------------------------------------
+const a8r = auditReuseTwins({ form: '433d', derived, backbone: backbone, entryById });
+for (const s of a8r.stops) STOP('A8R', s);
+
+// ---------------------------------------------------------------------------------------
 // A7 / A12  THE PORTAL. No derived name may collide with a live property holding a different
 //           fact; headroom is read BEFORE the first create and not after the last.
 // ---------------------------------------------------------------------------------------
@@ -593,6 +604,8 @@ else {
 }
 say('');
 
+for (const l of reuseTwinReport('433d', a8r.rows)) say(l);
+say('');
 say('## Assertion A8 — the twin table');
 say('');
 if (!twins.length) say('**None.** No form-specific derived fact matches a live shared `irs433_` name.');

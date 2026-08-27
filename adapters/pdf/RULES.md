@@ -1097,6 +1097,46 @@ written in, so it has no hash yet.
 
 ---
 
+## [R-40] Licensing is not obligation, and a wrong reuse is not a collision
+
+> A subject-register verdict PERMITS a reuse; it never compels one. And the cost of the wrong
+> reuse is not a collision — the portal will take the name — but a wrong value read back forever
+> under a name that denies it.
+
+**The defect that earned it.** `irs433_home_phone`, on 433-D, a form that does not know whose
+phone it is. The subject register calls 433-D COINCIDE with all five mapped forms, and that
+verdict plus a matching fact is enough to make the reuse look automatic. It is not: 433-D is
+filed by a natural person on one branch of its subject route and by a business entity on the
+other, so the cell can hold a corporation's switchboard number. Nothing would fail. The property
+would take the value, every gate would pass, every printed total would reconcile, and a
+revenue officer reading `irs433_home_phone` back would be reading a company's main line as a
+natural person's home line, with nothing anywhere recording that it came from a form that does
+not ask whose phone it is.
+
+**Rejecting it on "an entity has no home telephone" is the wrong refusal**, and the difference
+matters: that is a classifier's default about a category, and defaults are exactly what
+`[R-08]` says a name is worth. The right refusal is the state of the world in which the two
+values differ at one moment. `433d_title_if` is the same test at its cleanest — a corporation
+files signed by its treasurer, and one property would hold the treasurer's office in the
+corporation and their title in their own business at one moment.
+
+**And the ruling is a REASON and not a binding.** When this was ruled on 433-D's EIN,
+`adapters/hubspot/fields.433d.json` came out byte-identical across the change: no name moved.
+That is the shape to expect — the ruling records why the other live candidate was declined, and
+a decline that was already correct moves nothing.
+
+`[R-29]` is the near neighbour and it is a different statement: that one is about a coinciding
+subject failing to predict a VOLUME of reuses. This one is about it failing to compel any single
+one of them. `adapters/hubspot/twin-check.mjs` is the instrument, and it asks every reuse row
+what it DECLINED rather than only what it took.
+
+**Roughly when.** Ruled 2026-08-26, prompt 57 ruling on `irs433_home_phone`; adopted as a rule
+in prompt 58 with the instrument that enforces it. Cycle-dated: the commit that lands it is the
+commit this rule is written in, so it has no hash yet.
+
+---
+
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

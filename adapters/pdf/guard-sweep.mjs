@@ -169,6 +169,13 @@ export const VACUOUS = [
   { id: 'G-287', file: 'render-review.mjs', anchor: "if (!list.some((t) => String(t).split('.').pop().replace(/\\[\\d+\\]$/, '') === cstem)) continue;", verdict: 'sound',
     why: 'A NEGATED `.some()` THAT IS VACUOUSLY TRUE ON EMPTY, AND EMPTY IS THE RIGHT ANSWER HERE. `list` is the target list of one checkbox OPTION, built one line above as `Array.isArray(targets) ? targets : [targets]` — so it is never empty for a real option, and if a map ever declared an option with no target at all, `continue` is exactly right: an option that draws no widget is not a box this subject decided and belongs on no row of the review page. The vacuous direction SKIPS a row rather than ASSERTING one, which is the opposite of [R-17]\'s first instance, where the empty read produced a PASS. The claim this loop makes is positive and per-row — this option\'s target leaf IS this conditional stem — and a row only appears when a target actually matched.' },
 
+  // ── adapters/hubspot/twin-check.mjs ─────────────────────────────────────────────────────
+  // [D-28]. The widened twin universe: every REUSE row asked what it DECLINED, not only what
+  // it took. Its one flagged site is the catch over the backbone derivation.
+
+  { id: 'G-288', file: '../hubspot/twin-check.mjs', anchor: 'catch (e) { throw new Error(`STOP - ${HS}/${file} could not be read as JSON', verdict: 'sound',
+    why: 'A CATCH THAT THROWS, AND THE DIRECTION IT PROTECTS IS THE ONE THAT WOULD HAVE READ CLEAN. The vacuous shape here is `catch { continue; }`, and it is worse in this file than in most: the backbone is what says which shared `irs433_` names are LIVE, so a definitions file that silently left the derivation would shrink the set of live twins, which shrinks the set of reuse rows found to have declined anything, which makes the check report FEWER unruled declines the less of its input it could read. A guard that gets quieter as its input degrades is [R-04] exactly. The empty direction is separately closed by the run itself, which STOPs below 50 backbone names rather than reporting a pass over a set it could not read — the same floor derive-names-433d.mjs A8 carries, and it is a floor and not a truthiness test.' },
+
   // ── adapters/pdf/xfa-fieldset.mjs ───────────────────────────────────────────────────────
   // Five sites, and ONE OF THEM WAS A REAL VACUITY THAT THIS SWEEP FOUND. The tool derives a
   // field set from an XFA template packet and checks the derivation against a second, independent
