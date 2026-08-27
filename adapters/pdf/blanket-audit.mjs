@@ -351,6 +351,20 @@ const missing = (demanded, supplied, key = (x) => x) => demanded.filter(d => !su
 // `forms` scopes a declaration to the forms where the demand is structurally empty; omit it
 // and the declaration applies to every form.
 export const EMPTY_DEMAND = [
+
+  // ── [S-25c] on 433-D: two citations with nothing in that file to demand ─────────────────
+  //
+  // [S-25c] enumerates what kinds of number a crosswalk classification holds and cites an
+  // instrument for each. It was written for 433-A(OIC), whose classification quotes printed slot
+  // counts and a page coordinate. 433-D’s evidence is a different KIND again, and the difference
+  // is a property of the FORM: this one prints no repeatable table anywhere and no arithmetic,
+  // and its classification argues from printed captions and from the SUBJECT of each cell.
+  // Measured rather than asserted, both times.
+  { blanket: 'S-25c', instrument: 'check-row-shape.mjs', forms: ['433d'],
+    why: 'NO CLAIM SITE IN THIS FILE NAMES A GROUP, BECAUSE THE FORM DECLARES NONE. adapters/pdf/maps/433d.map.json carries no `groups` block at all — 433-D draws no repeatable table on any of its four pages — so `slotColumnsOf` has nothing to resolve here and could not have, whatever the classification said. The numbers [S-25c] covers on this form are the entries’ `page` integers, the ordinals inside the two combs (nine routing boxes, seventeen account boxes) and the counts of drawn copies. The combs are not tables: each box is its own scalar cell with its own key, which is exactly what entries W-13 and W-14 rule and why they are `same-fact-different-decomposition` rather than a group. An empty demand here is the form, not an unpaid citation.' },
+
+  { blanket: 'S-25c', instrument: 'align-block.mjs', forms: ['433d'],
+    why: 'THE FILE QUOTES NO COORDINATE. adapters/pdf/maps/433d.crosswalk-classification.json contains zero `y NNN` runs and zero `x A..B` ranges anywhere in it, claim site or not. Its evidence is printed captions quoted verbatim and each cell’s SUBJECT CLASS, both of which are read out of 433d.map.json’s `subject_classes` block by the generator rather than retyped. The coordinates that support those captions live in the map and in 433d.subject-classes.json, where adapters/pdf/assert-subject-class.mjs [SC-3] re-measures every declared caption against the drawn page on every run — a caption must be a printed run inside its own cell’s band — and adapters/pdf/assert-mirror.mjs re-derives the 83 mirrored pairs from geometry. An empty demand here is a property of what this file writes, not a citation nobody paid.' },
   // ── [S-18] on 433-B: the page has no arithmetic, so step 11's prover has no atoms ──────
   //
   // [S-18] credits gate step 11 with recomputing every entry in `<form>.totals.json`, and the
@@ -911,7 +925,13 @@ const countEquityCells = (withOperands) => {
 export const COMPLETENESS = [
 
   // ── the one that failed, now with the counter it needed ────────────────────────────────
-  C({ id: 'K-01', match: /every bound key on the form is covered by an entry|every bound/i,
+  // THE WORDINGS, WIDENED RATHER THAN A SECOND COUNTER ADDED. 433-D states the same blanket in
+  // two further spellings — "EACH BOUND key on this form is covered by exactly one entry" and
+  // "every engine input on this form is covered" — and both are about the set this counter
+  // already measures: the map’s input key space, read through classification-coverage.mjs. A
+  // second counter over one claim would be two instruments answering one question, which is the
+  // defect this counter’s own comment below records it having been built out of.
+  C({ id: 'K-01', match: /every bound key on the form is covered by an entry|every bound|each bound|every engine input on this form is covered/i,
     kind: 'counter',
     what: 'the classification covers the map\'s input key space',
     universe: { scoped_to: 'form', detail: 'every input key the map for THIS form declares, as adapters/hubspot/classification-coverage.mjs reads them',

@@ -1,0 +1,739 @@
+{
+ "form": "433d",
+ "against": [
+  "433a",
+  "433f",
+  "433aoi",
+  "433boi",
+  "433b"
+ ],
+ "_generated_by": "scratchpad/p55-433d-author-classification.mjs",
+ "form_revision": "7-2024",
+ "covers_slices": "COMPLETE - every field on 433-D is mapped or explicitly excluded",
+ "_what_this_is": "WHAT EACH BOUND KEY ON 433-D CORRESPONDS TO ON THE FIVE FORMS ALREADY MAPPED, and whether one property could serve both. It is the input to adapters/hubspot/derive-names-433d.mjs, which turns a category into a name.",
+ "_this_binds_NOTHING": "No property is created by this file and no name is typed in it. Every name is DERIVED from an entry’s category and its row’s fact by the deriver, so a category and a name cannot disagree because only one of them exists.",
+ "_the_finding_that_governs_every_entry": "THE SUBJECT REGISTER CALLS 433-D COINCIDE WITH ALL FIVE MAPPED FORMS, INCLUDING WITH 433-A AND 433-B, WHICH IT CALLS MUTUALLY EXCLUSIVE WITH EACH OTHER. That triangle is what a form with no printed eligibility gate produces, and the register recorded it and refused to resolve it: the subject is per RECORD, so a 433-D key’s reuse verdict cannot be settled by that axis alone. Applied per key, the dividing line is the SUBJECT CLASS. A subject-DEPENDENT or subject-CONDITIONAL cell has a FIXED subject — the route sends one branch to one property and the other elsewhere, and a conditional cell exists for one legal person and is asserted empty on the other — so the reuse test can be asked and answered. A subject-INDEPENDENT cell has a PER-RECORD subject, and a property shared with a form whose subject is fixed would hold, on the other branch, a fact about the wrong legal person under a name saying otherwise, permanently.",
+ "_and_that_is_why_the_answer_is_not_uniform": "ALL THREE REUSES ON THIS FORM ARE CELLS WITH A FIXED SUBJECT, and every one of them is fixed by the construct [R-35] established: two by the ROUTE (W-01, W-02) and one by the CONDITIONAL (W-05). Not one subject-INDEPENDENT cell reuses anything, on a form whose subject register verdict licenses reuse against all five predecessors. [R-29] is the rule that says that is not a contradiction: a coinciding subject says which reuses are PERMISSIBLE and nothing whatever about how many there will be.",
+ "_the_third_subject": "TWENTY-ONE CELLS ON THIS FORM ARE ABOUT NEITHER LEGAL PERSON. The FOR IRS USE ONLY block records the Service’s handling of the agreement — an originator’s identifying number, the employee who examined it, a Master File review cycle, a statutory collection expiry date, a lien determination. They carry their own category, `third-subject-the-service`, rather than sitting inside `new`, because \"no counterpart exists\" and \"no counterpart could exist\" are different facts and only the second is a statement about the subject.",
+ "_the_two_title_cells": "THE SHARPEST CASE ON THE FORM. `433d_title_if` is captioned \"(if Corporate Officer or Partner)\" and holds the office of the person signing FOR the taxpayer; `433d_title` is captioned \"Title\" and holds the office of the IRS employee who APPROVED the agreement. One printed page, two facts, two people on opposite sides of the document — and a derivation working from captions alone would have every reason to make them one property.",
+ "_the_categories": {
+  "exact": "The same fact, in the same shape, ABOUT THE SAME SUBJECT, asked by the same question. The only category a provisioning pass may reuse a property for. USED THREE TIMES, and every one of the three is a cell whose subject is fixed by the route or by a conditional.",
+  "same-fact-different-decomposition": "One quantity split into different parts by the two forms. N cells here against one there, or a different cut. Not a reuse in either direction: N cells cannot bind one property and one cannot be split into N. THE DOMINANT CATEGORY BY KEY COUNT ON THIS FORM, because the direct-debit comb draws twenty-six single-character boxes where every other form holds a bank number in one cell.",
+  "same-question-different-subject": "The predecessor asks this question and asks it about a different legal person. The question transfers; the answer does not. Every entry must carry a `subject_reason` naming the two subjects and the state of the world in which they differ.",
+  "third-subject-the-service": "DECLARED BY THIS FORM. The cell is about neither legal person the form routes between: it records what the Internal Revenue Service has done with the agreement. No reuse is conceivable rather than merely absent, and the distinction is the reason this is not `new`.",
+  "operator-input": "DECLARED BY THIS FORM. The key names no printed cell and is supplied by whoever prepares the record — here the subject discriminator itself, which decides where the identifier is routed and which cells are asserted empty. Kept out of `new` because `new` asserts that a PRINTED fact has no counterpart, and this fact is not printed.",
+  "new": "This form prints the fact and no predecessor prints it at all. Not a naming decision — there is no counterpart to collide with. Every use of it was verified against the five other forms rather than assumed."
+ },
+ "_granularity_is_declared_per_entry": "EVERY ENTRY ENUMERATES ITS KEYS. There is no glob and no count standing in for a list, which is [R-15] and is not decoration here: `433d_date*` would swallow `433d_date_paid` and `433d_date3` alongside the two increase dates, putting a signature date into an increase schedule, and a prefix over the IRS-use block would miss the bare stems `433d_name` and `433d_title` while a form-wide glob would confuse them with W-04 and W-16.",
+ "_how_coverage_is_counted": "BY KEY, NEVER BY ENTRY. The blanket this file states is \"every engine input on this form is covered by exactly one entry\", and the check above counts KEYS in both directions: an input covered by no entry is a STOP and a key covered twice is a STOP. On 433-A(OIC) the watching sweep counted ENTRIES while the blanket claimed KEYS, and it was true of 207 keys and false of 31 — one of which would have created a permanent duplicate property in a portal with a hard ceiling ([R-13]).",
+ "subject": {
+  "the_ruling": "A key’s reuse verdict on 433-D is settled by its SUBJECT CLASS and not by the form’s subject register verdict alone, because this form’s subject is a property of the record rather than of the form.",
+  "this_form": "BOTH LEGAL PERSONS, AND THE FORM DOES NOT PARTITION THEM — a natural person (alone, or jointly with a spouse) OR a business entity. 433-D is the first form in this register whose subject is not fixed by the form.",
+  "the_predecessors": "All five mapped forms. The register calls 433-D COINCIDE with every one of them, including with two that are MUTUALLY EXCLUSIVE with each other."
+ },
+ "entries": [
+  {
+   "id": "W-01",
+   "page": 1,
+   "category": "exact",
+   "scope": "reuse",
+   "keys": [
+    "433d_tin_ssn_itin"
+   ],
+   "caption": [
+    "Social Security or Employer Identification Number (SSN/ITIN/EIN)"
+   ],
+   "subject_class": [
+    "dependent"
+   ],
+   "fact": "tp_ssn_itin",
+   "reuse_of": "irs433_tp_ssn_itin",
+   "reuse_from": [
+    "433a",
+    "433aoi"
+   ],
+   "why": "THE INDIVIDUAL SIDE OF THE SUBJECT ROUTE. 433-D prints ONE box under \"Social Security or Employer Identification Number (SSN/ITIN/EIN)\" and the caption offers two kinds of value; the map routes the SSN/ITIN side to this key and the EIN side to another, on the record's declared subject. 433-A prints \"Social Security Number\" at line 2 and 433-A(OIC) at s1, and both already bind irs433_tp_ssn_itin.",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THE REASON IS THAT THIS KEY'S SUBJECT IS FIXED RATHER THAN PER-RECORD. A subject-INDEPENDENT cell on 433-D takes its subject from the record — the same box holds a natural person's telephone number on one filed copy and a corporation's on the next — and this key is not one of those: it exists ONLY on the individual branch, because the route sends the entity branch to a different property entirely. So the fact is \"the SSN or ITIN of the natural person this agreement is with\", which is the same fact 433-A line 2 and 433-A(OIC) s1 hold, about the same legal person, at the same moment. A taxpayer does not have one SSN on their collection information statement and a different one on their instalment agreement. The subject register calls 433-D / 433-A COINCIDE and this is the key on which that verdict is unambiguous.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-02",
+   "page": 1,
+   "category": "exact",
+   "scope": "reuse",
+   "keys": [
+    "433d_tin_ein"
+   ],
+   "caption": [
+    "Social Security or Employer Identification Number (SSN/ITIN/EIN)"
+   ],
+   "subject_class": [
+    "dependent"
+   ],
+   "fact": "employer_identification_number",
+   "reuse_of": "irs433boi_employer_identification_number",
+   "reuse_from": [
+    "433boi",
+    "433b"
+   ],
+   "why": "THE ENTITY SIDE OF THE SAME PRINTED BOX. The caption names an Employer Identification Number as one of the three values the box accepts, and the map routes it here when the record declares subject \"entity\". 433-B(OIC) created irs433boi_employer_identification_number and 433-B binds the same property, prefix and all, under [R-06].",
+   "scope_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-B ever have to hold two different values for one taxpayer at one moment? NO, and for the mirror of W-01's reason. This key exists ONLY on the entity branch — an individual record routes to irs433_tp_ssn_itin and this cell is never written — so its subject is FIXED as the business entity, which is exactly the legal person 433-B and 433-B(OIC) are about. An entity does not have one EIN on its collection information statement and a different one on its instalment agreement. IT BINDS THE irs433boi_ NAME, PREFIX AND ALL, which is [R-06]'s prefix half: the prefix records which form CREATED a name and not which form owns it, and 433-B established the precedent by binding this very property.",
+   "compared_against": [
+    "433boi",
+    "433b",
+    "433a",
+    "433aoi",
+    "433f"
+   ]
+  },
+  {
+   "id": "W-03",
+   "page": 1,
+   "category": "operator-input",
+   "scope": "form-specific",
+   "keys": [
+    "433d_subject"
+   ],
+   "caption": [],
+   "subject_class": [],
+   "fact": "subject",
+   "why": "THE DISCRIMINATOR ITSELF, AND IT NAMES NO PRINTED CELL. The engine reads it to decide which of W-01 and W-02 the identifier goes to and which conditional cells it must assert empty; a record that declares nothing is REFUSED rather than defaulted. It is the same construct 433-A(OIC) and 433-B(OIC) carry as `business_income_expense_route` — an operator input the key space cannot see, which is why that form needed an ENGINE_EXTRA_INPUTS row and why this one does.",
+   "scope_reason": "THE TEST CANNOT EVEN BE ASKED OF A COUNTERPART, BECAUSE THERE IS NONE. No other mapped form has a subject to discriminate: each of the other five is ABOUT one legal person by its own printed eligibility text or, where there is none, by four other printed sources. 433-D is the first form in this register whose subject is not a property of the form, so this input exists on this form alone and a shared name would be a name for a decision no other form makes. It is form-specific because there is nothing to share it with, and that is a checked absence rather than a default: `operator-input` is a category of its own precisely so it cannot hide inside `new`, which asserts that a PRINTED fact has no counterpart.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-04",
+   "page": 1,
+   "category": "same-fact-different-decomposition",
+   "scope": "form-specific",
+   "keys": [
+    "433d_name_and_address"
+   ],
+   "caption": [
+    "Name and address of taxpayer(s)"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "fact": "name_and_address",
+   "why": "ONE MULTI-LINE CELL HOLDING BOTH. The printed caption is \"Name and address of taxpayer(s)\" over a single tall box. 433-A draws them apart — line 1a \"Full Name\" into irs433_full_name and line 1b into irs433_address — and 433-A(OIC) draws first and last name separately again, into irs433_tp_first_name and irs433_tp_last_name.",
+   "scope_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? YES, AND THE DECOMPOSITION IS ENOUGH ON ITS OWN. irs433_full_name holds a name and irs433_address holds an address; this cell holds both, run together across several printed lines, and neither of those two properties could take it without holding a value its own name says it does not hold. A property cannot be a name on one form and a name-and-address on another. THE SUBJECT ARGUMENT IS THE SECOND REASON AND IT IS INDEPENDENT OF THE FIRST: this cell is subject-INDEPENDENT, so the name it holds is a natural person's on one filed copy and a corporation's on the next, and irs433_full_name is 433-A's individual filer by construction. Either reason alone settles it.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-05",
+   "page": 1,
+   "category": "exact",
+   "scope": "reuse",
+   "keys": [
+    "433d_spouse"
+   ],
+   "caption": [
+    "(Spouse)"
+   ],
+   "subject_class": [
+    "conditional"
+   ],
+   "fact": "sp_ssn_itin",
+   "reuse_of": "irs433_sp_ssn_itin",
+   "reuse_from": [
+    "433a",
+    "433aoi"
+   ],
+   "why": "THE SPOUSE'S IDENTIFIER, printed as \"(Spouse)\" beneath the same SSN/ITIN/EIN caption that governs the taxpayer box. The map classes it subject-CONDITIONAL with `empty_unless: individual`: a corporation has no spouse, and an entity record carrying a value here is refused at [SC-7] and again at gate step 10. 433-A line 2 and 433-A(OIC) s1 both bind irs433_sp_ssn_itin.",
+   "scope_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THIS IS THE SECOND KIND OF FIXED SUBJECT ON THIS FORM. W-01 and W-02 are fixed by the ROUTE; this one is fixed by the CONDITIONAL — the cell exists only where the filer is a natural person filing a joint liability, so the fact is \"the SSN or ITIN of that person's spouse\" and it cannot be anything else. That is precisely 433-A's and 433-A(OIC)'s fact about precisely the same legal person, and a spouse does not have one SSN on a collection information statement and another on an instalment agreement. THE THIRD CLASS IS WHAT MAKES THIS RULING AVAILABLE AT ALL: under the binary that [R-35] replaced, this cell was subject-independent, its subject would have been per-record, and the reuse would have been refused for a reason that is false of it.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-06",
+   "page": 1,
+   "category": "same-question-different-subject",
+   "scope": "form-specific",
+   "keys": [
+    "433d_home"
+   ],
+   "caption": [
+    "(Home)"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "fact": "home_phone",
+   "why": "ONE TELEPHONE CELL CAPTIONED \"(Home)\". 433-A prints \"Home Phone\" at line 1c and binds irs433_home_phone; the correspondence of the QUESTION is as close as this form gets to any predecessor.",
+   "subject_reason": "THE QUESTION TRANSFERS AND THE ANSWER DOES NOT, AND ON THIS FORM THE REASON IS NEW. On 433-A the home telephone number is a natural person's, because 433-A is about a natural person and admits nothing else. On 433-D this cell is subject-INDEPENDENT, so the number it holds belongs to whichever legal person the record declares — a natural person on one filed copy and a corporation on the next, because the form prints no eligibility text anywhere on any of its four pages and asks the filer to supply either identifier. One HubSpot contact is one legal person, so the two values would not collide on one record; what WOULD happen is worse and quieter. A corporation's switchboard number would be stored in a property called irs433_home_phone and read back by every downstream consumer as a natural person's home telephone number, forever, with nothing in the tree recording that the value came from a form that does not know whose phone it is. THE SUBJECT REGISTER SAYS 433-D AND 433-A COINCIDE AND THAT VERDICT IS NOT WRONG: it licenses the reuse. [R-29] is the rule that licensing is not obligation, and per key the licence is not worth taking here, because the subject that makes it safe is the record's and not the form's.",
+   "scope_reason": "See subject_reason: the cell is subject-INDEPENDENT on a form with no printed eligibility gate, so its subject is per record while irs433_home_phone's is fixed by 433-A's own subject. The property would hold a corporation's telephone number under a name that says it is an individual's home line.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-07",
+   "page": 1,
+   "category": "same-fact-different-decomposition",
+   "scope": "form-specific",
+   "keys": [
+    "433d_work_cell_business"
+   ],
+   "caption": [
+    "(Work, cell or business)"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "fact": "work_cell_or_business_phone",
+   "why": "ONE CELL FOR THREE KINDS OF NUMBER. The printed caption is \"(Work, cell or business)\" over a single box. 433-A draws three: irs433_tp_work_phone, irs433_cell_phone and irs433_business_phone, each with its own printed caption and its own cell.",
+   "scope_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? YES — three of them, and the form does not say which. A filer writes ONE number here and the printed caption declines to record whether it is the work line, the mobile or the business switchboard, so binding this cell to any one of 433-A's three properties would assert something the page does not say. Binding it to all three would write one number into three properties that a 433-A record fills with three different numbers. N cells cannot bind one property and one cannot be split into N. The subject argument of W-06 applies here too and is not needed.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-08",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_or_write"
+   ],
+   "caption": [
+    "Or write"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "fact": "or_write_address",
+   "why": "THE CORRESPONDENCE ADDRESS FOR THE AGREEMENT, printed as \"Or write\" beneath the two telephone cells — the address a taxpayer is told to write to instead of calling. It is a fact about how to reach the SERVICE'S handling of this agreement rather than a fact about the taxpayer, and no collection information statement prints anything of the kind.",
+   "scope_reason": "THERE IS NO COUNTERPART TO COLLIDE WITH. Every address property in the series holds an address OF the taxpayer — irs433_address, irs433_home_mailing_address, irs433_self_employment_business_address — and this cell holds the address the taxpayer is directed to use. Binding it to any of them would put a Service address into a property every downstream consumer reads as the filer's own.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-09",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_kinds_of_taxes",
+    "433d_tax_periods",
+    "433d_as_of",
+    "433d_amount_owed"
+   ],
+   "caption": [
+    "Kinds of taxes",
+    "Tax periods",
+    "Amount owed as of"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_kinds_of_taxes": "kinds_of_taxes",
+    "433d_tax_periods": "tax_periods",
+    "433d_as_of": "amount_owed_as_of_date",
+    "433d_amount_owed": "amount_owed"
+   },
+   "why": "THE LIABILITY THIS AGREEMENT IS AGAINST — four cells on one printed row, captioned \"Kinds of taxes\", \"Tax periods\" and \"Amount owed as of\" (which governs both a date cell and an amount cell). No collection information statement in this repo prints the debt being settled: they establish ability to pay and the debt is stated elsewhere.",
+   "scope_reason": "THE ONE APPARENT COUNTERPART IS A FALSE FRIEND AND IT WAS CHECKED RATHER THAN ASSUMED. irs433_amount_owed_as_of exists on the backbone, contributed by 433-A, and its input key is `16_amount_owed_as_of`. Read against 433-A's own map, that key targets `Page2.Table_Line15.HeaderRow14.Column3_14` — a COLUMN HEADER in the bank-accounts table, the \"as of\" date governing account BALANCES, not a tax debt at all. Binding 433-D's tax liability to it would put the balance due on an instalment agreement into a property holding the date a bank balance was read. The names correspond almost exactly and the facts do not, which is what [R-08] says a name is worth as evidence.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-10",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_dollar_amount",
+    "433d_date_paid",
+    "433d_and_dollar_amount",
+    "433d_on_the"
+   ],
+   "caption": [
+    "$",
+    "on",
+    "and $",
+    "on the"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_dollar_amount": "initial_payment_amount",
+    "433d_date_paid": "initial_payment_date",
+    "433d_and_dollar_amount": "instalment_amount",
+    "433d_on_the": "instalment_day_of_month"
+   },
+   "why": "THE AGREEMENT'S OWN TERMS, drawn as a printed sentence with four gaps: \"$ ___ on ___ and $ ___ on the ___\". The first pair is the payment made with the agreement, the second the recurring instalment and the day of each month it falls due.",
+   "scope_reason": "THIS IS THE FACT CLASS THAT MAKES 433-D A DIFFERENT DOCUMENT FROM THE FIVE BEFORE IT. A collection information statement records what a taxpayer HAS; an instalment agreement records what they have UNDERTAKEN TO PAY AND WHEN. No property in the series holds a promise, so there is no counterpart to collide with and none to reuse. `new` here is a statement about the printed pages of five other forms, and it was verified against them rather than assumed.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-11",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_date1",
+    "433d_date2",
+    "433d_amount1",
+    "433d_amount2",
+    "433d_payment1",
+    "433d_payment2"
+   ],
+   "caption": [
+    "Date of increase",
+    "Amount of increase",
+    "New installment payment amount"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_date1": "increase_1_date",
+    "433d_amount1": "increase_1_amount",
+    "433d_payment1": "increase_1_new_payment",
+    "433d_date2": "increase_2_date",
+    "433d_amount2": "increase_2_amount",
+    "433d_payment2": "increase_2_new_payment"
+   },
+   "why": "THE TWO SCHEDULED STEP-UPS, drawn as two identical printed rows under \"Date of increase\", \"Amount of increase\" and \"New installment payment amount\". The form provides for exactly two and draws no more.",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-12",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_initial",
+    "433d_additional_conditions"
+   ],
+   "caption": [
+    "By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.",
+    "Additional Conditions / Terms"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_initial": "agreement_initials",
+    "433d_additional_conditions": "additional_conditions_terms"
+   },
+   "why": "THE ASSENT AND ITS RIDER. The first cell sits under a printed paragraph beginning \"By initialing here and my signature below, I agree to the terms of this agreement, as provided in this form, if it is approved by the Internal Revenue Service.\"; the second under \"Additional Conditions / Terms\".",
+   "scope_reason": "A MARK OF ASSENT TO A CONTRACT HAS NO COUNTERPART ON A FORM THAT ASKS ONLY FOR FACTS. The five predecessors carry signatures — a signature attests that the facts given are true — and none carries an initial that agrees to a term. The distinction is the whole difference between a statement and an undertaking, and a shared property would erase it.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-13",
+   "page": 1,
+   "category": "same-fact-different-decomposition",
+   "scope": "form-specific",
+   "keys": [
+    "433d_routing_number1",
+    "433d_routing_number2",
+    "433d_routing_number3",
+    "433d_routing_number4",
+    "433d_routing_number5",
+    "433d_routing_number6",
+    "433d_routing_number7",
+    "433d_routing_number8",
+    "433d_routing_number9"
+   ],
+   "caption": [
+    "a. Routing number"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_routing_number1": "routing_number_digit_1",
+    "433d_routing_number2": "routing_number_digit_2",
+    "433d_routing_number3": "routing_number_digit_3",
+    "433d_routing_number4": "routing_number_digit_4",
+    "433d_routing_number5": "routing_number_digit_5",
+    "433d_routing_number6": "routing_number_digit_6",
+    "433d_routing_number7": "routing_number_digit_7",
+    "433d_routing_number8": "routing_number_digit_8",
+    "433d_routing_number9": "routing_number_digit_9"
+   },
+   "why": "NINE PRINTED BOXES, ONE DIGIT EACH, under \"a. Routing number\". The form draws a comb rather than a field: each box carries its own widget and accepts one character.",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-14",
+   "page": 1,
+   "category": "same-fact-different-decomposition",
+   "scope": "form-specific",
+   "keys": [
+    "433d_account_number1",
+    "433d_account_number2",
+    "433d_account_number3",
+    "433d_account_number4",
+    "433d_account_number5",
+    "433d_account_number6",
+    "433d_account_number7",
+    "433d_account_number8",
+    "433d_account_number9",
+    "433d_account_number10",
+    "433d_account_number11",
+    "433d_account_number12",
+    "433d_account_number13",
+    "433d_account_number14",
+    "433d_account_number15",
+    "433d_account_number16",
+    "433d_account_number17"
+   ],
+   "caption": [
+    "b. Account number"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_account_number1": "account_number_digit_1",
+    "433d_account_number2": "account_number_digit_2",
+    "433d_account_number3": "account_number_digit_3",
+    "433d_account_number4": "account_number_digit_4",
+    "433d_account_number5": "account_number_digit_5",
+    "433d_account_number6": "account_number_digit_6",
+    "433d_account_number7": "account_number_digit_7",
+    "433d_account_number8": "account_number_digit_8",
+    "433d_account_number9": "account_number_digit_9",
+    "433d_account_number10": "account_number_digit_10",
+    "433d_account_number11": "account_number_digit_11",
+    "433d_account_number12": "account_number_digit_12",
+    "433d_account_number13": "account_number_digit_13",
+    "433d_account_number14": "account_number_digit_14",
+    "433d_account_number15": "account_number_digit_15",
+    "433d_account_number16": "account_number_digit_16",
+    "433d_account_number17": "account_number_digit_17"
+   },
+   "why": "SEVENTEEN PRINTED BOXES, ONE CHARACTER EACH, under \"b. Account number\" — the same comb, one field longer than a routing number needs because account numbers vary in length.",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-15",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_your_signature",
+    "433d_signature_row_date_left",
+    "433d_signature_row_date_right"
+   ],
+   "caption": [
+    "Your signature",
+    "Date"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_your_signature": "taxpayer_signature",
+    "433d_signature_row_date_left": "taxpayer_signature_date",
+    "433d_signature_row_date_right": "second_signature_date"
+   },
+   "why": "THE TAXPAYER'S SIGNATURE AND THE TWO DATE CELLS ON ITS PRINTED ROW, captioned \"Your signature\" and \"Date\" twice. The two date cells are distinguished by their position on the row rather than by their captions, which are identical — the map's key override names them left and right for exactly that reason.",
+   "scope_reason": "NO PROPERTY IN THIS SERIES HOLDS A SIGNATURE. The five predecessors are signed and none of them binds the signature cell: a signature is an image on a filed page, and what the engine writes here is the typed name that stands for one. There is nothing to collide with. The identical captions are why these keys are enumerated by position: a name derived from the caption alone would give two cells the same fact and one property would take both, which A5 refuses.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-16",
+   "page": 1,
+   "category": "same-question-different-subject",
+   "scope": "form-specific",
+   "keys": [
+    "433d_title_if"
+   ],
+   "caption": [
+    "(if Corporate Officer or Partner)"
+   ],
+   "subject_class": [
+    "conditional"
+   ],
+   "fact": "signatory_title_if_corporate_officer_or_partner",
+   "why": "THE SIGNATORY'S OFFICE, printed as \"(if Corporate Officer or Partner)\" beside the signature line. The map classes it subject-CONDITIONAL with `empty_unless: entity`: a natural person signing for themselves holds no office, and an individual record carrying a value here is refused. irs433_title exists on the backbone from 433-A and 433-A(OIC).",
+   "subject_reason": "THE QUESTION LOOKS IDENTICAL AND THE TWO SUBJECTS ARE DIFFERENT LEGAL PERSONS. irs433_title is 433-A line 3a, inside the taxpayer's own self-employment block, and 433-A(OIC) binds it from `s4_other_business_title`: on both forms it is the title THE TAXPAYER HOLDS IN THEIR OWN BUSINESS. This cell is the office held by whoever signs ON BEHALF OF the entity that is the taxpayer — a corporate officer or a partner, who is a different legal person from the corporation and need not be the taxpayer at all. The state of the world in which they differ is the ordinary one: a corporation files a 433-D signed by its treasurer, so this cell holds \"Treasurer\" while the corporation itself has no line 3a title and its treasurer, if they ever filed a 433-A of their own, would hold whatever title their own business gave them. One property would then have to hold the treasurer's office in the corporation and their title in their own business at the same moment. THIS RULING IS ONLY AVAILABLE UNDER THE THIRD CLASS: the cell has a FIXED subject — the entity — which is what makes the comparison askable at all; under the binary [R-35] replaced it would have been subject-independent, and the answer would have come out right for the wrong reason.",
+   "scope_reason": "See subject_reason. The counterpart belongs to the individual taxpayer's own business role; this cell belongs to the officer signing for an entity. Two legal persons, two titles, one moment.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-17",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_spouse_signature"
+   ],
+   "caption": [
+    "Spouse’s signature"
+   ],
+   "subject_class": [
+    "conditional"
+   ],
+   "fact": "spouse_signature",
+   "why": "THE SPOUSE'S SIGNATURE, printed as \"Spouse’s signature\" with the qualifier \"(if a joint liability)\". Subject-CONDITIONAL on the individual side: an entity has no spouse and an entity record carrying a value here is refused at [SC-7] and again at gate step 10, on the filed document rather than only in the engine.",
+   "scope_reason": "Same ground as W-15 — no property in this series holds a signature — with the subject settled rather than left open: the conditional fixes it as the spouse of a natural person, so if a signature property ever existed this key could be tested against it. It does not, so the ruling is `new` and the absence was verified against the five other forms rather than assumed.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-18",
+   "page": 1,
+   "category": "third-subject-the-service",
+   "scope": "form-specific",
+   "keys": [
+    "433d_agreement_locator_number1",
+    "433d_agreement_locator_number2",
+    "433d_agreement_locator_number3",
+    "433d_agreement_locator_number4",
+    "433d_agreement_review_cycle1",
+    "433d_agreement_review_cycle2",
+    "433d_agreement_review_cycle3",
+    "433d_agreement_review_cycle4",
+    "433d_agreement_review_cycle5",
+    "433d_agreement_review_cycle6",
+    "433d_earliest_csed",
+    "433d_originator_id",
+    "433d_originator_code",
+    "433d_name",
+    "433d_title",
+    "433d_agreement_examined",
+    "433d_date3"
+   ],
+   "caption": [
+    "AGREEMENT LOCATOR NUMBER:",
+    "Agreement Review Cycle",
+    "Earliest CSED",
+    "Originator’s ID number",
+    "Originator Code",
+    "Name",
+    "Title",
+    "Agreement examined or approved by",
+    "Date"
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_agreement_locator_number1": "agreement_locator_number_box_1",
+    "433d_agreement_locator_number2": "agreement_locator_number_box_2",
+    "433d_agreement_locator_number3": "agreement_locator_number_box_3",
+    "433d_agreement_locator_number4": "agreement_locator_number_box_4",
+    "433d_agreement_review_cycle1": "agreement_review_cycle_box_1",
+    "433d_agreement_review_cycle2": "agreement_review_cycle_box_2",
+    "433d_agreement_review_cycle3": "agreement_review_cycle_box_3",
+    "433d_agreement_review_cycle4": "agreement_review_cycle_box_4",
+    "433d_agreement_review_cycle5": "agreement_review_cycle_box_5",
+    "433d_agreement_review_cycle6": "agreement_review_cycle_box_6",
+    "433d_earliest_csed": "earliest_csed",
+    "433d_originator_id": "originator_id_number",
+    "433d_originator_code": "originator_code",
+    "433d_name": "irs_employee_name",
+    "433d_title": "irs_employee_title",
+    "433d_agreement_examined": "agreement_examined_or_approved_by",
+    "433d_date3": "agreement_examined_date"
+   },
+   "why": "THE \"FOR IRS USE ONLY\" BLOCK — seventeen text cells whose captions are \"AGREEMENT LOCATOR NUMBER:\", \"Agreement Review Cycle\", \"Earliest CSED\", \"Originator’s ID number\", \"Originator Code\", \"Name\", \"Title\" and \"Agreement examined or approved by\" with its own \"Date\". Every one is filled by the Service and none by the filer.",
+   "subject_reason": "A THIRD LEGAL PERSON, AND IT IS NEITHER OF THE TWO THE FORM ROUTES BETWEEN. The subject register asks which legal person a form is ABOUT and records 433-D as admitting both a natural person and an entity. These cells are about NEITHER: an originator's identifying number identifies an IRS employee, a Master File review cycle is a schedule the Service keeps, a CSED is a statutory date the Service computes, and \"Name\" and \"Title\" here are the name and office of the officer who examined the agreement. THE TWO TITLE CELLS ON THIS FORM ARE THE SHARPEST CASE. `433d_title_if` at W-16 is the office of the person signing FOR the taxpayer; `433d_title` here is the office of the IRS employee who APPROVED the agreement. They sit on one printed page, their captions are \"(if Corporate Officer or Partner)\" and \"Title\", and a reader deriving names from captions alone would have every reason to make them one property. They are two facts about two different people on opposite sides of the same document.",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-19",
+   "page": 1,
+   "category": "new",
+   "scope": "form-specific",
+   "keys": [
+    "433d_submit_a_new",
+    "433d_unable_to_make"
+   ],
+   "caption": [
+    "Submit a new Form W-4 to your employer to increase your",
+    "I am unable to make debit payments."
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_submit_a_new": "submit_new_form_w4",
+    "433d_unable_to_make": "unable_to_make_debit_payments"
+   },
+   "why": "TWO TAXPAYER-FACING CHECKBOXES. The first sits under \"Submit a new Form W-4 to your employer to increase your withholding\"; the second under \"I am unable to make debit payments.\"",
+   "scope_reason": "BOTH ARE ELECTIONS ABOUT THIS AGREEMENT rather than facts about the taxpayer's circumstances, and no collection information statement in the series offers an election. A property holding \"this filer cannot pay by direct debit\" has no counterpart among properties holding what a filer owns and earns.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  },
+  {
+   "id": "W-20",
+   "page": 1,
+   "category": "third-subject-the-service",
+   "scope": "form-specific",
+   "keys": [
+    "433d_check_box_if",
+    "433d_review_status_indicator",
+    "433d_agreement_indicator",
+    "433d_lien_determination"
+   ],
+   "caption": [
+    "Check box if pre-assessed modules included."
+   ],
+   "subject_class": [
+    "independent"
+   ],
+   "facts": {
+    "433d_check_box_if": "pre_assessed_modules_included",
+    "433d_review_status_indicator": "review_status_indicator",
+    "433d_agreement_indicator": "agreement_indicator",
+    "433d_lien_determination": "lien_determination"
+   },
+   "why": "THE FOUR CHECKBOX CONSTRUCTS INSIDE THE IRS-USE BLOCK. \"Check box if pre-assessed modules included.\"; the Review Status Indicator, whose options include the IMF and BMF two-year review codes; the Agreement Indicator; and the lien determination, whose four options run from \"HAS ALREADY BEEN FILED\" to \"MAY BE FILED IF THIS AGREEMENT DEFAULTS\".",
+   "subject_reason": "Same third subject as W-18: each records a decision the SERVICE has taken about this agreement. A lien determination is not a fact about the taxpayer's property; it is a statement of what the Service has done or will do. THE MIRROR IS WHY THESE ARE FOUR CONSTRUCTS AND NOT SEVEN: 433-D draws the whole agreement twice, an IRS copy and a taxpayer copy, and each of these three indicators carries an exclusive option set on each copy — six declared exclusive sets over three facts. The map's mirror declaration is what binds the pair, and one property holds the one fact both copies must carry.",
+   "scope_reason": "No reuse is conceivable, for W-18's reason. The two Master File codes inside the Review Status Indicator are themselves subject-CONDITIONAL — RSI 5 is the Individual Master File review and RSI 6 the Business Master File — which is the clearest evidence on the page that this block tracks the Service's handling of a taxpayer whose kind the form does not fix.",
+   "compared_against": [
+    "433a",
+    "433aoi",
+    "433f",
+    "433b",
+    "433boi"
+   ]
+  }
+ ],
+ "_tally": {
+  "_why": "Derived from entries[] by scratchpad/p55-433d-author-classification.mjs and re-derived by adapters/pdf/count-sweep.mjs [S-25]. A hand-kept tally beside a list is how \"eleven\" survived three slices when the honest figure was ten. Every declared category is seeded at 0.",
+  "entries": 20,
+  "exact": 3,
+  "same-fact-different-decomposition": 4,
+  "same-question-different-subject": 2,
+  "third-subject-the-service": 2,
+  "operator-input": 1,
+  "new": 8
+ },
+ "_coverage_in_KEYS": {
+  "_derived_by": "scratchpad/p55-433d-author-classification.mjs",
+  "_why": "BY KEY, NEVER BY ENTRY. On 433-A(OIC) the sweep watching this blanket counted entries while the blanket claimed keys, and it was true of 207 and false of 31 ([R-13]).",
+  "keys_covered": 78,
+  "key_universe": 78,
+  "by_category": {
+   "exact": 3,
+   "operator-input": 1,
+   "same-fact-different-decomposition": 28,
+   "same-question-different-subject": 2,
+   "new": 23,
+   "third-subject-the-service": 21
+  },
+  "reuse_keys": 3,
+  "form_specific_keys": 75
+ },
+ "_what_this_file_does_not_say": "It does not say a reuse WILL happen — adapters/hubspot/derive-names-433d.mjs asserts every reuse against the live definition file that created the property and refuses one that names a property nobody made. It does not say what a property will be called: the name is the entry’s category plus the row’s fact, computed at derivation time. And it says nothing about the portal, which is read by the deriver and not by this file.",
+ "_compared_against": [
+  "433a",
+  "433f",
+  "433aoi",
+  "433boi",
+  "433b"
+ ]
+}

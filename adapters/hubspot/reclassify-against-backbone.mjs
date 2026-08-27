@@ -192,6 +192,45 @@ export const SAME_FACT_RULINGS = [
     why: 'Same block, same disposition: a telephone number against a business name, and the other business rather than the self-employment one.' },
   { form: '433aoi', key: 's4_other_business_ein', candidate: 'irs433_self_employment_business_name', ruling: 'different-fact',
     why: 'Same block, same disposition: an EIN against a business name, and the other business rather than the self-employment one.' },
+
+  // ── 433-D ─────────────────────────────────────────────────────────────────────────────
+  //
+  // ELEVEN CANDIDATES, AND EIGHT OF THEM SHARE A SINGLE DIGIT. The token matcher cuts a name
+  // into words and "1" and "2" are words, so 433-D's two scheduled step-up rows collide with
+  // 433-F's three write-in OTHER-EXPENSE lines on the ordinal alone. That is the matcher
+  // working as designed on the most generic token there is, and each pair is disposed on its
+  // own anyway — a blanket over "every candidate sharing only a digit" would be a rule nobody
+  // could check against the day an ordinal happened to name a real duplicate.
+  //
+  // NONE OF THE ELEVEN IS RULED same-fact, AND THE GROUND IS THE SAME EVERY TIME AND IS NOT
+  // THE TOKEN. 433-D is an INSTALMENT AGREEMENT. Every other form in this series is a
+  // COLLECTION INFORMATION STATEMENT: it records what a taxpayer HAS. These cells record what
+  // the taxpayer has UNDERTAKEN TO PAY, and when. No property in the series holds a promise.
+
+  { form: '433d', key: '433d_date1', candidate: 'irs433_exp_other_1_amount', ruling: 'different-fact',
+    why: 'A FUTURE DATE AGAINST A PRESENT EXPENSE. `433d_date1` is the date the first scheduled increase to the instalment takes effect — a term of an undertaking, printed under "Date of increase". The candidate is 433-F\'s amount for the first of three write-in OTHER EXPENSE lines: a monthly outgoing the filer has today. Different type as well, a date cell against a money cell. The shared token is the digit "1", which orders two unrelated lists.' },
+  { form: '433d', key: '433d_date1', candidate: 'irs433_exp_other_1_description', ruling: 'different-fact',
+    why: 'A FUTURE DATE AGAINST AN EXPENSE LABEL. The candidate holds what the filer CALLS their first write-in expense; this cell holds when a payment amount changes. Shared token "1". Same ground as the amount candidate above and the same single ordinal behind it.' },
+  { form: '433d', key: '433d_amount1', candidate: 'irs433_exp_other_1_amount', ruling: 'different-fact',
+    why: 'THE ONE PAIR WHERE THE TYPES AGREE, WHICH IS WHY IT NEEDS THE SUBJECT-MATTER GROUND RATHER THAN THE SHAPE ONE. Both are money. `433d_amount1` is how much the agreed instalment RISES BY on a future date; `irs433_exp_other_1_amount` is a monthly expense the filer already pays. One is a change to a promise, the other a fact about present outgoings, and a preparer reading the second as the first would report a rise in the taxpayer\'s instalment that no agreement contains. Shared token "1".' },
+  { form: '433d', key: '433d_amount1', candidate: 'irs433_exp_other_1_description', ruling: 'different-fact',
+    why: 'A MONEY CELL AGAINST AN EXPENSE LABEL, on the same ordinal. Writing an increase amount into a description property would put a number where a downstream consumer reads the name of an expense.' },
+  { form: '433d', key: '433d_date2', candidate: 'irs433_exp_other_2_amount', ruling: 'different-fact',
+    why: 'The second scheduled increase\'s effective date against 433-F\'s second write-in expense amount. Same disposition and the same ground as the `433d_date1` pair, on the digit "2".' },
+  { form: '433d', key: '433d_date2', candidate: 'irs433_exp_other_2_description', ruling: 'different-fact',
+    why: 'The second increase date against the second write-in expense label. Same disposition and same ground.' },
+  { form: '433d', key: '433d_amount2', candidate: 'irs433_exp_other_2_amount', ruling: 'different-fact',
+    why: 'The second increase amount against the second write-in expense amount. Both money, and the ground is the one `433d_amount1` carries: a change to an undertaking is not a present outgoing.' },
+  { form: '433d', key: '433d_amount2', candidate: 'irs433_exp_other_2_description', ruling: 'different-fact',
+    why: 'The second increase amount against the second write-in expense label. Same disposition and same ground.' },
+
+  { form: '433d', key: '433d_or_write', candidate: 'irs433_home_mailing_address', ruling: 'different-fact',
+    why: 'AN ADDRESS OF THE SERVICE AGAINST AN ADDRESS OF THE TAXPAYER, AND THE DIRECTION IS THE WHOLE OF IT. `433d_or_write` sits under the printed words "Or write", beneath the two telephone cells: it is the address the taxpayer is DIRECTED TO USE to reach the Service about this agreement. The candidate is where the filer LIVES. Every address property in this series holds an address OF the filer — irs433_address, irs433_home_mailing_address, irs433_self_employment_business_address — and binding this cell to any of them would put a Service address into a property every downstream consumer reads as the taxpayer\'s own, which is a worse error than leaving it unbound because nothing about the stored value would look wrong. Shared token "address".' },
+
+  { form: '433d', key: '433d_your_signature', candidate: 'irs433_taxpayer_age_band', ruling: 'different-fact',
+    why: 'A SIGNATURE AGAINST AN AGE BRACKET, sharing the word "taxpayer" because both are about the taxpayer, which is a subject and not a fact. `irs433_taxpayer_age_band` is 433-F\'s allowance-lookup input — which out-of-pocket healthcare standard applies — and is an enumeration over bands. This cell holds the typed name standing for a signature on an agreement. No property in this series holds a signature at all, which is why W-15 is classified `new`, and this candidate is the token matcher hitting the word every form in the series is about.' },
+  { form: '433d', key: '433d_signature_row_date_left', candidate: 'irs433_taxpayer_age_band', ruling: 'different-fact',
+    why: 'A DATE AGAINST AN AGE BRACKET, on the same generic token. The date the taxpayer signed the agreement is not a bracket their age falls in, and the two are not even the same type. Disposed separately from `433d_your_signature` above because the ruling is per (key, candidate) pair and one row disposing of two would be one decision wearing two hats.' },
 ];
 
 /**

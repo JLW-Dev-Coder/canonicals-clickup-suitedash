@@ -79,6 +79,17 @@ export const CONSTRUCT_KIND = {
   groups: 'group',
   checkboxes: 'option',
   check_here: 'option',
+  // THE TWO SUBJECT-ROUTE CONSTRUCTS. A subject-DEPENDENT cell does not reach one property; it
+  // reaches one of two on a declaration the record makes, so keySpaceOf() removes its printed key
+  // and puts three in its place. Both branch keys are ordinary text cells on the page and are
+  // therefore `scalar`. The DISCRIMINATOR is scalar too, for the same reason `engine` is: the
+  // engine reads it bare, the map names no cell for it, and its values are the record's declared
+  // subject rather than option keys the map has to translate. A row that IS an enumeration still
+  // comes out as `option`, because `kindOf` lets `map_option_by_value` override the construct
+  // name — the discriminator carries `options` and no `map_option_by_value`, which is exactly
+  // that distinction doing its work.
+  route: 'scalar',
+  'route-discriminator': 'scalar',
 };
 
 /**

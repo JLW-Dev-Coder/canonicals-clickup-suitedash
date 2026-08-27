@@ -202,7 +202,7 @@ export const QUESTIONS = [
     why: 'The same count on the predecessor form, reported as a figure rather than asserted. THIS IS THE FILE hs-dryrun-433b.mjs WAS WRITTEN FROM, and this form had only ever run before its own creates — which is exactly how the descendant came to assert what this one merely printed.' },
 
   // ─── the name derivers ─────────────────────────────────────────────────────────────────
-  { id: 'PP-15', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs'],
+  { id: 'PP-15', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs', 'derive-names-433d.mjs'],
     anchor: "const oursByDescription = (d) => (portal.get(d.hs_name)?.description || '').includes(", verdict: 'pass-sensitive',
     states: "return 'created by this pass';",
     why: 'THE FOURTH INSTANCE OF [D-18], AND THE ONE THAT SETTLED WHETHER THIS FILE GETS BUILT. It asks "did THIS pass create this live property?", and it asked it as `startsWith(\'<FORM> (input key: K)\')` — true for every property each form created, on every run, until the 433-B pass re-described nine shared properties to name BOTH forms. The predicate went false on four of them and derive-names-433boi.mjs STOPped at [A7]: that form could no longer regenerate its own definitions file, and nothing in the 433-B cycle ran it, so nothing said so. THE THREE INSTANCES ALREADY RECORDED WERE ALL BROKEN BY THE PASS THE TOOL ITSELF PRECEDES — somebody hits those the next time they run the tool. THIS ONE WAS BROKEN BY ANOTHER FORM\'S PASS, and nobody re-runs a finished form\'s deriver. `includes` of the same token is the repair, and the token stays disjoint in both directions because "(OIC)" sits between the form name and the paren — unlike /433-B\\b/, which matches inside "433-B(OIC)" and is the second instance.' },
@@ -210,19 +210,19 @@ export const QUESTIONS = [
     anchor: 'if (portal.has(d.hs_name) && !d.backbone_key && !oursByDescription(d)) {', verdict: 'pass-sensitive',
     states: "return 'created by this pass';",
     why: '[A7]: a derived name that is already live. Before the pass, none of this form\'s new names is live and the branch is never taken; after it, every one is, and only the description test keeps the tool from STOPping on its own work. That is the whole load-bearing weight [PP-15] carries.' },
-  { id: 'PP-17', file: 'derive-names-433b.mjs',
+  { id: 'PP-17', file: ['derive-names-433b.mjs', 'derive-names-433d.mjs'],
     anchor: 'if (!portal.has(d.hs_name)) continue;', verdict: 'pass-sensitive',
     states: "return 'created by this pass';",
     why: '[A7] on the one form that reaches it through a hit table instead of a bare condition. Before the pass this skips every row; after it, none. The rows it lets through are classified benign or not and reported either way, so a post-pass run prints 116 benign hits rather than stopping.' },
-  { id: 'PP-18', file: 'derive-names-433b.mjs',
+  { id: 'PP-18', file: ['derive-names-433b.mjs', 'derive-names-433d.mjs'],
     anchor: 'const live = portal.get(d.hs_name);', verdict: 'pass-sensitive',
     states: "return 'created by this pass';",
     why: 'Reads the live definition for the hit table [PP-17] fills. Absent before the pass, present after, and the table row states which of the three reasons applies.' },
-  { id: 'PP-19', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs'],
+  { id: 'PP-19', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs', 'derive-names-433d.mjs'],
     anchor: 'const l = portal.get(d.hs_name);', verdict: 'pass-sensitive',
     states: "if (!l) return '**would be created**';",
     why: '`statusOf`, which exists to answer exactly this question per row and prints one of four strings for it: portal not read, would be created, created by this pass, or already live and contributed by another form. A tool that names four states cannot be said not to know which one it is in.' },
-  { id: 'PP-20', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs'],
+  { id: 'PP-20', file: ['derive-names-433aoi.mjs', 'derive-names-433b.mjs', 'derive-names-433boi.mjs', 'derive-names-433d.mjs'],
     anchor: ") return 'created by this pass';", verdict: 'pass-sensitive',
     states: "return 'created by this pass';",
     why: 'The line that PRINTS [PP-19]\'s answer, and the second half of the [PP-15] repair. It asks and states in one expression.' },
@@ -237,6 +237,18 @@ export const QUESTIONS = [
     anchor: '!portal.has(d.hs_name));', verdict: 'pass-sensitive',
     states: 'HEADROOM',
     why: 'THE HEADROOM ARITHMETIC — how many properties this pass would add. It is the number this project sizes a pass against, and it correctly goes to zero once the pass has run. The tool prints it as "this pass would add N", which reads truthfully in both states; a run reporting zero to add after a complete pass is the pass being done, not the arithmetic failing.' },
+
+  // ─── the two questions only 433-D asks ─────────────────────────────────────────────────
+  //
+  // This is the first form in the series to REUSE FROM TWO CREATORS AT ONCE, so it is the
+  // first whose deriver has to ask whether the property it is binding is actually there.
+  { id: 'PP-31', file: 'derive-names-433d.mjs',
+    anchor: 'if (!portal.has(d.hs_name))            // A9R: the reuse target must be LIVE', verdict: 'pass-invariant',
+    why: 'A9R: A REUSE MUST BIND SOMETHING THAT EXISTS, and the three properties it binds were created by 433-A and 433-B(OIC) long before this pass. They are live before it and live after it, so this line reads the same in both states. What it refuses is the state where a row classified `exact` names a property NOBODY created: that would not be a reuse, it would be a creation under the prefix of another form, recording 433-A or 433-B(OIC) as the author of a name that 433-D invented, permanently and with no guard downstream able to tell. The condition is about the pass of the CREATOR, which has already happened, and not about this one.' },
+  { id: 'PP-32', file: 'derive-names-433d.mjs',
+    anchor: "wouldCreate = derived.filter((d) => d.scope !== 'reuse' && !portal.has(d.hs_name)).length;", verdict: 'pass-sensitive',
+    states: 'A12',
+    why: 'A12: HOW MANY PROPERTIES THIS PASS WOULD CREATE, read BEFORE the first create and compared against the live headroom. It is 75 before the pass and 0 after, and both are the truth about the moment they are read — which is the whole reason [R-32] requires the figure to be taken before the loop rather than inferred from it. The tool prints it as "this form would create N", which reads truthfully in both states, and the STOP it guards is the one that stops a partial provisioning run against a hard ceiling.' },
 
   // ─── the reuse describer ───────────────────────────────────────────────────────────────
   { id: 'PP-24', file: 'hs-describe-reused-433b.mjs',

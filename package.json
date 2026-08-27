@@ -48,7 +48,7 @@
     "headroom": "node adapters/hubspot/headroom.mjs",
     "mirror": "node adapters/pdf/assert-mirror.mjs --canary",
     "mirror:433d": "node adapters/pdf/gen-mirror.mjs 433d --check && node adapters/pdf/assert-mirror.mjs 433d --canary",
-    "sweeps:deep": "node adapters/pdf/assert-examined.mjs && node adapters/pdf/assert-fixture-authorship.mjs && node adapters/pdf/assert-row-class-routes.mjs && node adapters/pdf/assert-row-shape-spec.mjs && node scratchpad/p54-433d-derive-classes.mjs --check && node scratchpad/p54-433d-author-map.mjs --check",
+    "sweeps:deep": "node adapters/pdf/assert-examined.mjs && node adapters/pdf/assert-fixture-authorship.mjs && node adapters/pdf/assert-row-class-routes.mjs && node adapters/pdf/assert-row-shape-spec.mjs && node scratchpad/p54-433d-derive-classes.mjs --check && node scratchpad/p54-433d-author-map.mjs --check && node scratchpad/p55-433d-author-classification.mjs --check && node scratchpad/p57-433d-crosswalk-author.mjs --check",
     "reachability": "node adapters/pdf/assert-reachability.mjs --verbose",
     "exitcodes": "node adapters/hubspot/assert-exit-codes.mjs --portal --verbose",
     "subjectclass": "node adapters/pdf/subject-class.mjs --canary && node adapters/pdf/assert-subject-class.mjs",
@@ -63,7 +63,9 @@
     "union": "node adapters/pdf/saturation-union.mjs --verbose",
     "union:433d": "node adapters/pdf/saturation-union.mjs 433d --verbose",
     "xfa:433h": "node adapters/pdf/xfa-fieldset.mjs 433h --check",
-    "keyspace": "node adapters/hubspot/assert-key-space.mjs --verbose"
+    "keyspace": "node adapters/hubspot/assert-key-space.mjs --verbose",
+    "crosswalk:433d": "node adapters/hubspot/derive-names-433d.mjs --portal && node adapters/hubspot/reclassify-against-backbone.mjs 433d && node adapters/hubspot/assert-intake-keys.mjs",
+    "classify:433d": "node scratchpad/p55-433d-author-classification.mjs --check && node scratchpad/p57-433d-crosswalk-author.mjs --check"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

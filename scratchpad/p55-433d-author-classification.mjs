@@ -74,7 +74,7 @@ const STOP = (m) => stops.push(m);
 //
 // A copy is the parallel-list defect adapters/pdf/guard-sweep.mjs enumerates, and the fix is
 // not a better copy. There is one key space and one place that decides what is in it.
-const { keySpace: keySpaceMap, problems: keySpaceProblems } = keySpaceOf(MAP);
+const { keySpace: keySpaceMap, problems: keySpaceProblems, routes: ROUTES } = keySpaceOf(MAP);
 for (const p of keySpaceProblems) STOP(`the key space could not be derived: ${p}`);
 for (const k of (ENGINE_EXTRA_INPUTS['433d'] || [])) keySpaceMap.set(k, 'engine');
 const keySpace = new Set(keySpaceMap.keys());
@@ -83,10 +83,14 @@ const keySpace = new Set(keySpaceMap.keys());
 // route had, and the reason ENGINE_EXTRA_INPUTS exists.
 const ROUTE = MAP.subject_classes?.Taxpayer?.route;
 if (!ROUTE?.individual || !ROUTE?.entity || !ROUTE?.discriminator) STOP('the map declares no usable subject route on Taxpayer.');
-else {
-  keySpace.delete('433d_taxpayer');
-  keySpace.add(ROUTE.individual); keySpace.add(ROUTE.entity); keySpace.add(ROUTE.discriminator);
-}
+// THE SUBSTITUTION IS THE SELECTOR’S, NOT THIS FILE’S. keySpaceOf() applies every route the map
+// declares — the printed key leaves the key space and the two branch keys and the discriminator
+// take its place — so this file reads ROUTE only to caption and classify. It used to do the
+// substitution itself and the crosswalk author had a third copy, which is one declaration read
+// three ways. Asserted rather than assumed: a selector that stopped applying the route would
+// leave the printed key in the space and every entry below would be classified against it.
+else if (!ROUTES.some((r) => r.replaced === '433d_taxpayer' && r.individual === ROUTE.individual && r.entity === ROUTE.entity && r.discriminator === ROUTE.discriminator))
+  STOP('keySpaceOf() did not apply the Taxpayer route; the key space still describes one printed box rather than the three keys the engine reads.');
 
 // ── the caption of a key, read out of the map rather than typed ───────────────────────────
 const keyOfStem = (stem) => (MAP._key_overrides || {})[stem]
@@ -111,6 +115,19 @@ const range = (base, n, from = 1) => Array.from({ length: n }, (_, i) => `${base
 // THE ENTRIES. One per printed block. `keys` is the enumerated list — no globs, no counts
 // standing in for a list ([R-15]).
 // ═══════════════════════════════════════════════════════════════════════════════════════
+// THE DECLARED CATEGORIES, NAMED ONCE. The document quotes this object as `_the_categories`
+// and the tally seeds every one of its keys at zero, so a category that goes unused reports
+// its zero rather than disappearing, and a category invented in an entry and never declared is
+// caught by count-sweep [S-25b] rather than by a reader.
+const CATEGORIES = {
+  exact: 'The same fact, in the same shape, ABOUT THE SAME SUBJECT, asked by the same question. The only category a provisioning pass may reuse a property for. USED THREE TIMES, and every one of the three is a cell whose subject is fixed by the route or by a conditional.',
+  'same-fact-different-decomposition': 'One quantity split into different parts by the two forms. N cells here against one there, or a different cut. Not a reuse in either direction: N cells cannot bind one property and one cannot be split into N. THE DOMINANT CATEGORY BY KEY COUNT ON THIS FORM, because the direct-debit comb draws twenty-six single-character boxes where every other form holds a bank number in one cell.',
+  'same-question-different-subject': 'The predecessor asks this question and asks it about a different legal person. The question transfers; the answer does not. Every entry must carry a `subject_reason` naming the two subjects and the state of the world in which they differ.',
+  'third-subject-the-service': 'DECLARED BY THIS FORM. The cell is about neither legal person the form routes between: it records what the Internal Revenue Service has done with the agreement. No reuse is conceivable rather than merely absent, and the distinction is the reason this is not `new`.',
+  'operator-input': 'DECLARED BY THIS FORM. The key names no printed cell and is supplied by whoever prepares the record — here the subject discriminator itself, which decides where the identifier is routed and which cells are asserted empty. Kept out of `new` because `new` asserts that a PRINTED fact has no counterpart, and this fact is not printed.',
+  new: 'This form prints the fact and no predecessor prints it at all. Not a naming decision — there is no counterpart to collide with. Every use of it was verified against the five other forms rather than assumed.',
+};
+
 const E = [];
 
 // ── the two route keys, and they are the only two reuses on this form ──────────────────────
@@ -121,7 +138,7 @@ E.push({
   reuse_of: 'irs433_tp_ssn_itin',
   reuse_from: ['433a', '433aoi'],
   why: 'THE INDIVIDUAL SIDE OF THE SUBJECT ROUTE. 433-D prints ONE box under "Social Security or Employer Identification Number (SSN/ITIN/EIN)" and the caption offers two kinds of value; the map routes the SSN/ITIN side to this key and the EIN side to another, on the record\'s declared subject. 433-A prints "Social Security Number" at line 2 and 433-A(OIC) at s1, and both already bind irs433_tp_ssn_itin.',
-  scope_reason: 'THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THE REASON IS THAT THIS KEY\'S SUBJECT IS FIXED RATHER THAN PER-RECORD. Every other cell on 433-D takes its subject from the record — the same box holds a natural person\'s telephone number on one filed copy and a corporation\'s on the next — but this key exists ONLY on the individual branch, because the route sends the entity branch to a different property entirely. So the fact is "the SSN or ITIN of the natural person this agreement is with", which is the same fact 433-A line 2 and 433-A(OIC) s1 hold, about the same legal person, at the same moment. A taxpayer does not have one SSN on their collection information statement and a different one on their instalment agreement. The subject register calls 433-D / 433-A COINCIDE and this is the key on which that verdict is unambiguous.',
+  scope_reason: 'THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THE REASON IS THAT THIS KEY\'S SUBJECT IS FIXED RATHER THAN PER-RECORD. A subject-INDEPENDENT cell on 433-D takes its subject from the record — the same box holds a natural person\'s telephone number on one filed copy and a corporation\'s on the next — and this key is not one of those: it exists ONLY on the individual branch, because the route sends the entity branch to a different property entirely. So the fact is "the SSN or ITIN of the natural person this agreement is with", which is the same fact 433-A line 2 and 433-A(OIC) s1 hold, about the same legal person, at the same moment. A taxpayer does not have one SSN on their collection information statement and a different one on their instalment agreement. The subject register calls 433-D / 433-A COINCIDE and this is the key on which that verdict is unambiguous.',
   compared_against: ['433a', '433aoi', '433f', '433b', '433boi'],
 });
 
@@ -389,14 +406,7 @@ const doc = {
   _and_that_is_why_the_answer_is_not_uniform: 'ALL THREE REUSES ON THIS FORM ARE CELLS WITH A FIXED SUBJECT, and every one of them is fixed by the construct [R-35] established: two by the ROUTE (W-01, W-02) and one by the CONDITIONAL (W-05). Not one subject-INDEPENDENT cell reuses anything, on a form whose subject register verdict licenses reuse against all five predecessors. [R-29] is the rule that says that is not a contradiction: a coinciding subject says which reuses are PERMISSIBLE and nothing whatever about how many there will be.',
   _the_third_subject: 'TWENTY-ONE CELLS ON THIS FORM ARE ABOUT NEITHER LEGAL PERSON. The FOR IRS USE ONLY block records the Service’s handling of the agreement — an originator’s identifying number, the employee who examined it, a Master File review cycle, a statutory collection expiry date, a lien determination. They carry their own category, `third-subject-the-service`, rather than sitting inside `new`, because "no counterpart exists" and "no counterpart could exist" are different facts and only the second is a statement about the subject.',
   _the_two_title_cells: 'THE SHARPEST CASE ON THE FORM. `433d_title_if` is captioned "(if Corporate Officer or Partner)" and holds the office of the person signing FOR the taxpayer; `433d_title` is captioned "Title" and holds the office of the IRS employee who APPROVED the agreement. One printed page, two facts, two people on opposite sides of the document — and a derivation working from captions alone would have every reason to make them one property.',
-  _the_categories: {
-    exact: 'The same fact, in the same shape, ABOUT THE SAME SUBJECT, asked by the same question. The only category a provisioning pass may reuse a property for. USED THREE TIMES, and every one of the three is a cell whose subject is fixed by the route or by a conditional.',
-    'same-fact-different-decomposition': 'One quantity split into different parts by the two forms. N cells here against one there, or a different cut. Not a reuse in either direction: N cells cannot bind one property and one cannot be split into N. THE DOMINANT CATEGORY BY KEY COUNT ON THIS FORM, because the direct-debit comb draws twenty-six single-character boxes where every other form holds a bank number in one cell.',
-    'same-question-different-subject': 'The predecessor asks this question and asks it about a different legal person. The question transfers; the answer does not. Every entry must carry a `subject_reason` naming the two subjects and the state of the world in which they differ.',
-    'third-subject-the-service': 'DECLARED BY THIS FORM. The cell is about neither legal person the form routes between: it records what the Internal Revenue Service has done with the agreement. No reuse is conceivable rather than merely absent, and the distinction is the reason this is not `new`.',
-    'operator-input': 'DECLARED BY THIS FORM. The key names no printed cell and is supplied by whoever prepares the record — here the subject discriminator itself, which decides where the identifier is routed and which cells are asserted empty. Kept out of `new` because `new` asserts that a PRINTED fact has no counterpart, and this fact is not printed.',
-    new: 'This form prints the fact and no predecessor prints it at all. Not a naming decision — there is no counterpart to collide with. Every use of it was verified against the five other forms rather than assumed.',
-  },
+  _the_categories: CATEGORIES,
   _granularity_is_declared_per_entry: 'EVERY ENTRY ENUMERATES ITS KEYS. There is no glob and no count standing in for a list, which is [R-15] and is not decoration here: `433d_date*` would swallow `433d_date_paid` and `433d_date3` alongside the two increase dates, putting a signature date into an increase schedule, and a prefix over the IRS-use block would miss the bare stems `433d_name` and `433d_title` while a form-wide glob would confuse them with W-04 and W-16.',
   _how_coverage_is_counted: 'BY KEY, NEVER BY ENTRY. The blanket this file states is "every engine input on this form is covered by exactly one entry", and the check above counts KEYS in both directions: an input covered by no entry is a STOP and a key covered twice is a STOP. On 433-A(OIC) the watching sweep counted ENTRIES while the blanket claimed KEYS, and it was true of 207 keys and false of 31 — one of which would have created a permanent duplicate property in a portal with a hard ceiling ([R-13]).',
   subject: {
@@ -417,11 +427,30 @@ const doc = {
     scope_reason: e.scope_reason,
     compared_against: e.compared_against,
   })),
+  // THE TALLY, AND EVERY DECLARED CATEGORY IS SEEDED AT ZERO SO AN UNUSED ONE REPORTS ITS ZERO
+  // RATHER THAN BEING ABSENT. The category counts sit at the TOP LEVEL of this object because
+  // count-sweep [S-25b] asks `_tally` directly whether each entry's category is tallied, and a
+  // tally nested one key down answers a different question — which is what the first draft of
+  // this block did, and validate-map.mjs reported thirty mismatches for it at gate step 3.
+  // COUNTED IN ENTRIES, matching every other classification in this tree; the key counts are
+  // beside it under their own names, because a figure without its universe is not a figure ([R-07]).
   _tally: {
+    _why: `Derived from entries[] by ${SELF} and re-derived by adapters/pdf/count-sweep.mjs [S-25]. A hand-kept tally beside a list is how "eleven" survived three slices when the honest figure was ten. Every declared category is seeded at 0.`,
     entries: E.length,
+    ...Object.fromEntries(Object.keys(CATEGORIES).map((c) => [c, E.filter((e) => e.category === c).length])),
+  },
+  // THE KEY FIGURES SIT BESIDE THE TALLY AND NOT INSIDE IT. count-sweep [S-25] re-derives EVERY
+  // key of `_tally` as a count of entries in a category, so a key figure living there is a
+  // figure being checked against the wrong universe — which is [R-07] committed by the very
+  // block that exists to satisfy it. The two counts answer different questions and are named
+  // separately: the tally counts ENTRIES, this counts KEYS, and the coverage blanket above is
+  // asserted against the second in both directions.
+  _coverage_in_KEYS: {
+    _derived_by: SELF,
+    _why: 'BY KEY, NEVER BY ENTRY. On 433-A(OIC) the sweep watching this blanket counted entries while the blanket claimed keys, and it was true of 207 and false of 31 ([R-13]).',
     keys_covered: covered.size,
     key_universe: keySpace.size,
-    by_category_in_KEYS: byCat,
+    by_category: byCat,
     reuse_keys: E.filter((e) => e.scope === 'reuse').reduce((n, e) => n + e.keys.length, 0),
     form_specific_keys: E.filter((e) => e.scope !== 'reuse').reduce((n, e) => n + e.keys.length, 0),
   },

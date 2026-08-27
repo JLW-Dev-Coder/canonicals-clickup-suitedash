@@ -1,0 +1,1087 @@
+{
+ "meta": {
+  "form": "433d",
+  "_generated_by": "scratchpad/p57-433d-crosswalk-author.mjs",
+  "form_revision": "7-2024",
+  "catalog": "16644M",
+  "covers_slices": "COMPLETE - every field on 433-D is mapped or explicitly excluded",
+  "classification": "adapters/pdf/maps/433d.crosswalk-classification.json",
+  "_what_a_row_carries": "THE FACT AND THE SHAPE, NEVER A NAME. adapters/hubspot/derive-names-433d.mjs is the only place a 433-D property name exists; it derives one from the entry’s category and this row’s fact, so a category and a name cannot disagree because only one of them is written down.",
+  "_the_key_space": "READ FROM adapters/hubspot/classification-coverage.mjs keySpaceOf(), with the subject ROUTE applied: `433d_taxpayer` is replaced by the two branch keys and the discriminator, because that printed cell does not reach one property — it reaches one of two, on a declaration the record makes. The discriminator names no printed cell and is an ENGINE_EXTRA_INPUTS-shaped operator input.",
+  "_the_combs": "TWENTY-SIX ROWS ARE ONE PRINTED CHARACTER EACH — nine routing digits and seventeen account characters. They are typed `string/text` and not `number/number`: a leading zero is meaningful in a routing number, no total is computed from any of them, and a blanket numeric rule would corrupt the value silently with nothing downstream disagreeing. That is [R-09]’s money-by-declaration half read from the other side, and 433-D declares no rounding block at all.",
+  "_pii": "PII IS DECLARED PER ROW. The identifier on either branch, the spouse’s identifier, both telephone cells, the name-and-address block, both signature cells and every one of the twenty-six comb cells carry taxpayer identifying data. The FOR IRS USE ONLY combs do NOT: an agreement locator number and a review cycle are the Service’s own reference numbers."
+ },
+ "bindings": [
+  {
+   "key": "433d_account_number1",
+   "entry": "W-14",
+   "fact": "account_number_digit_1",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number10",
+   "entry": "W-14",
+   "fact": "account_number_digit_10",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number11",
+   "entry": "W-14",
+   "fact": "account_number_digit_11",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number12",
+   "entry": "W-14",
+   "fact": "account_number_digit_12",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number13",
+   "entry": "W-14",
+   "fact": "account_number_digit_13",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number14",
+   "entry": "W-14",
+   "fact": "account_number_digit_14",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number15",
+   "entry": "W-14",
+   "fact": "account_number_digit_15",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number16",
+   "entry": "W-14",
+   "fact": "account_number_digit_16",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number17",
+   "entry": "W-14",
+   "fact": "account_number_digit_17",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number2",
+   "entry": "W-14",
+   "fact": "account_number_digit_2",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number3",
+   "entry": "W-14",
+   "fact": "account_number_digit_3",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number4",
+   "entry": "W-14",
+   "fact": "account_number_digit_4",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number5",
+   "entry": "W-14",
+   "fact": "account_number_digit_5",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number6",
+   "entry": "W-14",
+   "fact": "account_number_digit_6",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number7",
+   "entry": "W-14",
+   "fact": "account_number_digit_7",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number8",
+   "entry": "W-14",
+   "fact": "account_number_digit_8",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_account_number9",
+   "entry": "W-14",
+   "fact": "account_number_digit_9",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-13, and one apparent counterpart was checked and refused: irs433_digital_asset_custodian_account_number exists on the backbone from 433-A(OIC) and holds a WHOLE custodian account number for a digital asset, which is a different fact about a different kind of account held in a different shape. Seventeen single-character cells cannot bind it, and the near-identical name is exactly the invitation [R-08] says a leaf name is worth nothing against."
+  },
+  {
+   "key": "433d_additional_conditions",
+   "entry": "W-12",
+   "fact": "additional_conditions_terms",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "multi-line printed cell, stored as text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "A MARK OF ASSENT TO A CONTRACT HAS NO COUNTERPART ON A FORM THAT ASKS ONLY FOR FACTS. The five predecessors carry signatures — a signature attests that the facts given are true — and none carries an initial that agrees to a term. The distinction is the whole difference between a statement and an undertaking, and a shared property would erase it."
+  },
+  {
+   "key": "433d_agreement_examined",
+   "entry": "W-18",
+   "fact": "agreement_examined_or_approved_by",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_indicator",
+   "entry": "W-20",
+   "fact": "agreement_indicator",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (3 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "0",
+     "value": "0",
+     "displayOrder": 0
+    },
+    {
+     "label": "1",
+     "value": "1",
+     "displayOrder": 1
+    },
+    {
+     "label": "2",
+     "value": "2",
+     "displayOrder": 2
+    }
+   ],
+   "map_option_by_value": {
+    "0": "0",
+    "1": "1",
+    "2": "2"
+   },
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "No reuse is conceivable, for W-18's reason. The two Master File codes inside the Review Status Indicator are themselves subject-CONDITIONAL — RSI 5 is the Individual Master File review and RSI 6 the Business Master File — which is the clearest evidence on the page that this block tracks the Service's handling of a taxpayer whose kind the form does not fix."
+  },
+  {
+   "key": "433d_agreement_locator_number1",
+   "entry": "W-18",
+   "fact": "agreement_locator_number_box_1",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_locator_number2",
+   "entry": "W-18",
+   "fact": "agreement_locator_number_box_2",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_locator_number3",
+   "entry": "W-18",
+   "fact": "agreement_locator_number_box_3",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_locator_number4",
+   "entry": "W-18",
+   "fact": "agreement_locator_number_box_4",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle1",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_1",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle2",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_2",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle3",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_3",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle4",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_4",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle5",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_5",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_agreement_review_cycle6",
+   "entry": "W-18",
+   "fact": "agreement_review_cycle_box_6",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_amount1",
+   "entry": "W-11",
+   "fact": "increase_1_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_amount2",
+   "entry": "W-11",
+   "fact": "increase_2_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_amount_owed",
+   "entry": "W-09",
+   "fact": "amount_owed",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE ONE APPARENT COUNTERPART IS A FALSE FRIEND AND IT WAS CHECKED RATHER THAN ASSUMED. irs433_amount_owed_as_of exists on the backbone, contributed by 433-A, and its input key is `16_amount_owed_as_of`. Read against 433-A's own map, that key targets `Page2.Table_Line15.HeaderRow14.Column3_14` — a COLUMN HEADER in the bank-accounts table, the \"as of\" date governing account BALANCES, not a tax debt at all. Binding 433-D's tax liability to it would put the balance due on an instalment agreement into a property holding the date a bank balance was read. The names correspond almost exactly and the facts do not, which is what [R-08] says a name is worth as evidence."
+  },
+  {
+   "key": "433d_and_dollar_amount",
+   "entry": "W-10",
+   "fact": "instalment_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THIS IS THE FACT CLASS THAT MAKES 433-D A DIFFERENT DOCUMENT FROM THE FIVE BEFORE IT. A collection information statement records what a taxpayer HAS; an instalment agreement records what they have UNDERTAKEN TO PAY AND WHEN. No property in the series holds a promise, so there is no counterpart to collide with and none to reuse. `new` here is a statement about the printed pages of five other forms, and it was verified against them rather than assumed."
+  },
+  {
+   "key": "433d_as_of",
+   "entry": "W-09",
+   "fact": "amount_owed_as_of_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE ONE APPARENT COUNTERPART IS A FALSE FRIEND AND IT WAS CHECKED RATHER THAN ASSUMED. irs433_amount_owed_as_of exists on the backbone, contributed by 433-A, and its input key is `16_amount_owed_as_of`. Read against 433-A's own map, that key targets `Page2.Table_Line15.HeaderRow14.Column3_14` — a COLUMN HEADER in the bank-accounts table, the \"as of\" date governing account BALANCES, not a tax debt at all. Binding 433-D's tax liability to it would put the balance due on an instalment agreement into a property holding the date a bank balance was read. The names correspond almost exactly and the facts do not, which is what [R-08] says a name is worth as evidence."
+  },
+  {
+   "key": "433d_check_box_if",
+   "entry": "W-20",
+   "fact": "pre_assessed_modules_included",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone printed tick, drawn once on each of the two copies",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "No reuse is conceivable, for W-18's reason. The two Master File codes inside the Review Status Indicator are themselves subject-CONDITIONAL — RSI 5 is the Individual Master File review and RSI 6 the Business Master File — which is the clearest evidence on the page that this block tracks the Service's handling of a taxpayer whose kind the form does not fix."
+  },
+  {
+   "key": "433d_date1",
+   "entry": "W-11",
+   "fact": "increase_1_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_date2",
+   "entry": "W-11",
+   "fact": "increase_2_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_date3",
+   "entry": "W-18",
+   "fact": "agreement_examined_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_date_paid",
+   "entry": "W-10",
+   "fact": "initial_payment_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THIS IS THE FACT CLASS THAT MAKES 433-D A DIFFERENT DOCUMENT FROM THE FIVE BEFORE IT. A collection information statement records what a taxpayer HAS; an instalment agreement records what they have UNDERTAKEN TO PAY AND WHEN. No property in the series holds a promise, so there is no counterpart to collide with and none to reuse. `new` here is a statement about the printed pages of five other forms, and it was verified against them rather than assumed."
+  },
+  {
+   "key": "433d_dollar_amount",
+   "entry": "W-10",
+   "fact": "initial_payment_amount",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THIS IS THE FACT CLASS THAT MAKES 433-D A DIFFERENT DOCUMENT FROM THE FIVE BEFORE IT. A collection information statement records what a taxpayer HAS; an instalment agreement records what they have UNDERTAKEN TO PAY AND WHEN. No property in the series holds a promise, so there is no counterpart to collide with and none to reuse. `new` here is a statement about the printed pages of five other forms, and it was verified against them rather than assumed."
+  },
+  {
+   "key": "433d_earliest_csed",
+   "entry": "W-18",
+   "fact": "earliest_csed",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_home",
+   "entry": "W-06",
+   "fact": "home_phone",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "telephone number as printed",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "See subject_reason: the cell is subject-INDEPENDENT on a form with no printed eligibility gate, so its subject is per record while irs433_home_phone's is fixed by 433-A's own subject. The property would hold a corporation's telephone number under a name that says it is an individual's home line."
+  },
+  {
+   "key": "433d_initial",
+   "entry": "W-12",
+   "fact": "agreement_initials",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "the filer’s initials, as written on the page",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "A MARK OF ASSENT TO A CONTRACT HAS NO COUNTERPART ON A FORM THAT ASKS ONLY FOR FACTS. The five predecessors carry signatures — a signature attests that the facts given are true — and none carries an initial that agrees to a term. The distinction is the whole difference between a statement and an undertaking, and a shared property would erase it."
+  },
+  {
+   "key": "433d_kinds_of_taxes",
+   "entry": "W-09",
+   "fact": "kinds_of_taxes",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE ONE APPARENT COUNTERPART IS A FALSE FRIEND AND IT WAS CHECKED RATHER THAN ASSUMED. irs433_amount_owed_as_of exists on the backbone, contributed by 433-A, and its input key is `16_amount_owed_as_of`. Read against 433-A's own map, that key targets `Page2.Table_Line15.HeaderRow14.Column3_14` — a COLUMN HEADER in the bank-accounts table, the \"as of\" date governing account BALANCES, not a tax debt at all. Binding 433-D's tax liability to it would put the balance due on an instalment agreement into a property holding the date a bank balance was read. The names correspond almost exactly and the facts do not, which is what [R-08] says a name is worth as evidence."
+  },
+  {
+   "key": "433d_lien_determination",
+   "entry": "W-20",
+   "fact": "lien_determination",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (4 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "filedimmediately",
+     "value": "filedimmediately",
+     "displayOrder": 0
+    },
+    {
+     "label": "filedwhen",
+     "value": "filedwhen",
+     "displayOrder": 1
+    },
+    {
+     "label": "hasalready",
+     "value": "hasalready",
+     "displayOrder": 2
+    },
+    {
+     "label": "maybe",
+     "value": "maybe",
+     "displayOrder": 3
+    }
+   ],
+   "map_option_by_value": {
+    "filedimmediately": "filedimmediately",
+    "filedwhen": "filedwhen",
+    "hasalready": "hasalready",
+    "maybe": "maybe"
+   },
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "No reuse is conceivable, for W-18's reason. The two Master File codes inside the Review Status Indicator are themselves subject-CONDITIONAL — RSI 5 is the Individual Master File review and RSI 6 the Business Master File — which is the clearest evidence on the page that this block tracks the Service's handling of a taxpayer whose kind the form does not fix."
+  },
+  {
+   "key": "433d_name",
+   "entry": "W-18",
+   "fact": "irs_employee_name",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_name_and_address",
+   "entry": "W-04",
+   "fact": "name_and_address",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "multi-line printed cell, stored as text",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? YES, AND THE DECOMPOSITION IS ENOUGH ON ITS OWN. irs433_full_name holds a name and irs433_address holds an address; this cell holds both, run together across several printed lines, and neither of those two properties could take it without holding a value its own name says it does not hold. A property cannot be a name on one form and a name-and-address on another. THE SUBJECT ARGUMENT IS THE SECOND REASON AND IT IS INDEPENDENT OF THE FIRST: this cell is subject-INDEPENDENT, so the name it holds is a natural person's on one filed copy and a corporation's on the next, and irs433_full_name is 433-A's individual filer by construction. Either reason alone settles it."
+  },
+  {
+   "key": "433d_on_the",
+   "entry": "W-10",
+   "fact": "instalment_day_of_month",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "the day of the month an instalment falls due, AS PRINTED — the page invites \"15th\" as readily as \"15\", so it is text and not a number",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THIS IS THE FACT CLASS THAT MAKES 433-D A DIFFERENT DOCUMENT FROM THE FIVE BEFORE IT. A collection information statement records what a taxpayer HAS; an instalment agreement records what they have UNDERTAKEN TO PAY AND WHEN. No property in the series holds a promise, so there is no counterpart to collide with and none to reuse. `new` here is a statement about the printed pages of five other forms, and it was verified against them rather than assumed."
+  },
+  {
+   "key": "433d_or_write",
+   "entry": "W-08",
+   "fact": "or_write_address",
+   "type": "string",
+   "fieldType": "textarea",
+   "type_basis": "multi-line printed cell, stored as text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THERE IS NO COUNTERPART TO COLLIDE WITH. Every address property in the series holds an address OF the taxpayer — irs433_address, irs433_home_mailing_address, irs433_self_employment_business_address — and this cell holds the address the taxpayer is directed to use. Binding it to any of them would put a Service address into a property every downstream consumer reads as the filer's own."
+  },
+  {
+   "key": "433d_originator_code",
+   "entry": "W-18",
+   "fact": "originator_code",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_originator_id",
+   "entry": "W-18",
+   "fact": "originator_id_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_payment1",
+   "entry": "W-11",
+   "fact": "increase_1_new_payment",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_payment2",
+   "entry": "W-11",
+   "fact": "increase_2_new_payment",
+   "type": "number",
+   "fieldType": "number",
+   "type_basis": "money cell — and 433-D declares NO rounding block, so it is written and compared TO THE CENT.",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-10 and it is not weaker for being a repetition: these are future terms of an undertaking, and nothing in a collection information statement is a future term of anything. THE PAIR IS ENUMERATED RATHER THAN GLOBBED — [R-15] — because `433d_date*` would also match `433d_date_paid` and `433d_date3`, which are two other facts under two other entries, and a prefix that swallowed them would put a signature date into an increase schedule."
+  },
+  {
+   "key": "433d_review_status_indicator",
+   "entry": "W-20",
+   "fact": "review_status_indicator",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "named-option checkbox set (3 options)",
+   "pii": false,
+   "options": [
+    {
+     "label": "1",
+     "value": "1",
+     "displayOrder": 0
+    },
+    {
+     "label": "5",
+     "value": "5",
+     "displayOrder": 1
+    },
+    {
+     "label": "6",
+     "value": "6",
+     "displayOrder": 2
+    }
+   ],
+   "map_option_by_value": {
+    "1": "1",
+    "5": "5",
+    "6": "6"
+   },
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "No reuse is conceivable, for W-18's reason. The two Master File codes inside the Review Status Indicator are themselves subject-CONDITIONAL — RSI 5 is the Individual Master File review and RSI 6 the Business Master File — which is the clearest evidence on the page that this block tracks the Service's handling of a taxpayer whose kind the form does not fix."
+  },
+  {
+   "key": "433d_routing_number1",
+   "entry": "W-13",
+   "fact": "routing_number_digit_1",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number2",
+   "entry": "W-13",
+   "fact": "routing_number_digit_2",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number3",
+   "entry": "W-13",
+   "fact": "routing_number_digit_3",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number4",
+   "entry": "W-13",
+   "fact": "routing_number_digit_4",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number5",
+   "entry": "W-13",
+   "fact": "routing_number_digit_5",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number6",
+   "entry": "W-13",
+   "fact": "routing_number_digit_6",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number7",
+   "entry": "W-13",
+   "fact": "routing_number_digit_7",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number8",
+   "entry": "W-13",
+   "fact": "routing_number_digit_8",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_routing_number9",
+   "entry": "W-13",
+   "fact": "routing_number_digit_9",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "ONE PRINTED CHARACTER CELL of a comb. An identifier fragment, never a quantity: a leading zero is meaningful and no total is computed from it.",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE MOST EXTREME DECOMPOSITION IN THIS REPO AND IT IS NOT A CLOSE CALL. Every other form in the series that records a bank holds an account or routing number as ONE value in ONE cell. Nine cells cannot bind one property, and one property cannot be split across nine — and the reverse binding, one property per box, has no counterpart anywhere to collide with. The nine are enumerated rather than globbed, and each carries its ordinal in its fact so that a value written into the wrong box is a wrong routing number rather than a silently reordered one."
+  },
+  {
+   "key": "433d_signature_row_date_left",
+   "entry": "W-15",
+   "fact": "taxpayer_signature_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO PROPERTY IN THIS SERIES HOLDS A SIGNATURE. The five predecessors are signed and none of them binds the signature cell: a signature is an image on a filed page, and what the engine writes here is the typed name that stands for one. There is nothing to collide with. The identical captions are why these keys are enumerated by position: a name derived from the caption alone would give two cells the same fact and one property would take both, which A5 refuses."
+  },
+  {
+   "key": "433d_signature_row_date_right",
+   "entry": "W-15",
+   "fact": "second_signature_date",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "date cell, stored as printed text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO PROPERTY IN THIS SERIES HOLDS A SIGNATURE. The five predecessors are signed and none of them binds the signature cell: a signature is an image on a filed page, and what the engine writes here is the typed name that stands for one. There is nothing to collide with. The identical captions are why these keys are enumerated by position: a name derived from the caption alone would give two cells the same fact and one property would take both, which A5 refuses."
+  },
+  {
+   "key": "433d_spouse",
+   "entry": "W-05",
+   "fact": "sp_ssn_itin",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier — a Social Security or Individual Taxpayer Identification Number",
+   "pii": true,
+   "backbone_key": null,
+   "reuse_of": "irs433_sp_ssn_itin",
+   "reuse_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THIS IS THE SECOND KIND OF FIXED SUBJECT ON THIS FORM. W-01 and W-02 are fixed by the ROUTE; this one is fixed by the CONDITIONAL — the cell exists only where the filer is a natural person filing a joint liability, so the fact is \"the SSN or ITIN of that person's spouse\" and it cannot be anything else. That is precisely 433-A's and 433-A(OIC)'s fact about precisely the same legal person, and a spouse does not have one SSN on a collection information statement and another on an instalment agreement. THE THIRD CLASS IS WHAT MAKES THIS RULING AVAILABLE AT ALL: under the binary that [R-35] replaced, this cell was subject-independent, its subject would have been per-record, and the reuse would have been refused for a reason that is false of it."
+  },
+  {
+   "key": "433d_spouse_signature",
+   "entry": "W-17",
+   "fact": "spouse_signature",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "the typed name standing for a signature",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "Same ground as W-15 — no property in this series holds a signature — with the subject settled rather than left open: the conditional fixes it as the spouse of a natural person, so if a signature property ever existed this key could be tested against it. It does not, so the ruling is `new` and the absence was verified against the five other forms rather than assumed."
+  },
+  {
+   "key": "433d_subject",
+   "entry": "W-03",
+   "fact": "subject",
+   "type": "enumeration",
+   "fieldType": "select",
+   "type_basis": "OPERATOR INPUT. It names no printed cell; the engine reads it to route the identifier and to decide which conditional cells it must assert empty. A record declaring nothing is REFUSED, never defaulted.",
+   "pii": false,
+   "options": [
+    {
+     "label": "individual",
+     "value": "individual",
+     "displayOrder": 0
+    },
+    {
+     "label": "entity",
+     "value": "entity",
+     "displayOrder": 1
+    }
+   ],
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST CANNOT EVEN BE ASKED OF A COUNTERPART, BECAUSE THERE IS NONE. No other mapped form has a subject to discriminate: each of the other five is ABOUT one legal person by its own printed eligibility text or, where there is none, by four other printed sources. 433-D is the first form in this register whose subject is not a property of the form, so this input exists on this form alone and a shared name would be a name for a decision no other form makes. It is form-specific because there is nothing to share it with, and that is a checked absence rather than a default: `operator-input` is a category of its own precisely so it cannot hide inside `new`, which asserts that a PRINTED fact has no counterpart."
+  },
+  {
+   "key": "433d_submit_a_new",
+   "entry": "W-19",
+   "fact": "submit_new_form_w4",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone printed tick, drawn once on each of the two copies",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "BOTH ARE ELECTIONS ABOUT THIS AGREEMENT rather than facts about the taxpayer's circumstances, and no collection information statement in the series offers an election. A property holding \"this filer cannot pay by direct debit\" has no counterpart among properties holding what a filer owns and earns."
+  },
+  {
+   "key": "433d_tax_periods",
+   "entry": "W-09",
+   "fact": "tax_periods",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE ONE APPARENT COUNTERPART IS A FALSE FRIEND AND IT WAS CHECKED RATHER THAN ASSUMED. irs433_amount_owed_as_of exists on the backbone, contributed by 433-A, and its input key is `16_amount_owed_as_of`. Read against 433-A's own map, that key targets `Page2.Table_Line15.HeaderRow14.Column3_14` — a COLUMN HEADER in the bank-accounts table, the \"as of\" date governing account BALANCES, not a tax debt at all. Binding 433-D's tax liability to it would put the balance due on an instalment agreement into a property holding the date a bank balance was read. The names correspond almost exactly and the facts do not, which is what [R-08] says a name is worth as evidence."
+  },
+  {
+   "key": "433d_tin_ein",
+   "entry": "W-02",
+   "fact": "employer_identification_number",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier — an Employer Identification Number",
+   "pii": false,
+   "backbone_key": null,
+   "reuse_of": "irs433boi_employer_identification_number",
+   "reuse_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-B ever have to hold two different values for one taxpayer at one moment? NO, and for the mirror of W-01's reason. This key exists ONLY on the entity branch — an individual record routes to irs433_tp_ssn_itin and this cell is never written — so its subject is FIXED as the business entity, which is exactly the legal person 433-B and 433-B(OIC) are about. An entity does not have one EIN on its collection information statement and a different one on its instalment agreement. IT BINDS THE irs433boi_ NAME, PREFIX AND ALL, which is [R-06]'s prefix half: the prefix records which form CREATED a name and not which form owns it, and 433-B established the precedent by binding this very property."
+  },
+  {
+   "key": "433d_tin_ssn_itin",
+   "entry": "W-01",
+   "fact": "tp_ssn_itin",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier — a Social Security or Individual Taxpayer Identification Number",
+   "pii": true,
+   "backbone_key": null,
+   "reuse_of": "irs433_tp_ssn_itin",
+   "reuse_reason": "THE TEST, ASKED OF THIS CELL: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? NO, AND THE REASON IS THAT THIS KEY'S SUBJECT IS FIXED RATHER THAN PER-RECORD. A subject-INDEPENDENT cell on 433-D takes its subject from the record — the same box holds a natural person's telephone number on one filed copy and a corporation's on the next — and this key is not one of those: it exists ONLY on the individual branch, because the route sends the entity branch to a different property entirely. So the fact is \"the SSN or ITIN of the natural person this agreement is with\", which is the same fact 433-A line 2 and 433-A(OIC) s1 hold, about the same legal person, at the same moment. A taxpayer does not have one SSN on their collection information statement and a different one on their instalment agreement. The subject register calls 433-D / 433-A COINCIDE and this is the key on which that verdict is unambiguous."
+  },
+  {
+   "key": "433d_title",
+   "entry": "W-18",
+   "fact": "irs_employee_title",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO REUSE IS CONCEIVABLE, WHICH IS A STRONGER STATEMENT THAN \"NO COUNTERPART EXISTS\" AND IS WHY THIS IS ITS OWN CATEGORY RATHER THAN `new`. Every property in this series is a fact about a taxpayer; a property holding an IRS employee's identifying number under a taxpayer-facing name would be wrong in a way no later correction could reach, because a HubSpot property name is permanent. The seventeen are enumerated rather than globbed: `433d_name` and `433d_title` are bare stems that a prefix pattern over the block would miss and that a glob over the form would confuse with W-04 and W-16."
+  },
+  {
+   "key": "433d_title_if",
+   "entry": "W-16",
+   "fact": "signatory_title_if_corporate_officer_or_partner",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "identifier or short text",
+   "pii": false,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "See subject_reason. The counterpart belongs to the individual taxpayer's own business role; this cell belongs to the officer signing for an entity. Two legal persons, two titles, one moment."
+  },
+  {
+   "key": "433d_unable_to_make",
+   "entry": "W-19",
+   "fact": "unable_to_make_debit_payments",
+   "type": "enumeration",
+   "fieldType": "booleancheckbox",
+   "type_basis": "lone printed tick, drawn once on each of the two copies",
+   "pii": false,
+   "options": [
+    {
+     "label": "Yes",
+     "value": "true",
+     "displayOrder": 0
+    },
+    {
+     "label": "No",
+     "value": "false",
+     "displayOrder": 1
+    }
+   ],
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "BOTH ARE ELECTIONS ABOUT THIS AGREEMENT rather than facts about the taxpayer's circumstances, and no collection information statement in the series offers an election. A property holding \"this filer cannot pay by direct debit\" has no counterpart among properties holding what a filer owns and earns."
+  },
+  {
+   "key": "433d_work_cell_business",
+   "entry": "W-07",
+   "fact": "work_cell_or_business_phone",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "telephone number as printed",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "THE TEST: could one property serving 433-D and 433-A ever have to hold two different values for one taxpayer at one moment? YES — three of them, and the form does not say which. A filer writes ONE number here and the printed caption declines to record whether it is the work line, the mobile or the business switchboard, so binding this cell to any one of 433-A's three properties would assert something the page does not say. Binding it to all three would write one number into three properties that a 433-A record fills with three different numbers. N cells cannot bind one property and one cannot be split into N. The subject argument of W-06 applies here too and is not needed."
+  },
+  {
+   "key": "433d_your_signature",
+   "entry": "W-15",
+   "fact": "taxpayer_signature",
+   "type": "string",
+   "fieldType": "text",
+   "type_basis": "the typed name standing for a signature",
+   "pii": true,
+   "backbone_key": null,
+   "scope": "form-specific",
+   "scope_reason": "NO PROPERTY IN THIS SERIES HOLDS A SIGNATURE. The five predecessors are signed and none of them binds the signature cell: a signature is an image on a filed page, and what the engine writes here is the typed name that stands for one. There is nothing to collide with. The identical captions are why these keys are enumerated by position: a name derived from the caption alone would give two cells the same fact and one property would take both, which A5 refuses."
+  }
+ ],
+ "not_provisioned": [],
+ "arguable": [],
+ "_count": {
+  "bindings": 78,
+  "key_universe": 78,
+  "by_shape": {
+   "string/text": 61,
+   "string/textarea": 3,
+   "enumeration/select": 4,
+   "number/number": 7,
+   "enumeration/booleancheckbox": 3
+  },
+  "_derived_by": "scratchpad/p57-433d-crosswalk-author.mjs",
+  "_why": "DERIVED ON EVERY RUN FROM THE ROWS THEMSELVES, never typed ([R-07]). `key_universe` is keySpaceOf()’s size with the route applied, and `bindings` must equal it — a crosswalk that binds fewer keys than the engine reads is a property nobody provisions."
+ }
+}

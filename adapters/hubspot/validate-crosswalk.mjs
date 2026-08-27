@@ -62,7 +62,7 @@
 // read its input" is precisely the failure a guard exists to prevent.
 
 import { existsSync, readFileSync } from 'fs';
-import { ENGINE_EXTRA_INPUTS } from './classification-coverage.mjs';
+import { ENGINE_EXTRA_INPUTS, keySpaceOf } from './classification-coverage.mjs';
 import { examined } from '../pdf/examined.mjs';
 
 const form = process.argv[2];
@@ -198,48 +198,31 @@ const resolveName = (name) => {
 // `undefined`, which this file then reported as "MISSING binding for engine input: undefined":
 // eight real engine inputs missing from the key space, and one input that does not exist added
 // to it — on a form whose crosswalk is empty, so nothing else contradicted it.
-const engineInputs = new Set([
-  ...(map.special?.composite_name_address?.from || []),
-  ...Object.keys(map.map || {}),
-  // `split` carries prose keys alongside its definitions (`_why`, and on 433-F a note on why
-  // the two Section C keys are scalars rather than row columns). The fill engines skip any
-  // entry without a `parts` array, so those keys are not engine inputs and a crosswalk row for
-  // one would be a property provisioned for a comment. Filtered the same way the engine skips
-  // them, rather than by name, so a third prose key needs no edit here.
-  ...Object.entries(map.split || {})
-    .filter(([, v]) => v && typeof v === 'object' && Array.isArray(v.parts))
-    .map(([k]) => k),
-  ...Object.entries(map.checkboxes || {})
-  // `checkboxes` also carries DECLARATIONS beside its targets. `_binds` names which group and
-  // canonical column each row-level construct is for — read by fill-433f.mjs to pair a flag
-  // array with its group, and by assert-row-shape-spec [A2] to answer whether the map binds a
-  // column at all. It is not a widget target and no record supplies a value for it, so a
-  // crosswalk row for it would be a property provisioned for a declaration.
-  //
-  // Excluded BY SHAPE and by the `_` convention this repo uses throughout for prose and
-  // declarations, the same way the `split` filter above excludes its own prose keys — never by
-  // name, so a second declaration needs no edit here.
-    .filter(([k, v]) => !k.startsWith('_')
-      && v && typeof v === 'object' && !Array.isArray(v) && !v.index)
-    .map(([k]) => k),
-  ...Object.entries(map.groups || {})
-    .filter(([k, d]) => !k.startsWith('_') && d && Array.isArray(d.slots))
-    .map(([k, d]) => d.array || d.source || k),
-  // `check_here` — A LONE BOX WITH NO COUNTERPART CELL, and a fifth engine-input block this
-  // file did not know about. 433-A(OIC) declares 17 and 433-B(OIC) 10; the other three forms
-  // declare none, which is exactly why its absence went unnoticed on the one form this guard
-  // used to run on. fill-433aoi.mjs:195 and fill-433boi.mjs:186 both iterate it and read
-  // `data[key]`, so every one of those 27 keys IS an engine input.
-  //
-  // THE TWO ENGINES FILTER IT DIFFERENTLY — fill-433aoi.mjs requires a string `target`,
-  // fill-433boi.mjs skips the `_` prefix — so the filter here is the INTERSECTION of the two,
-  // which is the only set both engines agree they read. Widening it to either engine's own
-  // rule alone would put a key in this space that the other engine never reads.
-  ...Object.entries(map.check_here || {})
-    .filter(([k, v]) => !k.startsWith('_') && v && typeof v === 'object' && typeof v.target === 'string')
-    .map(([k]) => k),
-  ...(ENGINE_EXTRA_INPUTS[form] || []),
-]);
+// THE ENGINE INPUTS, FROM THE ONE SELECTOR. Until this commit this file derived its own key
+// space, thirty lines of it, and the two derivations were EACH BLIND WHERE THE OTHER SAW.
+// This one read `special.composite_name_address` and `split`, which keySpaceOf() did not:
+// SEVEN keys on 433-A and FOUR on 433-F. keySpaceOf() reads a mirrored lone tick, which this
+// one did not: THREE on 433-D, and it was this file that rejected them as "EXTRA binding not
+// consumed by the engine" when the 433-D crosswalk first ran against it.
+//
+// classification-coverage.mjs was created to end exactly this, and its own header says why —
+// "A REIMPLEMENTATION IS A NEW INSTRUMENT AND IS NOT EVIDENCE ABOUT THE OLD ONE". It ended it
+// for the two derive-names tools and left the reimplementation standing in the file that runs
+// at GATE STEP 3, which is the one place a wrong key space stops a form from being filed.
+//
+// Every filter that lived here is now in the selector with the reason it was written for: the
+// `split` prose filter, the `_binds` row-level exclusion cross-checked against `groups`, the
+// `check_here` intersection of what both engines read, the `slots` filter on groups, and the
+// subject route — a dependent cell reaches one of TWO properties, so its printed key is not an
+// input key and the two branch keys and the discriminator are.
+const { keySpace: engineInputMap, problems: keySpaceProblems } = keySpaceOf(map);
+if (keySpaceProblems.length) {
+  console.error(`STOP — the key space for ${form} could not be derived:`);
+  keySpaceProblems.forEach((p) => console.error(`  ${p}`));
+  process.exit(2);
+}
+for (const k of (ENGINE_EXTRA_INPUTS[form] || [])) if (!engineInputMap.has(k)) engineInputMap.set(k, 'engine');
+const engineInputs = new Set(engineInputMap.keys());
 
 const rows = xw.bindings;
 if (!Array.isArray(rows)) {

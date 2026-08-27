@@ -148,7 +148,12 @@ export const ENGINE_EXTRA_INPUTS = {
 export const keySpaceOf = (mapDoc) => {
   const problems = [];
   const groupSource = {};
-  for (const [g, d] of Object.entries(mapDoc.groups || {})) if (!g.startsWith('_')) groupSource[g] = d.source || g;
+  // A GROUP CONTRIBUTES ITS SOURCE KEY, AND THE SPELLING IS `array || source || name`.
+  // validate-crosswalk.mjs read it that way and this function read `source || name`; the two
+  // agree on every map in the tree today, and agreeing today is not the same as being one
+  // reading. The `slots` filter is likewise its: a group with no slot list is not a repeatable
+  // table the engine feeds, and a crosswalk row for one would be a property nobody writes.
+  for (const [g, d] of Object.entries(mapDoc.groups || {})) if (!g.startsWith('_') && d && Array.isArray(d.slots)) groupSource[g] = d.array || d.source || g;
   const keySpace = new Map();
   for (const k of Object.keys(mapDoc.map || {})) if (!k.startsWith('_')) keySpace.set(k, 'map');
 
@@ -182,6 +187,58 @@ export const keySpaceOf = (mapDoc) => {
   for (const [k, v] of Object.entries(mapDoc.check_here || {})) if (!k.startsWith('_') && v && typeof v === 'object' && typeof v.target === 'string') keySpace.set(k, 'check_here');
   for (const src of Object.values(groupSource)) keySpace.set(src, 'groups');
 
+  // ── THE TWO BLOCKS THIS FUNCTION COULD NOT SEE UNTIL THIS COMMIT ────────────────────────
+  //
+  // adapters/hubspot/validate-crosswalk.mjs carried its own key-space derivation, and the two
+  // were each blind where the other saw. This function missed `special.composite_name_address`
+  // and `split`, which is SEVEN keys on 433-A and FOUR on 433-F; that one missed the mirrored
+  // lone tick, which is three on 433-D. One key space read two ways is the exact defect this
+  // module’s own header was written about — "a reimplementation is a new instrument and is not
+  // evidence about the old one" — and the module was created to end it and then left one
+  // reimplementation standing in the file that runs at gate step 3.
+  //
+  // THE COMPOSITE SOURCE KEYS. 433-F joins a name and an address into one printed widget and
+  // declares the two keys it joins. The engine reads both; neither appears in `map`.
+  for (const k of (mapDoc.special?.composite_name_address?.from || [])) if (!k.startsWith('_')) keySpace.set(k, 'special');
+  //
+  // THE SPLIT PARENTS. A `split` entry with a `parts` array is one value the engine cuts into
+  // several widgets — a telephone number into area code and line, an EIN into two halves. The
+  // PARENT is the input key and the parts are targets. Entries without a `parts` array are
+  // prose, and are filtered the way the engines skip them rather than by name.
+  for (const [k, v] of Object.entries(mapDoc.split || {}))
+    if (!k.startsWith('_') && v && typeof v === 'object' && Array.isArray(v.parts)) keySpace.set(k, 'split');
+
+  // ── THE SUBJECT ROUTE, WHERE THE MAP DECLARES ONE ───────────────────────────────────────
+  //
+  // A subject-DEPENDENT cell does not reach ONE property. It reaches one of two, on a
+  // declaration the record makes, so its printed key is not an input key at all: the two branch
+  // keys are, and so is the discriminator, which names no printed cell. [R-35] is the ruling
+  // that made this a class rather than an else branch. It is applied HERE rather than in each
+  // caller because prompt 55’s classification author and this cycle’s crosswalk author had each
+  // written their own copy of it, which is the parallel list again one level down.
+  const routes = [];
+  for (const [stem, d] of Object.entries(mapDoc.subject_classes || {})) {
+    if (stem.startsWith('_') || !d || d.class !== 'dependent' || !d.route) continue;
+    const { individual, entity, discriminator } = d.route;
+    if (!individual || !entity || !discriminator) { problems.push(`subject_classes["${stem}"] is dependent and its route does not declare all of individual, entity and discriminator. A dependent cell with an incomplete route reaches nothing.`); continue; }
+    routes.push({ stem, individual, entity, discriminator });
+  }
+
+  // APPLYING THE ROUTE. The dependent cell’s own key leaves the key space and the three keys
+  // the engine actually reads take its place. The printed key is derived from the stem the same
+  // way the map derives it — through `_key_overrides` first, then the camel-to-snake rule — so a
+  // stem this function cannot resolve to a member is reported rather than assumed absent.
+  for (const r of routes) {
+    const override = (mapDoc._key_overrides || {})[r.stem];
+    const derived = override || `${mapDoc.form}_${r.stem.replace(/([a-z0-9])([A-Z])/g, '$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/_+/g, '_').toLowerCase()}`;
+    if (keySpace.has(derived)) keySpace.delete(derived);
+    else problems.push(`subject_classes["${r.stem}"] declares a route and its printed key "${derived}" is not in the key space. The substitution below would then ADD three keys without removing the one they replace.`);
+    keySpace.set(r.individual, 'route');
+    keySpace.set(r.entity, 'route');
+    keySpace.set(r.discriminator, 'route-discriminator');
+    r.replaced = derived;
+  }
+
   // THE PREFIX ALIAS. `data[name] ?? data[PREFIX + name]` in every fill engine makes these one
   // member; the prefixed spelling wins where ENGINE_EXTRA_INPUTS declares it, because that is
   // the spelling the crosswalk, the registry and the live portal are already provisioned under.
@@ -197,7 +254,8 @@ export const keySpaceOf = (mapDoc) => {
     aliases.set(k, prefixed);
   }
 
-  return { keySpace, groupSource, rowLevel, checkboxShape, aliases, problems };
+  return { keySpace, groupSource, rowLevel, checkboxShape, aliases, routes, problems };
+
 };
 
 /**
@@ -247,6 +305,7 @@ export const MECHANISMS = {
 /** The granularity each mechanism kind carries, and the granularity of a bare verbatim naming. */
 export const GRANULARITY_OF = {
   verbatim: 'enumerated',
+  enumerated_keys: 'enumerated',
   prefix_glob: 'glob',
   counterpart_substitution: 'derived-counterpart',
 };
@@ -273,6 +332,24 @@ export const coverageOf = (classDoc, mapDoc, form) => {
   const entryById = new Map((classDoc.entries || []).map(e => [e.id, e]));
   const problems = [], notes = [];
 
+  // AN ENTRY MAY NAME ITS KEYS AS A LIST, AND A LIST IS THE STRONGEST FORM THERE IS.
+  //
+  // The three naming mechanisms this module documents all read PROSE, because the first three
+  // classifications were authored as prose and the reader was built for what existed. 433-D is
+  // authored the other way: every entry carries an explicit `keys` array, checked against the
+  // key space by its own generator on every run, with no glob and no count standing in for a
+  // list — which is [R-15] and is the granularity standard this module already names
+  // `enumerated`. Read only the prose and this file reports 0 of 78 covered on that form, which
+  // is the reader unable to see its input rather than a classification that covers nothing:
+  // exactly the shape [R-17] names, arriving through the module written to end it.
+  //
+  // IT WIDENS NOTHING ON THE OTHER FIVE FORMS. None of their entries carries a `keys` array, so
+  // this branch is never taken there and the prose reader decides every one of their keys as
+  // before. A key in the array that is not in the key space is not admitted here either — the
+  // key space is still what bounds the answer, and the generator STOPs on such a key anyway.
+  const enumeratedKeys = (entry, key) =>
+    (Array.isArray(entry.keys) && entry.keys.includes(key)) ? 'enumerated_keys' : null;
+
   const verbatim = (entry, key) => {
     const prose = String(entry.oic || '');
     const re = new RegExp(`(^|[^A-Za-z0-9_])${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^A-Za-z0-9_]|$)`);
@@ -286,7 +363,7 @@ export const coverageOf = (classDoc, mapDoc, form) => {
   const coverage = new Map();
   for (const e of (classDoc.entries || [])) {
     const got = new Map();
-    for (const k of keySpace.keys()) { const how = verbatim(e, k); if (how) got.set(k, how); }
+    for (const k of keySpace.keys()) { const how = enumeratedKeys(e, k) || verbatim(e, k); if (how) got.set(k, how); }
     const m = MECHANISM[e.id];
     if (m) {
       const added = [];
