@@ -19,7 +19,7 @@
 //
 // usage: node adapters/clickup/cu-write-probe.mjs <listId> [--body <file>]
 import { cu, listTasks, getTask, createTask, deleteTask, spaceTags, stop } from './cu-lib.mjs';
-import { stripMarks, stripLine } from './render-description.mjs';
+import { stripMarks, stripLine } from './projection.mjs';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const listId = process.argv[2];

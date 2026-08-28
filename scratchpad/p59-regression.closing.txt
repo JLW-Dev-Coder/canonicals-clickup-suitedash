@@ -1,0 +1,51 @@
+tier: closing
+steps: 42
+passed: 42
+failed: 0
+steps that left samples/ changed: 0
+elapsed: 2699.1s
+
+PASS     36.2s  gate 433a saturated
+PASS     38.2s  gate 433aoi saturated
+PASS     73.0s  gate 433b saturated
+PASS     43.1s  gate 433boi saturated
+PASS     20.5s  gate 433d saturated
+PASS     22.4s  gate 433f saturated
+PASS     35.8s  gate 433a production
+PASS     38.3s  gate 433aoi production
+PASS     73.4s  gate 433b production
+PASS     42.6s  gate 433boi production
+PASS     20.3s  gate 433d production
+PASS     23.2s  gate 433f production
+PASS     36.4s  gate 433a role=stress
+PASS     38.4s  gate 433aoi role=negative
+PASS     37.8s  gate 433aoi role=stress
+PASS     72.7s  gate 433b role=stress
+PASS     43.3s  gate 433boi role=negative
+PASS     43.0s  gate 433boi role=stress
+PASS     20.3s  gate 433d role=stress
+PASS     23.1s  gate 433f role=stress
+PASS      6.0s  overflow 433a
+PASS      4.8s  overflow 433aoi
+PASS    110.9s  recordshape 433aoi (set role)
+PASS      5.1s  saturation-union 433aoi (set role)
+PASS      4.6s  overflow 433b
+PASS      2.8s  overflow 433boi
+PASS    127.4s  recordshape 433boi (set role)
+PASS      2.5s  saturation-union 433boi (set role)
+PASS      3.2s  saturation-union 433d (set role)
+PASS      2.0s  overflow 433f
+PASS     72.5s  coverage 433a
+PASS    232.5s  coverage 433aoi
+PASS    147.5s  coverage 433b
+PASS    261.0s  coverage 433boi
+PASS     61.4s  coverage 433d
+PASS     46.9s  coverage 433f
+PASS    101.7s  sweeps
+PASS    695.6s  sweeps:deep
+PASS      5.3s  regression tier: canary
+PASS     14.3s  regression tier: portal
+PASS      0.5s  headroom
+PASS      7.7s  hs-preflight
+
+samples/ byte-identical across every step.

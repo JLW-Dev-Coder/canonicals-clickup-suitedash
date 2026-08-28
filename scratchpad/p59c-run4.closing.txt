@@ -1,0 +1,59 @@
+tier: closing
+steps: 42
+passed: 41
+failed: 1
+steps that left samples/ changed: 0
+elapsed: 2019.3s
+
+PASS     36.3s  gate 433a saturated
+PASS     39.9s  gate 433aoi saturated
+PASS     75.1s  gate 433b saturated
+PASS     44.5s  gate 433boi saturated
+PASS     21.2s  gate 433d saturated
+PASS     23.5s  gate 433f saturated
+PASS     37.5s  gate 433a production
+PASS     38.7s  gate 433aoi production
+PASS     76.8s  gate 433b production
+PASS     43.3s  gate 433boi production
+PASS     20.7s  gate 433d production
+PASS     23.4s  gate 433f production
+PASS     36.9s  gate 433a role=stress
+PASS     39.1s  gate 433aoi role=negative
+PASS     39.1s  gate 433aoi role=stress
+PASS     75.9s  gate 433b role=stress
+PASS     43.2s  gate 433boi role=negative
+PASS     43.2s  gate 433boi role=stress
+PASS     20.2s  gate 433d role=stress
+PASS     23.4s  gate 433f role=stress
+PASS      6.0s  overflow 433a
+PASS      5.1s  overflow 433aoi
+PASS    114.2s  recordshape 433aoi (set role)
+PASS      5.2s  saturation-union 433aoi (set role)
+PASS      4.6s  overflow 433b
+PASS      2.7s  overflow 433boi
+PASS    127.0s  recordshape 433boi (set role)
+PASS      2.8s  saturation-union 433boi (set role)
+PASS      3.2s  saturation-union 433d (set role)
+PASS      2.1s  overflow 433f
+PASS     73.8s  coverage 433a
+PASS    227.9s  coverage 433aoi
+PASS    147.9s  coverage 433b
+PASS    260.2s  coverage 433boi
+PASS     61.3s  coverage 433d
+PASS     46.6s  coverage 433f
+PASS     99.4s  sweeps
+FAIL(2)      0.4s  sweeps:deep
+PASS      4.9s  regression tier: canary
+PASS     13.6s  regression tier: portal
+PASS      0.5s  headroom
+PASS      6.8s  hs-preflight
+
+samples/ byte-identical across every step.
+
+--- sweeps:deep ---
+assert-examined — every guard that runs per form, and what it examined on each
+  reader:    8 canary case(s) live, including a legitimate ZERO and a malformed line
+  derived:   72 candidate(s) from adapters/pdf, adapters/hubspot by the signature "can stop a run AND is scoped to a form"
+  register:  71 entr(ies) — 24 guard, 2 orchestrator, 12 instrument, 10 generator, 6 engine, 11 portal, 5 engine-wide, 1 self
+SCOPE FAILED — 1 problem(s). The derived population and the register disagree, so no matrix below could be complete:
+  UNDISPOSED   adapters/pdf/assert-runner-derivation.mjs is a per-form file that can stop a run, and the register says nothing about it. Say whether it is a guard that owes an examined count, or which of the other kinds it is and why.

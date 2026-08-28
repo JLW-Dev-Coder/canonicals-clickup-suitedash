@@ -22,7 +22,7 @@
 //
 // usage: node adapters/clickup/projection-probe.mjs <listId>
 import { cu, listTasks, getTask, createTask, deleteTask, stop } from './cu-lib.mjs';
-import { stripMarks } from './render-description.mjs';
+import { stripMarks } from './projection.mjs';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const listId = process.argv[2];

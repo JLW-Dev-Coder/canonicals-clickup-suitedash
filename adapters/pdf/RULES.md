@@ -1137,6 +1137,175 @@ commit this rule is written in, so it has no hash yet.
 ---
 
 
+## [R-41] A `finally` restore must prove it still owns the state
+
+> A tool that snapshots shared state and restores it in a `finally` must write an OWNERSHIP
+> TOKEN alongside the snapshot and verify that token still matches before restoring. If it does
+> not match, the tool does not restore. It reports what it found and exits non-zero.
+
+**The defect that earned it.** `[D-27]`, seen from the other side. `[R-38]` records that
+`samples/` was left carrying another tool's bytes when two `declaration-coverage` runs
+interleaved, and rules on how a cycle ENDS. This rules on the restore itself, because killing a
+process is not the only way to reach the same place — and on this cycle it was reached a
+different way.
+
+Two regression runs were stopped mid-flight. Stopping the parent left `npm run sweeps:deep` and
+`adapters/pdf/assert-examined.mjs` alive as orphans, and their `finally` restores landed
+**during the next run**, writing a dead owner's snapshot over a live run's state. Five fixtures
+were clobbered — `433b.overmax`, `433b.slice3`, `433boi.negative`, `433boi.overmax`,
+`433boi.slice3` — and the symptom was `gate 433boi production` reporting CO-AUTHORSHIP
+UNDECLARED on a file that is byte-identical to HEAD and passes when read alone. The differing
+key set INCLUDED `_co_authored_with_hand`, the declaration key itself, which is the signature.
+
+**The restore was correct code.** Every instrument worked. The `finally` did exactly what it was
+written to do, on behalf of a run that no longer existed. What was missing is the question *am I
+still the owner of what I am about to overwrite* — and there is no way to ask it without a token,
+because the bytes on disk look the same either way.
+
+**What it is not.** It is not "do not kill runs". A run can die for reasons nobody chose, and a
+rule that depends on nobody pressing stop is not a rule. The token makes the dangerous case
+detectable rather than making it rare.
+
+**Roughly when.** Ruled 2026-08-27, prompt 59-A item G, on `[D-27]`'s mechanism. The number the
+prompt proposed was R-38 and that id was already in use for the closing-regression rule; the
+collision is recorded rather than silently renumbered, because `[R-12]`'s renumber half is
+exactly this hazard. Cycle-dated: the commit that lands it is the commit this rule is written
+in, so it has no hash yet.
+
+---
+
+## [R-42] A canary must not enter the population it guards
+
+> A canary is a fixed input with an asserted expected yield, and it must not become part of the
+> population its own detector sweeps. Its planted content is ASSEMBLED — concatenated, or built
+> at run time — so the detector's own pattern never appears literally in the source carrying it.
+> A canary the sweep can see is a canary that changes the answer it was written to check.
+
+**The defect that earned it.** `adapters/pdf/assert-name-sets-imported.mjs` sweeps the tree for
+an exported set of string literals that some other file retypes instead of importing. Its canary
+plants five synthetic sources, and one of them has to DECLARE a set. The first draft wrote that
+plant as a literal inside the sweep's own source. The sweep reads the `.mjs` files under
+`adapters/pdf`, so it read itself, matched its own canary text with its own declaration regex,
+and reported **52 declarations in a tree holding 51**. The canary had joined the population it
+was a canary for, and the over-count was in the direction that looks like thoroughness. The fix
+is to assemble the plant by concatenation so the literal never appears in the file.
+
+**It is not a special case of the sweep that met it.** `[R-17]` requires that every detector
+carry a canary and that the canary not be drawn from the artefacts. This is the other direction:
+the artefacts must not be able to draw the canary. Every canary is content placed somewhere
+something reads, so the hazard belongs to all of them and not to the one that surfaced it —
+which is why it is ruled rather than fixed in place and forgotten.
+
+**What it does not say.** It does not say a canary must live outside the tree. A canary held in
+the file it guards is fine and is usually right, because a canary in a separate fixture is one
+more path to go stale. What it forbids is the canary being MATCHABLE by the detector — the
+distinction is between where the bytes live and whether the pattern is present in them.
+
+**Where it is enforced.** `adapters/pdf/blanket-audit.mjs` holds the canary register, one entry
+per detector, and a detector added without a canary stops a run. That register cites this rule,
+so the next canary is built against it rather than rediscovering it at a wrong count.
+
+**Roughly when.** Ruled 2026-08-27, prompt 59-C item 3. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet.
+
+---
+
+## [R-43] A name set has one home, and every other reader imports it
+
+> A set of names that exists in one module is IMPORTED by every other file that needs it, never
+> retyped. A retyped list does not fail — it diverges, quietly, at whatever moment the source
+> list changes, and that moment is not the moment anybody looks.
+
+**The defect that earned it.** `scratchpad/p59-regression.mjs` derived every fixture role it
+found in `samples/` and fed each to `run-form-gate` as a singleton `--role`. Two of them —
+`record_shape` and `branch` — are SET roles, and `adapters/pdf/resolve-fixture.mjs` **exports
+`SET_ROLES` saying so**. The runner had retyped the vocabulary instead of importing it, so it
+asked `resolve-fixture` a question that file exists to refuse, and two steps went red for asking
+wrongly rather than for anything being wrong. Importing `SET_ROLES` is the whole fix.
+
+**It is the same object as `[R-07]`, one type up.** That rule says no COUNT is typed — derived,
+or declared underivable. This says no SET of names is typed either. A retyped count
+self-contradicts against its own list and `count-sweep` catches it; a retyped set agrees with
+itself perfectly and agrees with its source only until the source moves.
+
+**What the sweep found, and what it does not claim.**
+`adapters/pdf/assert-name-sets-imported.mjs` derives every exported set of string literals in
+`adapters/` and `scratchpad/` — 52 of them on the run that landed this commit, and the figure is
+derived and printed on every run rather than being a number this paragraph owns — and looks for another file building a bracketed
+literal EQUAL to one without importing it. It found **24 sites, every one in the sweep engine
+itself**: `DIRS`, `SWEPT_DIRS`, `CANARY_DIRS` and `PRUNED` are each written out longhand across
+several tools, and `SWEPT_DIRS` is exported TWICE, by `exclusion-sweep.mjs` and by
+`success-sweep.mjs`, which is this rule's drift already half-realised.
+
+**They are carried, not fixed,** and the tool is a RATCHET rather than a green light: the 24 are
+baselined by name, a NEW site fails the run, and a baselined site that has been FIXED also fails
+the run, so the list can only shrink deliberately. Replacing a directory vocabulary inside six
+sweep tools is a change to the instruments every other check in this repo is read through, and
+making it in the cycle that also landed the export is the adjacent change `[R-20]` says to carry.
+The sweep's blind spots are declared in its header: a set built by computation, a set spelled
+with different member strings, a PARTIAL retyping that omits a member, and a longer list that
+merely contains the set.
+
+**Roughly when.** Ruled 2026-08-27, prompt 59-A item H. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet. IT WAS WRITTEN AS R-42 AND IS R-43:
+prompt 59-C names R-42 for the canary-population rule above, explicitly, and was written against
+a tree where R-42 was free. This rule had taken that id in work that was staged and never
+committed, so nothing in the history depends on it. The renumber is recorded rather than made
+quietly, which is what `[R-41]`’s dating paragraph did with the same hazard in the other
+direction.
+
+---
+## [R-44] The closing regression has a stopping rule, and it is written before the run that meets it
+
+> A cycle's closing regression is COMPLETE when one run surfaces zero ENGINE defects and zero
+> INSTRUMENT defects. An instrument defect found on run N requires run N+1 — UNLESS it is
+> reachable only through an instrument added during run N, which is the apparatus chasing itself
+> and is recorded and carried instead. The two classes are counted separately in the report, and
+> the engine count is the result; a run reporting only instrument churn has not said what it was
+> run to say.
+
+**The defect that earned it.** The prompt-59 closing regression ran three times and each pass
+surfaced a fresh instrument defect, which reads as a run that is not converging. It was not.
+Across all three runs the engine defect count was ZERO, and nothing said so, because the report
+listed every defect in one undifferentiated list and the instrument defects were the only ones
+in it. Run 3 failed 30 of 43 steps and every one of those failures traced to two instrument
+defects — nine undisposed guard sites in `adapters/pdf/guard-sweep.mjs`, which fails
+`validate-map` and cascades into every gate, every coverage step and the sweep suite; and a step
+the runner invented from a proxy. Thirty red steps, zero engine defects, and the report could not
+tell the two apart.
+
+**The two classes.** An ENGINE defect is a defect in what the engine does to a form: a map, a
+fill engine, a fixture, a coverage claim, a crosswalk — anything a filed return would carry. An
+INSTRUMENT defect is a defect in the apparatus that assesses it: a sweep, a register, a guard
+disposition, a runner. The closing regression's job is to assess the engine on the final tree.
+Work done on the instruments while running it is real work and is reported as real work, in its
+own count.
+
+**Why the exemption clause is not a loophole.** Without it the rule never terminates: every new
+assertion tool arrives with undisposed guard sites, because `[R-12]` requires a new guard to be
+disposed and `[R-17]` requires a new detector to carry a canary — so adding an instrument on run
+N guarantees a finding on run N, which under a naive rule mandates run N+1, which may add
+another. The clause is narrow and it is a claim that has to be true of the specific defect: the
+defect must be UNREACHABLE by the apparatus as it stood at the start of run N. A defect the
+pre-existing apparatus could have found requires the next run, whenever the instrument that
+happened to surface it was written.
+
+**What it does not license.** It does not license committing on a red run. A run with failing
+steps has not passed, whatever class its failures fall in; the exemption governs whether ANOTHER
+full run is required to go hunting, not whether the current one may be called green. Nor does it
+license carrying an instrument defect unfixed — the fix lands either way, in the same commit;
+what is exempted is only the re-run.
+
+**Roughly when.** Ruled 2026-08-27, prompt 59-C item 2. Cycle-dated: the commit that lands it is
+the commit this rule is written in, so it has no hash yet. It was written down BEFORE the run it
+was to be judged by returned — authored while that closing regression was in flight and its
+outcome unknown — because a stopping rule chosen once you are standing on the finish line is a
+description and not a rule. It is the companion to `[R-38]`, which says a cycle that has not run
+its own closing regression has not ended; this says when that run is allowed to be the last one.
+
+---
+
+
 # What is deliberately not in here
 
 - **Per-form findings.** Those live in each map's `_carried` and in

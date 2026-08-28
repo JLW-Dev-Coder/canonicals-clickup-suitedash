@@ -49,6 +49,7 @@
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { VACUOUS, SELECTIONS, PARALLEL, FIGURES } from './guard-sweep.mjs';
+import { DERIVATIONS } from './assert-runner-derivation.mjs';
 import { MANIFEST } from './count-sweep.mjs';
 import { PREDICATES, DECLARED, RETIRED } from './exclusion-sweep.mjs';
 import { BOUNDARIES } from './sweep-boundary.mjs';
@@ -191,6 +192,7 @@ export const REGISTERS = () => {
   add('guard-sweep.mjs:SELECTIONS',     'engine', idsOf('SELECTIONS', SELECTIONS));
   add('guard-sweep.mjs:PARALLEL',       'engine', idsOf('PARALLEL', PARALLEL));
   add('guard-sweep.mjs:FIGURES',        'engine', idsOf('FIGURES', FIGURES));
+  add('assert-runner-derivation.mjs:DERIVATIONS', 'engine', idsOf('DERIVATIONS', DERIVATIONS));
   add('count-sweep.mjs:MANIFEST',       'engine', idsOf('MANIFEST', MANIFEST));
   add('exclusion-sweep.mjs:PREDICATES', 'engine', idsOf('PREDICATES', PREDICATES));
   add('exclusion-sweep.mjs:DECLARED',   'engine', idsOf('DECLARED', DECLARED));

@@ -108,6 +108,19 @@
     "at": "2026-08-27T22:36:02.346Z"
    },
    "purpose": "item E of prompt 59-A: establish what the ClickUp round trip and the mark-stripped projection preserve, per content class."
+  },
+  {
+   "task_id": "86e30jt3m",
+   "name": "_vlp_write_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30jt3m",
+   "created_at_ms": 1787871851138,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-27T23:04:14.010Z"
+   }
   }
  ]
 }
