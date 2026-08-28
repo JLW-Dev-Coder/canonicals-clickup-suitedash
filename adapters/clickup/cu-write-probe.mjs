@@ -17,7 +17,14 @@
 // place to discover it. --body <file> sends a real body through the same create/read-back/
 // delete cycle and compares what comes back against what went out.
 //
+// ONE SIZE IS NOT A CEILING. --body measured that ONE body survived; it did not measure where
+// the limit is, and the largest record in the mirror export is larger than the largest body
+// --body ever sent. --ceiling <sizes> sweeps sizes through the same cycle and records a verdict
+// per size — survived, truncated with the surviving length, or rejected with the status — in
+// `body_measurements` in the register. See its own header block below.
+//
 // usage: node adapters/clickup/cu-write-probe.mjs <listId> [--body <file>]
+//        node adapters/clickup/cu-write-probe.mjs <listId> --ceiling 52500,60000,80000
 import { cu, listTasks, getTask, createTask, deleteTask, spaceTags, stop } from './cu-lib.mjs';
 import { stripMarks, stripLine } from './projection.mjs';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -67,6 +74,185 @@ console.log(`  statuses: ${statuses.join(', ')}`);
 
 const before = await listTasks(listId);
 console.log(`  enumerated before probe: ${before.tasks.length} task(s) over ${before.pages} page(s)`);
+
+// ── --ceiling: WHERE THE BODY LIMIT ACTUALLY IS ──────────────────────────────────────────
+// A body of 50,634 chars was measured to survive. That is a MEASUREMENT OF ONE SIZE, and the
+// population it has to cover is not one size: the largest record in the mirror export
+// serialises to 52,251 chars, 1,617 chars OUTSIDE anything this repo has proved. A gap like
+// that is otherwise discovered by B2, mid-run, on one task, after hours of work — the wrong
+// place to discover it, for the same reason 959 tasks was the wrong place to discover whether
+// ClickUp truncates at all.
+//
+// This mode sends bodies at several sizes through the SAME create / read-back / delete /
+// read-absence cycle the single probe uses, and records a verdict per size in the register.
+//
+// A SILENT TRUNCATION AND A REJECTION ARE DIFFERENT FINDINGS, and only one of them is safe.
+// A 400 is ClickUp telling you where the limit is. A 200 that stores 60% of what was sent is
+// ClickUp NOT telling you, and it corrupts a mirror while every line of the request log reads
+// OK. They are recorded as distinct verdicts, and a truncation additionally carries the
+// surviving length, BINARY-SEARCHED against the read-back rather than read off the returned
+// character count — the returned count is the plain-text rendering and is always smaller than
+// what was sent, truncation or no, so it cannot answer this question.
+//
+// SYNTHETIC ONLY. The body is generated here in the same markdown SHAPE a rendered export
+// record has — heading, portal-definition block, a long `[n]` label/value option list, a
+// derived block, a divergence block — with every label and value invented. No portal value and
+// no client datum is sent to ClickUp by this mode.
+//
+// usage: node adapters/clickup/cu-write-probe.mjs <listId> --ceiling 52500,60000,80000
+if (process.argv.includes('--ceiling')) {
+  const sizes = (arg('--ceiling') ?? '').split(',').map(s => Number(s.trim())).filter(n => Number.isFinite(n) && n > 0);
+  if (!sizes.length) { console.error('usage: node adapters/clickup/cu-write-probe.mjs <listId> --ceiling <comma-separated char counts>'); stop(2); }
+
+  const CNAME = '_vlp_body_ceiling_probe__delete_me';
+  const optLine = (i, extra = 0) =>
+    `- [${i}] label ${JSON.stringify(`Synthetic option ${String(i).padStart(4, '0')} — filler${'.'.repeat(extra)}`)} · value \`synthetic_option_${String(i).padStart(4, '0')}\` · displayOrder \`${i - 1}\``;
+
+  // Builds a body of EXACTLY `target` chars. Exactly, because "about 60k" measured against a
+  // limit that might be 60,000 does not say which side of it the measurement was on.
+  function syntheticBody(target) {
+    const head = [
+      '#### 1. `synthetic_ceiling_probe_property`', '',
+      '**Portal definition — synthetic. Nothing below came from a portal, a form, or a person.**', '',
+      '- internal name: `synthetic_ceiling_probe_property`',
+      '- label: "Synthetic ceiling probe"',
+      '- type / fieldType: `enumeration` / `select`',
+      '- group: `synthetic_probe_group`',
+      '- createdAt: 2026-01-01T00:00:00.000Z',
+      '- archived: `false` · calculated: `false` · hasUniqueValue: `false` · hidden: `false` · formField: `true`',
+      '- description_present: `true`',
+      '- description: "Synthetic body written by adapters/clickup/cu-write-probe.mjs --ceiling to measure where the ClickUp description limit is."',
+      '',
+      '**Options — IN ORDER. The order is part of the definition, and the index is written as literal text so it survives the round trip.**', '',
+    ].join('\n');
+    const tail = [
+      '',
+      '**Derived — nothing. This is a probe body, not a property, so no file in this repo is named as a source.**', '',
+      '- created_by_form: *not derivable — a probe body is created by a probe.*',
+      '- bound_by_forms: *not derivable — no form binds a probe body.*',
+      '- prefix_tag: `synthetic`',
+      '',
+      '**Divergence.**', '',
+      'None. This body is synthetic and diverges from nothing.',
+      '',
+      '---',
+      `END OF SYNTHETIC CEILING PROBE BODY AT ${target} CHARS. If this sentence is absent from the read-back, the tail did not survive.`,
+    ].join('\n');
+    // The line length is ACCUMULATED, not computed from optLine(1). The first draft did the
+    // arithmetic off one sample line and was wrong by 1,918 chars at 52,500, because `[${i}]`
+    // grows a digit at 10, at 100 and at 1000 while the padded label and value do not. The
+    // stop(12) guard below caught it before a single task was created, which is what it is for.
+    const fixed = head.length + tail.length + 1;      // + the '\n' joining the option block to the tail
+    const opts = [];
+    let len = fixed;
+    for (let i = 1; ; i++) {
+      const line = optLine(i);
+      if (len + line.length + 1 > target) break;
+      opts.push(line);
+      len += line.length + 1;
+    }
+    if (opts.length < 2) { console.error(`STOP — ${target} is too small to build this shape.`); stop(11); }
+    // The shortfall is absorbed by the LAST option line, which pads with dots: JSON.stringify
+    // escapes none of them, so the line grows by exactly the shortfall.
+    opts[opts.length - 1] = optLine(opts.length, target - len);
+    const body = head + '\n' + opts.join('\n') + '\n' + tail;
+    if (body.length !== target) { console.error(`STOP — built ${body.length} chars, wanted ${target}. A wrong size measures nothing.`); stop(12); }
+    return body;
+  }
+
+  // The sampler the 50,634 measurement used, unchanged: lines long enough to be distinctive,
+  // taken at 0/25/50/75/90/99/100%, so a lost TAIL cannot hide behind a surviving head.
+  const AT = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
+  const sampleSurvival = (body, flat) => {
+    const ls = body.split('\n').filter(l => stripMarks(l).length > 24);
+    return AT.map(f => {
+      const line = ls[Math.min(ls.length - 1, Math.floor(f * (ls.length - 1)))];
+      const token = stripLine(line).slice(0, 48);
+      return { at: f, token, survived: flat.includes(token) };
+    });
+  };
+
+  // The exact surviving length. A truncation loses the TAIL, so "does the mark-stripped tail of
+  // body.slice(0, k) still appear in what came back" is monotone in k, and binary-searchable.
+  // The window is 200 chars so the probe token is always long enough to be distinctive.
+  const survivingLength = (body, flat) => {
+    const ok = (k) => {
+      const t = stripMarks(body.slice(Math.max(0, k - 200), k)).slice(-48);
+      return t.length >= 24 && flat.includes(t);
+    };
+    if (ok(body.length)) return body.length;
+    let lo = 0, hi = body.length;
+    while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); if (ok(mid)) lo = mid; else hi = mid - 1; }
+    return lo;
+  };
+
+  register.body_measurements = register.body_measurements ?? [];
+  const results = [];
+  for (const size of sizes) {
+    const body = syntheticBody(size);
+    console.log(`\n=== ${size} chars ===`);
+    console.log(`  body built: ${body.length} chars over ${body.split('\n').length} lines`);
+
+    let made = null, rejected = null;
+    try { made = await createTask(listId, { name: CNAME, markdown_description: body }); }
+    catch (e) { rejected = { status: e.status ?? null, detail: String(e.detail ?? e.message).slice(0, 600) }; }
+
+    if (rejected) {
+      // Nothing was created, so there is no probe to register and nothing to tear down. The
+      // MEASUREMENT is still recorded: a refusal is a finding, not a failed run.
+      console.log(`  create -> REJECTED. ClickUp answered ${rejected.status}.`);
+      console.log(`  ${rejected.detail}`);
+      const m = { sent_chars: size, verdict: 'rejected', http_status: rejected.status, detail: rejected.detail, task_id: null, surviving_chars: 0, returned_chars: 0, samples: null, at: new Date().toISOString() };
+      register.body_measurements.push(m);
+      writeFileSync(REG, JSON.stringify(register, null, 1) + '\n');
+      results.push(m);
+      continue;
+    }
+
+    // [R-24]: registered the instant the create returns, before any check below can stop the
+    // run. Every path out of here from this line on is a path that leaves a row behind.
+    register.probes.push({ task_id: made.id, name: CNAME, list_id: String(listId), url: made.url, created_at_ms: Number(made.date_created), state: 'live', torn_down_read: null, purpose: `body-ceiling measurement at ${size} chars` });
+    writeFileSync(REG, JSON.stringify(register, null, 1) + '\n');
+    console.log(`  create -> task ${made.id}  ${made.url}`);
+
+    const rb = await getTask(made.id);
+    const returned = rb.description ?? '';
+    const flat = stripMarks(returned);
+    const samples = sampleSurvival(body, flat);
+    const lost = samples.filter(s => !s.survived);
+    const surviving = lost.length ? survivingLength(body, flat) : size;
+    const verdict = lost.length ? 'truncated' : 'survived';
+
+    console.log(`  read back -> description ${returned.length} chars (the plain-text rendering; smaller than sent by design)`);
+    console.log(`  survival sampled at ${AT.map(f => f * 100 + '%').join('/')}: ${samples.length - lost.length}/${samples.length} survived`);
+    for (const s of lost) console.log(`    LOST at ${(s.at * 100).toFixed(0)}%: ${s.token}`);
+    console.log(`  VERDICT: ${verdict}${lost.length ? ` — ${surviving} of ${size} sent chars survived` : ''}`);
+
+    // ── teardown by DELETE, and the absence READ BACK rather than inferred  [R-23] ───────
+    await deleteTask(made.id);
+    let code = null, absent = false;
+    try { await getTask(made.id); } catch (e) { code = e.status; absent = e.status === 404; }
+    const list2 = await listTasks(listId);
+    const residual = list2.tasks.filter(t => t.name === CNAME).length;
+    const row = register.probes.at(-1);
+    row.state = absent && residual === 0 ? 'torn_down' : 'unknown';
+    row.torn_down_read = { get_status: code ?? 200, enumeration_residual: residual, at: new Date().toISOString() };
+    console.log(`  teardown -> GET ${code ?? 200}, ${residual} residual by enumeration -> ${row.state}`);
+
+    const m = { sent_chars: size, verdict, http_status: 200, detail: null, task_id: made.id, surviving_chars: surviving, returned_chars: returned.length, samples: samples.map(s => ({ at: s.at, survived: s.survived })), at: new Date().toISOString() };
+    register.body_measurements.push(m);
+    writeFileSync(REG, JSON.stringify(register, null, 1) + '\n');
+    results.push(m);
+    if (row.state !== 'torn_down') { console.error('\nSTOP — a ceiling probe is not provably absent.'); stop(6); }
+  }
+
+  const finalList = await listTasks(listId);
+  console.log(`\nlist ${listId} after every ceiling probe: ${finalList.tasks.length} task(s), by full enumeration over ${finalList.pages} page(s)`);
+  console.log('\nMEASURED:');
+  for (const m of results) console.log(`  ${String(m.sent_chars).padStart(6)} chars -> ${m.verdict}${m.verdict === 'truncated' ? ` (${m.surviving_chars} survived)` : ''}${m.verdict === 'rejected' ? ` (HTTP ${m.http_status})` : ''}`);
+  if (finalList.tasks.length !== before.tasks.length) { console.error(`\nSTOP — list count moved ${before.tasks.length} -> ${finalList.tasks.length} across probes that were torn down.`); stop(7); }
+  stop(0);
+}
 
 // ── 1. create ────────────────────────────────────────────────────────────────────────────
 // The name is fixed and self-describing so that a probe surviving a crash is identifiable in

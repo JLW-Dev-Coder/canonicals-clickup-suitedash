@@ -121,6 +121,184 @@
     "enumeration_residual": 0,
     "at": "2026-08-27T23:04:14.010Z"
    }
+  },
+  {
+   "task_id": "86e30mk6y",
+   "name": "_vlp_body_ceiling_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30mk6y",
+   "created_at_ms": 1787886565986,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-28T03:09:28.788Z"
+   },
+   "purpose": "body-ceiling measurement at 52500 chars"
+  },
+  {
+   "task_id": "86e30mk9r",
+   "name": "_vlp_body_ceiling_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30mk9r",
+   "created_at_ms": 1787886569773,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-28T03:09:32.449Z"
+   },
+   "purpose": "body-ceiling measurement at 60000 chars"
+  },
+  {
+   "task_id": "86e30mkcb",
+   "name": "_vlp_body_ceiling_probe__delete_me",
+   "list_id": "901709596688",
+   "url": "https://app.clickup.com/t/86e30mkcb",
+   "created_at_ms": 1787886574302,
+   "state": "torn_down",
+   "torn_down_read": {
+    "get_status": 404,
+    "enumeration_residual": 0,
+    "at": "2026-08-28T03:09:37.557Z"
+   },
+   "purpose": "body-ceiling measurement at 80000 chars"
   }
- ]
+ ],
+ "body_measurements": [
+  {
+   "sent_chars": 50634,
+   "verdict": "survived",
+   "http_status": 200,
+   "detail": null,
+   "task_id": null,
+   "surviving_chars": 50634,
+   "returned_chars": null,
+   "samples": null,
+   "at": "2026-08-27T21:26:00.000Z",
+   "registered_retrospectively": "YES — carried from the reported result of the earlier --body run, NOT measured by the run that added this row. That run predates body_measurements existing, so the register recorded its probe lifecycle and never its size or its verdict; there was no \"50,634 entry\" to add these three alongside. Two different figures for that single measurement survive in the tree and neither is a register row: the report says 50,634 chars sent, and the header of adapters/clickup/projection.mjs says \"a 49,693-char body came back as 46,048 chars of content\". They are recorded here as reported rather than reconciled, because reconciling them would be a guess. The three rows below are the only body sizes this register can show its own read-back for, and 52,500 covers the same ground with a measurement instead."
+  },
+  {
+   "sent_chars": 52500,
+   "verdict": "survived",
+   "http_status": 200,
+   "detail": null,
+   "task_id": "86e30mk6y",
+   "surviving_chars": 52500,
+   "returned_chars": 49341,
+   "samples": [
+    {
+     "at": 0,
+     "survived": true
+    },
+    {
+     "at": 0.25,
+     "survived": true
+    },
+    {
+     "at": 0.5,
+     "survived": true
+    },
+    {
+     "at": 0.75,
+     "survived": true
+    },
+    {
+     "at": 0.9,
+     "survived": true
+    },
+    {
+     "at": 0.99,
+     "survived": true
+    },
+    {
+     "at": 1,
+     "survived": true
+    }
+   ],
+   "at": "2026-08-28T03:09:28.789Z"
+  },
+  {
+   "sent_chars": 60000,
+   "verdict": "survived",
+   "http_status": 200,
+   "detail": null,
+   "task_id": "86e30mk9r",
+   "surviving_chars": 60000,
+   "returned_chars": 56391,
+   "samples": [
+    {
+     "at": 0,
+     "survived": true
+    },
+    {
+     "at": 0.25,
+     "survived": true
+    },
+    {
+     "at": 0.5,
+     "survived": true
+    },
+    {
+     "at": 0.75,
+     "survived": true
+    },
+    {
+     "at": 0.9,
+     "survived": true
+    },
+    {
+     "at": 0.99,
+     "survived": true
+    },
+    {
+     "at": 1,
+     "survived": true
+    }
+   ],
+   "at": "2026-08-28T03:09:32.449Z"
+  },
+  {
+   "sent_chars": 80000,
+   "verdict": "survived",
+   "http_status": 200,
+   "detail": null,
+   "task_id": "86e30mkcb",
+   "surviving_chars": 80000,
+   "returned_chars": 75191,
+   "samples": [
+    {
+     "at": 0,
+     "survived": true
+    },
+    {
+     "at": 0.25,
+     "survived": true
+    },
+    {
+     "at": 0.5,
+     "survived": true
+    },
+    {
+     "at": 0.75,
+     "survived": true
+    },
+    {
+     "at": 0.9,
+     "survived": true
+    },
+    {
+     "at": 0.99,
+     "survived": true
+    },
+    {
+     "at": 1,
+     "survived": true
+    }
+   ],
+   "at": "2026-08-28T03:09:37.557Z"
+  }
+ ],
+ "_body_measurements_what": "Every BODY SIZE ever sent to a ClickUp task description by this tool, and the verdict read back from the task. A verdict is one of: \"survived\" (every sampled point of the sent body is present in the read-back), \"truncated\" (some sampled point is absent; surviving_chars is then the exact prefix of the sent body that came back, binary-searched against the read-back in the mark-stripped projection), or \"rejected\" (the create never returned a task; http_status is what ClickUp answered and no task was made, so no probe row exists for it). returned_chars is the length of the PLAIN-TEXT rendering ClickUp returns and is smaller than sent_chars whether or not anything was truncated, so it decides nothing on its own.",
+ "_what_this_has_to_cover": "Derived from adapters/hubspot/cf-mirror-export.json on 2026-08-27 through the export’s own renderer, not typed: the largest RENDERED description body over the 959 records is 49,664 chars (personal_income_tax__1040___select_tax_form, 318 options) and the largest CANONICAL record serialisation is 52,251 chars for the same property. No other record exceeds 45,000 under either measure. Every size below is at or above both, so the population is inside the measured range rather than beside it."
 }
