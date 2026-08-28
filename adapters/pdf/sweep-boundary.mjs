@@ -889,6 +889,28 @@ export const BOUNDARIES = [
       return out;
     } },
 
+  { id: 'SB-29', sweep: 'every sweep', kind: 'claiming', path: 'adapters/hubspot/cf-mirror-export.csv, cf-mirror-export.sha256',
+    what: 'Removes the two members of the mirror-export artefact set that no other entry reaches. THE OTHER TWO ARE DELIBERATELY NOT CLAIMED HERE: cf-mirror-export.json is taken by [SB-15] (adapters/hubspot/*.json not in sweptFiles) and cf-mirror-export.md by [SB-14] (adapters/hubspot/*.md), and widening this entry over them would be a file two entries claim, which [SB-92] refuses. A .csv and a .sha256 are outside every selector in the engine by extension, which is [R-15] a fourth time.',
+    claim: 'They are GENERATED FROM cf-mirror-export.json and cannot drift from it. adapters/hubspot/check-cf-mirror-export.mjs re-renders both from the committed JSON through the same module the builder rendered them with, compares byte for byte, and recomputes every digest in the .sha256 including one per hand-off batch. The cover is STRONGER than the manifest rather than weaker: no figure in either file was typed, and a difference is a STOP rather than a note. The .csv additionally carries no client data — property DEFINITIONS only, built from /crm/v3/properties/contacts, which returns schema; the contact object is never queried. Its one-path exception in .gitignore is documented there against the client-data rule it sits under.',
+    assertedBy: 'adapters/hubspot/check-cf-mirror-export.mjs, wired into npm run sweeps, which performs eleven checks over the artefact set: the header proved to carry exactly the seven declared fields, body_sha256 recomputed over the records array under the serialisation rule the header itself states, both renderings re-derived byte for byte, every digest recomputed, the batch structure proved to cover every record exactly once, record_count and the prefix-tag partition proved equal and total, every derived field proved non-blank and carrying either a source or a reason, every portal fact proved present, name containment recomputed across the whole population, and the CSV proved to hold one data line per record so no embedded newline escapes its field.',
+    count: () => ls('adapters/hubspot').filter((p) => /^adapters\/hubspot\/cf-mirror-export\.(csv|sha256)$/.test(p)).length,
+    claims: () => ls('adapters/hubspot').filter((p) => /^adapters\/hubspot\/cf-mirror-export\.(csv|sha256)$/.test(p)),
+    // THE HALF THAT COULD ROT is the claim that something re-derives them. It is read out of
+    // package.json rather than trusted from the sentence above — a re-derivation nobody runs is
+    // a claim nobody knows is false, which is [R-34].
+    crosscheck: () => {
+      const out = [];
+      let scripts = '';
+      try { scripts = JSON.stringify(JSON.parse(r('package.json')).scripts || {}); } catch { scripts = ''; }
+      const checker = 'adapters/hubspot/check-cf-mirror-export.mjs';
+      if (!existsSync(checker)) out.push(`[SB-29] ${checker} is not in this tree, and it is the whole ground of this entry.`);
+      else if (!scripts.includes(checker)) out.push(`[SB-29] no npm script runs ${checker}, so nothing re-derives the renderings and every one of them is an unchecked artefact.`);
+      for (const f of ['adapters/hubspot/cf-mirror-export.json', 'adapters/hubspot/cf-mirror-export.md']) {
+        if (!existsSync(f)) out.push(`[SB-29] ${f} is absent; the two files this entry claims are rendered from it and cannot be checked without it.`);
+      }
+      return out;
+    } },
+
   // ═══ THE RESIDUAL — [D-24] ═══════════════════════════════════════════════════════════
   { id: 'SB-92', sweep: 'every sweep', kind: 'claiming', path: 'EVERY TRACKED FILE under every swept root — minus what is swept, minus what is claimed',
     what: 'THE POPULATION, DERIVED. Every entry above says what it removes; nothing until this one said what is left. A sidecar dropped into adapters/pdf/maps/ was swept by count-sweep only if its name matched one of the kinds sweptFiles() lists, and covered by this register only if it matched a pattern somebody had written — and a file matching neither was in no sweep, in no boundary, and NOTHING SAID SO.',

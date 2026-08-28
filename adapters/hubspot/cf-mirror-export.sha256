@@ -1,0 +1,37 @@
+# cf-mirror-export digests
+#
+# Recomputed and compared by adapters/hubspot/check-cf-mirror-export.mjs on every
+# `npm run sweeps`. A digest nobody recomputes is a pin in name only ([R-37]).
+#
+# A BATCH digest covers the text strictly BETWEEN its BEGIN and END delimiter lines,
+# exclusive, joined with newlines — so a batch can be handed to B2 on its own and
+# checked on its own.
+#
+# The .md and .csv digests are here in addition to the JSON one the specification
+# requires. They cost nothing and they pin the two files a reader is most likely to
+# open and edit by hand.
+
+sha256  cf-mirror-export.json  f824c733a4f0d996da99c15033b233d15f56df3a4a4bbcdbb05e6ff1e0adcf56
+sha256  cf-mirror-export.md    0170706586d200be196dccdd2353d8321d556cae1e6aa1b9abb064672f5b803f
+sha256  cf-mirror-export.csv   557bb4d957e87d8f6d2eb63e9df05340012515799a26eb6881c1f1adf59c3723
+
+sha256  batch 01 of 20 (50 record(s))  d5d09fcba9558301d2918d04703f244054d2bc08299ecad4d259eb3519d06308
+sha256  batch 02 of 20 (50 record(s))  0fc29479f85e64b24183f6764713fee1c2ed1a8e4e59513c39fa560ed7bae190
+sha256  batch 03 of 20 (50 record(s))  e22813d5248b69011334a19456ba1adea85fa257177c9b97eda11aa4558d05d7
+sha256  batch 04 of 20 (50 record(s))  67cb405bc34742860d7629cf1159b19f813c1c79622d51202f5521ed3ffb074d
+sha256  batch 05 of 20 (50 record(s))  aad562419488fdb180b8047349935ba92398200478b5b6fd9b5c54ffbf90670b
+sha256  batch 06 of 20 (50 record(s))  93b5752fad536f2a0949ab3ef4fd4b43fce250f40597b1d11e38e9bfd70dd9d2
+sha256  batch 07 of 20 (50 record(s))  c26eafd85325605ae8cd57a34924e7c53d091097437de3950e7e95d4abab967a
+sha256  batch 08 of 20 (50 record(s))  50cebd6a3d981bb13696f777b10e68e28424f53cc738ffeb1469624588cae986
+sha256  batch 09 of 20 (50 record(s))  3c307874b7e9e26980ea490c79c06f7ed3bd02e7b6035dce98ac2016c9e7cf80
+sha256  batch 10 of 20 (50 record(s))  57912cdb3b50e3dca193075452ab8236d627d64d4687a1e8af05692d99dc0693
+sha256  batch 11 of 20 (50 record(s))  c2a33c23bd5e7017a92c2940c315c758fbe6c5dcc8592c2975b46842a7b4f360
+sha256  batch 12 of 20 (50 record(s))  f1c53dccc2c378193879c7f476413f66ff9468548dc48447b0d20dc9c4d6c128
+sha256  batch 13 of 20 (50 record(s))  e455e322e7362be257986132e86a5118a6f8ed36549847bcecb2a123bad02817
+sha256  batch 14 of 20 (50 record(s))  bd4fd3b4974cf4d1db4d294769b11a592187f8f1e666d5a286fba7f2297da5ad
+sha256  batch 15 of 20 (50 record(s))  ba3833379a9d25e002c1856e74295ac6f3b271975d7f8679cbcc517e82aa926d
+sha256  batch 16 of 20 (50 record(s))  9b918cb9663ea2e6827dfa3ea0939c076dba8fa4540b87d7132e3d134e29fab7
+sha256  batch 17 of 20 (50 record(s))  c3ddc1df1930e7a801a446c86859bc97489ebf501cc36474c3b78bd2aa89c372
+sha256  batch 18 of 20 (50 record(s))  21e84ef9b54584b3e83f5f291aa97b38d92526c60a46773731636545b24daf56
+sha256  batch 19 of 20 (50 record(s))  aa80a5366a55c584adda679b294653c9b419933c3ade9f063a026a84e228603e
+sha256  batch 20 of 20 (9 record(s))  7f151c8b0ba7abea9588ce2cddff5abf5e22452f08c79ee8c4f37a0979512942

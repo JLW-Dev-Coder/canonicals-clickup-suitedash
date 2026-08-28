@@ -23,6 +23,17 @@ adapters/hubspot/backup/
 # derived from it that contains individual rows never enters git.
 data/
 *.csv
+# EXCEPT the mirror export. THE RULE ABOVE IS ABOUT CLIENT FINANCIAL DATA AND THIS EXCEPTION
+# does not weaken it: cf-mirror-export.csv is a list of HubSpot PROPERTY DEFINITIONS — internal
+# name, label, type, option labels and values, and this repo's binding for each. It carries no
+# property VALUES, no contact records, no names, no tax identification numbers and nothing
+# belonging to a real person; the contact object is never queried to build it, only
+# /crm/v3/properties/contacts, which returns schema. The exception is ONE exact path, not a
+# pattern, so no other CSV can slip through it. Prompt 59-A item I requires this tabular
+# rendering committed beside the JSON, for the case where ClickUp Brain 2 takes tabular input
+# better than prose; it is generated from cf-mirror-export.json and re-derived and compared by
+# adapters/hubspot/check-cf-mirror-export.mjs on every sweep.
+!adapters/hubspot/cf-mirror-export.csv
 scripts/.klaritie-digits-state.json
 scripts/klaritie-digits-batches/
 # Dry-run report: derived from the transaction CSV and prints individual rows
